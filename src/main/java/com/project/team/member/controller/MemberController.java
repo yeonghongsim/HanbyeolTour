@@ -1,11 +1,6 @@
 package com.project.team.member.controller;
 
 import org.springframework.stereotype.Controller;
-
-
-
-
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 
 	//회원가입 페이지로 이동 
-		@GetMapping("/join")
-		public String joinForm() {
-			
-			return "content/member/join";
-		}
+	@GetMapping("/join")
+	public String joinForm() {
+		
+		return "content/member/join";
+	}
 	
 	
 	
