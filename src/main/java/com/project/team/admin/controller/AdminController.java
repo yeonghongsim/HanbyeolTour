@@ -8,12 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	//상품관리 페이지
-	@GetMapping("/itemManage")
-	public String itemManage() {
+	
+	//상품 등록 페이지(관리자 페이지 첫 화면)
+	@GetMapping("/regItem")
+	public String regItem() {
 		
-		return "content/admin/item_manage";
-		
+		return "content/admin/reg_item";
 	}
 	
+	//카테고리 관리 페이지
+	@GetMapping("/cateManage")
+	public String cateManage() {
+		
+		return "content/admin/cate_manage";
+		
+	}
 }
