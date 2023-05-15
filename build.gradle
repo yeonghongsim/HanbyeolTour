@@ -8,18 +8,15 @@ group = 'com.project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' //fragment 사용을 위해 추가 
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 시큐리티1
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 시큐리티2
+	testImplementation 'org.springframework.security:spring-security-test' // 시큐리티3
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // fragment 사용을 위해 추가
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16' //쿼리 로그 라이브러리 추가
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
