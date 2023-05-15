@@ -1,1 +1,76 @@
-@charset "UTF-8";
+/*노멀라이즈*/
+body,ul,li{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+a{
+    text-decoration:none;
+    color:inherit;
+}
+/*노말라이즈 끝*/
+
+/*좌측사이드바*/
+.left-side-bar{
+    background-color:white;
+    width:200px;
+    height:100%;
+    top:0;
+
+    transition:left;
+}
+.left-side-bar:hover{
+
+}
+
+/*좌측사이드바-아이콘*/
+.left-side-bar > .icon-status > span{
+    text-align:right;
+    display:block;
+}
+.left-side-bar > .icon-status > span:last-child{
+    display:none;
+}
+.left-side-bar:hover > .icon-status > span:last-child{
+    display:block;
+}
+.left-side-bar:hover > .icon-status > span:first-child{
+    display:none;
+}
+/*좌측사이드바-아이콘 끝*/
+
+/*좌측사이드바-메뉴박스*/
+.left-side-bar > .menu-box-1 > ul ul{
+    display:none;
+    position:absolute;
+    left:100%;
+    top:0;
+}
+.left-side-bar > .menu-box-1 ul{
+    background-color:white;
+}
+.left-side-bar > .menu-box-1 ul > li{
+    position:relative;
+}
+
+.left-side-bar > .menu-box-1 ul > li > a{
+    display:block;
+    padding:20px;
+    white-space:nowrap;
+}
+.left-side-bar .menu-box-1 ul > li:hover > a{
+    background-color: white;
+    color : black;
+}
+.left-side-bar > .menu-box-1 > ul > li:hover > ul{
+    display:block;
+}
+
+.adminHeader{
+	background: #eeeeee;
+	height: 50px;
+	font-size: 20px;
+	padding-top: 10px;
+	margin-top: 50px;
+	padding-left: 10px
+}
