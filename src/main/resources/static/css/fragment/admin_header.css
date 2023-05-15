@@ -65,3 +65,12 @@ a{
 .left-side-bar > .menu-box-1 > ul > li:hover > ul{
     display:block;
 }
+
+.adminHeader{
+	background: #eeeeee;
+	height: 50px;
+	font-size: 20px;
+	padding-top: 10px;
+	margin-top: 50px;
+	padding-left: 10px
+}
