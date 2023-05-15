@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+
+.header-bar{
+	margin-top: 1.5rem;
+}
+
+
+/* 헤더 글씨 옆으로 나오도록 설정*/
+.header-title li {
+  display: inline-block;
+  margin-right: 20px;
+  cursor: pointer;
+  position: relative;
+  color: #666;
+}
+
+/* 마우스 올리면 밑줄 생성 */
+.header-title li:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: #666;
+}
+
+.logo {
+	font-size: 4rem;
+	padding: 0000;
+}
+
+.header-bar-2{
+	background: linear-gradient(45deg, #6AD5FF, #F0FBFF); 
+	margin-top: 1rem;
+}
+
+

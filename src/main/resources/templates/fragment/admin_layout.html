@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/css/common.css">
 
 <!-- header에 적용되는 css -->
-<link rel="stylesheet" href="/css/fragment/header.css">
+<link rel="stylesheet" href="/css/fragment/admin_header.css">
 
 <!-- content 페이지가 열릴 떄 같이 열리는 css -->
 <th:block layout:fragment="content_css"></th:block>
@@ -23,20 +23,21 @@
 <div class="container">
 	<div class="row" style="margin-bottom: 1em;">
 		<div class="col">
-			<th:block th:replace="~{fragment/header::headerFragment}"></th:block>
+			<th:block th:replace="~{fragment/admin_header::adminHeaderFragment}"></th:block>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col">
-			<th:block layout:fragment="content"></th:block>
+		<div class="col-3"> <!-- 행은 12 부분임 사이즈 지정 가능  -->
+			 <!-- adminSideFragment라는 이름으로 지정된 layout 페이지로 대체됨 -->
+      		<th:block th:replace="~{fragment/admin_side::adminSideFragment}"></th:block>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+		<div class="col-9">	   
+   			<!-- content라는 이름으로 지정된 layout 페이지 열림 (바뀌는 화면) -->
+     		 <th:block layout:fragment="adminContent"></th:block>
 		</div>
 	</div>
 </div>
+
 
 <!-- jquery 문법 로딩 -->
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -45,7 +46,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 <!-- header.js 파일 로딩 -->
-<script type="text/javascript"src="/js/fragment/header.js"></script>
+<script type="text/javascript"src="/js/fragment/admin_header.js"></script>
 
 <!-- 우편번호 API -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
