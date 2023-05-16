@@ -65,7 +65,7 @@
 		
 			<div class="col-9">
 				<input type="text" class="form-control form-control-lg" placeholder="아이디"
-			 	id="memId" name="memId" onkeyup="setDisabled();">
+			 	id="memId" name="memId" onkeyup="setDisabled();" oninput="idValidate()">
 			</div>
 			<div class="col-3 d-grid">	
 				<input type="button" class="btn btn-lg btn-outline-light" id="check_id" value="중복확인" onclick="isDuplicateMemId();" >
@@ -73,11 +73,11 @@
 			
 			
 			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw" oninput="pwValidate()">
 			</div>
 			
 			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw" oninput="pwCheck()">
 			</div>
 			
 			<div class="col-9">
@@ -87,12 +87,12 @@
 			<div class="col-3 gender-radio">
 				<div class="btn-group btn-group-lg justify-content-center" role="group" aria-label="Basic radio toggle button group">
 					
-					<input type="radio" class="btn-check" name="gender" id="gender_male" autocomplete="off" value="남" checked> 
+					<input type="radio" class="btn-check" name="memDGen" id="gender_male" autocomplete="off" value="남" checked> 
 					<label class="btn zc" for="gender_male">
 						<span class="btn-label">남</span>
 					</label> 
 					
-					<input type="radio" class="btn-check" name="gender" id="gender_female" autocomplete="off" value="여"> 
+					<input type="radio" class="btn-check" name="memDGen" id="gender_female" autocomplete="off" value="여"> 
 					<label class="btn btn-outline-y" for="gender_female">
 						<span class="btn-label">여</span>
 					</label>
@@ -102,18 +102,18 @@
 				
 		
 			<div class="col-4">
-				<select id="tell_1" class="form-select form-select-lg" name="memTells"> 
+				<select id="tell_1" class="form-select form-select-lg" name="memDTells"> 
 					<option selected value="010">010</option>
 					<option value="011">011</option>
 					<option value="016">016</option>
 				</select>
 			</div>
 			<div class="col-4">
-				<input type="text" class="form-control form-select-lg" id="tell_2" name="memTells"
+				<input type="text" class="form-control form-select-lg" id="tell_2" name="memDTells"
 				 placeholder="휴대폰번호 앞자리" maxlength="4">
 			</div>
 			<div class="col-4">
-				<input type="text" class="form-control form-select-lg" id="tell_3" name="memTells" 
+				<input type="text" class="form-control form-select-lg" id="tell_3" name="memDTells" 
 				 placeholder="휴대폰번호 뒷자리" maxlength="4">
 			</div>
 
@@ -150,7 +150,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="d-grid">
-						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn">가입완료</button>
+						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn" disabled>가입완료</button>
 					</div>
 				</div>
 			</div>
@@ -171,7 +171,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/member/join.js"></script>
+	<script type="text/javascript" src="/js/content/member/join.js"></script>
 	
 </th:block>
 

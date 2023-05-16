@@ -33,11 +33,45 @@
 	WHERE MEM_ID = #{memId}
 	</select>
 	
+	<!-- memCode 생성 -->
+	<select id="getNextMemCode" resultType="String">
+	SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
+    FROM HBT_MEM	
+	</select>
+	
+	<!-- memDCode 생성 -->
+	<select id="getNextMemDCode" resultType="String">
+	SELECT 'MEM_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_D_CODE, 5))), 0) + 1, 3, '0') 
+    FROM HBT_MEM_DETAIL		
+	</select>
+	
+	<!-- 회원가입 -->
 	<insert id="join">
-	
-	
-	
-	
+	INSERT INTO HBT_MEM (
+		MEM_CODE
+		, MEM_ID
+		, MEM_NAME
+		, MEM_PW
+		, MEM_D_CODE
+		, MEM_D_TELL
+		, MEM_D_ADDR
+		, MEM_D_ADDR2
+		, MEM_D_GEN
+		, MEM_D_BIR
+		, MEM_EMAIL
+	) VALUES(
+		#{memCode}
+		, #{memId}
+		, #{memName}
+		, #{memPw}
+		, #{memDCode}
+		, REPLACE(<foreach collection="memDTells" item="tell" open="'" separator="-" close="'">${tell}</foreach>, ' ', '')
+		, #{memDAddr}
+		, #{memDAddr2}
+		, #{memDGen}
+		, #{memDBir}
+		, #{memEmail}
+	)
 	</insert>
 	
 	

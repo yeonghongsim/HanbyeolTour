@@ -18,5 +18,7 @@ public class MemberDetailVO {
 	private String memDBir;
 	private String memDJoindate;
 	private String memEmail;
+	private String[] memDTells;
+	
 	
 }
