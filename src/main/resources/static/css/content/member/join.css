@@ -1,9 +1,114 @@
 @charset "UTF-8";
 
 .inner {
-	width: 1000px;
+	width: 50%;
     margin: 0 auto;
 	background-color: #f5f6f8;
+	margin-bottom: 10rem;
 }
+
+.join-title{
+	font-size: 3rem;
+	text-align: center;
+	letter-spacing: -4px;
+    padding-bottom: 2rem;
+}
+
+.join-img {
+	font-size: 3rem;
+	text-align: center;
+	color: #ffd000;
+	font-weight: bold;
+	
+}
+
+.join-status{
+	font-size: 1.3rem;
+	text-align: center;
+    padding-bottom: 1rem;
+    color: #ffd000;
+    font-weight: bold;
+}
+
+
+.s-row{
+	width: 50%;
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 1.5rem;
+}
+
+.form-control-lg{
+	height: 3.6rem;
+}
+
+.btn-outline-light{
+	color: black;
+	background-color:#ffd000;
+	border: 1px solid #dee2e6;
+	font-size: 1.25rem;
+}
+
+.btn-outline-light:hover {
+	background: #fff9d4; 
+	color: #bbb;
+	}
+	
+.btn-group{
+	height: 3.6rem;
+	width: 90%;
+	border: 1px solid #dee2e6;
+}
+
+.btn-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	
+}
+
+.btn-group .btn-check:checked + label.btn {
+	background-color: #ffd000;
+	color: black;
+	border: 1px solid #dee2e6;
+}
+
+.gender-radio {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.form-select-lg{
+	height: 3.6rem;
+}
+	
+.join-info-title{
+	font-size: 1.4rem;
+	font-weight:bold;
+	text-align: left;
+	letter-spacing: -1px;
+    padding-bottom: 1rem;
+}
+	
+.birthDay{
+	font-size: 1.4rem;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #ffd000;
+}
+	
+.bi-balloon-fill{
+	font-size: 1.6rem;
+}
+
+.date-input{
+	
+}
+
+
+
 
 

@@ -7,90 +7,156 @@
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
 	<link rel="stylesheet" href="/css/content/member/join.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="content">
 
+	<!-- 회원가입 제목 부분 -->
 	<div class="row">
-		<div class="col">
-			회원가입 페이지 입니다. 		
+		<div class="col join-img">
+			<i class="bi bi-airplane-engines"></i> 
 		</div>
 	</div>
+	<div class="row">
+		<div class="col join-title">
+			회원가입		
+		</div>
+	</div>
+	
+	<!-- 회원가입 상태  -->
+	<div class="row s-row">
+			<div class="col-2 join-status">
+				회원선택		
+			</div>
+			<div class="col-1 join-status">
+				-		
+			</div>
+			<div class="col-2 join-status">
+				본인확인	
+			</div>
+			<div class="col-1 join-status">
+				-		
+			</div>
+			<div class="col-2 join-status">
+				정보입력	
+			</div>
+			<div class="col-1 join-status">
+				-		
+			</div>
+			<div class="col-3 join-status">
+				가입완료		
+		</div>
+		
+	</div>
 
-	
+	<!-- 회원가입 정보 입력칸 -->
 	<div class="inner">
-		<form id="joinForm" class="row g-3" th:action="@{/member/join}" method="post">
-			<div class="col-8">
-				<!-- <label for="memId" class="form-label">ID</label> -->
-				<input type="text" class="form-control form-control-lg" placeholder="아이디"
-				 id="memId" name="memId" onkeyup="setDisabled();">
+		<div class="row">
+			<div class="col join-info-title">
+				필수사항	
 			</div>
-			<div class="col-4 d-grid">	
-			<!-- 	<label for="check_id" class="form-label"> &nbsp; </label> -->
-				<input type="button" class="btn btn-lg btn-outline-info" id="check_id" value="ID 중복확인" onclick="isDuplicateMemId();" >
-			</div>
-			<div class="col-12">
-				<!-- <label for="memPw" class="form-label">PASSWORD</label> -->
-				<input type="password" class="form-control" placeholder="비밀번호" id="memPw" name="memPw">
-			</div>
-			<div class="col-12">
-				<!-- <label for="check_pw" class="form-label">CONFIRM PASSWORD</label> -->
-				<input type="password" class="form-control" placeholder="비밀번호 확인" id="check_pw">
-			</div>
-			
-			<div class="col-12">
-				 <label for="memName" class="form-label">NAME</label>
-				 <input type="text" class="form-control" id="memName" name="memName" placeholder="">
-			</div>
-			
-			<div class="col-3">
-				<label for="gender_male" class="form-label">GENDER</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="gender" id="gender_male" value="M" checked>Male
-				</div>
-			</div>
-			<div class="col-9">	
-				<label for="gender_female" class="form-label">&nbsp;</label>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="gender" id="gender_female" value="F">Female
-				</div>
-			</div>	
+		</div>
 	
+		<form id="joinForm" class="row g-3" th:action="@{/member/join}" method="post">
+		
+			<div class="col-9">
+				<input type="text" class="form-control form-control-lg" placeholder="아이디"
+			 	id="memId" name="memId" onkeyup="setDisabled();">
+			</div>
+			<div class="col-3 d-grid">	
+				<input type="button" class="btn btn-lg btn-outline-light" id="check_id" value="중복확인" onclick="isDuplicateMemId();" >
+			</div>
+			
+			
+			<div class="col-12">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw">
+			</div>
+			
+			<div class="col-12">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw">
+			</div>
+			
+			<div class="col-9">
+				<input type="text" class="form-control form-control-lg" id="memName" name="memName" placeholder="이름">
+			</div>
+			
+			<div class="col-3 gender-radio">
+				<div class="btn-group btn-group-lg justify-content-center" role="group" aria-label="Basic radio toggle button group">
+					
+					<input type="radio" class="btn-check" name="gender" id="gender_male" autocomplete="off" value="남" checked> 
+					<label class="btn zc" for="gender_male">
+						<span class="btn-label">남</span>
+					</label> 
+					
+					<input type="radio" class="btn-check" name="gender" id="gender_female" autocomplete="off" value="여"> 
+					<label class="btn btn-outline-y" for="gender_female">
+						<span class="btn-label">여</span>
+					</label>
+					 
+				</div>
+			</div>
+				
+		
 			<div class="col-4">
-				<label for="tell_1" class="form-label">TELL</label>
-				<select id="tell_1" class="form-select" name="memTells">
+				<select id="tell_1" class="form-select form-select-lg" name="memTells"> 
 					<option selected value="010">010</option>
 					<option value="011">011</option>
 					<option value="016">016</option>
 				</select>
 			</div>
 			<div class="col-4">
-				<label for="tell_2" class="form-label"> &nbsp; </label>
-				<input type="text" class="form-control" id="tell_2" name="memTells">
+				<input type="text" class="form-control form-select-lg" id="tell_2" name="memTells"
+				 placeholder="휴대폰번호 앞자리" maxlength="4">
 			</div>
 			<div class="col-4">
-				<label for="tell_3" class="form-label"> &nbsp; </label>
-				<input type="text" class="form-control" id="tell_3" name="memTells">
+				<input type="text" class="form-control form-select-lg" id="tell_3" name="memTells" 
+				 placeholder="휴대폰번호 뒷자리" maxlength="4">
 			</div>
 
-			<div class="col-8">
-				<label for="memAddr" class="form-label">ADDRESS</label>
-				<input type="text" class="form-control" id="memAddr" name="memAddr" onclick="searchAddr();" readonly>
+
+			<div class="col-9">
+				<input type="text" class="form-control form-control-lg" id="memAddr" name="memAddr" 
+				onclick="searchAddr();" placeholder="우편번호" readonly>
 			</div>
-			<div class="col-4 d-grid">	
-				<label for="search" class="form-label"> &nbsp; </label>
-				<input type="button" class="btn btn-outline-secondary" id="search_btn" value="검색" onclick="searchAddr();">
+			<div class="col-3 d-grid">	
+				<input type="button" class="btn btn-outline-light" id="search_btn" value="주소 검색" onclick="searchAddr();">
 			</div>
 			<div class="col-12 mb-3">
-				<input type="text" class="form-control" id="addrDetail" placeholder="DETAIL ADDRESS" name="addrDetail">
+				<input type="text" class="form-control form-control-lg" id="addrDetail" name="addrDetail" 
+				placeholder="상세 주소">
 			</div>
+			
+			<div class="row">
+				<div class="col join-info-title">
+					선택사항	
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-3 birthDay">
+					<span ><i class="bi bi-balloon-fill"></i> 생 일</span>
+				</div>
+				<div class="col-9 date-input">
+					 <!-- 시작시 기본 날짜 설정은 value를 이용 -->
+   					<input type="date" class="form-control form-control-lg"
+   					 value="memBir" id="memBir" name="memBir">	
+				</div>
+			</div>
+			
+			
+			
+			
+			
 			
 			<div class="col-12 mb-3">
 				<div class="d-grid gap-2">
 					<button id="joinBtn" onclick="join();" type="button" class="btn btn-outline-primary" disabled>가입완료</button>
 				</div>
 			</div>
+			
+			
 		</form>
 	</div>
 
@@ -102,7 +168,8 @@
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/"></script>-->
+	<script type="text/javascript" src="/js/member/join.js"></script>
+	
 </th:block>
 
 
