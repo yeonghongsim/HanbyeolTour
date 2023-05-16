@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/user_layout}">
+<!-- 연결해야할 외부 CSS파  -->
+<th:block layout:fragment="content_css">
+<!--	<link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="content">
+
+<div class="row">
+	<div class="col mb-3 mx-0 px-0">
+
+			<!-- 사진 슬라이드  -->
+		<div class="row mb-3 mx-0 px-0">
+			<div class="col mb-3 mx-0 px-0">
+				<div id="itemLIstMainImg" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active" data-bs-interval="2000">
+							<img src="/img/itempageMain/1100_10912.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/img/itempageMain/1100_12089.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/img/itempageMain/1100_11682.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="itemLIstMainImg" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="itemLIstMainImg" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<div class="col">
+				<h3>추천상품</h3>
+				<p>한별투어에서 추천하는 상품입니다.</p>			
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<div class="col">
+			
+					<img src="/img/item/recomImg/635931406637468206.jpg"
+								class="d-block w-100 h-100 rounded" alt="...">
+					
+					
+			
+
+			</div>
+			
+			<!-- 추천상품 이미지  -->
+			<div class="col">
+				<div class="row mb-3">
+					<div class="col">
+						<img src="/img/item/recomImg/636150005046711816.jpg"
+								class="d-block w-100 rounded" alt="...">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<img src="/img/item/recomImg/636174968294085095.jpg"
+								class="d-block w-100 rounded" alt="...">
+					</div>
+					<div class="col">
+					
+						<img src="/img/item/recomImg/636985417039931596.jpg"
+								class="d-block w-100 rounded" alt="...">
+					
+					</div>
+				</div>
+			</div>
+		</div>
+			
+			
+			<!-- 지역별 인기여행지 -->
+
+
+			<div class="row my-5">
+				<div class="col">
+					<h3>중국</h3>
+					<p>가장 많이 가는 중국 여행지</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col d-flex justify-content-end btn btn-outline-succes">
+					<input type="button" data-bs-target="#carouselExample" data-bs-slide="prev" value="prev">
+					<input type="button" data-bs-target="#carouselExample" data-bs-slide="next" value="next">
+				</div>
+			</div>
+
+
+			<div class="row mt-3">
+				<div class="col">
+					<div id="carouselExample" class="carousel slide">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<div class="row py-4"  style="background-color: #E6E6E6">
+									<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+		
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/635931406637468206.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/635931406637468206.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/635931406637468206.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							<!-- 2페이지 -->
+							
+							<div class="carousel-item">
+							
+								<div class="row py-4"  style="background-color: #E6E6E6">
+									<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+		
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636150005046711816.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636150005046711816.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636150005046711816.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- 3페이지 -->
+							<div class="carousel-item">
+								<div class="row py-4"  style="background-color: #E6E6E6">
+									<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636174968294085095.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636174968294085095.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636174968294085095.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- 많이가는 여행지 추가 가능 -->
+			
+	<div class="row my-5">
+				<div class="col">
+					<h3>일본</h3>
+					<p>가장 많이 가는 일본 여행지</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col d-flex justify-content-end btn btn-outline-succes">
+
+					<input type="button" data-bs-target="#carouselExample" data-bs-slide="prev" value="prev">
+					<input type="button" data-bs-target="#carouselExample" data-bs-slide="next" value="next">
+
+
+				</div>
+			</div>
+
+
+			<div class="row mt-3">
+				<div class="col">
+					<div id="carouselExample" class="carousel slide">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<div class="row py-4"  style="background-color: #E6E6E6">
+									<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+		
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/635931406637468206.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/635931406637468206.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/635931406637468206.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							<!-- 2페이지 -->
+							
+							<div class="carousel-item">
+							
+								<div class="row py-4"  style="background-color: #E6E6E6">
+									<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+		
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636150005046711816.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636150005046711816.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636150005046711816.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- 3페이지 -->
+							<div class="carousel-item">
+								<div class="row py-4"  style="background-color: #E6E6E6">
+									<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636174968294085095.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636174968294085095.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+										<div class="card mx-3" style="width: 18rem;">
+											<img src="/img/item/recomImg/636174968294085095.jpg" class="card-img-top" alt="...">
+											<div class="card-body">
+												<p class="card-text">상품명</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+			
+			
+			
+
+			
+			
+			
+		</div>
+</div>
+</th:block>
+
+<!--  연결해야할 외부 js 파일 -->
+<th:block layout:fragment="content_js">
+ <!--	<script type="text/javascript" src="/"></script> -->
+</th:block>
+</html>
