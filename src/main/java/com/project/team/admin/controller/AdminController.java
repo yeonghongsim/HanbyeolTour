@@ -31,7 +31,10 @@ public class AdminController {
 	
 	//상품 등록 페이지(관리자 페이지 첫 화면)
 	@GetMapping("/regItem")
-	public String regItem() {
+	public String regItem(Model model) {
+		
+		//여행지 카테고리 조회
+		model.addAttribute("areaCateList", adminService.getAreaCateList());
 		
 		return "content/admin/reg_item";
 	}
