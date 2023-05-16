@@ -8,6 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class TypeRequestVO {
-	private int typeReqeustCode;
+	private int typeRequestCode;
 	private String typeRequestName;
 }
