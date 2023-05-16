@@ -3,9 +3,50 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="itemMapper">
+	<resultMap type="com.project.team.item.vo.ItemVO" id="itemVO">
+		<id 	column="ITEM_CODE" 			property="itemCode"/>
+		<result column="ITEM_TITLE" 		property="itemTitle"/>
+		<result column="ITEM_PRICE" 		property="itemPrice"/>
+		<result column="AREA_CODE" 			property="areaCode"/>
+		<result column="SELLING_START" 		property="sellingStart"/>
+		<result column="SELLING_END" 		property="sellingEnd"/>
+		<result column="IS_EXTRA_CHARGE" 	property="isExtraCharge"/>
+		<result column="IS_PEAK" 			property="isPeak"/>
+		<result column="IS_BOMB_SALE" 		property="isBombSale"/>
+		<result column="ITEM_INTRO" 		property="itemIntro"/>
+		<result column="STATUS_CODE" 		property="statusCode"/>
+	</resultMap>
 	
 	
+	<resultMap type="com.project.team.admin.vo.TourAreaVO" id="TourAreaVO">
+		<id 	column="AREA_CODE" 			property="areaCode"/>
+		<result column="AREA_ENG_NAME" 		property="areaEngName"/>
+		<result column="AREA_KOR_NAME" 		property="areaKoreName"/>
+	</resultMap>
 	
+	
+	<resultMap type="com.project.team.admin.vo.ImgVO" id="ItemVO">
+		<id 	column="ITEM_IMG_CODE" 			property="itemImgCode"/>
+		<result column="ITEM_CODE" 				property="itemCode"/>
+		<result column="ITEM_IMG_ORIGIN_NAME" 	property="itemImgOriginName"/>
+		<result column="ITEM_IMG_ATTACHED_NAME" property="itemImgAttachedNAme"/>
+		<result column="IS_MAIN" 				property="isMain"/>
+	</resultMap>
+	
+	<select id="getItemListByAreaName" resultType="Map">
+	SELECT ITEM.ITEM_CODE
+            , ITEM_TITLE
+            , AREA_KOR_NAME
+            , ITEMS.STATUS_CODE
+            , IMG.ITEM_IMG_ORIGIN_NAME
+            , IS_MAIN
+	FROM HBT_ITEM ITEM, HBT_ITEM_STATE ITEMS, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA
+	WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+	AND ITEM.AREA_CODE = AREA.AREA_CODE
+	AND IS_MAIN = 'Y'
+	AND ITEMS.STATUS_CODE = '1'
+	AND AREA_KOR_NAME = #{areaKorName}
+	</select>
 
 	
 </mapper>
