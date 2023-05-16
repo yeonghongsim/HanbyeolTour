@@ -3,6 +3,52 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="memberMapper">
+	<resultMap type="com.project.team.member.vo.MemberVO" id="member">
+		<id column="MEM_CODE" property="memCode"/>
+		<result column="MEM_ROLE" property="memRole"/>
+		<result column="MEM_ID" property="memId"/>
+		<result column="MEM_NAME" property="memName"/>
+		<result column="MEM_PW" property="memPw"/>
+		<result column="MEM_STATUS_CODE" property="memStatusCode"/>
+		<association property="memberDetailVO" resultMap="memberMapper.memberDetail"></association>
+	</resultMap>
+	
+	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
+		<id column="MEM_D_CODE" property="memDCode"/>
+		<result column="MEM_CODE" property="memCode"/>
+		<result column="MEM_D_TELL" property="memDTell"/>
+		<result column="MEM_D_ADDR" property="memDAddr"/>
+		<result column="MEM_D_ADDR2" property="memDAddr2"/>
+		<result column="MEM_D_GEN" property="memDGen"/>
+		<result column="MEM_D_BIR" property="memDBir"/>
+		<result column="MEM_D_JOINDATE" property="memDJoindate"/>
+		<result column="MEM_EMAIL" property="memEmail"/>
+	</resultMap>
+	
+	
+	<!--회원가입시 ID 중복 체크  -->
+	<select id="isDuplicateMemId" resultType="int">
+	SELECT COUNT(MEM_ID)
+	FROM HBT_MEM
+	WHERE MEM_ID = #{memId}
+	</select>
+	
+	<insert id="join">
+	
+	
+	
+	
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
