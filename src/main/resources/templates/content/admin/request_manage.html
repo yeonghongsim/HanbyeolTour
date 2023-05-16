@@ -18,7 +18,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<table class="table align-middle search-request">
+			<table class="table align-middle search-request text-center">
 				<colgroup>
 					<col width="20%">
 					<col width="20%">
@@ -45,30 +45,32 @@
 								</div>
 							</div>
 						</td>
-						<td>1</td>
+						<td>
+							<input class="btn btn-secondary w-100" type="button" value="초기화">
+						</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>문의유형</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td rowspan="3">
+						<td>
+							<select class="form-select text-center">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</td>
+						<td>문의자</td>
+						<td>*회원아이디</td>
+						<td rowspan="2">
 							<input type="button" class="btn btn-primary w-100" value="검색">
 						</td>
 					</tr>
 					<tr>
 						<td>문의제목</td>
-						<td>2</td>
-						<td>2</td>
-						<td>2</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>3</td>
-						<td>3</td>
-						<td>3</td>
+						<td>*작성된제목</td>
+						<td>구매코드</td>
+						<td>*입력된구매코드</td>
 					</tr>
 				</tbody>
 			</table>
