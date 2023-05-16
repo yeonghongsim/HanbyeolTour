@@ -47,7 +47,21 @@ public class AdminController {
 		
 	}
 	
+	//여행지 카테고리 등록
+	@ResponseBody
+	@PostMapping("/regAreaAjax")
+	public void regArea(@RequestBody AreaVO areaVO) {
+		//카테고리 등록
+		adminService.regArea(areaVO);
+	}
 	
+	//카테고리 삭제
+	@GetMapping("/deleteAreaCate")
+	public String deleteAreaCate(String areaCode) {
+		adminService.deleteAreaCate(areaCode);
+		
+		return "redirect:/admin/cateManage";
+	}
 	
 	
 	
@@ -75,23 +89,5 @@ public class AdminController {
 		
 	}
 	
-	
-	
-
-	//여행지 카테고리 등록
-	@ResponseBody
-	@PostMapping("/regAreaAjax")
-	public void regArea(@RequestBody AreaVO areaVO) {
-		//카테고리 등록
-		adminService.regArea(areaVO);
-	}
-	
-	//카테고리 삭제
-	@GetMapping("/deleteAreaCate")
-	public String deleteAreaCate(String areaCode) {
-		adminService.deleteAreaCate(areaCode);
-		
-		return "redirect:/admin/cateManage";
-	}
 
 }
