@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.search-request tr td {
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
+	border: 1px solid #eee;
+}
+
+.search-request tr td:first-child {
+	text-align: center;
+}
+

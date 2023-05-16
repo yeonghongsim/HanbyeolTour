@@ -23,4 +23,43 @@ public class AdminController {
 		return "content/admin/cate_manage";
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// ------------------ 심영홍 ------------- //
+	
+	// 1대1문의 관리 페이지
+	@GetMapping("/requestManage")
+	public String requestManage() {
+		
+		return "content/admin/request_manage";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

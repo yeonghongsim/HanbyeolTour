@@ -37,3 +37,33 @@
 }
 
 
+
+/* 심영홍 */
+.header-navbar {
+	border-bottom: 1px solid #eee;
+	border-top: 1px solid #eee;
+}
+
+.header-navbar > ul{
+	list-style: none;
+	text-align: center;
+	display: flex;
+}
+
+.header-navbar > ul > li {
+	flex: 1;
+}
+
+.header-navbar > ul > li > a {
+	color: black;
+	text-decoration: none;
+}
+
+.header-navbar > ul > li > a:hover {
+	color: grey;
+}
+
+
+
+
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/admin/request_manage.css">
+</th:block>
+
+<th:block layout:fragment="adminContent">
+	
+	<div class="row mb-3">
+		<div class="col">
+			<h2>문의 사항 관리</h2>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<table class="table align-middle search-request">
+				<colgroup>
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+				</colgroup>
+				<thead class="">
+					<tr>
+						<td class="align-middle">문의일자</td>
+						<td colspan="3">
+							<div class="row">
+								<div class="col-6">
+									<div class="input-group">
+										<span class="input-group-text">From</span>
+										<input type="date" class="form-control" name="searchFromDate">
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="input-group">
+										<span class="input-group-text">To</span>
+										<input type="date" class="form-control" name="searchFromDate">
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>1</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>문의유형</td>
+						<td>1</td>
+						<td>1</td>
+						<td>1</td>
+						<td rowspan="3">
+							<input type="button" class="btn btn-primary w-100" value="검색">
+						</td>
+					</tr>
+					<tr>
+						<td>문의제목</td>
+						<td>2</td>
+						<td>2</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>3</td>
+						<td>3</td>
+						<td>3</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			3
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			4
+		</div>
+	</div>
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src="/js/test.js(변경)"></script> --> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+</html>
