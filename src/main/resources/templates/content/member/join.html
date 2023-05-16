@@ -27,6 +27,7 @@
 	
 	<!-- 회원가입 상태  -->
 	<div class="row s-row">
+			
 			<div class="col-2 join-status">
 				회원선택		
 			</div>
@@ -47,12 +48,13 @@
 			</div>
 			<div class="col-3 join-status">
 				가입완료		
-		</div>
+			</div>
 		
 	</div>
 
 	<!-- 회원가입 정보 입력칸 -->
-	<div class="inner">
+	<div class="join-container">
+		<div class="inner">
 		<div class="row">
 			<div class="col join-info-title">
 				필수사항	
@@ -134,32 +136,33 @@
 				</div>
 			</div>
 			
-			<div class="row">
+			<div class="row bd-row">
 				<div class="col-3 birthDay">
-					<span ><i class="bi bi-balloon-fill"></i> 생 일</span>
+					<span ><i class="bi bi-calendar-event"></i>생 일</span>
 				</div>
 				<div class="col-9 date-input">
 					 <!-- 시작시 기본 날짜 설정은 value를 이용 -->
    					<input type="date" class="form-control form-control-lg"
    					 value="memBir" id="memBir" name="memBir">	
-				</div>
+				</div> 
 			</div>
 			
-			
-			
-			
-			
-			
-			<div class="col-12 mb-3">
-				<div class="d-grid gap-2">
-					<button id="joinBtn" onclick="join();" type="button" class="btn btn-outline-primary" disabled>가입완료</button>
+			<div class="row">
+				<div class="col">
+					<div class="d-grid">
+						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn">가입완료</button>
+					</div>
 				</div>
 			</div>
-			
-			
+						
 		</form>
 	</div>
-
+		
+	
+	
+	
+	</div>
+	
 
 
 

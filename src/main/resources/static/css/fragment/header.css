@@ -29,12 +29,16 @@
 .logo {
 	font-size: 4rem;
 	padding: 0000;
+	margin-left: 10rem;
+	color: #ffd000;
+	font-weight: bolder;
 }
 
 .header-bar-2{
-	background: linear-gradient(90deg, #6AD5FF, #F0FBFF); 
+	background: white; 
 	margin-top: 1rem;
-}
+}	
+	
 
 a {
   text-decoration: none;

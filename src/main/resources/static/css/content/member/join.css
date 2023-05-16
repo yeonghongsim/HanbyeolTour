@@ -1,10 +1,23 @@
 @charset "UTF-8";
 
-.inner {
-	width: 50%;
-    margin: 0 auto;
+.col{
+	padding: 0;
+}
+
+
+.join-container{
+	width: 100%;
 	background-color: #f5f6f8;
-	margin-bottom: 10rem;
+	border-bottom: 1px solid #bbb;
+	border-top: 1px solid #bbb;
+}
+
+
+.inner {
+	width: 40%;
+    margin: 0 auto;
+	margin-bottom: 4rem;
+	
 }
 
 .join-title{
@@ -12,6 +25,7 @@
 	text-align: center;
 	letter-spacing: -4px;
     padding-bottom: 2rem;
+    padding-left: 8px;
 }
 
 .join-img {
@@ -40,6 +54,7 @@
 
 .form-control-lg{
 	height: 3.6rem;
+	font-size: 1rem;
 }
 
 .btn-outline-light{
@@ -52,7 +67,7 @@
 .btn-outline-light:hover {
 	background: #fff9d4; 
 	color: #bbb;
-	}
+}
 	
 .btn-group{
 	height: 3.6rem;
@@ -81,34 +96,45 @@
 }
 .form-select-lg{
 	height: 3.6rem;
+	font-size: 1rem;
 }
 	
 .join-info-title{
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 	font-weight:bold;
 	text-align: left;
 	letter-spacing: -1px;
     padding-bottom: 1rem;
+    margin-top: 2rem;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 	
 .birthDay{
 	font-size: 1.4rem;
 	text-align: center;
 	display: flex;
+	font-weight: bold;
 	justify-content: center;
 	align-items: center;
 	color: #ffd000;
 }
 	
-.bi-balloon-fill{
+.bi-calendar-event{
 	font-size: 1.6rem;
+	margin-right: 1rem;
 }
 
-.date-input{
-	
+.bd-row{
+	margin-bottom: 2rem;
 }
 
-
+.joinBtn{
+	color: #ffffff;
+	margin-bottom: 1rem;
+	font-weight: bold;
+	height: 3rem;
+}
 
 
 
