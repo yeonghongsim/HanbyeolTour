@@ -5,12 +5,151 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/">-->
+	<link rel="stylesheet" href="/css/content/main/main_page.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="content">
-	<div>this page is main page.</div>
+
+<div class="row">
+	<div class="col">
+	
+	
+		<!-- 메인페이지 이미지자리  -->
+		<div class="row my-3">
+			<div class="col">
+			
+			
+				<div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active" data-bs-interval="2000">
+							<img src="/img/main/1100_10912.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/img/main/1100_11682.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/img/main/1100_12089.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/img/main/1100_12090.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+						<div class="carousel-item" data-bs-interval="2000">
+							<img src="/img/main/1100_12148.jpg"
+								class="d-block w-100 rounded" alt="...">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#mainImgSlide" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#mainImgSlide" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- 추천 페이지 설정  -->
+		<div class="row">
+			<div class="col">
+				<h3 style="font-weight: bold;">한별투어 추천 아이템</h3>
+			</div>
+		</div>
+		<div class="row" style="width: 50%;">
+			<div class="col d-flex">
+				<img src="/img/main/m_1.jpg" class="rounded recommend-img mx-3">
+				<img src="/img/main/m_2.jpg" class="rounded recommend-img mx-3">
+				<img src="/img/main/m_3.jpg" class="rounded recommend-img mx-3">
+				<img src="/img/main/m_4.jpg" class="rounded recommend-img mx-3">
+				<img src="/img/main/m_5.jpg" class="rounded recommend-img mx-3">
+			</div>
+		</div>
+		
+		
+		
+		<!-- 타임딜 or 땡처리 바로가기  -->
+		<div class="row">
+			<div class="col">
+				<h3 style="font-weight: bold;">오늘 놓치면 안될 #타임딜</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<img src="/img/main/timedeal.jpg" class="d-block w-100 rounded">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				타임딜 해당 이미지 띄울자리
+			</div>
+		</div>
+		
+		
+		
+		<!-- 맞춤형 상품목록  -->
+		<div class="row mt-3 mb-0">
+			<div class="col">
+				<h3 style="font-weight: bold;">지금 가장 HOT한 여행지</h3>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col">
+			
+				<div class="card" style="width: 18rem;">
+				  <img src="/img/item/recomImg/638022863183380383.jpg" class="card-img-top" alt="...">
+				  <div class="card-body">
+				    <p class="card-text">이거반복문</p>
+				  </div>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		
+		<!-- 맞춤형 상품목록 2  -->
+		<div class="row mt-3 mb-0">
+			<div class="col">
+				<h3 style="font-weight: bold;">여행고수의 예약타이밍</h3>
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<div class="col">
+				<div class="card" style="width: 18rem;">
+				  <img src="/img/item/recomImg/638041254584397388.jpg" class="card-img-top" alt="...">
+				  <div class="card-body">
+				    <p class="card-text">이거반복문2</p>
+				  </div>
+				</div>
+			
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+
+
+
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   

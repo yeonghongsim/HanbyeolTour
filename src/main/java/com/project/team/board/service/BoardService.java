@@ -1,5 +1,9 @@
 package com.project.team.board.service;
 
-public interface BoardService {
+import java.util.List;
 
+import com.project.team.board.vo.TypeRequestVO;
+
+public interface BoardService {
+	List<TypeRequestVO> getTypeRequestList();
 }

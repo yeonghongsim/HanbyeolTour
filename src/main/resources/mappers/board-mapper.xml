@@ -3,7 +3,22 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="boardMapper">
-
+	
+	<resultMap type="com.project.team.board.vo.TypeRequestVO" id="typeRequest">
+		<id 	column="TYPE_REQUEST_CODE" property="typeRequestCode"/>
+		<result column="TYPE_REQUEST_NAME" property="typeRequestName"/>
+	</resultMap>
+	
+	
+	
+	<select id="getTypeRequestList" resultMap="typeRequest">
+		SELECT TYPE_REQUEST_CODE
+			, TYPE_REQUEST_NAME
+		FROM TYPE_REQUEST
+	</select>
+	
+	
+	
 	
 </mapper>
 
