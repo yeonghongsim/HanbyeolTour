@@ -13,7 +13,64 @@
 <th:block layout:fragment="adminContent">
 <div class="row">
    <div class="col-12">
-     상품 등록 페이지
+		<span>상품 등록</span>
+     	<div class="row">
+		   	<div class="col-12">
+		      <form id="" class="row g-3" action="" method="post">
+		         <div class="col-3">
+		            <label for="" class="form-label">여행 국가</label> 
+		            <select id="" name="" class="form-select">
+		               <option value="">미국</option>
+		            </select>
+		         </div>
+		         <div class="col-9">
+		            <label for="" class="form-label">패키지 이름</label> 
+		            <input type="text" class="form-control" id="" name="">
+		         </div>
+		         <div class="col-4">
+		            <label for="" class="form-label">기본 가격</label> 
+		            <input type="text" class="form-control" id="" name="">
+		         </div>
+		         <div class="col-4">
+		            <label for="" class="form-label">인원수</label> 
+		            <input type="number" class="form-control" value="1" min="1" max="100ㄴ" id="" name="">
+		         </div>
+		         <div class="col-4">
+		            <label for="" class="form-label">여행기간</label>
+		            <input type="number" class="form-control" value="1" max="100" id="" name="">
+		         </div>
+		         <div class="col-12">
+		            <label for="" class="form-label">패키지 소개</label> 
+		            <textarea rows="5" class="form-control"></textarea>
+		         </div>
+		         <div class="col-6">
+		            <label for="" class="form-label">메인 이미지</label> 
+		            <input type="file" class="form-control" id="" name="">
+		         </div>
+		         <div class="col-6">
+		            <label for="" class="form-label">상세 이미지</label> 
+		            <input type="file" class="form-control" id="" name="">
+		         </div>
+		         <div class="col-12">
+		            <div class="form-check form-check-inline">
+		               <input class="form-check-input" value="" type="radio" id="" name="" checked>
+		               <label class="form-check-label" for="">판매중</label>
+		            </div>
+		            <div class="form-check form-check-inline">
+		               <input class="form-check-input" value="" type="radio" id="" name="">
+		               <label class="form-check-label" for="">준비중</label>
+		            </div>
+		            <div class="form-check form-check-inline">
+		               <input class="form-check-input" value="" type="radio" id="" name="">
+		               <label class="form-check-label" for="">품절</label>
+		            </div>
+		         </div>
+		         <div class="col-3">
+		            <button id="" type="button" class="btn" style="background-color: #ffd000;">상품 등록</button>
+		         </div>
+		      </form>
+		   </div>
+</div>
    </div>
 </div>
 	

@@ -27,6 +27,7 @@ a{
 .left-side-bar > .icon-status > span{
     text-align:right;
     display:block;
+    color: #ffd000;
 }
 .left-side-bar > .icon-status > span:last-child{
     display:none;
@@ -67,7 +68,7 @@ a{
 }
 
 .adminHeader{
-	background: #eeeeee;
+	background: #ffd000;
 	height: 50px;
 	font-size: 20px;
 	padding-top: 10px;
