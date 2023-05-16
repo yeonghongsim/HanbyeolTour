@@ -31,7 +31,7 @@ public class ItemController {
 		return "conte"
 				+ "nt/item/tour_item_list_main";
 	}
-	//패키지상품 메인페이지
+	//패키지상품 상세페이지
 	@GetMapping("/tourItemListDetail")
 	public String tourItemListDetail() {
 		
