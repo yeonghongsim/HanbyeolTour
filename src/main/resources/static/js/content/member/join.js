@@ -207,13 +207,7 @@ function pwCheck(){
         $('#check_pw').css('border-color', 'green'); // 오류가 없으면 테두리 색상 초기화
         $('#check_pw').css('border-width', '2px');
     }
-	
-
-	
-	
-	
-	
-	
+		
 	
 }
 
