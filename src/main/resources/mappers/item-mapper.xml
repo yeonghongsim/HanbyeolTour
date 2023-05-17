@@ -3,7 +3,7 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="itemMapper">
-	<resultMap type="com.project.team.item.vo.ItemVO" id="itemVO">
+	<resultMap type="com.project.team.item.vo.ItemVO" id="item">
 		<id 	column="ITEM_CODE" 			property="itemCode"/>
 		<result column="ITEM_TITLE" 		property="itemTitle"/>
 		<result column="ITEM_PRICE" 		property="itemPrice"/>
@@ -20,14 +20,14 @@
 	</resultMap>
 	
 	
-	<resultMap type="com.project.team.admin.vo.TourAreaVO" id="TourAreaVO">
+	<resultMap type="com.project.team.admin.vo.TourAreaVO" id="tourArea">
 		<id 	column="AREA_CODE" 			property="areaCode"/>
 		<result column="AREA_ENG_NAME" 		property="areaEngName"/>
 		<result column="AREA_KOR_NAME" 		property="areaKoreName"/>
 	</resultMap>
 	
 	
-	<resultMap type="com.project.team.admin.vo.ImgVO" id="ItemVO">
+	<resultMap type="com.project.team.admin.vo.ImgVO" id="img">
 		<id 	column="ITEM_IMG_CODE" 			property="itemImgCode"/>
 		<result column="ITEM_CODE" 				property="itemCode"/>
 		<result column="ITEM_IMG_ORIGIN_NAME" 	property="itemImgOriginName"/>

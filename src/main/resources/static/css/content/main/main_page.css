@@ -17,3 +17,11 @@
 	z-index: 2;
 }
 
+.recommend-img-div {
+	display: flex;
+	margin: auto;
+}
+
+.recommend-img-div div {
+	flex: 1;
+}
