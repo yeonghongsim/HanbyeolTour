@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+a {
+	color: black;
+	text-decoration: none;
+}
 
 .header-bar{
 	margin-top: 1.5rem;
@@ -46,29 +50,199 @@ a {
 /* 심영홍 */
 .header-navbar {
 	border-bottom: 1px solid #eee;
-	border-top: 1px solid #eee;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
-.header-navbar > ul{
+.dropdown-1-span {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-1-div {
+	position: absolute;
+	background-color: white;
+	display: none;
+	left: -30px;
+	z-index: 3;
+	border: 1px solid #eee;
+}
+
+.dropdown-1-ul {
 	list-style: none;
-	text-align: center;
-	display: flex;
+	width: 150px;
+	text-align: left;
 }
 
-.header-navbar > ul > li {
-	flex: 1;
+.dropdown-1-ul > li {
+	padding-top: 0.5rem;
 }
 
-.header-navbar > ul > li > a {
-	color: black;
-	text-decoration: none;
+.dropdown-1-ul > li:hover{
+	color: red;
 }
 
-.header-navbar > ul > li > a:hover {
-	color: grey;
+.dropdown-1-span:hover .dropdown-1-div {
+	display: block;
 }
 
+.dropdown-2-span {
+	position: relative;
+	display: inline-block;
+}
 
+.dropdown-2-div {
+	position: absolute;
+	background-color: white;
+	display: none;
+	left: -30px;
+	z-index: 3;
+	border: 1px solid #eee;
+}
 
+.dropdown-2-ul {
+	list-style: none;
+	width: 150px;
+	text-align: left;
+}
 
+.dropdown-2-ul > li {
+	padding-top: 0.5rem;
+}
+
+.dropdown-2-ul > li:hover{
+	color: red;
+}
+
+.dropdown-2-span:hover .dropdown-2-div {
+	display: block;
+}
+
+.dropdown-3-span {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-3-div {
+	position: absolute;
+	background-color: white;
+	display: none;
+	left: -30px;
+	z-index: 3;
+	border: 1px solid #eee;
+}
+
+.dropdown-3-ul {
+	list-style: none;
+	width: 150px;
+	text-align: left;
+}
+
+.dropdown-3-ul > li {
+	padding-top: 0.5rem;
+}
+
+.dropdown-3-ul > li:hover{
+	color: red;
+}
+
+.dropdown-3-span:hover .dropdown-3-div {
+	display: block;
+}
+
+.dropdown-4-span {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-4-div {
+	position: absolute;
+	background-color: white;
+	display: none;
+	left: -30px;
+	z-index: 3;
+	border: 1px solid #eee;
+}
+
+.dropdown-4-ul {
+	list-style: none;
+	width: 150px;
+	text-align: left;
+}
+
+.dropdown-4-ul > li {
+	padding-top: 0.5rem;
+}
+
+.dropdown-4-ul > li:hover{
+	color: red;
+}
+
+.dropdown-4-span:hover .dropdown-4-div {
+	display: block;
+}
+
+.dropdown-5-span {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-5-div {
+	position: absolute;
+	background-color: white;
+	display: none;
+	left: -30px;
+	z-index: 3;
+	border: 1px solid #eee;
+}
+
+.dropdown-5-ul {
+	list-style: none;
+	width: 150px;
+	text-align: left;
+}
+
+.dropdown-5-ul > li {
+	padding-top: 0.5rem;
+}
+
+.dropdown-5-ul > li:hover{
+	color: red;
+}
+
+.dropdown-5-span:hover .dropdown-5-div {
+	display: block;
+}
+
+.dropdown-6-span {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-6-div {
+	position: absolute;
+	background-color: white;
+	display: none;
+	left: -30px;
+	z-index: 3;
+	border: 1px solid #eee;
+}
+
+.dropdown-6-ul {
+	list-style: none;
+	width: 150px;
+	text-align: left;
+}
+
+.dropdown-6-ul > li {
+	padding-top: 0.5rem;
+}
+
+.dropdown-6-ul > li:hover{
+	color: red;
+}
+
+.dropdown-6-span:hover .dropdown-6-div {
+	display: block;
+}
 
