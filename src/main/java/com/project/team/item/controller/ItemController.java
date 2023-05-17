@@ -1,6 +1,7 @@
 package com.project.team.item.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,20 +16,22 @@ public class ItemController {
 	private ItemService itemService;
 	
 	//그룹별 아이템 보기 페이지 이동
-	@GetMapping("/tourItemList")
-	public String tourItemList() {
-		
-		String areaName = "일본";
-		
-		System.out.println(itemService.getItemListByAreaName(areaName));
+	@GetMapping("/tourItemListGroup")
+	public String tourItemList(String areaName, Model model) {
 		
 		
-		return "content/item/tour_item_list_grup";
+		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
+		
+		
+		return "content/item/tour_item_list_group";
 	}
 	
 	//일자별 아이템 보기 페이지 이동
 	@GetMapping("/tourItemListDate")
-	public String tourItemListDate() {
+	public String tourItemListDate(String areaName, Model model) {
+		
+		
+		//model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
 		
 		return "content/item/tour_item_list_date";
 	}
@@ -38,8 +41,7 @@ public class ItemController {
 	@GetMapping("/tourItemListMain")
 	public String tourItemListMain() {
 		
-		return "conte"
-				+ "nt/item/tour_item_list_main";
+		return "content/item/tour_item_list_main";
 	}
 	//패키지상품 상세페이지
 	@GetMapping("/tourItemListDetail")

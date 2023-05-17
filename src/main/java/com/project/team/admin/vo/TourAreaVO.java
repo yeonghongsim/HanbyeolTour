@@ -10,5 +10,5 @@ import lombok.ToString;
 public class TourAreaVO {
 	private String areaCode;
 	private String areaEngName;
-	private String areaKoreName;
+	private String areaKorName;
 }

@@ -11,6 +11,6 @@ public class ImgVO {
 	private String itemImgCode;
 	private String itemCode;
 	private String itemImgOriginName;
-	private String itemImgAttachedNAme;
+	private String itemImgAttachedName;
 	private String isMain;
 }
