@@ -11,4 +11,5 @@ public class TourAreaVO {
 	private String areaCode;
 	private String areaEngName;
 	private String areaKorName;
+	private String isUse;
 }

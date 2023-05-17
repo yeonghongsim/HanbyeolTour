@@ -64,6 +64,14 @@ public class AdminController {
 		adminService.regArea(tourAreaVO);
 	}
 	
+	
+	//여행지 카테고리 사용여부 변경 (정현 추가)
+	@ResponseBody
+	@PostMapping("/changeAreaIsUseAjax")
+	public int changeAreaIsUse(String areaCode) {
+		return adminService.changeAreaIsUse(areaCode);
+	}
+	
 	//여행지 카테고리 삭제
 	@GetMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {

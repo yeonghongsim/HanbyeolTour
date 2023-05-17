@@ -15,6 +15,9 @@ public interface AdminService {
 	//여행국가 카테고리 조회
 	List<TourAreaVO> getAreaCateList();
 	
+	//카테고리 사용여부 변경 (정현 추가)
+	int changeAreaIsUse(String areaCode);
+		
 	//여행국가 카테고리 삭제
 	void deleteAreaCate(String areaCode);
 	

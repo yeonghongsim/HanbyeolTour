@@ -22,9 +22,19 @@
 		SELECT AREA_CODE
 			, AREA_ENG_NAME
 			, AREA_KOR_NAME
+			, IS_USE
 		FROM HBT_TOUR_AREA
 		ORDER BY AREA_KOR_NAME
 	</select>
+	
+	<!-- 여행 국가 카테고리 사용여부 변경 (정현 추가) -->
+	<update id="changeAreaIsUse">
+		UPDATE HBT_TOUR_AREA 
+		SET
+			IS_USE = DECODE(IS_USE, 'Y', 'N', 'N', 'Y')
+		WHERE AREA_CODE = #{areaCode}
+	</update>
+		
 	
 	<!-- 여행 국가 카테고리 삭제-->
 	<delete id="deleteAreaCate">

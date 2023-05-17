@@ -25,6 +25,7 @@
 		<id 	column="AREA_CODE" 			property="areaCode"/>
 		<result column="AREA_ENG_NAME" 		property="areaEngName"/>
 		<result column="AREA_KOR_NAME" 		property="areaKorName"/>
+		<result column="IS_USE" 			property="isUse"/>
 	</resultMap>
 	
 	

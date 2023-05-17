@@ -31,6 +31,12 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getAreaCateList");
 	}
 	
+	//여행국가 카테고리 사용여부 변경 (정현 추가) 
+	@Override
+	public int changeAreaIsUse(String areaCode) {
+		return sqlSession.update("adminMapper.changeAreaIsUse", areaCode);
+	}
+	
 	//여행국가 카테고리 삭제
 	@Override
 	public void deleteAreaCate(String areaCode) {
@@ -54,6 +60,8 @@ public class AdminServiceImpl implements AdminService{
 		//상품 이미지 등록
 		sqlSession.insert("adminMapper.regImgs", itemVO);
 	}
+
+	
 
 	
 	
