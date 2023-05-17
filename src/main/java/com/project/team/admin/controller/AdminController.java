@@ -16,6 +16,8 @@ import com.project.team.admin.vo.AreaVO;
 import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
+import com.project.team.board.vo.BoardAdminVO;
+import com.project.team.util.DateUtil;
 
 import jakarta.annotation.Resource;
 
@@ -88,9 +90,73 @@ public class AdminController {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
-		return "content/admin/request_manage";
+		return "content/admin/board/request_manage";
 		
 	}
 	
+	// 공지사항
+	@GetMapping("/noticeManage")
+	public String noticeManage(Model model) {
+		
+		model.addAttribute("boardNoticeList", adminService.getBoardNoticeList());
+		
+		return "content/admin/board/notice_manage";
+		
+	}
+	
+	// 공지글 등록 양식 페이지 이동
+	@GetMapping("/regNoticeForm")
+	public String regNoticeForm(Model model) {
+		
+		model.addAttribute("nowDate", DateUtil.getNowDateToString());
+		
+		return "content/admin/board/reg_notice_form";
+		
+	}
+	
+	// 공지글 등록 쿼리 실행
+	@PostMapping("/regNotice")
+	public String regNotice(BoardAdminVO boardAdminVO) {
+		
+		String noticeCode = adminService.getBoardNoticeCode();
+		
+		boardAdminVO.setHbtBoardAdminNum(noticeCode);
+		System.out.println("@@@@@@@@" + boardAdminVO);
+		return "redirect:/admin/noticeManage";
+		
+	}
+	
+	// 공지사항 상세 조회
+	@GetMapping("/noticeDetail")
+	public String noticeDetail() {
+		
+		
+		return "content/admin/board/notice_detail";
+		
+	}
+	
+	// 공지글 정보 수정
+	@GetMapping("/updateNoticeForm")
+	public String updateNoticeForm() {
+		
+		return "content/admin/board/update_notice_form";
+		
+	}
+	
+	@GetMapping("/updateNotice")
+	public String updateNotice() {
+		
+		return "redirect:/admin/updateNoticeForm";
+	}
+	
+	
+	// 공지글 삭제 쿼리
+	@GetMapping("/deleteNotice")
+	public String deleteNotice(String hbtBoardAdminNum) {
+		System.out.println("@@@@@@" + hbtBoardAdminNum);
+		
+		return "redirect:/admin/noticeManage";
+		
+	}
 
 }

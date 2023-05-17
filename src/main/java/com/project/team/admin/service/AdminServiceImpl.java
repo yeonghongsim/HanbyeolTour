@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.team.admin.vo.AreaVO;
+import com.project.team.board.vo.BoardAdminVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -34,8 +35,34 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.delete("adminMapper.deleteAreaCate", areaCode);
 		
 	}
+
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//------------------- 심영홍 ------
+	
+	@Override
+	public String getBoardNoticeCode() {
+		return sqlSession.selectOne("adminMapper.getBoardNoticeCode");
+	}
+
+	@Override
+	public List<BoardAdminVO> getBoardNoticeList() {
+		return sqlSession.selectList("adminMapper.getBoardNoticeList");
+	}
 	
 	
 	

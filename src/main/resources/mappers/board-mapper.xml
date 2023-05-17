@@ -10,6 +10,21 @@
 	</resultMap>
 	
 	
+	<resultMap type="com.project.team.board.vo.BoardAdminVO" id="boardAdmin">
+		<id 	column="HBT_BOARD_ADMIN_NUM" 		property="hbtBoardAdminNum"/>
+		<result column="HBT_BOARD_ADMIN_TITLE" 		property="hbtBoardAdminTitle"/>
+		<result column="HBT_BOARD_ADMIN_CONTENT" 	property="hbtBoardAdminContent"/>
+		<result column="HBT_BOARD_ADMIN_CNT" 		property="hbtBoardAdminCnt"/>
+		<result column="HBT_BOARD_ADMIN_REG_DATE" 	property="hbtBoardAdminRegDate"/>
+		<result column="HBT_BOARD_ADMIN_LIKE" 		property="hbtBoardAdminLike"/>
+		<result column="MEM_CODE" 					property="memCode"/>
+		<association property="memberVO" 			resultMap="memberMapper.member"></association>
+	</resultMap>
+	
+
+	
+	
+	
 	
 	<select id="getTypeRequestList" resultMap="typeRequest">
 		SELECT TYPE_REQUEST_CODE

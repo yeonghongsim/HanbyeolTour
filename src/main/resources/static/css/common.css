@@ -29,3 +29,29 @@
 	margin: 0 auto;
 	
 }
+
+/* 찐노랑색*/
+.ye-S-fc {
+	color: #ffd000;
+}
+
+.ye-S-bc {
+	background-color: #ffd000;
+}
+
+/* 연노랑색*/
+.yel-fc {
+	color: #fff9d4;
+}
+
+.ye-bc {
+	background-color: #fff9d4;
+}
+/* 라임색*/
+.lime-fc {
+	color: #c6df5f;
+}
+
+.lime-bc {
+	background-color: #c6df5f;
+}

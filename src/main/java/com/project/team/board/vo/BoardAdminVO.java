@@ -1,5 +1,7 @@
 package com.project.team.board.vo;
 
+import com.project.team.member.vo.MemberVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,4 +16,5 @@ public class BoardAdminVO {
 	private int hbtBoardAdminCnt;
 	private String hbtBoardAdminRegDate;
 	private int hbtBoardAdminLike;
+	private MemberVO memberVO;
 }

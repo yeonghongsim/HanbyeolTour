@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/admin/notice_detail.css">
+</th:block>
+
+<th:block layout:fragment="adminContent">
+	<div class="row mb-3">
+		<div class="col">
+			<h4>공지글</h4>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<div class="row mb-3">
+				<div class="col">
+					<table class="table not-det-table text-center">
+						<colgroup>
+							<col width="25%">
+							<col width="25%">
+							<col width="25%">
+							<col width="25%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>글번호</td>
+								<td>2</td>
+								<td>작성자ID</td>
+								<td>
+									1
+								</td>
+							</tr>
+							<tr>
+								<td>제목</td>
+								<td>2</td>
+								<td>등록일</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<td colspan="3">2</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row mb-3 text-center">
+				<div class="offset-3 col-6">
+					<input onclick="location.href='/admin/noticeManage'" class="btn btn-primary" type="button" value="공지글 관리 페이지로 가기">
+					<input onclick="location.href='/admin/updateNotice'" class="btn btn-primary" type="button" value="수정하기">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			2
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			3
+		</div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/notice_detail.js"></script>
+</th:block>
+
+
+</html>

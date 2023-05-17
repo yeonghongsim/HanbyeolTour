@@ -67,6 +67,35 @@
 		)
 	</insert>
 
+
+
+
+
+	
+	
+	
+	
+	
+	<!-- 심영홍  -->
+	<select id="getBoardNoticeCode" resultType="String">
+		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_ADMIN_NUM, 10))), 0) + 1, 3, '0')
+		FROM HBT_BOARD_ADMIN
+	</select>
+	
+	
+	<select id="getBoardNoticeList" resultMap="boardMapper.boardAdmin">
+		SELECT HBT_BOARD_ADMIN_NUM
+			, HBT_BOARD_ADMIN_TITLE
+			, HBT_BOARD_ADMIN_REG_DATE
+			, HBT_BOARD_ADMIN_LIKE
+			, HBT_BOARD_ADMIN_CNT
+			, (SELECT MEM_ID
+				FROM HBT_MEM) MEM_ID
+		FROM HBT_BOARD_ADMIN
+	</select>
+	
+	
+	
 </mapper>
 
 
