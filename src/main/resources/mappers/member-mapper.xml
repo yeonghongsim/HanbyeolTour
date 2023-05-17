@@ -4,25 +4,25 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="memberMapper">
 	<resultMap type="com.project.team.member.vo.MemberVO" id="member">
-		<id column="MEM_CODE" property="memCode"/>
-		<result column="MEM_ROLE" property="memRole"/>
-		<result column="MEM_ID" property="memId"/>
-		<result column="MEM_NAME" property="memName"/>
-		<result column="MEM_PW" property="memPw"/>
-		<result column="MEM_STATUS_CODE" property="memStatusCode"/>
-		<association property="memberDetailVO" resultMap="memberMapper.memberDetail"></association>
+		<id column="MEM_CODE" 					property="memCode"/>
+		<result column="MEM_ROLE" 				property="memRole"/>
+		<result column="MEM_ID" 				property="memId"/>
+		<result column="MEM_NAME" 				property="memName"/>
+		<result column="MEM_PW" 				property="memPw"/>
+		<result column="MEM_STATUS_CODE" 		property="memStatusCode"/>
+		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
-		<id column="MEM_D_CODE" property="memDCode"/>
-		<result column="MEM_CODE" property="memCode"/>
-		<result column="MEM_D_TELL" property="memDTell"/>
-		<result column="MEM_D_ADDR" property="memDAddr"/>
-		<result column="MEM_D_ADDR2" property="memDAddr2"/>
-		<result column="MEM_D_GEN" property="memDGen"/>
-		<result column="MEM_D_BIR" property="memDBir"/>
-		<result column="MEM_D_JOINDATE" property="memDJoindate"/>
-		<result column="MEM_EMAIL" property="memEmail"/>
+		<id column="MEM_D_CODE" 			property="memDCode"/>
+		<result column="MEM_CODE" 			property="memCode"/>
+		<result column="MEM_D_TELL" 		property="memDTell"/>
+		<result column="MEM_D_ADDR" 		property="memDAddr"/>
+		<result column="MEM_D_ADDR2" 		property="memDAddr2"/>
+		<result column="MEM_D_GEN" 			property="memDGen"/>
+		<result column="MEM_D_BIR"		 	property="memDBir"/>
+		<result column="MEM_D_JOINDATE" 	property="memDJoindate"/>
+		<result column="MEM_EMAIL" 			property="memEmail"/>
 	</resultMap>
 	
 	
@@ -35,47 +35,56 @@
 	
 	<!-- memCode 생성 -->
 	<select id="getNextMemCode" resultType="String">
-	SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
-    FROM HBT_MEM	
+		SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
+    	FROM HBT_MEM
 	</select>
 	
 	<!-- memDCode 생성 -->
 	<select id="getNextMemDCode" resultType="String">
-	SELECT 'MEM_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_D_CODE, 5))), 0) + 1, 3, '0') 
-    FROM HBT_MEM_DETAIL		
+		SELECT 'MEM_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_D_CODE, 5))), 0) + 1, 3, '0') 
+    	FROM HBT_MEM_DETAIL
 	</select>
 	
-	<!-- 회원가입 -->
+	<!-- 회원가입 (HBT_MEM) -->
 	<insert id="join">
-	INSERT INTO HBT_MEM (
-		MEM_CODE
-		, MEM_ID
-		, MEM_NAME
-		, MEM_PW
-		, MEM_D_CODE
-		, MEM_D_TELL
-		, MEM_D_ADDR
-		, MEM_D_ADDR2
-		, MEM_D_GEN
-		, MEM_D_BIR
-		, MEM_EMAIL
-	) VALUES(
-		#{memCode}
-		, #{memId}
-		, #{memName}
-		, #{memPw}
-		, #{memDCode}
-		, REPLACE(<foreach collection="memDTells" item="tell" open="'" separator="-" close="'">${tell}</foreach>, ' ', '')
-		, #{memDAddr}
-		, #{memDAddr2}
-		, #{memDGen}
-		, #{memDBir}
-		, #{memEmail}
-	)
+		INSERT INTO HBT_MEM (
+			MEM_CODE
+			, MEM_ID
+			, MEM_NAME
+			, MEM_PW
+		) VALUES(
+			(SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
+	    	FROM HBT_MEM)
+			, #{memId}
+			, #{memName}
+			, #{memPw}
+	    )
 	</insert>
 	
-	
-	
+	<!-- 회원가입 (HBT_MEM_DETAIL) -->
+	<insert id="joinDetail">
+		INSERT INTO HBT_MEM_DETAIL (
+			MEM_D_CODE
+			, MEM_CODE
+			, MEM_D_TELL
+			, MEM_D_ADDR
+			, MEM_D_ADDR2
+			, MEM_D_GEN
+			, MEM_D_BIR
+			, MEM_EMAIL
+		) VALUES(
+			(SELECT 'MEM_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_D_CODE, 7))), 0) + 1, 3, '0') 
+	    	FROM HBT_MEM_DETAIL)
+	    	, (SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
+	    	FROM HBT_MEM_DETAIL)
+			, #{memDTell}
+			, #{memDAddr} 
+			, #{memDAddr2}
+			, #{memDGen}
+			, TO_DATE(#{memDBir}, 'YYYY-MM-DD')
+			, #{memEmail}
+	    )
+	</insert>
 	
 	
 	

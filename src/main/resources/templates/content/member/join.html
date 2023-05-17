@@ -65,7 +65,7 @@
 		
 			<div class="col-9">
 				<input type="text" class="form-control form-control-lg" placeholder="아이디"
-			 	id="memId" name="memId" onkeyup="setDisabled();" oninput="idValidate()">
+			 	id="memId" name="memId" onkeyup="setDisabled();" >
 			</div>
 			<div class="col-3 d-grid">	
 				<input type="button" class="btn btn-lg btn-outline-light" id="check_id" value="중복확인" onclick="isDuplicateMemId();" >
@@ -73,11 +73,11 @@
 			
 			
 			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw" oninput="pwValidate()">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw">
 			</div>
 			
 			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw" oninput="pwCheck()">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw">
 			</div>
 			
 			<div class="col-9">
@@ -87,21 +87,23 @@
 			<div class="col-3 gender-radio">
 				<div class="btn-group btn-group-lg justify-content-center" role="group" aria-label="Basic radio toggle button group">
 					
-					<input type="radio" class="btn-check" name="memDGen" id="gender_male" autocomplete="off" value="남" checked> 
-					<label class="btn zc" for="gender_male">
+					<input type="radio" class="btn-check" name="memDGen" id="memDGen_male" autocomplete="off" value="남" checked> 
+					<label class="btn zc" for="memDGen_male">
 						<span class="btn-label">남</span>
 					</label> 
 					
-					<input type="radio" class="btn-check" name="memDGen" id="gender_female" autocomplete="off" value="여"> 
-					<label class="btn btn-outline-y" for="gender_female">
+					<input type="radio" class="btn-check" name="memDGen" id="memDGen_female" autocomplete="off" value="여"> 
+					<label class="btn btn-outline-y" for="memDGen_female">
 						<span class="btn-label">여</span>
 					</label>
-					 
 				</div>
 			</div>
 				
+			<div class="col-12">
+				<input type="text" class="form-control form-control-lg" placeholder="이메일 주소" id="memEmail" name="memEmail">
+			</div>
 		
-			<div class="col-4">
+			<!-- <div class="col-4">
 				<select id="tell_1" class="form-select form-select-lg" name="memDTells"> 
 					<option selected value="010">010</option>
 					<option value="011">011</option>
@@ -115,18 +117,22 @@
 			<div class="col-4">
 				<input type="text" class="form-control form-select-lg" id="tell_3" name="memDTells" 
 				 placeholder="휴대폰번호 뒷자리" maxlength="4">
+			</div> -->
+			
+			<div class="col-12">
+				<input type="text" class="form-control form-select-lg" id="memDTell" name="memDTell"
+				 placeholder="- 없이 휴대폰 전체자리 입력" maxlength="11">
 			</div>
 
-
 			<div class="col-9">
-				<input type="text" class="form-control form-control-lg" id="memAddr" name="memAddr" 
+				<input type="text" class="form-control form-control-lg" id="memDAddr" name="memDAddr" 
 				onclick="searchAddr();" placeholder="우편번호" readonly>
 			</div>
 			<div class="col-3 d-grid">	
 				<input type="button" class="btn btn-outline-light" id="search_btn" value="주소 검색" onclick="searchAddr();">
 			</div>
 			<div class="col-12 mb-3">
-				<input type="text" class="form-control form-control-lg" id="addrDetail" name="addrDetail" 
+				<input type="text" class="form-control form-control-lg" id="memDAddr2" name="memDAddr2" 
 				placeholder="상세 주소">
 			</div>
 			
@@ -142,8 +148,7 @@
 				</div>
 				<div class="col-9 date-input">
 					 <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-   					<input type="date" class="form-control form-control-lg"
-   					 value="memBir" id="memBir" name="memBir">	
+   					<input type="date" class="form-control form-control-lg" id="memDBir" name="memDBir">	
 				</div> 
 			</div>
 			
