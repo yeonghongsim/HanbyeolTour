@@ -17,7 +17,7 @@
 		)
 	</insert>
 	
-	<!-- 여행국가 카테고리 조회 -->
+	<!-- 여행 국가 카테고리 조회 -->
 	<select id="getAreaCateList" resultMap="itemMapper.tourArea">
 		SELECT AREA_CODE
 			, AREA_ENG_NAME
@@ -26,7 +26,7 @@
 		ORDER BY AREA_KOR_NAME
 	</select>
 	
-	<!-- 여행국가 카테고리 삭제-->
+	<!-- 여행 국가 카테고리 삭제-->
 	<delete id="deleteAreaCate">
 		DELETE HBT_TOUR_AREA
 		WHERE AREA_CODE = #{areaCode}
