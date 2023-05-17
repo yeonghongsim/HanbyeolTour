@@ -20,5 +20,5 @@ public class ItemVO {
 	private String isBombSale;
 	private String itemIntro;
 	private String statusCode;
-
+	private String traverPeriod;
 }
