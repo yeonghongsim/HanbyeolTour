@@ -84,7 +84,6 @@ public class AdminController {
 		List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg);
 		
 		//상품 이미지 DB 등록
-		
 		//등록될 상품 코드 조회
 		String itemCode = adminService.getNextItemCode();
 		itemVO.setItemCode(itemCode);
@@ -100,7 +99,7 @@ public class AdminController {
 			img.setItemCode(itemCode);
 		}
 		
-		//itemVO에 상품 등록 시 필요한 이미지 정보 세팅
+		//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
 		itemVO.setImgList(imgList);
 
 		//상품 등록 쿼리
