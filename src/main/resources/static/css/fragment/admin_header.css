@@ -27,6 +27,7 @@ a{
 .left-side-bar > .icon-status > span{
     text-align:right;
     display:block;
+    color: #ffd000;
 }
 .left-side-bar > .icon-status > span:last-child{
     display:none;
@@ -67,10 +68,31 @@ a{
 }
 
 .adminHeader{
-	background: #eeeeee;
+	background: #ffd000;
 	height: 50px;
 	font-size: 20px;
 	padding-top: 10px;
 	margin-top: 50px;
 	padding-left: 10px
+}
+
+
+/* 인풋 태그 스타일 */
+.form-check-input:checked {
+	background-color: #ffd000;
+	border-color: #ffd000;
+}
+
+.form-control:focus {
+    color: black;
+    background-color: #fff9d4;
+    border-color: #ffd000;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);
+}
+/* 셀렉트박스 스타일 */
+.form-select:focus {
+    border-color: #ffd000;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);
 }

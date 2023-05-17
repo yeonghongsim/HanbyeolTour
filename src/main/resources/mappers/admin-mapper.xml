@@ -3,10 +3,71 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="adminMapper">
-
+	<resultMap type="com.project.team.admin.vo.AreaVO" id="area">
+		<id 	column="AREA_CODE" 		property="areaCode"/>
+		<result column="AREA_ENG_NAME" 	property="areaEngName"/>
+		<result column="AREA_KOR_NAME" 	property="areaKorName"/>
+	</resultMap>
+	
 		
-</mapper>
+	<!-- 카테고리 관리 페이지 - 여행국가 카테고리 등록 -->
+	<insert id="regArea">
+		INSERT INTO HBT_TOUR_AREA (
+			AREA_CODE
+			, AREA_ENG_NAME
+			, AREA_KOR_NAME
+		) VALUES (
+			#{areaCode}
+			, #{areaEngName}
+			, #{areaKorName}
+		)
+	</insert>
+	
+	<!-- 여행국가 카테고리 조회 -->
+	<select id="getAreaCateList" resultMap="area">
+		SELECT AREA_CODE
+			, AREA_ENG_NAME
+			, AREA_KOR_NAME
+		FROM HBT_TOUR_AREA
+		ORDER BY AREA_KOR_NAME
+	</select>
+	
+	<!-- 여행국가 카테고리 삭제-->
+	<delete id="deleteAreaCate">
+		DELETE HBT_TOUR_AREA
+		WHERE AREA_CODE = #{areaCode}
+	</delete>
+	
+	<!-- 상품(패키지 등록) -->
+	<insert id="regItem">
+		INSERT INTO HBT_ITEM (
+			ITEM_CODE
+			, ITEM_TITLE
+			, ITEM_PRICE
+			, AREA_CODE
+			, SELLING_START
+			, SELLING_END
+			, IS_EXTRA_CHARGE
+			, IS_PEAK
+			, IS_BOMB_SALE
+			, ITEM_INTRO
+			, STATUS_CODE
+		) VALUES (
+			#{itemCode}
+			, #{itemTitle}
+			, #{itemPrice}
+			, #{areaCode}
+			, #{sellingStart}
+			, #{sellingEnd}
+			, #{isExtraCharge}
+			, #{isPeak}
+			, #{isBombSale}
+			, #{itemIntro}
+			, #{statusCode}
+		)
+	</insert>
 
+</mapper>
 
 
 
