@@ -32,7 +32,7 @@
 		WHERE AREA_CODE = #{areaCode}
 	</delete>
 	
-	<!-- 상품(패키지 등록) -->
+	<!-- 상품(패키지) 등록 -->
 	<insert id="regItem">
 		INSERT INTO HBT_ITEM (
 			ITEM_CODE

@@ -94,7 +94,7 @@ public class AdminController {
 		//메인 이미지 첨부 정보 추가
 		imgList.add(attachecdImgVO);
 		
-		//imgVO에 itemCode 데이터 세팅
+		//imgVO에 itemCode 세팅
 		for(ImgVO img : imgList) {
 			img.setItemCode(itemCode);
 		}
