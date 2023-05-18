@@ -20,7 +20,8 @@ import com.project.team.admin.vo.TourAreaVO;
 import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
-import com.project.team.board.vo.BoardAdminVO;
+import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.util.DateUtil;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.util.UploadUtil;
@@ -159,12 +160,13 @@ public class AdminController {
 	
 	// 공지글 등록 쿼리 실행
 	@PostMapping("/regNotice")
-	public String regNotice(BoardAdminVO boardAdminVO) {
+	public String regNotice(BoardNoticeVO boardNoticeVO) {
 		
 		String noticeCode = adminService.getBoardNoticeCode();
+		boardNoticeVO.setHbtBoardNoticeNum(noticeCode);
 		
-		boardAdminVO.setHbtBoardAdminNum(noticeCode);
-		System.out.println("@@@@@@@@" + boardAdminVO);
+		System.out.println("@@@@@@@@@" + boardNoticeVO);
+		
 		return "redirect:/admin/noticeManage";
 		
 	}
@@ -203,10 +205,12 @@ public class AdminController {
 	}
 	
 	// 1대1문의 관리 페이지
-	@GetMapping("/requestManage")
-	public String requestManage(Model model) {
+	@RequestMapping("/requestManage")
+	public String requestManage(Model model, BoardRequestVO boardRequestVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		System.out.println("@@@@@@@@@" + boardRequestVO);
 		
 		return "content/admin/board/request_manage";
 		
