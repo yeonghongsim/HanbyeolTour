@@ -3,6 +3,7 @@
 # 이미지경로 파일
 ImgPath.java
 UploadPath.java
+.DS_Store
 
 ###이미지파일경로지정###
 ImgPath.java
