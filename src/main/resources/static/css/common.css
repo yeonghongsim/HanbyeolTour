@@ -40,3 +40,7 @@ body {
 .lime-bc {
 	background-color: #c6df5f;
 }
+
+textarea {
+	resize: none;
+}

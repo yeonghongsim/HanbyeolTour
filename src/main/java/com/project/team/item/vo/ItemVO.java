@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Getter
 @Setter
 @ToString
@@ -28,4 +29,5 @@ public class ItemVO {
 	private String traverPeriod;
 	private List<ImgVO> imgList;
 	private TourAreaVO tourAreaVO;
+	private List<String> itemCodeList;
 }

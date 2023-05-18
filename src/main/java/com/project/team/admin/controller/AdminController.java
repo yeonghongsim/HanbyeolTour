@@ -1,5 +1,6 @@
 package com.project.team.admin.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.util.UploadUtil;
@@ -37,14 +39,11 @@ public class AdminController {
 	private AdminService adminService;
 
 	
-	//상품 등록 페이지(관리자 페이지 첫 화면)
-	@GetMapping("/regItem")
-	public String regItem(Model model) {
+	//상품 관리 페이지(관리자 페이지 첫 화면)
+	@GetMapping("/itemManage")
+	public String itemManage() {
 		
-		//여행지 카테고리 조회
-		model.addAttribute("areaCateList", adminService.getAreaCateList());
-		
-		return "content/admin/reg_item";
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	//여행지 카테고리 관리 페이지
@@ -75,11 +74,21 @@ public class AdminController {
 	}
 	
 	//여행지 카테고리 삭제
-	@GetMapping("/deleteAreaCate")
+	@PostMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {
 		adminService.deleteAreaCate(areaCode);
 		
 		return "redirect:/admin/cateManage";
+	}
+	
+	//상품 등록 페이지
+	@GetMapping("/regItem")
+	public String regItem(Model model) {
+		
+		//등록된 여행지 카테고리 조회
+		model.addAttribute("areaCateList", adminService.getAreaCateList());
+		
+		return "content/admin/reg_item";
 	}
 	
 	//상품 등록
@@ -119,7 +128,33 @@ public class AdminController {
 		return "redirect:/admin/regItem";
 	}
 	
+	//등록 판매 상품 목록 조회()
+	@GetMapping("/itemManageForSale")
+	public String itemManageForSale(Model model) {
+		
+		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
+		
+		return "content/admin/item_manage_for_sale";
+	}
 	
+	//판매 상품 삭제
+	@GetMapping("/deleteItem")
+	public String deleteItem(String itemCode) {
+		adminService.deleteItem(itemCode);
+		
+		return "redirect:/admin/itemManageForSale";
+	}
+	
+	//판매 상품 선택 삭제
+	@GetMapping("/deleteCheckItems")
+	public String deleteCheckItems(String[] itemCodes, ItemVO itemVO) {
+		List<String> itemCodeList = Arrays.asList(itemCodes);
+		itemVO.setItemCodeList(itemCodeList);
+		
+		adminService.deleteCheckItems(itemVO);
+		
+		return "redirect:/admin/itemManageForSale";
+	}
 	
 	
 	
@@ -187,10 +222,14 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/updateNotice")
-	public String updateNotice() {
+	@PostMapping("/updateNotice")
+	public String updateNotice(BoardNoticeVO boardNoticeVO) {
 		
-		return "redirect:/admin/updateNoticeForm";
+		System.out.println("@@@@@@@" + boardNoticeVO);
+		
+		
+		
+		return "redirect:/admin/noticeDetail";
 	}
 	
 	
@@ -205,17 +244,22 @@ public class AdminController {
 	
 	// 1대1문의 관리 페이지
 	@RequestMapping("/requestManage")
-	public String requestManage(Model model) {
+	public String requestManage(Model model, RequestSearchVO requestSearchVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		model.addAttribute("nowDate", DateUtil.getNowDateToString());
 		
+		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
 		return "content/admin/board/request_manage";
 		
 	}
 	
-	
-	
+	@ResponseBody
+	@PostMapping("/searchRequestAjax")
+	public void searchRequestAjax() {
+		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
+	}
 	
 
 }
