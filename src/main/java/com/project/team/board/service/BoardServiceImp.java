@@ -18,5 +18,6 @@ public class BoardServiceImp implements BoardService{
 	public List<TypeRequestVO> getTypeRequestList() {
 		return sqlSession.selectList("boardMapper.getTypeRequestList");
 	}
+
 	
 }

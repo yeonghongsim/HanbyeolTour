@@ -43,80 +43,107 @@
 			<a href="/item/tourItemListMain">
 				<span class="dropdown-1-span">해외패키지</span>
 			</a>
-				<div class="dropdown-1-div">
-					<ul class="dropdown-1-ul">
-						<th:block th:each="menuList : ${locMenuList}">	
-							<li>
-								<a th:href="@{/item/tourItemListGroup(areaName=${menuList.areaKorName})}">
-									<span>[[${menuList.areaKorName}]]</span>
-								</a>
-							</li>
-						</th:block>
-					</ul>
-				</div>
+			<div class="dropdown-1-div">
+				<ul class="dropdown-1-ul">
+					<th:block th:each="menuList : ${locMenuList}">	
+						<li>
+							<a th:href="@{/item/tourItemListGroup(areaName=${menuList.areaKorName})}">
+								<span>[[${menuList.areaKorName}]]</span>
+							</a>
+						</li>
+					</th:block>
+				</ul>
+			</div>
 		</div>
-		<div class="col">
+		<div class="col dropdown-2-span">
 			<a href="/item/tourItemList">
-				<span class="dropdown-2-span">테마여행
-				<div class="dropdown-2-div">
-					<ul class="dropdown-2-ul">
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-					</ul>
-				</div>
-				</span>
+				<span class="dropdown-2-span">테마여행</span>
 			</a>
+			<div class="dropdown-2-div">
+				<ul class="dropdown-2-ul">
+					<th:block>	
+					<li>
+						<a>
+							<span>1</span>
+						</a>
+					</li>
+				</th:block>
+				</ul>
+			</div>
 		</div>
-		<div class="col">
+		<div class="col dropdown-3-span">
 			<a href="/item/tourItemListDetail">
-				<span class="dropdown-3-span">개별여행
-				<div class="dropdown-3-div">
-					<ul class="dropdown-3-ul">
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-					</ul>
-				</div>
-				</span>
+				<span class="dropdown-3-span">개별여행</span>
 			</a>
+			<div class="dropdown-3-div">
+				<ul class="dropdown-3-ul">
+					<th:block>	
+					<li>
+						<a>
+							<span>1</span>
+						</a>
+					</li>
+				</th:block>
+				</ul>
+			</div>
 		</div>
-		<div class="col">
+		<div class="col dropdown-4-span">
 			<a href="#">
-				<span class="dropdown-4-span">국내/제주
-				<div class="dropdown-4-div">
-					<ul class="dropdown-4-ul">
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-					</ul>
-				</div>
-				</span>
+				<span class="dropdown-4-span">국내/제주</span>
 			</a>
+			<div class="dropdown-4-div">
+				<ul class="dropdown-4-ul">
+					<th:block>	
+					<li>
+						<a>
+							<span>1</span>
+						</a>
+					</li>
+				</th:block>
+				</ul>
+			</div>
 		</div>
-		<div class="col">
+		<div class="col dropdown-5-span">
 			<a href="#">
-				<span class="dropdown-5-span">항공
-				<div class="dropdown-5-div">
-					<ul class="dropdown-5-ul">
-						<li><span>국내항공권 조회</span></li>
-						<li><span>해외항공권 조회</span></li>
-					</ul>
-				</div>
-				</span>
+				<span class="dropdown-5-span">항공</span>
 			</a>
+			<div class="dropdown-5-div">
+				<ul class="dropdown-5-ul">
+					<th:block>	
+					<li>
+						<a>
+							<span>국내항공권 조회</span>
+						</a>
+					</li>
+					<li>
+						<a>
+							<span>해외항공권 조회</span>
+						</a>
+					</li>
+				</th:block>
+				</ul>
+			</div>
 		</div>
-		<div class="col">
+		<div class="col dropdown-6-span">
 			<a href="#">
-				<span class="dropdown-6-span">호텔
-				<div class="dropdown-6-div">
-					<ul class="dropdown-6-ul">
-						<li><span>국내호텔 예약/조회</span></li>
-						<li><span>해외호텔 예약/조회</span></li>
-					</ul>
-				</div>
-				</span>
+				<span class="dropdown-6-span">호텔</span>
 			</a>
+			<div class="dropdown-6-div">
+				<ul class="dropdown-6-ul">
+					<th:block>	
+					<li>
+						<a>
+							<span>국내호텔 예약/조회</span>
+						</a>
+					</li>
+					<li>
+						<a>
+							<span>해외호텔 예약/조회</span>
+						</a>
+					</li>
+				</th:block>
+				</ul>
+			</div>
 		</div>
 	</div>
 	
