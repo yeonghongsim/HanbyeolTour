@@ -81,23 +81,37 @@
 	
 	<!-- 상품 이미지 등록 -->
 	<insert id="regImgs">
-	INSERT INTO HBT_ITEM_IMG (
-		ITEM_IMG_CODE
-		, ITEM_CODE
-		, ITEM_IMG_ORIGIN_NAME
-		, ITEM_IMG_ATTACHED_NAME
-		, IS_MAIN
-	)								<!-- imgVO -->
-	<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
-		SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
-      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
-			, #{itemCode}
-			, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
-			, #{img.itemImgAttachedName}
-			, #{img.isMain}
-		FROM DUAL
-	</foreach>
-</insert>
+		INSERT INTO HBT_ITEM_IMG (
+			ITEM_IMG_CODE
+			, ITEM_CODE
+			, ITEM_IMG_ORIGIN_NAME
+			, ITEM_IMG_ATTACHED_NAME
+			, IS_MAIN
+		)								<!-- imgVO -->
+		<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
+			SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
+	      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
+				, #{itemCode}
+				, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
+				, #{img.itemImgAttachedName}
+				, #{img.isMain}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<select id="saleListForAdmin" resultMap="itemMapper.item">
+		SELECT ITEM_CODE
+			, ITEM_TITLE
+			, ITEM_PRICE
+			, TRAVER_PERIOD
+			, AREA_KOR_NAME
+			, ITEM_IMG_ATTACHED_NAME
+		FROM HBT_ITEM, HBT_ITEM_IMG
+		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+		AND IS_MAIN = 'Y'
+	</select>
+
+
 
 
 
