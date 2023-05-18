@@ -37,14 +37,11 @@ public class AdminController {
 	private AdminService adminService;
 
 	
-	//상품 등록 페이지(관리자 페이지 첫 화면)
-	@GetMapping("/regItem")
-	public String regItem(Model model) {
+	//상품 관리 페이지(관리자 페이지 첫 화면)
+	@GetMapping("/itemManage")
+	public String itemManage() {
 		
-		//여행지 카테고리 조회
-		model.addAttribute("areaCateList", adminService.getAreaCateList());
-		
-		return "content/admin/reg_item";
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	//여행지 카테고리 관리 페이지
@@ -80,6 +77,16 @@ public class AdminController {
 		adminService.deleteAreaCate(areaCode);
 		
 		return "redirect:/admin/cateManage";
+	}
+	
+	//상품 등록 페이지
+	@GetMapping("/regItem")
+	public String regItem(Model model) {
+		
+		//등록된 여행지 카테고리 조회
+		model.addAttribute("areaCateList", adminService.getAreaCateList());
+		
+		return "content/admin/reg_item";
 	}
 	
 	//상품 등록
@@ -119,6 +126,14 @@ public class AdminController {
 		return "redirect:/admin/regItem";
 	}
 	
+	//등록 판매 상품 목록 조회()
+	@GetMapping("/itemManageForSale")
+	public String itemManageForSale(Model model) {
+		
+		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
+		
+		return "content/admin/item_manage_for_sale";
+	}
 	
 	
 	

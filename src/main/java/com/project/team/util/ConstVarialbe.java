@@ -1,8 +1,6 @@
 package com.project.team.util;
 
 public class ConstVarialbe {
-	// 첨부 파일 경로
-	public static final String UPLOAD_PATH = "D:\\dev\\workspaceSTS\\Shop\\src\\main\\resources\\static\\img\\itemImg";
 	
 	// 기본 관리자 메뉴 코드
 	public static final String DEFAULT_MENU_CODE = "MENU_001";

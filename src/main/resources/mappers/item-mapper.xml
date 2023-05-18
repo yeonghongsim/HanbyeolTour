@@ -16,7 +16,7 @@
 		<result column="ITEM_INTRO" 		property="itemIntro"/>
 		<result column="STATUS_CODE" 		property="statusCode"/>
 		<result column="TRAVER_PERIOD" 		property="traverPeriod"/>
-		<association property="TourAreaVO" 	resultMap="tourArea"> </association> 
+		<association property="tourAreaVO" 	resultMap="tourArea"> </association> 
 		<collection property="imgList" 		resultMap="img"></collection>
 	</resultMap>
 	

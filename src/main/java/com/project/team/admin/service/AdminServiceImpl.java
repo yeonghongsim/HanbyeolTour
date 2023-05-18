@@ -62,6 +62,13 @@ public class AdminServiceImpl implements AdminService{
 		//상품 이미지 등록
 		sqlSession.insert("adminMapper.regImgs", itemVO);
 	}
+	
+	//판매 상품 리스트 조회
+	@Override
+	public List<ItemVO> saleListForAdmin() {
+		
+		return sqlSession.selectList("adminMapper.saleListForAdmin");
+	}
 
 	
 
@@ -90,6 +97,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardAdminVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
+
 	
 	
 	
