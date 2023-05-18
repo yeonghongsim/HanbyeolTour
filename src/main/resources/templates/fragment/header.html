@@ -61,13 +61,13 @@
 			</a>
 			<div class="dropdown-2-div">
 				<ul class="dropdown-2-ul">
-					<th:block>	
-					<li>
-						<a>
-							<span>1</span>
-						</a>
-					</li>
-				</th:block>
+					<th:block th:each="menuList : ${locMenuList}">	
+						<li>
+							<a th:href="@{/item/tourItemListGroup(areaName=${menuList.areaKorName})}">
+								<span>[[${menuList.areaKorName}]]</span>
+							</a>
+						</li>
+					</th:block>
 				</ul>
 			</div>
 		</div>
@@ -133,12 +133,12 @@
 					<th:block>	
 					<li>
 						<a>
-							<span>국내호텔 예약/조회</span>
+							<span>국내 예약/조회</span>
 						</a>
 					</li>
 					<li>
 						<a>
-							<span>해외호텔 예약/조회</span>
+							<span>해외 예약/조회</span>
 						</a>
 					</li>
 				</th:block>

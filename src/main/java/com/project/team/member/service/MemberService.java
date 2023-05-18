@@ -11,7 +11,8 @@ public interface MemberService {
 	//회원가입 
 	void join(MemberVO memberVO, MemberDetailVO memberDetailVO);
 		
-	
+	//시큐리티 로그인 정보 가져오기
+	MemberVO getUserInfoForLogin(String memId);
 	
 	
 	

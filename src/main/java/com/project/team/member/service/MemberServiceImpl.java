@@ -24,15 +24,21 @@ public class MemberServiceImpl implements MemberService{
 		return result != 0 ? true : false;
 	}
 
-
+	// 회원가입 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void join(MemberVO memberVO, MemberDetailVO memberDetailVO) {
 		sqlSession.insert("memberMapper.join", memberVO);
 		sqlSession.insert("memberMapper.joinDetail", memberDetailVO);
 	}
+	
+	//	로그인 정보 가져오기 
+	@Override
+	public MemberVO getUserInfoForLogin(String memId) {
+		return sqlSession.selectOne("memberMapper.getUserInfoForLogin", memId);
+	}
 
-
+	
 	
 	
 	

@@ -39,7 +39,6 @@ function isDuplicateMemId(){
 	//회원 id를 입력하는 태그
 	const memIdTag = document.querySelector('#memId');
 	const memId = memIdTag.value;
-	console.log(memId);
 	
 	
 	if(memId == ''){

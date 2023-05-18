@@ -19,6 +19,7 @@ public class ItemController {
 	@GetMapping("/tourItemListGroup")
 	public String tourItemList(String areaName, Model model) {
 		
+		System.out.println(itemService.getItemListByAreaName(areaName));
 		
 		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
 		

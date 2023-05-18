@@ -3,7 +3,7 @@ package com.project.team.admin.service;
 
 import java.util.List;
 
-import com.project.team.board.vo.BoardAdminVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
@@ -42,7 +42,7 @@ public interface AdminService {
 	String getBoardNoticeCode();
 	
 	// 공지글 목록 조회
-	List<BoardAdminVO> getBoardNoticeList();
+	List<BoardRequestVO> getBoardNoticeList();
 	
 	
 	

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 
-import com.project.team.board.vo.BoardAdminVO;
+import com.project.team.board.vo.BoardRequestVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -107,7 +107,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<BoardAdminVO> getBoardNoticeList() {
+	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
 

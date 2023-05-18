@@ -42,7 +42,7 @@
             , ITEM_TITLE
             , AREA_KOR_NAME
             , ITEMS.STATUS_CODE
-            , IMG.ITEM_IMG_ORIGIN_NAME
+            , IMG.ITEM_IMG_ATTACHED_NAME 
             , IS_MAIN
             , ITEM.ITEM_PRICE
             , ITEM.TRAVER_PERIOD
