@@ -21,6 +21,7 @@ import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.util.UploadUtil;
@@ -187,10 +188,14 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/updateNotice")
-	public String updateNotice() {
+	@PostMapping("/updateNotice")
+	public String updateNotice(BoardNoticeVO boardNoticeVO) {
 		
-		return "redirect:/admin/updateNoticeForm";
+		System.out.println("@@@@@@@" + boardNoticeVO);
+		
+		
+		
+		return "redirect:/admin/noticeDetail";
 	}
 	
 	
@@ -205,17 +210,22 @@ public class AdminController {
 	
 	// 1대1문의 관리 페이지
 	@RequestMapping("/requestManage")
-	public String requestManage(Model model) {
+	public String requestManage(Model model, RequestSearchVO requestSearchVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		model.addAttribute("nowDate", DateUtil.getNowDateToString());
 		
+		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
 		return "content/admin/board/request_manage";
 		
 	}
 	
-	
-	
+	@ResponseBody
+	@PostMapping("/searchRequestAjax")
+	public void searchRequestAjax() {
+		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
+	}
 	
 
 }
