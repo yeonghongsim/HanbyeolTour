@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+<th:block layout:fragment="adminContent">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover">
+				<colgroup>
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+				</colgroup>
+				<thead style="background-color: #fff9d4;">
+					<tr>
+						<td><input type="checkbox"></td>
+						<td>상품이미지</td>
+						<td>패키지명</td>
+						<td>여행지</td>
+						<td>기간</td>
+						<td>가격</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox"> </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><input type="button" value="삭제"> </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src="/js/test.js(변경)"></script> --> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+</html>
