@@ -13,70 +13,75 @@
 	<div class="row mb-3">
 		<div class="col">
 		<h3>문의 사항 관리</h3>
-			<form id="requestSearch" action="/admin/requestManage" method="post">
-				<table class="table align-middle search-request text-center">
-					<colgroup>
-						<col width="20%">
-						<col width="20%">
-						<col width="20%">
-						<col width="20%">
-						<col width="20%">
-					</colgroup>
-					<thead class="">
-						<tr>
-							<td class="align-middle">문의일자</td>
-							<td colspan="3">
-								<div class="row">
-									<div class="col-6">
-										<div class="input-group">
-											<span class="input-group-text">From</span>
-											<input type="date" class="form-control" name="searchFromDate">
-										</div>
-									</div>
-									<div class="col-6">
-										<div class="input-group">
-											<span class="input-group-text">To</span>
-											<input type="date" class="form-control" name="searchToDate">
-										</div>
+			<table class="table align-middle search-request text-center">
+				<colgroup>
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+				</colgroup>
+				<thead class="">
+					<tr>
+						<td class="align-middle">문의일자</td>
+						<td colspan="3">
+							<div class="row">
+								<div class="col-6">
+									<div class="input-group">
+										<span class="input-group-text">From</span>
+										<input type="date" class="form-control" name="searchFromDate">
 									</div>
 								</div>
-							</td>
-							<td>
-								<input onclick="location.href='/admin/requestManage'" class="btn btn-secondary w-100" type="button" value="초기화">
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>문의유형</td>
-							<td>
-								<select class="form-select text-center">
-									<th:block th:each="typeRequest : ${typeRequestList}">
-										<option th:value="${typeRequest.typeRequestCode}">[[${typeRequest.typeRequestName}]]</option>
-									</th:block>
-								</select>
-							</td>
-							<td>문의자</td>
-							<td>
-								<input class="form-control" type="text" name="memId" value="" placeholder="회원 ID 입력">
-							</td>
-							<td rowspan="2">
-								<input onclick="searchRequest()" type="button" class="btn btn-primary w-100" value="검색">
-							</td>
-						</tr>
-						<tr>
-							<td>문의제목</td>
-							<td>
-								<input class="form-control" type="text" name="hbtBoardRequestTitle" value="" placeholder="문의글 제목 입력">
-							</td>
-							<td>구매코드</td>
-							<td>
-								<input class="form-control" type="text" name="buyCode" value="" placeholder="구매코드 입력">
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
+								<div class="col-6">
+									<div class="input-group">
+										<span class="input-group-text">To</span>
+										<input type="date" class="form-control" name="searchToDate" th:value="${nowDate}">
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-6">
+									<input onclick="location.href='/admin/requestManage'" class="btn btn-secondary w-100" type="button" value="초기화">
+								</div>
+								<div class="col-6">
+									<input onclick="searchRequest()" class="btn btn-success w-100" type="button" value="전체">
+								</div>
+							</div>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>문의유형</td>
+						<td>
+							<select class="form-select text-center" name="typeRequestVO.typeRequestCode">
+								<th:block th:each="typeRequest : ${typeRequestList}">
+									<option th:value="${typeRequest.typeRequestCode}">[[${typeRequest.typeRequestName}]]</option>
+								</th:block>
+							</select>
+						</td>
+						<td>문의자</td>
+						<td>
+							<input class="form-control text-center" type="text" name="memberVO.memId" value="" placeholder="회원 ID 입력">
+						</td>
+						<td rowspan="2">
+							<input onclick="searchRequest()" type="button" class="btn btn-primary w-100" value="검색">
+						</td>
+					</tr>
+					<tr>
+						<td>문의제목</td>
+						<td>
+							<input class="form-control text-center" type="text" name="hbtBoardRequestTitle" value="" placeholder="문의글 제목 입력">
+						</td>
+						<td>구매코드</td>
+						<td>
+							<input class="form-control text-center" type="text" name="buyCode" value="" placeholder="구매코드 입력">
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -101,7 +106,7 @@
 						<td>문의일자</td>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="searched-tbody">
 					<th:block th:if="${1 == 1}">
 						<tr>
 							<td>1</td>

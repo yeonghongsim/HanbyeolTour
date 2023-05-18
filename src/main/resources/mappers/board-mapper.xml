@@ -19,7 +19,7 @@
 		<result column="HBT_BOARD_NOTICE_LIKE" 			property="hbtBoardNoticeLike"/>
 		<association property="memberVO" 				resultMap="memberMapper.member"></association>
 	</resultMap>
-
+	
 	<resultMap type="com.project.team.board.vo.BoardRequestVO" id="boardRequest">
 		<id 	column="HBT_BOARD_REQUEST_NUM" 			property="hbtBoardRequestNum"/>
 		<result column="HBT_BOARD_REQUEST_TITLE" 		property="hbtBoardRequestTitle"/>
@@ -28,19 +28,6 @@
 		<association property="typeRequestVO" 			resultMap="typeRequest"/>
 		<association property="memberVO" 				resultMap="memberMapper.member"/>
 	</resultMap>
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	
 	

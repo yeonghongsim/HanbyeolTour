@@ -1,12 +1,6 @@
 @charset "UTF-8";
 
-textarea {
-	resize: none;
-}
-
 .reg-not-table > tbody > tr > td {
 	border: 1px solid #eee;
 }
-
-
 
