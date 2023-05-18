@@ -147,15 +147,7 @@ public class AdminController {
 	
 	// ------------------ 심영홍 ------------- //
 	
-	// 1대1문의 관리 페이지
-	@GetMapping("/requestManage")
-	public String requestManage(Model model) {
-		
-		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
-		
-		return "content/admin/board/request_manage";
-		
-	}
+	
 	
 	// 공지사항
 	@GetMapping("/noticeManage")
@@ -221,5 +213,19 @@ public class AdminController {
 		return "redirect:/admin/noticeManage";
 		
 	}
+	
+	// 1대1문의 관리 페이지
+	@GetMapping("/requestManage")
+	public String requestManage(Model model) {
+		
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		return "content/admin/board/request_manage";
+		
+	}
+	
+	
+	
+	
 
 }
