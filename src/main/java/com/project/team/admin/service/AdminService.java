@@ -3,17 +3,22 @@ package com.project.team.admin.service;
 
 import java.util.List;
 
-import com.project.team.admin.vo.AreaVO;
 import com.project.team.board.vo.BoardAdminVO;
+import com.project.team.admin.vo.ImgVO;
+import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.item.vo.ItemVO;
 
 public interface AdminService {
 	
 	//여행국가 카테고리 등록
-	void regArea(AreaVO areaVO);
+	void regArea(TourAreaVO tourAreaVO);
 	
 	//여행국가 카테고리 조회
-	List<AreaVO> getAreaCateList();
+	List<TourAreaVO> getAreaCateList();
 	
+	//카테고리 사용여부 변경 (정현 추가)
+	int changeAreaIsUse(String areaCode);
+		
 	//여행국가 카테고리 삭제
 	void deleteAreaCate(String areaCode);
 	
@@ -32,5 +37,10 @@ public interface AdminService {
 	
 	
 	
+	//상품 등록 (이미지 포함)
+	void regItem(ItemVO itemVO);
+	
+	//다음 상품 코드 조회 
+	String getNextItemCode();
 
 }

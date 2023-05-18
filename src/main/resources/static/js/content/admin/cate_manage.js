@@ -50,3 +50,36 @@ function deleteAreaCate(areaCode) {
 			location.href = `/admin/deleteAreaCate?areaCode=${areaCode}`;
 		}
 }
+
+
+//카테고리 사용여부 변경 (정현 추가)
+function changeAreaIsUse(areaCode){
+	
+	//ajax start
+	$.ajax({
+	   url: '/admin/changeAreaIsUseAjax', 
+	   type: 'post',
+	   data: {'areaCode' : areaCode}, //필요한 데이터
+	   success: function(result) {
+			console.log(result);
+		
+			if(result == 1){
+				alert('사용여부가 변경되었습니다.');
+			}
+			else{
+				alert('일시적 오류가 발생했습니다.');	
+			}
+
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
+	
+	
+}
+
+
+
+

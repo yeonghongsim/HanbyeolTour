@@ -47,12 +47,21 @@
 					<div class="row">
 						<div class="col">
 							<table class="table table-striped table-hover">
+								<colgroup>
+				                  <col width="10%">
+				                  <col width="15%">
+				                  <col width="15%">
+				                  <col width="20%">
+				                  <col width="*%">
+				                  <col width="15%">
+				                </colgroup>
 								<thead class="table-head text-center">
 									<tr>
 										<td>No</td>
 										<td>국가코드</td>
 										<td>한글 국가명</td>
 										<td>영문 국가명</td>
+										<td>사용여부</td>
 										<td> </td>
 									</tr>
 								</thead>
@@ -68,6 +77,22 @@
 											<td>[[${area.areaCode}]]</td>
 											<td>[[${area.areaKorName}]]</td>
 											<td>[[${area.areaEngName}]]</td>
+											<td>
+												<div class="row"> <!-- 정현 추가 -->
+													<div class="form-check col-6">
+														<input th:name="${'isUse_' + state.count}" type="radio"
+															class="form-check-input"
+															th:checked="${area.isUse == 'Y'}"
+															th:onchange="changeAreaIsUse([[${area.areaCode}]]);">사용중
+													</div>
+													<div class="form-check col-6">
+														<input th:name="${'isUse_' + state.count}" type="radio"
+															class="form-check-input"
+															th:checked="${area.isUse == 'N'}"
+															th:onchange="changeAreaIsUse([[${area.areaCode}]]);">미사용
+													</div>
+												</div>
+											</td>
 											<td><input type="button" value="삭제" class="btn" 
 												th:onclick="deleteAreaCate([[${area.areaCode}]]);" style="background-color: #ffd000;"></td>
 										</tr>

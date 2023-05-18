@@ -2,9 +2,22 @@
 
 
 
-
-
-
+//회원가입
+function join(){
+	
+	/*
+	//유효성 검사 진행 
+	const idValid = idValidate();
+	const pwValid = pwValidate();
+		
+	if(!idValid || !pwValid){
+		return ;
+	}
+	*/
+	
+	//회원가입 진행 
+	document.querySelector('#joinForm').submit();
+}
 
 
 //우편번호 검색 api 사용
@@ -14,7 +27,7 @@ function searchAddr(){
 			// 도로명 주소 변수
 			const roadAddr = data.roadAddress; 
 			//도로명 주소 세팅 
-			document.querySelector('#memAddr').value = roadAddr;
+			document.querySelector('#memDAddr').value = roadAddr;
         }
     }).open();
 }
@@ -210,9 +223,6 @@ function pwCheck(){
 		
 	
 }
-
-
-
 
 
 

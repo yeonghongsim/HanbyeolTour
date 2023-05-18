@@ -3,12 +3,6 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="adminMapper">
-	<resultMap type="com.project.team.admin.vo.AreaVO" id="area">
-		<id 	column="AREA_CODE" 		property="areaCode"/>
-		<result column="AREA_ENG_NAME" 	property="areaEngName"/>
-		<result column="AREA_KOR_NAME" 	property="areaKorName"/>
-	</resultMap>
-	
 		
 	<!-- 카테고리 관리 페이지 - 여행국가 카테고리 등록 -->
 	<insert id="regArea">
@@ -23,22 +17,32 @@
 		)
 	</insert>
 	
-	<!-- 여행국가 카테고리 조회 -->
-	<select id="getAreaCateList" resultMap="area">
+	<!-- 여행 국가 카테고리 조회 -->
+	<select id="getAreaCateList" resultMap="itemMapper.tourArea">
 		SELECT AREA_CODE
 			, AREA_ENG_NAME
 			, AREA_KOR_NAME
+			, IS_USE
 		FROM HBT_TOUR_AREA
 		ORDER BY AREA_KOR_NAME
 	</select>
 	
-	<!-- 여행국가 카테고리 삭제-->
+	<!-- 여행 국가 카테고리 사용여부 변경 (정현 추가) -->
+	<update id="changeAreaIsUse">
+		UPDATE HBT_TOUR_AREA 
+		SET
+			IS_USE = DECODE(IS_USE, 'Y', 'N', 'N', 'Y')
+		WHERE AREA_CODE = #{areaCode}
+	</update>
+		
+	
+	<!-- 여행 국가 카테고리 삭제-->
 	<delete id="deleteAreaCate">
 		DELETE HBT_TOUR_AREA
 		WHERE AREA_CODE = #{areaCode}
 	</delete>
 	
-	<!-- 상품(패키지 등록) -->
+	<!-- 상품(패키지) 등록 -->
 	<insert id="regItem">
 		INSERT INTO HBT_ITEM (
 			ITEM_CODE
@@ -52,6 +56,7 @@
 			, IS_BOMB_SALE
 			, ITEM_INTRO
 			, STATUS_CODE
+			, TRAVER_PERIOD
 		) VALUES (
 			#{itemCode}
 			, #{itemTitle}
@@ -64,8 +69,35 @@
 			, #{isBombSale}
 			, #{itemIntro}
 			, #{statusCode}
+			, #{traverPeriod}
 		)
 	</insert>
+	
+	<!-- 다음 상품 코드 조회 -->
+	<select id="getNextItemCode" resultType="String">
+		SELECT 'ITEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_CODE, 6))), 0) + 1, 3, '0') 
+        FROM HBT_ITEM
+	</select>
+	
+	<!-- 상품 이미지 등록 -->
+	<insert id="regImgs">
+	INSERT INTO HBT_ITEM_IMG (
+		ITEM_IMG_CODE
+		, ITEM_CODE
+		, ITEM_IMG_ORIGIN_NAME
+		, ITEM_IMG_ATTACHED_NAME
+		, IS_MAIN
+	)								<!-- imgVO -->
+	<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
+		SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
+      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
+			, #{itemCode}
+			, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
+			, #{img.itemImgAttachedName}
+			, #{img.isMain}
+		FROM DUAL
+	</foreach>
+</insert>
 
 
 

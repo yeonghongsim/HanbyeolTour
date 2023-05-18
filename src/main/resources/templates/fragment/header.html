@@ -9,7 +9,7 @@
 			<!-- 비로그인 시 -->
 			<div sec:authorize="isAnonymous()">
 				<ul class="header-title head-top">
-					<li class="h-btn">로그인</li>
+					<li class="h-btn"><a href="/member/login">로그인</a></li>
 					<li class="h-btn"><a href="/member/join">회원가입</a></li>
 					<li class="h-btn">장바구니</li>
 					<li class="h-btn">마이페이지</li>
@@ -39,18 +39,21 @@
 	</div>
 	
 	<div class="row mb-3 text-center header-navbar">
-		<div class="col">
+		<div class="col dropdown-1-span">
 			<a href="/item/tourItemListMain">
-				<span class="dropdown-1-span">해외패키지
+				<span class="dropdown-1-span">해외패키지</span>
+			</a>
 				<div class="dropdown-1-div">
 					<ul class="dropdown-1-ul">
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-						<li><span>1</span></li>
+						<th:block th:each="menuList : ${locMenuList}">	
+							<li>
+								<a th:href="@{/item/tourItemListGroup(areaName=${menuList.areaKorName})}">
+									<span>[[${menuList.areaKorName}]]</span>
+								</a>
+							</li>
+						</th:block>
 					</ul>
 				</div>
-				</span>
-			</a>
 		</div>
 		<div class="col">
 			<a href="/item/tourItemList">
@@ -96,9 +99,8 @@
 				<span class="dropdown-5-span">항공
 				<div class="dropdown-5-div">
 					<ul class="dropdown-5-ul">
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-						<li><span>1</span></li>
+						<li><span>국내항공권 조회</span></li>
+						<li><span>해외항공권 조회</span></li>
 					</ul>
 				</div>
 				</span>
@@ -109,9 +111,8 @@
 				<span class="dropdown-6-span">호텔
 				<div class="dropdown-6-div">
 					<ul class="dropdown-6-ul">
-						<li><span>1</span></li>
-						<li><span>1</span></li>
-						<li><span>1</span></li>
+						<li><span>국내호텔 예약/조회</span></li>
+						<li><span>해외호텔 예약/조회</span></li>
 					</ul>
 				</div>
 				</span>

@@ -5,8 +5,11 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.project.team.admin.vo.AreaVO;
+import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.item.vo.ItemVO;
+
 import com.project.team.board.vo.BoardAdminVO;
 
 @Service("adminService")
@@ -17,16 +20,22 @@ public class AdminServiceImpl implements AdminService{
 	
 	//여행국가 카테고리 등록
 	@Override
-	public void regArea(AreaVO areaVO) {
-		sqlSession.insert("adminMapper.regArea", areaVO);
+	public void regArea(TourAreaVO tourAreaVO) {
+		sqlSession.insert("adminMapper.regArea", tourAreaVO);
 		
 	}
 	
 	//여행국가 카테고리 조회
 	@Override
-	public List<AreaVO> getAreaCateList() {
+	public List<TourAreaVO> getAreaCateList() {
 		
 		return sqlSession.selectList("adminMapper.getAreaCateList");
+	}
+	
+	//여행국가 카테고리 사용여부 변경 (정현 추가) 
+	@Override
+	public int changeAreaIsUse(String areaCode) {
+		return sqlSession.update("adminMapper.changeAreaIsUse", areaCode);
 	}
 	
 	//여행국가 카테고리 삭제
@@ -37,7 +46,25 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	
+	//다음 상품 코드 조회
+	@Override
+	public String getNextItemCode() {
+		
+		return sqlSession.selectOne("adminMapper.getNextItemCode");
+	}
 	
+	
+	//상품 등록
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void regItem(ItemVO itemVO) {
+		sqlSession.insert("adminMapper.regItem", itemVO);
+		//상품 이미지 등록
+		sqlSession.insert("adminMapper.regImgs", itemVO);
+	}
+
+	
+
 	
 	
 	
