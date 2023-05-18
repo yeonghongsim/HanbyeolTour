@@ -15,9 +15,36 @@
 		
 		
 		<!-- 달력/상세검색 -->
+		
+		<!-- 년/월 다음날 이번달 버튼 -->
 		<div class="row mt-0">
 			<div class="col">
-			
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link" href="#"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li class="page-item">
+							<span id="yearSpan"></span><span id="monthSpan"></span></li>
+						<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable();"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+
+		<div class="row mt-0">
+			<div class="col">
+				<table class="table searchByDateCal">
+					<colgroup>
+					</colgroup>
+					<thead>
+					</thead>
+					<tbody >
+					</tbody>
+				</table>
 			</div>
 		</div>
 	
@@ -70,6 +97,6 @@
 
 <!--  연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
- <!--	<script type="text/javascript" src="/"></script> -->
+<script type="text/javascript" src="/js/content/item/tour_item_list_date.js"></script>
 </th:block>
 </html>

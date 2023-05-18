@@ -162,6 +162,9 @@ public class AdminController {
 	public String regNotice(BoardNoticeVO boardNoticeVO) {
 		
 		String noticeCode = adminService.getBoardNoticeCode();
+		boardNoticeVO.setHbtBoardNoticeNum(noticeCode);
+		
+		System.out.println("@@@@@@@@@" + boardNoticeVO);
 		
 		return "redirect:/admin/noticeManage";
 		
@@ -201,10 +204,11 @@ public class AdminController {
 	}
 	
 	// 1대1문의 관리 페이지
-	@GetMapping("/requestManage")
+	@RequestMapping("/requestManage")
 	public String requestManage(Model model) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
 		
 		return "content/admin/board/request_manage";
 		
