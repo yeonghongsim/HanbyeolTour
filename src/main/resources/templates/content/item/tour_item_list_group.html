@@ -23,7 +23,7 @@
 			<th:blcok th:each="tourItem, state : ${tourItemList}">
 				<div class="row itemRow">
 					<div class="col col-2 itemImg d-gird">
-						<img src="/img/item/testImg.png">
+						<img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'>
 					</div>
 					<div class="col col-2 d-flex align-items-center">
 						<span class="">[[${tourItem["ITEM_TITLE"]}]]</span>

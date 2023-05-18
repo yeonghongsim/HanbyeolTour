@@ -40,7 +40,7 @@ public class UploadUtil {
 			
 			// 파일 업로드
 			try { // 경로\\이미지명.확장자로 나와야 함. \\필요 > 경로 변수 마지막에 \\추가
-				File file = new File(ConstVarialbe.UPLOAD_PATH + itemImgAttachedName);
+				File file = new File(ImgPath.UPLOAD_PATH + itemImgAttachedName);
 				img.transferTo(file); //실제 이미지 업로드
 				
 				//imgVO에 이미지 정보 저장
