@@ -18,5 +18,5 @@ public class BoardVO {
 	private String hbtBoardRegDate;
 	private int hbtBoardCnt;
 	private int hbtBoardLike;
-	private List<BoardAdminVO> boardAdminVOList;
+	private List<BoardRequestVO> boardAdminVOList;
 }
