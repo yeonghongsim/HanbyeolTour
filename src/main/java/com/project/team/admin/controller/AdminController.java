@@ -41,7 +41,7 @@ public class AdminController {
 	@GetMapping("/itemManage")
 	public String itemManage() {
 		
-		return "content/admin/item_manage_for_sale";
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	//여행지 카테고리 관리 페이지
@@ -81,7 +81,10 @@ public class AdminController {
 	
 	//상품 등록 페이지
 	@GetMapping("/regItem")
-	public String regItem() {
+	public String regItem(Model model) {
+		
+		//등록된 여행지 카테고리 조회
+		model.addAttribute("areaCateList", adminService.getAreaCateList());
 		
 		return "content/admin/reg_item";
 	}
