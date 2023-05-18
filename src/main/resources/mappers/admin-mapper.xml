@@ -115,7 +115,7 @@
 	</select>
 	
 	
-	<select id="getBoardNoticeList" resultMap="boardMapper.boardAdmin">
+	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
 		SELECT HBT_BOARD_ADMIN_NUM
 			, HBT_BOARD_ADMIN_TITLE
 			, HBT_BOARD_ADMIN_REG_DATE
