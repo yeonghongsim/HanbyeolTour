@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,gradle
 
+###이미지파일경로지정###
+ImgPath.java
+
 ### Eclipse ###
 .metadata
 bin/
