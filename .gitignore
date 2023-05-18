@@ -1,7 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,gradle
 # 이미지경로 파일
-ImgPath.java
 UploadPath.java
 
 ###이미지파일경로지정###
