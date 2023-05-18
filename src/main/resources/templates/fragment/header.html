@@ -47,7 +47,7 @@
 				<ul class="dropdown-1-ul">
 					<th:block th:each="menuList : ${locMenuList}">	
 						<li>
-							<a th:href="@{/item/tourItemListGroup(areaName=${menuList.areaKorName})}">
+							<a th:href="@{/item/tourItemListDate(areaName=${menuList.areaKorName})}">
 								<span>[[${menuList.areaKorName}]]</span>
 							</a>
 						</li>
