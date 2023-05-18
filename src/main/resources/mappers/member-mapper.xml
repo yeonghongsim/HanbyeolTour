@@ -84,8 +84,15 @@
 	    )
 	</insert>
 	
-	
-	
+	<!-- Security 적용 로그인 정보 가져오기 -->
+	<select id="getUserInfoForLogin" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_ROLE
+		FROM HBT_MEM
+		WHERE MEM_ID = #{memId}	
+		AND MEM_STATUS_CODE = 1  
+	</select>
 	
 	
 	
