@@ -65,9 +65,14 @@ public class MemberController {
 	//로그인 페이지로 이동 
 	@GetMapping("/login")
 	public String loginForm() {
-		
 		return "content/member/login";
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
