@@ -1,9 +1,14 @@
 package com.project.team.item.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.team.item.service.ItemService;
 
@@ -19,9 +24,10 @@ public class ItemController {
 	@GetMapping("/tourItemListGroup")
 	public String tourItemList(String areaName, Model model) {
 		
-		System.out.println(itemService.getItemListByAreaName(areaName));
+		System.out.println("@@@@@@@@@@@" +areaName);
 		
 		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
+		model.addAttribute("areaName", areaName);
 		
 		
 		return "content/item/tour_item_list_group";
@@ -31,10 +37,33 @@ public class ItemController {
 	@GetMapping("/tourItemListDate")
 	public String tourItemListDate(String areaName, Model model) {
 		
+		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(areaName);
 		
-		//model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
+		for(HashMap<String, Object> map : list) {
+			String splitDate = map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0];
+			
+			map.put("END_DATE", splitDate);
+		}
+		System.out.println(list);
+		
+		
+		model.addAttribute("areaName", areaName);
+		model.addAttribute("tourItemList", list);
 		
 		return "content/item/tour_item_list_date";
+	}
+	
+
+	@PostMapping("/tourItemListDateAJAX")
+	@ResponseBody
+	public List<HashMap<String, Object>> tourItemListDateAJAX(String areaName, Model model) {
+		
+		System.out.println(areaName);
+		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
+		
+		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(areaName);
+		
+		return list;
 	}
 	
 	

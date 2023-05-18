@@ -21,12 +21,12 @@
 			<div class="col">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="#"
+						<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable('prev');"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 						<li class="page-item">
-							<span id="yearSpan"></span><span id="monthSpan"></span></li>
-						<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable();"
+							<span id="yearSpan"></span><span>.</span><span id="monthSpan"></span></li>
+						<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable('next');"
 							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 						</a></li>
 					</ul>
@@ -65,16 +65,24 @@
 					<colgroup></colgroup>
 					<thead>
 						<tr>
-							<td>출발/도착시간</td>
+							<td>출발/도착 날짜</td>
 							<td>여행기간</td>
-							<td>항공사</td>
-							<td>상품가격</td>
 							<td>상품명</td>
+							<td>상품가격</td>
 							<td>상태</td>
 						</tr>
 					</thead>
 					<tbody>
-					
+						<th:block th:each="tourItem, state : ${tourItemList}">
+							<input type="hidden" name="endDate" id="endDate" th:value='${tourItem["END_DATE"]}'>
+							<input type="hidden" name="listIndex" id="endDate" th:value='#{lists.size(tourItemList)}'>
+							<tr class="searchResultByDate">
+								<td>[[${tourItem["TRAVER_PERIOD"]}]]</td>
+								<td>[[${tourItem["ITEM_TITLE"]}]]</td>
+								<td>[[${tourItem["ITEM_PRICE"]}]]</td>
+								<td>[[${tourItem["STATUS_NAME"]}]]</td>
+							</tr>
+						</th:block>
 					</tbody>
 				</table>				
 			</div>
@@ -92,6 +100,9 @@
 		
 	</div>
 </div>
+
+<input type="hidden" name="areaName" id="areaName" th:value="${areaName}">
+<input type="button" value="test" onclick="getSearchByDateAJAX();">
 
 </th:block>
 
