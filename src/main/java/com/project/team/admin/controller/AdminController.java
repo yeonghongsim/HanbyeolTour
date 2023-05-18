@@ -21,7 +21,6 @@ import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardNoticeVO;
-import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.util.DateUtil;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.util.UploadUtil;
@@ -206,11 +205,10 @@ public class AdminController {
 	
 	// 1대1문의 관리 페이지
 	@RequestMapping("/requestManage")
-	public String requestManage(Model model, BoardRequestVO boardRequestVO) {
+	public String requestManage(Model model) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
-		System.out.println("@@@@@@@@@" + boardRequestVO);
 		
 		return "content/admin/board/request_manage";
 		
