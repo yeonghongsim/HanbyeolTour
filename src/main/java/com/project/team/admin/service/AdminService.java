@@ -31,6 +31,9 @@ public interface AdminService {
 	//판매 상품 선택 삭제
 	void deleteCheckItems(ItemVO itemVO);
 	
+	//판매 상품 상세 조회
+	ItemVO getItemDetailForAdmin(String itemCode);
+	
 	
 	
 	

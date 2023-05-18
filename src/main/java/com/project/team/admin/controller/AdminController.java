@@ -156,6 +156,14 @@ public class AdminController {
 		return "redirect:/admin/itemManageForSale";
 	}
 	
+	//판매 상품 상세 정보
+	@ResponseBody
+	@RequestMapping("/getItemDetailForAdminAjax")
+	public ItemVO getItemDetailForAdminAjax(Model model, String itemCode) {
+		
+		return adminService.getItemDetailForAdmin(itemCode);
+		
+	}
 	
 	
 	
