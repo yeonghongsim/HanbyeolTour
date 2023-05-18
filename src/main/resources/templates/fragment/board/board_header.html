@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<th:block th:fragment="headerFragment">
+	<!-- 상단바 1 -->
+	<div class="row header-bar">
+		<div class="col text-end">
+			<!-- 비로그인 시 -->
+			<div sec:authorize="isAnonymous()">
+				<ul class="header-title head-top">
+					<li class="h-btn"><a href="/member/login">로그인</a></li>
+					<li class="h-btn"><a href="/member/join">회원가입</a></li>
+					<li class="h-btn">장바구니</li>
+					<li class="h-btn">마이페이지</li>
+					<li class="h-btn"><a href="/board/boardMain">고객센터</a></li>
+					<li class="h-btn"><a th:href="@{/admin/regItem}">관리자메뉴</a></li>
+				</ul>
+			</div>
+			<!-- 로그인 시 -->
+			<div sec:authorize="isAuthenticated()">
+				<ul class="header-title head-top">
+					<li>[[${#authentication.name}]]님 즐거운 여행되세요!</li>
+					<li class="h-btn">로그아웃</li>
+					<li class="h-btn">장바구니</li>
+					<li class="h-btn">마이페이지</li>
+					<li class="h-btn">고객센터</li>
+					<li class="h-btn">관리자메뉴</li>
+				</ul>
+			</div> 
+		</div>
+	</div>
+	
+	<!-- 카테고리 목록 메뉴 바( 우선 사이트 명만 로고 대신 놔둠) -->
+	<div class="row header-bar-2 under-line-gy">
+		<div class="col logo">
+			<span onclick="location.href='/'" style="cursor: pointer;" class="header-title">✈️한별투어</span>
+		</div>
+	</div>
+	
+	
+	
+</th:block>
+
+
+</html>

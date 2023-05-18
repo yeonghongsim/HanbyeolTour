@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/board/board_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/board/board_main.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="board_content">
+	
+	<div class="row mb-3 under-line-ylS">
+		<div class="col">
+			<h3>고객센터 > main</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<ul>
+				<li>공지글</li>
+				<li>자유게시판</li>
+				<li>자주묻는문의사항</li>
+				<li>문의글 등록</li>
+			</ul>
+			<div>
+				<div>BOARD_MENU_CODE / B_MENU_001+</div>
+				<div>BOARD_MENU_NAME / 위의 리스트 목록</div>
+				<div>BOARD_MENU_URL / 각 리스트당 이동에 쓰일 링크 문자열</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src="/"></script>-->
+</th:block>
+
+
+
+</html>
