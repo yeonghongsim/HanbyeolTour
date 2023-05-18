@@ -3,9 +3,11 @@ package com.project.team.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.team.member.service.MemberService;
@@ -64,13 +66,19 @@ public class MemberController {
 
 	//로그인 페이지로 이동 
 	@GetMapping("/login")
-	public String loginForm() {
+	public String loginForm(MemberVO memberVO, Model model
+			, @RequestParam(required = false) String eMsg
+			, @RequestParam(required = false, defaultValue = "false") String isError) {
+		
+		// 가져온 데이터 (로그인 실패시에만 발생 ) 을 전달해주기 
+		model.addAttribute("eMsg", eMsg);
+		model.addAttribute("isError", isError);
+		
 		return "content/member/login";
 	}
 	
 	
-	
-	
+
 	
 	
 	

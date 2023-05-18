@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -26,10 +28,15 @@ public class SecurityConfig {
 					.loginProcessingUrl("/member/login")// 실제로 로그인을 하는 url 
 					.usernameParameter("memId")//넘어올 아이디 이름 
 					.passwordParameter("memPw")//넘어올 비밀번호 이름 
-//					.successHandler(getSuccessHandler())
-//					.failureHandler(getFailureHandler())
-					.permitAll(); // 로그인은 인증없어도 가야하니까, 모든 로그인 관련 페이지는 다 허용 
-		
+					.successHandler(getSuccessHandler())
+					.failureHandler(getFailureHandler())
+					.permitAll() // 모든 로그인 관련 페이지는 다 허용 
+				.and()
+					.logout()
+					.logoutUrl("/member/logout") //실제로 로그아웃 하는 url 
+					.invalidateHttpSession(true) //로그아웃시 작동하는 것 (세션데이터 지우기)
+					.logoutSuccessUrl("/"); // 로그아웃시 이동할 경로 
+					// index controller로 이동하면 알아서 권한에 따라 페이지 이동 시켜줌
 		return security.build();
 		
 		
@@ -47,10 +54,18 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	 
+	// 로그인 성공시 실행되는 클래스 객체 생성
+	@Bean
+	public SuccessHandler getSuccessHandler() {
+		return new SuccessHandler();
+	}
 	
-	
-	
-	
+	//로그인 실패시 실행되는 클래스 객체 생성 
+	@Bean
+	public FailureHandler getFailureHandler() {
+		
+		return new FailureHandler();
+	}
 	
 	
 	
