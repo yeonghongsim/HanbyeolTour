@@ -119,6 +119,8 @@ public class AdminController {
 		return "redirect:/admin/regItem";
 	}
 	
+	//등록된 상품 목록 조회
+	
 	
 	
 	
