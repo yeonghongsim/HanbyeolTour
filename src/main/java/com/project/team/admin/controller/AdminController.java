@@ -1,5 +1,6 @@
 package com.project.team.admin.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class AdminController {
 	}
 	
 	//여행지 카테고리 삭제
-	@GetMapping("/deleteAreaCate")
+	@PostMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {
 		adminService.deleteAreaCate(areaCode);
 		
@@ -135,6 +136,24 @@ public class AdminController {
 		return "content/admin/item_manage_for_sale";
 	}
 	
+	//판매 상품 삭제
+	@GetMapping("/deleteItem")
+	public String deleteItem(String itemCode) {
+		adminService.deleteItem(itemCode);
+		
+		return "redirect:/admin/itemManageForSale";
+	}
+	
+	//판매 상품 선택 삭제
+	@GetMapping("/deleteCheckItems")
+	public String deleteCheckItems(String[] itemCodes, ItemVO itemVO) {
+		List<String> itemCodeList = Arrays.asList(itemCodes);
+		itemVO.setItemCodeList(itemCodeList);
+		
+		adminService.deleteCheckItems(itemVO);
+		
+		return "redirect:/admin/itemManageForSale";
+	}
 	
 	
 	

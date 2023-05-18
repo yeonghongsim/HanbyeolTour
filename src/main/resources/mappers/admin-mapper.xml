@@ -112,6 +112,21 @@
 		AND ITEM.AREA_CODE = AREA.AREA_CODE
 		AND IS_MAIN = 'Y'
 	</select>
+	
+	<!-- 판매 상품 삭제-->
+	<delete id="deleteItem">
+		DELETE HBT_ITEM
+		WHERE ITEM_CODE = #{itemCode}
+	</delete>
+	
+	<!-- 판매 상품 선택 삭제 -->
+	<delete id="deleteCheckItems">
+		DELETE HBT_ITEM
+		WHERE ITEM_CODE IN
+		<foreach collection="itemCodeList" item="itemCode" separator="," open="(" close=")">
+			#{itemCode}
+		</foreach>
+	</delete>
 
 
 

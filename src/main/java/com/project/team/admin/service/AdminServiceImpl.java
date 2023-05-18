@@ -69,7 +69,20 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectList("adminMapper.saleListForAdmin");
 	}
-
+	
+	//판매 상품 삭제
+	@Override
+	public void deleteItem(String itemCode) {
+		sqlSession.delete("adminMapper.deleteItem", itemCode);
+		
+	}
+	
+	//판매 상품 선택 삭제
+	@Override
+	public void deleteCheckItems(ItemVO itemVO) {
+		sqlSession.delete("adminMapper.deleteCheckItems", itemVO);
+		
+	}
 	
 
 	
@@ -97,6 +110,9 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardAdminVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
+
+
 
 
 	

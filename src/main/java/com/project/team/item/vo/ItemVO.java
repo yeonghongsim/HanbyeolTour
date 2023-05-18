@@ -29,4 +29,5 @@ public class ItemVO {
 	private String traverPeriod;
 	private List<ImgVO> imgList;
 	private TourAreaVO tourAreaVO;
+	private List<String> itemCodeList;
 }
