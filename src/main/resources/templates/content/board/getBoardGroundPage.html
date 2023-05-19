@@ -5,7 +5,7 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/board/page1.css">
+	<link rel="stylesheet" href="/css/content/board/getBoardGroundPage.css">
 </th:block>
 
 <!-- 본문 내용 -->   
@@ -13,15 +13,23 @@
 	
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
-			<h3>고객센터 > page1</h3>
+			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
+	
+	<div class="row">
+		<div class="col">
+			1
+		</div>
+	</div>
+	
+	
 	
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/"></script>-->
+	<script type="text/javascript" src="/js/content/board/getBoardGroundPage.js"></script>
 </th:block>
 
 

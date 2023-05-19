@@ -52,8 +52,11 @@
 	AND IS_MAIN = 'Y'
 	AND ITEMS.STATUS_CODE = '1'
 	AND AREA_KOR_NAME = #{areaName}
-	</select>
+	<if test="date != null and !date.isEmpty()">
+	AND #{date} BETWEEN ITEM.SELLING_START AND ITEM.SELLING_END
+	</if>
 
+	</select>
 	
 </mapper>
 

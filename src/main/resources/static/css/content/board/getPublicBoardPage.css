@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+
+.public-table > tbody > tr > td:nth-child(2) {
+	text-align: left;
+}
+
+
+
+
