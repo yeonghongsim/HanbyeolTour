@@ -165,8 +165,8 @@ function openModal(itemCode, areaCateList){
 										}
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
-			str += `					<button id="" type="submit" class="btn"                                                     `;
-			str += `						style="background-color: #ffd000;" onclick="updateItem(${result.itemCode});">수정</button>                                        `;
+			str += `					<input id="" type="submit" class="btn" value="수정"                                                     `;
+			str += `						style="background-color: #ffd000;" onclick="updateItem('${result.itemCode}');">                                     `;
 			str += `				</div>                                                                                          `;
 			str += `			</form> `;
 			
@@ -261,6 +261,7 @@ function deleteCheckItems(){
 }
 
 function updateItem(itemCode){
+
 	
 }
 
