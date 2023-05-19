@@ -38,7 +38,6 @@ public class ItemController {
 		model.addAttribute("tourItemList", itemService.getItemListByAreaName(searchKeyword));
 		model.addAttribute("areaName", areaName);
 		
-		
 		return "content/item/tour_item_list_group";
 	}
 	
@@ -49,8 +48,10 @@ public class ItemController {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Map<String, String> searchKeyword = new HashMap<>();
+		Calendar nowDate = Calendar.getInstance();
 		
 		searchKeyword.put("areaName", areaName);
+		searchKeyword.put("date", getTodayDate());
 		
 		//일자별 상세조회
 		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(searchKeyword);
@@ -68,7 +69,6 @@ public class ItemController {
 			setArrDate.add(Calendar.DATE, Integer.parseInt(splitDate));
 			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
 		}
-		
 		
 		model.addAttribute("areaName", areaName);
 		model.addAttribute("tourItemList", list);
@@ -107,8 +107,6 @@ public class ItemController {
 			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
 		}
 		
-		
-		
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(list);
 	}
@@ -126,6 +124,16 @@ public class ItemController {
 		
 		return "content/item/tour_item_list_detail";
 	}
+	
+	//오늘날짜구하기
+	    public  String getTodayDate() {
+	        Calendar calendar = Calendar.getInstance();
+	        int year = calendar.get(Calendar.YEAR);
+	        int month = calendar.get(Calendar.MONTH) + 1; // 0부터 시작하므로 1을 더해줍니다.
+	        int day = calendar.get(Calendar.DAY_OF_MONTH);
+	        String nowDate = year + "-" + month + "-" + day;
+	        return nowDate;
+	    }
 	
 
 }
