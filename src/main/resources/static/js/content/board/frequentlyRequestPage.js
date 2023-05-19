@@ -29,7 +29,7 @@ function searchByInput(){
 			str += `<tr>`;
 			str += `	<td>typeRequestName1</td>`;
 			str += `	<td>`;
-			str += `		<span class="pointer" onclick="toggleAnswer(this)">title</span>`;
+			str += `		<span class="pointer" onclick="toggleAnswer(this)">title1</span>`;
 			str += `	</td>`;
 			str += `	<td class="bi bi-chevron-up"></td>`;
 			str += `</tr>`;
@@ -78,7 +78,7 @@ function searchTypeRequest(typeRequestCode){
 			str += `<tr>`;
 			str += `	<td>typeRequestName1</td>`;
 			str += `	<td>`;
-			str += `		<span class="pointer" onclick="toggleAnswer(this)">title</span>`;
+			str += `		<span class="pointer" onclick="toggleAnswer(this)">title1</span>`;
 			str += `	</td>`;
 			str += `	<td class="bi bi-chevron-up"></td>`;
 			str += `</tr>`;
@@ -89,7 +89,7 @@ function searchTypeRequest(typeRequestCode){
 			str += `<tr>`;
 			str += `	<td>typeRequestName2</td>`;
 			str += `	<td>`;
-			str += `		<span class="pointer" onclick="toggleAnswer(this)">title</span>`;
+			str += `		<span class="pointer" onclick="toggleAnswer(this)">title2</span>`;
 			str += `	</td>`;
 			str += `	<td class="bi bi-chevron-up"></td>`;
 			str += `</tr>`;
@@ -100,7 +100,7 @@ function searchTypeRequest(typeRequestCode){
 			str += `<tr>`;
 			str += `	<td>typeRequestName3</td>`;
 			str += `	<td>`;
-			str += `		<span class="pointer" onclick="toggleAnswer(this)">title</span>`;
+			str += `		<span class="pointer" onclick="toggleAnswer(this)">title3</span>`;
 			str += `	</td>`;
 			str += `	<td class="bi bi-chevron-up"></td>`;
 			str += `</tr>`;
