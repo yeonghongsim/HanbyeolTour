@@ -20,6 +20,8 @@ public interface MemberService {
 	//비밀번호 찾기 - 이메일 주소 가져오기 
 	String getMemEmailForFindPw(MemberVO memberVO);
 	
+	//비밀번호 수정
+	void updateMemPw(MemberVO memberVO);
 	
 	
 }

@@ -122,7 +122,13 @@
 	   	  )
 	</select>
 
-	
+	<!-- 비밀번호 변경 (임시로) -->
+	<update id="updateMemPw">
+		UPDATE HBT_MEM
+		SET
+		MEM_PW = #{memPw}
+		WHERE MEM_ID = #{memId}
+	</update>
 	
 	
 	

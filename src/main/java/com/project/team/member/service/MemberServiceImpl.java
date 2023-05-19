@@ -49,6 +49,12 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemEmailForFindPw(MemberVO memberVO) {
 		return sqlSession.selectOne("memberMapper.getMemEmailForFindPw", memberVO);
 	}
+	
+	//비밀번호 수정 
+	@Override
+	public void updateMemPw(MemberVO memberVO) {
+		sqlSession.update("memberMapper.updateMemPw", memberVO);
+	}
 
 	
 	
