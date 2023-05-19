@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/board/board_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/board/frequentlyRequestPage.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="board_content">
+	
+	<div class="row mb-3 under-line-ylS">
+		<div class="col">
+			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_003'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col-3">
+			img
+		</div>
+		<div class="col-9">
+			<div class="row">
+				<div class="col">
+					info message
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					coment
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row search_con">
+		<div class="col-6">
+			<div class="row search_area">
+				<div class="col-lg-4">
+					<span>자주 묻는 질문</span>
+				</div>
+				<div class="col-lg-6">
+					<input type="text" class="form-control" id="searchInput" name="searchInput">
+				</div>
+				<div class="col-lg-2">
+					<input onclick="searchByInput();" type="button" class="btn btn-warning" value="검색" style="color: white;">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row mb-3 typeRequest-con">
+		<div class="col-lg-2 col-sm-3 typeRequest-div">
+			<span class="pointer" th:onclick="searchTypeRequest(this)">전체</span>
+		</div>
+		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">
+			<span class="pointer" th:onclick="searchTypeRequest(this)">[[${typeRequest.typeRequestName}]]</span>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<table class="table">
+				<colgroup>
+					<col width="15%">
+					<col width="*">
+					<col width="10%">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>질문 유형</td>
+						<td>제목</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>typeRequestName1</td>
+						<td>
+							<span class="pointer" onclick="toggleAnswer(this);">title</span>
+						</td>
+						<td class="bi bi-chevron-up"></td>
+					</tr>
+					<tr class="answerTr hide">
+						<td>A.</td>
+						<td colspan="2">answer1</td>
+					</tr>
+					<tr>
+						<td>typeRequestName2</td>
+						<td>
+							<span class="pointer" onclick="toggleAnswer(this);">title</span>
+						</td>
+						<td class="bi bi-chevron-up"></td>
+					</tr>
+					<tr class="answerTr hide">
+						<td>A.</td>
+						<td colspan="2">answer2</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>	
+	
+	
+	<i class="bi bi-chevron-up"></i>
+	<i class="bi bi-chevron-down"></i>
+	
+	answerTr = selectedTitle.closest('tr').nextElementSibling;
+	chevronWay = selectedTitle.parentElement.nextElementSibling;
+	
+	answerTr.classList.toggle('hide');
+	alter(chevronWay);
+	
+	
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/board/frequentlyRequestPage.js"></script>
+</th:block>
+
+
+
+</html>

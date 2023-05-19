@@ -29,6 +29,11 @@
 		<association property="memberVO" 				resultMap="memberMapper.member"/>
 	</resultMap>
 	
+	<resultMap type="com.project.team.board.vo.BoardSideMenuVO" id="boardSideMenu">
+		<id 	column="BOARD_SIDE_MENU_CODE" property="boardSideMenuCode"/>
+		<result column="BOARD_SIDE_MENU_NAME" property="boardSideMenuName"/>
+		<result column="BOARD_SIDE_MENU_URL" property="boardSideMenuUrl"/>
+	</resultMap>
 	
 	
 	<select id="getTypeRequestList" resultMap="typeRequest">
@@ -37,7 +42,12 @@
 		FROM TYPE_REQUEST
 	</select>
 	
-	
+	<select id="getBoardSideMenuList" resultMap="boardSideMenu">
+		SELECT BOARD_SIDE_MENU_CODE
+			, BOARD_SIDE_MENU_NAME
+			, BOARD_SIDE_MENU_URL
+		FROM BOARD_SIDE_MENU
+	</select>
 	
 	
 </mapper>
