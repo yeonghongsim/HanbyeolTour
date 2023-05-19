@@ -131,7 +131,7 @@ public class AdminController {
 	
 	//등록 판매 상품 목록 조회()
 	@GetMapping("/itemManageForSale")
-	public String itemManageForSale(Model model) {
+	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg) {
 		
 		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
 		//등록된 여행지 카테고리 조회
@@ -170,12 +170,11 @@ public class AdminController {
 	}
 	
 	//판매 상품 수정
-	@PostMapping("/updateItem")
-	public String updateItem(ItemVO itemVO) {
+	@ResponseBody
+	@PostMapping("/updateItemAjax")
+	public void updateItem(ItemVO itemVO) {
 		
 		adminService.updateItem(itemVO);
-		
-		return "redirect:/admin/itemManageForSale";
 	}
 	
 	
