@@ -172,9 +172,14 @@ public class AdminController {
 	//판매 상품 수정
 	@ResponseBody
 	@PostMapping("/updateItemAjax")
-	public void updateItem(ItemVO itemVO) {
+	public void updateItem(ItemVO itemVO, String itemCode) {
+		//오류 수정중
 		
-		adminService.updateItem(itemVO);
+		//itemVO.setItemCode(itemCode);
+		//System.out.println(itemVO);
+		
+		//return "";
+		
 	}
 	
 	

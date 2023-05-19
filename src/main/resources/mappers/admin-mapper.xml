@@ -162,7 +162,7 @@
 			, SELLING_START = #{sellingStart}
 			, SELLING_END = #{sellingEnd}
 			, IS_EXTRA_CHARGE = #{isExtraCharge}
-			, IS_PEAK #{isPeak}
+			, IS_PEAK = #{isPeak}
 			, IS_BOMB_SALE = #{isBombSale}
 			, ITEM_INTRO = #{itemIntro}
 			, STATUS_CODE = #{statusCode}
