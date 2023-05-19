@@ -1,5 +1,18 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,gradle
+# 이미지경로 파일
+UploadPath.java
+.DS_Store
+
+###이미지파일경로지정###
+ImgPath.java
+<<<<<<< HEAD
+
+###이미지파일경로지정###
+ImgPath.java
+
+=======
+>>>>>>> dev
 
 ###이미지파일경로지정###
 ImgPath.java

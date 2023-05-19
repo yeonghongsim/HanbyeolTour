@@ -13,6 +13,11 @@ repositories {
 }
 
 dependencies {
+
+
+    implementation 'com.oracle.database.security:osdt_cert:21.3.0.0'
+    implementation 'com.oracle.database.security:oraclepki:21.3.0.0'
+    implementation 'com.oracle.database.security:osdt_core:21.3.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security' // 시큐리티1
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 시큐리티2
 	testImplementation 'org.springframework.security:spring-security-test' // 시큐리티3

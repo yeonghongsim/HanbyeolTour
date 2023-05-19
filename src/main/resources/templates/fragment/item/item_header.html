@@ -12,14 +12,15 @@
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 					<div class="navbar-nav">
-						<a class="nav-link" href="#">일자별 상세검색</a> <a
-							class="nav-link active" href="#">그룹별 상품보기</a>
+						<a class="nav-link" th:href='@{/item/tourItemListDate?areaName=} + ${areaName}'>일자별 상세검색</a> <a
+							class="nav-link" th:href='@{/item/tourItemListGroup?areaName=} + ${areaName}'>그룹별 상품보기</a>
 					</div>
 				</div>
 			</div>
 		</nav>
 	</div>
 
+<input type="hidden" name="areaName" id="areaName" th:value="${areaName}">
 </th:block>
 
 

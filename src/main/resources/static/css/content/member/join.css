@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+.col{
+	padding: 0;
+}
+
+
+.join-container{
+	width: 100%;
+	background-color: #f5f6f8;
+	border-bottom: 1px solid #bbb;
+	border-top: 1px solid #bbb;
+}
+
+
+.inner {
+	width: 40%;
+    margin: 0 auto;
+	margin-bottom: 4rem;
+	
+}
+
+.join-title{
+	font-size: 3rem;
+	text-align: center;
+	letter-spacing: -4px;
+    padding-bottom: 2rem;
+    padding-left: 8px;
+}
+
+.join-img {
+	font-size: 3rem;
+	text-align: center;
+	color: #ffd000;
+	font-weight: bold;
+	
+}
+
+.join-status{
+	font-size: 1.3rem;
+	text-align: center;
+    padding-bottom: 1rem;
+    color: #ffd000;
+    font-weight: bold;
+}
+
+
+.s-row{
+	width: 50%;
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 1.5rem;
+}
+
+.form-control-lg{
+	height: 3.6rem;
+	font-size: 1rem;
+}
+
+.btn-outline-light{
+	color: black;
+	background-color:#ffd000;
+	border: 1px solid #dee2e6;
+	font-size: 1.25rem;
+}
+
+.btn-outline-light:hover {
+	background: #fff9d4; 
+	color: #bbb;
+}
+	
+.btn-group{
+	height: 3.6rem;
+	width: 90%;
+	border: 1px solid #bbb;
+	/* #dee2e6 */
+	background-color: #dee2e6;
+}
+
+.btn-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.btn-group .btn-check:checked + label.btn {
+	background-color: #ffd000;
+	color: black;
+	border: 1px solid #bbb;
+}
+
+.gender-radio {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.form-select-lg{
+	height: 3.6rem;
+	font-size: 1rem;
+}
+	
+.join-info-title{
+	font-size: 1.6rem;
+	font-weight:bold;
+	text-align: left;
+	letter-spacing: -1px;
+    padding-bottom: 1rem;
+    margin-top: 2rem;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+	
+.birthDay{
+	font-size: 1.4rem;
+	text-align: center;
+	display: flex;
+	font-weight: bold;
+	justify-content: center;
+	align-items: center;
+	color: #ffd000;
+}
+	
+.bi-calendar-event{
+	font-size: 1.6rem;
+	margin-right: 1rem;
+}
+
+.bd-row{
+	margin-bottom: 2rem;
+}
+
+.joinBtn{
+	color: #ffffff;
+	margin-bottom: 1rem;
+	font-weight: bold;
+	height: 3rem;
+}
+
+.joinBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: #ffffff;
+	margin-bottom: 1rem;
+	font-weight: bold;
+	height: 3rem;
+	background-color:#ffd000;
+	border: 1px solid #dee2e6;
+}
+

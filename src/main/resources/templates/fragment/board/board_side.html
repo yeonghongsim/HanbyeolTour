@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="boardSideFragment">
+	<div class="row under-line-ylS">
+		<div class="col">
+			<h3>
+				<a href="/board/boardMain">고객센터</a>
+			</h3>
+		</div>
+	</div>
+	<div class="row">
+		<th:block>
+			<div th:each="boardSideMenu : ${boardSideMenuList}" class="row under-line-yl board-side-menu">
+				<div class="col">
+					<h5>
+						<a th:href="@{'/board/' + ${boardSideMenu.boardSideMenuUrl}}">[[${boardSideMenu.boardSideMenuName}]]</a>
+					</h5>
+				</div>
+			</div>
+		</th:block>
+	</div>
+
+</th:block>
+
+</html>

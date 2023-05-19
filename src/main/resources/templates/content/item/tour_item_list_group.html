@@ -13,40 +13,39 @@
 		<div class="col">
 		
 			<!-- 그룹별 상품보기 -->
-				
 			<div class="row">
 				<div class="col">
-					<span>총 0건의 상품이 검색되었습니다.</span>
+					<span>[['총 ' + ${#lists.size(tourItemList)} + '건의 상품이 검색되었습니다.']]</span>
 				</div>
 			</div>
 
 				<!-- 상품목록  -->
-			<div class="row itemRow">
+			<th:blcok th:each="tourItem, state : ${tourItemList}">
+				<div class="row itemRow">
+					<div class="col col-2 itemImg d-gird">
+						<img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'>
+					</div>
+					<div class="col col-2 d-flex align-items-center">
+						<span class="">[[${tourItem["ITEM_TITLE"]}]]</span>
+					</div>
+					<div class="row mt-2 offset-2 mb-3">
+						<div class="col">
+							<span>[[${tourItem["ITEM_PRICE"]}]]</span>
+						</div>
+						<div class="col">
+							<span>[[${tourItem["TRAVER_PERIOD"]}]]</span>
+						</div>
+						<div class="col">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false" th:aria-controls="flush-collapseOne + ${state.index}">
+						        출발일 보기
+						     </button>
+						</div>
+					</div>
 				
-				<div class="col col-2 itemImg d-gird">
-					<img src="/img/item/testImg.png">
-				</div>
-				<div class="col col-auto d-flex align-items-center">
-					<span class=""> 상품이름 or 상세 </span>
-				</div>
-				<div class="row mt-2 offset-2 mb-3">
-					<div class="col">
-						<span>상품가격 10000</span>
-					</div>
-					<div class="col">
-						<span>여행기간 3일</span>
-					</div>
-					<div class="col">
-						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-					        출발일 보기
-					     </button>
-					</div>
-				</div>
-					
 					
 				<div class="row mb-2">
 					<div class="col">
-						<div id="flush-collapseOne" class="accordion-collapse collapse"
+						<div th:id="flush-collapseOne + ${state.index}" class="accordion-collapse collapse"
 							data-bs-parent="#accordionFlushExample">
 							<div class="accordion-body">
 								<div class="row">
@@ -86,17 +85,16 @@
 									<div class="col text-center mx-auto">
 										<input class="collapsed" type="button"
 										data-bs-toggle="collapse"
-										data-bs-target="#flush-collapseOne" aria-expanded="false"
-										aria-controls="flush-collapseOne" value="닫기">
+										th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false"
+										th:aria-controls="flush-collapseOne + ${state.index}" value="닫기">
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-				
 			</div>
+		</th:blcok>	
 			
 			
 			<div class="row"></div>
@@ -106,6 +104,8 @@
 		</div>
 	</div>
 
+
+<input type="hidden" name="areaName" th:value="${areaName}">
 </th:block>
 
 <!--  연결해야할 외부 js 파일 -->

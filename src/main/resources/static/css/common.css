@@ -1,18 +1,5 @@
 @charset "UTF-8";
 
-*{
-	margin:0;
-	padding:0;
-}
-
-.container{
-	margin-left: 0;
-	margin-right: 0;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding: 0 0 0 0;
-}
-
 @font-face {
     font-family: 'Pretendard-Regular';
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -20,12 +7,39 @@
     font-style: normal;
 }
 
-
-
-.container{
+body {
+	margin:0;
 	font-family: 'Pretendard-Regular';
 	font-size: 16px;
-	width: 100%;
-	margin: 0 auto;
-	
+}
+
+
+/* 찐노랑색*/
+.ye-S-fc {
+	color: #ffd000;
+}
+
+.ye-S-bc {
+	background-color: #ffd000;
+}
+
+/* 연노랑색*/
+.yel-fc {
+	color: #fff9d4;
+}
+
+.ye-bc {
+	background-color: #fff9d4;
+}
+/* 라임색*/
+.lime-fc {
+	color: #c6df5f;
+}
+
+.lime-bc {
+	background-color: #c6df5f;
+}
+
+textarea {
+	resize: none;
 }

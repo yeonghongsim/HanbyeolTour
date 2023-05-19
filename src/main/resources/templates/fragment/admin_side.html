@@ -15,12 +15,12 @@
     <nav class="menu-box-1">
         <ul>
             <li>
-                <a href="#">상품 관리</a>
+                <a th:href="@{/admin/itemManage}">상품 관리</a>
                 <ul>
                     <li>
+                        <a th:href="@{/admin/itemManageForSale}">판매 상품 관리</a>
                         <a th:href="@{/admin/regItem}">상품 등록</a>
-                        <a href="#">카테고리 등록</a>
-                        <a href="#">?</a>
+                        <a th:href="@{/admin/cateManage}">카테고리 관리</a>
                     </li>
                 </ul>
             </li>
@@ -56,8 +56,8 @@
                 <a href="#">공지 및 문의 관리</a>
                 <ul>
                     <li>
-                        <a href="#">공지사항</a>
-                        <a href="#">1:1 문의 관리</a>
+                        <a href="/admin/noticeManage">공지사항</a>
+                        <a href="/admin/requestManage">1:1 문의 관리</a>
                        
                     </li>
                 </ul>

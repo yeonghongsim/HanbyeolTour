@@ -3,7 +3,52 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="boardMapper">
-
+	
+	<resultMap type="com.project.team.board.vo.TypeRequestVO" id="typeRequest">
+		<id 	column="TYPE_REQUEST_CODE" property="typeRequestCode"/>
+		<result column="TYPE_REQUEST_NAME" property="typeRequestName"/>
+	</resultMap>
+	
+	
+	<resultMap type="com.project.team.board.vo.BoardNoticeVO" id="boardNotice">
+		<id 	column="HBT_BOARD_NOTICE_NUM" 			property="hbtBoardNoticeNum"/>
+		<result column="HBT_BOARD_NOTICE_TITLE" 		property="hbtBoardNoticeTitle"/>
+		<result column="HBT_BOARD_NOTICE_CONTENT" 		property="hbtBoardNoticeContent"/>
+		<result column="HBT_BOARD_NOTICE_REG_DATE" 		property="hbtBoardNoticeRegDate"/>
+		<result column="HBT_BOARD_NOTICE_CNT" 			property="hbtBoardNoticeCnt"/>
+		<result column="HBT_BOARD_NOTICE_LIKE" 			property="hbtBoardNoticeLike"/>
+		<association property="memberVO" 				resultMap="memberMapper.member"></association>
+	</resultMap>
+	
+	<resultMap type="com.project.team.board.vo.BoardRequestVO" id="boardRequest">
+		<id 	column="HBT_BOARD_REQUEST_NUM" 			property="hbtBoardRequestNum"/>
+		<result column="HBT_BOARD_REQUEST_TITLE" 		property="hbtBoardRequestTitle"/>
+		<result column="HBT_BOARD_REQUEST_CONTENT" 		property="hbtBoardRequestContent"/>
+		<result column="HBT_BOARD_REQUEST_REG_DATE" 	property="hbtBoardRequestRegDate"/>
+		<association property="typeRequestVO" 			resultMap="typeRequest"/>
+		<association property="memberVO" 				resultMap="memberMapper.member"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.board.vo.BoardSideMenuVO" id="boardSideMenu">
+		<id 	column="BOARD_SIDE_MENU_CODE" property="boardSideMenuCode"/>
+		<result column="BOARD_SIDE_MENU_NAME" property="boardSideMenuName"/>
+		<result column="BOARD_SIDE_MENU_URL" property="boardSideMenuUrl"/>
+	</resultMap>
+	
+	
+	<select id="getTypeRequestList" resultMap="typeRequest">
+		SELECT TYPE_REQUEST_CODE
+			, TYPE_REQUEST_NAME
+		FROM TYPE_REQUEST
+	</select>
+	
+	<select id="getBoardSideMenuList" resultMap="boardSideMenu">
+		SELECT BOARD_SIDE_MENU_CODE
+			, BOARD_SIDE_MENU_NAME
+			, BOARD_SIDE_MENU_URL
+		FROM BOARD_SIDE_MENU
+	</select>
+	
 	
 </mapper>
 

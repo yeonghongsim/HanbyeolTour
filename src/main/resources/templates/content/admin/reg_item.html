@@ -6,14 +6,98 @@
 
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+	<link rel="stylesheet" href="/css/content/admin/reg_item.css"> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
 </th:block>
 
 
 <th:block layout:fragment="adminContent">
 <div class="row">
    <div class="col-12">
-     상품 등록 페이지
+		
+     	<div class="row">
+		   	<div class="col-12">
+		      <form id="" class="row g-3" th:action="@{/admin/regItemProcess}" method="post" enctype="multipart/form-data">
+		         <div class="col-3">
+		            <label for="" class="form-label">여행 국가</label> 
+		            <select id="" name="areaCode" class="form-select">
+		               <th:block th:each="area : ${areaCateList}">
+		               		<option th:value="${area.areaCode}">[[${area.areaKorName}]]</option>
+		               </th:block>
+		            </select>
+		         </div>
+		         <div class="col-9">
+		            <label for="" class="form-label">패키지 이름</label> 
+		            <input type="text" class="form-control" id="" name="itemTitle">
+		         </div>
+		         <div class="col-3">
+		            <label for="" class="form-label">기본 가격</label> 
+		            <input type="text" class="form-control" id="" name="itemPrice">
+		         </div>
+		         <div class="col-3">
+		            <label for="" class="form-label">땡처리할인</label> 
+		           	<select id="" name="isBombSale" class="form-select">
+		               <option value="Y">Y</option>
+		               <option value="N">N</option>
+		            </select>
+		         </div>
+		         <div class="col-3">
+		            <label for="" class="form-label">성수기요금</label> 
+		           	<select id="" name="isPeak" class="form-select">
+		               <option value="Y">Y</option>
+		               <option value="N">N</option>
+		            </select>
+		         </div>
+		         <div class="col-3">
+		            <label for="" class="form-label">출발요일할증</label> 
+		           	<select id="" name="isExtraCharge" class="form-select">
+		               <option value="Y">Y</option>
+		               <option value="N">N</option>
+		            </select>
+		         </div>
+		         <div class="col-4">
+		            <label for="" class="form-label">패키지 기간</label>
+		            <input type="text" class="form-control" id="" name="traverPeriod">
+		         </div>
+		         <div class="col-4">
+		         	<label for="" class="form-label">판매시작일</label>
+		            <input type="date" class="form-control" id="" name="sellingStart">
+		         </div>
+		         <div class="col-4">
+		         	<label for="" class="form-label">판매종료일</label>
+		            <input type="date" class="form-control" id="" name="sellingEnd">
+		         </div>
+		         <div class="col-12">
+		            <label for="" class="form-label">패키지 소개</label> 
+		            <textarea rows="5" class="form-control" name="itemIntro"></textarea>
+		         </div>
+		         <div class="col-6">
+		            <label for="" class="form-label">메인 이미지</label> 
+		            <input type="file" class="form-control" id="" name="mainImg" >
+		         </div>
+		         <div class="col-6">
+		            <label for="" class="form-label">상세 이미지</label> 
+		            <input type="file" class="form-control" id="" name="subImg" multiple>
+		         </div>
+		         <div class="col-12">
+		            <div class="form-check form-check-inline">
+		               <input class="form-check-input" value="1" type="radio" id="" name="statusCode" checked>
+		               <label class="form-check-label" for="">판매중</label>
+		            </div>
+		            <div class="form-check form-check-inline">
+		               <input class="form-check-input" value="2" type="radio" id="" name="statusCode">
+		               <label class="form-check-label" for="">준비중</label>
+		            </div>
+		            <div class="form-check form-check-inline">
+		               <input class="form-check-input" value="3" type="radio" id="" name="statusCode">
+		               <label class="form-check-label" for="">품절</label>
+		            </div>
+		         </div>
+		         <div class="col-3">
+		            <button id="" type="submit" class="btn" style="background-color: #ffd000;">상품 등록</button>
+		         </div>
+		      </form>
+		   </div>
+</div>
    </div>
 </div>
 	
