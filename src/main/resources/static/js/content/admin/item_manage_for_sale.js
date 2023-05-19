@@ -24,7 +24,8 @@ function openModal(itemCode, areaCateList){
 			let str = '';
 
 
-			str += `	<form class="row" action="/admin/updateItem" method="post">                                                                                          `;
+			str += `	<form class="row" id="itemDetailForm" action="/admin/updateItem" method="post"> `;
+			str += `		<input type="hidden" name="itemCode" value="${result.itemCode}">                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">여행 국가</label>                                          `;
 			str += `					<select id="" name="areaCode" class="form-select">                                          `;
@@ -110,7 +111,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-6 mb-2">                                                                             `;
 			str += `					<label for="" class="form-label">상세 이미지</label>                                        `;
-			str += `					<input type="file" class="form-control" id="" name="subImg" multiple}>                       `;
+			str += `					<input type="file" class="form-control" id="" name="subImg" multiple>                       `;
 										for(const img of result.imgList){
 											if(img.isMain == 'N'){
 			str += `							<div style="font-size:0.8rem; margin: 5px;">* 업로드 된 파일 : ${img.itemImgOriginName}`;
@@ -260,9 +261,28 @@ function deleteCheckItems(){
 	
 }
 
+
+//상품 수정
 function updateItem(itemCode){
 
+	//location.href=`/admin/updateItemAjax?itemCode=${itemCode}`;
 	
+	//ajax start
+	$.ajax({
+		url: '/admin/updateItemAjax', //요청경로
+		type: 'post',
+		data: $("#itemDetailForm").serialize(), //필요한 데이터
+		async : true, //default 
+		contentType : 'application/json; charset=UTF-8', //json 방식
+		//contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default 방식
+		success: function(result) {
+			alert('ajax 통신 성공');
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+//ajax end
 }
 
 
