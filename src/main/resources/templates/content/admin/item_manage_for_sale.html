@@ -50,7 +50,7 @@
 									<td>
 										<img th:src="${'/img/' + item.imgList[0].itemImgAttachedName}">
 									</td>
-									<td><span th:onclick="openModal([[${item.itemCode}]]);"
+									<td><span th:onclick="openModal([[${item.itemCode}]], [[${areaCateList}]]);"
 										style="cursor: pointer;">[[${item.itemTitle}]]</span></td>
 									<td>[[${item.tourAreaVO.areaKorName}]]</td>
 									<td>[[${item.traverPeriod}]]</td>
@@ -162,8 +162,8 @@
 								</div>
 							</div>
 							<div class="col-3">
-								<button id="" type="submit" class="btn"
-									style="background-color: #ffd000;">수정</button>
+								<input id="" type="submit" class="btn"
+									style="background-color: #ffd000;" value="수정">
 							</div>
 						</form>
 					</div>
