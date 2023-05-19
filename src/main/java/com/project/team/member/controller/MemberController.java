@@ -66,13 +66,7 @@ public class MemberController {
 
 	//로그인 페이지로 이동 
 	@GetMapping("/login")
-	public String loginForm(MemberVO memberVO, Model model
-			, @RequestParam(required = false) String eMsg
-			, @RequestParam(required = false, defaultValue = "false") String isError) {
-		
-		// 가져온 데이터 (로그인 실패시에만 발생 ) 을 전달해주기 
-		model.addAttribute("eMsg", eMsg);
-		model.addAttribute("isError", isError);
+	public String loginForm(){
 		
 		return "content/member/login";
 	}
