@@ -3,6 +3,7 @@
 
 ###이미지파일경로지정###
 ImgPath.java
+.DS_Store
 
 ### Eclipse ###
 .metadata
