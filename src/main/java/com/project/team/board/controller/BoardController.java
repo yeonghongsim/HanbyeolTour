@@ -1,6 +1,7 @@
 package com.project.team.board.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,25 +16,50 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/boardMain")
-	public String boardMain() {
+	public String boardMain(Model model) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		
 		return "content/board/board_main";
 	}
 	
-	@GetMapping("/page1")
-	public String page1() {
-		return "content/board/page1";
+	@GetMapping("/getPublicBoardPage")
+	public String getPublicBoardPage(Model model) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		
+		return "content/board/getPublicBoardPage";
 	}
 
-	@GetMapping("/page2")
-	public String page2() {
-		return "content/board/page2";
+	@GetMapping("/getBoardGroundPage")
+	public String getBoardGroundPage(Model model) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		
+		return "content/board/getBoardGroundPage";
 	}
 	
-	@GetMapping("/page3")
-	public String page3() {
-		return "content/board/page3";
+	@GetMapping("/frequentlyRequestPage")
+	public String frequentlyRequestPage(Model model) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		return "content/board/frequentlyRequestPage";
 	}
 	
+	@GetMapping("/regRequestPage")
+	public String regRequestPage(Model model) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		
+		return "content/board/regRequestPage";
+	}
 	
 	
 	

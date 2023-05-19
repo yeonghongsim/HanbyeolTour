@@ -10,29 +10,15 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col">
-			<div class="row under-line-yl board-side-menu">
+		<th:block>
+			<div th:each="boardSideMenu : ${boardSideMenuList}" class="row under-line-yl board-side-menu">
 				<div class="col">
 					<h5>
-						<a href="/board/page1">page1</a>
+						<a th:href="@{'/board/' + ${boardSideMenu.boardSideMenuUrl}}">[[${boardSideMenu.boardSideMenuName}]]</a>
 					</h5>
 				</div>
 			</div>
-			<div class="row under-line-yl board-side-menu">
-				<div class="col">
-					<h5>
-						<a href="/board/page2">page2</a>
-					</h5>
-				</div>
-			</div>
-			<div class="row under-line-yl board-side-menu">
-				<div class="col">
-					<h5>
-						<a href="/board/page3">page3</a>
-					</h5>
-				</div>
-			</div>
-		</div>
+		</th:block>
 	</div>
 
 </th:block>
