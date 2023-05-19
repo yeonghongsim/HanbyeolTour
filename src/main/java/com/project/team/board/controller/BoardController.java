@@ -3,7 +3,9 @@ package com.project.team.board.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.team.board.service.BoardService;
 
@@ -51,6 +53,28 @@ public class BoardController {
 		
 		return "content/board/frequentlyRequestPage";
 	}
+	
+	
+	
+	@ResponseBody
+	@PostMapping("/searchFreqRequestByInputAjax")
+	public void searchFreqRequestByInputAjax(String searchInputValue) {
+		
+		System.out.println("searchFreqRequestByInputAjax run~");
+		System.out.println("@@@@@@@" + searchInputValue);
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/searchFreqRequestByCodeAjax")
+	public void searchFreqRequestByCodeAjax(String typeRequestCode) {
+		
+		System.out.println("searchFreqRequestByCodeAjax run~");
+		System.out.println("@@@@@@@" + typeRequestCode);
+		
+	}
+	
+	
 	
 	@GetMapping("/regRequestPage")
 	public String regRequestPage(Model model) {
