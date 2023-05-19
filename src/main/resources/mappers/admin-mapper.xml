@@ -134,8 +134,8 @@
 			, ITEM_TITLE
 			, ITEM_PRICE
 			, AREA_KOR_NAME
-			, SELLING_START
-			, SELLING_END
+			, TO_CHAR(SELLING_START, 'YYYY-MM-DD') SELLING_START
+			, TO_CHAR(SELLING_END, 'YYYY-MM-DD') SELLING_END
 			, IS_EXTRA_CHARGE
 			, IS_PEAK
 			, IS_BOMB_SALE
@@ -151,6 +151,24 @@
 		AND ITEM.AREA_CODE = AREA.AREA_CODE
 		AND ITEM.ITEM_CODE = #{itemCode}
 	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="updateItem">
+		UPDATE HBT_ITEM
+		SET 
+			ITEM_TITLE = #{itemTitle}
+			, ITEM_PRICE = #{itemPrice}
+			, AREA_CODE = #{areaCode}
+			, SELLING_START = #{sellingStart}
+			, SELLING_END = #{sellingEnd}
+			, IS_EXTRA_CHARGE #{isExtraCharge}
+			, IS_PEAK #{isPeak}
+			, IS_BOMB_SALE = #{isBombSale}
+			, ITEM_INTRO = #{itemIntro}
+			, STATUS_CODE = #{statusCode}
+			, TRAVER_PERIOD = #{traverPeriod}
+		WHERE ITEM_CODE = #{itemCode}
+	</update>
 
 
 

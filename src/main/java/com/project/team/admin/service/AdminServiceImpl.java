@@ -89,6 +89,13 @@ public class AdminServiceImpl implements AdminService{
 	public ItemVO getItemDetailForAdmin(String itemCode) {
 		return sqlSession.selectOne("adminMapper.getItemDetailForAdmin", itemCode);
 	}
+	
+	//판매 상품 수정
+	@Override
+	public void updateItem(ItemVO itemVO) {
+		sqlSession.update("adminMapper.updateItem", itemVO);
+		
+	}
 
 	
 
@@ -117,6 +124,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
+
 
 
 
