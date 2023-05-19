@@ -14,7 +14,11 @@ public interface MemberService {
 	//시큐리티 로그인 정보 가져오기
 	MemberVO getUserInfoForLogin(String memId);
 	
+	//아이디 찾기 
+	String findId(MemberVO memberVO);
 	
+	//비밀번호 찾기 - 이메일 주소 가져오기 
+	String getMemEmailForFindPw(MemberVO memberVO);
 	
 	
 	
