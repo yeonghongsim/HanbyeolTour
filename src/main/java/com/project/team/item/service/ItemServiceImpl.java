@@ -2,6 +2,7 @@ package com.project.team.item.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,8 +16,8 @@ public class ItemServiceImpl implements ItemService{
 	
 	
 	//국가명으로 여행상품 검색
-	public List<HashMap<String, Object>> getItemListByAreaName(String areaName) {
-		return sqlSession.selectList("itemMapper.getItemListByAreaName", areaName);
+	public List<HashMap<String, Object>> getItemListByAreaName(Map<String, String> searchKeyword) {
+		return sqlSession.selectList("itemMapper.getItemListByAreaName", searchKeyword);
 	}
 	
 	

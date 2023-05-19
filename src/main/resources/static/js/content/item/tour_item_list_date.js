@@ -1,13 +1,10 @@
 init();
 
-
 //페이지가 로딩될때 실행될 자바스크립트
 function init (){
 	//달력테이블 그리기
 	getSearchByDateTable();
-	
-	setArrDepDate();
-	
+	//setArrDepDate();
 }
 
 
@@ -85,7 +82,6 @@ function getSearchByDateTable(month){
 		getDays.push(new Date(nowYear, nowMonth-1, i+1).getDay());
 	}
 	
-	
 	//요일 테이블
 	drawCalTable += `<tr>`
 	for(let i = 0; i < lastDate; i++){
@@ -103,12 +99,11 @@ function getSearchByDateTable(month){
 	}
 	drawCalTable += `</tr>`	
 	
-	
 	//날짜테이블
 	drawCalTable += `<tr>`
 	
 	for(let i = 0; i < lastDate; i++){
-		drawCalTable += `<td>${i+1}</td>`
+		drawCalTable += `<td onclick="getSearchByDateAJAX(${i+1});">${i+1}</td>`
 	}
 	drawCalTable += `</tr>`
 	
@@ -117,49 +112,75 @@ function getSearchByDateTable(month){
 	 
 }
 
-
 //달력의 날짜 클릭시 검색결과
-function getSearchByDateAJAX(){
-		
-	const areaName = document.querySelector('#areaName').value; 
-	console.log(areaName.value);
-		
+function getSearchByDateAJAX(getDate){
+	//현재지역 가져오기
+	const areaName = document.querySelector('#areaName').value;
+	
+	//검색할 년 월 정보 가져오기
+	const getYear = document.querySelector('#yearSpan').textContent;
+	const getMonth = document.querySelector('#monthSpan').textContent;
+	
+	let a = new Date(getYear + '-' +  getMonth + '-' + getDate);
+	
 	$.ajax({
 		url: '/item/tourItemListDateAJAX', //요청경로
 		type: 'post',
 		//contentType : 'application/json; charset=UTF-8',
 		//contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		//async : true,
-		data: {'areaName': areaName}, 
+		data: {'areaName': areaName,'searchDate': a}, 
 		success: function(result) {
-			console.log(result);
+			//json 타입에서 array로 변환
+			let resultArray = JSON.parse(result);
+			
+			//결과테이블 수정
+			const resultTbodyTag = document.querySelector('.resultTbodyTag');
+				resultTbodyTag.replaceChildren();
+			
+			//테이블 그리기 시작			
+			str = '';
+			for(const i of resultArray){
+				str += `<tr>`;
+				str += `<td><img src="/img/item/itemImg/${i.ITEM_IMG_ATTACHED_NAME}"></td>`
+				str += `<td>`;
+				str += `<div>${i.DEP_DATE}</div>`;
+				str += `<div>${i.ARR_DATE}</div>`;
+				str += `</td>`;
+				str += `<td>${i.TRAVER_PERIOD}</td>`;
+				str += `<td>${i.ITEM_TITLE}</td>`;
+				str += `<td>${i.ITEM_PRICE}</td>`;
+				str += `<td>${i.STATUS_NAME}</td>`;
+				str += `</tr>`;
+			}
+			document.querySelector('.resultTbodyTag').insertAdjacentHTML('afterbegin',str);
+			
 		},
 		error: function() {
 			alert('실패');
 		}
 	});
-	
 }
 
 
 function setArrDepDate(){
 	
-	
+	const dateTr = document.querySelectorAll('.searchResultByDate');
 	let nowYear = date.getFullYear();
 	let nowMonth = date.getMonth() + 1;
 	let nowDate = date.getDate();
 	const endDate = document.querySelector('#endDate').value;
+	
 	//출발일
 	const depDate = '<td><div>' + nowYear + '년' + nowMonth + '월' + nowDate + '일</div>';
 	
-	
-	
 	//도착일
-	let arrDate = nowDate + endDate;
+	let arrDate = parseInt(nowDate) + parseInt(endDate);
 	
 	const getDate = new Date(nowYear, nowMonth, 0);
 	const lastDate = getDate.getDate();
 	
+	//이번달 마지막날짜를 넘을때 년 월 정보 변경
 	if(arrDate > lastDate){
 		arrDate = 0 + endDate;
 		nowMonth += 1;
@@ -169,11 +190,20 @@ function setArrDepDate(){
 			nowYear = nowYear + 1;
 		}
 	}
-	arrDate = '<div>' + nowYear + '년' + nowMonth + '월' + nowDate + '일' + '</div></td>';
+	arrDate = '<div>' + nowYear + '년' + nowMonth + '월' + arrDate + '일' + '</div></td>';
 	
-	
-	document.querySelector('.searchResultByDate').insertAdjacentHTML('afterbegin', depDate + arrDate);
-	
-	
+	for(let i = 0; i < dateTr.length; i++){
+		dateTr[i].insertAdjacentHTML('afterbegin', depDate + arrDate);
+	}
 }
 
+//날짜형식변환 함수
+function getDate123(dateString){
+	const year = dateString.substr(0, 4);
+	const month = dateString.substr(4, 2) - 1;
+	const day = dateString.substr(6, 2);
+	
+	const date = new Date(year, month, day);
+	const formattedDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\./g, '-');
+	return formattedDate;
+}
