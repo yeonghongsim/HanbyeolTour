@@ -1,7 +1,13 @@
 package com.project.team.item.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +31,11 @@ public class ItemController {
 	//그룹별 아이템 보기 페이지 이동
 	@GetMapping("/tourItemListGroup")
 	public String tourItemList(String areaName, Model model) {
+
+		Map<String, String> searchKeyword = new HashMap<>();
 		
-		System.out.println("@@@@@@@@@@@" +areaName);
-		
-		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
+		searchKeyword.put("areaName", areaName);
+		model.addAttribute("tourItemList", itemService.getItemListByAreaName(searchKeyword));
 		model.addAttribute("areaName", areaName);
 		
 		
@@ -38,15 +45,29 @@ public class ItemController {
 	//일자별 아이템 보기 페이지 이동
 	@GetMapping("/tourItemListDate")
 	public String tourItemListDate(String areaName, Model model) {
+		//날짜형식변환
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(areaName);
+		Map<String, String> searchKeyword = new HashMap<>();
 		
+		searchKeyword.put("areaName", areaName);
+		
+		//일자별 상세조회
+		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(searchKeyword);
+		
+		//도착일자설정
 		for(HashMap<String, Object> map : list) {
-			String splitDate = map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0];
+			//날짜초기화
+			Calendar depDate = Calendar.getInstance();
+			Calendar setArrDate = Calendar.getInstance();
+			//출발일 오늘 날짜로 넣기
+			map.put("DEP_DATE", dateFormat.format(depDate.getTime()));
 			
-			map.put("END_DATE", splitDate);
+			//오늘날짜에 여행기간만큼더하기
+			String splitDate = map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0];
+			setArrDate.add(Calendar.DATE, Integer.parseInt(splitDate));
+			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
 		}
-		System.out.println(list);
 		
 		
 		model.addAttribute("areaName", areaName);
@@ -58,15 +79,37 @@ public class ItemController {
 
 	@PostMapping("/tourItemListDateAJAX")
 	@ResponseBody
-	public String tourItemListDateAJAX(String areaName, Model model) throws JsonProcessingException {
+	public String tourItemListDateAJAX(String areaName, Date searchDate ,Model model) throws JsonProcessingException {
 		
-		System.out.println(areaName);
-		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		//잘짜형식 문자열 형식으로 변환
+		String setDate = dateFormat.format(searchDate);
 		
-		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(areaName);
+		Map<String, String> searchKeyword = new HashMap<>();
+		
+		searchKeyword.put("areaName", areaName);
+		searchKeyword.put("date", setDate);
+		
+		//쿼리조회
+		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(searchKeyword);
+		
+		for(HashMap<String, Object> map : list) {
+			//날짜초기화
+			Calendar setArrDate = Calendar.getInstance();
+			//출발일 검색일자로 넣기
+			map.put("DEP_DATE", setDate);
+			
+			//출발일자에 여행기간만큼더하기
+			String splitDate = map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0];
+			
+			setArrDate.setTime(searchDate);
+			setArrDate.add(Calendar.DATE, Integer.parseInt(splitDate));
+			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
+		}
+		
+		
 		
 		ObjectMapper mapper = new ObjectMapper();
-		
 		return mapper.writeValueAsString(list);
 	}
 	

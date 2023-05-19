@@ -14,7 +14,8 @@ public class IntercepterConfig implements WebMvcConfigurer {
 		
 		
 			registry.addInterceptor(getMenuIntercepter())
-									.addPathPatterns("/item/**");
+									.addPathPatterns("/item/**")
+									.excludePathPatterns("/**/*AJAX");
 	}
 	
 
