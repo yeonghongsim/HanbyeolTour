@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 
@@ -17,6 +18,11 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public List<TypeRequestVO> getTypeRequestList() {
 		return sqlSession.selectList("boardMapper.getTypeRequestList");
+	}
+
+	@Override
+	public List<BoardSideMenuVO> getBoardSideMenuList() {
+		return sqlSession.selectList("boardMapper.getBoardSideMenuList");
 	}
 
 	
