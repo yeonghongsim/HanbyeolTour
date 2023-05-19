@@ -1,5 +1,6 @@
 package com.project.team.admin.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -133,6 +134,9 @@ public class AdminController {
 	public String itemManageForSale(Model model) {
 		
 		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
+		//등록된 여행지 카테고리 조회
+		List<TourAreaVO> areaCateList = adminService.getAreaCateList();
+		model.addAttribute("areaCateList", areaCateList);
 		
 		return "content/admin/item_manage_for_sale";
 	}
@@ -163,6 +167,15 @@ public class AdminController {
 		
 		return adminService.getItemDetailForAdmin(itemCode);
 		
+	}
+	
+	//판매 상품 수정
+	@PostMapping("/updateItem")
+	public String updateItem(ItemVO itemVO) {
+		
+		adminService.updateItem(itemVO);
+		
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	
