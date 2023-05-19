@@ -38,6 +38,18 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.getUserInfoForLogin", memId);
 	}
 
+	// 아이디 찾기 	
+	@Override
+	public String findId(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.findId", memberVO);
+	}
+	
+	//비밀번호 찾기 
+	@Override
+	public String getMemEmailForFindPw(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.getMemEmailForFindPw", memberVO);
+	}
+
 	
 	
 	
