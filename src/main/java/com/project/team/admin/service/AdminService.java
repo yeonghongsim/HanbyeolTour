@@ -34,6 +34,8 @@ public interface AdminService {
 	//판매 상품 상세 조회
 	ItemVO getItemDetailForAdmin(String itemCode);
 	
+	//판매 상품 수정
+	void updateItem(ItemVO itemVO);
 	
 	
 	

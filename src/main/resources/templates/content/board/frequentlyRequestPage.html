@@ -18,18 +18,20 @@
 	</div>
 	
 	<div class="row mb-3">
-		<div class="col-3">
-			img
+		<div class="col-3 search-img-div">
+			<img src="/imageForUse/searchImg.jpeg">
 		</div>
 		<div class="col-9">
-			<div class="row">
+			<div class="row mb-3">
 				<div class="col">
-					info message
+					<span>간단 소개.</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					coment
+					<span>검색하고 싶은 검색어를 입력하여 문의글을 볼 수 있습니다.</span><br>
+					<span>아래의 버튼을 클릭하여 해당 문의 유형와 관련하여 문의글을 볼 수 있습니다.</span><br>
+					<span>검색된 문의사항의 제목을 클릭 시 해당 문의사항의 답변을 볼 수 있습니다.</span>
 				</div>
 			</div>
 		</div>
@@ -45,7 +47,7 @@
 					<input type="text" class="form-control" id="searchInput" name="searchInput">
 				</div>
 				<div class="col-lg-2">
-					<input onclick="searchByInput();" type="button" class="btn btn-warning" value="검색" style="color: white;">
+					<input onclick="searchByInput();" type="button" class="btn btn-info" value="검색" style="color: white;">
 				</div>
 			</div>
 		</div>
@@ -53,10 +55,10 @@
 	
 	<div class="row mb-3 typeRequest-con">
 		<div class="col-lg-2 col-sm-3 typeRequest-div">
-			<span class="pointer" th:onclick="searchTypeRequest(this)">전체</span>
+			<span class="pointer" th:onclick="searchTypeRequest()">전체</span>
 		</div>
 		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">
-			<span class="pointer" th:onclick="searchTypeRequest(this)">[[${typeRequest.typeRequestName}]]</span>
+			<span class="pointer" th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])">[[${typeRequest.typeRequestName}]]</span>
 		</div>
 	</div>
 
@@ -68,14 +70,14 @@
 					<col width="*">
 					<col width="10%">
 				</colgroup>
-				<thead>
+				<thead class="board-thead">
 					<tr>
 						<td>질문 유형</td>
 						<td>제목</td>
 						<td></td>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="freq-request-tbody">
 					<tr>
 						<td>typeRequestName1</td>
 						<td>
@@ -102,16 +104,6 @@
 			</table>
 		</div>
 	</div>	
-	
-	
-	<i class="bi bi-chevron-up"></i>
-	<i class="bi bi-chevron-down"></i>
-	
-	answerTr = selectedTitle.closest('tr').nextElementSibling;
-	chevronWay = selectedTitle.parentElement.nextElementSibling;
-	
-	answerTr.classList.toggle('hide');
-	alter(chevronWay);
 	
 	
 	
