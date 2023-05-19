@@ -36,7 +36,10 @@
 							<span>[[${tourItem["TRAVER_PERIOD"]}]]</span>
 						</div>
 						<div class="col">
-							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false" th:aria-controls="flush-collapseOne + ${state.index}">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+									th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false" 
+									th:aria-controls="flush-collapseOne + ${state.index}" 
+									th:onclick="getSearchByDateTable([[${state.index}]]);">
 						        출발일 보기
 						     </button>
 						</div>
@@ -48,11 +51,32 @@
 						<div th:id="flush-collapseOne + ${state.index}" class="accordion-collapse collapse"
 							data-bs-parent="#accordionFlushExample">
 							<div class="accordion-body">
-								<div class="row">
-									<div class="col">
-										월/일 선택나오게(달력)
+								<div class="row dateDiv">
+									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]], 0);">
+										<span class="yearSpan"></span>
+										<span class="monthSpan"></span>
+									</div>
+									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]],1);">
+										<span class="yearSpan"></span>
+										<span class="monthSpan"></span>
+									</div>
+									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]],2);">
+										<span class="yearSpan"></span>
+										<span class="monthSpan"></span>
+									</div>
+									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]],3);">
+										<span class="yearSpan"></span>
+										<span class="monthSpan"></span>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col">
+										<table class="calTableTag table">
+											<colgroup></colgroup>
+										</table>
+									</div>
+								</div>
+								
 								<div class="row">
 									<div class="col">
 										<span>- 출발날짜를 선택 하시면 해당 날짜에 출발 가능한 상품을 리스트에서 확인 하실 수 있습니다.</span>
@@ -110,6 +134,6 @@
 
 <!--  연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
- <!--	<script type="text/javascript" src="/"></script> -->
+<script type="text/javascript" src="/js/content/item/tour_item_list_group.js"></script>
 </th:block>
 </html>
