@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.item.service.ItemService;
 
 import jakarta.annotation.Resource;
@@ -56,14 +58,16 @@ public class ItemController {
 
 	@PostMapping("/tourItemListDateAJAX")
 	@ResponseBody
-	public List<HashMap<String, Object>> tourItemListDateAJAX(String areaName, Model model) {
+	public String tourItemListDateAJAX(String areaName, Model model) throws JsonProcessingException {
 		
 		System.out.println(areaName);
 		model.addAttribute("tourItemList", itemService.getItemListByAreaName(areaName));
 		
 		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(areaName);
 		
-		return list;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		return mapper.writeValueAsString(list);
 	}
 	
 	
