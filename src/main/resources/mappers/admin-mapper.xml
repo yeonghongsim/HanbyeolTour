@@ -127,6 +127,30 @@
 			#{itemCode}
 		</foreach>
 	</delete>
+	
+	<!-- 상품 이름 클릭 시 상품 상세 정보 -->
+	<select id="getItemDetailForAdmin" resultMap="itemMapper.item">
+		SELECT ITEM.ITEM_CODE
+			, ITEM_TITLE
+			, ITEM_PRICE
+			, AREA_KOR_NAME
+			, SELLING_START
+			, SELLING_END
+			, IS_EXTRA_CHARGE
+			, IS_PEAK
+			, IS_BOMB_SALE
+			, ITEM_INTRO
+			, STATUS_CODE
+			, TRAVER_PERIOD
+			, ITEM_IMG_CODE
+			, ITEM_IMG_ORIGIN_NAME
+			, ITEM_IMG_ATTACHED_NAME
+			, IS_MAIN
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA
+		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+		AND ITEM.AREA_CODE = AREA.AREA_CODE
+		AND ITEM.ITEM_CODE = #{itemCode}
+	</select>
 
 
 

@@ -1,3 +1,124 @@
+//상품 상세 정보
+function openModal(itemCode){
+	const itemDetailModal = new bootstrap.Modal('#itemDetailModal');
+	
+	//ajax start
+	$.ajax({
+		url: '/admin/getItemDetailForAdminAjax', //요청경로
+		type: 'post',
+		data: {'itemCode' : itemCode}, //필요한 데이터
+		async : true, //default 
+		//contentType : 'application/json; charset=UTF-8', //json 방식
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default 방식
+		success: function(result) {
+			
+			console.log(result)
+			
+			//div 안의 모달 내용 지워주기.
+			const modalBody = document.querySelector('.modal-body');
+			modalBody.replaceChildren();
+			
+			//상품 정보 나올 모달 그리기
+			let str = '';
+
+
+			str += `	<form class="row">                                                                                          `;
+			str += `				<div class="col-3">                                                                             `;
+			str += `					<label for="" class="form-label">여행 국가</label>                                          `;
+			str += `					<select id="" name="areaCode" class="form-select">                                          `;
+		    str += `          		 	<th:block>                                                                              `;
+		    str += `           				<option></option>                                                                   `;
+		    str += `          			 </th:block>                                                                            `;
+		    str += `        			</select>                                                                                   `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-9">                                                                             `;
+			str += `					<label for="" class="form-label">패키지 이름</label>                                        `;
+			str += `					<input type="text" class="form-control" id="" name="itemTitle" value="${result.itemTitle}">                   `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-3">                                                                             `;
+			str += `					<label for="" class="form-label">기본 가격</label>                                          `;
+			str += `					<input type="text" class="form-control" id="" name="itemPrice">                             `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-3">                                                                             `;
+			str += `					<label for="" class="form-label">땡처리할인</label>                                         `;
+			str += `					<select id="" name="isBombSale" class="form-select">                                        `;
+			str += `						<option value="Y">Y</option>                                                            `;
+			str += `						<option value="N">N</option>                                                            `;
+			str += `					</select>                                                                                   `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-3">                                                                             `;
+			str += `					<label for="" class="form-label">성수기요금</label>                                         `;
+			str += `					<select id="" name="isPeak" class="form-select">                                            `;
+			str += `						<option value="Y">Y</option>                                                            `;
+			str += `						<option value="N">N</option>                                                            `;
+			str += `					</select>                                                                                   `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-3">                                                                             `;
+			str += `					<label for="" class="form-label">출발요일할증</label>                                       `;
+			str += `					<select id="" name="isExtraCharge" class="form-select">                                     `;
+			str += `						<option value="Y">Y</option>                                                            `;
+			str += `						<option value="N">N</option>                                                            `;
+			str += `					</select>                                                                                   `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-4">                                                                             `;
+			str += `					<label for="" class="form-label">패키지 기간</label>                                        `;
+			str += `					<input type="text" class="form-control" id="" name="traverPeriod">                          `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-4">                                                                             `;
+			str += `					<label for="" class="form-label">판매시작일</label>                                         `;
+			str += `					<input type="date" class="form-control" id="" name="sellingStart">                          `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-4">                                                                             `;
+			str += `					<label for="" class="form-label">판매종료일</label>                                         `;
+			str += `					<input type="date" class="form-control" id="" name="sellingEnd">                            `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-12">                                                                            `;
+			str += `					<label for="" class="form-label">패키지 소개</label>                                        `;
+			str += `					<textarea rows="5" class="form-control" name="itemIntro"></textarea>                        `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-6">                                                                             `;
+			str += `					<label for="" class="form-label">메인 이미지</label>                                        `;
+			str += `					<input type="file" class="form-control" id="" name="mainImg">                               `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-6">                                                                             `;
+			str += `					<label for="" class="form-label">상세 이미지</label>                                        `;
+			str += `					<input type="file" class="form-control" id="" name="subImg" multiple>                       `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-12">                                                                            `;
+			str += `					<div class="form-check form-check-inline">                                                  `;
+			str += `						<input class="form-check-input" value="1" type="radio" id="" name="statusCode" checked> `;
+			str += `						<label class="form-check-label" for="">판매중</label>                                   `;
+			str += `					</div>                                                                                      `;
+			str += `					<div class="form-check form-check-inline">                                                  `;
+			str += `						<input class="form-check-input" value="2" type="radio" id="" name="statusCode">         `;
+			str += `						<label class="form-check-label" for="">준비중</label>                                   `;
+			str += `					</div>                                                                                      `;
+			str += `					<div class="form-check form-check-inline">                                                  `;
+			str += `						<input class="form-check-input" value="3" type="radio" id="" name="statusCode">         `;
+			str += `						<label class="form-check-label" for="">품절</label>                                     `;
+			str += `					</div>                                                                                      `;
+			str += `				</div>                                                                                          `;
+			str += `				<div class="col-3">                                                                             `;
+			str += `					<button id="" type="submit" class="btn"                                                     `;
+			str += `						style="background-color: #ffd000;">수정</button>                                        `;
+			str += `				</div>                                                                                          `;
+			str += `			</form> `;
+			
+			modalBody.insertAdjacentHTML('afterbegin', str);
+		},	
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+	
+	itemDetailModal.show();
+	
+}
+	
+	
+
+
 
 //제목 전체 체크박스 클릭 컨트롤
 function AllCheckboxControl() {
