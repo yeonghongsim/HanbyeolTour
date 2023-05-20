@@ -169,8 +169,7 @@
 			, TRAVER_PERIOD = #{traverPeriod}
 		WHERE ITEM_CODE = #{itemCode}
 	</update>
-
-
+	
 
 
 

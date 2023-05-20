@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 
@@ -94,6 +95,8 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateItem(ItemVO itemVO) {
 		sqlSession.update("adminMapper.updateItem", itemVO);
+		//sqlSession.update("adminMapper.updateItemImg", itemVO);
+		 
 		
 	}
 

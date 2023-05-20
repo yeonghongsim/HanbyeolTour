@@ -2,7 +2,9 @@ package com.project.team.admin.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -170,16 +172,14 @@ public class AdminController {
 	}
 	
 	//판매 상품 수정
-	@ResponseBody
-	@PostMapping("/updateItemAjax")
-	public void updateItem(ItemVO itemVO, String itemCode) {
+	@PostMapping("/updateItem")
+	public String updateItem(ItemVO itemVO) {
 		//오류 수정중
+		System.out.println(itemVO);
 		
-		//itemVO.setItemCode(itemCode);
-		//System.out.println(itemVO);
-		
-		//return "";
-		
+		adminService.updateItem(itemVO);
+
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	

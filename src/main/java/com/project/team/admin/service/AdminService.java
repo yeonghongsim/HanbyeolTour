@@ -22,7 +22,7 @@ public interface AdminService {
 	//여행국가 카테고리 삭제
 	void deleteAreaCate(String areaCode);
 	
-	//판매 상품 조회
+	//판매 등록 상품 리스트 조회
 	List<ItemVO> saleListForAdmin();
 	
 	//판매 상품 삭제
