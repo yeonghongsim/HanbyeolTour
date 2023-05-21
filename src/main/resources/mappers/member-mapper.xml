@@ -10,7 +10,7 @@
 		<result column="MEM_NAME" 				property="memName"/>
 		<result column="MEM_PW" 				property="memPw"/>
 		<result column="MEM_STATUS_CODE" 		property="memStatusCode"/>
-		<association property="memberDetailVO"  resultMap="memberDetail"/>
+		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">

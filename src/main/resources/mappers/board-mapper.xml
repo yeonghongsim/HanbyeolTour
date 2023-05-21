@@ -17,7 +17,7 @@
 		<result column="HBT_BOARD_NOTICE_REG_DATE" 		property="hbtBoardNoticeRegDate"/>
 		<result column="HBT_BOARD_NOTICE_CNT" 			property="hbtBoardNoticeCnt"/>
 		<result column="HBT_BOARD_NOTICE_LIKE" 			property="hbtBoardNoticeLike"/>
-		<association property="memberVO" 				resultMap="memberMapper.member"/>
+		<association property="memberVO" 				resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.board.vo.BoardRequestVO" id="boardRequest">
