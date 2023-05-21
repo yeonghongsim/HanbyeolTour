@@ -23,6 +23,14 @@ public class MemberServiceImpl implements MemberService{
 		int result = sqlSession.selectOne("memberMapper.isDuplicateMemId", memId);
 		return result != 0 ? true : false;
 	}
+	
+	// 이메일 중복확인 
+	@Override
+	public boolean isDuplicateMemEmail(String memEmail) {
+		int result = sqlSession.selectOne("memberMapper.isDuplicateMemEmail", memEmail);
+		return result != 0 ? true : false;
+	}
+
 
 	// 회원가입 
 	@Override
@@ -56,6 +64,7 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.update("memberMapper.updateMemPw", memberVO);
 	}
 
+	
 	
 	
 	

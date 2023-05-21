@@ -33,6 +33,13 @@
 	WHERE MEM_ID = #{memId}
 	</select>
 	
+	<!--회원가입시 Email 중복 체크  -->
+	<select id="isDuplicateMemEmail" resultType="int">
+	SELECT COUNT(MEM_EMAIL)
+	FROM HBT_MEM_DETAIL
+	WHERE MEM_EMAIL = #{memEmail}
+	</select>
+	
 	<!-- memCode 생성 -->
 	<!-- <select id="getNextMemCode" resultType="String">
 		SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
@@ -96,7 +103,6 @@
 	</select>
 	
 	
-	
 	<!-- 아이디 찾기 -->
 	<select id="findId" resultType="String">
 	  SELECT MEM_ID
@@ -112,14 +118,14 @@
 	<!-- 비밀번호 찾기 -> 이메일 주소 확인 후 임시 비밀번호 발송 -->
 	<select id="getMemEmailForFindPw" resultType="String">
 	  SELECT MEM_EMAIL
-	  FROM HBT_MEM
-	  WHERE MEM_ID = #{memId}
-	  WHERE MEM_NAME = #{memName}
-	  AND MEM_CODE IN (
-	      SELECT MEM_CODE
-	      FROM HBT_MEM_DETAIL
-	      WHERE MEM_D_TELL = #{memberDetailVO.memDTell}
-	   	  )
+	  FROM HBT_MEM_DETAIL
+	  WHERE MEM_CODE IN (
+	    SELECT MEM_CODE
+	    FROM HBT_MEM
+	    WHERE MEM_ID = #{memId}
+	      AND MEM_NAME = #{memName}
+	  )
+	  AND MEM_D_TELL = #{memberDetailVO.memDTell}
 	</select>
 
 	<!-- 비밀번호 변경 (임시로) -->

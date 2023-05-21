@@ -8,6 +8,9 @@ public interface MemberService {
 	//회원가입 시 아이디 중복 체크 
 	boolean isDuplicateMemId(String memId);
 	
+	//회원가입 시 이메일 중복 체크 
+	boolean isDuplicateMemEmail(String memEmail);
+	
 	//회원가입 
 	void join(MemberVO memberVO, MemberDetailVO memberDetailVO);
 		

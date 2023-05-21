@@ -68,6 +68,19 @@
 	background: #fff9d4; 
 	color: #bbb;
 }
+
+
+.btn-outline-light:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: #ffffff;
+	margin-bottom: 1rem;
+	font-weight: bold;
+	height: 3.6rem;
+	background-color:#ffd000;
+	border: 1px solid #dee2e6;
+}
+
 	
 .btn-group{
 	height: 3.6rem;

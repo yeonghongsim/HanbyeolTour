@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 /* 헤더 글씨 옆으로 나오도록 설정*/
 .login-func-bar li {
   display: inline-block;
@@ -16,3 +17,24 @@ a{
 	text-decoration: none;
 }
 
+.page-title{
+	font-size: 2rem;
+	text-align: center;
+	letter-spacing: -2px;
+    padding-bottom: 1rem;
+    padding-left: 8px;
+}
+
+
+
+.custom-popover {
+  --bs-popover-max-width: 300px;
+  --bs-popover-border-color: #ffd000;
+  --bs-popover-header-bg: #ffd000;
+  --bs-popover-header-color: BLACK;
+  --bs-popover-body-padding-x: 0.5rem;
+  --bs-popover-body-padding-y: 0.5rem;
+  --bs-popover-body-margin-x: 1rem;
+  font-size: 0.8rem;
+  
+}
