@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 
@@ -94,8 +95,18 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateItem(ItemVO itemVO) {
 		sqlSession.update("adminMapper.updateItem", itemVO);
+		//sqlSession.update("adminMapper.updateItemImg", itemVO);
+		 
 		
 	}
+	
+	//상품 상세 정보 X 클릭 시 이미지 삭제
+	@Override
+	public void deleteItemImg(ImgVO imgVO) {
+		sqlSession.delete("adminMapper.deleteItemImg", imgVO);
+		
+	}
+
 
 	
 
@@ -124,6 +135,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
 
 
 
