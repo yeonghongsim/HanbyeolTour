@@ -28,9 +28,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		//loginInfo를 UserDetails 객체에 넣기 
 		UserDetails user = User.withUsername(userInfo.getMemId())
 								.password(userInfo.getMemPw())
-								.roles(userInfo.getMemRole().split(",")) //권한 3개 -> split
+								.roles(userInfo.getMemRole().split(","))//권한 3개 -> split
 								.build();
-	
+	    
 		return user;
 	}
 		

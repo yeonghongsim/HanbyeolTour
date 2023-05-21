@@ -18,13 +18,16 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		//실행되는지 출력 
 		System.out.println("@@@@ success handler 실행됨 @@@@");
-		
 		//로그인 성공 여부 정보 전달 
 		PrintWriter p = response.getWriter();
 		p.write("success");
 		p.flush();
 		
+		
+		
 		//super.onAuthenticationSuccess(request, response, authentication);
+				
+		
 	}
 
 		
