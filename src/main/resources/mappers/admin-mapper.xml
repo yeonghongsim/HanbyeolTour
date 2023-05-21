@@ -170,6 +170,13 @@
 		WHERE ITEM_CODE = #{itemCode}
 	</update>
 	
+	<!-- 상품 상세 정보 X 클릭 이미지 삭제 -->
+	<delete id="deleteItemImg">
+		DELETE HBT_ITEM_IMG
+		WHERE ITEM_CODE = #{itemCode}
+		AND ITEM_IMG_CODE = #{itemImgCode}
+	</delete>
+	
 
 
 

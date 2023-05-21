@@ -37,6 +37,9 @@ public interface AdminService {
 	//판매 상품 수정
 	void updateItem(ItemVO itemVO);
 	
+	//상품 상세 정보 X 클릭 시 이미지 삭제
+	void deleteItemImg(ImgVO imgVO);
+	
 	
 	
 	

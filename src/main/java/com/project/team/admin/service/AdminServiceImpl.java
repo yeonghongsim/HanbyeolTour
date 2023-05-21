@@ -99,6 +99,14 @@ public class AdminServiceImpl implements AdminService{
 		 
 		
 	}
+	
+	//상품 상세 정보 X 클릭 시 이미지 삭제
+	@Override
+	public void deleteItemImg(ImgVO imgVO) {
+		sqlSession.delete("adminMapper.deleteItemImg", imgVO);
+		
+	}
+
 
 	
 
@@ -127,6 +135,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
 
 
 

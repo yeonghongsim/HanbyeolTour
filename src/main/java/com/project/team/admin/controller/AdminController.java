@@ -182,6 +182,22 @@ public class AdminController {
 		return "redirect:/admin/itemManageForSale";
 	}
 	
+	//상품 상세 정보 조회 X 버튼 클릭 시 이미지 삭제
+	@ResponseBody
+	@PostMapping("/deleteItemImgAjax")
+	public String deleteItemImgAjax(ImgVO imgVO) {
+		
+		System.out.println(imgVO.getItemCode());
+		System.out.println(imgVO.getItemImgCode());
+		
+		adminService.deleteItemImg(imgVO);
+		
+		String result = "success";
+		
+		return result;
+	}
+	
+	
 	
 	
 	
