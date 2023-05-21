@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/user_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/member/join_notice.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="content">
+
+	<!-- 회원가입 후 안내 페이지 제목 부분 -->
+	<div class="row n-container">
+		<div class="col">
+			<div class="row">
+				<div class="col join-img">
+					<i class="bi bi-person-add"></i>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col join-n-title">
+					한별투어의 회원이 되신 것을 환영합니다! 		
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col join-n-content">
+					혜택 ~~~~~~~ 내용 적기<br>
+					혜택 ~~~~~~~ 내용 적기<br>
+					혜택 ~~~~~~~ 내용 적기<br>
+					혜택 ~~~~~~~ 내용 적기 
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col text-center mb-3 mt-5 d-grid">
+					 <button onclick="location.href='/';" class="btn btn-outline-warning btn-lg" type="button">
+					  <span>메인 페이지로 가기</span> 
+					</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center last-btn d-grid">
+					 <button onclick="location.href='/member/login';" class="btn btn-outline-secondary btn-lg" type="button">
+					  <span>로그인 하러가기</span> 
+					</button>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	
+
+
+
+
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src="/"></script>-->
+</th:block>
+
+
+
+</html>

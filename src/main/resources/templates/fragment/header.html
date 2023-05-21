@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <th:block th:fragment="headerFragment">
@@ -14,7 +15,6 @@
 					<li class="h-btn">장바구니</li>
 					<li class="h-btn">마이페이지</li>
 					<li class="h-btn"><a href="/board/boardMain">고객센터</a></li>
-					<li class="h-btn"><a th:href="@{/admin/itemManage}">관리자메뉴</a></li>
 				</ul>
 			</div>
 			<!-- 로그인 시 -->
@@ -23,9 +23,13 @@
 					<li>[[${#authentication.name}]]님 즐거운 여행되세요! 😉</li>
 					<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
 					<li class="h-btn">장바구니</li>
-					<li class="h-btn">마이페이지</li>
-					<li class="h-btn">고객센터</li>
-					<li class="h-btn">관리자메뉴</li>
+					<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>
+					<li class="h-btn"><a href="/board/boardMain">고객센터</a></li>
+					<th:block sec:authorize="hasRole('ROLE_AD')">
+						<li class="h-btn">
+							<a th:href="@{/admin/itemManage}">관리자메뉴</a>
+						</li>
+					</th:block>
 				</ul>
 			</div> 
 		</div>
