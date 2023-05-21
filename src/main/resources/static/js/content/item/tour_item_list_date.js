@@ -141,8 +141,8 @@ function getSearchByDateAJAX(getDate){
 			//테이블 그리기 시작			
 			str = '';
 			for(const i of resultArray){
-				str += `<tr>`;
-				str += `<td><img src="/img/item/itemImg/${i.ITEM_IMG_ATTACHED_NAME}"></td>`
+				str += `<tr class="searchResultByDate">`;
+				str += `<td><img class="img-fluid" src="/img/item/itemImg/${i.ITEM_IMG_ATTACHED_NAME}"></td>`
 				str += `<td>`;
 				str += `<div>${i.DEP_DATE}</div>`;
 				str += `<div>${i.ARR_DATE}</div>`;

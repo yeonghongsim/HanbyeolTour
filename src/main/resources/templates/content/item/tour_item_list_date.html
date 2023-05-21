@@ -1,128 +1,141 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{fragment/item/item_layout}">
-<!-- 연결해야할 외부 CSS파  -->
-<th:block layout:fragment="content_css">
-<link rel="stylesheet" href="/css/item/item_header.css">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragment/item/item_layout}">
+    <!-- 연결해야할 외부 CSS 파일 -->
+    <th:block layout:fragment="content_css">
+        <link rel="stylesheet" href="/css/item/item_header.css">
 
-<style>
-.searchByDateCal > tbody > tr > td:hover {
-	cursor: pointer;
-}
-.searchResultByDate img {
-	height: 100px;
-}
+        <style>
+            .searchByDateCal > tbody > tr:nth-child(2) > td:hover {
+                cursor: pointer;
+            }
 
-</style>
+            .searchResultByDate img {
+                max-height: 100px;
+                object-fit: contain;
+            }
 
-</th:block>
+            .pagination {
+                justify-content: center;
+                align-items: center;
+            }
 
-<th:block layout:fragment="item_content">
-<div class="row">
-	<div class="col">
-		
-		
-		
-		<!-- 달력/상세검색 -->
-		<div class="row">
-			<div class="col">
-				<span>[[${areaName} + ' 검색결과']]</span>
-			</div>
-		</div>
-		<!-- 년/월 다음날 이번달 버튼 -->
-		<div class="row mt-0">
-			<div class="col">
-				<nav aria-label="Page navigation example">
-					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable('prev');"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item">
-							<span id="yearSpan"></span><span>.</span><span id="monthSpan"></span></li>
-						<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable('next');"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
+            .pagination .page-item {
+                margin-right: 0.5rem;
+            }
+
+            .pagination .page-link {
+                border: none;
+                background-color: transparent;
+                color: #007bff;
+                font-size: 18px;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .pagination .page-item.active .page-link {
+                outline: none;
+                box-shadow: none;
+            }
+
+            .pagination .page-item span {
+                font-size: 18px;
+            }
 
 
-		<div class="row mt-0">
-			<div class="col">
-				<table class="table searchByDateCal">
-					<colgroup>
-					</colgroup>
-					<thead>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	
-	
-		
-		<!-- 검색결과 상단 메뉴  -->
-		<div class="row">
-			<div class="col">
-							
-			</div>
-		</div>
 
+        </style>
+    </th:block>
 
-		<!-- 검색결과표  -->		
-		<div class="row">
-			<div class="col">
-				<table class="table table-succes">
-					<colgroup></colgroup>
-					<thead>
-						<tr>
-							<td></td>
-							<td>출발/도착 날짜</td>
-							<td>여행기간</td>
-							<td>상품명</td>
-							<td>상품가격</td>
-							<td>상태</td>
-						</tr>
-					</thead>
-					<tbody class="resultTbodyTag">
-						<th:block th:each="tourItem, state : ${tourItemList}">
-							<input type="hidden" name="endDate" id="endDate" th:value='${tourItem["END_DATE"]}'>
-							<input type="hidden" name="listIndex" id="endDate" th:value='${#lists.size(tourItemList)}'>
-							<tr class="searchResultByDate">
-								<td><img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'></td>
-								<td>
-									<div>[[${tourItem["DEP_DATE"]}]]</div>
-									<div>[[${tourItem["ARR_DATE"]}]]</div>
-								</td>
-								<td>[[${tourItem["TRAVER_PERIOD"]}]]</td>
-								<td>[[${tourItem["ITEM_TITLE"]}]]</td>
-								<td>[[${tourItem["ITEM_PRICE"]}]]</td>
-								<td>[[${tourItem["STATUS_NAME"]}]]</td>
-							</tr>
-						</th:block>
-					</tbody>
-				</table>				
-			</div>
-		</div>
-		
-s		
-		
-		
-		<div class="row"></div>
-		<div class="row"></div>
-		
-	</div>
-</div>
+    <th:block layout:fragment="item_content">
+        <div class="row">
+            <div class="col">
+                <!-- 달력/상세검색 -->
+                <div class="row">
+                    <div class="col">
+                        <span>[[${areaName} + ' 검색결과']]</span>
+                    </div>
+                </div>
+                <!-- 년/월 다음날 이번달 버튼 -->
+                <div class="row mt-0">
+                    <div class="col">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link ye-bc" href="javascript:void(0);" onclick="getSearchByDateTable('prev');" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+                                <li class="page-item">
+                                    <span id="yearSpan"></span><span>.</span><span id="monthSpan"></span>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="getSearchByDateTable('next');" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
 
-<input type="hidden" name="areaName" id="areaName" th:value="${areaName}">
+                <div class="row mt-0">
+                    <div class="col">
+                        <table class="table searchByDateCal ye-S-bc">
+                            <colgroup>
+                            </colgroup>
+                            <thead>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-</th:block>
+                <!-- 검색결과 상단 메뉴 -->
+                <div class="row">
+                    <div class="col">
 
-<!--  연결해야할 외부 js 파일 -->
-<th:block layout:fragment="content_js">
-<script type="text/javascript" src="/js/content/item/tour_item_list_date.js"></script>
-</th:block>
+                    </div>
+                </div>
+
+                <!-- 검색결과표 -->
+                <div class="row">
+                    <div class="col">
+                        <table class="table ye-S-bc">
+                            <colgroup></colgroup>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>출발/도착 날짜</th>
+                                    <th>여행기간</th>
+                                    <th>상품명</th>
+                                    <th>상품가격</th>
+                                    <th>상태</th>
+                                </tr>
+                            </thead>
+                            <tbody class="resultTbodyTag">
+                                <th:block th:each="tourItem, state : ${tourItemList}">
+                                    <input type="hidden" name="endDate" id="endDate" th:value="${tourItem['END_DATE']}">
+                                    <input type="hidden" name="listIndex" id="endDate" th:value="${#lists.size(tourItemList)}">
+                                    <tr class="searchResultByDate">
+                                        <td><img th:src="@{/img/item/itemImg/} + ${tourItem['ITEM_IMG_ATTACHED_NAME']}" class="img-fluid"></td>
+                                        <td>
+                                            <div>[[${tourItem['DEP_DATE']}]]</div>
+                                            <div>[[${tourItem['ARR_DATE']}]]</div>
+                                        </td>
+                                        <td>[[${tourItem['TRAVER_PERIOD']}]]</td>
+                                        <td>[[${tourItem['ITEM_TITLE']}]]</td>
+                                        <td>[[${tourItem['ITEM_PRICE']}]]</td>
+                                        <td>[[${tourItem['STATUS_NAME']}]]</td>
+                                    </tr>
+                                </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row"></div>
+                <div class="row"></div>
+            </div>
+        </div>
+
+        <input type="hidden" name="areaName" id="areaName" th:value="${areaName}">
+
+    </th:block>
+
+    <!-- 연결해야할 외부 JS 파일 -->
+    <th:block layout:fragment="content_js">
+        <script type="text/javascript" src="/js/content/item/tour_item_list_date.js"></script>
+    </th:block>
 </html>

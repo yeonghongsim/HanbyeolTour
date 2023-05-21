@@ -27,6 +27,12 @@ import jakarta.annotation.Resource;
 public class ItemController {
 	@Resource(name = "itemService")
 	private ItemService itemService;
+
+	
+	@GetMapping("/test")
+	public String test() {
+		return "content/item/test_api";
+	}
 	
 	//그룹별 아이템 보기 페이지 이동
 	@GetMapping("/tourItemListGroup")
@@ -106,7 +112,7 @@ public class ItemController {
 			setArrDate.add(Calendar.DATE, Integer.parseInt(splitDate));
 			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
 		}
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(list);
 	}

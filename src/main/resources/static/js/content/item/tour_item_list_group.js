@@ -1,5 +1,4 @@
 
-
 //일자별상품조회 달력
 function getSearchByDateTable(idx, month){
 	
@@ -181,3 +180,32 @@ function getDate123(dateString){
 	const formattedDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\./g, '-');
 	return formattedDate;
 }
+
+function searchPlaces(keyword, radius) {
+  var url = '/search'; // 서버의 검색 API 엔드포인트 URL
+
+  // 요청 데이터
+  var requestData = {
+    keyword: '서울',
+    radius: '5000'
+  };
+
+  // Ajax 요청 보내기
+  $.ajax({
+    url: url,
+    type: 'POST',
+    data: JSON.stringify(requestData),
+    contentType: 'application/json',
+    success: function(response) {
+      // 서버 응답 처리
+      console.log(response);
+      // TODO: 검색 결과를 처리하는 로직 추가
+    },
+    error: function(xhr, status, error) {
+      // 에러 처리
+      console.error('Error:', error);
+    }
+  });
+}
+
+
