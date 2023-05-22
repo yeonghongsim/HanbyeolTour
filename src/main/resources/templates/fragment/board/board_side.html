@@ -9,9 +9,10 @@
 			</h3>
 		</div>
 	</div>
-	<div class="row">
-		<th:block th:each="boardSideMenu : ${boardSideMenuList}" class="row under-line-yl board-side-menu">
-			<div class="col">
+	
+	<div class="row" th:each="boardSideMenu : ${boardSideMenuList}">
+		<th:block>
+			<div class="col under-line-yl board-side-menu">
 				<h5>
 					<a th:href="@{'/board/' + ${boardSideMenu.boardSideMenuUrl}}">[[${boardSideMenu.boardSideMenuName}]]</a>
 				</h5>
