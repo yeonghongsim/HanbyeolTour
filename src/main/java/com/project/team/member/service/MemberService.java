@@ -1,6 +1,9 @@
 package com.project.team.member.service;
 
+import java.util.List;
+
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 
 public interface MemberService {
@@ -26,5 +29,6 @@ public interface MemberService {
 	//비밀번호 수정
 	void updateMemPw(MemberVO memberVO);
 	
-	
+	// 회원 사이드 메뉴 목록 조회
+	List<MemberSideMenuVO> getMsMenuList();
 }

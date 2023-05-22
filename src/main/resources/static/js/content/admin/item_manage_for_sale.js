@@ -1,23 +1,3 @@
-
-//이미지 팝업 모달 선택
-const imgModal = new bootstrap.Modal('#imgModal');
-
-//이미지명 클릭 시 이미지 모달창 띄우기
-function openImgModal(itemImgAttachedName, itemImgOriginName){
-	//모달 안에서 보여질 이미지 정보 세팅 (모달 태그 안의 이미지 태그 선택)	
-	const modalTag = document.querySelector('#imgModal');
-	//모달 태그에서 img 태그 선택(선택한 태그에서도 querySelector 쓰기 가능)
-	modalTag.querySelector('img').src = `/img/item/itemImg/${itemImgAttachedName}`;
-	
-	//모달창의 이미지 제목 세팅 (원본파일명으로) 태그.textContent : 태그의 글자 바꾸기
-	modalTag.querySelector('h1').textContent = itemImgOriginName;
-	
-	//modal 띄우기
-	imgModal.show();  //imgModal.hide() > 모달 숨김.
-	
-	
-}
-
 //상품 상세 정보
 function openModal(itemCode, areaCateList){
 	const itemDetailModal = new bootstrap.Modal('#itemDetailModal');
@@ -44,8 +24,8 @@ function openModal(itemCode, areaCateList){
 			let str = '';
 
 
+
 			str += `	<form class="row" id="itemDetailForm" action="/admin/updateItem" method="post" enctype="multipart/form-data"> `;
-			
 			str += `		<input type="hidden" name="itemCode" value="${result.itemCode}"> `;     
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">여행 국가</label>                                          `;
@@ -127,7 +107,6 @@ function openModal(itemCode, areaCateList){
   			str += `								<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" pointer-events="visible"/>`;
 			str += `								</svg> `;
 			str += `							</div>`;
-
 											}
 										}
 			str += `				</div>                                                                                          `;
@@ -141,7 +120,6 @@ function openModal(itemCode, areaCateList){
   			str += `									<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" pointer-events="visible"/>`;
 			str += `								</svg> `;
 			str += `							</div>`;
-
 											}
 										}
 			str += `				</div>                                                                                          `;
@@ -310,8 +288,8 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 		}
 	});
 //ajax end
-
 }
+
 
 //상품 수정 시 이미지 등록 여부 확인 ()
 function updateItem(){
@@ -335,6 +313,11 @@ function updateItem(){
 	document.querySelector('#itemDetailForm').submit();
 	
 }
+
+
+
+
+
 
 
 

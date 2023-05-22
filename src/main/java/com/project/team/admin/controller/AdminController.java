@@ -3,9 +3,7 @@ package com.project.team.admin.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -173,6 +171,7 @@ public class AdminController {
 		
 	}
 	
+<<<<<<< HEAD
 	//판매 상품 수정(이미지 포함)
 	@PostMapping("/updateItem")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
@@ -213,6 +212,16 @@ public class AdminController {
 		return "content/admin/mem_info";
 	}
 	
+=======
+	//판매 상품 수정
+	@ResponseBody
+	@PostMapping("/updateItemAjax")
+	public void updateItem(ItemVO itemVO) {
+		
+		adminService.updateItem(itemVO);
+	}
+	
+>>>>>>> e40be6046c004d2820aac39f383c0958856b715b
 	
 	
 	

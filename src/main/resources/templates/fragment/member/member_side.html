@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="memberSideFragment">
+	
+	<div class="row">
+		<th:block>
+			<div th:each="msMenu : ${msMenuList}" class="row">
+				<div class="col ms_side_div">
+					<h5>
+						<a th:href="@{'/member/' + ${msMenu.msMenuUrl}}">[[${msMenu.msMenuName}]]</a>
+					</h5>
+				</div>
+			</div>
+		</th:block>
+	</div>
+	
+</th:block>
+
+</html>

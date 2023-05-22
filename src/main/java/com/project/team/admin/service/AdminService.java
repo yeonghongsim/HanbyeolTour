@@ -24,7 +24,7 @@ public interface AdminService {
 	//여행국가 카테고리 삭제
 	void deleteAreaCate(String areaCode);
 	
-	//판매 등록 상품 리스트 조회
+	//판매 상품 조회
 	List<ItemVO> saleListForAdmin();
 	
 	//판매 상품 삭제
@@ -39,6 +39,7 @@ public interface AdminService {
 	//판매 상품 수정
 	void updateItem(ItemVO itemVO);
 	
+
 	//상품 이미지 수정
 	void regImgsForItemDetail(ItemVO itemVO);
 	
@@ -50,7 +51,7 @@ public interface AdminService {
 	
 	//첨부 파일명 조회
 	String getAttachedFileName(String itemImgCode);
-	
+
 	
 	
 	

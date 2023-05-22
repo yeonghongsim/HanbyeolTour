@@ -95,7 +95,6 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateItem(ItemVO itemVO) {
 		sqlSession.update("adminMapper.updateItem", itemVO);
-		//sqlSession.update("adminMapper.updateItemImg", itemVO);
 	}
 	
 	//상품 이미지 수정
@@ -160,14 +159,5 @@ public class AdminServiceImpl implements AdminService{
 
 
 
-
-
-
-
-
-
-
-	
-	
 	
 }

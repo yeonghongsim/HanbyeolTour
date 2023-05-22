@@ -162,13 +162,14 @@
 			, SELLING_START = #{sellingStart}
 			, SELLING_END = #{sellingEnd}
 			, IS_EXTRA_CHARGE = #{isExtraCharge}
-			, IS_PEAK = #{isPeak}
+			, IS_PEAK #{isPeak}
 			, IS_BOMB_SALE = #{isBombSale}
 			, ITEM_INTRO = #{itemIntro}
 			, STATUS_CODE = #{statusCode}
 			, TRAVER_PERIOD = #{traverPeriod}
 		WHERE ITEM_CODE = #{itemCode}
 	</update>
+
 	
 	<!-- 상품 이미지 수정 -->
 	
@@ -207,6 +208,7 @@
 		AND MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
 	
 	</select>
+
 
 
 
