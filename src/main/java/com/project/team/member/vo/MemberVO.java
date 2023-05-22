@@ -15,4 +15,5 @@ public class MemberVO {
 	private String memPw;
 	private int memStatusCode;
 	private MemberDetailVO memberDetailVO;
+	private MemStatusVO memStatusVO;
 }

@@ -28,6 +28,7 @@ import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
 import com.project.team.util.ImgPath;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -171,7 +172,7 @@ public class AdminController {
 		
 	}
 	
-<<<<<<< HEAD
+
 	//판매 상품 수정(이미지 포함)
 	@PostMapping("/updateItem")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
@@ -204,24 +205,25 @@ public class AdminController {
 		return "redirect:/admin/memInfo";
 	}
 	
-	//회원 정보 
+	//회원 리스트 조회
 	@GetMapping("/memInfo")
-	public String memInfo( ) {
-	
+	public String memInfo(Model model) {
 		
+		model.addAttribute("memList", adminService.getMemList());
+	
 		return "content/admin/mem_info";
 	}
 	
-=======
-	//판매 상품 수정
+	//회원 상세 정보 조회
 	@ResponseBody
-	@PostMapping("/updateItemAjax")
-	public void updateItem(ItemVO itemVO) {
+	@PostMapping("/getMemDetailAjax")
+	public MemberVO getMemDetailAjax(String memId) {
 		
-		adminService.updateItem(itemVO);
+		System.out.println(memId);
+		
+		return adminService.getMemDetailInfo(memId);
 	}
 	
->>>>>>> e40be6046c004d2820aac39f383c0958856b715b
 	
 	
 	

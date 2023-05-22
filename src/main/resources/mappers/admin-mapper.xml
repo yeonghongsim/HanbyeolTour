@@ -179,16 +179,27 @@
 		WHERE ITEM_IMG_CODE = #{itemImgCode}
 	</delete>
 	
+	<!-- 업로드 이미지명 조회 -->
 	<select id="getAttachedFileName" resultType="String">
 		SELECT ITEM_IMG_ATTACHED_NAME
 		FROM HBT_ITEM_IMG
 		WHERE ITEM_IMG_CODE = #{itemImgCode}
 	</select>
 	
-	<!-- 회원 정보 -->
-	<select id="getMemsInfo" resultMap="memberMapper.member">
-		SELECT HBT_MEM
-			MEM.MEM_CODE
+	<!-- 회원 리스트 조회 -->
+	<select id="getMemList" resultMap="memberMapper.member">
+		SELECT MEM_CODE
+			, MEM_ID
+			, MEM_NAME
+			, MEM.MEM_STATUS_CODE
+			, MEM_STATUS_NAME
+		FROM HBT_MEM MEM, HBT_MEM_STATUS STATUS
+		WHERE MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
+	</select>
+	
+	<!-- 회원 정보 상세 조회 -->
+	<select id="getMemDetailInfo" resultMap="memberMapper.member">
+		SELECT MEM.MEM_CODE
 			, MEM_ROLE
 			, MEM_ID
 			, MEM_NAME
@@ -199,13 +210,14 @@
 			, MEM_D_ADDR
 			, MEM_D_ADDR2
 			, MEM_D_GEN
-			, MEM_D_BIR
-			, MEM_D_JOINDATE
+			, TO_CHAR(MEM_D_BIR, 'YYYY-MM-DD') MEM_D_BIR
+			, TO_CHAR(MEM_D_JOINDATE, 'YYYY-MM-DD') MEM_D_JOINDATE
 			, MEM_EMAIL
 			, MEM_STATUS_NAME
 		FROM HBT_MEM MEM, HBT_MEM_DETAIL DETAIL, HBT_MEM_STATUS STATUS
 		WHERE MEM.MEM_CODE = DETAIL.MEM_CODE
 		AND MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
+		AND MEM.MEM_ID = #{memId}
 	
 	</select>
 

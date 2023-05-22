@@ -15,7 +15,7 @@
 		<div class="col">
 			<div class="row">
 				<div class="col">
-					<table class="table">
+					<table class="table text-center">
 						<colgroup>
 							<col width="">
 						</colgroup>
@@ -28,12 +28,21 @@
 							</tr>
 						</thead>
 						<tbody>
+						<th:block th:if="${#lists.size(memList) == 0}">
 							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td colspan="4">
+									등록된 회원이 없습니다.
+								</td>
 							</tr>
+						</th:block>
+						<th:block th:unless="${#lists.size(memList) == 0}">
+							<tr th:each="mem, state : ${memList}">
+								<td>[[${state.count}]]</td>
+								<td><a href="javascript:void(0);" th:onclick="getMemDetail([[${mem.memId}]]);">[[${mem.memId}]]</a></td>
+								<td>[[${mem.memName}]]</td>
+								<td>[[${mem.memStatusVO.memStatusName}]]</td>
+							</tr>
+						</th:block>
 						</tbody>
 					</table>
 				</div>
@@ -44,7 +53,7 @@
 
 <!-- 연결해야 할 외부 js 파일-->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/js/test.js(변경)"></script> --> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+	<script type="text/javascript" src="/js/content/admin/mem_info.js"></script> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
 </th:block>
 
 

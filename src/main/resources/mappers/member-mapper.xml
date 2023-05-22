@@ -11,6 +11,7 @@
 		<result column="MEM_PW" 				property="memPw"/>
 		<result column="MEM_STATUS_CODE" 		property="memStatusCode"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
+		<association property="memStatusVO"		resultMap="memStatus"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
@@ -23,6 +24,12 @@
 		<result column="MEM_D_BIR"		 	property="memDBir"/>
 		<result column="MEM_D_JOINDATE" 	property="memDJoindate"/>
 		<result column="MEM_EMAIL" 			property="memEmail"/>
+	</resultMap>
+	
+	<!-- 이한별 작성 -->
+	<resultMap type="com.project.team.member.vo.MemStatusVO" id="memStatus">
+		<id		column="MEM_STATUS_CODE" 	property="memStatusCode"/>
+		<result column="MEM_STATUS_NAME" 	property="memStatusName"/>
 	</resultMap>
 	
 	

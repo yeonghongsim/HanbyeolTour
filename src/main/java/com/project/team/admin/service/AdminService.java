@@ -46,8 +46,11 @@ public interface AdminService {
 	//상품 상세 정보 X 클릭 시 이미지 삭제
 	void deleteItemImg(ImgVO imgVO);
 	
-	//회원 정보 조회
-	List<MemberVO> getMemsInfo();
+	//회원 리스트 조회
+	List<MemberVO> getMemList();
+	
+	//회원 상세 정보 조회
+	MemberVO getMemDetailInfo(String memId);
 	
 	//첨부 파일명 조회
 	String getAttachedFileName(String itemImgCode);
