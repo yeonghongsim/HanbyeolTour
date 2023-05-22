@@ -8,26 +8,72 @@
 
     <style>
         #map {
-            height: 400px; /* The height is 400 pixels */
+            height: 600px; /* The height is 400 pixels */
             width: 100%; /* The width is the width of the web page */
         }
     </style>
 </th:block>
 
 <th:block layout:fragment="content">
-    <div id="map">
+    <div class="row">
 
 
+<!--        검색어입력-->
+        <div class="row">
+            <div class="col">
+                <select class="areaName form-select">
+                    <th:block th:each="loc : ${locMenuList}">
+                        <option>[[${loc.areaKorName}]]</option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="도시명" id="cityName">
+            </div>
+            <div class="col">
+                <input class="btn" type="button" value="검색" onclick="searchHotels();">
+            </div>
+        </div>
+
+<!--        아이템 카드-->
+        <div class="row resultDiv">
+            <div class="col">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+
+            </div>
+        </div>
     </div>
 
-  <input type="button" value="검색" onclick="searchHotels();">
-  <input type="button" value="test" onclick="makerTest();">
+
+
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">모달버튼</button>
+
+
 </th:block>
 
 <!--  연결해야할 외부 js 파일 -->
+<div>
+
+
+
+
+
 <th:block layout:fragment="content_js">
     <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4">
     </script>
   <script type="text/javascript" src="/js/content/hotels/searchHotels.js"></script>
 </th:block>
