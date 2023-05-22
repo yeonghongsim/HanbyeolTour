@@ -139,18 +139,18 @@ function getSearchByDateAJAX(getDate){
 				resultTbodyTag.replaceChildren();
 			
 			//테이블 그리기 시작			
-			str = '';
+			let str = '';
 			for(const i of resultArray){
 				str += `<tr>`;
-				str += `<td><img src="/img/item/itemImg/${i.ITEM_IMG_ATTACHED_NAME}"></td>`
+				str += `<td><img src="/img/item/itemImg/${i["ITEM_IMG_ATTACHED_NAME"]}"></td>`
 				str += `<td>`;
-				str += `<div>${i.DEP_DATE}</div>`;
-				str += `<div>${i.ARR_DATE}</div>`;
+				str += `<div>${i["DEP_DATE"]}</div>`;
+				str += `<div>${i["ARR_DATE"]}</div>`;
 				str += `</td>`;
-				str += `<td>${i.TRAVER_PERIOD}</td>`;
-				str += `<td>${i.ITEM_TITLE}</td>`;
-				str += `<td>${i.ITEM_PRICE}</td>`;
-				str += `<td>${i.STATUS_NAME}</td>`;
+				str += `<td>${i["TRAVER_PERIOD"]}</td>`;
+				str += `<td>${i["ITEM_TITLE"]}</td>`;
+				str += `<td>${i["ITEM_PRICE"]}</td>`;
+				str += `<td>${i["STATUS_NAME"]}</td>`;
 				str += `</tr>`;
 			}
 			document.querySelector('.resultTbodyTag').insertAdjacentHTML('afterbegin',str);

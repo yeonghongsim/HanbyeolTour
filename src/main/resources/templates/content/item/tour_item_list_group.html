@@ -20,7 +20,7 @@
 			</div>
 
 				<!-- 상품목록  -->
-			<th:blcok th:each="tourItem, state : ${tourItemList}">
+			<th:block th:each="tourItem, state : ${tourItemList}">
 				<div class="row itemRow">
 					<div class="col col-2 itemImg d-gird">
 						<img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'>
@@ -39,7 +39,7 @@
 							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
 									th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false" 
 									th:aria-controls="flush-collapseOne + ${state.index}" 
-									th:onclick="getSearchByDateTable([[${state.index}]]);">
+									th:onclick="getSearchByGroupTable([[${state.index}]]);">
 						        출발일 보기
 						     </button>
 						</div>
@@ -52,25 +52,28 @@
 							data-bs-parent="#accordionFlushExample">
 							<div class="accordion-body">
 								<div class="row dateDiv">
-									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]], 0);">
+									<div class="col" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
 										<span class="yearSpan"></span>
 										<span class="monthSpan"></span>
 									</div>
-									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]],1);">
+									<div class="col" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
 										<span class="yearSpan"></span>
 										<span class="monthSpan"></span>
 									</div>
-									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]],2);">
+									<div class="col" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
 										<span class="yearSpan"></span>
 										<span class="monthSpan"></span>
 									</div>
-									<div class="col" th:onclick="getSearchByDateTable([[${state.index}]],3);">
+									<div class="col" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
 										<span class="yearSpan"></span>
 										<span class="monthSpan"></span>
 									</div>
 								</div>
+
+								<!--달력테이블 그려지는 자리-->
 								<div class="row">
 									<div class="col">
+										<input type="hidden" th:value="${tourItem['ITEM_CODE']}">
 										<table class="calTableTag table">
 											<colgroup></colgroup>
 										</table>
@@ -90,6 +93,7 @@
 											</colgroup>
 											<thead>
 												<tr>
+													<td>상품이미지</td>
 													<td>출발정보<br>도착정보</td>
 													<td>항공사</td>
 													<td>여행기간</td>
@@ -98,7 +102,7 @@
 													<td>예약상태</td>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody class="resultTbodyTag">
 											
 											</tbody>
 										</table>
@@ -118,7 +122,7 @@
 					</div>
 				</div>
 			</div>
-		</th:blcok>	
+		</th:block>
 			
 			
 			<div class="row"></div>
