@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.team.admin.service.AdminService;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
@@ -29,6 +30,8 @@ import jakarta.mail.internet.InternetAddress;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	@Resource(name = "adminService")
+	private AdminService adminService;
 	
 	@Resource(name = "memberService")
 	private MemberService memberService;
@@ -188,7 +191,20 @@ public class MemberController {
 	
 	
 	
-	
+	// 회원 정보 관리 / 마이페이지
+	@GetMapping("/infoManage")
+	public String infoManage(Model model) {
+		
+		//메인페이지 열릴때 해외패키지 하위메뉴 조회
+		model.addAttribute("locMenuList", adminService.getAreaCateList());
+		
+		// 회원 사이드 메뉴 조회
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/info_manage";
+		
+		
+	}
 	
 	
 	

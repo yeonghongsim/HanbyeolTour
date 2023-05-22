@@ -296,11 +296,22 @@ public class AdminController {
 		
 	}
 	
+	// 문의 사항 검색
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")
 	public void searchRequestAjax() {
 		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
 	}
 	
+	// 자주 묻는 문의 사항 관리 페이지
+	@GetMapping("/frequncyRequestMng")
+	public String frequncyRequestMng(Model model) {
+		
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		return "content/admin/board/frequncy_request_mng";
+		
+		
+	}
 
 }
