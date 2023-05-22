@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.team.admin.service.AdminService;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.MailService;
-import com.project.team.util.MailVO;
 
 import jakarta.annotation.Resource;
 import jakarta.mail.Address;
@@ -30,8 +28,6 @@ import jakarta.mail.internet.InternetAddress;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	@Resource(name = "adminService")
-	private AdminService adminService;
 	
 	@Resource(name = "memberService")
 	private MemberService memberService;
@@ -55,13 +51,6 @@ public class MemberController {
 	@ResponseBody
 	public boolean isDuplicateMemId(String memId) {
 		return memberService.isDuplicateMemId(memId);
-	}
-	
-	//이메일 중복 확인 
-	@PostMapping("/isDuplicateMemEmail")
-	@ResponseBody
-	public boolean isDuplicateMemEmail(String memEmail) {
-		return memberService.isDuplicateMemEmail(memEmail);
 	}
 	
 	//회원가입 
@@ -152,10 +141,7 @@ public class MemberController {
 		//이메일 주소 조회
 		String memEmail = memberService.getMemEmailForFindPw(memberVO);
 		
-		System.out.println(memEmail);
-		
 		 if(memEmail != null) {
-			   
 			 //메일 발송 전에 임시 비밀번호를 DB에 비밀번호로 저장을 해주기 
 			   //1. 임시비밀번호 생성 
 			   String temporaryPw = mailService.createRandomPw();
@@ -192,35 +178,22 @@ public class MemberController {
 			       recipientAddresses[i] = new InternetAddress(emailList.get(i));
 			   }
 			   			   
-			   mailService.sendHTMLEmail(recipientAddresses, temporaryPw, name);
+			   mailService.sendHTMLEmail();
 			  
 			   
 			   return true;
 		   }
 		   	   
-		   return false;
-	}
-		
-		
-	
-	
-	
-	// 회원 정보 관리 / 마이페이지
-	@GetMapping("/infoManage")
-	public String infoManage(Model model) {
-		
-		//메인페이지 열릴때 해외패키지 하위메뉴 조회
-		model.addAttribute("locMenuList", adminService.getAreaCateList());
-		
-		// 회원 사이드 메뉴 조회
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
-		
-		return "content/member/info_manage";
-		
+		   return memEmail != null ? true : false;
 		
 	}
-	
-	
+		
+		
+		
+		
+		
+		
+			
 	
 	
 	

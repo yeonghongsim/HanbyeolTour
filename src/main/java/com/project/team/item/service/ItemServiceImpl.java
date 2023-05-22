@@ -19,6 +19,11 @@ public class ItemServiceImpl implements ItemService{
 	public List<HashMap<String, Object>> getItemListByAreaName(Map<String, String> searchKeyword) {
 		return sqlSession.selectList("itemMapper.getItemListByAreaName", searchKeyword);
 	}
+
+	//그룹별상품보기에서 일자별 검색결과
+	public List<HashMap<String, Object>> getTourItemListGroupAJAX(Map<String, String> searchKeyword){
+		return sqlSession.selectList("itemMapper.getTourItemListGroupAJAX", searchKeyword);
+	}
 	
 	
 }

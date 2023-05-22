@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 /* 헤더 글씨 옆으로 나오도록 설정*/
 .login-func-bar li {
   display: inline-block;

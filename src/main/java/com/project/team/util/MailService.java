@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import jakarta.mail.Address;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
@@ -47,13 +47,14 @@ public class MailService {
 	}
 	
 	//HTML 메일 보내기 
-	public void sendHTMLEmail(Address[] recipientAddresses, String password, String name) {
+	public void sendHTMLEmail() {
 		MimeMessage message = javaMailSender.createMimeMessage();
+		String password = "111111"; //임시 비밀번호 ( 나중에는 정말 랜덤 비밀번호로 설정해주기 ) 
 		
 		try {
-			message.setSubject("한별투어 - 임시 비밀번호를 알려드립니다!");  // 제목 설정 
-			message.setText(setContext(password, name), "UTF-8", "html"); // 내용 설정 ( HTML ) // 111111 => password => 아래의 메소드로 간다. => 내용이 저장됨 //인코딩, html 파일형식 
-			message.addRecipients(MimeMessage.RecipientType.TO, recipientAddresses); //(MimeMessage.RecipientType.TO, 수신자 주소) //뒤에오는게 여려명인 경우 addresss[]로 해줘야함 
+			message.setSubject("임시 제목");  // 제목 설정 
+			message.setText(setContext(password), "UTF-8", "html"); // 내용 설정 ( HTML ) // 111111 => password => 아래의 메소드로 간다. => 내용이 저장됨 //인코딩, html 파일형식 
+			message.addRecipients(MimeMessage.RecipientType.TO,""); //(MimeMessage.RecipientType.TO, 수신자 주소) //뒤에오는게 여려명인 경우 addresss[]로 해줘야함 
 			javaMailSender.send(message);
 			
 		} catch (MessagingException e) {
@@ -126,10 +127,9 @@ public class MailService {
 	
 	
 	//HTML을 메일로 전송할 때 그 메일의 내용 세팅 
-	public String setContext(String password, String name) {
+	public String setContext(String password) {
 		Context context = new Context();
 		context.setVariable("password", password); //password라는 이름으로 넘어온 매개변수를 html에 있는 password에 데이터를 넣을수 있다. 
-		context.setVariable("name", name); //password라는 이름으로 넘어온 매개변수를 html에 있는 password에 데이터를 넣을수 있다. 
 		return templateEngine.process("mail", context); //타임리프로 mail.html을 다루겠다는 의미 
 		//mail.html 은  templates 패키지 안에 있어서 가능. 다른폴더라면 폴더명도 넣어줘야함 
 		//mail.html을 리턴해서 보낼건데, 그안에 password 변수가 있는데, 그 안에 password 데이터를 넣을거고

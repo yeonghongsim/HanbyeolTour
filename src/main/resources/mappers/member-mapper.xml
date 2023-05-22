@@ -12,6 +12,7 @@
 		<result column="MEM_STATUS_CODE" 		property="memStatusCode"/>
 		<result column="IS_TEMPORARY_PW" 		property="isTemporaryPw"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
+		<association property="memStatusVO"		resultMap="memStatus"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
@@ -26,24 +27,18 @@
 		<result column="MEM_EMAIL" 			property="memEmail"/>
 	</resultMap>
 	
-	<resultMap type="com.project.team.member.vo.MemberSideMenuVO" id="msMenu">
-		<id column="MS_MENU_CODE" property="msMenuCode"/>
-		<result column="MS_MENU_NAME" property="msMenuName"/>
-		<result column="MS_MENU_URL" property="msMenuUrl"/>
+	<!-- 이한별 작성 -->
+	<resultMap type="com.project.team.member.vo.MemStatusVO" id="memStatus">
+		<id		column="MEM_STATUS_CODE" 	property="memStatusCode"/>
+		<result column="MEM_STATUS_NAME" 	property="memStatusName"/>
 	</resultMap>
+	
 	
 	<!--회원가입시 ID 중복 체크  -->
 	<select id="isDuplicateMemId" resultType="int">
 	SELECT COUNT(MEM_ID)
 	FROM HBT_MEM
 	WHERE MEM_ID = #{memId}
-	</select>
-	
-	<!--회원가입시 Email 중복 체크  -->
-	<select id="isDuplicateMemEmail" resultType="int">
-	SELECT COUNT(MEM_EMAIL)
-	FROM HBT_MEM_DETAIL
-	WHERE MEM_EMAIL = #{memEmail}
 	</select>
 	
 	<!-- memCode 생성 -->
@@ -118,6 +113,7 @@
 	</select>
 	
 	
+	
 	<!-- 아이디 찾기 -->
 	<select id="findId" resultType="String">
 	  SELECT MEM_ID
@@ -133,23 +129,16 @@
 	<!-- 비밀번호 찾기 -> 이메일 주소 확인 후 임시 비밀번호 발송 -->
 	<select id="getMemEmailForFindPw" resultType="String">
 	  SELECT MEM_EMAIL
-	  FROM HBT_MEM_DETAIL
-	  WHERE MEM_CODE IN (
-	    SELECT MEM_CODE
-	    FROM HBT_MEM
-	    WHERE MEM_ID = #{memId}
-	      AND MEM_NAME = #{memName}
-	  )
-	  AND MEM_D_TELL = #{memberDetailVO.memDTell}
+	  FROM HBT_MEM
+	  WHERE MEM_ID = #{memId}
+	  WHERE MEM_NAME = #{memName}
+	  AND MEM_CODE IN (
+	      SELECT MEM_CODE
+	      FROM HBT_MEM_DETAIL
+	      WHERE MEM_D_TELL = #{memberDetailVO.memDTell}
+	   	  )
 	</select>
 
-	<!-- 비밀번호 변경 (임시로) -->
-	<update id="updateMemPw">
-		UPDATE HBT_MEM
-		SET
-		MEM_PW = #{memPw}
-		WHERE MEM_ID = #{memId}
-	</update>
 	
 	<!-- 임시 비밀번호 발급 여부 변경 -->
 	<update id="updateIsTemporaryPw">
@@ -177,13 +166,8 @@
 	
 	
 	
-	<!-- 심영홍 -->
-	<select id="getMsMenuList" resultMap="msMenu">
-		SELECT MS_MENU_CODE
-			, MS_MENU_NAME
-			, MS_MENU_URL
-		FROM MEMBER_SIDE_MENU
-	</select>
+	
+	
 	
 </mapper>
 

@@ -13,6 +13,9 @@ repositories {
 }
 
 dependencies {
+	//구글api사용
+	implementation 'com.google.maps:google-maps-services:0.17.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 발송 
     implementation 'com.oracle.database.security:osdt_cert:21.3.0.0'
     implementation 'com.oracle.database.security:oraclepki:21.3.0.0'
