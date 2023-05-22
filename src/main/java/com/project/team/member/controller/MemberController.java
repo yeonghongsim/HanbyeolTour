@@ -75,7 +75,12 @@ public class MemberController {
 		memberService.join(memberVO, memberDetailVO);
 		
 		
-		return "redirect:/member/login";
+		return "content/member/join_notice";
+	}
+	
+	@GetMapping("/notice")
+	public String joinnotice() {
+		return "content/member/join_notice";
 	}
 	
 	
