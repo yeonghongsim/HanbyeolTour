@@ -7,31 +7,39 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-@RequestMapping("/hotels")
 @RestController
 public class HotelSearchController {
 
-    //해외호텔검색페이지 이동
-
-
-
     @PostMapping("/search")
-    public ResponseEntity<String> searchPlacesAJAX(@RequestBody PlaceSearchRequest request) {
+    public ResponseEntity<String> searchPlaces(@RequestBody PlaceSearchRequest request) {
+        try {
+            // Place API 요청을 생성하고 호출
+            //String query = URLEncoder.encode(request.getKeyword(), StandardCharsets.UTF_8);
+            String query = URLEncoder.encode("식당", StandardCharsets.UTF_8);
+            String location = "37.5665,126.9780";  // Seoul's latitude and longitude
+            int radius = 500;
+
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
+            String apiKey = "AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4";
+            String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=seoul&radius=500&key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4";
+//            String url =  "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query +
+//                    "&location=" + location +
+//                    "&radius=" + radius +
+//                    "&key=" + apiKey;
 
 
 
-        // Place API 요청을 생성하고 호출
-        String query = URLEncoder.encode(request.getKeyword(), StandardCharsets.UTF_8);
-        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%ED%98%B8%ED%85%94%20%EC%84%9C%EC%9A%B8&location=37.5665,126.9780&radius=5000&opennow=true&minprice=0&maxprice=4&key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4";
-
-        // Place API 호출 및 응답 받기
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-
-
-        System.out.println(response);
-        // 검색 결과를 클라이언트로 반환
-        return response;
+            // Place API 호출 및 응답 받기
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            System.out.println(response);
+            // 검색 결과를 클라이언트로 반환
+            return response;
+        } catch (Exception e) {
+            // 예외 처리
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public static class PlaceSearchRequest {
@@ -56,6 +64,4 @@ public class HotelSearchController {
             this.radius = radius;
         }
     }
-
-
 }

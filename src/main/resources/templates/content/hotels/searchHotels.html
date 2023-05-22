@@ -5,14 +5,30 @@
 <!-- 연결해야할 외부 CSS파  -->
 <th:block layout:fragment="content_css">
   <link rel="stylesheet" href="/css/item/item_header.css">
+
+    <style>
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
 </th:block>
 
 <th:block layout:fragment="content">
+    <div id="map">
+
+
+    </div>
+
   <input type="button" value="검색" onclick="searchHotels();">
+  <input type="button" value="test" onclick="makerTest();">
 </th:block>
 
 <!--  연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4&callback=initMap">
+    </script>
   <script type="text/javascript" src="/js/content/hotels/searchHotels.js"></script>
 </th:block>
 </html>
