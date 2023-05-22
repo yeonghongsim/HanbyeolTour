@@ -14,5 +14,6 @@ public class MemberVO {
 	private String memName;
 	private String memPw;
 	private int memStatusCode;
+	private String isTemporaryPw;
 	private MemberDetailVO memberDetailVO;
 }

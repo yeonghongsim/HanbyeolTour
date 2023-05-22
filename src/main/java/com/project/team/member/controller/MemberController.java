@@ -81,6 +81,7 @@ public class MemberController {
 		return "content/member/join_notice";
 	}
 	
+	// 임시로 페이지 보기 위해 만들어 놓음 (회원가입 없이 페이지 보려고)
 	@GetMapping("/notice")
 	public String joinnotice() {
 		return "content/member/join_notice";
@@ -94,6 +95,18 @@ public class MemberController {
 		
 		return "content/member/login";
 	}
+	
+	
+	@PostMapping("/isTemporaryPwAjax")
+	@ResponseBody
+	public String getgetIsTemporaryPw(String memId) {
+		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
+		System.out.println("@@@@@@22"+ isTemporaryPw);
+		return isTemporaryPw;
+	} 
+	
+	
+	
 	
 	//아이디 찾기 페이지로 이동 
 	@GetMapping("/findId")
@@ -152,8 +165,10 @@ public class MemberController {
 			   //3. 임시비밀번호로 비밀번호 DB 수정
 			   memberService.updateMemPw(memberVO); 
 			   
+			   //4. 임시비밀번호 발급 여부 추가 
+			   memberService.updateIsTemporaryPw(memberVO.getMemId());
+			   		   
 			   String name = memberVO.getMemName();
-			   System.out.println("!!!!!"+name);
 			   
 			   
 			   // 간단한 메일 발송 (실행할 떄 mailVO 전달받아야한다.(내용, 수신자 필요) 
@@ -170,7 +185,6 @@ public class MemberController {
 			   // HTML 메일 발송 
 			   List<String> emailList = new ArrayList<>(); //이메일 리스트 만들어주기 
 			   emailList.add(memEmail);
-			   System.out.println("@@@@@" + emailList);
 			   
 			   //emailList -> address[] 형태, InternetAddress 객체로 변환
 			   Address[] recipientAddresses = new InternetAddress[emailList.size()];

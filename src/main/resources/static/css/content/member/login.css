@@ -38,3 +38,16 @@ a{
   font-size: 0.8rem;
   
 }
+
+#btn-home{
+	display: none;
+}
+#btn-home-2{
+	display: none;
+}
+
+#btn-updatePw{
+	display: none;
+}
+
+

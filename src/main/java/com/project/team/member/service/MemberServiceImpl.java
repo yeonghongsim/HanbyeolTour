@@ -64,12 +64,37 @@ public class MemberServiceImpl implements MemberService{
 	public void updateMemPw(MemberVO memberVO) {
 		sqlSession.update("memberMapper.updateMemPw", memberVO);
 	}
+	
+	// 임시 비밀번호 발급 여부 수정 
+	@Override
+	public void updateIsTemporaryPw(String memId) {
+		sqlSession.update("memberMapper.updateIsTemporaryPw", memId);
+	}
+	
+	// 임시 비밀번호 발급 여부 확인 
+	@Override
+	public String getIsTemporaryPw(String memId) {
+		return sqlSession.selectOne("memberMapper.getIsTemporaryPw", memId);
+	}
+	
+	//임시 비밀번호 발급 고객 - 비밀번호 수정 완료 후 상태 변경
+	@Override
+	public void updateIsTemporaryPwToN(String memId) {
+		sqlSession.update("memberMapper.updateIsTemporaryPwToN", memId);
+	}
 
+	
+		
 	// 회원 사이드 메뉴 목록 조회
 	@Override
 	public List<MemberSideMenuVO> getMsMenuList() {
 		return sqlSession.selectList("memberMapper.getMsMenuList");
 	}
+
+	
+	
+	
+	
 
 	
 	
