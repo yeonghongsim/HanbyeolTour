@@ -54,7 +54,7 @@
 	</div>
 	
 	<div class="row mb-3 typeRequest-con">
-		<div class="col-lg-2 col-sm-3 typeRequest-div">
+		<div class="col-lg-2 col-sm-3 typeRequest-div" th:classappend="${1 == 1} ? 'ye-S-bc' : ''">
 			<span class="pointer" th:onclick="searchTypeRequest()">전체</span>
 		</div>
 		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">

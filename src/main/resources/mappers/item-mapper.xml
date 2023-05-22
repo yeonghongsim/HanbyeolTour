@@ -16,8 +16,8 @@
 		<result column="ITEM_INTRO" 		property="itemIntro"/>
 		<result column="STATUS_CODE" 		property="statusCode"/>
 		<result column="TRAVER_PERIOD" 		property="traverPeriod"/>
-		<association property="tourAreaVO" 	resultMap="tourArea"> </association> 
-		<collection property="imgList" 		resultMap="img"></collection>
+		<association property="tourAreaVO" 	resultMap="tourArea"> </association>
+		<collection property="imgList" 		resultMap="img"/>
 	</resultMap>
 	
 	
@@ -55,33 +55,27 @@
 	<if test="date != null and !date.isEmpty()">
 	AND #{date} BETWEEN ITEM.SELLING_START AND ITEM.SELLING_END
 	</if>
-
 	</select>
-	
+
+	<select id="getTourItemListGroupAJAX" resultType="Map">
+	SELECT ITEM.ITEM_CODE
+            , ITEM_TITLE
+            , AREA_KOR_NAME
+            , ITEMS.STATUS_NAME
+            , IMG.ITEM_IMG_ATTACHED_NAME
+            , IS_MAIN
+            , ITEM.ITEM_PRICE
+            , ITEM.TRAVER_PERIOD
+	FROM HBT_ITEM ITEM, HBT_ITEM_STATE ITEMS, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA
+	WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+	AND ITEM.AREA_CODE = AREA.AREA_CODE
+	AND IS_MAIN = 'Y'
+	AND ITEMS.STATUS_CODE = '1'
+	AND ITEM.ITEM_CODE = #{itemCode}
+	AND #{searchDate} BETWEEN ITEM.SELLING_START AND ITEM.SELLING_END
+	</select>
+
+
+
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

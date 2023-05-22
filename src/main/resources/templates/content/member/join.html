@@ -66,7 +66,7 @@
 				<div class="row">
 					<div class="col-9" id="memIdDiv">
 						<input type="text" class="form-control form-control-lg" placeholder="아이디"
-					 	id="memId" name="memId" onkeyup="setDisabled();" onclick="idValidate()" oninput="idValidate()">
+					 	id="memId" name="memId" onclick="idValidate()" oninput="idValidate()">
 					</div>
 					<div class="col-3 d-grid">	
 						<input type="button" class="btn btn-lg btn-outline-light" id="check_id" value="중복확인" onclick="isDuplicateMemId();" disabled>
@@ -79,7 +79,7 @@
 			</div>
 			
 			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw" oninput="pwCheck()">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw" oninput="pwCheckValidate()" onclick="pwCheckValidate();">
 			</div>
 			
 			<div class="col-12">
@@ -111,7 +111,7 @@
 				<div class="row">
 					<div class="col-9" id="memEmailDiv">
 						<input type="email" class="form-control form-control-lg" placeholder="이메일  예시) ID@example.com" 
-						id="memEmail" name="memEmail" onkeyup="setDisabled();" onclick="emailValidate();" oninput="emailValidate()">
+						id="memEmail" name="memEmail" onclick="emailValidate();" oninput="emailValidate()">
 					</div>
 					<div class="col-3 d-grid">	
 						<input type="button" class="btn btn-lg btn-outline-light" id="check_email" value="중복확인" onclick="isDuplicateMemEmail();" disabled>
@@ -141,16 +141,16 @@
 				 placeholder="- 없이 휴대폰 전체자리 입력" oninput="memDTellValidate()" onclick="memDTellValidate();">
 			</div>
 
-			<div class="col-9">
+			<div class="col-9" id="memDAddrDiv">
 				<input type="text" class="form-control form-control-lg" id="memDAddr" name="memDAddr" 
-				onclick="searchAddr();" placeholder="우편번호" readonly>
+				onclick="memDAddrValidate();" placeholder="우편번호" readonly oninput="memDAddrValidate()">
 			</div>
 			<div class="col-3 d-grid">	
 				<input type="button" class="btn btn-outline-light" id="search_btn" value="주소 검색" onclick="searchAddr();">
 			</div>
-			<div class="col-12 mb-3">
+			<div class="col-12 mb-3" id="memDAddr2Div">
 				<input type="text" class="form-control form-control-lg" id="memDAddr2" name="memDAddr2" 
-				placeholder="상세 주소">
+				placeholder="상세 주소" onclick="memDAddr2Validate();" oninput="memDAddr2Validate()">
 			</div>
 			
 			<div class="row">
@@ -172,7 +172,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="d-grid">
-						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn" disabled>가입완료</button>
+						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn">가입완료</button>
 					</div>
 				</div>
 			</div>

@@ -1,10 +1,9 @@
 package com.project.team.admin.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,9 @@ import com.project.team.board.vo.BoardNoticeVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
+import com.project.team.util.ImgPath;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -172,13 +173,15 @@ public class AdminController {
 		
 	}
 	
-	//판매 상품 수정
+
+	//판매 상품 수정(이미지 포함)
 	@PostMapping("/updateItem")
-	public String updateItem(ItemVO itemVO) {
+	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
 		//오류 수정중
 		System.out.println(itemVO);
 		
 		adminService.updateItem(itemVO);
+		adminService.regImgsForItemDetail(itemVO);
 
 		return "redirect:/admin/itemManageForSale";
 	}
@@ -186,18 +189,41 @@ public class AdminController {
 	//상품 상세 정보 조회 X 버튼 클릭 시 이미지 삭제
 	@ResponseBody
 	@PostMapping("/deleteItemImgAjax")
-	public String deleteItemImgAjax(ImgVO imgVO) {
-		
-		System.out.println(imgVO.getItemCode());
-		System.out.println(imgVO.getItemImgCode());
+	public void deleteItemImgAjax(ImgVO imgVO) {
+		//첨부된 파일명 조회
+		String attachedFileName = adminService.getAttachedFileName(imgVO.getItemImgCode());
+		File file = new File(ImgPath.UPLOAD_PATH + attachedFileName);
+		file.delete();
 		
 		adminService.deleteItemImg(imgVO);
-		
-		String result = "success";
-		
-		return result;
+	
 	}
 	
+	//회원 관리 페이지
+	@GetMapping("/memManage")
+	public String memManage() {
+		
+		return "redirect:/admin/memInfo";
+	}
+	
+	//회원 리스트 조회
+	@GetMapping("/memInfo")
+	public String memInfo(Model model) {
+		
+		model.addAttribute("memList", adminService.getMemList());
+	
+		return "content/admin/mem_info";
+	}
+	
+	//회원 상세 정보 조회
+	@ResponseBody
+	@PostMapping("/getMemDetailAjax")
+	public MemberVO getMemDetailAjax(String memId) {
+		
+		System.out.println(memId);
+		
+		return adminService.getMemDetailInfo(memId);
+	}
 	
 	
 	
@@ -297,7 +323,6 @@ public class AdminController {
 		
 	}
 	
-	// 문의 사항 검색
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")
 	public void searchRequestAjax() {

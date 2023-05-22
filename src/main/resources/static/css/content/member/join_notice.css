@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+.join-img {
+	font-size: 5rem;
+	text-align: center;
+	color: #ffd000;
+	font-weight: bold;
+	
+}
+
+
+.join-n-title{
+	font-size: 2rem;
+	text-align: center;
+	letter-spacing: -2px;
+    padding-bottom: 2rem;
+    padding-left: 8px;
+}
+
+.join-n-content{
+	font-size: 1rem;
+	text-align: center;
+	letter-spacing: -1px;
+    padding-bottom: 0.2rem;
+    padding-left: 8px;
+}
+
+.last-btn{
+	margin-bottom: 2rem;
+}
+
+.n-container{
+	border: 2px solid #ffd000;
+	border-radius:2rem;
+	width: 50%;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 5rem;
+	margin-bottom: 10rem;
+	padding: 2rem;
+}
+
+
+

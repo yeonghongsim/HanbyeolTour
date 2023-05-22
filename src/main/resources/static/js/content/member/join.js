@@ -4,18 +4,37 @@
 
 //회원가입
 function join(){
-	
-	//유효성 검사 진행 
-	const idValid = idValidate();
-	const pwValid = pwValidate();
 		
-	if(!idValid || !pwValid){
-		return ;
-	}
-	
+    // 유효성 검사 진행
+    const idValid = idValidate();
+    const pwValid = pwValidate();
+    const pwCheckValid = pwCheckValidate();
+    const nameValid = nameValidate();
+    const emailValid = emailValidate();
+    const memDTellValid = memDTellValidate();
+    const memDAddrValid = memDAddrValidate();
+    const memDAddr2Valid = memDAddr2Validate();
+
+    if (idValid || !pwValid || !pwCheckValid || !nameValid || !emailValid || !memDTellValid || !memDAddrValid || !memDAddr2Valid) {
+    	alert('모든 입력사항들이 올바르게 입력되어 있는지 확인해주세요!');
+    	return ;
+    }
+    
 	//회원가입 진행 
-	document.querySelector('#joinForm').submit();
+    document.querySelector('#joinForm').submit();
+   
+    
 }
+
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 
 //우편번호 검색 api 사용
@@ -28,6 +47,8 @@ function searchAddr(){
 			document.querySelector('#memDAddr').value = roadAddr;
         }
     }).open();
+    
+   
 }
 
 
@@ -120,6 +141,7 @@ function idValidate(){
 	    $('#memId').css('border-color', '#dc3545'); // 테두리 색상 변경
         $('#memId').css('border-width', '2px'); // 테두리 두께 변경
         document.querySelector('#check_id').disabled = true;
+        //setDisabled()
 	}
 	else {
         $('#memId').css('border-color', 'green'); 
@@ -179,7 +201,7 @@ function pwValidate(){
 
 
 //비밀번호 확인 
-function pwCheck(){
+function pwCheckValidate(){
 	//기존 오류 메시지 제거 
 	const pwCheckError = document.querySelector('#pwCheckError');
 	if (pwCheckError) {
@@ -196,28 +218,36 @@ function pwCheck(){
 	checkPwTag = document.querySelector('#check_pw');
 	checkPw = document.querySelector('#check_pw').value;
 	
-	if(originPw != null){
-			if(originPw != checkPw){
-			str_pwCheck = '입력한 비밀번호와 일치하지 않습니다.';
-			result_pwCheck = false;
+	if(checkPw == ''){
+		str_pwCheck = `비밀번호 확인을 입력해주세요.`;
+		result_pwCheck = false;
+	}
+	else{
+		
+		if(originPw != null && originPw != checkPw){
+		str_pwCheck = '입력한 비밀번호와 일치하지 않습니다.';
+		result_pwCheck = false;
 		}
-		else{
+		
+		if(originPw != null && originPw == checkPw){
 			str_pwCheck = '비밀번호 확인이 완료 되었습니다.';
 		}
 	}
 	
-	if(originPw != null){
-		if(!result_pwCheck){
-		const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_pwCheck}</div>`;
-		checkPwTag.insertAdjacentHTML('afterend', errorHTML);
-		$('#check_pw').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#check_pw').css('border-width', '2px'); // 테두리 두께 변경
+	 
+	
+	//if(originPw != null){
+	if(!result_pwCheck){
+	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_pwCheck}</div>`;
+	checkPwTag.insertAdjacentHTML('afterend', errorHTML);
+	$('#check_pw').css('border-color', '#dc3545'); // 테두리 색상 변경
+    $('#check_pw').css('border-width', '2px'); // 테두리 두께 변경
 	}
 	else {
         $('#check_pw').css('border-color', 'green'); 
         $('#check_pw').css('border-width', '2px');
     }
-	}
+	//}
 	
 	return result_pwCheck;	
 	
@@ -347,7 +377,7 @@ function isDuplicateMemEmail(){
 				alert('사용 가능한 이메일 주소입니다.');
 				
 				//JOIN 버튼의 disabled 속성 제거 
-				document.querySelector('.joinBtn').disabled = false;
+				//document.querySelector('.joinBtn').disabled = false;
 			}
 	   },
 	   error: function() {
@@ -407,8 +437,88 @@ function memDTellValidate(){
 }
 
 
+//우편번호 유효성검사 
+function memDAddrValidate(){
+	
+	//기존 오류 메시지 제거 
+	const memDAddrError = document.querySelector('#memDAddrError');
+	if (memDAddrError) {
+		memDAddrError.remove();
+	}
+	
+	//함수 리턴 결과 저장할 함수 
+	let result_memDAddr= true;
+	
+	//오류 메세지 저장 
+	let str_memDAddr =``;
+	
+	const memDAddrTag = document.querySelector('#memDAddrDiv');
+	
+	// validation 처리
+	const memDAddr = document.querySelector('#memDAddr').value;
+	
+	if(memDAddr == ''){
+		str_memDAddr = `주소는 필수 입력사항입니다. 주소 검색을 통해 입력해주세요.`;
+		result_memDAddr = false;
+	}
+	
+	//유효성 검사 실패 시 오류 메세지 출력
+	if(!result_memDAddr){
+		const errorHTML = `<div class="my-invalid" id="memDAddrError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memDAddr}</div>`;
+		memDAddrTag.insertAdjacentHTML('afterend', errorHTML);
+	    $('#memDAddr').css('border-color', '#dc3545'); // 테두리 색상 변경
+        $('#memDAddr').css('border-width', '2px'); // 테두리 두께 변경
+	}
+	else {
+       $('#memDAddr').css('border-color', 'green'); 
+        $('#memDAddr').css('border-width', '2px');
+    }
+	
+	
+	return result_memDAddr;
+}
 
 
+//상세 주소 유효성 검사 
+function memDAddr2Validate(){
+	
+	//기존 오류 메시지 제거 
+	const memDAddr2Error = document.querySelector('#memDAddr2Error');
+	if (memDAddr2Error) {
+		memDAddr2Error.remove();
+	}
+	
+	//함수 리턴 결과 저장할 함수 
+	let result_memDAddr2= true;
+	
+	//오류 메세지 저장 
+	let str_memDAddr2 =``;
+	
+	const memDAddr2Tag = document.querySelector('#memDAddr2Div');
+	
+	// validation 처리
+	const memDAddr2 = document.querySelector('#memDAddr2').value;
+	
+	if(memDAddr2 == ''){
+		str_memDAddr2 = `상세 주소를 입력해주세요.`;
+		result_memDAddr2 = false;
+	}
+	
+	//유효성 검사 실패 시 오류 메세지 출력
+	if(!result_memDAddr2){
+		const errorHTML = `<div class="my-invalid" id="memDAddr2Error" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memDAddr2}</div>`;
+		memDAddr2Tag.insertAdjacentHTML('afterend', errorHTML);
+	    $('#memDAddr2').css('border-color', '#dc3545'); // 테두리 색상 변경
+        $('#memDAddr2').css('border-width', '2px'); // 테두리 두께 변경
+	}
+	else {
+       $('#memDAddr2').css('border-color', 'green'); 
+        $('#memDAddr2').css('border-width', '2px');
+    }
+	
+	
+	return result_memDAddr2;
+}
 
 
 
