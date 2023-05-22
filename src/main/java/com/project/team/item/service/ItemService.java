@@ -11,4 +11,5 @@ public interface ItemService {
 	
 	List<HashMap<String, Object>> getItemListByAreaName(Map<String, String> searchKeyword);
 
+	List<HashMap<String, Object>> getTourItemListGroupAJAX(Map<String, String> searchKeyword);
 }

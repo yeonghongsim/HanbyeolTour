@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
-
+import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.FreqRequestVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -89,6 +91,49 @@ public class AdminServiceImpl implements AdminService{
 	public ItemVO getItemDetailForAdmin(String itemCode) {
 		return sqlSession.selectOne("adminMapper.getItemDetailForAdmin", itemCode);
 	}
+	
+	//판매 상품 수정
+	@Override
+	public void updateItem(ItemVO itemVO) {
+		sqlSession.update("adminMapper.updateItem", itemVO);
+	}
+	
+	//상품 이미지 수정
+	@Override
+	public void regImgsForItemDetail(ItemVO itemVO) {
+		sqlSession.insert("adminMapper.regImgsForItemDetail", itemVO);
+		
+	}
+	
+	//상품 상세 정보 X 클릭 시 이미지 삭제
+	@Override
+	public void deleteItemImg(ImgVO imgVO) {
+		sqlSession.delete("adminMapper.deleteItemImg", imgVO);
+		
+	}
+	
+	//첨부 파일명 조회
+	@Override
+	public String getAttachedFileName(String itemImgCode) {
+		
+		return sqlSession.selectOne("adminMapper.getAttachedFileName", itemImgCode);
+	}
+	
+	//회원 리스트 조회
+	@Override
+	public List<MemberVO> getMemList() {
+		
+		return sqlSession.selectList("adminMapper.getMemList");
+	}
+
+	//회원 상세 정보 조회
+	@Override
+	public MemberVO getMemDetailInfo(String memId) {
+		
+		return sqlSession.selectOne("adminMapper.getMemDetailInfo", memId);
+	}
+
+
 
 	
 
@@ -118,12 +163,23 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
 
+	@Override
+	public String getMemCode(String memid) {
+		return sqlSession.selectOne("adminMapper.getMemCode", memid);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertBoardForFreReq(FreqRequestVO freqRequestVO) {
+		sqlSession.insert("adminMapper.insertBoardForFreReq", freqRequestVO);
+	}
 
 
 
 
 
-	
-	
+
+
+
 	
 }

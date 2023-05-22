@@ -11,6 +11,7 @@
 		<result column="MEM_PW" 				property="memPw"/>
 		<result column="MEM_STATUS_CODE" 		property="memStatusCode"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
+		<association property="memStatusVO"		resultMap="memStatus"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
@@ -25,6 +26,12 @@
 		<result column="MEM_EMAIL" 			property="memEmail"/>
 	</resultMap>
 	
+	<!-- 이한별 작성 -->
+	<resultMap type="com.project.team.member.vo.MemStatusVO" id="memStatus">
+		<id		column="MEM_STATUS_CODE" 	property="memStatusCode"/>
+		<result column="MEM_STATUS_NAME" 	property="memStatusName"/>
+	</resultMap>
+	
 	
 	<!--회원가입시 ID 중복 체크  -->
 	<select id="isDuplicateMemId" resultType="int">
@@ -34,17 +41,18 @@
 	</select>
 	
 	<!-- memCode 생성 -->
-	<select id="getNextMemCode" resultType="String">
+	<!-- <select id="getNextMemCode" resultType="String">
 		SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
     	FROM HBT_MEM
-	</select>
+	</select> -->
 	
 	<!-- memDCode 생성 -->
-	<select id="getNextMemDCode" resultType="String">
+	<!-- <select id="getNextMemDCode" resultType="String">
 		SELECT 'MEM_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_D_CODE, 5))), 0) + 1, 3, '0') 
     	FROM HBT_MEM_DETAIL
 	</select>
-	
+	 -->
+	 
 	<!-- 회원가입 (HBT_MEM) -->
 	<insert id="join">
 		INSERT INTO HBT_MEM (
@@ -94,6 +102,33 @@
 		AND MEM_STATUS_CODE = 1  
 	</select>
 	
+	
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="String">
+	  SELECT MEM_ID
+	  FROM HBT_MEM
+	  WHERE MEM_NAME = #{memName}
+	  AND MEM_CODE IN (
+	      SELECT MEM_CODE
+	      FROM HBT_MEM_DETAIL
+	      WHERE MEM_D_TELL = #{memberDetailVO.memDTell}
+	   	  )
+	</select>
+	
+	<!-- 비밀번호 찾기 -> 이메일 주소 확인 후 임시 비밀번호 발송 -->
+	<select id="getMemEmailForFindPw" resultType="String">
+	  SELECT MEM_EMAIL
+	  FROM HBT_MEM
+	  WHERE MEM_ID = #{memId}
+	  WHERE MEM_NAME = #{memName}
+	  AND MEM_CODE IN (
+	      SELECT MEM_CODE
+	      FROM HBT_MEM_DETAIL
+	      WHERE MEM_D_TELL = #{memberDetailVO.memDTell}
+	   	  )
+	</select>
+
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.project.team.admin.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,9 +24,12 @@ import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
+import com.project.team.util.ImgPath;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -130,9 +135,12 @@ public class AdminController {
 	
 	//등록 판매 상품 목록 조회()
 	@GetMapping("/itemManageForSale")
-	public String itemManageForSale(Model model) {
+	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg) {
 		
 		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
+		//등록된 여행지 카테고리 조회
+		List<TourAreaVO> areaCateList = adminService.getAreaCateList();
+		model.addAttribute("areaCateList", areaCateList);
 		
 		return "content/admin/item_manage_for_sale";
 	}
@@ -163,6 +171,58 @@ public class AdminController {
 		
 		return adminService.getItemDetailForAdmin(itemCode);
 		
+	}
+	
+
+	//판매 상품 수정(이미지 포함)
+	@PostMapping("/updateItem")
+	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
+		//오류 수정중
+		System.out.println(itemVO);
+		
+		adminService.updateItem(itemVO);
+		adminService.regImgsForItemDetail(itemVO);
+
+		return "redirect:/admin/itemManageForSale";
+	}
+	
+	//상품 상세 정보 조회 X 버튼 클릭 시 이미지 삭제
+	@ResponseBody
+	@PostMapping("/deleteItemImgAjax")
+	public void deleteItemImgAjax(ImgVO imgVO) {
+		//첨부된 파일명 조회
+		String attachedFileName = adminService.getAttachedFileName(imgVO.getItemImgCode());
+		File file = new File(ImgPath.UPLOAD_PATH + attachedFileName);
+		file.delete();
+		
+		adminService.deleteItemImg(imgVO);
+	
+	}
+	
+	//회원 관리 페이지
+	@GetMapping("/memManage")
+	public String memManage() {
+		
+		return "redirect:/admin/memInfo";
+	}
+	
+	//회원 리스트 조회
+	@GetMapping("/memInfo")
+	public String memInfo(Model model) {
+		
+		model.addAttribute("memList", adminService.getMemList());
+	
+		return "content/admin/mem_info";
+	}
+	
+	//회원 상세 정보 조회
+	@ResponseBody
+	@PostMapping("/getMemDetailAjax")
+	public MemberVO getMemDetailAjax(String memId) {
+		
+		System.out.println(memId);
+		
+		return adminService.getMemDetailInfo(memId);
 	}
 	
 	
@@ -268,6 +328,39 @@ public class AdminController {
 	public void searchRequestAjax() {
 		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
 	}
+	
+	// 자주 묻는 문의 사항 관리 페이지
+	@GetMapping("/frequncyRequestMng")
+	public String frequncyRequestMng(Model model) {
+		
+		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
+		
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		return "content/admin/board/frequncy_request_mng";
+		
+		
+	}
+	
+	// 자주 묻는 문의 사항 글 등록
+	@PostMapping("/regFreReq")
+	public String regFreReq(FreqRequestVO freqRequestVO) {
+		
+		String freqReqCode = boardService.getNextByFreqReqCode();
+		String memCode = adminService.getMemCode(freqRequestVO.getMemberVO().getMemId());
+		
+		freqRequestVO.setFreqRequestCode(freqReqCode);
+		freqRequestVO.getMemberVO().setMemCode(memCode);
+		System.out.println("@@@@@@@@" + freqRequestVO);
+		
+		adminService.insertBoardForFreReq(freqRequestVO);
+		
+		return "redirect:/admin/frequncyRequestMng";
+		
+	}
+	
+	
+	
 	
 
 }

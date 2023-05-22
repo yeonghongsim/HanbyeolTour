@@ -2,7 +2,6 @@ package com.project.team.item.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ public class ItemController {
 		model.addAttribute("tourItemList", itemService.getItemListByAreaName(searchKeyword));
 		model.addAttribute("areaName", areaName);
 		
-		
 		return "content/item/tour_item_list_group";
 	}
 	
@@ -49,8 +47,10 @@ public class ItemController {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Map<String, String> searchKeyword = new HashMap<>();
+		Calendar nowDate = Calendar.getInstance();
 		
 		searchKeyword.put("areaName", areaName);
+		searchKeyword.put("date", getTodayDate());
 		
 		//일자별 상세조회
 		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(searchKeyword);
@@ -69,24 +69,26 @@ public class ItemController {
 			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
 		}
 		
-		
 		model.addAttribute("areaName", areaName);
 		model.addAttribute("tourItemList", list);
 		
 		return "content/item/tour_item_list_date";
 	}
 	
-
+	//
 	@PostMapping("/tourItemListDateAJAX")
 	@ResponseBody
 	public String tourItemListDateAJAX(String areaName, Date searchDate ,Model model) throws JsonProcessingException {
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		//잘짜형식 문자열 형식으로 변환
-		String setDate = dateFormat.format(searchDate);
-		
-		Map<String, String> searchKeyword = new HashMap<>();
-		
+		DateFormat dateFormat;
+		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		//날짜형식 문자열 형식으로 변환
+		String setDate;
+		setDate = dateFormat.format(searchDate);
+
+		Map<String, String> searchKeyword;
+		searchKeyword = new HashMap<>();
+
 		searchKeyword.put("areaName", areaName);
 		searchKeyword.put("date", setDate);
 		
@@ -107,13 +109,50 @@ public class ItemController {
 			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
 		}
 		
-		
-		
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(list);
 	}
-	
-	
+
+	//그룹별 상품보기 AJAX
+	@PostMapping("/tourItemListGroupAJAX")
+	@ResponseBody
+	public String tourItemListGroupAJAX(Date searchDate, String itemCode) throws JsonProcessingException {
+
+		//날짜형데이터를 문자열 데이터로 변환
+		DateFormat dateFormat;
+		dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String setDate;
+		setDate = dateFormat.format(searchDate);
+
+		//데이터검색을위한 세팅
+		Map<String, String> searchKeyword;
+		searchKeyword = new HashMap<>();
+
+		searchKeyword.put("itemCode", itemCode);
+		searchKeyword.put("searchDate", setDate);
+
+		List<HashMap<String, Object>> list = itemService.getTourItemListGroupAJAX(searchKeyword);
+
+
+		for(HashMap<String, Object> map : list) {
+			//날짜초기화
+			Calendar setArrDate = Calendar.getInstance();
+			//출발일 검색일자로 넣기
+			map.put("DEP_DATE", setDate);
+
+			//출발일자에 여행기간만큼더하기
+			String splitDate = map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0];
+
+			setArrDate.setTime(searchDate);
+			setArrDate.add(Calendar.DATE, Integer.parseInt(splitDate));
+			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(list);
+	}
+
+
 	//패키지상품 메인페이지
 	@GetMapping("/tourItemListMain")
 	public String tourItemListMain() {
@@ -126,6 +165,20 @@ public class ItemController {
 		
 		return "content/item/tour_item_list_detail";
 	}
+	//호텔페이지 이동
+	@GetMapping("/hotelPage")
+	public String goHotelPage(){
+		return "content/hotels/searchHotels";
+	}
+	
+	//오늘날짜구하기
+	    public  String getTodayDate() {
+	        Calendar calendar = Calendar.getInstance();
+	        int year = calendar.get(Calendar.YEAR);
+	        int month = calendar.get(Calendar.MONTH) + 1; // 0부터 시작하므로 1을 더해줍니다.
+	        int day = calendar.get(Calendar.DAY_OF_MONTH);
+			return year + "-" + month + "-" + day;
+	    }
 	
 
 }

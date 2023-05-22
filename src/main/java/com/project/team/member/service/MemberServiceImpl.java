@@ -2,6 +2,7 @@ package com.project.team.member.service;
 
 import java.util.List;
 
+import com.project.team.member.vo.MemberSideMenuVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class MemberServiceImpl implements MemberService{
 		return result != 0 ? true : false;
 	}
 
+	@Override
+	public boolean isDuplicateMemEmail(String memEmail) {
+		return false;
+	}
+
 	// 회원가입 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -38,16 +44,27 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.getUserInfoForLogin", memId);
 	}
 
+	// 아이디 찾기 	
+	@Override
+	public String findId(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.findId", memberVO);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//비밀번호 찾기 
+	@Override
+	public String getMemEmailForFindPw(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.getMemEmailForFindPw", memberVO);
+	}
+
+	@Override
+	public void updateMemPw(MemberVO memberVO) {
+
+	}
+
+	@Override
+	public List<MemberSideMenuVO> getMsMenuList() {
+		return null;
+	}
+
+
 }

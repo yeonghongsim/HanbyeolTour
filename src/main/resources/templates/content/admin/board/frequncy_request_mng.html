@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/admin/board/frequncy_request_mng.css">
+</th:block>
+
+<th:block layout:fragment="adminContent">
+	<div class="row mb-3">
+		<div class="col">
+			<div class="row" style="justify-content: center; align-items: center;">
+				<div class="col-10">
+					<span>자주 묻는 문의 관리</span>
+				</div>
+				<div class="col-2">
+					<input th:onclick="regFreqReqJs([[${#authentication.name}]], [[${typeRequestList}]])" type="button" class="btn btn-primary w-100" value="글 등록하기">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row mb-3 typeRequest-con">
+		<div class="col-lg-2 col-sm-3 typeRequest-div">
+			<span class="pointer" th:onclick="searchTypeRequest()">전체</span>
+		</div>
+		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">
+			<span class="pointer" th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])">[[${typeRequest.typeRequestName}]]</span>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col" id="fre_table_div">
+			<table class="table table-striped">
+				<colgroup>
+					<col width="15%">
+					<col width="*">
+					<col width="15%">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>No.</td>
+						<td>title</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody id="req-table-tbody">
+					<th:block th:each="freqRequest : ${getFreqRequestList}">
+						<tr class="align-middle">
+							<td>[[${freqRequest.typeRequestVO.typeRequestName}]]</td>
+							<td>[[${freqRequest.freqRequestTitle}]]</td>
+							<td>1</td>
+						</tr>
+						<tr class="align-middle">
+							<td>A.</td>
+							<td>[[${freqRequest.freqRequestContent}]]</td>
+							<td>
+								<input th:onclick="updateQnAjs(this);" type="button" class="btn btn-secondary w-100" value="글 수정1">
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/board/frequncy_request_mng.js"></script>
+</th:block>
+
+
+</html>
+

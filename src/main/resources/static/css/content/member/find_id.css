@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.page-title{
+	font-size: 2rem;
+	text-align: center;
+	letter-spacing: -2px;
+    padding-bottom: 1rem;
+    padding-left: 8px;
+}

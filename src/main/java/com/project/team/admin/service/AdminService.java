@@ -1,12 +1,15 @@
 package com.project.team.admin.service;
 
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.vo.MemberVO;
 
 public interface AdminService {
 	
@@ -34,7 +37,25 @@ public interface AdminService {
 	//판매 상품 상세 조회
 	ItemVO getItemDetailForAdmin(String itemCode);
 	
+	//판매 상품 수정
+	void updateItem(ItemVO itemVO);
 	
+
+	//상품 이미지 수정
+	void regImgsForItemDetail(ItemVO itemVO);
+	
+	//상품 상세 정보 X 클릭 시 이미지 삭제
+	void deleteItemImg(ImgVO imgVO);
+	
+	//회원 리스트 조회
+	List<MemberVO> getMemList();
+	
+	//회원 상세 정보 조회
+	MemberVO getMemDetailInfo(String memId);
+	
+	//첨부 파일명 조회
+	String getAttachedFileName(String itemImgCode);
+
 	
 	
 	
@@ -54,5 +75,11 @@ public interface AdminService {
 	
 	//다음 상품 코드 조회 
 	String getNextItemCode();
+	
+	// 회원 코드 조회 By 회원 아이디
+	String getMemCode(String memid);
 
+	// 자주 문의 글 등록
+	void insertBoardForFreReq(FreqRequestVO freqRequestVO);
+	
 }
