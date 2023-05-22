@@ -12,6 +12,7 @@ import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 
 import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.FreqRequestVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -134,6 +135,17 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
+	}
+
+	@Override
+	public String getMemCode(String memid) {
+		return sqlSession.selectOne("adminMapper.getMemCode", memid);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertBoardForFreReq(FreqRequestVO freqRequestVO) {
+		sqlSession.insert("adminMapper.insertBoardForFreReq", freqRequestVO);
 	}
 
 

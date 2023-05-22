@@ -4,6 +4,7 @@ package com.project.team.admin.service;
 import java.util.List;
 
 import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
@@ -59,5 +60,11 @@ public interface AdminService {
 	
 	//다음 상품 코드 조회 
 	String getNextItemCode();
+	
+	// 회원 코드 조회 By 회원 아이디
+	String getMemCode(String memid);
 
+	// 자주 문의 글 등록
+	void insertBoardForFreReq(FreqRequestVO freqRequestVO);
+	
 }

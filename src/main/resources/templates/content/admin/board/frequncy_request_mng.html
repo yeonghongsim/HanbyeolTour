@@ -17,7 +17,7 @@
 					<span>자주 묻는 문의 관리</span>
 				</div>
 				<div class="col-2">
-					<input type="button" class="btn btn-primary w-100" value="글 등록">
+					<input th:onclick="regFreqReqJs([[${#authentication.name}]], [[${typeRequestList}]])" type="button" class="btn btn-primary w-100" value="글 등록하기">
 				</div>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col">
+		<div class="col" id="fre_table_div">
 			<table class="table table-striped">
 				<colgroup>
 					<col width="15%">
@@ -44,34 +44,24 @@
 					<tr>
 						<td>No.</td>
 						<td>title</td>
-						<td>1</td>
+						<td></td>
 					</tr>
 				</thead>
 				<tbody id="req-table-tbody">
-					<tr>
-						<td>Q.</td>
-						<td>title1</td>
-						<td>1</td>
-					</tr>
-					<tr class="align-middle">
-						<td>Q.</td>
-						<td>coment1</td>
-						<td>
-							<input th:onclick="updateQnAjs(this);" type="button" class="btn btn-secondary w-100" value="글 수정1">
-						</td>
-					</tr>
-					<tr>
-						<td>Q.</td>
-						<td>title2</td>
-						<td>2</td>
-					</tr>
-					<tr class="align-middle">
-						<td>Q.</td>
-						<td>coment2</td>
-						<td>
-							<input th:onclick="updateQnAjs(this);" type="button" class="btn btn-secondary w-100" value="글 수정2">
-						</td>
-					</tr>
+					<th:block th:each="freqRequest : ${getFreqRequestList}">
+						<tr class="align-middle">
+							<td>[[${freqRequest.typeRequestVO.typeRequestName}]]</td>
+							<td>[[${freqRequest.freqRequestTitle}]]</td>
+							<td>1</td>
+						</tr>
+						<tr class="align-middle">
+							<td>A.</td>
+							<td>[[${freqRequest.freqRequestContent}]]</td>
+							<td>
+								<input th:onclick="updateQnAjs(this);" type="button" class="btn btn-secondary w-100" value="글 수정1">
+							</td>
+						</tr>
+					</th:block>
 				</tbody>
 			</table>
 		</div>

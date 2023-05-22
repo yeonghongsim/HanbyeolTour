@@ -25,6 +25,7 @@ import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
 import com.project.team.item.vo.ItemVO;
@@ -307,11 +308,34 @@ public class AdminController {
 	@GetMapping("/frequncyRequestMng")
 	public String frequncyRequestMng(Model model) {
 		
+		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
+		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
 		return "content/admin/board/frequncy_request_mng";
 		
 		
 	}
+	
+	// 자주 묻는 문의 사항 글 등록
+	@PostMapping("/regFreReq")
+	public String regFreReq(FreqRequestVO freqRequestVO) {
+		
+		String freqReqCode = boardService.getNextByFreqReqCode();
+		String memCode = adminService.getMemCode(freqRequestVO.getMemberVO().getMemId());
+		
+		freqRequestVO.setFreqRequestCode(freqReqCode);
+		freqRequestVO.getMemberVO().setMemCode(memCode);
+		System.out.println("@@@@@@@@" + freqRequestVO);
+		
+		adminService.insertBoardForFreReq(freqRequestVO);
+		
+		return "redirect:/admin/frequncyRequestMng";
+		
+	}
+	
+	
+	
+	
 
 }

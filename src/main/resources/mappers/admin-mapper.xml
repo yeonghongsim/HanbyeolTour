@@ -205,6 +205,27 @@
 		FROM HBT_BOARD_ADMIN
 	</select>
 	
+	<select id="getMemCode" resultType="String">
+		SELECT MEM_CODE
+			FROM HBT_MEM
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<insert id="insertBoardForFreReq">
+		INSERT INTO HBT_FREQ_REQUEST (
+		    FREQ_REQUEST_CODE
+		    , FREQ_REQUEST_TITLE
+		    , FREQ_REQUEST_CONTENT
+		    , MEM_CODE
+		    , TYPE_REQUEST_CODE
+		) VALUES (
+		    #{freqRequestCode}
+		    , #{freqRequestTitle}
+		    , #{freqRequestContent}
+		    , #{memberVO.memCode}
+		    , #{typeRequestVO.typeRequestCode}
+		)
+	</insert>
 	
 	
 </mapper>
