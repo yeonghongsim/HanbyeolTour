@@ -24,15 +24,16 @@
 		<div class="col-4 mt-4">
 			<form id="findIdForm" th:action="@{/member/findId}" method="post">
 				
-				<div class="row mb-3">
+				<div class="row mb-3" id="memNameDiv">
 					<div class="col-12">
-						<input type="text" id="memName" name="memName" class="form-control form-control-lg" placeholder="이름">
+						<input type="text" id="memName" name="memName" class="form-control form-control-lg" 
+						placeholder="이름" onclick="nameValidate();" oninput="nameValidate()">
 					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col-12" >
-						<input type="text" id="memDTell" name="memDTell" class="form-control form-control-lg" 
-						placeholder="'-'을 제외한 휴대전화 전체 자리" maxlength="11">
+					<div class="col-12" id="memDTellDiv">
+						<input type="text" id="memDTell" name="memDTell" class="form-control form-control-lg" maxlength="11"
+						placeholder="'-'을 제외한 휴대전화 전체 자리" oninput="memDTellValidate()" onclick="memDTellValidate();">
 					</div>
 				</div>
 				<div class="row mb-3" >
@@ -50,8 +51,14 @@
 				
 				
 				<div class="row">
-					<div class="col-12 d-grid mb-5">
+					<div class="col-12 d-grid mb-2">
 						<input type="button" class="btn btn-secondary" value="비밀번호 찾기" onclick="location.href='/member/findPw'">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-12 d-grid mb-5">
+						<input type="button" class="btn btn-warning" value="로그인하러 가기" onclick="location.href='/member/login'">
 					</div>
 				</div>
 				

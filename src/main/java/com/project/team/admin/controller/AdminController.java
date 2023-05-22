@@ -2,7 +2,9 @@ package com.project.team.admin.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -170,12 +172,31 @@ public class AdminController {
 	}
 	
 	//판매 상품 수정
-	@ResponseBody
-	@PostMapping("/updateItemAjax")
-	public void updateItem(ItemVO itemVO) {
+	@PostMapping("/updateItem")
+	public String updateItem(ItemVO itemVO) {
+		//오류 수정중
+		System.out.println(itemVO);
 		
 		adminService.updateItem(itemVO);
+
+		return "redirect:/admin/itemManageForSale";
 	}
+	
+	//상품 상세 정보 조회 X 버튼 클릭 시 이미지 삭제
+	@ResponseBody
+	@PostMapping("/deleteItemImgAjax")
+	public String deleteItemImgAjax(ImgVO imgVO) {
+		
+		System.out.println(imgVO.getItemCode());
+		System.out.println(imgVO.getItemImgCode());
+		
+		adminService.deleteItemImg(imgVO);
+		
+		String result = "success";
+		
+		return result;
+	}
+	
 	
 	
 	

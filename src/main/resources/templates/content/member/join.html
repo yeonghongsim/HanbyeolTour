@@ -62,47 +62,64 @@
 		</div>
 	
 		<form id="joinForm" class="row g-3" th:action="@{/member/join}" method="post">
-		
-			<div class="col-9">
-				<input type="text" class="form-control form-control-lg" placeholder="아이디"
-			 	id="memId" name="memId" onkeyup="setDisabled();" >
-			</div>
-			<div class="col-3 d-grid">	
-				<input type="button" class="btn btn-lg btn-outline-light" id="check_id" value="중복확인" onclick="isDuplicateMemId();" >
-			</div>
-			
-			
 			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw">
-			</div>
-			
-			<div class="col-12">
-				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw">
-			</div>
-			
-			<div class="col-9">
-				<input type="text" class="form-control form-control-lg" id="memName" name="memName" placeholder="이름">
-			</div>
-			
-			<div class="col-3 gender-radio">
-				<div class="btn-group btn-group-lg justify-content-center" role="group" aria-label="Basic radio toggle button group">
-					
-					<input type="radio" class="btn-check" name="memDGen" id="memDGen_male" autocomplete="off" value="남" checked> 
-					<label class="btn zc" for="memDGen_male">
-						<span class="btn-label">남</span>
-					</label> 
-					
-					<input type="radio" class="btn-check" name="memDGen" id="memDGen_female" autocomplete="off" value="여"> 
-					<label class="btn btn-outline-y" for="memDGen_female">
-						<span class="btn-label">여</span>
-					</label>
+				<div class="row">
+					<div class="col-9" id="memIdDiv">
+						<input type="text" class="form-control form-control-lg" placeholder="아이디"
+					 	id="memId" name="memId" onkeyup="setDisabled();" onclick="idValidate()" oninput="idValidate()">
+					</div>
+					<div class="col-3 d-grid">	
+						<input type="button" class="btn btn-lg btn-outline-light" id="check_id" value="중복확인" onclick="isDuplicateMemId();" disabled>
+					</div>
 				</div>
 			</div>
-				
-			<div class="col-12">
-				<input type="text" class="form-control form-control-lg" placeholder="이메일 주소" id="memEmail" name="memEmail">
+			
+			<div class="col-12" id="memPwDiv">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="memPw" name="memPw" onclick="pwValidate();" oninput="pwValidate()">
 			</div>
-		
+			
+			<div class="col-12">
+				<input type="password" class="form-control form-control-lg" placeholder="비밀번호 확인" id="check_pw" oninput="pwCheck()">
+			</div>
+			
+			<div class="col-12">
+				<div class="row">
+					<div class="col-7" id="memNameDiv">
+						<input type="text" class="form-control form-control-lg" id="memName" name="memName" placeholder="이름" onclick="nameValidate();" oninput="nameValidate()">
+					</div>
+					<div class="col-5">
+						<div class="gender-radio">
+							<div class="btn-group btn-group-lg justify-content-center" role="group" aria-label="Basic radio toggle button group">
+								
+								<input type="radio" class="btn-check" name="memDGen" id="memDGen_male" autocomplete="off" value="남" checked> 
+								<label class="btn zc" for="memDGen_male">
+									<span class="btn-label">남</span>
+								</label> 
+								
+								<input type="radio" class="btn-check" name="memDGen" id="memDGen_female" autocomplete="off" value="여"> 
+								<label class="btn btn-outline-y" for="memDGen_female">
+									<span class="btn-label">여</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="col-12">
+				<div class="row">
+					<div class="col-9" id="memEmailDiv">
+						<input type="email" class="form-control form-control-lg" placeholder="이메일  예시) ID@example.com" 
+						id="memEmail" name="memEmail" onkeyup="setDisabled();" onclick="emailValidate();" oninput="emailValidate()">
+					</div>
+					<div class="col-3 d-grid">	
+						<input type="button" class="btn btn-lg btn-outline-light" id="check_email" value="중복확인" onclick="isDuplicateMemEmail();" disabled>
+					</div>
+				</div>
+			</div>
+			
+			
 			<!-- <div class="col-4">
 				<select id="tell_1" class="form-select form-select-lg" name="memDTells"> 
 					<option selected value="010">010</option>
@@ -119,9 +136,9 @@
 				 placeholder="휴대폰번호 뒷자리" maxlength="4">
 			</div> -->
 			
-			<div class="col-12">
-				<input type="text" class="form-control form-select-lg" id="memDTell" name="memDTell"
-				 placeholder="- 없이 휴대폰 전체자리 입력" maxlength="11">
+			<div class="col-12" id="memDTellDiv">
+				<input type="text" class="form-control form-select-lg" id="memDTell" name="memDTell" maxlength="11"
+				 placeholder="- 없이 휴대폰 전체자리 입력" oninput="memDTellValidate()" onclick="memDTellValidate();">
 			</div>
 
 			<div class="col-9">

@@ -8,6 +8,9 @@ public interface MemberService {
 	//회원가입 시 아이디 중복 체크 
 	boolean isDuplicateMemId(String memId);
 	
+	//회원가입 시 이메일 중복 체크 
+	boolean isDuplicateMemEmail(String memEmail);
+	
 	//회원가입 
 	void join(MemberVO memberVO, MemberDetailVO memberDetailVO);
 		
@@ -20,6 +23,8 @@ public interface MemberService {
 	//비밀번호 찾기 - 이메일 주소 가져오기 
 	String getMemEmailForFindPw(MemberVO memberVO);
 	
+	//비밀번호 수정
+	void updateMemPw(MemberVO memberVO);
 	
 	
 }
