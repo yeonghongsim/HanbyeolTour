@@ -44,7 +44,8 @@ function openModal(itemCode, areaCateList){
 			let str = '';
 
 
-			str += `	<form class="row" id="itemDetailForm" action="/admin/updateItem" method="post"> `;
+			str += `	<form class="row" id="itemDetailForm" action="/admin/updateItem" method="post" enctype="multipart/form-data"> `;
+			
 			str += `		<input type="hidden" name="itemCode" value="${result.itemCode}"> `;     
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">여행 국가</label>                                          `;
@@ -62,7 +63,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">기본 가격</label>                                          `;
-			str += `					<input type="text" class="form-control" id="" name="itemPrice" value="${result.itemPrice.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}">                             `;
+			str += `					<input type="text" class="form-control" id="" name="itemPrice" value="${result.itemPrice}">                             `;
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">땡처리할인</label>                                         `;
@@ -116,13 +117,13 @@ function openModal(itemCode, areaCateList){
 			str += `					<label for="" class="form-label">패키지 소개</label>                                        `;
 			str += `					<textarea rows="5" class="form-control" name="itemIntro">${result.itemIntro}</textarea>                        `;
 			str += `				</div>                                                                                          `;
-			str += `				<div class="col-6" id="MainImgDiv">                                                                             `;
+			str += `				<div class="col-6" id="mainImgDiv">                                                                             `;
 			str += `					<label for="" class="form-label">메인 이미지</label>                                        `;
-			str += `					<input type="file" class="form-control" id="" name="mainImg">                               `;
+			str += `					<input type="file" class="form-control" id="mainImg" name="mainImg" disabled>                               `;
 										for(const img of result.imgList){
 											if(img.isMain == 'Y') {
 			str += `							<div style="font-size:0.8rem; margin: 5px;"><a href="javascript:void(0);" onclick="openImgModal('${img.itemImgAttachedName}', '${img.itemImgOriginName}');">* 업로드 된 파일 : ${img.itemImgOriginName}</a>`;
-			str += `								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="deleteItemImgAjax('${result.itemCode}', '${img.itemImgCode}');" style="cursor:pointer; color:red;"> `;
+			str += `								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="deleteItemImgAjax('${img.itemImgCode}', this);" style="cursor:pointer; color:red;"> `;
   			str += `								<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" pointer-events="visible"/>`;
 			str += `								</svg> `;
 			str += `							</div>`;
@@ -130,13 +131,13 @@ function openModal(itemCode, areaCateList){
 											}
 										}
 			str += `				</div>                                                                                          `;
-			str += `				<div class="col-6 mb-2">                                                                             `;
+			str += `				<div class="col-6 mb-2" id="subImgDiv">                                                                             `;
 			str += `					<label for="" class="form-label">상세 이미지</label>                                        `;
-			str += `					<input type="file" class="form-control" id="" name="subImg" multiple>                       `;
+			str += `					<input type="file" class="form-control" id="subImg" name="subImg" multiple>                       `;
 										for(const img of result.imgList){
 											if(img.isMain == 'N'){
 			str += `							<div style="font-size:0.8rem; margin: 5px;"><a href="javascript:void(0);" onclick="openImgModal('${img.itemImgAttachedName}', '${img.itemImgOriginName}');">* 업로드 된 파일 : ${img.itemImgOriginName}</a>`;
-  			str += `								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="deleteItemImgAjax('${result.itemCode}', '${img.itemImgCode}');" style="cursor:pointer; color:red;">`;
+  			str += `								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="deleteItemImgAjax('${img.itemImgCode}', this);" style="cursor:pointer; color:red;">`;
   			str += `									<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" pointer-events="visible"/>`;
 			str += `								</svg> `;
 			str += `							</div>`;
@@ -188,7 +189,7 @@ function openModal(itemCode, areaCateList){
 										}
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
-			str += `					<input id="" type="submit" class="btn" value="수정"                                                     `;
+			str += `					<input id="" type="button" class="btn" value="수정" onclick="updateItem();"                                                     `;
 			str += `						style="background-color: #ffd000;">                                     `;
 			str += `				</div>                                                                                          `;
 			str += `			</form> `;
@@ -285,20 +286,24 @@ function deleteCheckItems(){
 
 
 //상품 이미지 x 표시 클릭 시 이미지 삭제
-function deleteItemImgAjax(itemCode, itemImgCode){
-	
-	
-	
+function deleteItemImgAjax(itemImgCode, xBtn){
+
 	//ajax start
 	$.ajax({
 		url: '/admin/deleteItemImgAjax', //요청경로
 		type: 'post',
-		data: {'itemCode' : itemCode, 'itemImgCode' : itemImgCode}, //필요한 데이터
+		data: {'itemImgCode' : itemImgCode}, //필요한 데이터
 		success: function(result) {
 			alert('ajax 통신 성공');
 			
-			const MainImgDiv = document.querySelector('#MainImgDiv');
-			//MainImgDiv.removeChild('div');
+			//버튼의 부모 태그 선택
+			const previousId = xBtn.parentElement.previousElementSibling.id;
+			xBtn.parentElement.remove();
+			
+			if(previousId == 'mainImg'){
+				document.querySelector('#mainImg').disabled=false;
+					
+			}
 		},
 		error: function() {
 			alert('실패');
@@ -308,8 +313,28 @@ function deleteItemImgAjax(itemCode, itemImgCode){
 
 }
 
+//상품 수정 시 이미지 등록 여부 확인 ()
+function updateItem(){
+	
+	let childrenCnt = document.querySelector('#mainImgDiv').children.length;
+	const mainImg = document.querySelector('#mainImg').value;
+	if(!(childrenCnt == 3 || mainImg != '')){
+		alert('메인 이미지를 선택하십시오.');
+		return;
+	}
 
-
+	childrenCnt = document.querySelector('#subImgDiv').children.length;
+	
+	const subImg = document.querySelector('#subImg').value;
+	if(!(childrenCnt >= 3 || subImg != '')){
+		alert('상세 이미지를 선택하십시오.');
+		return;
+	}
+	
+	
+	document.querySelector('#itemDetailForm').submit();
+	
+}
 
 
 

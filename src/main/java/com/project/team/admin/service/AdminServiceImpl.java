@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
-
+import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
 
 @Service("adminService")
@@ -96,7 +96,12 @@ public class AdminServiceImpl implements AdminService{
 	public void updateItem(ItemVO itemVO) {
 		sqlSession.update("adminMapper.updateItem", itemVO);
 		//sqlSession.update("adminMapper.updateItemImg", itemVO);
-		 
+	}
+	
+	//상품 이미지 수정
+	@Override
+	public void regImgsForItemDetail(ItemVO itemVO) {
+		sqlSession.insert("adminMapper.regImgsForItemDetail", itemVO);
 		
 	}
 	
@@ -105,6 +110,19 @@ public class AdminServiceImpl implements AdminService{
 	public void deleteItemImg(ImgVO imgVO) {
 		sqlSession.delete("adminMapper.deleteItemImg", imgVO);
 		
+	}
+	
+	//첨부 파일명 조회
+	@Override
+	public String getAttachedFileName(String itemImgCode) {
+		
+		return sqlSession.selectOne("adminMapper.getAttachedFileName", itemImgCode);
+	}
+	
+	//회원 정보 조회
+	@Override
+	public List<MemberVO> getMemsInfo() {
+		return sqlSession.selectList("adminMapper.getMemsInfo");
 	}
 
 
@@ -135,6 +153,11 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
+
+
+
+
 
 
 

@@ -1,12 +1,14 @@
 package com.project.team.admin.service;
 
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.vo.MemberVO;
 
 public interface AdminService {
 	
@@ -37,8 +39,17 @@ public interface AdminService {
 	//판매 상품 수정
 	void updateItem(ItemVO itemVO);
 	
+	//상품 이미지 수정
+	void regImgsForItemDetail(ItemVO itemVO);
+	
 	//상품 상세 정보 X 클릭 시 이미지 삭제
 	void deleteItemImg(ImgVO imgVO);
+	
+	//회원 정보 조회
+	List<MemberVO> getMemsInfo();
+	
+	//첨부 파일명 조회
+	String getAttachedFileName(String itemImgCode);
 	
 	
 	
