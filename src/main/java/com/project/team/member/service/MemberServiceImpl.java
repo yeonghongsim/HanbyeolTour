@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 
 
@@ -62,6 +63,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void updateMemPw(MemberVO memberVO) {
 		sqlSession.update("memberMapper.updateMemPw", memberVO);
+	}
+
+	// 회원 사이드 메뉴 목록 조회
+	@Override
+	public List<MemberSideMenuVO> getMsMenuList() {
+		return sqlSession.selectList("memberMapper.getMsMenuList");
 	}
 
 	

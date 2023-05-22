@@ -10,13 +10,11 @@
 		</div>
 	</div>
 	<div class="row">
-		<th:block>
-			<div th:each="boardSideMenu : ${boardSideMenuList}" class="row under-line-yl board-side-menu">
-				<div class="col">
-					<h5>
-						<a th:href="@{'/board/' + ${boardSideMenu.boardSideMenuUrl}}">[[${boardSideMenu.boardSideMenuName}]]</a>
-					</h5>
-				</div>
+		<th:block th:each="boardSideMenu : ${boardSideMenuList}" class="row under-line-yl board-side-menu">
+			<div class="col">
+				<h5>
+					<a th:href="@{'/board/' + ${boardSideMenu.boardSideMenuUrl}}">[[${boardSideMenu.boardSideMenuName}]]</a>
+				</h5>
 			</div>
 		</th:block>
 	</div>
