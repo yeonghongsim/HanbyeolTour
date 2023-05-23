@@ -238,6 +238,7 @@
 	</select>
 	
 	
+	
 	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
 		SELECT HBT_BOARD_ADMIN_NUM
 			, HBT_BOARD_ADMIN_TITLE
@@ -271,6 +272,18 @@
 		)
 	</insert>
 	
+	<select id="getFreqRequestList" resultMap="boardMapper.freqRequest">
+		SELECT FREQ_REQUEST_CODE
+		    , FREQ_REQUEST_TITLE
+		    , FREQ_REQUEST_CONTENT
+		    , HBT_FREQ_REQUEST.TYPE_REQUEST_CODE
+		    , TYPE_REQUEST_NAME
+		FROM HBT_FREQ_REQUEST, TYPE_REQUEST
+		WHERE HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = TYPE_REQUEST.TYPE_REQUEST_CODE
+		<if test="typeRequestCode != null">
+		AND HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = #{typeRequestCode}
+		</if>
+	</select>
 	
 </mapper>
 

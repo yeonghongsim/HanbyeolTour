@@ -342,6 +342,19 @@ public class AdminController {
 		
 	}
 	
+	@ResponseBody
+	@PostMapping("/searchFreqRequestByCodeAjax")
+	public List<FreqRequestVO> searchFreqRequestByCodeAjax(String typeRequestCode) {
+		
+		System.out.println("searchFreqRequestByCodeAjax run~");
+		System.out.println("@@@@@@@" + typeRequestCode);
+		
+		
+		return adminService.getFreqRequestList(typeRequestCode);
+		
+	}
+	
+	
 	// 자주 묻는 문의 사항 글 등록
 	@PostMapping("/regFreReq")
 	public String regFreReq(FreqRequestVO freqRequestVO) {
