@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/admin_layout}">
+<!-- 연결해야 할 외부 CSS파일 -->
+<th:block layout:fragment="content_css">
+</th:block>
+<!-- 본문 내용 -->
+<th:block layout:fragment="adminContent">
+<div class="row">
+
+    <!-- 메인페이지 슬라이드 이미지 관리   -->
+    <div class="row">
+        <h3>메인 페이지 슬라이드 사진 설정</h3>
+        <!--  사진 업로드 및 설정  -->
+        <div class="col table">
+            <div class="row mb-3">
+                <table>
+                    <colgroup></colgroup>
+                    <thead>
+                        <tr>
+                          <td>No</td>
+                          <td>파일명</td>
+                          <td>연결 된 상품</td>
+                          <td>삭제</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mb-3">
+                <div class="col-9">
+                    <input class="form-control" type="file">
+                </div>
+                <div class="col">
+
+                </div>
+                <div class="col">
+                    <input class="btn" type="button" value="추가">
+                </div>
+
+            </div>
+        </div>
+        <!--    미리보기 -->
+        <div class="col">
+
+            <div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="2000">
+                        <img src="/img/main/1100_10912.jpg"
+                             class="d-block w-100 rounded" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>N번째 이미지</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="/img/main/1100_11682.jpg"
+                             class="d-block w-100 rounded" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="/img/main/1100_12089.jpg"
+                             class="d-block w-100 rounded" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="/img/main/1100_12090.jpg"
+                             class="d-block w-100 rounded" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="/img/main/1100_12148.jpg"
+                             class="d-block w-100 rounded" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#mainImgSlide" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#mainImgSlide" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <h3>추천 아이템 관리</h3>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row">
+        <input class="btn" type="button" value="변경 사항 저장">
+    </div>
+
+    <div class="row">
+        <div class="col">
+            미리보기 자리
+        </div>
+    </div>
+
+
+
+</div>
+</th:block>
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+</th:block>
+</html>
