@@ -10,6 +10,7 @@
 		<result column="MEM_NAME" 				property="memName"/>
 		<result column="MEM_PW" 				property="memPw"/>
 		<result column="MEM_STATUS_CODE" 		property="memStatusCode"/>
+		<result column="IS_TEMPORARY_PW" 		property="isTemporaryPw"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 		<association property="memStatusVO"		resultMap="memStatus"></association>
 	</resultMap>
@@ -93,6 +94,15 @@
 	</insert>
 	
 	<!-- Security 적용 로그인 정보 가져오기 -->
+	<!-- <select id="getUserInfoForLogin" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_ROLE
+		FROM HBT_MEM
+		WHERE MEM_ID = #{memId}	
+		AND MEM_STATUS_CODE = 1  
+	</select> -->
+	
 	<select id="getUserInfoForLogin" resultMap="member">
 		SELECT MEM_ID
 			, MEM_PW
@@ -129,6 +139,30 @@
 	   	  )
 	</select>
 
+	
+	<!-- 임시 비밀번호 발급 여부 변경 -->
+	<update id="updateIsTemporaryPw">
+		UPDATE HBT_MEM
+		SET
+		IS_TEMPORARY_PW = 'Y'
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 임시 비밀번호 발급 여부 확인  -->
+	<select id="getIsTemporaryPw" resultType="String">
+		SELECT IS_TEMPORARY_PW
+		FROM HBT_MEM
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 임시 비밀번호 발급 회원 - 비밀번호 수정완료 시 상태 변경 -->
+	<update id="updateIsTemporaryPwToN">
+		UPDATE HBT_MEM
+		SET
+		IS_TEMPORARY_PW = 'N'
+		WHERE MEM_ID = #{memId}
+	</update>
+	
 	
 	
 	

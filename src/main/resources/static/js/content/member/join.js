@@ -15,7 +15,7 @@ function join(){
     const memDAddrValid = memDAddrValidate();
     const memDAddr2Valid = memDAddr2Validate();
 
-    if (idValid || !pwValid || !pwCheckValid || !nameValid || !emailValid || !memDTellValid || !memDAddrValid || !memDAddr2Valid) {
+    if (!idValid || !pwValid || !pwCheckValid || !nameValid || !emailValid || !memDTellValid || !memDAddrValid || !memDAddr2Valid) {
     	alert('모든 입력사항들이 올바르게 입력되어 있는지 확인해주세요!');
     	return ;
     }
@@ -45,6 +45,14 @@ function searchAddr(){
 			const roadAddr = data.roadAddress; 
 			//도로명 주소 세팅 
 			document.querySelector('#memDAddr').value = roadAddr;
+			//기존 오류 메시지 제거 
+			const memDAddrError = document.querySelector('#memDAddrError');
+			if (memDAddrError) {
+				memDAddrError.remove();
+			}
+			
+			$('#memDAddr').css('border-color', 'green'); 
+        	$('#memDAddr').css('border-width', '2px');
         }
     }).open();
     
@@ -98,9 +106,9 @@ function isDuplicateMemId(){
 
 
 //회원가입 버튼 비활성화 (아이디 태그에 중복확인 후 키보드 입력하면 다시 회원가입 버튼 비활성화되도록 설정)
-function setDisabled(){
-	document.querySelector('.joinBtn').disabled = true;
-}
+//function setDisabled(){
+//	document.querySelector('.joinBtn').disabled = true;
+//}
 
 
 
@@ -149,6 +157,31 @@ function idValidate(){
         document.querySelector('#check_id').disabled = false;
     }
 	
+	// 오류 메시지 추가
+	if (!result_memId) {
+	  const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memId}</div>`;
+	  const existingError = memIdTag.querySelector('#memIdError');
+	  if (existingError) {
+	    existingError.innerHTML = str_memId;
+	  } else {
+	    memIdTag.insertAdjacentHTML('afterend', errorHTML);
+	  }
+	  $('#memId').css('border-color', '#dc3545');
+	  $('#memId').css('border-width', '2px');
+	  document.querySelector('#check_id').disabled = true;
+	} else {
+	  $('#memId').css('border-color', 'green');
+	  $('#memId').css('border-width', '2px');
+	  document.querySelector('#check_id').disabled = false;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	
 	return result_memId;
 }
@@ -173,14 +206,14 @@ function pwValidate(){
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
 	//const getIdCheck = RegExp(/^[a-zA-Z0-9]{4,14}$/);
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{9,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
 	
 	if(memPw == ''){
 		str_memPw = '비밀번호는 필수 입력사항입니다.';
 		result_memPw = false;
 	}
 	else if(memPw.match(pwRegex) == null){
-		str_memPw = '비밀번호는 영문 대소문자, 숫자, 특수문자를 1개 이상 포함한 9~20자리의 글자로 입력해주세요.<br>공백은 불가합니다.';
+		str_memPw = '비밀번호는 영문 대소문자, 숫자, 특수문자를 1개 이상 포함한 8~20자리의 글자로 입력해주세요.<br>공백은 불가합니다.';
 		result_memPw = false;
 	}
 	

@@ -19,6 +19,9 @@ import com.project.team.member.vo.MemberVO;
 import com.project.team.util.MailService;
 
 import jakarta.annotation.Resource;
+import jakarta.mail.Address;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 
 
 
@@ -64,7 +67,13 @@ public class MemberController {
 		memberService.join(memberVO, memberDetailVO);
 		
 		
-		return "redirect:/member/login";
+		return "content/member/join_notice";
+	}
+	
+	// 임시로 페이지 보기 위해 만들어 놓음 (회원가입 없이 페이지 보려고)
+	@GetMapping("/notice")
+	public String joinnotice() {
+		return "content/member/join_notice";
 	}
 	
 	
@@ -75,6 +84,18 @@ public class MemberController {
 		
 		return "content/member/login";
 	}
+	
+	
+	@PostMapping("/isTemporaryPwAjax")
+	@ResponseBody
+	public String getgetIsTemporaryPw(String memId) {
+		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
+		System.out.println("@@@@@@22"+ isTemporaryPw);
+		return isTemporaryPw;
+	} 
+	
+	
+	
 	
 	//아이디 찾기 페이지로 이동 
 	@GetMapping("/findId")
@@ -113,7 +134,7 @@ public class MemberController {
 	//비밀번호 찾기 
 	@ResponseBody
 	@PostMapping("/findPwAjax")
-	public boolean findPwAjax(MemberVO memberVO, MemberDetailVO memberDetailVO) {
+	public boolean findPwAjax(MemberVO memberVO, MemberDetailVO memberDetailVO) throws AddressException {
 		
 		memberVO.setMemberDetailVO(memberDetailVO);
 		
@@ -121,31 +142,46 @@ public class MemberController {
 		String memEmail = memberService.getMemEmailForFindPw(memberVO);
 		
 		 if(memEmail != null) {
-		   //메일 발송 전에 임시 비밀번호를 DB에 비밀번호로 저장을 해주기 
-		   //1. 임시비밀번호 생성 
-		   String temporaryPw = mailService.createRandomPw();
-		   //2. 암호화 
-		   String encodedPw = encoder.encode(temporaryPw);
-		   memberVO.setMemPw(encodedPw);
-		   
-		   // 빈 값에는 아이디, 비밀번호 채워야함 
-		   // 이미 입력한 아이디 값은 들어있다. getMemEmail 메소드 덕분에 
-		   //memberService.updateMemPw(memberVO); 
-		   
-		   // 간단한 메일 발송 (실행할 떄 mailVO 전달받아야한다.(내용, 수신자 필요) 
-		  // MailVO mailVO = new MailVO();
-		   //mailVO.setTitle("임시 비밀번호 발송");
-		   
-		  // List<String> emaiList = new ArrayList<>(); //이메일 리스트 만들어주기 
-		  // emaiList.add(memEmail);
-		   
-		   
-		  // mailVO.setRecipientList(emaiList); //문자열 리스트 넣어줘야함.
-		  // mailVO.setContent("임시 비밀번호 : " + temporaryPw);// 메일 본문에는 암호화 안된 비번 보내기 
-		    
-		   
-		  // mailService.sendSimpleEmail(mailVO);
+			 //메일 발송 전에 임시 비밀번호를 DB에 비밀번호로 저장을 해주기 
+			   //1. 임시비밀번호 생성 
+			   String temporaryPw = mailService.createRandomPw();
+			   //2. 암호화 
+			   String encodedPw = encoder.encode(temporaryPw);
+			   memberVO.setMemPw(encodedPw);
+			   //3. 임시비밀번호로 비밀번호 DB 수정
+			   memberService.updateMemPw(memberVO); 
 			   
+			   //4. 임시비밀번호 발급 여부 추가 
+			   memberService.updateIsTemporaryPw(memberVO.getMemId());
+			   		   
+			   String name = memberVO.getMemName();
+			   
+			   
+			   // 간단한 메일 발송 (실행할 떄 mailVO 전달받아야한다.(내용, 수신자 필요) 
+//			   MailVO mailVO = new MailVO();
+//			   mailVO.setTitle("한별투어 - 임시 비밀번호가 전송되었습니다.");
+//			   List<String> emailList = new ArrayList<>(); //이메일 리스트 만들어주기 
+//			   emailList.add(memEmail);
+//			   System.out.println("@@@@@" + emailList);
+//			   mailVO.setRecipientList(emailList); //문자열 리스트 넣어줘야함.
+//			   mailVO.setContent("임시 비밀번호 : " + temporaryPw);// 메일 본문에는 암호화 안된 비번 보내기 
+//			   mailService.sendSimpleEmail(mailVO); // 메일 전송 메소드 실행 
+			   
+			   
+			   // HTML 메일 발송 
+			   List<String> emailList = new ArrayList<>(); //이메일 리스트 만들어주기 
+			   emailList.add(memEmail);
+			   
+			   //emailList -> address[] 형태, InternetAddress 객체로 변환
+			   Address[] recipientAddresses = new InternetAddress[emailList.size()];
+			   for (int i = 0; i < emailList.size(); i++) {
+			       recipientAddresses[i] = new InternetAddress(emailList.get(i));
+			   }
+			   			   
+			   mailService.sendHTMLEmail();
+			  
+			   
+			   return true;
 		   }
 		   	   
 		   return memEmail != null ? true : false;
@@ -157,28 +193,7 @@ public class MemberController {
 		
 		
 		
-		
-//		String memPw = memberService.findPw(memberVO);
-//		System.out.println(memPw);
-//		
-//		System.out.println(memberVO.getMemId());
-//		System.out.println(memberVO.getMemName());
-//		
-//		String memId = memberVO.getMemId();
-//		String memName = memberVO.getMemName();
-//		
-//		memberVO.setMemId(memId);
-//		memberVO.setMemName(memName);
-//		memberVO.setMemPw(memPw);
-		
-
-	
-	
-	
-	
-	
-	
-	
+			
 	
 	
 	

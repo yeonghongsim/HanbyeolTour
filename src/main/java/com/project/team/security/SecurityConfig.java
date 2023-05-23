@@ -35,8 +35,12 @@ public class SecurityConfig {
 					.logout()
 					.logoutUrl("/member/logout") //실제로 로그아웃 하는 url 
 					.invalidateHttpSession(true) //로그아웃시 작동하는 것 (세션데이터 지우기)
-					.logoutSuccessUrl("/"); // 로그아웃시 이동할 경로 
+					.logoutSuccessUrl("/") // 로그아웃시 이동할 경로 
 					// index controller로 이동하면 알아서 권한에 따라 페이지 이동 시켜줌
+				.and()
+					.exceptionHandling()
+					.accessDeniedPage("/accessDeny"); //접근이 인가되지 않는 회원이 접근시 이동할 페이지 설정 
+		
 		return security.build();
 		
 		

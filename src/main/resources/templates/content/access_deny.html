@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- bootstrap css 로딩 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/content/access_deny.css">
+
+</head>
+
+<body>
+
+
+<div class="row">
+	<div class="col bi-col text-center">
+		<i class="bi bi-exclamation-triangle"></i>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col title">
+		접근 권한이 없는 페이지 입니다. 
+	</div>
+</div>
+
+<div class="row">
+	<div class="col content">
+		아래의 버튼을 눌러 메인 페이지로 이동해주세요.
+	</div>
+</div>
+
+<div class="row">
+	<div class="col mt-4 text-center">
+		<button onclick="location.href='/';" type="button" class="btn btn-primary btn-lg">메인페이지로 이동 <i class="bi bi-box-arrow-up-right"></i></button>
+	</div>
+</div>
+
+
+
+</body>
+
+
+</html>

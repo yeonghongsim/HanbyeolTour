@@ -29,6 +29,17 @@ public interface MemberService {
 	//비밀번호 수정
 	void updateMemPw(MemberVO memberVO);
 	
+	//임시 비밀번호 발급 여부 수정
+	void updateIsTemporaryPw(String memId);
+	
+	//임시 비밀번호 발급 여부 확인
+	String getIsTemporaryPw(String memId);
+	
+	//임시 비밀번호 발금 회원 - 비밀번호 변경 후 상태 변경 
+	void updateIsTemporaryPwToN(String memId);
+	
+	
+	
 	// 회원 사이드 메뉴 목록 조회
 	List<MemberSideMenuVO> getMsMenuList();
 }
