@@ -14,10 +14,10 @@ function regFreqReqJs(memId, typeRequestList){
 	str += `		<form action="/admin/regFreReq" id="regFreReqForm" method="post">`;
 	str += `		<table class="table text-center">`;
 	str += `			<colgroup>`;
-	str += `				<col width="">`;
-	str += `				<col width="">`;
-	str += `				<col width="">`;
-	str += `				<col width="">`;
+	str += `				<col width="15%">`;
+	str += `				<col width="*">`;
+	str += `				<col width="15%">`;
+	str += `				<col width="15%">`;
 	str += `			</colgroup>`;
 	str += `			<tr>`;
 	str += `				<td class="align-middle"><span>문의유형</span></td>`;
@@ -37,11 +37,11 @@ function regFreqReqJs(memId, typeRequestList){
 	str += `			</tr>`;
 	str += `			<tr>`;
 	str += `				<td class="align-middle"><span>Q.</span></td>`;
-	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestTitle"></td>`;
+	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestTitle" required placeholder="제목을 입력하세요."></td>`;
 	str += `			</tr>`;
 	str += `			<tr>`;
 	str += `				<td class="align-middle"><span>A.</span></td>`;
-	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestContent"></td>`;
+	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestContent" required placeholder="내용을 입력하세요."></td>`;
 	str += `			</tr>`;
 	str += `		</table>`;
 	str += `		</form>`;
