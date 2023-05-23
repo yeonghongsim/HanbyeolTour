@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.team.board.vo.BoardSideMenuVO;
+import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 
@@ -25,5 +26,21 @@ public class BoardServiceImp implements BoardService{
 		return sqlSession.selectList("boardMapper.getBoardSideMenuList");
 	}
 
+	@Override
+	public String getNextByFreqReqCode() {
+		return sqlSession.selectOne("boardMapper.getNextByFreqReqCode");
+	}
+
+	@Override
+	public List<FreqRequestVO> getFreqRequestList() {
+		return sqlSession.selectList("boardMapper.getFreqRequestList");
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

@@ -12,6 +12,7 @@ import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.FreqRequestVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -118,11 +119,20 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectOne("adminMapper.getAttachedFileName", itemImgCode);
 	}
 	
-	//회원 정보 조회
+	//회원 리스트 조회
 	@Override
-	public List<MemberVO> getMemsInfo() {
-		return sqlSession.selectList("adminMapper.getMemsInfo");
+	public List<MemberVO> getMemList() {
+		
+		return sqlSession.selectList("adminMapper.getMemList");
 	}
+
+	//회원 상세 정보 조회
+	@Override
+	public MemberVO getMemDetailInfo(String memId) {
+		
+		return sqlSession.selectOne("adminMapper.getMemDetailInfo", memId);
+	}
+
 
 
 	
@@ -152,6 +162,18 @@ public class AdminServiceImpl implements AdminService{
 	public List<BoardRequestVO> getBoardNoticeList() {
 		return sqlSession.selectList("adminMapper.getBoardNoticeList");
 	}
+
+	@Override
+	public String getMemCode(String memid) {
+		return sqlSession.selectOne("adminMapper.getMemCode", memid);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertBoardForFreReq(FreqRequestVO freqRequestVO) {
+		sqlSession.insert("adminMapper.insertBoardForFreReq", freqRequestVO);
+	}
+
 
 
 

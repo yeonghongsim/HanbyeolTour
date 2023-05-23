@@ -24,10 +24,12 @@ import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
 import com.project.team.util.ImgPath;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -204,15 +206,15 @@ public class AdminController {
 		return "redirect:/admin/memInfo";
 	}
 	
-	//회원 정보 
+	//회원 리스트 조회
 	@GetMapping("/memInfo")
-	public String memInfo( ) {
-	
+	public String memInfo(Model model) {
 		
+		model.addAttribute("memList", adminService.getMemList());
+	
 		return "content/admin/mem_info";
 	}
 	
-
 
 	
 	
@@ -314,6 +316,39 @@ public class AdminController {
 	public void searchRequestAjax() {
 		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
 	}
+	
+	// 자주 묻는 문의 사항 관리 페이지
+	@GetMapping("/frequncyRequestMng")
+	public String frequncyRequestMng(Model model) {
+		
+		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
+		
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		return "content/admin/board/frequncy_request_mng";
+		
+		
+	}
+	
+	// 자주 묻는 문의 사항 글 등록
+	@PostMapping("/regFreReq")
+	public String regFreReq(FreqRequestVO freqRequestVO) {
+		
+		String freqReqCode = boardService.getNextByFreqReqCode();
+		String memCode = adminService.getMemCode(freqRequestVO.getMemberVO().getMemId());
+		
+		freqRequestVO.setFreqRequestCode(freqReqCode);
+		freqRequestVO.getMemberVO().setMemCode(memCode);
+		System.out.println("@@@@@@@@" + freqRequestVO);
+		
+		adminService.insertBoardForFreReq(freqRequestVO);
+		
+		return "redirect:/admin/frequncyRequestMng";
+		
+	}
+	
+	
+	
 	
 
 }

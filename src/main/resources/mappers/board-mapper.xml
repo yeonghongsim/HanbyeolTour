@@ -34,6 +34,14 @@
 		<result column="BOARD_SIDE_MENU_NAME" property="boardSideMenuName"/>
 		<result column="BOARD_SIDE_MENU_URL" property="boardSideMenuUrl"/>
 	</resultMap>
+
+	<resultMap type="com.project.team.board.vo.FreqRequestVO" id="freqRequest">
+		<id 	column="FREQ_REQUEST_CODE" property="freqRequestCode"/>
+		<result column="FREQ_REQUEST_TITLE" property="freqRequestTitle"/>
+		<result column="FREQ_REQUEST_CONTENT" property="freqRequestContent"/>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<association property="typeRequestVO" resultMap="typeRequest"></association>
+	</resultMap>
 	
 	
 	<select id="getTypeRequestList" resultMap="typeRequest">
@@ -47,6 +55,22 @@
 			, BOARD_SIDE_MENU_NAME
 			, BOARD_SIDE_MENU_URL
 		FROM BOARD_SIDE_MENU
+	</select>
+	
+	<select id="getNextByFreqReqCode" resultType="String">
+		SELECT 'FREQ_REQ_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(FREQ_REQUEST_CODE, 10))), 0) + 1, 3, '0') 
+	    FROM HBT_FREQ_REQUEST
+	</select>
+	
+	
+	<select id="getFreqRequestList" resultMap="freqRequest">
+		SELECT FREQ_REQUEST_CODE
+			, FREQ_REQUEST_TITLE
+			, FREQ_REQUEST_CONTENT
+			, REQ.TYPE_REQUEST_CODE
+			, TYPE_REQUEST_NAME
+		FROM HBT_FREQ_REQUEST REQ, TYPE_REQUEST TYP
+		WHERE REQ.TYPE_REQUEST_CODE = TYP.TYPE_REQUEST_CODE
 	</select>
 	
 	
