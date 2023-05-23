@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.team.board.service.BoardService;
+import com.project.team.board.vo.FreqRequestVO;
 
 import jakarta.annotation.Resource;
 
@@ -53,7 +54,6 @@ public class BoardController {
 		
 		return "content/board/frequentlyRequestPage";
 	}
-	
 	
 	
 	@ResponseBody

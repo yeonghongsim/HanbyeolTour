@@ -1,5 +1,70 @@
 init();
 
+// 글 동록 양식 보기
+function regFreqReqJs(memId, typeRequestList){
+	
+	const fre_table_div = document.querySelector('#fre_table_div');
+	
+	fre_table_div.replaceChildren();
+	
+	let str = '';
+	
+	str += `<div class="row">`;
+	str += `	<div class="col">`;
+	str += `		<form action="/admin/regFreReq" id="regFreReqForm" method="post">`;
+	str += `		<table class="table text-center">`;
+	str += `			<colgroup>`;
+	str += `				<col width="15%">`;
+	str += `				<col width="*">`;
+	str += `				<col width="15%">`;
+	str += `				<col width="15%">`;
+	str += `			</colgroup>`;
+	str += `			<tr>`;
+	str += `				<td class="align-middle"><span>문의유형</span></td>`;
+	str += `				<td>`;
+	str += `					<select class="form-control" name="TypeRequestVO.typeRequestCode">`;
+	for(const typeRequest of typeRequestList){
+		str += `					<option value="${typeRequest.typeRequestCode}">${typeRequest.typeRequestName}</option>`;
+		
+	}
+	str += `					</select>`;
+	str += `				</td>`;
+	str += `				<td class="align-middle"><span>등록자Id</span></td>`;
+	str += `				<td class="align-middle">`;
+	str += `					${memId}`;
+	str += `					<input type="hidden" value="${memId}" name="MemberVO.memId">`;
+	str += `				</td`;
+	str += `			</tr>`;
+	str += `			<tr>`;
+	str += `				<td class="align-middle"><span>Q.</span></td>`;
+	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestTitle" required placeholder="제목을 입력하세요."></td>`;
+	str += `			</tr>`;
+	str += `			<tr>`;
+	str += `				<td class="align-middle"><span>A.</span></td>`;
+	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestContent" required placeholder="내용을 입력하세요."></td>`;
+	str += `			</tr>`;
+	str += `		</table>`;
+	str += `		</form>`;
+	str += `	</div>`;
+	str += `</div>`;
+	str += `<div class="row">`;
+	str += `	<div class="offset-10 col-2">`;
+	str += `		<input onclick="regFreRequest();" class="btn btn-success w-100" type="button" value="글 등록"></td>`;
+	str += `	</div>`;
+	str += `</div>`;
+	
+	fre_table_div.insertAdjacentHTML('afterbegin', str);
+	
+}
+
+// 글 등록하기
+function regFreRequest(){
+	document.querySelector('#regFreReqForm').submit();
+	
+
+}
+
+
 
 // 검색 버튼 밑의 버튼을 이용한 검색 기능
 function searchTypeRequest(typeRequestCode){

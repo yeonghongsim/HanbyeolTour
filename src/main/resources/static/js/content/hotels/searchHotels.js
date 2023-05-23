@@ -1,138 +1,76 @@
+//google place api 요청
+function searchHotelsAJAX(){
+    //검색지역 세팅
+    const areaName = document.querySelector('.areaName').value;
+    const cityName = document.querySelector('#cityName').value;
 
-
-function searchHotels(){
-
-    //ajax start
     $.ajax({
-        url: '/search', //요청경로
+        url: '/hotel/searchAJAX', //요청경로
         type: 'post',
-        contentType : 'application/json; charset=UTF-8',
-        //contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-        async : true,
-        data: JSON.stringify({
-            keyword: 'hotel',
-            radius: 500
-        }),
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : false,
+        data: {
+            'areaName': areaName,
+            'cityName': cityName
+        },
         success: function(result) {
-
-        console.log(result);
-
+            const results = result['results'];
+            //검색결과를 화면에 보여주기위핸 함수 호출
+            drawHotel(results);
         },
         error: function() {
             alert('실패');
         }
     });
-    //ajax end
-
 }
-let map;
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: new google.maps.LatLng(-33.91722, 151.23064),
-        zoom: 16,
-    });
 
-    const iconBase =
-        "https://developers.google.com/maps/documentation/javascript/examples/full/images/";
-    const icons = {
-        parking: {
-            icon: iconBase + "parking_lot_maps.png",
-        },
-        library: {
-            icon: iconBase + "library_maps.png",
-        },
-        info: {
-            icon: iconBase + "info-i_maps.png",
-        },
-    };
-    const features = [
-        {
-            position: new google.maps.LatLng(-33.91721, 151.2263),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91539, 151.2282),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91747, 151.22912),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.9191, 151.22907),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91725, 151.23011),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91872, 151.23089),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91784, 151.23094),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91682, 151.23149),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.9179, 151.23463),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91666, 151.23468),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.916988, 151.23364),
-            type: "info",
-        },
-        {
-            position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.916365282092855, 151.22937399734496),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.91665018901448, 151.2282474695587),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.919543720969806, 151.23112279762267),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.91608037421864, 151.23288232673644),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.91851096391805, 151.2344058214569),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.91818154739766, 151.2346203981781),
-            type: "parking",
-        },
-        {
-            position: new google.maps.LatLng(-33.91727341958453, 151.23348314155578),
-            type: "library",
-        },
-    ];
-
-    // Create markers.
-    for (let i = 0; i < features.length; i++) {
-        const marker = new google.maps.Marker({
-            position: features[i].position,
-            icon: icons[features[i].type].icon,
-            map: map,
-        });
+function drawHotel(results){
+    //태그가 그려질 위치
+    const resultDiv =  document.querySelector('.resultDiv');
+    //모달창 초기화
+    resultDiv.replaceChildren();
+    var str = '';
+    //리턴받은 값으로 화면 구성
+    for(const result of results){
+        str += `<div class="col">
+                    <div class="card" style="width: 18rem;">`;
+        if(Array.isArray(result['photos'])){
+            str +=`<img width="320px;" height="240px;" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=320&photoreference=${result['photos'][0]['photo_reference']}&key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4" class="card-img-top" alt="">`;
+        }
+        else {
+            str += `<img width="320px;" height="240px;" src="/img/item/xbox.jpg" className="card-img-top" alt="">`;
+            }
+        str += `         <div class="card-body">
+                            <h5 class="card-title">${result['name']}</h5>
+                            <p class="card-text">평점 : ${result['rating']}</p>
+                            <a href="javascript:void(0)" onclick="showLocationOnMap(${result['geometry']['location']['lat']},${result['geometry']['location']['lng']}, '${result['name']}');" class="btn btn-primary">구글맵에서 보기</a>
+                        </div>
+                    </div>
+                </div>
+                `;
     }
+    //태그 삽입
+    resultDiv.insertAdjacentHTML('afterbegin', str);
 }
 
-window.initMap = initMap;
+function showLocationOnMap(lat, lng, name) {
+    //구글맵 호출
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: lat, lng: lng }, // Set initial center position
+        zoom: 17 // Set initial zoom level
+    });
+    //모달창 오픈
+    $('#modalToggle').modal('show');
+    //구글맵에 마커 추가
+    const marker = new google.maps.Marker({
+        position: { lat, lng },
+        map: map,
+        label: {
+            text: name,
+            fontSize: '18px',
+        }
+    });
+    map.setCenter(marker.getPosition(modalToggle));
+}
