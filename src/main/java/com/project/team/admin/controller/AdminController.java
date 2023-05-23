@@ -281,5 +281,20 @@ public class AdminController {
 		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
 	}
 	
+	//-----------------페이지 설정---------------//
+
+	//메인 페이지 설정
+	@GetMapping("/setMainPage")
+	public String setMainPage(){
+
+		return "content/admin/page/set_main_page";
+	}
+
+	//메인 페이지 설정
+	@GetMapping("/setPackagePage")
+	public String setPackagePage(){
+
+		return "content/admin/page/set_package_page";
+	}
 
 }
