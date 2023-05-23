@@ -85,12 +85,11 @@ public class MemberController {
 		return "content/member/login";
 	}
 	
-	
+	//임시 비밀번호 발급 여부 판단 
 	@PostMapping("/isTemporaryPwAjax")
 	@ResponseBody
 	public String getgetIsTemporaryPw(String memId) {
 		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
-		System.out.println("@@@@@@22"+ isTemporaryPw);
 		return isTemporaryPw;
 	} 
 	
