@@ -334,9 +334,9 @@ public class AdminController {
 
 	//메인 페이지 설정
 	@GetMapping("/setMainPage")
-	public String setMainPage(){
-
-
+	public String setMainPage(Model model){
+		//메인페이지 이미지 목록
+		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
 		return "content/admin/page/set_main_page";
 	}
 
@@ -349,7 +349,7 @@ public class AdminController {
 
 	//메인페이지 슬라이드 이미지 업로드
 	@PostMapping("/uploadMainSlideImg")
-	public String uploadMainSlideImg(MultipartFile slideImg,String itemCode){
+	public String uploadMainSlideImg(MultipartFile slideImg){
 		//파일 업로드 및 가강된 파일명 가져오기
 		ImgVO attachedImgVO = UploadUtil.uploadFile(slideImg, UploadPath.MAIN_IMG_UPLOAD_PATH);
 
@@ -358,12 +358,13 @@ public class AdminController {
 		//DB에 insert할 데이터 세팅
 		uploadImg.put("origin", attachedImgVO.getItemImgOriginName());
 		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
-		uploadImg.put("itemCode", itemCode);
 
 		//db에 입력
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+ uploadImg);
 
+		adminService.uploadMainSlideImg(uploadImg);
 
-		return "";
+		return "redirect:/admin/setMainPage";
 	}
 
 }
