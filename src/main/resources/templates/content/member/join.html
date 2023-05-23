@@ -26,7 +26,7 @@
 	</div>
 	
 	<!-- 회원가입 상태  -->
-	<div class="row s-row">
+	<!-- <div class="row s-row">
 			
 			<div class="col-2 join-status">
 				회원선택		
@@ -50,7 +50,7 @@
 				가입완료		
 			</div>
 		
-	</div>
+	</div> -->
 
 	<!-- 회원가입 정보 입력칸 -->
 	<div class="join-container">
@@ -63,8 +63,8 @@
 	
 		<form id="joinForm" class="row g-3" th:action="@{/member/join}" method="post">
 			<div class="col-12">
-				<div class="row">
-					<div class="col-9" id="memIdDiv">
+				<div class="row" id="memIdDiv">
+					<div class="col-9">
 						<input type="text" class="form-control form-control-lg" placeholder="아이디"
 					 	id="memId" name="memId" onclick="idValidate()" oninput="idValidate()">
 					</div>
@@ -83,8 +83,8 @@
 			</div>
 			
 			<div class="col-12">
-				<div class="row">
-					<div class="col-7" id="memNameDiv">
+				<div class="row" id="memNameDiv">
+					<div class="col-7">
 						<input type="text" class="form-control form-control-lg" id="memName" name="memName" placeholder="이름" onclick="nameValidate();" oninput="nameValidate()">
 					</div>
 					<div class="col-5">
@@ -108,8 +108,8 @@
 			
 			
 			<div class="col-12">
-				<div class="row">
-					<div class="col-9" id="memEmailDiv">
+				<div class="row" id="memEmailDiv">
+					<div class="col-9">
 						<input type="email" class="form-control form-control-lg" placeholder="이메일  예시) ID@example.com" 
 						id="memEmail" name="memEmail" onclick="emailValidate();" oninput="emailValidate()">
 					</div>
@@ -140,14 +140,28 @@
 				<input type="text" class="form-control form-select-lg" id="memDTell" name="memDTell" maxlength="11"
 				 placeholder="- 없이 휴대폰 전체자리 입력" oninput="memDTellValidate()" onclick="memDTellValidate();">
 			</div>
-
-			<div class="col-9" id="memDAddrDiv">
+			
+			<div class="row" id="memDAddrDiv">
+				<div class="col-9">
+					<input type="text" class="form-control form-control-lg" id="memDAddr" name="memDAddr" 
+					onclick="memDAddrValidate();" placeholder="우편번호" readonly oninput="memDAddrValidate()">
+				</div>
+				<div class="col-3 d-grid">	
+					<input type="button" class="btn btn-outline-light" id="search_btn" value="주소 검색" onclick="searchAddr();">
+				</div>
+			</div>
+			
+			
+<!-- 			<div class="col-9" id="memDAddrDiv">
 				<input type="text" class="form-control form-control-lg" id="memDAddr" name="memDAddr" 
 				onclick="memDAddrValidate();" placeholder="우편번호" readonly oninput="memDAddrValidate()">
 			</div>
 			<div class="col-3 d-grid">	
 				<input type="button" class="btn btn-outline-light" id="search_btn" value="주소 검색" onclick="searchAddr();">
 			</div>
+			 -->
+			
+			
 			<div class="col-12 mb-3" id="memDAddr2Div">
 				<input type="text" class="form-control form-control-lg" id="memDAddr2" name="memDAddr2" 
 				placeholder="상세 주소" onclick="memDAddr2Validate();" oninput="memDAddr2Validate()">
@@ -172,7 +186,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="d-grid">
-						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn">가입완료</button>
+						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn">회원가입</button>
 					</div>
 				</div>
 			</div>

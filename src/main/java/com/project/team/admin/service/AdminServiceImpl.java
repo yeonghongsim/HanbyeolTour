@@ -174,6 +174,11 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.insert("adminMapper.insertBoardForFreReq", freqRequestVO);
 	}
 
+	@Override
+	public List<FreqRequestVO> getFreqRequestList(String typeRequestCode) {
+		return sqlSession.selectList("adminMapper.getFreqRequestList", typeRequestCode);
+	}
+
 
 
 

@@ -35,7 +35,7 @@ function idValidate(){
 	const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?!\s)[a-zA-Z\d]{6,14}$/;
 	
 	if(memId == ''){
-		str_memId = '입력된 아이디가 없습니다.';
+		str_memId = '아이디를 입력해주세요.';
 		result_memId = false;
 	}
 	else if(memId.match(idRegex) == null){
@@ -76,10 +76,10 @@ function pwValidate(){
 	
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{9,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
 	
 	if(memPw == ''){
-		str_memPw = '입력된 비밀번호가 없습니다.';
+		str_memPw = '비밀번호를 입력해주세요.';
 		result_memPw = false;
 	}
 	else if(memPw.match(pwRegex) == null){
@@ -118,29 +118,69 @@ function login(){
 	   success: function(result) {
 			
 			if(result == 'success'){ //로그인 성공 시
-				
-				let str =``;
-				// div 를 선택할수 있도록하기 위해서 아이디 부여 ( 다시 창이 뜰 때 삭제할수 있도록 )
-				
-				str += `<div class="col-12 text-center" id="findId">`;
-				str += `<span>`;
-				str += `<i class="bi bi-person-circle" style="font-size:3rem; color:#ffd000;"></i><br>`;
-				str += `<strong style="font-size:1.2rem;">${memId}</strong> 회원님 환영합니다!`;
-				str += `</span>`;
-				str += `</div>`;
-				
-				//데이터 태그에 넣어주기 
-				document.querySelector('#loginModalDiv').insertAdjacentHTML('afterbegin', str);
-				 document.querySelector('#btn-row').style.display = 'block';
-				
-				
-			}
-			else{//로그인 실패 시 
-			
+	    		
+	    		//ajax start
+				$.ajax({
+				   url: '/member/isTemporaryPwAjax', //요청경로
+				   type: 'post',
+				   async: true, 
+				   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
+				   data: {'memId': memId}, //필요한 데이터
+				   success: function(result) {
+					
+						if(result == 'Y'){
+						
+							// IS_TEMPORARY_PW = 'Y' 인 경우 (임시 비밀번호 발급받은 회원)
+						    let str =``;
+						   
+						    str += `<div class="col-12 text-center">`;
+							str += `<span>`;
+							str += `<br>`;
+							str += `<i class="bi bi-person-circle" style="font-size:3rem; color:#ffd000;"></i><br>`;
+							str += `<strong style="font-size:1.2rem;">${memId}</strong> 회원님!<br>`;
+							str += `지금은 임시 비밀번호가 발급된 상태입니다.<br>`;
+							str += `<strong style="font-weight:bolder; color:red;">꼭! 비밀번호 변경 후</strong> 사이트를 이용해주세요!`;
+							str += `<br>`;
+							str += `</span>`;
+							str += `</div>`;
+						
+						    // 데이터 태그에 넣어주기
+						    document.querySelector('#loginModalDiv').insertAdjacentHTML('afterbegin', str);
+						    document.querySelector('#btn-home-2').style.display = 'block';
+							document.querySelector('#btn-updatePw').style.display = 'block';
 							
+						}
+						else{
+							//일반회원 - 그냥 로그인 성공한 경우 
+							let str =``;
+							// div 를 선택할수 있도록하기 위해서 아이디 부여 ( 다시 창이 뜰 때 삭제할수 있도록 )
+							
+							str += `<div class="col-12 text-center">`;
+							str += `<span>`;
+							str += `<i class="bi bi-person-circle" style="font-size:3rem; color:#ffd000;"></i><br>`;
+							str += `<strong style="font-size:1.2rem;">${memId}</strong> 회원님 환영합니다!`;
+							str += `</span>`;
+							str += `</div>`;
+							
+							//데이터 태그에 넣어주기 
+							document.querySelector('#loginModalDiv').insertAdjacentHTML('afterbegin', str);
+							document.querySelector('#btn-home').style.display = 'block';
+							
+						}
+										
+				   },
+				   error: function() {
+				      alert('실패');
+				   }
+				});
+				//ajax end
+							
+			}  
+			else {
+				// 로그인 실패한 경우
 				let str =``;
 			
-				str += `<div class="col-12 text-center" id="findId">`;
+				str += `<div class="col-12 text-center">`;
 				str += `<span>`;
 				str += `<br>`;
 				str += `<i class="bi bi-exclamation-circle" style="font-size:3rem; color:#dc3545;"></i><br>`;
@@ -154,8 +194,6 @@ function login(){
 				//데이터 태그에 넣어주기 
 				document.querySelector('#loginModalDiv').insertAdjacentHTML('afterbegin', str);
 				
-				//버튼 안보이게 하기 
-				document.querySelector('#btn-row').style.display = 'none';
 				
 				//pw input 태그만 초기화
 				const inputs = document.querySelectorAll('#loginForm input:not([type="button"])');
@@ -165,7 +203,6 @@ function login(){
 				  secondInput.value = '';
 				}
 							
-				
 			}
 	   },
 	   error: function() {
@@ -177,8 +214,12 @@ function login(){
 	
 }
 
-
-
+// 임시비밀번호 발급 회원 - 로그인 후 홈으로 이동 누를시에 뜨는 팝업 
+function beforeGoMain(){
+	if(confirm('비밀번호 변경없이 홈으로 이동하시겠어요?\n비밀번호 변경은 언제든 가능합니다!\n잊지말고 꼭 변경해주세요~🙂')){
+		location.href = '/';
+	}
+}
 
 
 

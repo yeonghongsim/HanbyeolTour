@@ -25,10 +25,10 @@
 	
 	<div class="row mb-3 typeRequest-con">
 		<div class="col-lg-2 col-sm-3 typeRequest-div">
-			<span class="pointer" th:onclick="searchTypeRequest()">전체</span>
+			<span th:onclick="searchTypeRequest()" style="cursor: pointer;">전체</span>
 		</div>
 		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">
-			<span class="pointer" th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])">[[${typeRequest.typeRequestName}]]</span>
+			<span th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])" style="cursor: pointer;">[[${typeRequest.typeRequestName}]]</span>
 		</div>
 	</div>
 	
@@ -58,7 +58,7 @@
 							<td>A.</td>
 							<td>[[${freqRequest.freqRequestContent}]]</td>
 							<td>
-								<input th:onclick="updateQnAjs(this);" type="button" class="btn btn-secondary w-100" value="글 수정1">
+								<input th:onclick="updateQnAjs([[${freqRequest.typeRequestVO.typeRequestCode}]], this);" type="button" class="btn btn-secondary w-100" value="수정 하기">
 							</td>
 						</tr>
 					</th:block>

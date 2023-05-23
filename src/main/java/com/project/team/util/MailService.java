@@ -1,5 +1,9 @@
 package com.project.team.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -61,7 +65,7 @@ public class MailService {
 	}
 	
 	//6자리의 랜덤 비밀번호 생성 
-	public String createRandomPw() {
+	public String createRandomPw_origin() {
 		//문자 0~9 , A~Z 까지 들어있는 배열 
         String[] charSet = new String[]{ //데이터 n개 -> 인덱스 n-1개  
         		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -83,6 +87,42 @@ public class MailService {
         
         return temporaryPw;
 	}
+	
+	
+
+	public String createRandomPw() {
+	    // 사용 가능한 문자 범위
+	    String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+	    String specialCharacters = "!@#$%^&*()";
+	    String numbers = "0123456789";
+
+	    // 임시 비밀번호를 저장할 리스트
+	    List<Character> temporaryPw = new ArrayList<>();
+
+	    // 최소 1개씩 포함하여 각각 랜덤 문자 생성
+	    Random random = new Random();
+
+	    temporaryPw.add(upperCaseLetters.charAt(random.nextInt(upperCaseLetters.length())));
+	    temporaryPw.add(lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length())));
+	    temporaryPw.add(specialCharacters.charAt(random.nextInt(specialCharacters.length())));
+	    temporaryPw.add(numbers.charAt(random.nextInt(numbers.length())));
+
+	    // 나머지 자리 랜덤 문자 생성
+	    for (int i = 4; i < 8; i++) {
+	        String combinedChars = upperCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+	        temporaryPw.add(combinedChars.charAt(random.nextInt(combinedChars.length())));
+	    }
+
+	    // 임시 비밀번호를 문자열로 변환하여 반환
+	    StringBuilder stringBuilder = new StringBuilder(temporaryPw.size());
+	    for (Character character : temporaryPw) {
+	        stringBuilder.append(character);
+	    }
+
+	    return stringBuilder.toString();
+	}
+
 	
 	
 	

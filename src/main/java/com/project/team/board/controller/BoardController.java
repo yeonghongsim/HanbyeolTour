@@ -65,14 +65,7 @@ public class BoardController {
 		
 	}
 	
-	@ResponseBody
-	@PostMapping("/searchFreqRequestByCodeAjax")
-	public void searchFreqRequestByCodeAjax(String typeRequestCode) {
-		
-		System.out.println("searchFreqRequestByCodeAjax run~");
-		System.out.println("@@@@@@@" + typeRequestCode);
-		
-	}
+	
 	
 	
 	

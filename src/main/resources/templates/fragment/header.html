@@ -15,6 +15,9 @@
 					<li class="h-btn">장바구니</li>
 					<li class="h-btn">마이페이지</li>
 					<li class="h-btn"><a href="/board/boardMain">고객센터</a></li>
+					<li class="h-btn">
+						<a th:href="@{/admin/itemManage}">관리자메뉴</a>
+					</li>
 				</ul>
 			</div>
 			<!-- 로그인 시 -->
@@ -128,26 +131,10 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col dropdown-6-span">
+		<div class="col">
 			<a href="/item/hotelPage">
-				<span class="dropdown-6-span">호텔</span>
+				<span>호텔</span>
 			</a>
-			<div class="dropdown-6-div">
-				<ul class="dropdown-6-ul">
-					<th:block>	
-					<li>
-						<a>
-							<span>국내 예약/조회</span>
-						</a>
-					</li>
-					<li>
-						<a>
-							<span>해외 예약/조회</span>
-						</a>
-					</li>
-				</th:block>
-				</ul>
-			</div>
 		</div>
 	</div>
 	

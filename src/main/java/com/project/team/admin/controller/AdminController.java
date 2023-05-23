@@ -173,56 +173,12 @@ public class AdminController {
 		
 	}
 	
-
-	//판매 상품 수정(이미지 포함)
-	@PostMapping("/updateItem")
-	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
-		//오류 수정중
-		System.out.println(itemVO);
+	//판매 상품 수정
+	@ResponseBody
+	@PostMapping("/updateItemAjax")
+	public void updateItem(ItemVO itemVO) {
 		
 		adminService.updateItem(itemVO);
-		adminService.regImgsForItemDetail(itemVO);
-
-		return "redirect:/admin/itemManageForSale";
-	}
-	
-	//상품 상세 정보 조회 X 버튼 클릭 시 이미지 삭제
-	@ResponseBody
-	@PostMapping("/deleteItemImgAjax")
-	public void deleteItemImgAjax(ImgVO imgVO) {
-		//첨부된 파일명 조회
-		String attachedFileName = adminService.getAttachedFileName(imgVO.getItemImgCode());
-		File file = new File(ImgPath.UPLOAD_PATH + attachedFileName);
-		file.delete();
-		
-		adminService.deleteItemImg(imgVO);
-	
-	}
-	
-	//회원 관리 페이지
-	@GetMapping("/memManage")
-	public String memManage() {
-		
-		return "redirect:/admin/memInfo";
-	}
-	
-	//회원 리스트 조회
-	@GetMapping("/memInfo")
-	public String memInfo(Model model) {
-		
-		model.addAttribute("memList", adminService.getMemList());
-	
-		return "content/admin/mem_info";
-	}
-	
-	//회원 상세 정보 조회
-	@ResponseBody
-	@PostMapping("/getMemDetailAjax")
-	public MemberVO getMemDetailAjax(String memId) {
-		
-		System.out.println(memId);
-		
-		return adminService.getMemDetailInfo(memId);
 	}
 	
 	
@@ -332,35 +288,62 @@ public class AdminController {
 	// 자주 묻는 문의 사항 관리 페이지
 	@GetMapping("/frequncyRequestMng")
 	public String frequncyRequestMng(Model model) {
-		
+
 		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
-		
+
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
-		
+
 		return "content/admin/board/frequncy_request_mng";
+
+
+	}
+	
+	@ResponseBody
+	@PostMapping("/searchFreqRequestByCodeAjax")
+	public List<FreqRequestVO> searchFreqRequestByCodeAjax(String typeRequestCode) {
 		
+		System.out.println("searchFreqRequestByCodeAjax run~");
+		System.out.println("@@@@@@@" + typeRequestCode);
+		
+		
+		return adminService.getFreqRequestList(typeRequestCode);
 		
 	}
 	
 	// 자주 묻는 문의 사항 글 등록
 	@PostMapping("/regFreReq")
 	public String regFreReq(FreqRequestVO freqRequestVO) {
-		
+
 		String freqReqCode = boardService.getNextByFreqReqCode();
 		String memCode = adminService.getMemCode(freqRequestVO.getMemberVO().getMemId());
-		
+
 		freqRequestVO.setFreqRequestCode(freqReqCode);
 		freqRequestVO.getMemberVO().setMemCode(memCode);
 		System.out.println("@@@@@@@@" + freqRequestVO);
-		
+
 		adminService.insertBoardForFreReq(freqRequestVO);
-		
+
 		return "redirect:/admin/frequncyRequestMng";
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
+	//-----------------페이지 설정---------------//
+
+	//메인 페이지 설정
+	@GetMapping("/setMainPage")
+	public String setMainPage(){
+
+		return "content/admin/page/set_main_page";
+	}
+
+	//메인 페이지 설정
+	@GetMapping("/setPackagePage")
+	public String setPackagePage(){
+
+		return "content/admin/page/set_package_page";
+	}
 
 }
