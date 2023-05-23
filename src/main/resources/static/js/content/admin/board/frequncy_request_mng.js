@@ -125,12 +125,16 @@ function searchTypeRequest(typeRequestCode){
 			
 			str += `<table class="table table-striped">`;
 			str += `	<colgroup>`;
+			str += `		<col width="10%">`;
 			str += `		<col width="15%">`;
 			str += `		<col width="*">`;
 			str += `		<col width="15%">`;
 			str += `	</colgroup>`;
 			str += `	<thead>`;
 			str += `		<tr>`;
+			str += `			<td>`;
+			str += `				<input type="checkbox">`;
+			str += `			</td>`;
 			str += `			<td><span>No.</span></td>`;
 			str += `			<td><span>title</span></td>`;
 			str += `			<td></td>`;
@@ -141,11 +145,17 @@ function searchTypeRequest(typeRequestCode){
 			str += `	</tbody>`;
 		for(const freqRequest of result){
 			str += `	<tr class="align-middle">`;
+			str += `		<td>`;
+			str += `			<input type="checkbox">`;
+			str += `		</td>`;
 			str += `		<td>${freqRequest.typeRequestVO.typeRequestName}</td>`;
 			str += `		<td>${freqRequest.freqRequestTitle}</td>`;
-			str += `		<td>1</td>`;
+			str += `		<td>`;
+			str += `			<input class="btn btn-danger w-100" type="button" value="삭제 하기">`;
+			str += `		</td>`;
 			str += `	</tr>`;
 			str += `	<tr class="align-middle">`;
+			str += `		<td></td>`;
 			str += `		<td><span>A.</span></td>`;
 			str += `		<td>${freqRequest.freqRequestContent}</td>`;
 			str += `		<td>`;
