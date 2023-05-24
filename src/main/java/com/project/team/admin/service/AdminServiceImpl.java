@@ -1,6 +1,7 @@
 package com.project.team.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,12 +185,14 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.delete("adminMapper.delFreqReq", freqRequestVO);
 	}
 
+	public void uploadMainSlideImg(Map<String, String> uploadImg) {
+		sqlSession.insert("adminMapper.uploadMainSlideImg", uploadImg);
+	}
+
+	@Override
+	public List<Map<String, String>> getMainSlideImg() {
+		return sqlSession.selectList("adminMapper.getMainSlideImg");
+	}
 
 
-
-
-
-
-
-	
 }

@@ -13,7 +13,7 @@ public class UploadUtil {
 	//static : 전역변수, 객체 생성없이 클래스명.메소드로 호출 가능!
 	
 	//단일 파일 업로드 메소드
-	public static ImgVO uploadFile(MultipartFile img) {
+	public static ImgVO uploadFile(MultipartFile img, String path) {
 		//imgVO 리턴하기 위해 선언(controller에서 첨부된 파일 정보 사용하기 위함)
 		ImgVO imgVO = null;
 		
@@ -40,7 +40,7 @@ public class UploadUtil {
 			
 			// 파일 업로드
 			try { // 경로\\이미지명.확장자로 나와야 함. \\필요 > 경로 변수 마지막에 \\추가
-				File file = new File(ImgPath.UPLOAD_PATH + itemImgAttachedName);
+				File file = new File(path + itemImgAttachedName);
 				img.transferTo(file); //실제 이미지 업로드
 				
 				//imgVO에 이미지 정보 저장
@@ -64,12 +64,12 @@ public class UploadUtil {
 	
 	
 	//다중 파일 업로드 메소드
-	public static List<ImgVO> multiFileUpload(MultipartFile[] imgs) {
+	public static List<ImgVO> multiFileUpload(MultipartFile[] imgs,String path) {
 		//첨부된 파일 정보를 다 담을 수 있는 통
 		List<ImgVO> result = new ArrayList<>();
 		
 		for(MultipartFile img : imgs) {
-			ImgVO vo = uploadFile(img); //매개변수로 첨부파일 하나 들어올 때 업로드 시켜주는 메소드
+			ImgVO vo = uploadFile(img, path); //매개변수로 첨부파일 하나 들어올 때 업로드 시켜주는 메소드
 			vo.setIsMain("N");
 			result.add(vo); 
 		}
