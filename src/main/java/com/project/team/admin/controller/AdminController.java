@@ -65,9 +65,21 @@ public class AdminController {
 	//여행지 카테고리 등록
 	@ResponseBody
 	@PostMapping("/regAreaAjax")
-	public void regArea(@RequestBody TourAreaVO tourAreaVO) {
+	public List<TourAreaVO> regArea(@RequestBody TourAreaVO tourAreaVO) {
 		//카테고리 등록
 		adminService.regArea(tourAreaVO);
+		
+		return adminService.getAreaCateList();
+	}
+	
+	//여행지 카테고리 중복 여부 확인
+	@ResponseBody
+	@PostMapping("/checkAreaAjax")
+	public int checkAreaAjax(TourAreaVO tourAreaVO) {
+		
+		System.out.println(tourAreaVO);
+		
+		return adminService.checkAreaName(tourAreaVO);
 	}
 	
 	
@@ -79,7 +91,7 @@ public class AdminController {
 	}
 	
 	//여행지 카테고리 삭제
-	@PostMapping("/deleteAreaCate")
+	@GetMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {
 		adminService.deleteAreaCate(areaCode);
 		
@@ -133,7 +145,7 @@ public class AdminController {
 		return "redirect:/admin/regItem";
 	}
 	
-	//등록 판매 상품 목록 조회()
+	//등록 판매 상품 목록 조회
 	@GetMapping("/itemManageForSale")
 	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg) {
 		
@@ -173,16 +185,117 @@ public class AdminController {
 		
 	}
 	
-	//판매 상품 수정
+	//상품 수정 이미지 삭제
 	@ResponseBody
-	@PostMapping("/updateItemAjax")
-	public void updateItem(ItemVO itemVO) {
+	@PostMapping("/deleteItemImgAjax")
+	public void deleteItemImgAjax(ImgVO imgVO) {
+		adminService.deleteItemImg(imgVO);
+	}
+	
+	//판매 상품 수정
+	@PostMapping("/updateItem")
+	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
+		//disabled 속성 때문에 null 가능
+		if(mainImg != null && subImg.length != 0) {
+			//메인 이미지 세팅
+			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
+			
+			//서브 이미지 세팅
+			List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 		
+			//상품 이미지 DB 등록
+			//해당 상품 아이템 코드 세팅
+			String itemCode = itemVO.getItemCode();
+			itemVO.setItemCode(itemCode);
+			
+			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
+			//서브 이미지 첨부 정보 추가
+			List<ImgVO> imgList = attachedImgList;
+			
+			//메인 이미지 첨부 정보 추가
+			imgList.add(attachecdImgVO);
+			
+			//imgVO에 itemCode 세팅
+			for(ImgVO img : imgList) {
+				img.setItemCode(itemCode);
+				
+			}
+			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
+			itemVO.setImgList(imgList);
+		
+		}else if(mainImg != null && subImg.length == 0) {
+			//메인 이미지 세팅
+			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
+			
+			//상품 이미지 DB 등록
+			//해당 상품 아이템 코드 세팅
+			String itemCode = itemVO.getItemCode();
+			itemVO.setItemCode(itemCode);
+			
+			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
+			List<ImgVO> imgList = new ArrayList<>();
+			
+			//메인 이미지 첨부 정보 추가
+			imgList.add(attachecdImgVO);
+			
+			//imgVO에 itemCode 세팅
+			for(ImgVO img : imgList) {
+				img.setItemCode(itemCode);
+			}
+			
+			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
+			itemVO.setImgList(imgList);
+			
+		}else{
+				//서브 이미지 세팅
+				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+				
+				//상품 이미지 DB 등록
+				//해당 상품 아이템 코드 세팅
+				String itemCode = itemVO.getItemCode();
+				itemVO.setItemCode(itemCode);
+				
+				//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
+				//서브 이미지 첨부 정보 추가
+				
+				List<ImgVO> imgList = attachedImgList;
+				//imgVO에 itemCode 세팅
+				for(ImgVO img : imgList) {
+					img.setItemCode(itemCode);
+				}
+				//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
+				itemVO.setImgList(imgList);
+		}
+		
+		
+		System.out.println(itemVO);
 		adminService.updateItem(itemVO);
+		adminService.regImgsForItemDetail(itemVO);
+		
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	
+	//회원 리스트 조회
+	@GetMapping("/memInfo")
+	public String memInfo(Model model) {
+		
+		model.addAttribute("memList", adminService.getMemList());
 	
+		return "content/admin/mem_info";
+	}
+	
+	//회원 상세 정보 조회
+	@ResponseBody
+	@PostMapping("/getMemDetailAjax")
+	public MemberVO getMemDetailAjax(String memId) {
+		
+		System.out.println(memId);
+		
+		return adminService.getMemDetailInfo(memId);
+	}
 	
 	
 	
