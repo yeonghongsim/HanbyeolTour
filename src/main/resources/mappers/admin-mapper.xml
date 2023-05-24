@@ -243,11 +243,47 @@
 		FROM HBT_MAINPAGE_IMG
 	</select>
 
+	<select id="getRecomItem" resultType="Map">
+		SELECT RECOM.ITEM_CODE
+			, RECOM_COMMENT
+			, ITEM.ITEM_TITLE
+			, IMG.ITEM_IMG_ATTACHED_NAME
+		FROM HBT_RECOM_ITEM RECOM, HBT_ITEM ITEM, HBT_ITEM_IMG IMG
+		WHERE RECOM.ITEM_CODE = ITEM.ITEM_CODE
+		AND ITEM.ITEM_CODE = IMG.ITEM_CODE
+		AND IMG.IS_MAIN = 'Y'
+	</select>
 
-	
-	
-	
-	
+	<select id="getItemList" resultType="Map">
+		SELECT ITEM.ITEM_CODE
+			 , ITEM_TITLE
+			 , ITEM_IMG_ATTACHED_NAME
+		FROM HBT_ITEM ITEM , HBT_ITEM_IMG IMG
+		   , HBT_ITEM_STATE STATE
+		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+		  AND IMG.IS_MAIN = 'Y'
+		  AND STATE.STATUS_CODE = ITEM.STATUS_CODE
+		  AND STATE.STATUS_NAME = '판매중'
+		  AND ITEM.ITEM_CODE NOT IN (SELECT ITEM_CODE FROM HBT_RECOM_ITEM)
+	</select>
+
+	<delete id="resetRecomItemList">
+		DELETE HBT_RECOM_ITEM
+	</delete>
+
+	<insert id="setRecomItemList">
+		INSERT INTO HBT_RECOM_ITEM (
+		        	ITEM_CODE
+		        	, RECOM_COMMENT
+		)
+		<foreach collection="list" item="item" separator="UNION ALL">
+			SELECT #{item.itemCode}
+					, #{item.comment}
+			FROM DUAL
+		</foreach>
+	</insert>
+
+
 	
 	<!-- 심영홍  -->
 	<select id="getBoardNoticeCode" resultType="String">

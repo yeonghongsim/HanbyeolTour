@@ -337,6 +337,8 @@ public class AdminController {
 	public String setMainPage(Model model){
 		//메인페이지 이미지 목록
 		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
+		model.addAttribute("recomItem", adminService.getRecomItem());
+		model.addAttribute("itemList", adminService.getItemList());
 		return "content/admin/page/set_main_page";
 	}
 
@@ -366,5 +368,30 @@ public class AdminController {
 
 		return "redirect:/admin/setMainPage";
 	}
+
+	//추천 아이템 등록
+	@PostMapping("/setRecomItemListAJAX")
+	@ResponseBody
+	public void setRecomItemList(@RequestParam(value = "itemCode[]") List<String> itemCode, @RequestParam(value = "comment[]") List<String> comment){
+
+		List<Map<String,String>> list = new ArrayList<>();
+
+		System.out.println(itemCode.size());
+
+		for(int i = 0; i < itemCode.size(); i++){
+			Map<String,String> map = new HashMap<>();
+			map.put("itemCode", itemCode.get(i));
+			map.put("comment", comment.get(i));
+
+			list.add(map);
+			System.out.println("for문" + i + "번째");
+		}
+
+		System.out.println(list);
+
+		adminService.setRecomItemList(list);
+
+	}
+
 
 }

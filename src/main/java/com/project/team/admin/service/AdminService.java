@@ -91,4 +91,11 @@ public interface AdminService {
 
 	//메인페이지 이미지 로드
 	List<Map<String,String>> getMainSlideImg();
+
+	//추천아이템 목록 조회
+	List<Map<String,String>> getRecomItem();
+	//판매중인 상품
+	List<Map<String,String>> getItemList();
+	//추천 아이템 업데이트
+	void setRecomItemList(List<Map<String,String>> list);
 }
