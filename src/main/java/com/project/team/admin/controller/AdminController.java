@@ -145,7 +145,7 @@ public class AdminController {
 		return "redirect:/admin/regItem";
 	}
 	
-	//등록 판매 상품 목록 조회()
+	//등록 판매 상품 목록 조회
 	@GetMapping("/itemManageForSale")
 	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg) {
 		
@@ -195,7 +195,7 @@ public class AdminController {
 	//판매 상품 수정
 	@PostMapping("/updateItem")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
-		
+		//disabled 속성 때문에 null 가능
 		if(mainImg != null && subImg.length != 0) {
 			//메인 이미지 세팅
 			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
@@ -248,7 +248,7 @@ public class AdminController {
 			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
 			itemVO.setImgList(imgList);
 			
-		}else if(mainImg == null && subImg.length != 0){
+		}else{
 				//서브 이미지 세팅
 				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 				
@@ -278,7 +278,24 @@ public class AdminController {
 	}
 	
 	
+	//회원 리스트 조회
+	@GetMapping("/memInfo")
+	public String memInfo(Model model) {
+		
+		model.addAttribute("memList", adminService.getMemList());
 	
+		return "content/admin/mem_info";
+	}
+	
+	//회원 상세 정보 조회
+	@ResponseBody
+	@PostMapping("/getMemDetailAjax")
+	public MemberVO getMemDetailAjax(String memId) {
+		
+		System.out.println(memId);
+		
+		return adminService.getMemDetailInfo(memId);
+	}
 	
 	
 	
