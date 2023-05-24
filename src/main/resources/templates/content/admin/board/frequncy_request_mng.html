@@ -36,12 +36,16 @@
 		<div class="col" id="fre_table_div">
 			<table class="table table-striped">
 				<colgroup>
+					<col width="10%">
 					<col width="15%">
 					<col width="*">
 					<col width="15%">
 				</colgroup>
 				<thead>
 					<tr>
+						<td>
+							<input type="checkbox">
+						</td>
 						<td>No.</td>
 						<td>title</td>
 						<td></td>
@@ -50,11 +54,17 @@
 				<tbody id="req-table-tbody">
 					<th:block th:each="freqRequest : ${getFreqRequestList}">
 						<tr class="align-middle">
+							<td>
+								<input type="checkbox">
+							</td>
 							<td>[[${freqRequest.typeRequestVO.typeRequestName}]]</td>
 							<td>[[${freqRequest.freqRequestTitle}]]</td>
-							<td>1</td>
+							<td>
+								<input class="btn btn-danger w-100" type="button" value="삭제 하기">
+							</td>
 						</tr>
 						<tr class="align-middle">
+							<td></td>
 							<td>A.</td>
 							<td>[[${freqRequest.freqRequestContent}]]</td>
 							<td>
