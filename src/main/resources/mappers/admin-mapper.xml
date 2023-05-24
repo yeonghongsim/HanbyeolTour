@@ -97,6 +97,7 @@
 				, #{img.isMain}
 			FROM DUAL
 		</foreach>
+		
 	</insert>
 	
 	<!-- 판매 상품 조회 -->
@@ -172,6 +173,7 @@
 
 	
 	<!-- 상품 이미지 수정 -->
+	
 	
 	<!-- 상품 상세 정보 X 클릭 이미지 삭제 -->
 	<delete id="deleteItemImg">
