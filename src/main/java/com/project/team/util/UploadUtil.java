@@ -70,8 +70,9 @@ public class UploadUtil {
 		
 		for(MultipartFile img : imgs) {
 			ImgVO vo = uploadFile(img, path); //매개변수로 첨부파일 하나 들어올 때 업로드 시켜주는 메소드
-			vo.setIsMain("N");
-			result.add(vo); 
+				vo.setIsMain("N");
+				result.add(vo); 
+	
 		}
 		return result;
 	}

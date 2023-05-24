@@ -17,6 +17,9 @@ public interface AdminService {
 	//여행국가 카테고리 등록
 	void regArea(TourAreaVO tourAreaVO);
 	
+	//여행국가 카테고리 중복 확인
+	int checkAreaName(TourAreaVO tourAreaVO);
+	
 	//여행국가 카테고리 조회
 	List<TourAreaVO> getAreaCateList();
 	

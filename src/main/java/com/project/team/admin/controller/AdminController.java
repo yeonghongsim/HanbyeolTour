@@ -65,9 +65,21 @@ public class AdminController {
 	//여행지 카테고리 등록
 	@ResponseBody
 	@PostMapping("/regAreaAjax")
-	public void regArea(@RequestBody TourAreaVO tourAreaVO) {
+	public List<TourAreaVO> regArea(@RequestBody TourAreaVO tourAreaVO) {
 		//카테고리 등록
 		adminService.regArea(tourAreaVO);
+		
+		return adminService.getAreaCateList();
+	}
+	
+	//여행지 카테고리 중복 여부 확인
+	@ResponseBody
+	@PostMapping("/checkAreaAjax")
+	public int checkAreaAjax(TourAreaVO tourAreaVO) {
+		
+		System.out.println(tourAreaVO);
+		
+		return adminService.checkAreaName(tourAreaVO);
 	}
 	
 	
@@ -79,7 +91,7 @@ public class AdminController {
 	}
 	
 	//여행지 카테고리 삭제
-	@PostMapping("/deleteAreaCate")
+	@GetMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {
 		adminService.deleteAreaCate(areaCode);
 		
@@ -184,7 +196,7 @@ public class AdminController {
 	@PostMapping("/updateItem")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
 		
-		if(mainImg != null && subImg != null) {
+		if(mainImg != null && subImg.length != 0) {
 			//메인 이미지 세팅
 			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
@@ -212,7 +224,7 @@ public class AdminController {
 			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
 			itemVO.setImgList(imgList);
 		
-		}else if(mainImg != null && subImg == null) {
+		}else if(mainImg != null && subImg.length == 0) {
 			//메인 이미지 세팅
 			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
@@ -223,7 +235,6 @@ public class AdminController {
 			itemVO.setItemCode(itemCode);
 			
 			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-			//서브 이미지 첨부 정보 추가
 			List<ImgVO> imgList = new ArrayList<>();
 			
 			//메인 이미지 첨부 정보 추가
@@ -236,7 +247,7 @@ public class AdminController {
 			
 			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
 			itemVO.setImgList(imgList);
-		}else{
+		}else if(mainImg == null && subImg.length != 0){
 				//서브 이미지 세팅
 				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 				

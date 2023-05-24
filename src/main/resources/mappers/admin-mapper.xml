@@ -10,12 +10,25 @@
 			AREA_CODE
 			, AREA_ENG_NAME
 			, AREA_KOR_NAME
+			, IS_USE
 		) VALUES (
 			#{areaCode}
 			, #{areaEngName}
 			, #{areaKorName}
+			, 'Y'
 		)
 	</insert>
+	
+	<!-- 여행 국가 카테고리 중복 확인 -->
+	<select id="checkAreaName" resultType="int">
+		SELECT COUNT(AREA_CODE)
+			, COUNT(AREA_ENG_NAME)
+			, COUNT(AREA_KOR_NAME)
+		FROM HBT_TOUR_AREA
+		WHERE AREA_CODE = #{areaCode}
+		AND AREA_KOR_NAME = #{areaKorName} 
+		AND AREA_ENG_NAME = #{areaEngName} 
+	</select>
 	
 	<!-- 여행 국가 카테고리 조회 -->
 	<select id="getAreaCateList" resultMap="itemMapper.tourArea">
