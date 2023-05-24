@@ -42,25 +42,27 @@
 					<col width="15%">
 				</colgroup>
 				<thead>
-					<tr>
+					<tr class="align-middle">
 						<td>
-							<input type="checkbox">
+							<input type="checkbox" class="chkAll">
 						</td>
 						<td>No.</td>
 						<td>title</td>
-						<td></td>
+						<td>
+							<input class="btn btn-danger w-100" type="button" value="선택 삭제">
+						</td>
 					</tr>
 				</thead>
 				<tbody id="req-table-tbody">
 					<th:block th:each="freqRequest : ${getFreqRequestList}">
 						<tr class="align-middle">
 							<td>
-								<input type="checkbox">
+								<input type="checkbox" class="chk">
 							</td>
 							<td>[[${freqRequest.typeRequestVO.typeRequestName}]]</td>
 							<td>[[${freqRequest.freqRequestTitle}]]</td>
 							<td>
-								<input class="btn btn-danger w-100" type="button" value="삭제 하기">
+								<input class="btn btn-danger w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], [[${freqRequest.typeRequestVO.typeRequestCode}]])">
 							</td>
 						</tr>
 						<tr class="align-middle">
