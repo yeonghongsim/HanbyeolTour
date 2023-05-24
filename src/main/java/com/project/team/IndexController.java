@@ -32,7 +32,12 @@ public class IndexController {
 	
 	@GetMapping("/main")
 	public String main(Model model) {
-		
+
+		//메인메뉴 이미지 조회
+		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
+		//추천 상품 목록 조회
+		model.addAttribute("recomItem", adminService.getRecomItem());
+
 		//메인페이지 열릴때 해외패키지 하위메뉴 조회
 		model.addAttribute("locMenuList", adminService.getAreaCateList());
 
