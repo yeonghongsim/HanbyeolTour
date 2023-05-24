@@ -99,7 +99,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-6" id="mainImgDiv">                                                                             `;
 			str += `					<label for="" class="form-label">메인 이미지</label>                                        `;
-			str += `					<input type="file" class="form-control" id="mainImg" name="mainImg" disabled>                               `;
+			str += `					<input type="file" class="form-control" id="mainImg" name="mainImg" disabled accept="image/*">                               `;
 										for(const img of result.imgList){
 											if(img.isMain == 'Y') {
 			str += `							<div style="font-size:0.8rem; margin: 5px;"><a href="javascript:void(0);" onclick="openImgModal('${img.itemImgAttachedName}', '${img.itemImgOriginName}');">* 업로드 된 파일 : ${img.itemImgOriginName}</a>`;
@@ -112,7 +112,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-6 mb-2" id="subImgDiv">                                                                             `;
 			str += `					<label for="" class="form-label">상세 이미지</label>                                        `;
-			str += `					<input type="file" class="form-control" id="subImg" name="subImg" multiple>                       `;
+			str += `					<input type="file" class="form-control" id="subImg" name="subImg" multiple accept="image/*">                       `;
 										for(const img of result.imgList){
 											if(img.isMain == 'N'){
 			str += `							<div style="font-size:0.8rem; margin: 5px;"><a href="javascript:void(0);" onclick="openImgModal('${img.itemImgAttachedName}', '${img.itemImgOriginName}');">* 업로드 된 파일 : ${img.itemImgOriginName}</a>`;

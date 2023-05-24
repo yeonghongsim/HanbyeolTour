@@ -150,6 +150,11 @@ function changeAreaIsUse(areaCode){
 	
 }
 
-
-
-
+//여행 국가 카테고리 입력 영어만 가능
+$('.EnglargeDiv').on("input", (e) => {
+  let v = e.currentTarget.value;
+  if ((/[ㄱ-힣]+/).test(v)) {
+    e.currentTarget.value = v.replaceAll(/[ㄱ-힣]+/g, '')
+    $('.EnglargeDiv').focus()
+  }
+})

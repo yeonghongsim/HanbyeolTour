@@ -247,6 +247,7 @@ public class AdminController {
 			
 			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
 			itemVO.setImgList(imgList);
+			
 		}else if(mainImg == null && subImg.length != 0){
 				//서브 이미지 세팅
 				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
