@@ -27,9 +27,9 @@
 				<div class="col">
 					<form class="row g-3">
 						<div class="col-9">
-							<input id="areaCode" type="text" class="form-control" placeholder="추가할 국가 코드 입력" style="margin-bottom: 10px;">
-							<input id="areaKorName" type="text" class="form-control" placeholder="한글 국가명 입력" style="margin-bottom: 10px;">
-							<input id="areaEngName" type="text" class="form-control" placeholder="영문 국가명 입력" style="margin-bottom: 10px;">
+							<input id="areaCode" type="text" class="form-control EnglargeDiv" placeholder="추가할 2자리 국가 코드 입력" style="margin-bottom: 10px;" required>
+							<input id="areaKorName" type="text" class="form-control onlyKor" placeholder="한글 국가명 입력" style="margin-bottom: 10px;" required>
+							<input id="areaEngName" type="text" class="form-control EnglargeDiv" placeholder="영문 국가명 입력" style="margin-bottom: 10px;" required>
 						</div>       <!-- d-grid : col-영역만큼 버튼 사이즈 커짐 -->
 						<div class="col-2 d-grid">
 							<button th:onclick="regArea();" type="button" class="btn mb-3" style="background-color: #ffd000;">
@@ -51,7 +51,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<table class="table table-striped table-hover text-center" style="width: 900px;">
+							<table id="areaCateTable" class="table table-striped table-hover text-center" style="width: 900px;">
 								<colgroup>
 				                  <col width="5%">
 				                  <col width="15%">

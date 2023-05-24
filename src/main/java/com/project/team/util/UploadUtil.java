@@ -18,7 +18,7 @@ public class UploadUtil {
 		ImgVO imgVO = null;
 		
 		//첨부 됐으면(true) 파일 업로드 코드 실행.
-		if (!img.isEmpty() || img.isEmpty()) {
+		if (!img.isEmpty()) {
 			imgVO = new ImgVO(); //첨부파일이 있으면 imgVO 객체 생성
 
 			// 원본파일명 받아오기
@@ -68,11 +68,14 @@ public class UploadUtil {
 		//첨부된 파일 정보를 다 담을 수 있는 통
 		List<ImgVO> result = new ArrayList<>();
 		
-		for(MultipartFile img : imgs) {
-			ImgVO vo = uploadFile(img, path); //매개변수로 첨부파일 하나 들어올 때 업로드 시켜주는 메소드
-			vo.setIsMain("N");
-			result.add(vo); 
-		}
+			for(MultipartFile img : imgs) {
+				ImgVO vo = uploadFile(img, path); //매개변수로 첨부파일 하나 들어올 때 업로드 시켜주는 메소드
+					if(vo != null) {
+						vo.setIsMain("N");
+						result.add(vo); 
+					}
+			}
+		
 		return result;
 	}
 

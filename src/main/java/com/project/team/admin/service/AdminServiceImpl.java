@@ -28,6 +28,12 @@ public class AdminServiceImpl implements AdminService{
 		
 	}
 	
+	//여행국가 카테고리 중복 확인
+	@Override
+	public int checkAreaName(TourAreaVO tourAreaVO) {
+		return sqlSession.selectOne("adminMapper.checkAreaName", tourAreaVO);
+	}
+	
 	//여행국가 카테고리 조회
 	@Override
 	public List<TourAreaVO> getAreaCateList() {
@@ -200,6 +206,24 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	
+	@Override
+	public List<Map<String, String>> getRecomItem() {
+		return sqlSession.selectList("adminMapper.getRecomItem");
+	}
+
+	@Override
+	public List<Map<String, String>> getItemList() {
+		return sqlSession.selectList("adminMapper.getItemList");
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void setRecomItemList(List<Map<String,String>> list) {
+		sqlSession.delete("adminMapper.resetRecomItemList");
+		sqlSession.insert("adminMapper.setRecomItemList", list);
+	}
+
+
 
 
 }

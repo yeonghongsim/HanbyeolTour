@@ -56,7 +56,7 @@
 		         </div>
 		         <div class="col-4">
 		            <label for="" class="form-label">패키지 기간</label>
-		            <input type="text" class="form-control" id="" name="traverPeriod">
+		            <input type="text" class="form-control" id="" name="traverPeriod" onkeyup="noSpaceInput(this)">
 		         </div>
 		         <div class="col-4">
 		         	<label for="" class="form-label">판매시작일</label>
@@ -72,11 +72,11 @@
 		         </div>
 		         <div class="col-6">
 		            <label for="" class="form-label">메인 이미지</label> 
-		            <input type="file" class="form-control" id="" name="mainImg" >
+		            <input type="file" class="form-control" id="" name="mainImg" accept="image/*">
 		         </div>
 		         <div class="col-6">
 		            <label for="" class="form-label">상세 이미지</label> 
-		            <input type="file" class="form-control" id="" name="subImg" multiple>
+		            <input type="file" class="form-control" id="" name="subImg" multiple accept="image/*">
 		         </div>
 		         <div class="col-12">
 		            <div class="form-check form-check-inline">

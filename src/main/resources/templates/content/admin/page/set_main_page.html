@@ -5,7 +5,18 @@
 <!-- 연결해야 할 외부 CSS파일 -->
 <th:block layout:fragment="content_css">
 <style>
+    .recomImg {
+        position: relative;
+    }
 
+    .recom_img_comment {
+        justify-content: center;
+        position: absolute;
+        top: 60%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        padding: 5px;
+    }
 </style>
 </th:block>
 <!-- 본문 내용 -->
@@ -93,43 +104,57 @@
     </div>
 
 
-    <div class="row text-center">
+    <div class="row mb-3 text-center">
         <div class="col-5">
             <span>전체 상품 목록</span>
-            <select class="form-select ye-bc" multiple="" aria-label="multiple select example" control-id="ControlID-13">
-                <option value="213">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
+            <select class="form-select ye-bc allItemList" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <th:block th:each="item : ${itemList}">
+                    <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}">[[${item['ITEM_TITLE']}]]</option>
+                </th:block>
             </select>
         </div>
         <div class="col-2">
             <div class="row mb-3">
-                <input type="button" class="btn ye-bc" value="▷">
+                <input type="button" class="btn ye-bc" value="▷" onclick="addRecomItem();">
             </div>
             <div class="row mt-3">
-                <input type="button" class="btn ye-bc" value="◁">
+                <input type="button" class="btn ye-bc" value="◁" onclick="removeRecomItem();">
             </div>
         </div>
         <div class="col-5">
             <span>추천 상품 목록</span>
-            <select class="form-select ye-bc" multiple="" aria-label="multiple select example" control-id="ControlID-13">
-                <option selected="">Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select class="form-select ye-bc recomItemList" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <th:block th:each="item : ${recomItem}">
+                    <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}">[[${item['ITEM_TITLE']}]]</option>
+                </th:block>
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            미리보기 자리
+
+    <!-- 추천 아이템 등록 이미지 미리보기     -->
+    <div class="row mb-3 recomImgDiv">
+        <div class="row">
+            <th:block th:each="item : ${recomItem}">
+                <div class="col col-2 offset-1 recomImg">
+                    <div class="row mb-3">
+                        <img th:src="@{/img/item/itemImg/} + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img">
+                        <h4 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h4>
+                    </div>
+                    <div class="row">
+                        <input class="form-control comment_input" type="text" placeholder="코멘트 입력" onchange="changeComment();">
+                    </div>
+                </div>
+            </th:block>
         </div>
+
+</div>
+
+    <div class="row">
+
     </div>
 
-
     <div class="row my-1">
-        <input class="btn ye-bc" type="button" value="변경 사항 저장">
+        <input class="btn ye-bc" type="button" value="변경 사항 저장" onclick="setRecomItem();">
     </div>
 
 
@@ -139,5 +164,6 @@
 </th:block>
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+    <script src="/js/content/admin/page/set_main_page.js"></script>
 </th:block>
 </html>

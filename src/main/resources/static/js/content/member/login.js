@@ -76,8 +76,9 @@ function pwValidate(){
 	
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
-	
+	//const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&!@#$%^&*()]{8,20}$/;
+
 	if(memPw == ''){
 		str_memPw = '비밀번호를 입력해주세요.';
 		result_memPw = false;
