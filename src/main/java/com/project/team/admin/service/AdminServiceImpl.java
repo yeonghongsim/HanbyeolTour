@@ -1,6 +1,7 @@
 package com.project.team.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class AdminServiceImpl implements AdminService{
 	public void regArea(TourAreaVO tourAreaVO) {
 		sqlSession.insert("adminMapper.regArea", tourAreaVO);
 		
+	}
+	
+	//여행국가 카테고리 중복 확인
+	@Override
+	public int checkAreaName(TourAreaVO tourAreaVO) {
+		return sqlSession.selectOne("adminMapper.checkAreaName", tourAreaVO);
 	}
 	
 	//여행국가 카테고리 조회
@@ -179,12 +186,44 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getFreqRequestList", typeRequestCode);
 	}
 
+	@Override
+	public void delFreqReq(FreqRequestVO freqRequestVO) {
+		sqlSession.delete("adminMapper.delFreqReq", freqRequestVO);
+	}
+	
+	@Override
+	public void updateFreqReq(FreqRequestVO freqRequestVO) {
+		sqlSession.update("adminMapper.updateFreqReq", freqRequestVO);
+	}
 
+	public void uploadMainSlideImg(Map<String, String> uploadImg) {
+		sqlSession.insert("adminMapper.uploadMainSlideImg", uploadImg);
+	}
 
-
-
-
-
+	@Override
+	public List<Map<String, String>> getMainSlideImg() {
+		return sqlSession.selectList("adminMapper.getMainSlideImg");
+	}
 
 	
+	@Override
+	public List<Map<String, String>> getRecomItem() {
+		return sqlSession.selectList("adminMapper.getRecomItem");
+	}
+
+	@Override
+	public List<Map<String, String>> getItemList() {
+		return sqlSession.selectList("adminMapper.getItemList");
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void setRecomItemList(List<Map<String,String>> list) {
+		sqlSession.delete("adminMapper.resetRecomItemList");
+		sqlSession.insert("adminMapper.setRecomItemList", list);
+	}
+
+
+
+
 }

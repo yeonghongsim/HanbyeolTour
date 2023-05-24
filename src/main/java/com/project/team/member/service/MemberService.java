@@ -38,8 +38,14 @@ public interface MemberService {
 	//임시 비밀번호 발금 회원 - 비밀번호 변경 후 상태 변경 
 	void updateIsTemporaryPwToN(String memId);
 	
+	//회원 탈퇴 신청 - 상태코드 변경 
+	void updateMemStatusCodeTo2(String memId);
+	
+	//비밀번호 조회 
+	String getMemPw(String memId);
 	
 	
+		
 	// 회원 사이드 메뉴 목록 조회
 	List<MemberSideMenuVO> getMsMenuList();
 }

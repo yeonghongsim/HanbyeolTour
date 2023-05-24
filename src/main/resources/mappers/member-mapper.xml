@@ -33,6 +33,13 @@
 		<result column="MEM_STATUS_NAME" 	property="memStatusName"/>
 	</resultMap>
 	
+	<!-- 회원 사이드 메뉴 -->
+	<resultMap type="com.project.team.member.vo.MemberSideMenuVO" id="msMenu">
+		<id		column="MS_MENU_CODE" 	property="msMenuCode"/>
+		<result column="MS_MENU_NAME" 	property="msMenuName"/>
+		<result column="MS_MENU_URL" 	property="msMenuUrl"/>
+	</resultMap>
+	
 	
 	<!--회원가입시 ID 중복 체크  -->
 	<select id="isDuplicateMemId" resultType="int">
@@ -41,19 +48,15 @@
 	WHERE MEM_ID = #{memId}
 	</select>
 	
-	<!-- memCode 생성 -->
-	<!-- <select id="getNextMemCode" resultType="String">
-		SELECT 'MEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CODE, 5))), 0) + 1, 3, '0') 
-    	FROM HBT_MEM
-	</select> -->
-	
-	<!-- memDCode 생성 -->
-	<!-- <select id="getNextMemDCode" resultType="String">
-		SELECT 'MEM_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_D_CODE, 5))), 0) + 1, 3, '0') 
-    	FROM HBT_MEM_DETAIL
+	<!--회원가입시 Email 중복 체크  -->
+	<select id="isDuplicateMemEmail" resultType="int">
+	SELECT COUNT(MEM_EMAIL)
+	FROM HBT_MEM_DETAIL
+	WHERE MEM_EMAIL = #{memEmail}
 	</select>
-	 -->
-	 
+	
+	
+		 
 	<!-- 회원가입 (HBT_MEM) -->
 	<insert id="join">
 		INSERT INTO HBT_MEM (
@@ -94,15 +97,6 @@
 	</insert>
 	
 	<!-- Security 적용 로그인 정보 가져오기 -->
-	<!-- <select id="getUserInfoForLogin" resultMap="member">
-		SELECT MEM_ID
-			, MEM_PW
-			, MEM_ROLE
-		FROM HBT_MEM
-		WHERE MEM_ID = #{memId}	
-		AND MEM_STATUS_CODE = 1  
-	</select> -->
-	
 	<select id="getUserInfoForLogin" resultMap="member">
 		SELECT MEM_ID
 			, MEM_PW
@@ -111,7 +105,6 @@
 		WHERE MEM_ID = #{memId}	
 		AND MEM_STATUS_CODE = 1  
 	</select>
-	
 	
 	
 	<!-- 아이디 찾기 -->
@@ -126,18 +119,27 @@
 	   	  )
 	</select>
 	
+		
 	<!-- 비밀번호 찾기 -> 이메일 주소 확인 후 임시 비밀번호 발송 -->
 	<select id="getMemEmailForFindPw" resultType="String">
 	  SELECT MEM_EMAIL
-	  FROM HBT_MEM
-	  WHERE MEM_ID = #{memId}
-	  WHERE MEM_NAME = #{memName}
-	  AND MEM_CODE IN (
-	      SELECT MEM_CODE
-	      FROM HBT_MEM_DETAIL
-	      WHERE MEM_D_TELL = #{memberDetailVO.memDTell}
-	   	  )
+	  FROM HBT_MEM_DETAIL
+	  WHERE MEM_CODE IN (
+	    SELECT MEM_CODE
+	    FROM HBT_MEM
+	    WHERE MEM_ID = #{memId}
+	      AND MEM_NAME = #{memName}
+	  )
+	  AND MEM_D_TELL = #{memberDetailVO.memDTell}
 	</select>
+
+	<!-- 비밀번호 변경 -->
+	<update id="updateMemPw">
+		UPDATE HBT_MEM
+		SET
+		MEM_PW = #{memPw}
+		WHERE MEM_ID = #{memId}
+	</update>
 
 	
 	<!-- 임시 비밀번호 발급 여부 변경 -->
@@ -163,11 +165,34 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
+	<!-- 탈퇴 신청 회원 - 회원상태코드 2로 변경 -->
+	<update id="updateMemStatusCodeTo2">
+		UPDATE HBT_MEM
+		SET
+		MEM_STATUS_CODE = '2'
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 비밀번호 조회 -->
+	<select id="getMemPw" resultType="String">
+		SELECT MEM_PW
+		FROM HBT_MEM
+		WHERE MEM_ID = #{memId}
+	</select>
 	
 	
 	
 	
 	
+	
+	
+	<!-- 심영홍 -->
+	<select id="getMsMenuList" resultMap="msMenu">
+		SELECT MS_MENU_CODE
+		    , MS_MENU_NAME
+		    , MS_MENU_URL
+		FROM MEMBER_SIDE_MENU
+	</select>
 	
 </mapper>
 

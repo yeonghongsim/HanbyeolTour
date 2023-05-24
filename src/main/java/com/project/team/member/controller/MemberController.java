@@ -53,6 +53,13 @@ public class MemberController {
 		return memberService.isDuplicateMemId(memId);
 	}
 	
+	//이메일 중복 확인 
+	@PostMapping("/isDuplicateMemEmail")
+	@ResponseBody
+	public boolean isDuplicateMemEmail(String memEmail) {
+		return memberService.isDuplicateMemEmail(memEmail);
+	}
+	
 	//회원가입 
 	@PostMapping("/join")
 	public String join(MemberVO memberVO, MemberDetailVO memberDetailVO) {
@@ -85,12 +92,11 @@ public class MemberController {
 		return "content/member/login";
 	}
 	
-	
+	//임시 비밀번호 발급 여부 판단 
 	@PostMapping("/isTemporaryPwAjax")
 	@ResponseBody
 	public String getgetIsTemporaryPw(String memId) {
 		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
-		System.out.println("@@@@@@22"+ isTemporaryPw);
 		return isTemporaryPw;
 	} 
 	
@@ -141,7 +147,10 @@ public class MemberController {
 		//이메일 주소 조회
 		String memEmail = memberService.getMemEmailForFindPw(memberVO);
 		
+		System.out.println(memEmail);
+		
 		 if(memEmail != null) {
+			   
 			 //메일 발송 전에 임시 비밀번호를 DB에 비밀번호로 저장을 해주기 
 			   //1. 임시비밀번호 생성 
 			   String temporaryPw = mailService.createRandomPw();
@@ -178,25 +187,43 @@ public class MemberController {
 			       recipientAddresses[i] = new InternetAddress(emailList.get(i));
 			   }
 			   			   
-			   mailService.sendHTMLEmail();
+			   mailService.sendHTMLEmail(recipientAddresses, temporaryPw, name);
 			  
 			   
 			   return true;
 		   }
 		   	   
-		   return memEmail != null ? true : false;
-		
+		   return false;
 	}
 		
 		
+	//마이 페이지로 이동 
+	@GetMapping("/infoManage")	
+	public String infoManage(Model model) {
 		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
-		
-		
-			
+		return "content/member/info_manage";
 	
+	}
 	
-	
+	/*---------- 심영홍 ------------*/
+	@GetMapping("/checkMyRequest")
+	public String checkMyRequest(Model model) {
+		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/check_my_request";
+	}
+//	// 회원 탈퇴 페이지로 이동 
+//	@GetMapping("/accountDeletion")
+//	public String accountDeletion(Model model) {
+//		
+//		model.addAttribute("msMenuList", memberService.getMsMenuList());
+//		
+//		return "content/member/myPage/account_deletion";
+//	}
+//	
 	
 
 }

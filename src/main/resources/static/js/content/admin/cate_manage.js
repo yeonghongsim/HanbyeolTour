@@ -12,6 +12,14 @@ function regArea(){
 	}	
 	
 	//여행지 카테고리명 중복 확인
+	if(checkAreaDuplicate(areaCode.value, areaKorName.value, areaEngName.value)){
+		alert('중복된 카테고리명 입니다.\n확인 후 다시 입력하십시오.')
+		areaCode.value = '';
+		areaKorName.value = '';
+		areaEngName.value = '';
+		return;
+		
+	}
 	
 	const param = {'areaCode' : areaCode.value
 					,'areaKorName' : areaKorName.value
@@ -27,7 +35,48 @@ function regArea(){
 		contentType : 'application/json; charset=UTF-8', //json 방식
 		//contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default 방식
 		success: function(result) {
-			alert('ajax 통신 성공');
+			
+			alert('카테고리가 등록되었습니다.')
+	       	
+	       	const areaCateTableTbody = document.querySelector('#areaCateTable tbody');
+			areaCateTableTbody.replaceChildren();
+			
+			let str = '';
+			
+			for(let i = 0 ; i < result.length ; i++){
+				str += `<tr>`;
+				str += `<td>${i + 1}</td>`;
+				str += `<td>${result[i].areaCode}</td>`;
+				str += `<td>${result[i].areaKorName}</td>`;
+				str += `<td>${result[i].areaEngName}</td>`;
+				str += `<td>`;
+				str += `<div class="row">`;
+				str += `<div class="form-check col-6">`;
+				if(result[i].isUse == 'Y') {
+					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+							class="form-check-input" checked onchange="changeAreaIsUse('${result[i].areaCode}');">사용중`;
+				}else{
+					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+							class="form-check-input" onchange="changeAreaIsUse('${result[i].areaCode}');">사용중`;
+				}
+				str += `</div>`;
+				str += `<div class="form-check col-6">`;
+				if(result[i].isUse == 'N') {
+					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+							class="form-check-input" checked onchange="changeAreaIsUse('${result[i].areaCode}');">미사용`;
+				}else{
+					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+							class="form-check-input" onchange="changeAreaIsUse('${result[i].areaCode}');">미사용`;
+				}
+				str += `</div>`;
+				str += `</div>`;
+				str += `</td>`;
+				str += `<td><input type="button" value="삭제" class="btn btn-outline"
+												onclick="deleteAreaCate('${result[i].areaCode}');" style="border-color: #ffd000;"></td> `;
+				str += `</tr>`;
+			}
+			areaCateTableTbody.insertAdjacentHTML('afterbegin', str);
+			
 		},
 		error: function() {
 			alert('실패');
@@ -38,8 +87,29 @@ function regArea(){
 
 
 //여행국가 카테고리 등록 시 국가 중복 확인
-function checkAreaDuplicate(){
+function checkAreaDuplicate(areaCode, areaKorName, areaEngName){
+	let isDuplicate = false;
 	
+	
+	//ajax start
+	$.ajax({
+		url: '/admin/checkAreaAjax', //요청경로
+		type: 'post',
+		data: {'areaCode' : areaCode, 'areaKorName' : areaKorName, 'areaEngName' : areaEngName}, //필요한 데이터
+		async : false, //default 
+		success: function(result) {
+			alert('ajax 통신 성공');
+			if(result == 1) {
+				isDuplicate = true;
+			}
+			
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+//ajax end
+	return isDuplicate;
 }
 
 //여행국가 카테고리 삭제
@@ -64,7 +134,7 @@ function changeAreaIsUse(areaCode){
 			console.log(result);
 		
 			if(result == 1){
-				alert('사용여부가 변경되었습니다.');
+				alert('사용 여부가 변경되었습니다.');
 			}
 			else{
 				alert('일시적 오류가 발생했습니다.');	
@@ -80,6 +150,11 @@ function changeAreaIsUse(areaCode){
 	
 }
 
-
-
-
+//여행 국가 카테고리 입력 영어만 가능
+$('.EnglargeDiv').on("input", (e) => {
+  let v = e.currentTarget.value;
+  if ((/[ㄱ-힣]+/).test(v)) {
+    e.currentTarget.value = v.replaceAll(/[ㄱ-힣]+/g, '')
+    $('.EnglargeDiv').focus()
+  }
+})

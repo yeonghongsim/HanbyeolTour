@@ -25,9 +25,11 @@ public class MemberServiceImpl implements MemberService{
 		return result != 0 ? true : false;
 	}
 
+	// 이메일 중복확인 
 	@Override
 	public boolean isDuplicateMemEmail(String memEmail) {
-		return false;
+		int result = sqlSession.selectOne("memberMapper.isDuplicateMemEmail", memEmail);
+		return result != 0 ? true : false;
 	}
 
 	// 회원가입 
@@ -55,10 +57,10 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemEmailForFindPw(MemberVO memberVO) {
 		return sqlSession.selectOne("memberMapper.getMemEmailForFindPw", memberVO);
 	}
-
+	//비밀번호 수정 
 	@Override
 	public void updateMemPw(MemberVO memberVO) {
-
+		sqlSession.update("memberMapper.updateMemPw", memberVO);
 	}
 	
 	// 임시 비밀번호 발급 여부 수정 
@@ -78,14 +80,39 @@ public class MemberServiceImpl implements MemberService{
 	public void updateIsTemporaryPwToN(String memId) {
 		sqlSession.update("memberMapper.updateIsTemporaryPwToN", memId);
 	}
-
+	
+	
+	// 회원 탈퇴 신청 회원 - 상태코드 변경 
+	@Override
+	public void updateMemStatusCodeTo2(String memId) {
+		sqlSession.update("memberMapper.updateMemStatusCodeTo2", memId);
+	}
+	
+	// 비밀번호 조회 
+	@Override
+	public String getMemPw(String memId) {
+		return sqlSession.selectOne("memberMapper.getMemPw", memId);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	//-------------------------------------------------------------------
 	
 		
 	// 회원 사이드 메뉴 목록 조회
 	@Override
 	public List<MemberSideMenuVO> getMsMenuList() {
-		return null;
+		return sqlSession.selectList("memberMapper.getMsMenuList");
 	}
+
+	
+
+	
 
 	
 	

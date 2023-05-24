@@ -3,6 +3,7 @@ package com.project.team.admin.service;
 
 import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Map;
 
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
@@ -15,6 +16,9 @@ public interface AdminService {
 	
 	//여행국가 카테고리 등록
 	void regArea(TourAreaVO tourAreaVO);
+	
+	//여행국가 카테고리 중복 확인
+	int checkAreaName(TourAreaVO tourAreaVO);
 	
 	//여행국가 카테고리 조회
 	List<TourAreaVO> getAreaCateList();
@@ -36,6 +40,15 @@ public interface AdminService {
 	
 	//판매 상품 상세 조회
 	ItemVO getItemDetailForAdmin(String itemCode);
+	
+	//상품 등록 (이미지 포함)
+	void regItem(ItemVO itemVO);
+	
+	//다음 상품 코드 조회 
+	String getNextItemCode();
+	
+	// 회원 코드 조회 By 회원 아이디
+	String getMemCode(String memid);
 	
 	//판매 상품 수정
 	void updateItem(ItemVO itemVO);
@@ -69,15 +82,7 @@ public interface AdminService {
 	List<BoardRequestVO> getBoardNoticeList();
 	
 	
-	
-	//상품 등록 (이미지 포함)
-	void regItem(ItemVO itemVO);
-	
-	//다음 상품 코드 조회 
-	String getNextItemCode();
-	
-	// 회원 코드 조회 By 회원 아이디
-	String getMemCode(String memid);
+
 
 	// 자주 문의 글 등록
 	void insertBoardForFreReq(FreqRequestVO freqRequestVO);
@@ -85,4 +90,22 @@ public interface AdminService {
 	// 자주 문의 글 조회 By 문의유형 코드
 	List<FreqRequestVO> getFreqRequestList(String typeRequestCode);
 	
+	// 자주 문의 글 삭제
+	void delFreqReq(FreqRequestVO freqRequestVO);
+	
+	// 자주 문의 글 수정
+	void updateFreqReq(FreqRequestVO freqRequestVO);
+
+	//메인페이지 이미지 업로드
+	void uploadMainSlideImg(Map<String, String> uploadImg);
+
+	//메인페이지 이미지 로드
+	List<Map<String,String>> getMainSlideImg();
+
+	//추천아이템 목록 조회
+	List<Map<String,String>> getRecomItem();
+	//판매중인 상품
+	List<Map<String,String>> getItemList();
+	//추천 아이템 업데이트
+	void setRecomItemList(List<Map<String,String>> list);
 }
