@@ -188,8 +188,13 @@ public class MemberController {
 	}
 		
 		
+	//마이 페이지로 이동 
+	@GetMapping("/infoManage")
+	public String infoManage() {
 		
-		
+		return "content/member/info_manage";
+	}	
+	
 		
 		
 			
