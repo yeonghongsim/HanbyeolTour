@@ -18,7 +18,7 @@ public class UploadUtil {
 		ImgVO imgVO = null;
 		
 		//첨부 됐으면(true) 파일 업로드 코드 실행.
-		if (!img.isEmpty() || img.isEmpty()) {
+		if (!img.isEmpty()) {
 			imgVO = new ImgVO(); //첨부파일이 있으면 imgVO 객체 생성
 
 			// 원본파일명 받아오기

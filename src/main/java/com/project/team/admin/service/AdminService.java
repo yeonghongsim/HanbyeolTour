@@ -38,6 +38,15 @@ public interface AdminService {
 	//판매 상품 상세 조회
 	ItemVO getItemDetailForAdmin(String itemCode);
 	
+	//상품 등록 (이미지 포함)
+	void regItem(ItemVO itemVO);
+	
+	//다음 상품 코드 조회 
+	String getNextItemCode();
+	
+	// 회원 코드 조회 By 회원 아이디
+	String getMemCode(String memid);
+	
 	//판매 상품 수정
 	void updateItem(ItemVO itemVO);
 	
@@ -70,15 +79,7 @@ public interface AdminService {
 	List<BoardRequestVO> getBoardNoticeList();
 	
 	
-	
-	//상품 등록 (이미지 포함)
-	void regItem(ItemVO itemVO);
-	
-	//다음 상품 코드 조회 
-	String getNextItemCode();
-	
-	// 회원 코드 조회 By 회원 아이디
-	String getMemCode(String memid);
+
 
 	// 자주 문의 글 등록
 	void insertBoardForFreReq(FreqRequestVO freqRequestVO);

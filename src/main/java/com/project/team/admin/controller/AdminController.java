@@ -173,12 +173,96 @@ public class AdminController {
 		
 	}
 	
-	//판매 상품 수정
+	//상품 수정 이미지 삭제
 	@ResponseBody
-	@PostMapping("/updateItemAjax")
-	public void updateItem(ItemVO itemVO) {
+	@PostMapping("/deleteItemImgAjax")
+	public void deleteItemImgAjax(ImgVO imgVO) {
+		adminService.deleteItemImg(imgVO);
+	}
+	
+	//판매 상품 수정
+	@PostMapping("/updateItem")
+	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
 		
+		if(mainImg != null && subImg != null) {
+			//메인 이미지 세팅
+			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
+			
+			//서브 이미지 세팅
+			List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+		
+			//상품 이미지 DB 등록
+			//해당 상품 아이템 코드 세팅
+			String itemCode = itemVO.getItemCode();
+			itemVO.setItemCode(itemCode);
+			
+			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
+			//서브 이미지 첨부 정보 추가
+			List<ImgVO> imgList = attachedImgList;
+			
+			//메인 이미지 첨부 정보 추가
+			imgList.add(attachecdImgVO);
+			
+			//imgVO에 itemCode 세팅
+			for(ImgVO img : imgList) {
+				img.setItemCode(itemCode);
+				
+			}
+			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
+			itemVO.setImgList(imgList);
+		
+		}else if(mainImg != null && subImg == null) {
+			//메인 이미지 세팅
+			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
+			
+			//상품 이미지 DB 등록
+			//해당 상품 아이템 코드 세팅
+			String itemCode = itemVO.getItemCode();
+			itemVO.setItemCode(itemCode);
+			
+			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
+			//서브 이미지 첨부 정보 추가
+			List<ImgVO> imgList = new ArrayList<>();
+			
+			//메인 이미지 첨부 정보 추가
+			imgList.add(attachecdImgVO);
+			
+			//imgVO에 itemCode 세팅
+			for(ImgVO img : imgList) {
+				img.setItemCode(itemCode);
+			}
+			
+			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
+			itemVO.setImgList(imgList);
+		}else{
+				//서브 이미지 세팅
+				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+				
+				//상품 이미지 DB 등록
+				//해당 상품 아이템 코드 세팅
+				String itemCode = itemVO.getItemCode();
+				itemVO.setItemCode(itemCode);
+				
+				//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
+				//서브 이미지 첨부 정보 추가
+				
+				List<ImgVO> imgList = attachedImgList;
+				//imgVO에 itemCode 세팅
+				for(ImgVO img : imgList) {
+					img.setItemCode(itemCode);
+				}
+				//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
+				itemVO.setImgList(imgList);
+		}
+		
+		
+		System.out.println(itemVO);
 		adminService.updateItem(itemVO);
+		adminService.regImgsForItemDetail(itemVO);
+		
+		return "redirect:/admin/itemManageForSale";
 	}
 	
 	

@@ -291,7 +291,7 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 }
 
 
-//상품 수정 시 이미지 등록 여부 확인 ()
+//상품 수정 시 이미지 등록 여부 확인
 function updateItem(){
 	
 	let childrenCnt = document.querySelector('#mainImgDiv').children.length;
