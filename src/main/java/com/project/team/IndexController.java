@@ -52,8 +52,9 @@ public class IndexController {
 		
 		//not_login = null
 		if(authentication == null) {
-			path = "redirect:/main";
+				path = "redirect:/main";
 		}
+			
 		// login success
 		else {
 			// 로그인한 사람 권한 정보 받아오기 
@@ -76,17 +77,24 @@ public class IndexController {
 			if(strAuthoList.contains("ROLE_AD")) {
 				path = "redirect:/admin/itemManage";
 			}
+			
 			else if(strAuthoList.contains("ROLE_MNG")) {
 				path = "redirect:/admin/itemManage";
 			}
+			
+			// 권한 정보 : [ROLE_USR] , [ROLE_ANONYMOUS]
 			else {
-				// 권한 정보 : [ROLE_USR]
-				// login page 이용 => login success
-				if(prevPage.contains("/login")) {
+				// login X && 바로 main page 접근 
+				if(prevPage == null) {
+					path = "redirect:/main";
+				}
+				// login page 이용 => login 성공시 홈으로 가기 버튼 
+				else if(prevPage.contains("/login")) {
 					path = "redirect:/main";
 				}
 				else {
-					// path = "redirect:" + prevPage;
+					path = "redirect:" + prevPage;
+					
 					// logout 후 관리자 페이지에서 메인으로 이동하도록 하는 조건 
 					if(prevPage.contains("/admin")) {
 						path = "redirect:/main";

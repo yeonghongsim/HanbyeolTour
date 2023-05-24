@@ -89,9 +89,6 @@ function isDuplicateMemId(){
 			else{
 				alert('사용 가능한 아이디입니다.');
 				
-				//JOIN 버튼의 disabled 속성 제거 
-				//document.querySelector('.joinBtn').disabled = false;
-				
 				//아이디 입력 태그 테두리 변화 
 				
 			}
@@ -148,13 +145,10 @@ function idValidate(){
 		memIdTag.insertAdjacentHTML('afterend', errorHTML);
 	    $('#memId').css('border-color', '#dc3545'); // 테두리 색상 변경
         $('#memId').css('border-width', '2px'); // 테두리 두께 변경
-        document.querySelector('#check_id').disabled = true;
-        //setDisabled()
 	}
 	else {
         $('#memId').css('border-color', 'green'); 
         $('#memId').css('border-width', '2px');
-        document.querySelector('#check_id').disabled = false;
     }
 	
 	/*
@@ -243,8 +237,8 @@ function pwCheckValidate(){
 	let str_pwCheck ='';
 	
 	originPw = document.querySelector('#memPw').value;
-	checkPwTag = document.querySelector('#check_pw');
-	checkPw = document.querySelector('#check_pw').value;
+	checkPwTag = document.querySelector('#checkPw');
+	checkPw = document.querySelector('#checkPw').value;
 	
 	if(checkPw == ''){
 		str_pwCheck = `비밀번호 확인을 입력해주세요.`;
@@ -268,12 +262,12 @@ function pwCheckValidate(){
 	if(!result_pwCheck){
 	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_pwCheck}</div>`;
 	checkPwTag.insertAdjacentHTML('afterend', errorHTML);
-	$('#check_pw').css('border-color', '#dc3545'); // 테두리 색상 변경
-    $('#check_pw').css('border-width', '2px'); // 테두리 두께 변경
+	$('#checkPw').css('border-color', '#dc3545'); // 테두리 색상 변경
+    $('#checkPw').css('border-width', '2px'); // 테두리 두께 변경
 	}
 	else {
-        $('#check_pw').css('border-color', 'green'); 
-        $('#check_pw').css('border-width', '2px');
+        $('#checkPw').css('border-color', 'green'); 
+        $('#checkPw').css('border-width', '2px');
     }
 	//}
 	

@@ -53,6 +53,13 @@ public class MemberController {
 		return memberService.isDuplicateMemId(memId);
 	}
 	
+	//이메일 중복 확인 
+	@PostMapping("/isDuplicateMemEmail")
+	@ResponseBody
+	public boolean isDuplicateMemEmail(String memEmail) {
+		return memberService.isDuplicateMemEmail(memEmail);
+	}
+	
 	//회원가입 
 	@PostMapping("/join")
 	public String join(MemberVO memberVO, MemberDetailVO memberDetailVO) {
@@ -199,10 +206,16 @@ public class MemberController {
 		return "content/member/info_manage";
 	
 	}
-			
 	
-	
-	
+//	// 회원 탈퇴 페이지로 이동 
+//	@GetMapping("/accountDeletion")
+//	public String accountDeletion(Model model) {
+//		
+//		model.addAttribute("msMenuList", memberService.getMsMenuList());
+//		
+//		return "content/member/myPage/account_deletion";
+//	}
+//	
 	
 
 }
