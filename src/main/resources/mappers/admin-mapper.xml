@@ -162,7 +162,7 @@
 			, SELLING_START = #{sellingStart}
 			, SELLING_END = #{sellingEnd}
 			, IS_EXTRA_CHARGE = #{isExtraCharge}
-			, IS_PEAK = #{isPeak}
+			, IS_PEAK #{isPeak}
 			, IS_BOMB_SALE = #{isBombSale}
 			, ITEM_INTRO = #{itemIntro}
 			, STATUS_CODE = #{statusCode}
@@ -222,26 +222,8 @@
 	</select>
 
 
-	<!--  메인페이지 이미지 업로드	-->
-	<insert id="uploadMainSlideImg">
-		INSERT INTO HBT_MAINPAGE_IMG (
-		   HBT_MAINPAGE_IMG_CODE
-		 , HBT_MAINPAGE_ORIGIN_FILE_NAME
-		 , HBT_MAINPAGE_ATTECHED_FILE_NAME
-		) VALUES (
-			 (SELECT 'HBT_MAINPAGE_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_MAINPAGE_IMG_CODE, 14))), 0) + 1, 3, '0') FROM HBT_MAINPAGE_IMG)
-		 , #{origin}
-		 , #{attached}
-		 )
-	</insert>
 
-	<!--	메인이미지 조회-->
-	<select id="getMainSlideImg" resultType="Map">
-		SELECT HBT_MAINPAGE_IMG_CODE
-			, HBT_MAINPAGE_ORIGIN_FILE_NAME
-			, HBT_MAINPAGE_ATTECHED_FILE_NAME
-		FROM HBT_MAINPAGE_IMG
-	</select>
+
 
 
 	
@@ -254,6 +236,7 @@
 		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_ADMIN_NUM, 10))), 0) + 1, 3, '0')
 		FROM HBT_BOARD_ADMIN
 	</select>
+	
 	
 	
 	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
@@ -289,30 +272,23 @@
 		)
 	</insert>
 	
+	<select id="getFreqRequestList" resultMap="boardMapper.freqRequest">
+		SELECT FREQ_REQUEST_CODE
+		    , FREQ_REQUEST_TITLE
+		    , FREQ_REQUEST_CONTENT
+		    , HBT_FREQ_REQUEST.TYPE_REQUEST_CODE
+		    , TYPE_REQUEST_NAME
+		FROM HBT_FREQ_REQUEST, TYPE_REQUEST
+		WHERE HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = TYPE_REQUEST.TYPE_REQUEST_CODE
+		<if test="typeRequestCode != null">
+		AND HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = #{typeRequestCode}
+		</if>
+	</select>
+	
+	<delete id="delFreqReq">
+		DELETE HBT_FREQ_REQUEST 
+		WHERE TYPE_REQUEST_CODE = #{typeRequestVO.typeRequestCode}
+		AND FREQ_REQUEST_CODE = #{freqRequestCode}
+	</delete>
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

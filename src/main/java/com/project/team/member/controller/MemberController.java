@@ -191,14 +191,14 @@ public class MemberController {
 		
 		
 	//마이 페이지로 이동 
-	@GetMapping("/infoManage")
-	public String infoManage() {
+	@GetMapping("/infoManage")	
+	public String infoManage(Model model) {
+		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
 		return "content/member/info_manage";
-	}	
 	
-		
-		
+	}
 			
 	
 	

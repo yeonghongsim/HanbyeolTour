@@ -33,6 +33,13 @@
 		<result column="MEM_STATUS_NAME" 	property="memStatusName"/>
 	</resultMap>
 	
+	<!-- 회원 사이드 메뉴 -->
+	<resultMap type="com.project.team.member.vo.MemberSideMenuVO" id="msMenu">
+		<id		column="MS_MENU_CODE" 	property="msMenuCode"/>
+		<result column="MS_MENU_NAME" 	property="msMenuName"/>
+		<result column="MS_MENU_URL" 	property="msMenuUrl"/>
+	</resultMap>
+	
 	
 	<!--회원가입시 ID 중복 체크  -->
 	<select id="isDuplicateMemId" resultType="int">
@@ -180,7 +187,13 @@
 	
 	
 	
-	
+	<!-- 심영홍 -->
+	<select id="getMsMenuList" resultMap="msMenu">
+		SELECT MS_MENU_CODE
+		    , MS_MENU_NAME
+		    , MS_MENU_URL
+		FROM MEMBER_SIDE_MENU
+	</select>
 	
 </mapper>
 

@@ -85,6 +85,10 @@ public interface AdminService {
 	
 	// 자주 문의 글 조회 By 문의유형 코드
 	List<FreqRequestVO> getFreqRequestList(String typeRequestCode);
+	
+	// 자주 문의 글 삭제
+	void delFreqReq(FreqRequestVO freqRequestVO);
+	
 
 	//메인페이지 이미지 업로드
 	void uploadMainSlideImg(Map<String, String> uploadImg);

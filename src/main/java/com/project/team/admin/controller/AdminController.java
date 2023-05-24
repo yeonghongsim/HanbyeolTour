@@ -302,10 +302,6 @@ public class AdminController {
 	@PostMapping("/searchFreqRequestByCodeAjax")
 	public List<FreqRequestVO> searchFreqRequestByCodeAjax(String typeRequestCode) {
 		
-		System.out.println("searchFreqRequestByCodeAjax run~");
-		System.out.println("@@@@@@@" + typeRequestCode);
-		
-		
 		return adminService.getFreqRequestList(typeRequestCode);
 		
 	}
@@ -322,12 +318,21 @@ public class AdminController {
 		System.out.println("@@@@@@@@" + freqRequestVO);
 
 		adminService.insertBoardForFreReq(freqRequestVO);
-
+		
 		return "redirect:/admin/frequncyRequestMng";
 
 	}
 
+	
+	@ResponseBody
+	@PostMapping("/delFreqReqAjax")
+	public void delFreqReqAjax(FreqRequestVO freqRequestVO) {
+		
+		System.out.println("@@@@@@@@@" + freqRequestVO);
 
+		//adminService.delFreqReq(freqRequestVO);
+		
+	}
 
 
 	//-----------------페이지 설정---------------//
