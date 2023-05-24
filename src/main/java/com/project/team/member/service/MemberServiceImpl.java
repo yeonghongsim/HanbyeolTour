@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updateMemPw(MemberVO memberVO) {
-
+		sqlSession.update("memberMapper.updateMemPw", memberVO);
 	}
 	
 	// 임시 비밀번호 발급 여부 수정 
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService{
 	// 회원 사이드 메뉴 목록 조회
 	@Override
 	public List<MemberSideMenuVO> getMsMenuList() {
-		return null;
+		return sqlSession.selectList("memberMapper.getMsMenuList");
 	}
 
 	
