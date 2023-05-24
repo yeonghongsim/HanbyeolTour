@@ -22,7 +22,11 @@ public class IndexController {
 		return "content/main/main_page";
 	}
 	
-	
+	//미인가 시 이동할 페이지 
+	@GetMapping("/accessDeny")
+	public String accessDeny() {
+		return "content/access_deny";
+	}
 	
 	
 	

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/admin_layout}">
+<!-- 연결해야 할 외부 CSS파일 -->
+<th:block layout:fragment="content_css">
+<style>
+
+</style>
+</th:block>
+<!-- 본문 내용 -->
+<th:block layout:fragment="adminContent">
+<div class="row">
+
+    <!-- 메인페이지 슬라이드 이미지 관리   -->
+    <div class="row text-center">
+        <h3>메인 페이지 슬라이드 사진 설정</h3>
+        <!--  사진 업로드 및 설정  -->
+        <form action="/admin/uploadMainSlideImg" method="post" enctype="multipart/form-data">
+            <div class="col-6">
+                <div class="row mb-3">
+                    <div class="col">
+                        <table class="table ye-bc">
+                            <colgroup></colgroup>
+                            <thead>
+                            <tr>
+                                <td>No</td>
+                                <td>파일명</td>
+                                <td>삭제</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="img, state : ${mainSlideImg}">
+                                <tr>
+                                    <td>[[${state.count}]]</td>
+                                    <td>[[${img['HBT_MAINPAGE_ORIGIN_FILE_NAME']}]]</td>
+                                    <td>
+                                        <input type="button" class="btn ye-S-bc" value="삭제" onclick="">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+
+                    <div class="col-6">
+                        <input class="form-control ye-bc" type="file" name="slideImg">
+                    </div>
+                    <div class="col">
+                        <input class="btn btn ye-bc" type="submit" value="추가">
+                    </div>
+
+                </div>
+            </div>
+        <!--    미리보기 -->
+            <div class="col-6">
+                <div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+
+
+                        <th:block th:each="img, state : ${mainSlideImg}">
+                            <div class="carousel-item active" data-bs-interval="2000">
+                                <img th:src="@{/img/main/slide/} + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
+                                     class="d-block w-100 rounded" alt="...">
+                            </div>
+                        </th:block>
+
+록
+                    </div>
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#mainImgSlide" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#mainImgSlide" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+    <div class="row text-center">
+        <h3>추천 아이템 관리</h3>
+    </div>
+
+
+    <div class="row text-center">
+        <div class="col-5">
+            <span>전체 상품 목록</span>
+            <select class="form-select ye-bc" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <option value="213">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <div class="row mb-3">
+                <input type="button" class="btn ye-bc" value="▷">
+            </div>
+            <div class="row mt-3">
+                <input type="button" class="btn ye-bc" value="◁">
+            </div>
+        </div>
+        <div class="col-5">
+            <span>추천 상품 목록</span>
+            <select class="form-select ye-bc" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <option selected="">Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            미리보기 자리
+        </div>
+    </div>
+
+
+    <div class="row my-1">
+        <input class="btn ye-bc" type="button" value="변경 사항 저장">
+    </div>
+
+
+
+
+</div>
+</th:block>
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+</th:block>
+</html>

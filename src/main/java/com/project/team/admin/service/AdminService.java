@@ -3,6 +3,7 @@ package com.project.team.admin.service;
 
 import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Map;
 
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
@@ -82,4 +83,12 @@ public interface AdminService {
 	// 자주 문의 글 등록
 	void insertBoardForFreReq(FreqRequestVO freqRequestVO);
 	
+	// 자주 문의 글 조회 By 문의유형 코드
+	List<FreqRequestVO> getFreqRequestList(String typeRequestCode);
+
+	//메인페이지 이미지 업로드
+	void uploadMainSlideImg(Map<String, String> uploadImg);
+
+	//메인페이지 이미지 로드
+	List<Map<String,String>> getMainSlideImg();
 }

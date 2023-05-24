@@ -1,10 +1,10 @@
 package com.project.team.admin.controller;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
+import com.project.team.util.ConstVarialbe;
+import com.project.team.util.UploadPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,11 +101,11 @@ public class AdminController {
 	public String regItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
 		
 		//메인 이미지 세팅
-		ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg);
+		ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 		//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
 		
 		//서브 이미지 세팅
-		List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg);
+		List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 		
 		//상품 이미지 DB 등록
 		//등록될 다음 상품 코드 조회
@@ -173,49 +173,17 @@ public class AdminController {
 		
 	}
 	
-
-	//판매 상품 수정(이미지 포함)
-	@PostMapping("/updateItem")
-	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
-		//오류 수정중
-		System.out.println(itemVO);
+	//판매 상품 수정
+	@ResponseBody
+	@PostMapping("/updateItemAjax")
+	public void updateItem(ItemVO itemVO) {
 		
 		adminService.updateItem(itemVO);
-		adminService.regImgsForItemDetail(itemVO);
-
-		return "redirect:/admin/itemManageForSale";
 	}
 	
-	//상품 상세 정보 조회 X 버튼 클릭 시 이미지 삭제
-	@ResponseBody
-	@PostMapping("/deleteItemImgAjax")
-	public void deleteItemImgAjax(ImgVO imgVO) {
-		//첨부된 파일명 조회
-		String attachedFileName = adminService.getAttachedFileName(imgVO.getItemImgCode());
-		File file = new File(ImgPath.UPLOAD_PATH + attachedFileName);
-		file.delete();
-		
-		adminService.deleteItemImg(imgVO);
 	
-	}
 	
-	//회원 관리 페이지
-	@GetMapping("/memManage")
-	public String memManage() {
-		
-		return "redirect:/admin/memInfo";
-	}
 	
-	//회원 리스트 조회
-	@GetMapping("/memInfo")
-	public String memInfo(Model model) {
-		
-		model.addAttribute("memList", adminService.getMemList());
-	
-		return "content/admin/mem_info";
-	}
-	
-
 	
 	
 	
@@ -320,35 +288,83 @@ public class AdminController {
 	// 자주 묻는 문의 사항 관리 페이지
 	@GetMapping("/frequncyRequestMng")
 	public String frequncyRequestMng(Model model) {
-		
+
 		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
-		
+
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
-		
+
 		return "content/admin/board/frequncy_request_mng";
+
+
+	}
+	
+	@ResponseBody
+	@PostMapping("/searchFreqRequestByCodeAjax")
+	public List<FreqRequestVO> searchFreqRequestByCodeAjax(String typeRequestCode) {
 		
+		System.out.println("searchFreqRequestByCodeAjax run~");
+		System.out.println("@@@@@@@" + typeRequestCode);
+		
+		
+		return adminService.getFreqRequestList(typeRequestCode);
 		
 	}
 	
 	// 자주 묻는 문의 사항 글 등록
 	@PostMapping("/regFreReq")
 	public String regFreReq(FreqRequestVO freqRequestVO) {
-		
+
 		String freqReqCode = boardService.getNextByFreqReqCode();
 		String memCode = adminService.getMemCode(freqRequestVO.getMemberVO().getMemId());
-		
+
 		freqRequestVO.setFreqRequestCode(freqReqCode);
 		freqRequestVO.getMemberVO().setMemCode(memCode);
 		System.out.println("@@@@@@@@" + freqRequestVO);
-		
+
 		adminService.insertBoardForFreReq(freqRequestVO);
-		
+
 		return "redirect:/admin/frequncyRequestMng";
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
+	//-----------------페이지 설정---------------//
+
+	//메인 페이지 설정
+	@GetMapping("/setMainPage")
+	public String setMainPage(Model model){
+		//메인페이지 이미지 목록
+		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
+		return "content/admin/page/set_main_page";
+	}
+
+	//페키지 페이지 설정
+	@GetMapping("/setPackagePage")
+	public String setPackagePage(){
+
+		return "content/admin/page/set_package_page";
+	}
+
+	//메인페이지 슬라이드 이미지 업로드
+	@PostMapping("/uploadMainSlideImg")
+	public String uploadMainSlideImg(MultipartFile slideImg){
+		//파일 업로드 및 가강된 파일명 가져오기
+		ImgVO attachedImgVO = UploadUtil.uploadFile(slideImg, UploadPath.MAIN_IMG_UPLOAD_PATH);
+
+		Map<String, String> uploadImg = new HashMap<>();
+
+		//DB에 insert할 데이터 세팅
+		uploadImg.put("origin", attachedImgVO.getItemImgOriginName());
+		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
+
+		//db에 입력
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+ uploadImg);
+
+		adminService.uploadMainSlideImg(uploadImg);
+
+		return "redirect:/admin/setMainPage";
+	}
 
 }

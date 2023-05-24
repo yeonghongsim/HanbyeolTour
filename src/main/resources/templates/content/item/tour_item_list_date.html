@@ -90,7 +90,7 @@
 					<tbody class="resultTbodyTag">
 						<th:block th:each="tourItem, state : ${tourItemList}">
 							<input type="hidden" name="endDate" id="endDate" th:value='${tourItem["END_DATE"]}'>
-							<input type="hidden" name="listIndex" id="endDate" th:value='${#lists.size(tourItemList)}'>
+							<input type="hidden" name="listIndex" th:value='${#lists.size(tourItemList)}'>
 							<tr class="searchResultByDate">
 								<td><img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'></td>
 								<td>
@@ -108,12 +108,8 @@
 			</div>
 		</div>
 		
-s		
-		
-		
 		<div class="row"></div>
 		<div class="row"></div>
-		
 	</div>
 </div>
 
