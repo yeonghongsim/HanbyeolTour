@@ -118,17 +118,39 @@
 	</select>
 	
 	<!-- 비밀번호 찾기 -> 이메일 주소 확인 후 임시 비밀번호 발송 -->
-	<select id="getMemEmailForFindPw" resultType="String">
+<!-- 	<select id="getMemEmailForFindPw" resultType="String">
 	  SELECT MEM_EMAIL
-	  FROM HBT_MEM
-	  WHERE MEM_ID = #{memId}
-	  WHERE MEM_NAME = #{memName}
+	  FROM HBT_MEM_DETAIL
+	  WHERE MEM_D_TELL = #{memDTell}
 	  AND MEM_CODE IN (
 	      SELECT MEM_CODE
-	      FROM HBT_MEM_DETAIL
-	      WHERE MEM_D_TELL = #{memberDetailVO.memDTell}
+	      FROM HBT_MEM
+	      WHERE MEM_ID = #{memId}
+	      AND MEM_PW = #{memPw}
 	   	  )
+	</select> -->
+	
+	
+	<!-- 비밀번호 찾기 -> 이메일 주소 확인 후 임시 비밀번호 발송 -->
+	<select id="getMemEmailForFindPw" resultType="String">
+	  SELECT MEM_EMAIL
+	  FROM HBT_MEM_DETAIL
+	  WHERE MEM_CODE IN (
+	    SELECT MEM_CODE
+	    FROM HBT_MEM
+	    WHERE MEM_ID = #{memId}
+	      AND MEM_NAME = #{memName}
+	  )
+	  AND MEM_D_TELL = #{memberDetailVO.memDTell}
 	</select>
+
+	<!-- 비밀번호 변경 (임시로) -->
+	<update id="updateMemPw">
+		UPDATE HBT_MEM
+		SET
+		MEM_PW = #{memPw}
+		WHERE MEM_ID = #{memId}
+	</update>
 
 	
 	<!-- 임시 비밀번호 발급 여부 변경 -->

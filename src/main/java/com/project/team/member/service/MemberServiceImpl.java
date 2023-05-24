@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updateMemPw(MemberVO memberVO) {
-
+		sqlSession.update("memberMapper.updateMemPw", memberVO);
 	}
 	
 	// 임시 비밀번호 발급 여부 수정 

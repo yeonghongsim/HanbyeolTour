@@ -140,7 +140,10 @@ public class MemberController {
 		//이메일 주소 조회
 		String memEmail = memberService.getMemEmailForFindPw(memberVO);
 		
+		System.out.println(memEmail);
+		
 		 if(memEmail != null) {
+			   
 			 //메일 발송 전에 임시 비밀번호를 DB에 비밀번호로 저장을 해주기 
 			   //1. 임시비밀번호 생성 
 			   String temporaryPw = mailService.createRandomPw();
@@ -177,14 +180,13 @@ public class MemberController {
 			       recipientAddresses[i] = new InternetAddress(emailList.get(i));
 			   }
 			   			   
-			   mailService.sendHTMLEmail();
+			   mailService.sendHTMLEmail(recipientAddresses, temporaryPw, name);
 			  
 			   
 			   return true;
 		   }
 		   	   
-		   return memEmail != null ? true : false;
-		
+		   return false;
 	}
 		
 		

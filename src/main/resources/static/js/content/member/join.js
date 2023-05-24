@@ -157,6 +157,7 @@ function idValidate(){
         document.querySelector('#check_id').disabled = false;
     }
 	
+	/*
 	// 오류 메시지 추가
 	if (!result_memId) {
 	  const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memId}</div>`;
@@ -175,14 +176,8 @@ function idValidate(){
 	  document.querySelector('#check_id').disabled = false;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+	*/
+		
 	return result_memId;
 }
 
@@ -205,9 +200,9 @@ function pwValidate(){
 	
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
-	//const getIdCheck = RegExp(/^[a-zA-Z0-9]{4,14}$/);
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
-	
+	//const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&!@#$%^&*()]{8,20}$/;
+		
 	if(memPw == ''){
 		str_memPw = '비밀번호는 필수 입력사항입니다.';
 		result_memPw = false;
