@@ -202,6 +202,13 @@ public class MemberController {
 	
 	
 	
-	
+	/*---------- 심영홍 ------------*/
+	@GetMapping("/checkMyRequest")
+	public String checkMyRequest(Model model) {
+		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/check_my_request";
+	}
 
 }

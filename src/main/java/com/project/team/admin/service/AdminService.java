@@ -89,6 +89,8 @@ public interface AdminService {
 	// 자주 문의 글 삭제
 	void delFreqReq(FreqRequestVO freqRequestVO);
 	
+	// 자주 문의 글 수정
+	void updateFreqReq(FreqRequestVO freqRequestVO);
 
 	//메인페이지 이미지 업로드
 	void uploadMainSlideImg(Map<String, String> uploadImg);

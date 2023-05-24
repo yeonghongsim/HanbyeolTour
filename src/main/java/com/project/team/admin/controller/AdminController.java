@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -315,22 +318,42 @@ public class AdminController {
 
 		freqRequestVO.setFreqRequestCode(freqReqCode);
 		freqRequestVO.getMemberVO().setMemCode(memCode);
-		System.out.println("@@@@@@@@" + freqRequestVO);
 
 		adminService.insertBoardForFreReq(freqRequestVO);
 		
 		return "redirect:/admin/frequncyRequestMng";
 
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/updateQnaAjax")
+	public void updateQnaAjax(FreqRequestVO freqRequestVO) {
+		
+		System.out.println("@@@@@@" + freqRequestVO);
+		adminService.updateFreqReq(freqRequestVO);
+		
+	}
 	
 	@ResponseBody
 	@PostMapping("/delFreqReqAjax")
-	public void delFreqReqAjax(FreqRequestVO freqRequestVO) {
+	public void delFreqReqAjax(@RequestBody String freqRequestStr, FreqRequestVO freqRequestVO) {
 		
-		System.out.println("@@@@@@@@@" + freqRequestVO);
-
-		//adminService.delFreqReq(freqRequestVO);
+		ObjectMapper mapper = new ObjectMapper();
+		List<String> freqRequestList  = null;
+		
+		try {
+			String[] freqRequestArr = mapper.readValue(freqRequestStr, String[].class);
+			
+			freqRequestList = Arrays.asList(freqRequestArr);
+		
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		freqRequestVO.setFreqRequestList(freqRequestList);
+		adminService.delFreqReq(freqRequestVO);
 		
 	}
 

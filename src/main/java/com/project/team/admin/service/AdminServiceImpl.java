@@ -184,6 +184,11 @@ public class AdminServiceImpl implements AdminService{
 	public void delFreqReq(FreqRequestVO freqRequestVO) {
 		sqlSession.delete("adminMapper.delFreqReq", freqRequestVO);
 	}
+	
+	@Override
+	public void updateFreqReq(FreqRequestVO freqRequestVO) {
+		sqlSession.update("adminMapper.updateFreqReq", freqRequestVO);
+	}
 
 	public void uploadMainSlideImg(Map<String, String> uploadImg) {
 		sqlSession.insert("adminMapper.uploadMainSlideImg", uploadImg);
@@ -193,6 +198,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getMainSlideImg() {
 		return sqlSession.selectList("adminMapper.getMainSlideImg");
 	}
+
+	
 
 
 }

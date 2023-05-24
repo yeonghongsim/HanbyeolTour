@@ -14,7 +14,12 @@
 		<div class="col">
 			<div class="row" style="justify-content: center; align-items: center;">
 				<div class="col-10">
-					<span>자주 묻는 문의 관리</span>
+					<div>
+						<span>자주 묻는 문의 관리</span>
+					</div>
+					<div>
+						<span>각 게시글의 유형이름을 클릭 시 해당 글의 내용을 볼 수 있습니다.</span>
+					</div>
 				</div>
 				<div class="col-2">
 					<input th:onclick="regFreqReqJs([[${#authentication.name}]], [[${typeRequestList}]])" type="button" class="btn btn-primary w-100" value="글 등록하기">
@@ -25,7 +30,7 @@
 	
 	<div class="row mb-3 typeRequest-con">
 		<div class="col-lg-2 col-sm-3 typeRequest-div">
-			<span th:onclick="searchTypeRequest()" style="cursor: pointer;">전체</span>
+			<span th:onclick="searchTypeRequest(0)" style="cursor: pointer;">전체</span>
 		</div>
 		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">
 			<span th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])" style="cursor: pointer;">[[${typeRequest.typeRequestName}]]</span>
@@ -34,9 +39,9 @@
 	
 	<div class="row">
 		<div class="col" id="fre_table_div">
-			<table class="table table-striped">
+			<table class="table table-hover">
 				<colgroup>
-					<col width="10%">
+					<col width="7%">
 					<col width="15%">
 					<col width="*">
 					<col width="15%">
@@ -44,12 +49,12 @@
 				<thead>
 					<tr class="align-middle">
 						<td>
-							<input type="checkbox" class="chkAll">
+							<input type="checkbox" class="chkAll form-check-input" onclick="chkAll()">
 						</td>
 						<td>No.</td>
 						<td>title</td>
 						<td>
-							<input class="btn btn-danger w-100" type="button" value="선택 삭제">
+							<input class="btn btn-danger w-100" type="button" value="선택 삭제" onclick="delFreqReq('', 0)">
 						</td>
 					</tr>
 				</thead>
@@ -57,20 +62,22 @@
 					<th:block th:each="freqRequest : ${getFreqRequestList}">
 						<tr class="align-middle">
 							<td>
-								<input type="checkbox" class="chk">
+								<input type="checkbox" class="chk form-check-input" th:value="${freqRequest.freqRequestCode}" onclick="chks()">
 							</td>
-							<td>[[${freqRequest.typeRequestVO.typeRequestName}]]</td>
+							<td>
+								<span class="showAnswer" style="cursor: pointer;" onclick="showAnswer(this);">[[${freqRequest.typeRequestVO.typeRequestName}]]</span>
+							</td>
 							<td>[[${freqRequest.freqRequestTitle}]]</td>
 							<td>
-								<input class="btn btn-danger w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], [[${freqRequest.typeRequestVO.typeRequestCode}]])">
+								<input class="btn btn-danger w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], 0)">
 							</td>
 						</tr>
-						<tr class="align-middle">
+						<tr class="align-middle hide">
 							<td></td>
 							<td>A.</td>
 							<td>[[${freqRequest.freqRequestContent}]]</td>
 							<td>
-								<input th:onclick="updateQnAjs([[${freqRequest.typeRequestVO.typeRequestCode}]], this);" type="button" class="btn btn-secondary w-100" value="수정 하기">
+								<input th:onclick="updateQnAjs([[${freqRequest.freqRequestCode}]], this, 0);" type="button" class="btn btn-secondary w-100" value="수정 하기">
 							</td>
 						</tr>
 					</th:block>

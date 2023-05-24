@@ -43,3 +43,11 @@ body {
 textarea {
 	resize: none;
 }
+
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}

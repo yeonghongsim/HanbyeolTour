@@ -237,8 +237,6 @@
 		FROM HBT_BOARD_ADMIN
 	</select>
 	
-	
-	
 	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
 		SELECT HBT_BOARD_ADMIN_NUM
 			, HBT_BOARD_ADMIN_TITLE
@@ -280,15 +278,24 @@
 		    , TYPE_REQUEST_NAME
 		FROM HBT_FREQ_REQUEST, TYPE_REQUEST
 		WHERE HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = TYPE_REQUEST.TYPE_REQUEST_CODE
-		<if test="typeRequestCode != null">
+		<if test='typeRequestCode != 0'>
 		AND HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = #{typeRequestCode}
 		</if>
+		ORDER BY TYPE_REQUEST_CODE, FREQ_REQUEST_CODE DESC
 	</select>
 	
 	<delete id="delFreqReq">
 		DELETE HBT_FREQ_REQUEST 
-		WHERE TYPE_REQUEST_CODE = #{typeRequestVO.typeRequestCode}
-		AND FREQ_REQUEST_CODE = #{freqRequestCode}
+		WHERE FREQ_REQUEST_CODE IN  
+		<foreach collection="freqRequestList" item="freqReqeustCode" open="(" separator="," close=")">
+			#{freqReqeustCode}
+		</foreach>
 	</delete>
+	
+	<update id="updateFreqReq">
+		UPDATE HBT_FREQ_REQUEST
+		SET FREQ_REQUEST_TITLE = #{freqRequestTitle}, FREQ_REQUEST_CONTENT = #{freqRequestContent}
+		WHERE FREQ_REQUEST_CODE = #{freqRequestCode}
+	</update>
 	
 </mapper>
