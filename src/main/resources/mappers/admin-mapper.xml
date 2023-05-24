@@ -283,7 +283,7 @@
 		</foreach>
 	</insert>
 
-	
+
 	
 	<!-- 심영홍  -->
 	<select id="getBoardNoticeCode" resultType="String">
