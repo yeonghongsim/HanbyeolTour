@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService{
 	// 회원 사이드 메뉴 목록 조회
 	@Override
 	public List<MemberSideMenuVO> getMsMenuList() {
-		return null;
+		return sqlSession.selectList("memberMapper.getMsMenuList");
 	}
 
 	

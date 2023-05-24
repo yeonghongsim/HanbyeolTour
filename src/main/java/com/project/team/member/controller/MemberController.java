@@ -190,8 +190,14 @@ public class MemberController {
 		
 		
 		
+	@GetMapping("/infoManage")	
+	public String infoManage(Model model) {
 		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
+		return "content/member/info_manage";
+	
+	}
 			
 	
 	

@@ -179,6 +179,11 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getFreqRequestList", typeRequestCode);
 	}
 
+	@Override
+	public void delFreqReq(FreqRequestVO freqRequestVO) {
+		sqlSession.delete("adminMapper.delFreqReq", freqRequestVO);
+	}
+
 
 
 

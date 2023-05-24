@@ -285,6 +285,12 @@
 		</if>
 	</select>
 	
+	<delete id="delFreqReq">
+		DELETE HBT_FREQ_REQUEST 
+		WHERE TYPE_REQUEST_CODE = #{typeRequestVO.typeRequestCode}
+		AND FREQ_REQUEST_CODE = #{freqRequestCode}
+	</delete>
+	
 </mapper>
 
 

@@ -1,5 +1,10 @@
 init();
 
+
+
+
+
+
 // 글 동록 양식 보기
 function regFreqReqJs(memId, typeRequestList){
 	
@@ -70,8 +75,8 @@ function regFreRequest(){
 // 글 수정하러 가기
 function updateQnAjs(reqCode, selected_input) {
 	
-	const content_area = selected_input.closest('tr').children[1];
-	const title_area = selected_input.closest('tr').previousElementSibling.children[1];
+	const content_area = selected_input.closest('tr').children[2];
+	const title_area = selected_input.closest('tr').previousElementSibling.children[2];
 	const update_btn = selected_input.parentElement;
 	
 	const content_text = content_area.innerText;
@@ -124,6 +129,7 @@ function searchTypeRequest(typeRequestCode){
 			let str = '';
 			
 			str += `<table class="table table-striped">`;
+			str += `	<input type="hidden" class="table_typeReqCode" value="">`;
 			str += `	<colgroup>`;
 			str += `		<col width="10%">`;
 			str += `		<col width="15%">`;
@@ -131,13 +137,15 @@ function searchTypeRequest(typeRequestCode){
 			str += `		<col width="15%">`;
 			str += `	</colgroup>`;
 			str += `	<thead>`;
-			str += `		<tr>`;
+			str += `		<tr class="align-middle">`;
 			str += `			<td>`;
-			str += `				<input type="checkbox">`;
+			str += `				<input type="checkbox" class="chkAll">`;
 			str += `			</td>`;
 			str += `			<td><span>No.</span></td>`;
 			str += `			<td><span>title</span></td>`;
-			str += `			<td></td>`;
+			str += `			<td>`;
+			str += `				<input class="btn btn-danger w-100" type="button" value="선택 삭제">`;
+			str += `			</td>`;
 			str += `		</tr>`;
 			str += `	</thead>`;
 			str += `	<tbody id="req-table-tbody">`;
@@ -146,12 +154,12 @@ function searchTypeRequest(typeRequestCode){
 		for(const freqRequest of result){
 			str += `	<tr class="align-middle">`;
 			str += `		<td>`;
-			str += `			<input type="checkbox">`;
+			str += `			<input type="checkbox" class="chk">`;
 			str += `		</td>`;
 			str += `		<td>${freqRequest.typeRequestVO.typeRequestName}</td>`;
 			str += `		<td>${freqRequest.freqRequestTitle}</td>`;
 			str += `		<td>`;
-			str += `			<input class="btn btn-danger w-100" type="button" value="삭제 하기">`;
+			str += `			<input class="btn btn-danger w-100" type="button" value="삭제 하기" onclick="delFreqReq('${freqRequest.freqRequestCode}', ${freqRequest.typeRequestVO.typeRequestCode})">`;
 			str += `		</td>`;
 			str += `	</tr>`;
 			str += `	<tr class="align-middle">`;
@@ -176,13 +184,45 @@ function searchTypeRequest(typeRequestCode){
 	
 }
 
-
-
+function delFreqReq(freqRequestCode, typeRequestCode){
+	const ask = confirm('해당 글을 삭제하시겠습니까?');
+	
+	if(ask){
+		//ajax start
+		$.ajax({
+			url: '/admin/delFreqReqAjax', //요청경로
+			type: 'post',
+			async: true, // 동기방식(Ajax사용), false == 비동기방식
+	 		//contentType: 'application/json; charset=UTF-8',
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        //필요한 데이터
+	        // 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+	        data: {'freqRequestCode' : freqRequestCode
+	        , 'typeRequestVO.typeRequestCode' : typeRequestCode},
+	        success: function(result) {
+				alert(document.querySelector('.table_typeReqCode').value);
+				
+				searchTypeRequest();
+				
+					           
+	        },
+	        error: function() {
+	           alert('실패');
+	   		}
+	   });
+	   //ajax end
+	}
+	
+	
+}
 
 
 
 
 
 function init(){
+	
+	
+	
 	
 }
