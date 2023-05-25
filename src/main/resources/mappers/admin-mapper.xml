@@ -433,6 +433,7 @@
 <!--			, MEM_D_CODE-->
 <!--			, MEM_D_TELL-->
 <!--			, MEM_D_ADDR-->
+
 <!--			, MEM_D_ADDR2-->
 <!--			, MEM_D_GEN-->
 <!--			, TO_CHAR(MEM_D_BIR, 'YYYY-MM-DD') MEM_D_BIR-->
