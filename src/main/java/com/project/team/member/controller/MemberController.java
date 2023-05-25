@@ -95,7 +95,7 @@ public class MemberController {
 	//임시 비밀번호 발급 여부 판단 
 	@PostMapping("/isTemporaryPwAjax")
 	@ResponseBody
-	public String getgetIsTemporaryPw(String memId) {
+	public String getIsTemporaryPw(String memId) {
 		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
 		return isTemporaryPw;
 	} 
