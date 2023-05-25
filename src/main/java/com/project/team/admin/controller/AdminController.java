@@ -67,7 +67,7 @@ public class AdminController {
 	
 	//여행지 카테고리 등록
 	@ResponseBody
-	@PostMapping("/regAreaAjax")
+	@PostMapping("/regAreaAJAX")
 	public List<TourAreaVO> regArea(@RequestBody TourAreaVO tourAreaVO) {
 		//카테고리 등록
 		adminService.regArea(tourAreaVO);
@@ -77,7 +77,7 @@ public class AdminController {
 	
 	//여행지 카테고리 중복 여부 확인
 	@ResponseBody
-	@PostMapping("/checkAreaAjax")
+	@PostMapping("/checkAreaAJAX")
 	public int checkAreaAjax(TourAreaVO tourAreaVO) {
 		
 		System.out.println(tourAreaVO);
@@ -88,7 +88,7 @@ public class AdminController {
 	
 	//여행지 카테고리 사용여부 변경 (정현 추가)
 	@ResponseBody
-	@PostMapping("/changeAreaIsUseAjax")
+	@PostMapping("/changeAreaIsUseAJAX")
 	public int changeAreaIsUse(String areaCode) {
 		return adminService.changeAreaIsUse(areaCode);
 	}
@@ -181,7 +181,7 @@ public class AdminController {
 	
 	//판매 상품 상세 정보
 	@ResponseBody
-	@RequestMapping("/getItemDetailForAdminAjax")
+	@RequestMapping("/getItemDetailForAdminAJAX")
 	public ItemVO getItemDetailForAdminAjax(Model model, String itemCode) {
 		
 		return adminService.getItemDetailForAdmin(itemCode);
@@ -190,7 +190,7 @@ public class AdminController {
 	
 	//상품 수정 이미지 삭제
 	@ResponseBody
-	@PostMapping("/deleteItemImgAjax")
+	@PostMapping("/deleteItemImgAJAX")
 	public void deleteItemImgAjax(ImgVO imgVO) {
 		adminService.deleteItemImg(imgVO);
 	}
@@ -292,7 +292,7 @@ public class AdminController {
 	
 	//회원 상세 정보 조회
 	@ResponseBody
-	@PostMapping("/getMemDetailAjax")
+	@PostMapping("/getMemDetailAJAX")
 	public MemberVO getMemDetailAjax(String memId) {
 		
 		System.out.println(memId);

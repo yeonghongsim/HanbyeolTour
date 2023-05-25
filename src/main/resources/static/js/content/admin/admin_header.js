@@ -1,5 +1,5 @@
 //input 태그 숫자 입력 1000단위 콤마
-function inputNumberFormat(obj) {
+function inputNumberFormat(obj) {c
      obj.value = comma(uncomma(obj.value));
  }
  

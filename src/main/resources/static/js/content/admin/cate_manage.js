@@ -28,7 +28,7 @@ function regArea(){
 	
 	//ajax start
 	$.ajax({
-		url: '/admin/regAreaAjax', //요청경로
+		url: '/admin/regAreaAJAX', //요청경로
 		type: 'post',
 		data: JSON.stringify(param), //필요한 데이터
 		async : true, //default 
@@ -93,7 +93,7 @@ function checkAreaDuplicate(areaCode, areaKorName, areaEngName){
 	
 	//ajax start
 	$.ajax({
-		url: '/admin/checkAreaAjax', //요청경로
+		url: '/admin/checkAreaAJAX', //요청경로
 		type: 'post',
 		data: {'areaCode' : areaCode, 'areaKorName' : areaKorName, 'areaEngName' : areaEngName}, //필요한 데이터
 		async : false, //default 
@@ -127,7 +127,7 @@ function changeAreaIsUse(areaCode){
 	
 	//ajax start
 	$.ajax({
-	   url: '/admin/changeAreaIsUseAjax', 
+	   url: '/admin/changeAreaIsUseAJAX', 
 	   type: 'post',
 	   data: {'areaCode' : areaCode}, //필요한 데이터
 	   success: function(result) {
