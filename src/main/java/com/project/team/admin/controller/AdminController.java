@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -64,7 +67,7 @@ public class AdminController {
 	
 	//여행지 카테고리 등록
 	@ResponseBody
-	@PostMapping("/regAreaAjax")
+	@PostMapping("/regAreaAJAX")
 	public List<TourAreaVO> regArea(@RequestBody TourAreaVO tourAreaVO) {
 		//카테고리 등록
 		adminService.regArea(tourAreaVO);
@@ -74,7 +77,7 @@ public class AdminController {
 	
 	//여행지 카테고리 중복 여부 확인
 	@ResponseBody
-	@PostMapping("/checkAreaAjax")
+	@PostMapping("/checkAreaAJAX")
 	public int checkAreaAjax(TourAreaVO tourAreaVO) {
 		
 		System.out.println(tourAreaVO);
@@ -85,7 +88,7 @@ public class AdminController {
 	
 	//여행지 카테고리 사용여부 변경 (정현 추가)
 	@ResponseBody
-	@PostMapping("/changeAreaIsUseAjax")
+	@PostMapping("/changeAreaIsUseAJAX")
 	public int changeAreaIsUse(String areaCode) {
 		return adminService.changeAreaIsUse(areaCode);
 	}
@@ -178,7 +181,7 @@ public class AdminController {
 	
 	//판매 상품 상세 정보
 	@ResponseBody
-	@RequestMapping("/getItemDetailForAdminAjax")
+	@RequestMapping("/getItemDetailForAdminAJAX")
 	public ItemVO getItemDetailForAdminAjax(Model model, String itemCode) {
 		
 		return adminService.getItemDetailForAdmin(itemCode);
@@ -187,7 +190,7 @@ public class AdminController {
 	
 	//상품 수정 이미지 삭제
 	@ResponseBody
-	@PostMapping("/deleteItemImgAjax")
+	@PostMapping("/deleteItemImgAJAX")
 	public void deleteItemImgAjax(ImgVO imgVO) {
 		adminService.deleteItemImg(imgVO);
 	}
@@ -289,7 +292,7 @@ public class AdminController {
 	
 	//회원 상세 정보 조회
 	@ResponseBody
-	@PostMapping("/getMemDetailAjax")
+	@PostMapping("/getMemDetailAJAX")
 	public MemberVO getMemDetailAjax(String memId) {
 		
 		System.out.println(memId);
@@ -428,22 +431,42 @@ public class AdminController {
 
 		freqRequestVO.setFreqRequestCode(freqReqCode);
 		freqRequestVO.getMemberVO().setMemCode(memCode);
-		System.out.println("@@@@@@@@" + freqRequestVO);
 
 		adminService.insertBoardForFreReq(freqRequestVO);
 		
 		return "redirect:/admin/frequncyRequestMng";
 
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/updateQnaAjax")
+	public void updateQnaAjax(FreqRequestVO freqRequestVO) {
+		
+		System.out.println("@@@@@@" + freqRequestVO);
+		adminService.updateFreqReq(freqRequestVO);
+		
+	}
 	
 	@ResponseBody
 	@PostMapping("/delFreqReqAjax")
-	public void delFreqReqAjax(FreqRequestVO freqRequestVO) {
+	public void delFreqReqAjax(@RequestBody String freqRequestStr, FreqRequestVO freqRequestVO) {
 		
-		System.out.println("@@@@@@@@@" + freqRequestVO);
-
-		//adminService.delFreqReq(freqRequestVO);
+		ObjectMapper mapper = new ObjectMapper();
+		List<String> freqRequestList  = null;
+		
+		try {
+			String[] freqRequestArr = mapper.readValue(freqRequestStr, String[].class);
+			
+			freqRequestList = Arrays.asList(freqRequestArr);
+		
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		freqRequestVO.setFreqRequestList(freqRequestList);
+		adminService.delFreqReq(freqRequestVO);
 		
 	}
 
@@ -455,7 +478,9 @@ public class AdminController {
 	public String setMainPage(Model model){
 		//메인페이지 이미지 목록
 		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
+		//추천아이템 목록 조회
 		model.addAttribute("recomItem", adminService.getRecomItem());
+		//전체 아이템 목록에서 추천아이템에 등록되어 있는 상품을 제외한 목록 조회
 		model.addAttribute("itemList", adminService.getItemList());
 		return "content/admin/page/set_main_page";
 	}
@@ -480,8 +505,6 @@ public class AdminController {
 		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
 
 		//db에 입력
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+ uploadImg);
-
 		adminService.uploadMainSlideImg(uploadImg);
 
 		return "redirect:/admin/setMainPage";
@@ -494,19 +517,14 @@ public class AdminController {
 
 		List<Map<String,String>> list = new ArrayList<>();
 
-		System.out.println(itemCode.size());
-
+		//데이터 insert 를위한 데이터 가공
 		for(int i = 0; i < itemCode.size(); i++){
 			Map<String,String> map = new HashMap<>();
 			map.put("itemCode", itemCode.get(i));
 			map.put("comment", comment.get(i));
-
 			list.add(map);
-			System.out.println("for문" + i + "번째");
 		}
-
-		System.out.println(list);
-
+		//추천 아이템 등록
 		adminService.setRecomItemList(list);
 
 	}

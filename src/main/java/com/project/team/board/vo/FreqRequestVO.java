@@ -1,5 +1,7 @@
 package com.project.team.board.vo;
 
+import java.util.List;
+
 import com.project.team.member.vo.MemberVO;
 
 import lombok.Getter;
@@ -15,4 +17,5 @@ public class FreqRequestVO {
 	private String freqRequestContent;
 	private MemberVO memberVO;
 	private TypeRequestVO typeRequestVO;
+	private List<String> freqRequestList;
 }

@@ -4,7 +4,7 @@ function openModal(itemCode, areaCateList){
 	
 	//ajax start
 	$.ajax({
-		url: '/admin/getItemDetailForAdminAjax', //요청경로
+		url: '/admin/getItemDetailForAdminAJAX', //요청경로
 		type: 'post',
 		data: {'itemCode' : itemCode}, //필요한 데이터
 		async : true, //default 
@@ -268,7 +268,7 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 
 	//ajax start
 	$.ajax({
-		url: '/admin/deleteItemImgAjax', //요청경로
+		url: '/admin/deleteItemImgAJAX', //요청경로
 		type: 'post',
 		data: {'itemImgCode' : itemImgCode}, //필요한 데이터
 		success: function(result) {

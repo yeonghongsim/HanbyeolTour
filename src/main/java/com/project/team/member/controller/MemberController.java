@@ -207,6 +207,14 @@ public class MemberController {
 	
 	}
 	
+	/*---------- 심영홍 ------------*/
+	@GetMapping("/checkMyRequest")
+	public String checkMyRequest(Model model) {
+		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/check_my_request";
+	}
 //	// 회원 탈퇴 페이지로 이동 
 //	@GetMapping("/accountDeletion")
 //	public String accountDeletion(Model model) {
