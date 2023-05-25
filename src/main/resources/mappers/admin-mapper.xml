@@ -27,7 +27,7 @@
 		FROM HBT_TOUR_AREA
 		WHERE AREA_CODE = #{areaCode}
 		AND AREA_KOR_NAME = #{areaKorName} 
-		AND AREA_ENG_NAME = #{areaEngName} 
+		AND AREA_ENG_NAME = #{areaEngName}
 	</select>
 	
 	<!-- 여행 국가 카테고리 조회 -->
@@ -48,7 +48,6 @@
 		WHERE AREA_CODE = #{areaCode}
 	</update>
 		
-	
 	<!-- 여행 국가 카테고리 삭제-->
 	<delete id="deleteAreaCate">
 		DELETE HBT_TOUR_AREA
@@ -182,7 +181,6 @@
 			, TRAVER_PERIOD = #{traverPeriod}
 		WHERE ITEM_CODE = #{itemCode}
 	</update>
-
 	
 	<!-- 상품 이미지 수정 -->
 	<insert id="regImgsForItemDetail">
@@ -204,93 +202,6 @@
 		</foreach>
 	</insert>
 	
-	<!-- 판매 상품 조회 -->
-	<select id="saleListForAdmin" resultMap="itemMapper.item">
-		SELECT ITEM.ITEM_CODE
-			, ITEM_TITLE
-			, ITEM_PRICE
-			, TRAVER_PERIOD
-			, AREA.AREA_KOR_NAME
-			, IMG.ITEM_IMG_ATTACHED_NAME
-		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA
-		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
-		AND ITEM.AREA_CODE = AREA.AREA_CODE
-		AND IS_MAIN = 'Y'
-	</select>
-	
-	<!-- 판매 상품 삭제-->
-	<delete id="deleteItem">
-		DELETE HBT_ITEM
-		WHERE ITEM_CODE = #{itemCode}
-	</delete>
-	
-	<!-- 판매 상품 선택 삭제 -->
-	<delete id="deleteCheckItems">
-		DELETE HBT_ITEM
-		WHERE ITEM_CODE IN
-		<foreach collection="itemCodeList" item="itemCode" separator="," open="(" close=")">
-			#{itemCode}
-		</foreach>
-	</delete>
-	
-	<!-- 상품 이름 클릭 시 상품 상세 정보 -->
-	<select id="getItemDetailForAdmin" resultMap="itemMapper.item">
-		SELECT ITEM.ITEM_CODE
-			, ITEM_TITLE
-			, ITEM_PRICE
-			, AREA_KOR_NAME
-			, TO_CHAR(SELLING_START, 'YYYY-MM-DD') SELLING_START
-			, TO_CHAR(SELLING_END, 'YYYY-MM-DD') SELLING_END
-			, IS_EXTRA_CHARGE
-			, IS_PEAK
-			, IS_BOMB_SALE
-			, ITEM_INTRO
-			, STATUS_CODE
-			, TRAVER_PERIOD
-			, ITEM_IMG_CODE
-			, ITEM_IMG_ORIGIN_NAME
-			, ITEM_IMG_ATTACHED_NAME
-			, IS_MAIN
-		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA
-		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
-		AND ITEM.AREA_CODE = AREA.AREA_CODE
-		AND ITEM.ITEM_CODE = #{itemCode}
-	</select>
-	
-	<!-- 상품 수정 -->
-	<update id="updateItem">
-		UPDATE HBT_ITEM
-		SET 
-			ITEM_TITLE = #{itemTitle}
-			, ITEM_PRICE = #{itemPrice}
-			, AREA_CODE = #{areaCode}
-			, SELLING_START = #{sellingStart}
-			, SELLING_END = #{sellingEnd}
-			, IS_EXTRA_CHARGE = #{isExtraCharge}
-			, IS_PEAK #{isPeak}
-			, IS_BOMB_SALE = #{isBombSale}
-			, ITEM_INTRO = #{itemIntro}
-			, STATUS_CODE = #{statusCode}
-			, TRAVER_PERIOD = #{traverPeriod}
-		WHERE ITEM_CODE = #{itemCode}
-	</update>
-
-	
-	<!-- 상품 이미지 수정 -->
-	
-	<!-- 상품 상세 정보 X 클릭 이미지 삭제 -->
-	<delete id="deleteItemImg">
-		DELETE HBT_ITEM_IMG
-		WHERE ITEM_IMG_CODE = #{itemImgCode}
-	</delete>
-	
-	<!-- 업로드 이미지명 조회 -->
-	<select id="getAttachedFileName" resultType="String">
-		SELECT ITEM_IMG_ATTACHED_NAME
-		FROM HBT_ITEM_IMG
-		WHERE ITEM_IMG_CODE = #{itemImgCode}
-	</select>
-	
 	<!-- 회원 리스트 조회 -->
 	<select id="getMemList" resultMap="memberMapper.member">
 		SELECT MEM_CODE
@@ -323,79 +234,7 @@
 		WHERE MEM.MEM_CODE = DETAIL.MEM_CODE
 		AND MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
 		AND MEM.MEM_ID = #{memId}
-	
 	</select>
-
-
-
-
-
-
-	
-	
-	
-	
-	
-	<!-- 심영홍  -->
-	<select id="getBoardNoticeCode" resultType="String">
-		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_ADMIN_NUM, 10))), 0) + 1, 3, '0')
-		FROM HBT_BOARD_ADMIN
-	</select>
-	
-	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
-		SELECT HBT_BOARD_ADMIN_NUM
-			, HBT_BOARD_ADMIN_TITLE
-			, HBT_BOARD_ADMIN_REG_DATE
-			, HBT_BOARD_ADMIN_LIKE
-			, HBT_BOARD_ADMIN_CNT
-			, (SELECT MEM_ID
-				FROM HBT_MEM) MEM_ID
-		FROM HBT_BOARD_ADMIN
-	</select>
-	
-	<select id="getMemCode" resultType="String">
-		SELECT MEM_CODE
-			FROM HBT_MEM
-		WHERE MEM_ID = #{memId}
-	</select>
-	
-	<insert id="insertBoardForFreReq">
-		INSERT INTO HBT_FREQ_REQUEST (
-		    FREQ_REQUEST_CODE
-		    , FREQ_REQUEST_TITLE
-		    , FREQ_REQUEST_CONTENT
-		    , MEM_CODE
-		    , TYPE_REQUEST_CODE
-		) VALUES (
-		    #{freqRequestCode}
-		    , #{freqRequestTitle}
-		    , #{freqRequestContent}
-		    , #{memberVO.memCode}
-		    , #{typeRequestVO.typeRequestCode}
-		)
-	</insert>
-	
-	<select id="getFreqRequestList" resultMap="boardMapper.freqRequest">
-		SELECT FREQ_REQUEST_CODE
-		    , FREQ_REQUEST_TITLE
-		    , FREQ_REQUEST_CONTENT
-		    , HBT_FREQ_REQUEST.TYPE_REQUEST_CODE
-		    , TYPE_REQUEST_NAME
-		FROM HBT_FREQ_REQUEST, TYPE_REQUEST
-		WHERE HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = TYPE_REQUEST.TYPE_REQUEST_CODE
-		<if test='typeRequestCode != 0'>
-		AND HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = #{typeRequestCode}
-		</if>
-		ORDER BY TYPE_REQUEST_CODE, FREQ_REQUEST_CODE DESC
-	</select>
-	
-	<delete id="delFreqReq">
-		DELETE HBT_FREQ_REQUEST 
-		WHERE FREQ_REQUEST_CODE IN  
-		<foreach collection="freqRequestList" item="freqReqeustCode" open="(" separator="," close=")">
-			#{freqReqeustCode}
-		</foreach>
-	</delete>
 	
 	<update id="updateFreqReq">
 		UPDATE HBT_FREQ_REQUEST
@@ -403,7 +242,6 @@
 		WHERE FREQ_REQUEST_CODE = #{freqRequestCode}
 	</update>
 
-	
 	<!-- 상품 상세 정보 X 클릭 이미지 삭제 -->
 	<delete id="deleteItemImg">
 		DELETE HBT_ITEM_IMG
@@ -417,62 +255,26 @@
 		WHERE ITEM_IMG_CODE = #{itemImgCode}
 	</select>
 	
-	<!-- 회원 리스트 조회 -->
-	<select id="getMemList" resultMap="memberMapper.member">
-		SELECT MEM_CODE
-			, MEM_ID
-			, MEM_NAME
-			, MEM.MEM_STATUS_CODE
-			, MEM_STATUS_NAME
-		FROM HBT_MEM MEM, HBT_MEM_STATUS STATUS
-		WHERE MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
-	</select>
-	
-	<!-- 회원 정보 상세 조회 -->
-	<select id="getMemDetailInfo" resultMap="memberMapper.member">
-		SELECT MEM.MEM_CODE
-			, MEM_ROLE
-			, MEM_ID
-			, MEM_NAME
-			, MEM_PW
-			, MEM.MEM_STATUS_CODE
-			, MEM_D_CODE
-			, MEM_D_TELL
-			, MEM_D_ADDR
-			, MEM_D_ADDR2
-			, MEM_D_GEN
-			, TO_CHAR(MEM_D_BIR, 'YYYY-MM-DD') MEM_D_BIR
-			, TO_CHAR(MEM_D_JOINDATE, 'YYYY-MM-DD') MEM_D_JOINDATE
-			, MEM_EMAIL
-			, MEM_STATUS_NAME
-		FROM HBT_MEM MEM, HBT_MEM_DETAIL DETAIL, HBT_MEM_STATUS STATUS
-		WHERE MEM.MEM_CODE = DETAIL.MEM_CODE
-		AND MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
-		AND MEM.MEM_ID = #{memId}
-	
-	</select>
-
 	<!--  메인페이지 이미지 업로드	-->
 	<insert id="uploadMainSlideImg">
 		INSERT INTO HBT_MAINPAGE_IMG (
-									   HBT_MAINPAGE_IMG_CODE
-									 , HBT_MAINPAGE_ORIGIN_FILE_NAME
-									 , HBT_MAINPAGE_ATTECHED_FILE_NAME
+		   HBT_MAINPAGE_IMG_CODE
+		 , HBT_MAINPAGE_ORIGIN_FILE_NAME
+		 , HBT_MAINPAGE_ATTECHED_FILE_NAME
 		) VALUES (
-					 (SELECT 'HBT_MAINPAGE_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_MAINPAGE_IMG_CODE, 14))), 0) + 1, 3, '0') FROM HBT_MAINPAGE_IMG)
-				 , #{origin}
-				 , #{attached}
-				 )
+			 (SELECT 'HBT_MAINPAGE_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_MAINPAGE_IMG_CODE, 14))), 0) + 1, 3, '0') FROM HBT_MAINPAGE_IMG)
+		 , #{origin}
+		 , #{attached}
+		 )
 	</insert>
 
-	<!--	메인이미지 조회-->
+	<!--메인이미지 조회-->
 	<select id="getMainSlideImg" resultType="Map">
 		SELECT HBT_MAINPAGE_IMG_CODE
 			 , HBT_MAINPAGE_ORIGIN_FILE_NAME
 			 , HBT_MAINPAGE_ATTECHED_FILE_NAME
 		FROM HBT_MAINPAGE_IMG
 	</select>
-
 
 	<select id="getRecomItem" resultType="Map">
 		SELECT RECOM.ITEM_CODE
@@ -504,8 +306,8 @@
 
 	<insert id="setRecomItemList">
 		INSERT INTO HBT_RECOM_ITEM (
-		ITEM_CODE
-		, RECOM_COMMENT
+			ITEM_CODE
+			, RECOM_COMMENT
 		)
 		<foreach collection="list" item="item" separator="UNION ALL">
 			SELECT #{item.itemCode}
@@ -513,16 +315,12 @@
 			FROM DUAL
 		</foreach>
 	</insert>
-
-
 	
 	<!-- 심영홍  -->
 	<select id="getBoardNoticeCode" resultType="String">
 		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_ADMIN_NUM, 10))), 0) + 1, 3, '0')
 		FROM HBT_BOARD_ADMIN
 	</select>
-	
-	
 	
 	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
 		SELECT HBT_BOARD_ADMIN_NUM
@@ -568,12 +366,46 @@
 		<if test="typeRequestCode != null">
 		AND HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = #{typeRequestCode}
 		</if>
+		ORDER BY TYPE_REQUEST_CODE, FREQ_REQUEST_CODE DESC
 	</select>
 	
 	<delete id="delFreqReq">
-		DELETE HBT_FREQ_REQUEST 
-		WHERE TYPE_REQUEST_CODE = #{typeRequestVO.typeRequestCode}
-		AND FREQ_REQUEST_CODE = #{freqRequestCode}
+		DELETE HBT_FREQ_REQUEST
+		WHERE FREQ_REQUEST_CODE IN
+		<foreach collection="freqRequestList" item="freqReqeustCode" open="(" separator="," close=")">
+			#{freqReqeustCode}
+		</foreach>
 	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 심영홍 작업 부분 시작 -->
+	
+	
+	
+	<!-- 심영홍 작업 부분 끝 -->
+	
+	
+	
 	
 </mapper>
