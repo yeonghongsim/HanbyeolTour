@@ -478,7 +478,9 @@ public class AdminController {
 	public String setMainPage(Model model){
 		//메인페이지 이미지 목록
 		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
+		//추천아이템 목록 조회
 		model.addAttribute("recomItem", adminService.getRecomItem());
+		//전체 아이템 목록에서 추천아이템에 등록되어 있는 상품을 제외한 목록 조회
 		model.addAttribute("itemList", adminService.getItemList());
 		return "content/admin/page/set_main_page";
 	}
@@ -503,8 +505,6 @@ public class AdminController {
 		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
 
 		//db에 입력
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+ uploadImg);
-
 		adminService.uploadMainSlideImg(uploadImg);
 
 		return "redirect:/admin/setMainPage";
@@ -517,19 +517,14 @@ public class AdminController {
 
 		List<Map<String,String>> list = new ArrayList<>();
 
-		System.out.println(itemCode.size());
-
+		//데이터 insert 를위한 데이터 가공
 		for(int i = 0; i < itemCode.size(); i++){
 			Map<String,String> map = new HashMap<>();
 			map.put("itemCode", itemCode.get(i));
 			map.put("comment", comment.get(i));
-
 			list.add(map);
-			System.out.println("for문" + i + "번째");
 		}
-
-		System.out.println(list);
-
+		//추천 아이템 등록
 		adminService.setRecomItemList(list);
 
 	}

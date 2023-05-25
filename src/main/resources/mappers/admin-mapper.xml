@@ -47,7 +47,7 @@
 			IS_USE = DECODE(IS_USE, 'Y', 'N', 'N', 'Y')
 		WHERE AREA_CODE = #{areaCode}
 	</update>
-		
+
 	<!-- 여행 국가 카테고리 삭제-->
 	<delete id="deleteAreaCate">
 		DELETE HBT_TOUR_AREA
@@ -201,7 +201,7 @@
 			FROM DUAL
 		</foreach>
 	</insert>
-	
+
 	<!-- 회원 리스트 조회 -->
 	<select id="getMemList" resultMap="memberMapper.member">
 		SELECT MEM_CODE
@@ -254,7 +254,7 @@
 		FROM HBT_ITEM_IMG
 		WHERE ITEM_IMG_CODE = #{itemImgCode}
 	</select>
-	
+
 	<!--  메인페이지 이미지 업로드	-->
 	<insert id="uploadMainSlideImg">
 		INSERT INTO HBT_MAINPAGE_IMG (
@@ -321,7 +321,7 @@
 		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_ADMIN_NUM, 10))), 0) + 1, 3, '0')
 		FROM HBT_BOARD_ADMIN
 	</select>
-	
+
 	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
 		SELECT HBT_BOARD_ADMIN_NUM
 			, HBT_BOARD_ADMIN_TITLE
@@ -377,35 +377,35 @@
 		</foreach>
 	</delete>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<!-- 심영홍 작업 부분 시작 -->
-	
-	
-	
+
+
+
 	<!-- 심영홍 작업 부분 끝 -->
-	
-	
-	
-	
+
+
+
+
 </mapper>
