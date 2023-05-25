@@ -190,7 +190,7 @@ function find_pw(findPwBtn){
 	
 	//ajax start
 	$.ajax({
-	   url: '/member/findPwAjax', //요청경로
+	   url: '/member/findPwAJAX', //요청경로
 	   type: 'post',
 	   async: true, // 비동기 , 동기 설정
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default

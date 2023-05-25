@@ -16,7 +16,7 @@ function change_my_pw(memId){
 		
 		if(memPw != null){
 			$.ajax({
-		   url: '/myPage/changeMyPwFormAjax', //요청경로
+		   url: '/myPage/changeMyPwFormAJAX', //요청경로
 		   type: 'post',
 		   async: true, // 비동기 , 동기 설정
 		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
