@@ -195,11 +195,48 @@ public class AdminController {
 		adminService.deleteItemImg(imgVO);
 	}
 	
-	//판매 상품 수정
+	
+	
 	@PostMapping("/updateItem")
+	public String updateItem1(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
+		String itemCode = itemVO.getItemCode();
+		itemVO.setItemCode(itemCode);
+		
+		ImgVO attachecdImgVO = null;
+		if(mainImg != null) {
+			//단일 첨부 - 첨부 없으면 null
+			attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+		}
+		
+		//다중 첨부 - 첨부 없으면 빈 리스트
+		List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+		
+		adminService.updateItem(itemVO);
+		
+		if(attachecdImgVO != null || attachedImgList.size() != 0){
+			List<ImgVO> imgList = new ArrayList<>();
+			
+			if(attachecdImgVO != null){
+				imgList.add(attachecdImgVO);
+			}
+			if(attachedImgList.size() != 0) {
+				imgList.addAll(attachedImgList);
+			}
+			
+			itemVO.setImgList(imgList);
+			adminService.regImgsForItemDetail(itemVO);
+		}
+		return "redirect:/admin/itemManageForSale";
+	}
+	 
+	
+	
+	//판매 상품 수정
+	@PostMapping("/updateItem1")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
 		//disabled 속성 때문에 null 가능
 		if(mainImg != null && subImg.length != 0) {
+			System.out.println(1);
 			//메인 이미지 세팅
 			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
@@ -228,6 +265,8 @@ public class AdminController {
 			itemVO.setImgList(imgList);
 		
 		}else if(mainImg != null && subImg.length == 0) {
+			System.out.println(2);
+
 			//메인 이미지 세팅
 			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
@@ -251,7 +290,15 @@ public class AdminController {
 			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
 			itemVO.setImgList(imgList);
 			
-		}else{
+		}else if(mainImg == null && subImg.length != 0) {
+			System.out.println(3);
+				if(mainImg == null) {
+					System.out.println(4);
+				}
+				System.out.println(subImg.length);
+			
+				
+			
 				//서브 이미지 세팅
 				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 				
@@ -275,8 +322,9 @@ public class AdminController {
 		
 		System.out.println(itemVO);
 		adminService.updateItem(itemVO);
-		adminService.regImgsForItemDetail(itemVO);
 		
+		adminService.regImgsForItemDetail(itemVO);
+	
 		return "redirect:/admin/itemManageForSale";
 	}
 	

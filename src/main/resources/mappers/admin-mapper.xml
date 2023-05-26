@@ -190,16 +190,18 @@
 			, ITEM_IMG_ORIGIN_NAME
 			, ITEM_IMG_ATTACHED_NAME
 			, IS_MAIN
-		)								<!-- imgVO -->
-		<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
-			SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
-	      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
-				, #{itemCode}
-				, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
-				, #{img.itemImgAttachedName}
-				, #{img.isMain}
-			FROM DUAL
-		</foreach>
+		)
+					<!-- imgVO -->
+			<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
+				SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
+		      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
+					, #{itemCode}
+					, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
+					, #{img.itemImgAttachedName}
+					, #{img.isMain}
+				FROM DUAL
+			</foreach>
+
 	</insert>
 
 	<!-- 회원 리스트 조회 -->
