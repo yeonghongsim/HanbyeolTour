@@ -131,6 +131,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	
-	
+	@Override
+	public String getMemCode(String memid) {
+		return sqlSession.selectOne("adminMapper.getMemCode", memid);
+	}
 
 }

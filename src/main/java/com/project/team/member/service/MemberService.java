@@ -48,4 +48,7 @@ public interface MemberService {
 		
 	// 회원 사이드 메뉴 목록 조회
 	List<MemberSideMenuVO> getMsMenuList();
+	
+	// 회원 코드 조회 By 회원 아이디
+	String getMemCode(String memid);
 }

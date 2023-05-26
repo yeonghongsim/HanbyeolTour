@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.regTable > tbody > tr > td {
+	border: 1px solid #eee;
+}
 
-
-
+.regTable > tbody > tr {
+	vertical-align: middle;
+	align-items: center;
+}

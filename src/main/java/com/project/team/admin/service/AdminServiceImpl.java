@@ -160,10 +160,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	//------------------- 심영홍 ------
 	
-	@Override
-	public String getBoardNoticeCode() {
-		return sqlSession.selectOne("adminMapper.getBoardNoticeCode");
-	}
 
 	@Override
 	public String getMemCode(String memid) {

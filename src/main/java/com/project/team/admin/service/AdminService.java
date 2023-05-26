@@ -75,8 +75,6 @@ public interface AdminService {
 	
 	
 	//-------------------- 심영홍 -------
-	// 공지글 글번호
-	String getBoardNoticeCode();
 	
 	
 	

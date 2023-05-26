@@ -194,6 +194,12 @@
 		FROM MEMBER_SIDE_MENU
 	</select>
 	
+	<select id="getMemCode" resultType="String">
+		SELECT MEM_CODE
+			FROM HBT_MEM
+		WHERE MEM_ID = #{memId}
+	</select>
+	
 </mapper>
 
 
