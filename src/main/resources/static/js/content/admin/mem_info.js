@@ -14,7 +14,7 @@ function getMemDetail(memId){
 			
 			let str = '';
 			
-			str += `<h5>회원 상세 정보</h5>`                                        
+			str += `<h5 style="font-style: italic;">회원 상세 정보</h5>`                                        
 			str += `<table class="table">             `;
 			str += `	<colgroup>                    `;
 			str += `		<col width="10%">       `;

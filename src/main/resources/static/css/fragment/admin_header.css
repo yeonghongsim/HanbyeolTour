@@ -59,22 +59,23 @@ a{
     padding:20px;
     white-space:nowrap;
 }
-.left-side-bar .menu-box-1 ul > li:hover > a{
-    background-color: white;
-    color : black;
+.left-side-bar .menu-box-1 ul > li:hover > .sideAHover{
+    background-color: #ffd000;
+    color : white;
 }
 .left-side-bar > .menu-box-1 > ul > li:hover > ul{
     display:block;
 }
 
 .adminHeader{
-	background: #ffd000;
+	background:#fff9d4;
 	height: 50px;
 	font-size: 20px;
 	padding-top: 10px;
 	margin-top: 50px;
 	padding-left: 10px
 }
+
 
 
 /* 인풋 태그 스타일 */
@@ -97,10 +98,12 @@ a{
     box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);
 }
 
+/* 영어 대문자만 가능  */
 .EnglargeDiv{
 	text-transform: uppercase;
 }
 
+/* 페이징 숫자 css  */
 .active>.page-link, .page-link.active {
     z-index: 3;
     color: white;
@@ -110,23 +113,49 @@ a{
 
 .page-link {
 	color: black;	
+	border-color: white;
 }
 
 .page-link:hover {
     z-index: 2;
     color: #fff9d4;
     background-color: var(--bs-pagination-hover-bg);
-    border-color: var(--bs-pagination-hover-border-color);
+
 }
 
 .page-link:focus {
     z-index: 3;
     color: #fff9d4;
-    background-color: var(--bs-pagination-focus-bg);
+    background-color: #fff9d4;
     outline: 0;
     box-shadow: var(--bs-pagination-focus-box-shadow);
 }
 
 .pagination {
 	--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);	
+}
+
+.table {
+    --bs-table-hover-bg: rgba(0, 0, 0, 0); 
+
+}
+
+.table-hover tbody tr:hover > td {
+  background-color: #fff9d4;
+}
+
+.smallRed {
+	color: red;
+	font-size: 0.8rem;
+}
+
+
+.menuTitle{
+	font-style: italic;
+	content: "";
+	display: block;
+	width: 40%;
+	border-bottom: 3px solid #ffd000;
+	margin-bottom: 30px;
+	margin-top: 30px;
 }
