@@ -15,6 +15,5 @@ public class BoardNoticeVO {
 	private String hbtBoardNoticeContent;
 	private String hbtBoardNoticeRegDate;
 	private String hbtBoardNoticeCnt;
-	private String hbtBoardNoticeLike;
 	private MemberVO memberVO;
 }

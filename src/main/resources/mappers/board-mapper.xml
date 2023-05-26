@@ -16,7 +16,6 @@
 		<result column="HBT_BOARD_NOTICE_CONTENT" 		property="hbtBoardNoticeContent"/>
 		<result column="HBT_BOARD_NOTICE_REG_DATE" 		property="hbtBoardNoticeRegDate"/>
 		<result column="HBT_BOARD_NOTICE_CNT" 			property="hbtBoardNoticeCnt"/>
-		<result column="HBT_BOARD_NOTICE_LIKE" 			property="hbtBoardNoticeLike"/>
 		<association property="memberVO" 				resultMap="memberMapper.member"></association>
 	</resultMap>
 	
@@ -62,6 +61,10 @@
 	    FROM HBT_FREQ_REQUEST
 	</select>
 	
+	<select id="getBoardNoticeCode" resultType="String">
+		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_NOTICE_NUM, 10))), 0) + 1, 3, '0')
+		FROM HBT_BOARD_NOTICE
+	</select>
 	
 	<select id="getFreqRequestList" resultMap="freqRequest">
 		SELECT FREQ_REQUEST_CODE
@@ -74,6 +77,52 @@
 		ORDER BY TYPE_REQUEST_CODE, FREQ_REQUEST_CODE DESC
 	</select>
 	
+	<insert id="regBoardNotice">
+		INSERT INTO HBT_BOARD_NOTICE (
+		    HBT_BOARD_NOTICE_NUM
+		    ,HBT_BOARD_NOTICE_TITLE
+		    ,HBT_BOARD_NOTICE_CONTENT
+		    ,MEM_CODE
+		) VALUES (
+		    #{hbtBoardNoticeNum}
+		    , #{hbtBoardNoticeTitle}
+		    , #{hbtBoardNoticeContent}
+		    , #{memberVO.memCode}
+		)
+	</insert>
+	
+	<select id="getBoardNoticeList" resultMap="boardNotice">
+		SELECT HBT_BOARD_NOTICE_NUM
+		    , HBT_BOARD_NOTICE_TITLE
+		    , HBT_BOARD_NOTICE_CONTENT
+		    , HBT_BOARD_NOTICE_CNT
+		    , TO_CHAR(HBT_BOARD_NOTICE_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_NOTICE_REG_DATE
+		    , MEM_CODE
+		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD_NOTICE.MEM_CODE) MEM_ID
+		FROM HBT_BOARD_NOTICE
+	</select>
+	
+	<select id="getBoardNoticeDetail" resultMap="boardNotice">
+		SELECT HBT_BOARD_NOTICE_NUM
+		    , HBT_BOARD_NOTICE_TITLE
+		    , HBT_BOARD_NOTICE_CONTENT
+		    , TO_CHAR(HBT_BOARD_NOTICE_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_NOTICE_REG_DATE
+		    , MEM_CODE
+		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD_NOTICE.MEM_CODE) MEM_ID
+		FROM HBT_BOARD_NOTICE
+		WHERE HBT_BOARD_NOTICE_NUM = #{hbtBoardNoticeNum}
+	</select>
+	
+	<delete id="delNotice">
+		DELETE FROM HBT_BOARD_NOTICE 
+		WHERE HBT_BOARD_NOTICE_NUM = #{hbtBoardNoticeNum}
+	</delete>
+	
+	<update id="updateBoardNotice">
+		UPDATE HBT_BOARD_NOTICE
+		SET HBT_BOARD_NOTICE_TITLE = #{hbtBoardNoticeTitle}, HBT_BOARD_NOTICE_CONTENT = #{hbtBoardNoticeTitle}
+		WHERE HBT_BOARD_NOTICE_NUM = #{hbtBoardNoticeNum}
+	</update>
 	
 </mapper>
 

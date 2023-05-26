@@ -4,7 +4,7 @@ function check_pw() {
     const checkPw = document.querySelector('#checkPw').value;
        
 	$.ajax({
-	   url: '/myPage/checkPwAjax', //요청경로
+	   url: '/myPage/checkPwAJAX', //요청경로
 	   type: 'post',
 	   async: true, // 비동기 , 동기 설정
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default

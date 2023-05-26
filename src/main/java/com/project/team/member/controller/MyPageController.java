@@ -66,7 +66,7 @@ public class MyPageController {
 	}
 	
 	//비밀번호 변경전 정보 확인 
-	@PostMapping("/checkPwAjax")
+	@PostMapping("/checkPwAJAX")
 	@ResponseBody
 	public boolean checkPwAjax(Model model, String checkPw, Authentication authentication) {
 		// side 메뉴 리스트 
@@ -101,7 +101,7 @@ public class MyPageController {
 	}
 	
 	
-	@PostMapping("/changeMyPwFormAjax")
+	@PostMapping("/changeMyPwFormAJAX")
 	@ResponseBody
 	public String changeMyPwFormAjax(Model model, String memId, String memPw) {
 		// side 메뉴 리스트 

@@ -122,7 +122,7 @@ function login(){
 	    		
 	    		//ajax start
 				$.ajax({
-				   url: '/member/isTemporaryPwAjax', //요청경로
+				   url: '/member/isTemporaryPwAJAX', //요청경로
 				   type: 'post',
 				   async: true, 
 				   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default

@@ -149,7 +149,7 @@ function update_QnA(freqRequestCode, title, content, typeRequestCode){
 	if(ask){
 		//ajax start
 		$.ajax({
-			url: '/admin/updateQnaAjax', //요청경로
+			url: '/admin/updateQnaAJAX', //요청경로
 			type: 'post',
 			async: true, // 동기방식(Ajax사용), false == 비동기방식
 			//contentType: 'application/json; charset=UTF-8',
@@ -178,7 +178,7 @@ function update_QnA(freqRequestCode, title, content, typeRequestCode){
 function searchTypeRequest(typeRequestCode){
 	//ajax start
 	$.ajax({
-		url: '/admin/searchFreqRequestByCodeAjax', //요청경로
+		url: '/admin/searchFreqRequestByCodeAJAX', //요청경로
 		type: 'post',
 		async: true, // 동기방식(Ajax사용), false == 비동기방식
 		//contentType: 'application/json; charset=UTF-8',
@@ -284,7 +284,7 @@ function delFreqReq(freqRequestCode, typeRequestCode){
 	if(ask){
 		//ajax start
 		$.ajax({
-			url: '/admin/delFreqReqAjax', //요청경로
+			url: '/admin/delFreqReqAJAX', //요청경로
 			type: 'post',
 			async: true, // 동기방식(Ajax사용), false == 비동기방식
 	 		contentType: 'application/json; charset=UTF-8',

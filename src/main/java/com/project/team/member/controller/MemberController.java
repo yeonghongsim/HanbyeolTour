@@ -93,9 +93,9 @@ public class MemberController {
 	}
 	
 	//임시 비밀번호 발급 여부 판단 
-	@PostMapping("/isTemporaryPwAjax")
+	@PostMapping("/isTemporaryPwAJAX")
 	@ResponseBody
-	public String getgetIsTemporaryPw(String memId) {
+	public String getIsTemporaryPw(String memId) {
 		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
 		return isTemporaryPw;
 	} 
@@ -113,7 +113,7 @@ public class MemberController {
 	
 	//아이디 찾기 
 	@ResponseBody
-	@PostMapping("/findIdAjax")
+	@PostMapping("/findIdAJAX")
 	public MemberVO findIdAjax(MemberVO memberVO, MemberDetailVO memberDetailVO) {
 		memberVO.setMemberDetailVO(memberDetailVO);
 		String memId = memberService.findId(memberVO);
@@ -139,7 +139,7 @@ public class MemberController {
 	
 	//비밀번호 찾기 
 	@ResponseBody
-	@PostMapping("/findPwAjax")
+	@PostMapping("/findPwAJAX")
 	public boolean findPwAjax(MemberVO memberVO, MemberDetailVO memberDetailVO) throws AddressException {
 		
 		memberVO.setMemberDetailVO(memberDetailVO);
