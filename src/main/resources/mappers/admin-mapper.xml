@@ -207,13 +207,33 @@
 	<!-- 회원 리스트 조회 -->
 	<select id="getMemList" resultMap="memberMapper.member">
 		SELECT MEM_CODE
-			, MEM_ID
-			, MEM_NAME
-			, MEM.MEM_STATUS_CODE
-			, MEM_STATUS_NAME
+		, MEM_ID
+		, MEM_NAME
+		, MEM.MEM_STATUS_CODE
+		, MEM_STATUS_NAME
 		FROM HBT_MEM MEM, HBT_MEM_STATUS STATUS
 		WHERE MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
+		<!-- 상단,사이드 메뉴 주문관리 눌러서 들어올 때 null. 입력 값없이 검색 시 빈값. 이 모두가 아닐 때 작동 searchKeyword는 
+		selectbox 이기 때문에 항상 값이 있음. -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+			<!-- 셀렉트 박스 선택 데이터 매번 바뀜 , 빈 값에 해당하는 입력 값(searchValue) 종류도 매번 바뀜 -->
+			<!-- searchKeyword에 '' 붙으면 X, $으로 데이터 받음 -->
+			<!-- searchValue 문자열, 대소문자 구분없이 포함하는 데이터 나와야 하기 때문에 아래처럼. -->
+			AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
+	
+	<!-- 검색 조건에 맞는 주문 내역 수 -->
+	<select id="getMemListCnt" resultType="int">
+		SELECT COUNT(MEM_CODE)
+		FROM HBT_MEM
+		<if test='searchValue != null and !searchValue.equals("")'>
+		WHERE UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
+	
+	
 	
 	<!-- 회원 정보 상세 조회 -->
 	<select id="getMemDetailInfo" resultMap="memberMapper.member">

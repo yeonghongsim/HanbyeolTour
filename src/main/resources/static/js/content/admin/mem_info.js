@@ -69,3 +69,14 @@ function getMemDetail(memId){
 	});
 //ajax end
 }
+
+
+
+//회원 조회 페이징 처리
+function getMemListPaging(pageNum){
+	document.querySelector('#nowPage').value = pageNum;
+	const searchForm = document.querySelector('#searchForm');
+	
+	searchForm.submit();
+
+}

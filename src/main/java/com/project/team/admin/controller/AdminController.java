@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.ImgVO;
+import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
@@ -196,9 +197,10 @@ public class AdminController {
 	}
 	
 	
-	
+	//상품 수정 (이미지 포함)
 	@PostMapping("/updateItem")
-	public String updateItem1(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
+	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
+		//아이템 코드 세팅
 		String itemCode = itemVO.getItemCode();
 		itemVO.setItemCode(itemCode);
 		
@@ -224,117 +226,25 @@ public class AdminController {
 			}
 			
 			itemVO.setImgList(imgList);
+			//이미지 수정 쿼리
 			adminService.regImgsForItemDetail(itemVO);
 		}
-		return "redirect:/admin/itemManageForSale";
-	}
-	 
-	
-	
-	//판매 상품 수정
-	@PostMapping("/updateItem1")
-	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
-		//disabled 속성 때문에 null 가능
-		if(mainImg != null && subImg.length != 0) {
-			System.out.println(1);
-			//메인 이미지 세팅
-			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
-			
-			//서브 이미지 세팅
-			List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-		
-			//상품 이미지 DB 등록
-			//해당 상품 아이템 코드 세팅
-			String itemCode = itemVO.getItemCode();
-			itemVO.setItemCode(itemCode);
-			
-			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-			//서브 이미지 첨부 정보 추가
-			List<ImgVO> imgList = attachedImgList;
-			
-			//메인 이미지 첨부 정보 추가
-			imgList.add(attachecdImgVO);
-			
-			//imgVO에 itemCode 세팅
-			for(ImgVO img : imgList) {
-				img.setItemCode(itemCode);
-				
-			}
-			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
-			itemVO.setImgList(imgList);
-		
-		}else if(mainImg != null && subImg.length == 0) {
-			System.out.println(2);
-
-			//메인 이미지 세팅
-			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
-			
-			//상품 이미지 DB 등록
-			//해당 상품 아이템 코드 세팅
-			String itemCode = itemVO.getItemCode();
-			itemVO.setItemCode(itemCode);
-			
-			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-			List<ImgVO> imgList = new ArrayList<>();
-			
-			//메인 이미지 첨부 정보 추가
-			imgList.add(attachecdImgVO);
-			
-			//imgVO에 itemCode 세팅
-			for(ImgVO img : imgList) {
-				img.setItemCode(itemCode);
-			}
-			
-			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
-			itemVO.setImgList(imgList);
-			
-		}else if(mainImg == null && subImg.length != 0) {
-			System.out.println(3);
-				if(mainImg == null) {
-					System.out.println(4);
-				}
-				System.out.println(subImg.length);
-			
-				
-			
-				//서브 이미지 세팅
-				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-				
-				//상품 이미지 DB 등록
-				//해당 상품 아이템 코드 세팅
-				String itemCode = itemVO.getItemCode();
-				itemVO.setItemCode(itemCode);
-				
-				//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-				//서브 이미지 첨부 정보 추가
-				
-				List<ImgVO> imgList = attachedImgList;
-				//imgVO에 itemCode 세팅
-				for(ImgVO img : imgList) {
-					img.setItemCode(itemCode);
-				}
-				//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
-				itemVO.setImgList(imgList);
-		}
-		
-		
-		System.out.println(itemVO);
-		adminService.updateItem(itemVO);
-		
-		adminService.regImgsForItemDetail(itemVO);
-	
 		return "redirect:/admin/itemManageForSale";
 	}
 	
 	
 	//회원 리스트 조회
-	@GetMapping("/memInfo")
-	public String memInfo(Model model) {
+	@RequestMapping("/memInfo")
+	public String memInfo(Model model, MemListSearchVO memListSearchVO) {
+		//검색 조건에 맞는 데이터 수 조회
+		int totalDataCnt = adminService.getMemListCnt(memListSearchVO);
+		memListSearchVO.setTotalDataCnt(totalDataCnt);
 		
-		model.addAttribute("memList", adminService.getMemList());
-	
+		memListSearchVO.setPageInfo();
+		
+		//전체 회원 조회
+		model.addAttribute("memList", adminService.getMemList(memListSearchVO));
+		
 		return "content/admin/mem_info";
 	}
 	

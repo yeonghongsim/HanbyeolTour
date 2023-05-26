@@ -100,3 +100,33 @@ a{
 .EnglargeDiv{
 	text-transform: uppercase;
 }
+
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: white;
+    background-color: #ffd000;
+    border-color: #ffd000;
+}
+
+.page-link {
+	color: black;	
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #fff9d4;
+    background-color: var(--bs-pagination-hover-bg);
+    border-color: var(--bs-pagination-hover-border-color);
+}
+
+.page-link:focus {
+    z-index: 3;
+    color: #fff9d4;
+    background-color: var(--bs-pagination-focus-bg);
+    outline: 0;
+    box-shadow: var(--bs-pagination-focus-box-shadow);
+}
+
+.pagination {
+	--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);	
+}
