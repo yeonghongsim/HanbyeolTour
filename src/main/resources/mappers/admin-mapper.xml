@@ -190,28 +190,51 @@
 			, ITEM_IMG_ORIGIN_NAME
 			, ITEM_IMG_ATTACHED_NAME
 			, IS_MAIN
-		)								<!-- imgVO -->
-		<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
-			SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
-	      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
-				, #{itemCode}
-				, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
-				, #{img.itemImgAttachedName}
-				, #{img.isMain}
-			FROM DUAL
-		</foreach>
+		)
+					<!-- imgVO -->
+			<foreach collection="imgList" item="img" separator="UNION ALL" index="i">
+				SELECT (SELECT 'ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_IMG_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
+		      			FROM HBT_ITEM_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
+					, #{itemCode}
+					, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
+					, #{img.itemImgAttachedName}
+					, #{img.isMain}
+				FROM DUAL
+			</foreach>
+
 	</insert>
 
 	<!-- 회원 리스트 조회 -->
 	<select id="getMemList" resultMap="memberMapper.member">
 		SELECT MEM_CODE
-			, MEM_ID
-			, MEM_NAME
-			, MEM.MEM_STATUS_CODE
-			, MEM_STATUS_NAME
+		, MEM_ID
+		, MEM_NAME
+		, MEM.MEM_STATUS_CODE
+		, MEM_STATUS_NAME
 		FROM HBT_MEM MEM, HBT_MEM_STATUS STATUS
 		WHERE MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
+		<!-- 상단,사이드 메뉴 주문관리 눌러서 들어올 때 null. 입력 값없이 검색 시 빈값. 이 모두가 아닐 때 작동 searchKeyword는 
+		selectbox 이기 때문에 항상 값이 있음. -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+			<!-- 셀렉트 박스 선택 데이터 매번 바뀜 , 빈 값에 해당하는 입력 값(searchValue) 종류도 매번 바뀜 -->
+			<!-- searchKeyword에 '' 붙으면 X, $으로 데이터 받음 -->
+			<!-- searchValue 문자열, 대소문자 구분없이 포함하는 데이터 나와야 하기 때문에 아래처럼. -->
+			AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		ORDER BY MEM_CODE
+		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
+	
+	<!-- 검색 조건에 맞는 주문 내역 수 -->
+	<select id="getMemListCnt" resultType="int">
+		SELECT COUNT(MEM_CODE)
+		FROM HBT_MEM
+		<if test='searchValue != null and !searchValue.equals("")'>
+		WHERE UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
+	
+	
 	
 	<!-- 회원 정보 상세 조회 -->
 	<select id="getMemDetailInfo" resultMap="memberMapper.member">
@@ -275,7 +298,7 @@
 			 , HBT_MAINPAGE_ATTECHED_FILE_NAME
 		FROM HBT_MAINPAGE_IMG
 	</select>
-
+	<!--추천 아이템 목록 조회-->
 	<select id="getRecomItem" resultType="Map">
 		SELECT RECOM.ITEM_CODE
 			 , RECOM_COMMENT
@@ -286,7 +309,7 @@
 		  AND ITEM.ITEM_CODE = IMG.ITEM_CODE
 		  AND IMG.IS_MAIN = 'Y'
 	</select>
-
+	<!-- 추천아이템목록중 추천상품목록에있는 항목을 제외한 나머지 아이템 조회	-->
 	<select id="getItemList" resultType="Map">
 		SELECT ITEM.ITEM_CODE
 			 , ITEM_TITLE
@@ -299,11 +322,11 @@
 		  AND STATE.STATUS_NAME = '판매중'
 		  AND ITEM.ITEM_CODE NOT IN (SELECT ITEM_CODE FROM HBT_RECOM_ITEM)
 	</select>
-
+	<!--	추천아이템 삭제-->
 	<delete id="resetRecomItemList">
 		DELETE HBT_RECOM_ITEM
 	</delete>
-
+	<!--추천 아이템 목록 등록-->
 	<insert id="setRecomItemList">
 		INSERT INTO HBT_RECOM_ITEM (
 			ITEM_CODE
@@ -315,6 +338,47 @@
 			FROM DUAL
 		</foreach>
 	</insert>
+	<!--메인페이지 이미지 삭제	-->
+	<delete id="deleteMainSlideImg">
+		DELETE HBT_MAINPAGE_IMG
+		WHERE HBT_MAINPAGE_IMG_CODE = #{imgCode}
+	</delete>
+	<!-- 사용중인 전체 아이템리스트	-->
+	<select id="getItemListAll" resultType="Map">
+		SELECT ITEM.ITEM_CODE
+			, ITEM_IMG_ATTACHED_NAME
+			, ITEM_TITLE
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG
+		WHERE IMG.ITEM_CODE = ITEM.ITEM_CODE
+		AND IMG.IS_MAIN = 'Y'
+		AND STATUS_CODE = 1
+	</select>
+	<!-- 패키지 추천 아이템 목록 전체 삭제	-->
+	<delete id="deleteRecomImgForPKG">
+		DELETE PKG_RECOM_ITEM
+	</delete>
+	<!-- 패키지 추천 아이템 등록	-->
+	<insert id="addRecomImgForPKG">
+		INSERT INTO PKG_RECOM_ITEM (
+		    ITEM_CODE
+		)
+		<foreach collection="list" item="item" separator="UNION ALL">
+			SELECT #{item}
+			FROM DUAL
+		</foreach>
+	</insert>
+	<!-- 패키지 추천 아이템 목록 조회-->
+	<select id="getRecomImgListForPKG" resultType="Map">
+		SELECT ITEM.ITEM_CODE
+			, IMG.ITEM_IMG_ATTACHED_NAME
+			, ITEM.ITEM_TITLE
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, PKG_RECOM_ITEM PKG
+		WHERE PKG.ITEM_CODE = ITEM.ITEM_CODE
+		AND PKG.ITEM_CODE = IMG.ITEM_CODE
+		AND IS_MAIN = 'Y'
+	</select>
+
+
 	
 	<!-- 심영홍  -->
 

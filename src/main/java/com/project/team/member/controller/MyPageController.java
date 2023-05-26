@@ -65,12 +65,12 @@ public class MyPageController {
 		return "content/member/myPage/check_pw";
 	}
 	
-	//비밀번호 변경전 정보 확인 
+	//비밀번호 변경 전 정보 확인 
 	@PostMapping("/checkPwAJAX")
 	@ResponseBody
 	public boolean checkPwAjax(Model model, String checkPw, Authentication authentication) {
 		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		//model.addAttribute("msMenuList", memberService.getMsMenuList());
 		System.out.println("@@ 인풋태그 입력값 : " + checkPw);
 		
 		//입력한 비밀번호 가져와서 암호화 처리 
@@ -100,30 +100,77 @@ public class MyPageController {
 		return "content/member/myPage/change_my_pw";
 	}
 	
-	
+	// 비밀번호 변경 
 	@PostMapping("/changeMyPwFormAJAX")
 	@ResponseBody
-	public String changeMyPwFormAjax(Model model, String memId, String memPw) {
+	public boolean changeMyPwFormAjax(Model model, String memId, String memPw, Authentication authentication) {
 		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		//model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
-		System.out.println("@@ 아이디 :" + memId);
-		System.out.println("@@ 비밀번호 :" + memPw);
-		// 비밀번호 암호화 
-		String newPw = encoder.encode(memPw);
-					
-		//비밀번호 수정 쿼리 실행 
-		MemberVO memberVO = new MemberVO();
-		memberVO.setMemId(memId);
-		memberVO.setMemPw(newPw);
+		//기존의 비밀번호 
+		String encodedPw = memberService.getMemPw(memId);
+		System.out.println("@@회원의 DB에 등록된 비번 : " + encodedPw);
 		
-		memberService.updateMemPw(memberVO);
+		// 비밀번호 암호화 전에 이전의 비밀번호와 같은지 비교 필요 
+		Boolean result = encoder.matches(memPw, encodedPw);
+		System.out.println("@@ 기존의 비밀번호와 일치한지 여부 : " + result);
 		
-
-		return "success";
+		// 이전과 비밀번호가 일치한지에 대한 결과에 따라서 진행 
+		if(!result) {
+			// 비밀번호 암호화 
+			String newPw = encoder.encode(memPw);
+			
+			//비밀번호 수정 쿼리 실행 
+			MemberVO memberVO = new MemberVO();
+			memberVO.setMemId(memId);
+			memberVO.setMemPw(newPw);
+			
+			memberService.updateMemPw(memberVO);
+			
+			// 임시비밀번호 발급 여부 변경 
+			memberService.updateIsTemporaryPwToN(memId);
+			
+			result = true;
+		}
+		else {
+			
+			result = false;			
+		}
+		
+		return result;
 	}
 	
 	
+	// 내정보 수정 페이지로 이동 
+	@GetMapping("/updateMyInfo")
+	public String updateMyInfoPage(Model model, Authentication authentication) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
+		System.out.println("@@ Info 정보 :" + memInfo);
+		//회원 정보 
+		model.addAttribute("memInfo", memInfo);
+		
+		return "content/member/myPage/update_my_info";
+	}
+	
+	
+	// 내정보 수정 
+	@PostMapping("/updateMyInfoPage")
+	public String updateMyInfo(Model model, MemberVO memberVO, MemberDetailVO memberDetailVO) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@컨트롤러 실행?");
+		System.out.println("!!!!!!!!!!!!!!!!!!!"+memberVO);
+		System.out.println("!!!!!!!!!!!!!!!!!!!"+memberDetailVO);
+		
+		memberVO.setMemberDetailVO(memberDetailVO);
+		
+		//memberService.updateMyInfo(memberVO);
+		
+		
+		 
+		return "redirect:/myPage/updateMyInfo";
+	}
 	
 
 	

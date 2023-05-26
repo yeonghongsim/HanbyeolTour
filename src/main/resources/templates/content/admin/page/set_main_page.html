@@ -46,7 +46,7 @@
                                     <td>[[${state.count}]]</td>
                                     <td>[[${img['HBT_MAINPAGE_ORIGIN_FILE_NAME']}]]</td>
                                     <td>
-                                        <input type="button" class="btn ye-S-bc" value="삭제" onclick="">
+                                        <input type="button" class="btn ye-S-bc" value="삭제" th:onclick="|location.href='@{/admin/deleteMainSlideImg(imgCode=(${img.HBT_MAINPAGE_IMG_CODE}))}'|">
                                     </td>
                                     <td></td>
                                 </tr>
@@ -80,7 +80,7 @@
                             </div>
                         </th:block>
 
-록
+
                     </div>
                     <button class="carousel-control-prev" type="button"
                             data-bs-target="#mainImgSlide" data-bs-slide="prev">
