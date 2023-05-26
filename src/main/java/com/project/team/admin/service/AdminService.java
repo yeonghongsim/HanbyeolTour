@@ -78,8 +78,6 @@ public interface AdminService {
 	// 공지글 글번호
 	String getBoardNoticeCode();
 	
-	// 공지글 목록 조회
-	List<BoardRequestVO> getBoardNoticeList();
 	
 	
 

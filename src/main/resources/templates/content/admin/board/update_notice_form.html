@@ -20,6 +20,7 @@
 			<div class="row mb-3">
 				<div class="col">
 					<form id="updateNoticeForm" action="/admin/updateNotice" method="post">
+						<input type="hidden" name="hbtBoardNoticeNum" th:value="${noticeDetail.hbtBoardNoticeNum}">
 						<table class="table not-upd-table text-center align-middle">
 							<colgroup>
 								<col width="25%">
@@ -29,25 +30,21 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<td>글번호</td>
-									<td>2</td>
-									<td>작성자ID</td>
-									<td>
-										1
-									</td>
-								</tr>
-								<tr>
 									<td>제목</td>
 									<td>
-										<input type="text" class="form-control" name="">
+										<input type="text" class="form-control" name="hbtBoardNoticeTitle" th:value="${noticeDetail.hbtBoardNoticeTitle}">
 									</td>
-									<td>등록일</td>
-									<td>1</td>
+									<td>
+										<span>작성자</span>
+									</td>
+									<td>
+										[[${noticeDetail.memberVO.memId}]]
+									</td>
 								</tr>
 								<tr>
 									<td>내용</td>
 									<td colspan="3">
-										<textarea rows="5" class="form-control" name=""></textarea>
+										<textarea rows="5" class="form-control" name="hbtBoardNoticeContent">[[${noticeDetail.hbtBoardNoticeContent}]]</textarea>
 									</td>
 								</tr>
 							</tbody>

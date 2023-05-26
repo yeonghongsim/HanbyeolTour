@@ -322,17 +322,6 @@
 		FROM HBT_BOARD_ADMIN
 	</select>
 	
-	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
-		SELECT HBT_BOARD_ADMIN_NUM
-			, HBT_BOARD_ADMIN_TITLE
-			, HBT_BOARD_ADMIN_REG_DATE
-			, HBT_BOARD_ADMIN_LIKE
-			, HBT_BOARD_ADMIN_CNT
-			, (SELECT MEM_ID
-				FROM HBT_MEM) MEM_ID
-		FROM HBT_BOARD_ADMIN
-	</select>
-	
 	<select id="getMemCode" resultType="String">
 		SELECT MEM_CODE
 			FROM HBT_MEM
@@ -363,7 +352,7 @@
 		    , TYPE_REQUEST_NAME
 		FROM HBT_FREQ_REQUEST, TYPE_REQUEST
 		WHERE HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = TYPE_REQUEST.TYPE_REQUEST_CODE
-		<if test="typeRequestCode != null">
+		<if test="typeRequestCode != 0">
 		AND HBT_FREQ_REQUEST.TYPE_REQUEST_CODE = #{typeRequestCode}
 		</if>
 		ORDER BY TYPE_REQUEST_CODE, FREQ_REQUEST_CODE DESC

@@ -166,11 +166,6 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<BoardRequestVO> getBoardNoticeList() {
-		return sqlSession.selectList("adminMapper.getBoardNoticeList");
-	}
-
-	@Override
 	public String getMemCode(String memid) {
 		return sqlSession.selectOne("adminMapper.getMemCode", memid);
 	}
