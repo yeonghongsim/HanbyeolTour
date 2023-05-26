@@ -7,8 +7,6 @@ function addRecomItem(){
 
     const recomImgDiv = document.querySelector('.recomImgDiv');
 
-
-
     //목록중 선택된 아이템 찾아서 삭제
     for(let i = 0; i < allItemList.length; i++){
         if(allItemList[i].selected){
@@ -24,8 +22,6 @@ function addRecomItem(){
             allItemList[i].remove();
         }
     }
-    //이미지 미리보기 초기화
-    //recomImgDiv.replaceChildren();
     //바뀐내용 그림 그리기
     drawImg();
 }
@@ -38,8 +34,6 @@ function removeRecomItem(){
     const recomItemList = document.querySelectorAll('.recomItemList option');
 
     const recomImgDiv = document.querySelector('.recomImgDiv');
-
-
 
     //목록중 선택된 아이템 찾아서 삭제
     for(let i = 0; i < recomItemList.length; i++){
@@ -61,15 +55,6 @@ function removeRecomItem(){
 
 }
 
-
-
-
-
-
-
-
-
-
 function drawImg(){
 
     const recomSelectTag = document.querySelector('.recomItemList');
@@ -85,14 +70,10 @@ function drawImg(){
         comments.push(com.textContent);
     }
 
-
-    console.log(comments);
-
     for(let i = 0; i < recomItemList.length;i++){
         const itemCode = recomItemList[i].value.split(',')[0];
         const imgName = recomItemList[i].value.split(',')[1];
         const title = recomItemList[i].text;
-
 
         img += `
                 <div class="col col-2 recomImg">
@@ -148,7 +129,6 @@ function setRecomItem(){
             alert('실패');
         }
     });
-
 
 }
 
