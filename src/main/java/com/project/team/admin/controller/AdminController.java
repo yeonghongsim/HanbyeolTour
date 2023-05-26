@@ -482,7 +482,7 @@ public class AdminController {
 
 	//-----------------페이지 설정---------------//
 
-	//메인 페이지 설정
+	//메인 페이지 설정페이지 로딩
 	@GetMapping("/setMainPage")
 	public String setMainPage(Model model){
 		//메인페이지 이미지 목록
@@ -496,9 +496,21 @@ public class AdminController {
 
 	//페키지 페이지 설정
 	@GetMapping("/setPackagePage")
-	public String setPackagePage(){
+	public String setPackagePage(Model model){
+		model.addAttribute("recomImgList", adminService.getRecomImgListForPKG());
+		model.addAttribute("itemList", adminService.getItemListAll());
+		System.out.println("@@@@@@@@@@@@@@@@@@@"+ adminService.getRecomImgListForPKG());
 
 		return "content/admin/page/set_package_page";
+	}
+
+	//상품 메인 페이지 추천 아이템 등록
+	@PostMapping("/addRecomImgForPKGAJAX")
+	@ResponseBody
+	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCodes){
+		List<String> list = itemCodes;
+		System.out.println(list);
+		adminService.addRecomImgForPKG(list);
 	}
 
 	//메인페이지 슬라이드 이미지 업로드
@@ -536,6 +548,14 @@ public class AdminController {
 		//추천 아이템 등록
 		adminService.setRecomItemList(list);
 
+	}
+	//메인 페이지 슬라이드 이미지 삭제
+	@GetMapping("/deleteMainSlideImg")
+	public String deleteMainSlideImg(String imgCode){
+
+		System.out.println(imgCode);
+		adminService.deleteMainSlideImg(imgCode);
+		return "redirect:/admin/setMainPage";
 	}
 
 

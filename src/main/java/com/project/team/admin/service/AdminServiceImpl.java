@@ -218,7 +218,27 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.insert("adminMapper.setRecomItemList", list);
 	}
 
+	@Override
+	public void deleteMainSlideImg(String imgCode) {
+		sqlSession.delete("adminMapper.deleteMainSlideImg", imgCode);
+	}
 
+	@Override
+	public List<Map<String, String>> getItemListAll() {
+		return sqlSession.selectList("adminMapper.getItemListAll");
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void addRecomImgForPKG(List<String> list) {
+		sqlSession.delete("adminMapper.deleteRecomImgForPKG");
+		sqlSession.insert("adminMapper.addRecomImgForPKG", list);
+	}
+
+	@Override
+	public List<Map<String, String>> getRecomImgListForPKG() {
+		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
+	}
 
 
 }

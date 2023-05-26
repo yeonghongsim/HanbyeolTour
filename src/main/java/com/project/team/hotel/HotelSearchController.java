@@ -37,7 +37,7 @@ public class HotelSearchController {
             System.out.println(response);
             //응답받은 데이터에서 location 추출
             String jsonData = response.getBody();
-
+            
             String result = restTemplate.getForObject(url, String.class);
             JsonObject jsonObject = JsonParser.parseString(result).getAsJsonObject();
             String placeId = jsonObject.getAsJsonArray("predictions").get(0).getAsJsonObject().get("place_id").getAsString();
