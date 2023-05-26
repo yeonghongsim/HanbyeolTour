@@ -17,7 +17,9 @@ public class IntercepterConfig implements WebMvcConfigurer {
 									.addPathPatterns("/item/**")
 									.addPathPatterns("/hotel/**")
 									.addPathPatterns("/**/**")
-									.excludePathPatterns("/**/*AJAX");
+									.excludePathPatterns("/**/*AJAX")
+									.excludePathPatterns("/admin/**");
+			
 	}
 	
 
