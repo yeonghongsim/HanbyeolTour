@@ -47,14 +47,14 @@ public class MemberController {
 	
 	
 	//아이디 중복 확인 
-	@PostMapping("/isDuplicateMemId")
+	@PostMapping("/isDuplicateMemIdAJAX")
 	@ResponseBody
 	public boolean isDuplicateMemId(String memId) {
 		return memberService.isDuplicateMemId(memId);
 	}
 	
 	//이메일 중복 확인 
-	@PostMapping("/isDuplicateMemEmail")
+	@PostMapping("/isDuplicateMemEmailAJAX")
 	@ResponseBody
 	public boolean isDuplicateMemEmail(String memEmail) {
 		return memberService.isDuplicateMemEmail(memEmail);
@@ -93,9 +93,9 @@ public class MemberController {
 	}
 	
 	//임시 비밀번호 발급 여부 판단 
-	@PostMapping("/isTemporaryPwAjax")
+	@PostMapping("/isTemporaryPwAJAX")
 	@ResponseBody
-	public String getgetIsTemporaryPw(String memId) {
+	public String getIsTemporaryPw(String memId) {
 		String isTemporaryPw = memberService.getIsTemporaryPw(memId);
 		return isTemporaryPw;
 	} 
@@ -113,7 +113,7 @@ public class MemberController {
 	
 	//아이디 찾기 
 	@ResponseBody
-	@PostMapping("/findIdAjax")
+	@PostMapping("/findIdAJAX")
 	public MemberVO findIdAjax(MemberVO memberVO, MemberDetailVO memberDetailVO) {
 		memberVO.setMemberDetailVO(memberDetailVO);
 		String memId = memberService.findId(memberVO);
@@ -139,7 +139,7 @@ public class MemberController {
 	
 	//비밀번호 찾기 
 	@ResponseBody
-	@PostMapping("/findPwAjax")
+	@PostMapping("/findPwAJAX")
 	public boolean findPwAjax(MemberVO memberVO, MemberDetailVO memberDetailVO) throws AddressException {
 		
 		memberVO.setMemberDetailVO(memberDetailVO);
@@ -206,6 +206,18 @@ public class MemberController {
 		return "content/member/info_manage";
 	
 	}
+	
+	//휴대폰 번호 중복 확인 
+	@PostMapping("/isDuplicateMemDTellAJAX")
+	@ResponseBody
+	public boolean isDuplicateMemDTell(String memDTell) {
+		return memberService.isDuplicateMemDTell(memDTell);
+	}
+	
+	
+	
+	
+	
 	
 	/*---------- 심영홍 ------------*/
 	@GetMapping("/checkMyRequest")

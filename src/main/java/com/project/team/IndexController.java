@@ -19,17 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class IndexController {
 	@Resource(name = "adminService")
 	private AdminService adminService;
-	
-//	/** original index code **/
-//	@GetMapping("/")
-//	public String index(Model model) {
-//		
-//		//메인페이지 열릴때 해외패키지 하위메뉴 조회
-//		model.addAttribute("locMenuList", adminService.getAreaCateList());
-//		
-//		return "content/main/main_page";
-//	}
-	
+
 	@GetMapping("/main")
 	public String main(Model model) {
 

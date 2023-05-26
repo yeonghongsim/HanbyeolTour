@@ -13,9 +13,30 @@
 <th:block layout:fragment="adminContent">
 	<div class="row">
 		<div class="col">
+			<h3 class="menuTitle">회원 관리</h3>
 			<div class="row">
+				<form th:action="@{/admin/memInfo}" method="post" id="searchForm">
+					<input type="hidden" name="memCode" th:value="${memCode}" id="memCode">
+					<input type="hidden" name="nowPage" th:value="${memListSearchVO.nowPage}" id="nowPage">
+				<div class="row mb-3">
+					<!-- 검색 기능 -->
+					<div class="col-2">
+					
+						<select class="form-select" name="searchKeyword">
+							<option value="MEM_ID" th:selectd="${memListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
+							<option value="MEM_NAME" th:selectd="${memListSearchVO.searchKeyword == 'MEM_NAME'}">이름</option>
+						</select>
+					</div>
+					<div class="col-4">
+						<input type="text" class="form-control" name="searchValue" th:value="${memListSearchVO.searchValue}">
+					</div>
+					<div class="col-1">
+						<input type="submit" value="검색" class="btn btn-outline" style="border-color: #ffd000;">
+					</div>
+				</div>
+				</form>
 				<div class="col">
-					<table class="table text-center">
+					<table class="table text-center table-hover">
 						<colgroup>
 							<col width="">
 						</colgroup>
@@ -46,10 +67,34 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="row justify-content-center">
+						<div class="col-3">
+							<nav aria-label="Page navigation example">
+							  <ul class="pagination">
+							    <li class="page-item" th:classappend="${memListSearchVO.prev ? '' : 'disabled'}">
+							      <a class="page-link" href="javascript:void(0);" th:onclick="getMemListPaging([[${memListSearchVO.beginPage - 1}]]);" aria-label="Previous">
+							        <span aria-hidden="true">&laquo;</span>
+							      </a>
+							    </li>
+							    
+							    <li class="page-item"   
+							    	th:each="pageNum : ${#numbers.sequence(memListSearchVO.beginPage, memListSearchVO.endPage)}">
+							    	<a class="page-link"  th:classappend="${memListSearchVO.nowPage == pageNum ? 'active' : ''}" 
+							    		href="javascript:void(0);" th:onclick="getMemListPaging([[${pageNum}]]);">[[${pageNum}]]</a>
+							    </li>
+							    
+							    <li class="page-item" th:classappend="${memListSearchVO.next ? '' : 'disabled'}">
+							      <a class="page-link" href="javascript:void(0);" th:onclick="getMemListPaging([[${memListSearchVO.endPage + 1}]]);" aria-label="Next">
+							        <span aria-hidden="true">&raquo;</span>
+							      </a>
+							    </li>
+							  </ul>
+							</nav>
+						</div>
+					</div>
 				<div class="row">
 					<div class="col memDetailDiv">
-						회원 상세 정보 나오는 곳
-						
+					
 					</div>
 				</div>
 			 </div>

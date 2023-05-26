@@ -3,7 +3,7 @@ function getMemDetail(memId){
 	
 	//ajax start
 	$.ajax({
-		url: '/admin/getMemDetailAjax', //요청경로
+		url: '/admin/getMemDetailAJAX', //요청경로
 		type: 'post',
 		data: {'memId' : memId}, //필요한 데이터
 		success: function(result) {
@@ -13,15 +13,16 @@ function getMemDetail(memId){
 			memDetailDiv.replaceChildren();
 			
 			let str = '';
-			                                        
+			
+			str += `<h5 style="font-style: italic;">회원 상세 정보</h5>`                                        
 			str += `<table class="table">             `;
 			str += `	<colgroup>                    `;
-			str += `		<col width="16.6%">       `;
-			str += `		<col width="16.6%">       `;
-			str += `		<col width="16.6%">       `;
-			str += `		<col width="16.6%">       `;
-			str += `		<col width="16.6%">       `;
-			str += `		<col width="16.6%">		`;						
+			str += `		<col width="10%">       `;
+			str += `		<col width="23.3%">       `;
+			str += `		<col width="10%">       `;
+			str += `		<col width="23.3%">       `;
+			str += `		<col width="10%">       `;
+			str += `		<col width="23.3%">		`;						
 			str += `	</colgroup>                   `;
 			str += `	<thead>                       `;
 			str += `		<tr>                      `;
@@ -42,11 +43,11 @@ function getMemDetail(memId){
 			str += `		</tr>                     `;
 			str += `		<tr>                      `;
 			str += `			<td>주소</td>         `;
-			str += `			<td>${result.memberDetailVO.memDAddr}</td>             `;
-			str += `			<td>상세주소</td>     `;
-			str += `			<td>${result.memberDetailVO.memDAddr2}</td>             `;
-			str += `			<td colspan="2"></td> `;
-			str += `			<td></td>             `;
+			str += `			<td colspan="6">${result.memberDetailVO.memDAddr} ${result.memberDetailVO.memDAddr2}</td>             `;
+			//str += `			<td>상세주소</td>     `;
+			//str += `			<td>${result.memberDetailVO.memDAddr2}</td>             `;
+			//str += `			<td></td> `;
+			//str += `			<td></td>             `;
 			str += `		</tr>                     `;
 			str += `		<tr>                      `;
 			str += `			<td>활동상태</td>     `;
@@ -67,4 +68,15 @@ function getMemDetail(memId){
 		}
 	});
 //ajax end
+}
+
+
+
+//회원 조회 페이징 처리
+function getMemListPaging(pageNum){
+	document.querySelector('#nowPage').value = pageNum;
+	const searchForm = document.querySelector('#searchForm');
+	
+	searchForm.submit();
+
 }

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.team.board.service.BoardService;
+import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.member.service.MemberService;
 
 import jakarta.annotation.Resource;
 
@@ -17,6 +19,8 @@ import jakarta.annotation.Resource;
 public class BoardController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
+	@Resource(name = "memberService")
+	private MemberService memberService;
 	
 	@GetMapping("/boardMain")
 	public String boardMain(Model model) {
@@ -41,8 +45,26 @@ public class BoardController {
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
+		System.out.println(boardService.getBoardList());
 		
 		return "content/board/getBoardGroundPage";
+	}
+	
+	@PostMapping("/regBoard")
+	public String regBoard(BoardVO boardVO) {
+		
+		String htbBoardNum = boardService.getNextByBoardNum();
+		String memCode = memberService.getMemCode(boardVO.getMemberVO().getMemId());
+		
+		boardVO.setHbtBoardNum(htbBoardNum);
+		boardVO.getMemberVO().setMemCode(memCode);
+		
+		System.out.println("@@@@@@@@@@@" + boardVO);
+		//boardService.regBoard(boardVO);
+		
+		
+		return "redirect:/board/getBoardGroundPage";
+		
 	}
 	
 	@GetMapping("/frequentlyRequestPage")

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.team.board.vo.BoardSideMenuVO;
+import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.TypeRequestVO;
 
@@ -35,6 +36,43 @@ public class BoardServiceImp implements BoardService{
 	public List<FreqRequestVO> getFreqRequestList() {
 		return sqlSession.selectList("boardMapper.getFreqRequestList");
 	}
+
+	@Override
+	public void regBoard(BoardVO boardVO) {
+		sqlSession.insert("boardMapper.regBoard", boardVO);
+	}
+
+	@Override
+	public List<BoardVO> getBoardList() {
+		return sqlSession.selectList("boardMapper.getBoardList");
+
+	}
+	@Override
+	public List<BoardVO> getBoardList(BoardVO boardVO) {
+		return sqlSession.selectList("boardMapper.getBoardList", boardVO);
+	}
+
+	@Override
+	public String getNextByBoardNum() {
+		return sqlSession.selectOne("boardMapper.getNextByBoardNum");
+	}
+
+	@Override
+	public BoardVO getBoardNoticeDetail(String hbtBoardNum) {
+		return sqlSession.selectOne("boardMapper.getBoardNoticeDetail", hbtBoardNum);
+	}
+
+	@Override
+	public void delNotice(String hbtBoardNoticeNum) {
+		sqlSession.delete("boardMapper.delNotice", hbtBoardNoticeNum);
+	}
+
+	@Override
+	public void updateBoardNotice(BoardVO boardVO) {
+		sqlSession.update("boardMapper.updateBoardNotice", boardVO);
+	}
+
+
 	
 	
 	

@@ -21,12 +21,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.ImgVO;
+import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
-import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.util.DateUtil;
@@ -67,7 +68,7 @@ public class AdminController {
 	
 	//여행지 카테고리 등록
 	@ResponseBody
-	@PostMapping("/regAreaAjax")
+	@PostMapping("/regAreaAJAX")
 	public List<TourAreaVO> regArea(@RequestBody TourAreaVO tourAreaVO) {
 		//카테고리 등록
 		adminService.regArea(tourAreaVO);
@@ -77,7 +78,7 @@ public class AdminController {
 	
 	//여행지 카테고리 중복 여부 확인
 	@ResponseBody
-	@PostMapping("/checkAreaAjax")
+	@PostMapping("/checkAreaAJAX")
 	public int checkAreaAjax(TourAreaVO tourAreaVO) {
 		
 		System.out.println(tourAreaVO);
@@ -88,7 +89,7 @@ public class AdminController {
 	
 	//여행지 카테고리 사용여부 변경 (정현 추가)
 	@ResponseBody
-	@PostMapping("/changeAreaIsUseAjax")
+	@PostMapping("/changeAreaIsUseAJAX")
 	public int changeAreaIsUse(String areaCode) {
 		return adminService.changeAreaIsUse(areaCode);
 	}
@@ -181,7 +182,7 @@ public class AdminController {
 	
 	//판매 상품 상세 정보
 	@ResponseBody
-	@RequestMapping("/getItemDetailForAdminAjax")
+	@RequestMapping("/getItemDetailForAdminAJAX")
 	public ItemVO getItemDetailForAdminAjax(Model model, String itemCode) {
 		
 		return adminService.getItemDetailForAdmin(itemCode);
@@ -190,109 +191,66 @@ public class AdminController {
 	
 	//상품 수정 이미지 삭제
 	@ResponseBody
-	@PostMapping("/deleteItemImgAjax")
+	@PostMapping("/deleteItemImgAJAX")
 	public void deleteItemImgAjax(ImgVO imgVO) {
 		adminService.deleteItemImg(imgVO);
 	}
 	
-	//판매 상품 수정
+	
+	//상품 수정 (이미지 포함)
 	@PostMapping("/updateItem")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
-		//disabled 속성 때문에 null 가능
-		if(mainImg != null && subImg.length != 0) {
-			//메인 이미지 세팅
-			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
-			
-			//서브 이미지 세팅
-			List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
+		//아이템 코드 세팅
+		String itemCode = itemVO.getItemCode();
+		itemVO.setItemCode(itemCode);
 		
-			//상품 이미지 DB 등록
-			//해당 상품 아이템 코드 세팅
-			String itemCode = itemVO.getItemCode();
-			itemVO.setItemCode(itemCode);
-			
-			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-			//서브 이미지 첨부 정보 추가
-			List<ImgVO> imgList = attachedImgList;
-			
-			//메인 이미지 첨부 정보 추가
-			imgList.add(attachecdImgVO);
-			
-			//imgVO에 itemCode 세팅
-			for(ImgVO img : imgList) {
-				img.setItemCode(itemCode);
-				
-			}
-			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
-			itemVO.setImgList(imgList);
-		
-		}else if(mainImg != null && subImg.length == 0) {
-			//메인 이미지 세팅
-			ImgVO attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-			//imgVO에 첨부 이미지 정보 저장되어있음. 쿼리 빈값 채울 용도
-			
-			//상품 이미지 DB 등록
-			//해당 상품 아이템 코드 세팅
-			String itemCode = itemVO.getItemCode();
-			itemVO.setItemCode(itemCode);
-			
-			//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-			List<ImgVO> imgList = new ArrayList<>();
-			
-			//메인 이미지 첨부 정보 추가
-			imgList.add(attachecdImgVO);
-			
-			//imgVO에 itemCode 세팅
-			for(ImgVO img : imgList) {
-				img.setItemCode(itemCode);
-			}
-			
-			//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
-			itemVO.setImgList(imgList);
-			
-		}else{
-				//서브 이미지 세팅
-				List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-				
-				//상품 이미지 DB 등록
-				//해당 상품 아이템 코드 세팅
-				String itemCode = itemVO.getItemCode();
-				itemVO.setItemCode(itemCode);
-				
-				//상품 이미지 등록 쿼리 실행 시 쿼리 빈 값 채워줄 데이터를 가진 리스트
-				//서브 이미지 첨부 정보 추가
-				
-				List<ImgVO> imgList = attachedImgList;
-				//imgVO에 itemCode 세팅
-				for(ImgVO img : imgList) {
-					img.setItemCode(itemCode);
-				}
-				//itemVO에 상품 등록 시 필요한 모든 이미지 정보 세팅
-				itemVO.setImgList(imgList);
+		ImgVO attachecdImgVO = null;
+		if(mainImg != null) {
+			//단일 첨부 - 첨부 없으면 null
+			attachecdImgVO = UploadUtil.uploadFile(mainImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 		}
 		
+		//다중 첨부 - 첨부 없으면 빈 리스트
+		List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
 		
-		System.out.println(itemVO);
 		adminService.updateItem(itemVO);
-		adminService.regImgsForItemDetail(itemVO);
 		
+		if(attachecdImgVO != null || attachedImgList.size() != 0){
+			List<ImgVO> imgList = new ArrayList<>();
+			
+			if(attachecdImgVO != null){
+				imgList.add(attachecdImgVO);
+			}
+			if(attachedImgList.size() != 0) {
+				imgList.addAll(attachedImgList);
+			}
+			
+			itemVO.setImgList(imgList);
+			//이미지 수정 쿼리
+			adminService.regImgsForItemDetail(itemVO);
+		}
 		return "redirect:/admin/itemManageForSale";
 	}
 	
 	
 	//회원 리스트 조회
-	@GetMapping("/memInfo")
-	public String memInfo(Model model) {
+	@RequestMapping("/memInfo")
+	public String memInfo(Model model, MemListSearchVO memListSearchVO) {
+		//검색 조건에 맞는 데이터 수 조회
+		int totalDataCnt = adminService.getMemListCnt(memListSearchVO);
+		memListSearchVO.setTotalDataCnt(totalDataCnt);
 		
-		model.addAttribute("memList", adminService.getMemList());
-	
+		memListSearchVO.setPageInfo();
+		
+		//전체 회원 조회
+		model.addAttribute("memList", adminService.getMemList(memListSearchVO));
+		
 		return "content/admin/mem_info";
 	}
 	
 	//회원 상세 정보 조회
 	@ResponseBody
-	@PostMapping("/getMemDetailAjax")
+	@PostMapping("/getMemDetailAJAX")
 	public MemberVO getMemDetailAjax(String memId) {
 		
 		System.out.println(memId);
@@ -308,15 +266,15 @@ public class AdminController {
 	
 	
 	
-	// ------------------ 심영홍 ------------- //
 	
 	
 	
 	// 공지사항
 	@GetMapping("/noticeManage")
-	public String noticeManage(Model model) {
-		
-		model.addAttribute("boardNoticeList", adminService.getBoardNoticeList());
+	public String noticeManage(Model model, BoardVO boardVO) {
+		boardVO.setIsNotice("Y");
+		boardVO.setIsPrivate("N");
+		model.addAttribute("noticeList", boardService.getBoardList(boardVO));
 		
 		return "content/admin/board/notice_manage";
 		
@@ -324,9 +282,8 @@ public class AdminController {
 	
 	// 공지글 등록 양식 페이지 이동
 	@GetMapping("/regNoticeForm")
-	public String regNoticeForm(Model model) {
+	public String regNoticeForm() {
 		
-		model.addAttribute("nowDate", DateUtil.getNowDateToString());
 		
 		return "content/admin/board/reg_notice_form";
 		
@@ -334,51 +291,57 @@ public class AdminController {
 	
 	// 공지글 등록 쿼리 실행
 	@PostMapping("/regNotice")
-	public String regNotice(BoardNoticeVO boardNoticeVO) {
+	public String regNotice(BoardVO boardVO) {
 		
-		String noticeCode = adminService.getBoardNoticeCode();
-		boardNoticeVO.setHbtBoardNoticeNum(noticeCode);
+		String hbtBoardNum = boardService.getNextByBoardNum();
+		String memCode = adminService.getMemCode(boardVO.getMemberVO().getMemId());
 		
-		System.out.println("@@@@@@@@@" + boardNoticeVO);
+		boardVO.setHbtBoardNum(hbtBoardNum);
+		boardVO.getMemberVO().setMemCode(memCode);
+		
+		boardService.regBoard(boardVO);
 		
 		return "redirect:/admin/noticeManage";
 		
 	}
 	
+	
 	// 공지사항 상세 조회
 	@GetMapping("/noticeDetail")
-	public String noticeDetail() {
+	public String noticeDetail(String hbtBoardNum, Model model) {
 		
+		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
 		
 		return "content/admin/board/notice_detail";
 		
 	}
 	
-	// 공지글 정보 수정
+	// 공지글 정보 수정 양식@@@@@@@@@@@@@@@@
 	@GetMapping("/updateNoticeForm")
-	public String updateNoticeForm() {
+	public String updateNoticeForm(String hbtBoardNum, Model model) {
+		
+		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
 		
 		return "content/admin/board/update_notice_form";
 		
 	}
 	
+	// 공지글 수정 @@@@@@@@@@@@@@@
 	@PostMapping("/updateNotice")
-	public String updateNotice(BoardNoticeVO boardNoticeVO) {
+	public String updateNotice(BoardVO boardVO) {
 		
-		System.out.println("@@@@@@@" + boardNoticeVO);
-		
-		
-		
-		return "redirect:/admin/noticeDetail";
+		boardService.updateBoardNotice(boardVO);
+
+		return "redirect:/admin/noticeManage";
 	}
 	
 	
 	// 공지글 삭제 쿼리
-	@GetMapping("/deleteNotice")
-	public String deleteNotice(String hbtBoardAdminNum) {
-		System.out.println("@@@@@@" + hbtBoardAdminNum);
+	@ResponseBody
+	@PostMapping("/delboardNoticeAJAX")
+	public void delboardNoticeAJAX(String hbtBoardNum) {
 		
-		return "redirect:/admin/noticeManage";
+		boardService.delNotice(hbtBoardNum);
 		
 	}
 	
@@ -387,7 +350,6 @@ public class AdminController {
 	public String requestManage(Model model, RequestSearchVO requestSearchVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
-		model.addAttribute("nowDate", DateUtil.getNowDateToString());
 		
 		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
@@ -415,8 +377,8 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/searchFreqRequestByCodeAjax")
-	public List<FreqRequestVO> searchFreqRequestByCodeAjax(String typeRequestCode) {
+	@PostMapping("/searchFreqRequestByCodeAJAX")
+	public List<FreqRequestVO> searchFreqRequestByCodeAJAX(String typeRequestCode) {
 		
 		return adminService.getFreqRequestList(typeRequestCode);
 		
@@ -439,17 +401,17 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/updateQnaAjax")
-	public void updateQnaAjax(FreqRequestVO freqRequestVO) {
+	@PostMapping("/updateQnaAJAX")
+	public void updateQnaAJAX(FreqRequestVO freqRequestVO) {
 		
-		System.out.println("@@@@@@" + freqRequestVO);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@" + freqRequestVO);
 		adminService.updateFreqReq(freqRequestVO);
 		
 	}
 	
 	@ResponseBody
-	@PostMapping("/delFreqReqAjax")
-	public void delFreqReqAjax(@RequestBody String freqRequestStr, FreqRequestVO freqRequestVO) {
+	@PostMapping("/delFreqReqAJAX")
+	public void delFreqReqAJAX(@RequestBody String freqRequestStr, FreqRequestVO freqRequestVO) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		List<String> freqRequestList  = null;
@@ -473,21 +435,35 @@ public class AdminController {
 
 	//-----------------페이지 설정---------------//
 
-	//메인 페이지 설정
+	//메인 페이지 설정페이지 로딩
 	@GetMapping("/setMainPage")
 	public String setMainPage(Model model){
 		//메인페이지 이미지 목록
 		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
+		//추천아이템 목록 조회
 		model.addAttribute("recomItem", adminService.getRecomItem());
+		//전체 아이템 목록에서 추천아이템에 등록되어 있는 상품을 제외한 목록 조회
 		model.addAttribute("itemList", adminService.getItemList());
 		return "content/admin/page/set_main_page";
 	}
 
 	//페키지 페이지 설정
 	@GetMapping("/setPackagePage")
-	public String setPackagePage(){
+	public String setPackagePage(Model model){
+		model.addAttribute("recomImgList", adminService.getRecomImgListForPKG());
+		model.addAttribute("itemList", adminService.getItemListAll());
+		System.out.println("@@@@@@@@@@@@@@@@@@@"+ adminService.getRecomImgListForPKG());
 
 		return "content/admin/page/set_package_page";
+	}
+
+	//상품 메인 페이지 추천 아이템 등록
+	@PostMapping("/addRecomImgForPKGAJAX")
+	@ResponseBody
+	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCodes){
+		List<String> list = itemCodes;
+		System.out.println(list);
+		adminService.addRecomImgForPKG(list);
 	}
 
 	//메인페이지 슬라이드 이미지 업로드
@@ -503,8 +479,6 @@ public class AdminController {
 		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
 
 		//db에 입력
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+ uploadImg);
-
 		adminService.uploadMainSlideImg(uploadImg);
 
 		return "redirect:/admin/setMainPage";
@@ -517,21 +491,24 @@ public class AdminController {
 
 		List<Map<String,String>> list = new ArrayList<>();
 
-		System.out.println(itemCode.size());
-
+		//데이터 insert 를위한 데이터 가공
 		for(int i = 0; i < itemCode.size(); i++){
 			Map<String,String> map = new HashMap<>();
 			map.put("itemCode", itemCode.get(i));
 			map.put("comment", comment.get(i));
-
 			list.add(map);
-			System.out.println("for문" + i + "번째");
 		}
-
-		System.out.println(list);
-
+		//추천 아이템 등록
 		adminService.setRecomItemList(list);
 
+	}
+	//메인 페이지 슬라이드 이미지 삭제
+	@GetMapping("/deleteMainSlideImg")
+	public String deleteMainSlideImg(String imgCode){
+
+		System.out.println(imgCode);
+		adminService.deleteMainSlideImg(imgCode);
+		return "redirect:/admin/setMainPage";
 	}
 
 

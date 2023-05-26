@@ -2,6 +2,7 @@
 
 //비밀번호 변경 쿼리 
 function change_my_pw(memId){
+	
 	//유효성 검사 실행 결과 
 	const pwValid = pwValidate();
 	const pwCheckValid = pwCheckValidate();
@@ -10,24 +11,26 @@ function change_my_pw(memId){
 		alert('입력한 비밀번호를 다시 확인해주세요.');
 	}
 	else{
-			// 새 비밀번호 입력값 
+		// 새 비밀번호 입력값 
 		const memPw = document.querySelector('#memPw').value;
-		console.log(memId);
 		
 		if(memPw != null){
 			$.ajax({
-		   url: '/myPage/changeMyPwFormAjax', //요청경로
+		   url: '/myPage/changeMyPwFormAJAX', //요청경로
 		   type: 'post',
 		   async: true, // 비동기 , 동기 설정
 		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
 		   data: {'memId':memId, 'memPw':memPw}, //필요한 데이터
 		   success: function(result) {
-				if(result == 'success'){
+				if(result){
 					alert('비밀번호가 성공적으로 변경되었습니다.');
+					// 로그아웃 처리 
+					location.href = `/member/logout`
+					//로그인 페이지로 이동 
 					location.href = `/member/login`
 				}
 				else{
-					alert('비밀번호 변경에 실패했습니다.');
+					alert('기존의 비밀번호와 동일합니다.\n다시 확인해주세요.');
 					return;
 				}
 			},

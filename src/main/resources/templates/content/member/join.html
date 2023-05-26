@@ -69,7 +69,7 @@
 					 	id="memId" name="memId" onclick="idValidate()" oninput="idValidate()">
 					</div>
 					<div class="col-3 d-grid">	
-						<input type="button" class="btn btn-lg btn-outline-light" id="checkId" value="중복확인" onclick="isDuplicateMemId();">
+						<input type="button" class="btn btn-lg btn-outline-light" id="checkId" value="중복확인" onclick="isDuplicateMemId();" disabled>
 					</div>
 				</div>
 			</div>
@@ -114,7 +114,7 @@
 						id="memEmail" name="memEmail" onclick="emailValidate();" oninput="emailValidate()">
 					</div>
 					<div class="col-3 d-grid">	
-						<input type="button" class="btn btn-lg btn-outline-light" id="check_email" value="중복확인" onclick="isDuplicateMemEmail();" disabled>
+						<input type="button" class="btn btn-lg btn-outline-light" id="checkEmail" value="중복확인" onclick="isDuplicateMemEmail();" disabled>
 					</div>
 				</div>
 			</div>
@@ -136,10 +136,24 @@
 				 placeholder="휴대폰번호 뒷자리" maxlength="4">
 			</div> -->
 			
-			<div class="col-12" id="memDTellDiv">
+			<!-- <div class="col-12" id="memDTellDiv">
 				<input type="text" class="form-control form-select-lg" id="memDTell" name="memDTell" maxlength="11"
 				 placeholder="- 없이 휴대폰 전체자리 입력" oninput="memDTellValidate()" onclick="memDTellValidate();">
+			</div> -->
+			
+			<div class="col-12">
+				<div class="row" id="memDTellDiv">
+					<div class="col-9">
+						<input type="text" class="form-control form-select-lg" id="memDTell" name="memDTell" maxlength="11"
+				 		placeholder="- 없이 휴대폰 전체자리 입력" oninput="memDTellValidate()" onclick="memDTellValidate();">
+					</div>
+					<div class="col-3 d-grid">	
+						<input type="button" class="btn btn-lg btn-outline-light" id="checkMemDTell" value="중복확인" onclick="isDuplicateMemDTell();" disabled>
+					</div>
+				</div>
 			</div>
+			
+			
 			
 			<div class="row" id="memDAddrDiv">
 				<div class="col-9">

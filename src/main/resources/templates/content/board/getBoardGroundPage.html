@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    layout:decorate="~{fragment/board/board_layout}">
    
 <!-- 연결해야 할 외부 CSS파일 -->   
@@ -13,16 +14,106 @@
 	
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
-			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col">
-			1
+		<div class="col" id="wholeViewDiv">
+		
+		<div class="row mb-3">
+			<div class="col text-center">
+				<h3>놀이터</h3>
+			</div>
+		</div>
+	
+		<div class="row mb-5">
+			<div class="col-2">
+				<select class="form-select text-center" name="searchKey" id="searchKey">
+					<option value="hbtBoardTitle">제목</option>
+					<option value="hbtBoardContent">내용</option>
+				</select>
+			</div>
+			<div class="col-8">
+				<input class="form-control" type="text" name="searchVal" id="searchVal">
+			</div>
+			<div class="col-2">
+				<input th:onclick="searchBoard()" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
+			</div>
+		</div>
+	
+		<div class="row mb-3">
+			<div class="col">
+				
+				<div class="row mb-3 text-end">
+					<div class="col">
+						<input th:onclick="regBoardForm();" class="btn btn-success" type="button" value="게시글 작성">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<table class="table text-center table-hover">
+							<colgroup>
+								<col width="10%">
+								<col width="">
+								<col width="10%">
+								<col width="10%">
+								<col width="15%">
+								<col width="15%">
+							</colgroup>
+							<thead class="board-thead">
+								<tr>
+									<td>글번호</td>
+									<td>제목</td>
+									<td>조회수</td>
+									<td>댓글수</td>
+									<td>작성일</td>
+									<td>작성자</td>
+								</tr>
+							</thead>
+							<tbody id="board-tbody">
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			
+				
+			</div>
+		</div>
+	
+		<div class="row mb-3 text-center">
+			<div class="col">
+				페이지 처리예정
+			</div>
+		</div>
+	
 		</div>
 	</div>
-	
 	
 	
 </th:block>
