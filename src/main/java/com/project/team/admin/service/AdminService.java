@@ -8,6 +8,7 @@ import java.util.Map;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.admin.vo.ImgVO;
+import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
@@ -47,7 +48,7 @@ public interface AdminService {
 	//다음 상품 코드 조회 
 	String getNextItemCode();
 	
-	// 회원 코드 조회 By 회원 아이디
+	//회원 코드 조회 By 회원 아이디
 	String getMemCode(String memid);
 	
 	//판매 상품 수정
@@ -61,7 +62,10 @@ public interface AdminService {
 	void deleteItemImg(ImgVO imgVO);
 	
 	//회원 리스트 조회
-	List<MemberVO> getMemList();
+	List<MemberVO> getMemList(MemListSearchVO memListSearchVO);
+	
+	//회원 검색 조건에 맞는 데이터 수
+	int getMemListCnt(MemListSearchVO memListSearchVO);
 	
 	//회원 상세 정보 조회
 	MemberVO getMemDetailInfo(String memId);
@@ -75,8 +79,6 @@ public interface AdminService {
 	
 	
 	//-------------------- 심영홍 -------
-	// 공지글 글번호
-	String getBoardNoticeCode();
 	
 	
 	
@@ -106,4 +108,13 @@ public interface AdminService {
 	List<Map<String,String>> getItemList();
 	//추천 아이템 업데이트
 	void setRecomItemList(List<Map<String,String>> list);
+	//메인슬라이드이미지삭제
+	void deleteMainSlideImg(String imgCode);
+	//판매중인 모든 상품리스트조회
+	List<Map<String,String>> getItemListAll();
+	//패키지화면 추천 아이템 업데이트
+	void addRecomImgForPKG(List<Map<String, String>> list);
+	//패키지 추천 아이템 목록 조회
+	List<Map<String,String>> getRecomImgListForPKG();
+
 }

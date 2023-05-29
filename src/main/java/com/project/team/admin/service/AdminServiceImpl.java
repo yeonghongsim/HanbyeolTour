@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.team.admin.vo.ImgVO;
+import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
@@ -128,9 +129,15 @@ public class AdminServiceImpl implements AdminService{
 	
 	//회원 리스트 조회
 	@Override
-	public List<MemberVO> getMemList() {
+	public List<MemberVO> getMemList(MemListSearchVO memListSearchVO) {
 		
-		return sqlSession.selectList("adminMapper.getMemList");
+		return sqlSession.selectList("adminMapper.getMemList", memListSearchVO);
+	}
+	
+	//검색 조건에 맞는 멤버 수
+	@Override
+	public int getMemListCnt(MemListSearchVO memListSearchVO) {
+		return sqlSession.selectOne("adminMapper.getMemListCnt", memListSearchVO);
 	}
 
 	//회원 상세 정보 조회
@@ -160,10 +167,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	//------------------- 심영홍 ------
 	
-	@Override
-	public String getBoardNoticeCode() {
-		return sqlSession.selectOne("adminMapper.getBoardNoticeCode");
-	}
 
 	@Override
 	public String getMemCode(String memid) {
@@ -216,6 +219,28 @@ public class AdminServiceImpl implements AdminService{
 	public void setRecomItemList(List<Map<String,String>> list) {
 		sqlSession.delete("adminMapper.resetRecomItemList");
 		sqlSession.insert("adminMapper.setRecomItemList", list);
+	}
+
+	@Override
+	public void deleteMainSlideImg(String imgCode) {
+		sqlSession.delete("adminMapper.deleteMainSlideImg", imgCode);
+	}
+
+	@Override
+	public List<Map<String, String>> getItemListAll() {
+		return sqlSession.selectList("adminMapper.getItemListAll");
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void addRecomImgForPKG(List<Map<String, String>> list) {
+		sqlSession.delete("adminMapper.deleteRecomImgForPKG");
+		sqlSession.insert("adminMapper.addRecomImgForPKG", list);
+	}
+
+	@Override
+	public List<Map<String, String>> getRecomImgListForPKG() {
+		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
 
 

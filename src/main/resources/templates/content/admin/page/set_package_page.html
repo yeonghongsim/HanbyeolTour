@@ -4,86 +4,66 @@
       layout:decorate="~{fragment/admin_layout}">
 <!-- 연결해야 할 외부 CSS파일 -->
 <th:block layout:fragment="content_css">
+    <style>
+        .dragging.dragging{
+            opacity: 0.5;
+        }
+    </style>
 </th:block>
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
 <div class="row">
 
-    <!-- 패키지 메인 메뉴 슬라이드 이미지 설정    -->
+    <!-- 패키지 메인 추천상품    -->
     <div class="row">
+        <h3>추천 상품 등록</h3>
+    </div>
+
+    <div class="row ye-bc mb-5 py-3 resultDiv">
+        <div class="col-6">
+            <img th:data-item="${recomImgList[0]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[0]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" src="">
+        </div>
+        <div class="col-6">
+            <div class="row mb-3">
+                <img th:data-item="${recomImgList[1]['ITEM_CODE']}" class="imgArea  d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[1]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" src="">
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <img src="" th:data-item="${recomImgList[2]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[2]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
+                </div>
+                <div class="col-6">
+                    <img src="" th:data-item="${recomImgList[3]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[3]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이미지 미리보기 자리   -->
+
+
+
+    <div class="row mb-3">
         <div class="col">
+            <select class="form-select ye-bc allItemList" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <th:block th:each="item : ${itemList}">
+                    <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}" onclick="showItemImg(this);">[[${item['ITEM_TITLE']}]]</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="col">
+            <div class="row previewDiv mb-3">
+                <!-- 등록한 이미지 파일 미리보기       -->
+            </div>
+        </div>
+    </div>
 
 
-            <h3>페키지 메인 페이지 슬라이드 사진 설정</h3>
-            <!--  사진 업로드 및 설정  -->
-            <form action="/admin/uploadMainSlideImg" method="post" enctype="multipart/form-data">
-                <div class="col-6">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <table class="table ye-bc">
-                                <colgroup></colgroup>
-                                <thead>
-                                <tr>
-                                    <td>No</td>
-                                    <td>파일명</td>
-                                    <td>삭제</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <th:block th:each="img, state : ${mainSlideImg}">
-                                    <tr>
-                                        <td>[[${state.count}]]</td>
-                                        <td>[[${img['HBT_MAINPAGE_ORIGIN_FILE_NAME']}]]</td>
-                                        <td>
-                                            <input type="button" class="btn ye-S-bc" value="삭제" onclick="">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </th:block>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-
-                        <div class="col-6">
-                            <input class="form-control ye-bc" type="file" name="slideImg">
-                        </div>
-                        <div class="col">
-                            <input class="btn btn ye-bc" type="submit" value="추가">
-                        </div>
-
-                    </div>
-                </div>
-                <!--    미리보기 -->
-                <div class="col-6">
-                    <div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-
-
-                            <th:block th:each="img, state : ${mainSlideImg}">
-                                <div class="carousel-item active" data-bs-interval="2000">
-                                    <img th:src="@{/img/main/slide/} + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
-                                         class="d-block w-100 rounded" alt="...">
-                                </div>
-                            </th:block>
-
-                        </div>
-                        <button class="carousel-control-prev" type="button"
-                                data-bs-target="#mainImgSlide" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button"
-                                data-bs-target="#mainImgSlide" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </form>
-
+    <div class="row">
+        <div class="col-6">
+            <input type="button" class="btn ye-bc" value="추천 상품 저장" onclick="addRecomImgForPKMenu();">
+        </div>
+        <div class="col">
+            <input type="button" class="btn ye-bc" value="되돌리기" onclick="reLoad();">
         </div>
     </div>
 
@@ -92,14 +72,11 @@
 
 
 
-
     <div class="row">
-        <div class="col"></div>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-    </div>
+        <div class="col"
 
+        ></div>
+    </div>
 
 
 
@@ -110,5 +87,6 @@
 </th:block>
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+    <script src="/js/content/admin/page/set_package.js"></script>
 </th:block>
 </html>

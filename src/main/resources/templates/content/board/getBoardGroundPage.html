@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    layout:decorate="~{fragment/board/board_layout}">
    
 <!-- 연결해야 할 외부 CSS파일 -->   
@@ -13,17 +14,118 @@
 	
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
-			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col">
-			1
+		<div class="col" id="wholeViewDiv">
+		
+		<div class="row mb-3">
+			<div class="col-2">
+				<select class="form-select text-center" name="searchKey" id="searchKey">
+					<option value="HBT_BOARD_TITLE">제목</option>
+					<option value="(SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE)">작성자</option>
+				</select>
+			</div>
+			<div class="col-8">
+				<input class="form-control" type="text" name="searchVal" id="searchVal">
+			</div>
+			<div class="col-2">
+				<input th:onclick="searchBoard()" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
+			</div>
+		</div>
+	
+		<div class="row mb-3">
+			<div class="col">
+				
+				<div class="row mb-3 text-end">
+					<div class="col">
+						<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-success" type="button" value="게시글 작성">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<table class="table text-center table-hover">
+							<colgroup>
+								<col width="10%">
+								<col width="">
+								<col width="10%">
+								<col width="10%">
+								<col width="15%">
+								<col width="15%">
+							</colgroup>
+							<thead class="board-thead">
+								<tr>
+									<td>글번호</td>
+									<td>제목</td>
+									<td>조회수</td>
+									<td>댓글수</td>
+									<td>작성일</td>
+									<td>작성자</td>
+								</tr>
+							</thead>
+							<tbody id="board-tbody">
+								<th:block th:each="board, state : ${boardList}">
+									<tr class="align-middle">
+										<td>[[${boardList.size() - state.index}]]</td>
+										<td>
+											<div>
+												<a th:href="@{/board/boardGroundDetail(hbtBoardNum=${board.hbtBoardNum})}">
+													<span>[[${board.hbtBoardTitle}]]</span>
+													<img th:if="${board.isPrivate} == 'Y'" src="/imageForUse/lock.jpeg" style="width: 30px;">
+												</a>
+											</div>
+											<div>
+											</div>
+										</td>
+										<td>[[${board.hbtBoardCnt}]]</td>
+										<td>[[${board.replyCnt}]]</td>
+										<td>[[${board.hbtBoardRegDate}]]</td>
+										<td>[[${board.memberVO.memId}]]</td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<div class="col">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a class="page-link" href="#"aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Next"> 
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	
 		</div>
 	</div>
-	
-	
 	
 </th:block>
 

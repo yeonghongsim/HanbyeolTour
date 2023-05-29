@@ -37,7 +37,7 @@ public class HotelSearchController {
             System.out.println(response);
             //응답받은 데이터에서 location 추출
             String jsonData = response.getBody();
-
+            
             String result = restTemplate.getForObject(url, String.class);
             JsonObject jsonObject = JsonParser.parseString(result).getAsJsonObject();
             String placeId = jsonObject.getAsJsonArray("predictions").get(0).getAsJsonObject().get("place_id").getAsString();
@@ -55,8 +55,8 @@ public class HotelSearchController {
             double longitude = locationObject.get("lng").getAsDouble();
 
             //추출한 정보로 APIURL 다시세팅
-            String finalUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?photo=true&radius=5000&language=ko&query="
-                    + cityName + "hotel&location=" + latitude + "," + longitude
+            String finalUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?photo=true&radius=5000&language=ko&rating=desc&query="
+                    + cityName + "+hotel&location=" + latitude + "," + longitude
                     + "&key=" + apiKey;
 
             //추출한 location 정보로 API 재호출
