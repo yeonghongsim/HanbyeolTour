@@ -23,9 +23,6 @@ public interface BoardService {
 	// reg-board
 	void regBoard(BoardVO boardVO);
 	
-	// select board-list
-	List<BoardVO> getBoardList();
-
 	// select board-notice-list
 	List<BoardVO> getBoardList(BoardVO boardVO);
 	

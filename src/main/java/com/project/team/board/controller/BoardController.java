@@ -1,5 +1,7 @@
 package com.project.team.board.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,22 +34,35 @@ public class BoardController {
 	}
 	
 	@GetMapping("/getPublicBoardPage")
-	public String getPublicBoardPage(Model model) {
+	public String getPublicBoardPage(Model model, BoardVO boardVO) {
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
+		boardVO.setIsNotice("Y");
+		model.addAttribute("noticeList", boardService.getBoardList(boardVO));
 		
 		return "content/board/getPublicBoardPage";
 	}
 
 	@GetMapping("/getBoardGroundPage")
-	public String getBoardGroundPage(Model model) {
+	public String getBoardGroundPage(Model model,BoardVO boardVO) {
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		boardVO.setIsNotice("N");
 		
-		System.out.println(boardService.getBoardList());
+		model.addAttribute("boardList", boardService.getBoardList(boardVO));
 		
 		return "content/board/getBoardGroundPage";
+	}
+	
+	@ResponseBody
+	@PostMapping("/getBoardGroundBySearchAJAX")
+	public List<BoardVO> getBoardGroundBySearchAJAX(BoardVO boardVO) {
+		boardVO.setIsNotice("N");
+		
+		return boardService.getBoardList(boardVO);
+		
+		
 	}
 	
 	@PostMapping("/regBoard")
@@ -59,11 +74,22 @@ public class BoardController {
 		boardVO.setHbtBoardNum(htbBoardNum);
 		boardVO.getMemberVO().setMemCode(memCode);
 		
-		System.out.println("@@@@@@@@@@@" + boardVO);
-		//boardService.regBoard(boardVO);
+		boardService.regBoard(boardVO);
 		
 		
 		return "redirect:/board/getBoardGroundPage";
+		
+	}
+	
+	@GetMapping("/boardGroundDetail")
+	public String boardGroundDetail(Model model, String hbtBoardNum) {
+		System.out.println("@@@@@@@@@@" + hbtBoardNum);
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		model.addAttribute("boardDetail", hbtBoardNum);
+		
+		return "content/board/board_gound_detail";
 		
 	}
 	

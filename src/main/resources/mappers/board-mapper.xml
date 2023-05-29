@@ -8,7 +8,7 @@
 		<id 	column="TYPE_REQUEST_CODE" property="typeRequestCode"/>
 		<result column="TYPE_REQUEST_NAME" property="typeRequestName"/>
 	</resultMap>
-	
+
 	<resultMap type="com.project.team.board.vo.BoardVO" id="board">
 		<id 	column="HBT_BOARD_NUM" 			property="hbtBoardNum"/>
 		<result column="HBT_BOARD_TITLE" 		property="hbtBoardTitle"/>
@@ -75,21 +75,25 @@
 		    , HBT_BOARD_TITLE
 		    , HBT_BOARD_CONTENT
 		    , MEM_CODE
-		    <if test="isPrivate.equals('Y')">
+		    <if test='isPrivate.equals("Y")'>
 		    , IS_PRIVATE
 		    , PRIVATE_PW
 		    </if>
+		    <if test='isNotice.equals("Y")'>
 		    , IS_NOTICE
+		    </if>
 		) VALUES (
 		    #{hbtBoardNum}
 		    , #{hbtBoardTitle}
 		    , #{hbtBoardContent}
 		    , #{memberVO.memCode}
-		    <if test="isPrivate.equals('Y')">
+		    <if test='isPrivate.equals("Y")'>
 		    , #{isPrivate}
 		    , #{privatePw}
 		    </if>
+		    <if test='isNotice.equals("Y")'>
 		    , #{isNotice}
+		    </if>
 		)
 	</insert>
 	
@@ -113,15 +117,32 @@
 		    , TO_CHAR(HBT_BOARD_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REG_DATE
 		    , MEM_CODE
 		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE) MEM_ID
-			<if test='privatePw != null or isPrivate.equals("Y")'>
 			, IS_PRIVATE
+			<if test='isPrivate != null and isPrivate.equals("Y")'>
 			, PRIVATE_PW
 			</if>
 		FROM HBT_BOARD
-		<if test='isNotice.equals("Y")'>
+		<if test='isNotice != null'>
 		WHERE IS_NOTICE = #{isNotice}
 		</if>
+		<if test="groundSearchVO != null">
+		AND UPPER(${groundSearchVO.searchKey}) LIKE '%'||UPPER(#{groundSearchVO.searchVal})||'%'
+		</if>
 		ORDER BY HBT_BOARD_NUM DESC
+	</select>
+	
+	<select id="getBoardDetail" resultMap="board">
+		SELECT HBT_BOARD_NUM
+			, MEM_CODE
+			, HBT_BOARD_TITLE
+			, HBT_BOARD_CONTENT
+			, HBT_BOARD_REG_DATE
+			, HBT_BOARD_CNT
+			, IS_NOTICE
+			, REPLY_CNT
+			, IS_PRIVATE
+			, PRIVATE_PW
+		FROM HBT_BOARD
 	</select>
 	
 	<select id="getBoardNoticeDetail" resultMap="board">

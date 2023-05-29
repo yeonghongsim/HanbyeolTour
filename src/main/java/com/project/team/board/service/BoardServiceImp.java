@@ -43,11 +43,6 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> getBoardList() {
-		return sqlSession.selectList("boardMapper.getBoardList");
-
-	}
-	@Override
 	public List<BoardVO> getBoardList(BoardVO boardVO) {
 		return sqlSession.selectList("boardMapper.getBoardList", boardVO);
 	}
