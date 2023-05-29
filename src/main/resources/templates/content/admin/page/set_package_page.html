@@ -5,14 +5,9 @@
 <!-- 연결해야 할 외부 CSS파일 -->
 <th:block layout:fragment="content_css">
     <style>
-
-        .draggable.dragging {
+        .dragging.dragging{
             opacity: 0.5;
         }
-        .hide {
-            visibility : hidden ;
-        }
-
     </style>
 </th:block>
 <!-- 본문 내용 -->
@@ -23,38 +18,31 @@
     <div class="row">
         <h3>추천 상품 등록</h3>
     </div>
-    <div class="row mb-5 resultDiv">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <img th:data-item="${recomImgList[0]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[0]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
-                </div>
-            </div>
+
+    <div class="row ye-bc mb-5 py-3 resultDiv">
+        <div class="col-6">
+            <img th:data-item="${recomImgList[0]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[0]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" src="">
         </div>
-        <div class="col">
-            <div class="row">
-                <div class="col imgArea">
-                    <img th:data-item="${recomImgList[1]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[1]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
-                </div>
+        <div class="col-6">
+            <div class="row mb-3">
+                <img th:data-item="${recomImgList[1]['ITEM_CODE']}" class="imgArea  d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[1]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" src="">
             </div>
             <div class="row">
-                <div class="col imgArea">
-                    <img th:data-item="${recomImgList[2]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[2]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
+                <div class="col-6">
+                    <img src="" th:data-item="${recomImgList[2]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[2]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
                 </div>
-                <div class="col imgArea">
-                    <img th:data-item="${recomImgList[3]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[3]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
+                <div class="col-6">
+                    <img src="" th:data-item="${recomImgList[3]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded" th:src="@{/img/item/itemImg/} + ${recomImgList[3]['ITEM_IMG_ATTACHED_NAME']}" draggable="false">
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 이미지 미리보기 자리   -->
-    <div class="row previewDiv mb-3">
-    <!-- 등록한 이미지 파일 미리보기       -->
-    </div>
 
 
-    <div class="row">
+
+    <div class="row mb-3">
         <div class="col">
             <select class="form-select ye-bc allItemList" multiple="" aria-label="multiple select example" control-id="ControlID-13">
                 <th:block th:each="item : ${itemList}">
@@ -62,27 +50,32 @@
                 </th:block>
             </select>
         </div>
-    </div>
-
-
-    <div class="row">
         <div class="col">
-            <input type="button" value="추천 상품 저장" onclick="addRecomImgForPKMenu();">
-        </div>
-        <div class="col">
-            <input type="button" value="되돌리기" onclick="reLoad();">
+            <div class="row previewDiv mb-3">
+                <!-- 등록한 이미지 파일 미리보기       -->
+            </div>
         </div>
     </div>
 
 
-
-
-
     <div class="row">
-        <div class="col"></div>
+        <div class="col-6">
+            <input type="button" class="btn ye-bc" value="추천 상품 저장" onclick="addRecomImgForPKMenu();">
+        </div>
+        <div class="col">
+            <input type="button" class="btn ye-bc" value="되돌리기" onclick="reLoad();">
+        </div>
     </div>
+
+
+
+
+
+
     <div class="row">
-        <div class="col"></div>
+        <div class="col"
+
+        ></div>
     </div>
 
 

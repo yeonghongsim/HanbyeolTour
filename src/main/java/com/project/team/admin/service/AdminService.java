@@ -113,7 +113,7 @@ public interface AdminService {
 	//판매중인 모든 상품리스트조회
 	List<Map<String,String>> getItemListAll();
 	//패키지화면 추천 아이템 업데이트
-	void addRecomImgForPKG(List<String> list);
+	void addRecomImgForPKG(List<Map<String, String>> list);
 	//패키지 추천 아이템 목록 조회
 	List<Map<String,String>> getRecomImgListForPKG();
 

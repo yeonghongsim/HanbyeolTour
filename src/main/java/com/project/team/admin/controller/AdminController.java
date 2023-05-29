@@ -1,11 +1,9 @@
 package com.project.team.admin.controller;
 
-import java.io.File;
 import java.util.*;
 
-import com.project.team.util.ConstVarialbe;
+import com.project.team.item.controller.ItemController;
 import com.project.team.util.UploadPath;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +28,10 @@ import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
-import com.project.team.util.DateUtil;
-import com.project.team.util.ImgPath;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
-import jakarta.annotation.Resource;
 
 @Controller
 @RequestMapping("/admin")
@@ -452,7 +447,6 @@ public class AdminController {
 	public String setPackagePage(Model model){
 		model.addAttribute("recomImgList", adminService.getRecomImgListForPKG());
 		model.addAttribute("itemList", adminService.getItemListAll());
-		System.out.println("@@@@@@@@@@@@@@@@@@@"+ adminService.getRecomImgListForPKG());
 
 		return "content/admin/page/set_package_page";
 	}
@@ -460,9 +454,17 @@ public class AdminController {
 	//상품 메인 페이지 추천 아이템 등록
 	@PostMapping("/addRecomImgForPKGAJAX")
 	@ResponseBody
-	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCodes){
-		List<String> list = itemCodes;
-		System.out.println(list);
+	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCode, @RequestParam(value = "sortIndex[]") List<String> sortIndex){
+
+
+		List<Map<String, String>> list = new ArrayList<>();
+
+		for(int i = 0; i<itemCode.size(); i++){
+			Map<String,String> map = new HashMap<>();
+			map.put("itemCode", itemCode.get(i));
+			map.put("sortIndex", sortIndex.get(i));
+			list.add(map);
+		}
 		adminService.addRecomImgForPKG(list);
 	}
 
@@ -477,7 +479,6 @@ public class AdminController {
 		//DB에 insert할 데이터 세팅
 		uploadImg.put("origin", attachedImgVO.getItemImgOriginName());
 		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
-
 		//db에 입력
 		adminService.uploadMainSlideImg(uploadImg);
 
@@ -506,10 +507,37 @@ public class AdminController {
 	@GetMapping("/deleteMainSlideImg")
 	public String deleteMainSlideImg(String imgCode){
 
-		System.out.println(imgCode);
 		adminService.deleteMainSlideImg(imgCode);
 		return "redirect:/admin/setMainPage";
 	}
+
+	//-----------------------상품 상세 설정---------------------------//
+
+	//호텔 목록 관리
+	@GetMapping("hotelManage")
+	public String hotelManage(){
+
+		return "/content/admin/item/hotel_manage";
+	}
+	//호텔 목록 관리
+	@GetMapping("airlineManage")
+	public String airlineManage(){
+
+		return "/content/admin/item/airline_manage";
+	}
+	//호텔 목록 관리
+	@GetMapping("tourManage")
+	public String tourManage(){
+
+		return "/content/admin/item/tour_manage";
+	}
+	//호텔 목록 관리
+	@GetMapping("itemDailyManage")
+	public String itemDailyManage(){
+
+		return "/content/admin/item/item_daily_manage";
+	}
+
 
 
 }

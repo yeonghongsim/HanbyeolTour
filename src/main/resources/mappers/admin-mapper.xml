@@ -361,9 +361,11 @@
 	<insert id="addRecomImgForPKG">
 		INSERT INTO PKG_RECOM_ITEM (
 		    ITEM_CODE
+		    , SORT_INDEX
 		)
 		<foreach collection="list" item="item" separator="UNION ALL">
-			SELECT #{item}
+			SELECT #{item.itemCode}
+				, ${item.sortIndex}
 			FROM DUAL
 		</foreach>
 	</insert>
@@ -376,6 +378,7 @@
 		WHERE PKG.ITEM_CODE = ITEM.ITEM_CODE
 		AND PKG.ITEM_CODE = IMG.ITEM_CODE
 		AND IS_MAIN = 'Y'
+		ORDER BY SORT_INDEX
 	</select>
 
 

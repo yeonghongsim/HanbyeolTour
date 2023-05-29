@@ -233,7 +233,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void addRecomImgForPKG(List<String> list) {
+	public void addRecomImgForPKG(List<Map<String, String>> list) {
 		sqlSession.delete("adminMapper.deleteRecomImgForPKG");
 		sqlSession.insert("adminMapper.addRecomImgForPKG", list);
 	}

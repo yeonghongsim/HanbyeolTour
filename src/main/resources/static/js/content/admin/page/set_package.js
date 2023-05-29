@@ -9,7 +9,7 @@ function showItemImg(itemInfo){
 
 
     let imgTag = `
-                  <div class="col imgArea">
+                  <div class="col-4 offset-4 imgArea mb-3">
                     <img class="imgArea d-block w-100 h-100 rounded" data-item="${itemCode}" src="/img/item/itemImg/${imgName}" draggable="true">
                   </div>
     `;
@@ -30,10 +30,18 @@ function addRecomImgForPKMenu(){
 
 
     let itemCode = [];
-    for(const img of imgTag){
+    let sortIndex = [];
+
+    imgTag.forEach((img, index) => {
         itemCode.push(img.dataset.item);
+        sortIndex.push(index);
+    });
+
+    if(isDuplicate(itemCode)){
+        alert('중복상품등록불가');
+        reLoad();
+        return;
     }
-    console.log(itemCode);
 
     $.ajax({
         url: '/admin/addRecomImgForPKGAJAX', //요청경로
@@ -41,8 +49,8 @@ function addRecomImgForPKMenu(){
         //contentType : 'application/json; charset=UTF-8',
         contentType : "application/x-www-form-urlencoded; charset=UTF-8",
         async : true,
-        data: {'itemCode': itemCode},
-        success: function(result) {
+        data: {'itemCode': itemCode, 'sortIndex': sortIndex },
+        success: function() {
             alert('추천 아이템 변경 성공');
             location.reload();
         },
@@ -53,16 +61,20 @@ function addRecomImgForPKMenu(){
 }
 
 
+//배열중복검사함수
+function isDuplicate(arr)  {
+    const isDup = arr.some(function(e) {
+        return arr.indexOf(e) !== arr.lastIndexOf(e);
+    });
+
+    return isDup;
+}
 
 
 
-
-
-//드래그앤 드랍
-let dragged;
-
+//-------------------------드래그앤 드랍 --------------------------//
 /* 드래그 가능한 대상에서 발생하는 이벤트 */
-
+let dragged;
 document.addEventListener("dragstart", event => {
     // 드래그한 요소에 대한 참조 저장
     dragged = event.target;
