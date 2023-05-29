@@ -47,19 +47,6 @@ function change_my_pw(memId){
 	
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
 
 

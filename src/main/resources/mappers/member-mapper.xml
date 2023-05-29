@@ -180,7 +180,7 @@
 		WHERE MEM_ID = #{memId}
 	</select>
 	
-	<!-- 회원 정보조회 -->
+	<!-- 마이페이지 회원 정보조회 -->
 	<select id="getMemInfo" resultMap="member">
 		SELECT
 		    M.MEM_CODE,
@@ -205,24 +205,21 @@
 	<update id="updateMyInfo">
 	    UPDATE HBT_MEM_DETAIL
 	    SET 
-	        HBT_MEM_DETAIL.MEM_D_TELL = #{memberDetailVO.memDTell},
-	        HBT_MEM_DETAIL.MEM_D_ADDR = #{memberDetailVO.memDAddr},
-	        HBT_MEM_DETAIL.MEM_D_ADDR2 = #{memberDetailVO.memDAddr2},
-	        HBT_MEM_DETAIL.MEM_D_GEN = #{memberDetailVO.memDGen},
-	        HBT_MEM_DETAIL.MEM_EMAIL = #{memberDetailVO.memEmail},
-	        HBT_MEM_DETAIL.MEM_D_BIR = #{memberDetailVO.memDBir}
-	    WHERE MEM_CODE IN (
-	            SELECT MEM_CODE
-	            FROM HBT_MEM
-	            WHERE MEM_ID = #{memId}
-	        )
+	        HBT_MEM_DETAIL.MEM_D_TELL = #{memDTell},
+	        HBT_MEM_DETAIL.MEM_D_ADDR = #{memDAddr},
+	        HBT_MEM_DETAIL.MEM_D_ADDR2 = #{memDAddr2},
+	        HBT_MEM_DETAIL.MEM_D_GEN = #{memDGen},
+	        HBT_MEM_DETAIL.MEM_EMAIL = #{memEmail},
+	        HBT_MEM_DETAIL.MEM_D_BIR = #{memDBir}
+	    WHERE MEM_CODE = #{memCode}
 	</update>
 	
+	<!-- 회원 정보 수정 (이름만) -->
 	<update id="updateMyInfoName">
 	    UPDATE HBT_MEM
 	    SET 
-	        MEM_NAME = #{memName},
-	    WHERE MEM_ID = #{memId}
+	        MEM_NAME = #{memName}
+	    WHERE MEM_CODE = #{memCode}
 	</update>
 	
 	<!--회원가입시 memDTell 중복 체크  -->
