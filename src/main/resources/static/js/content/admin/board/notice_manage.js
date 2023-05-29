@@ -1,5 +1,5 @@
-function getNoticeDetail(hbtBoardNoticeNum){
+function getNoticeDetail(hbtBoardNum){
 	
-	location.href = `/admin/noticeDetail?hbtBoardNoticeNum=${hbtBoardNoticeNum}`;	
+	location.href = `/admin/noticeDetail?hbtBoardNum=${hbtBoardNum}`;
 	
 }

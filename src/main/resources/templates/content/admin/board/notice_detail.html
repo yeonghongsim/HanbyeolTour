@@ -32,19 +32,19 @@
 								<td>
 									[[${noticeDetail.memberVO.memId}]]
 								</td>
-								<td>조회수</td>
-								<td>0</td>
+								<td>조회수 / 댓글수</td>
+								<td>[[${noticeDetail.hbtBoardCnt}]] / [[${noticeDetail.replyCnt}]]</td>
 							</tr>
 							<tr>
 								<td>제목</td>
-								<td>[[${noticeDetail.hbtBoardNoticeTitle}]]</td>
+								<td>[[${noticeDetail.hbtBoardTitle}]]</td>
 								<td>등록일</td>
-								<td>[[${noticeDetail.hbtBoardNoticeRegDate}]]</td>
+								<td>[[${noticeDetail.hbtBoardRegDate}]]</td>
 							</tr>
 							<tr>
 								<td>내용</td>
 								<td colspan="3" class="text-start" style="padding-left: 3rem;">
-									[[${noticeDetail.hbtBoardNoticeContent}]]
+									[[${noticeDetail.hbtBoardContent}]]
 								</td>
 							</tr>
 						</tbody>
@@ -53,21 +53,11 @@
 			</div>
 			<div class="row mb-3 text-center">
 				<div class="offset-3 col-6">
-					<input onclick="location.href='/admin/noticeManage'" class="btn btn-primary" type="button" value="공지글 관리 페이지로 가기">
-					<input th:onclick="|location.href='@{/admin/updateNoticeForm(hbtBoardNoticeNum=(${noticeDetail.hbtBoardNoticeNum}))}'|" class="btn btn-primary" type="button" value="수정 하러 하기">
-					<input th:onclick="deleteBoardNotice([[${noticeDetail.hbtBoardNoticeNum}]]);" class="btn btn-primary" type="button" value="삭제하기">
+					<input onclick="location.href='/admin/noticeManage'" class="btn btn-secondary" type="button" value="공지글 관리 페이지로 가기">
+					<input th:onclick="|location.href='@{/admin/updateNoticeForm(hbtBoardNum=(${noticeDetail.hbtBoardNum}))}'|" class="btn btn-primary" type="button" value="수정 하러 하기">
+					<input th:onclick="deleteBoardNotice([[${noticeDetail.hbtBoardNum}]]);" class="btn btn-danger" type="button" value="삭제하기">
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col">
-			2
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			3
 		</div>
 	</div>
 </th:block>

@@ -1,6 +1,6 @@
 package com.project.team.board.vo;
 
-import java.util.List;
+import com.project.team.member.vo.MemberVO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +17,7 @@ public class BoardVO {
 	private String privatePw;
 	private String hbtBoardRegDate;
 	private int hbtBoardCnt;
-	private int hbtBoardLike;
-	private List<BoardRequestVO> boardAdminVOList;
+	private String isNotice;
+	private int replyCnt;
+	private MemberVO memberVO;
 }
