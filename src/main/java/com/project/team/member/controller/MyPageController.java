@@ -159,15 +159,10 @@ public class MyPageController {
 	// 내정보 수정 
 	@PostMapping("/updateMyInfoPage")
 	public String updateMyInfo(Model model, MemberVO memberVO, MemberDetailVO memberDetailVO) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@컨트롤러 실행?");
-		System.out.println("!!!!!!!!!!!!!!!!!!!"+memberVO);
-		System.out.println("!!!!!!!!!!!!!!!!!!!"+memberDetailVO);
 		
 		memberVO.setMemberDetailVO(memberDetailVO);
 		
-		//memberService.updateMyInfo(memberVO);
-		
-		
+		memberService.updateMyInfo(memberVO, memberDetailVO);
 		 
 		return "redirect:/myPage/updateMyInfo";
 	}

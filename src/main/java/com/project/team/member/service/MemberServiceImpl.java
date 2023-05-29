@@ -106,24 +106,14 @@ public class MemberServiceImpl implements MemberService{
 		return result != 0 ? true : false;
 	}
 	
-//	// 회원 정보 수정 
-//	@Override
-//	public void updateMyInfo1(MemberDetailVO memberDetailVO) {
-//		sqlSession.update("memberMapper.updateMyInfo", memberDetailVO);
-//	}
-//	// 회원 정보 수정 
-//	@Override
-//	public void updateMyInfoName(MemberVO memberVO) {
-//		sqlSession.update("memberMapper.updateMyInfo", memberVO);
-//	}
-//	// 회원가입 
-//		@Override
-//		@Transactional(rollbackFor = Exception.class)
-//		public void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO) {
-//			sqlSession.update("memberMapper.updateMyInfo", memberDetailVO);
-//			sqlSession.update("memberMapper.updateMyInfo", memberVO);
-//		}
-//	
+	// 회원 정보 수정  
+		@Override
+		@Transactional(rollbackFor = Exception.class)
+		public void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO) {
+			sqlSession.update("memberMapper.updateMyInfo", memberDetailVO);
+			sqlSession.update("memberMapper.updateMyInfoName", memberVO);
+		}
+	
 	
 	
 	
