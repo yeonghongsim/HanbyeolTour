@@ -17,11 +17,19 @@ function searchAddr(){
 }
 
 
-
+// 회원정보 수정 
 function update_my_info(){
-
-	//회원정보 수정 진행 
-	document.querySelector('#infoUpdateForm').submit();
+	
+	// Confirmation
+	const result = confirm(`정말 회원정보를 수정하시겠어요?`);
+	
+	if(result){
+		document.querySelector('#infoUpdateForm').submit();
+		
+	}
+	else{
+		return;		
+	}
 }
 
 

@@ -51,9 +51,8 @@ public interface MemberService {
 	boolean isDuplicateMemDTell(String memDTell);
 	
 	//회원정보 변경
-	//void updateMyInfo (MemberDetailVO memberDetailVO, MemberVO memberVO);
-	//회원정보 변경
-	//void updateMyInfoName (MemberVO memberVO);
+	void updateMyInfo (MemberVO memberVO, MemberDetailVO memberDetailVO);
+	
 	
 	
 	

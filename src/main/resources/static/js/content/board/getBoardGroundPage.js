@@ -3,10 +3,105 @@ function searchBoard() {
 	const searchKey = document.querySelector('#searchKey');
 	const searchVal = document.querySelector('#searchVal');
 	
-	alert(searchKey.value + '\n' + searchVal.value);
+	if(searchVal.value == ''){
+		searchVal.placeholder = "검색어를 입력해주세요.";
+		
+		return ;
+	}
+	
+	
+	//ajax start
+    $.ajax({
+    	url: '/board/getBoardGroundBySearchAJAX', //요청경로
+    	type: 'post',
+    	async: true, // 동기방식(Ajax사용), false == 비동기방식
+    	//contentType: 'application/json; charset=UTF-8',
+    	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    	//필요한 데이터
+    	// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+    	data: {'groundSearchVO.searchKey' : searchKey.value
+    			, 'groundSearchVO.searchVal' : searchVal.value},
+    	success: function(result) {
+        	const board_tbody = document.querySelector('#board-tbody');
+        	
+        	board_tbody.replaceChildren();
+        	
+        	let str = '';
+        	
+			result.forEach(function(board, index){
+				str += `<tr class="align-middle">`;
+				str += `	<td>${result.length - index}</td>`;
+				str += `	<td>`;
+					if(board.isPrivate == 'N'){
+				str += `	<div>`;
+				str += `		<a onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}')">${board.hbtBoardTitle}</a>`;
+				str += `	</div>`;
+					} else {
+				str += `	<div>`;
+				str += `		<a onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}', this)">${board.hbtBoardTitle}</a>`;
+				str += `		<img src="/imageForUse/lock.jpeg" style="width: 30px;">`;		
+				str += `	</div>`;
+				str += `	<div class="row">`;
+				str += `		<div class="col">`;
+				str += `		</div>`;
+				str += `	</div>`;
+					}
+						
+				str += `	</td>`;
+				str += `	<td>${board.hbtBoardCnt}</td>`;
+				str += `	<td>${board.replyCnt}</td>`;
+				str += `	<td>${board.hbtBoardRegDate}</td>`;
+				str += `	<td>${board.memberVO.memId}</td>`;
+				str += `</tr>`;	
+			});
+        	
+        	
+        	board_tbody.insertAdjacentHTML('afterbegin', str);
+        	
+        	
+    	},
+     	error: function() {
+        	alert('실패');
+    	}
+    });
+	//ajax end
 	
 }
 
+function getBoardDetail(isPrivate, hbtBoardNum, aTag){
+	
+	if(isPrivate == 'Y'){
+		const imgTag = aTag.nextElementSibling;
+		const chkVal = document.querySelector('.chkVal');
+		const chkBtn = document.querySelector('.chkBtn');
+		if(imgTag != null){
+			imgTag.remove();
+		}
+		if(chkVal != null & chkBtn != null){
+			chkVal.remove();
+			chkBtn.remove();
+		}
+		
+		let str = '';
+		
+		str += `<div claa="row">`;
+		str += `	<div class="col-6">`;
+		str += `		<input class="chkVal form-control" type="text">`;
+		str += `	</div>`;
+		str += `	<div class="col-6">`;
+		str += `		<input class="chkBtn btn btn-secondary" type="button" value="확인">`;
+		str += `	</div>`;
+		str += `</div>`;
+		
+		
+		aTag.parentElement.nextElementSibling.children[0].insertAdjacentHTML('afterbegin', str);
+		
+		
+	} else {
+		location.href=`/board/boardGroundDetail?hbtBoardNum=${hbtBoardNum}`;
+	}
+	
+}
 
 function regBoardForm(memId){
 	

@@ -24,6 +24,7 @@
 		<div class="row">
 			<div class="col">
 				<form id="infoUpdateForm" th:action="@{/myPage/updateMyInfoPage}" method="post">
+					<input type="hidden" th:value="${info.memCode}" name="memCode" id="memCode">
 					<table class="table" style="border: 1px solid black;">
 						<colgroup>
 							<col width="20%">
