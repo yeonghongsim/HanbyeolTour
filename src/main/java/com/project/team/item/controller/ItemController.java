@@ -60,15 +60,9 @@ public class ItemController {
 		searchKeyword.put("areaName", areaName);
 		searchKeyword.put("date", DateUtil.getNowDateToString());
 		//일자별 상세조회
-		List<HashMap<String, Object>> list = itemService.getItemListByAreaName(searchKeyword);
-		//list에 출도착날짜 추가
-		List<HashMap<String, Object>> list2 = addArrDate(list, searchDate);
-
-		System.out.println("@@@@@@@@@@@@@@@@@"+list);
-		System.out.println("@@@@@@@@@@@@@@@@@"+list2);
 
 		model.addAttribute("areaName", areaName);
-		model.addAttribute("tourItemList", list);
+		model.addAttribute("tourItemList", addArrDate(itemService.getItemListByAreaName(searchKeyword), searchDate));
 		
 		return "content/item/tour_item_list_date";
 	}

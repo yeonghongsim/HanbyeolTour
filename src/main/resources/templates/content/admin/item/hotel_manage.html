@@ -13,21 +13,25 @@
       <div class="row mb-3">
         <div class="col">
           <select class="form-select">
-            <option>지역리스트</option>
+            <th:block>
+              <th:block th:each="area : ${areaList}">
+                <option>[[${area.areaKorName}]]</option>
+              </th:block>
+            </th:block>
           </select>
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="호텔이름">
+          <input type="text" class="form-control" name="hbtHotelName" placeholder="호텔이름">
         </div>
       </div>
 
 
       <div class="row mb-3">
         <div class="col">
-          <input type="text" class="form-control" placeholder="호텔등급">
+          <input type="text" class="form-control" name="hbtHotelGrade" placeholder="호텔등급">
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="가격">
+          <input type="text" class="form-control" name="hbtHotelPrice" placeholder="가격">
         </div>
       </div>
 
@@ -43,7 +47,7 @@
 
       <div class="row mb-3">
         <div class="col">
-          <textarea class="form-control"></textarea>
+          <textarea name="hbtHotelIntro" class="form-control"></textarea>
         </div>
       </div>
 
