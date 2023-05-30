@@ -37,23 +37,8 @@
 		</div>
 	</div>
 	
-	<div class="row search_con">
-		<div class="col-6">
-			<div class="row search_area">
-				<div class="col-lg-4">
-					<span>자주 묻는 질문</span>
-				</div>
-				<div class="col-lg-6">
-					<input type="text" class="form-control" id="searchInput" name="searchInput">
-				</div>
-				<div class="col-lg-2">
-					<input onclick="searchByInput();" type="button" class="btn btn-info" value="검색" style="color: white;">
-				</div>
-			</div>
-		</div>
-	</div>
 	
-	<div class="row mb-3 typeRequest-con">
+	<div class="row row-cols-5 mb-3 typeRequest-con justify-content-center">
 		<div class="col-lg-2 col-sm-3 typeRequest-div" th:classappend="${1 == 1} ? 'ye-S-bc' : ''">
 			<span class="pointer" th:onclick="searchTypeRequest()">전체</span>
 		</div>
@@ -78,28 +63,19 @@
 					</tr>
 				</thead>
 				<tbody id="freq-request-tbody">
-					<tr>
-						<td>typeRequestName1</td>
-						<td>
-							<span class="pointer" onclick="toggleAnswer(this);">title</span>
-						</td>
-						<td class="bi bi-chevron-up"></td>
-					</tr>
-					<tr class="answerTr hide">
-						<td>A.</td>
-						<td colspan="2">answer1</td>
-					</tr>
-					<tr>
-						<td>typeRequestName2</td>
-						<td>
-							<span class="pointer" onclick="toggleAnswer(this);">title</span>
-						</td>
-						<td class="bi bi-chevron-up"></td>
-					</tr>
-					<tr class="answerTr hide">
-						<td>A.</td>
-						<td colspan="2">answer2</td>
-					</tr>
+					<th:block th:each="freqReq : ${freqReqList}">
+						<tr>
+							<td>[[${freqReq.typeRequestVO.typeRequestName}]]</td>
+							<td>
+								<span class="pointer" onclick="toggleAnswer(this);">[[${freqReq.freqRequestTitle}]]</span>
+							</td>
+							<td class="bi bi-chevron-up"></td>
+						</tr>
+						<tr class="answerTr hide">
+							<td>A.</td>
+							<td colspan="2">[[${freqReq.freqRequestContent}]]</td>
+						</tr>
+					</th:block>
 				</tbody>
 			</table>
 		</div>

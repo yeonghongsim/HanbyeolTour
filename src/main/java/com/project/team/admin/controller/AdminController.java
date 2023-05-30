@@ -301,11 +301,11 @@ public class AdminController {
 	}
 	
 	
-	// 공지사항 상세 조회
+	// 공지사항 상세 조회------
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(String hbtBoardNum, Model model) {
 		
-		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
+		model.addAttribute("noticeDetail", boardService.getBoardDetail(hbtBoardNum));
 		
 		return "content/admin/board/notice_detail";
 		
@@ -315,7 +315,7 @@ public class AdminController {
 	@GetMapping("/updateNoticeForm")
 	public String updateNoticeForm(String hbtBoardNum, Model model) {
 		
-		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
+		model.addAttribute("noticeDetail", boardService.getBoardDetail(hbtBoardNum));
 		
 		return "content/admin/board/update_notice_form";
 		
@@ -360,9 +360,9 @@ public class AdminController {
 	
 	// 자주 묻는 문의 사항 관리 페이지
 	@GetMapping("/frequncyRequestMng")
-	public String frequncyRequestMng(Model model) {
+	public String frequncyRequestMng(Model model, String typeRequestCode) {
 
-		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
+		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList(typeRequestCode));
 
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 

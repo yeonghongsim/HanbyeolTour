@@ -34,16 +34,14 @@ function searchBoard() {
 				str += `	<td>`;
 					if(board.isPrivate == 'N'){
 				str += `	<div>`;
-				str += `		<a onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}')">${board.hbtBoardTitle}</a>`;
+				str += `		<span onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}')" class="pointer">${board.hbtBoardTitle}</span>`;
 				str += `	</div>`;
 					} else {
 				str += `	<div>`;
-				str += `		<a onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}', this)">${board.hbtBoardTitle}</a>`;
+				str += `		<span onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}', this)" class="pointer">${board.hbtBoardTitle}</span>`;
 				str += `		<img src="/imageForUse/lock.jpeg" style="width: 30px;">`;		
 				str += `	</div>`;
-				str += `	<div class="row">`;
-				str += `		<div class="col">`;
-				str += `		</div>`;
+				str += `	<div class="row chkDiv">`;
 				str += `	</div>`;
 					}
 						
@@ -72,34 +70,69 @@ function getBoardDetail(isPrivate, hbtBoardNum, aTag){
 	
 	if(isPrivate == 'Y'){
 		const imgTag = aTag.nextElementSibling;
-		const chkVal = document.querySelector('.chkVal');
-		const chkBtn = document.querySelector('.chkBtn');
+		const chkDiv = aTag.parentElement.nextElementSibling;
+		
 		if(imgTag != null){
 			imgTag.remove();
 		}
-		if(chkVal != null & chkBtn != null){
-			chkVal.remove();
-			chkBtn.remove();
-		}
+		
+		chkDiv.replaceChildren();
 		
 		let str = '';
 		
-		str += `<div claa="row">`;
-		str += `	<div class="col-6">`;
-		str += `		<input class="chkVal form-control" type="text">`;
+		str += `	<div class="col-8">`;
+		str += `		<input class="chkVal form-control w-100" type="password">`;
 		str += `	</div>`;
-		str += `	<div class="col-6">`;
-		str += `		<input class="chkBtn btn btn-secondary" type="button" value="확인">`;
+		str += `	<div class="col-4">`;
+		str += `		<input onclick="chkPw('${hbtBoardNum}', this);" class="chkBtn btn btn-secondary w-100" type="button" value="확인">`;
 		str += `	</div>`;
-		str += `</div>`;
 		
 		
-		aTag.parentElement.nextElementSibling.children[0].insertAdjacentHTML('afterbegin', str);
+		chkDiv.insertAdjacentHTML('afterbegin', str);
 		
 		
 	} else {
 		location.href=`/board/boardGroundDetail?hbtBoardNum=${hbtBoardNum}`;
 	}
+	
+}
+
+function chkPw(hbtBoardNum, chkInp){
+	const chkPw = chkInp.parentElement.previousElementSibling.children[0];
+	
+	if(chkPw.value == null){
+		chkPw.placeholder = '비밀번호를 입력하세요.';
+		
+		return ;
+	}
+	
+	//ajax start
+    $.ajax({
+    	url: '/board/chkPrivatePwAJAX', //요청경로
+    	type: 'post',
+    	async: true, // 동기방식(Ajax사용), false == 비동기방식
+    	//contentType: 'application/json; charset=UTF-8',
+    	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    	//필요한 데이터
+    	// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+    	data: {'hbtBoardNum' : hbtBoardNum},
+    	success: function(result) {
+        	
+        	if(result == chkPw.value){
+				location.href=`/board/boardGroundDetail?hbtBoardNum=${hbtBoardNum}`;
+			} else {
+				alert('잘못된 비밀번호입니다.');
+			}
+			
+        	
+        	
+    	},
+     	error: function() {
+        	alert('실패');
+    	}
+    });
+	//ajax end
+	
 	
 }
 
