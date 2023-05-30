@@ -20,7 +20,7 @@
 			<div class="row mb-3">
 				<div class="col">
 					<form id="updateNoticeForm" action="/admin/updateNotice" method="post">
-						<input type="hidden" name="hbtBoardNoticeNum" th:value="${noticeDetail.hbtBoardNoticeNum}">
+						<input type="hidden" name="hbtBoardNum" th:value="${noticeDetail.hbtBoardNum}">
 						<table class="table not-upd-table text-center align-middle">
 							<colgroup>
 								<col width="25%">
@@ -32,7 +32,7 @@
 								<tr>
 									<td>제목</td>
 									<td>
-										<input type="text" class="form-control" name="hbtBoardNoticeTitle" th:value="${noticeDetail.hbtBoardNoticeTitle}">
+										<input type="text" class="form-control" id="hbtBoardTitle" name="hbtBoardTitle" th:value="${noticeDetail.hbtBoardTitle}">
 									</td>
 									<td>
 										<span>작성자</span>
@@ -44,7 +44,7 @@
 								<tr>
 									<td>내용</td>
 									<td colspan="3">
-										<textarea rows="5" class="form-control" name="hbtBoardNoticeContent">[[${noticeDetail.hbtBoardNoticeContent}]]</textarea>
+										<textarea rows="5" class="form-control" id="hbtBoardContent" name="hbtBoardContent">[[${noticeDetail.hbtBoardContent}]]</textarea>
 									</td>
 								</tr>
 							</tbody>
@@ -54,20 +54,10 @@
 			</div>
 			<div class="row mb-3 text-center">
 				<div class="offset-3 col-6">
-					<input onclick="location.href='/admin/noticeManage'" class="btn btn-primary" type="button" value="공지글 관리 페이지로 가기">
+					<input onclick="location.href='/admin/noticeManage'" class="btn btn-secondary" type="button" value="공지글 관리 페이지로 가기">
 					<input onclick="updateNotice();" class="btn btn-primary" type="button" value="수정하기">
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col">
-			2
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			3
 		</div>
 	</div>
 </th:block>

@@ -1,11 +1,9 @@
 package com.project.team.admin.controller;
 
-import java.io.File;
 import java.util.*;
 
-import com.project.team.util.ConstVarialbe;
+import com.project.team.item.controller.ItemController;
 import com.project.team.util.UploadPath;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,16 +25,13 @@ import com.project.team.admin.vo.TourAreaVO;
 import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
-import com.project.team.board.vo.BoardNoticeVO;
+import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.RequestSearchVO;
-import com.project.team.util.DateUtil;
-import com.project.team.util.ImgPath;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
-import jakarta.annotation.Resource;
 
 @Controller
 @RequestMapping("/admin")
@@ -266,16 +261,15 @@ public class AdminController {
 	
 	
 	
-	// ------------------ 심영홍 ------------- //
 	
 	
 	
 	// 공지사항
 	@GetMapping("/noticeManage")
-	public String noticeManage(Model model) {
-		
-		model.addAttribute("boardNoticeList", boardService.getBoardNoticeList());
-		
+	public String noticeManage(Model model, BoardVO boardVO) {
+		boardVO.setIsNotice("Y");
+		boardVO.setIsPrivate("N");
+		model.addAttribute("noticeList", boardService.getBoardList(boardVO));
 		
 		return "content/admin/board/notice_manage";
 		
@@ -292,15 +286,15 @@ public class AdminController {
 	
 	// 공지글 등록 쿼리 실행
 	@PostMapping("/regNotice")
-	public String regNotice(BoardNoticeVO boardNoticeVO) {
+	public String regNotice(BoardVO boardVO) {
 		
-		String noticeNum = boardService.getBoardNoticeCode();
-		String memCode = adminService.getMemCode(boardNoticeVO.getMemberVO().getMemId());
+		String hbtBoardNum = boardService.getNextByBoardNum();
+		String memCode = adminService.getMemCode(boardVO.getMemberVO().getMemId());
 		
-		boardNoticeVO.setHbtBoardNoticeNum(noticeNum);
-		boardNoticeVO.getMemberVO().setMemCode(memCode);
+		boardVO.setHbtBoardNum(hbtBoardNum);
+		boardVO.getMemberVO().setMemCode(memCode);
 		
-		boardService.regBoardNotice(boardNoticeVO);
+		boardService.regBoard(boardVO);
 		
 		return "redirect:/admin/noticeManage";
 		
@@ -309,30 +303,29 @@ public class AdminController {
 	
 	// 공지사항 상세 조회
 	@GetMapping("/noticeDetail")
-	public String noticeDetail(String hbtBoardNoticeNum, Model model) {
-		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNoticeNum));
+	public String noticeDetail(String hbtBoardNum, Model model) {
+		
+		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
 		
 		return "content/admin/board/notice_detail";
 		
 	}
 	
-	// 공지글 정보 수정
+	// 공지글 정보 수정 양식@@@@@@@@@@@@@@@@
 	@GetMapping("/updateNoticeForm")
-	public String updateNoticeForm(String hbtBoardNoticeNum, Model model) {
+	public String updateNoticeForm(String hbtBoardNum, Model model) {
 		
-		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNoticeNum));
+		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
 		
 		return "content/admin/board/update_notice_form";
 		
 	}
 	
+	// 공지글 수정 @@@@@@@@@@@@@@@
 	@PostMapping("/updateNotice")
-	public String updateNotice(BoardNoticeVO boardNoticeVO) {
+	public String updateNotice(BoardVO boardVO) {
 		
-		System.out.println("@@@@@@@@@" + boardNoticeVO);
-		boardService.updateBoardNotice(boardNoticeVO);
-		
-		System.out.println("###################" + boardNoticeVO.getHbtBoardNoticeNum());
+		boardService.updateBoardNotice(boardVO);
 
 		return "redirect:/admin/noticeManage";
 	}
@@ -341,9 +334,9 @@ public class AdminController {
 	// 공지글 삭제 쿼리
 	@ResponseBody
 	@PostMapping("/delboardNoticeAJAX")
-	public void delboardNoticeAJAX(String hbtBoardNoticeNum) {
+	public void delboardNoticeAJAX(String hbtBoardNum) {
 		
-		boardService.delNotice(hbtBoardNoticeNum);
+		boardService.delNotice(hbtBoardNum);
 		
 	}
 	
@@ -352,7 +345,6 @@ public class AdminController {
 	public String requestManage(Model model, RequestSearchVO requestSearchVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
-		model.addAttribute("nowDate", DateUtil.getNowDateToString());
 		
 		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
@@ -382,8 +374,6 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/searchFreqRequestByCodeAJAX")
 	public List<FreqRequestVO> searchFreqRequestByCodeAJAX(String typeRequestCode) {
-		
-		System.out.println("@@@@@@@@@@@@@@@@@@" + typeRequestCode);
 		
 		return adminService.getFreqRequestList(typeRequestCode);
 		
@@ -457,7 +447,6 @@ public class AdminController {
 	public String setPackagePage(Model model){
 		model.addAttribute("recomImgList", adminService.getRecomImgListForPKG());
 		model.addAttribute("itemList", adminService.getItemListAll());
-		System.out.println("@@@@@@@@@@@@@@@@@@@"+ adminService.getRecomImgListForPKG());
 
 		return "content/admin/page/set_package_page";
 	}
@@ -465,9 +454,17 @@ public class AdminController {
 	//상품 메인 페이지 추천 아이템 등록
 	@PostMapping("/addRecomImgForPKGAJAX")
 	@ResponseBody
-	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCodes){
-		List<String> list = itemCodes;
-		System.out.println(list);
+	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCode, @RequestParam(value = "sortIndex[]") List<String> sortIndex){
+
+
+		List<Map<String, String>> list = new ArrayList<>();
+
+		for(int i = 0; i<itemCode.size(); i++){
+			Map<String,String> map = new HashMap<>();
+			map.put("itemCode", itemCode.get(i));
+			map.put("sortIndex", sortIndex.get(i));
+			list.add(map);
+		}
 		adminService.addRecomImgForPKG(list);
 	}
 
@@ -482,7 +479,6 @@ public class AdminController {
 		//DB에 insert할 데이터 세팅
 		uploadImg.put("origin", attachedImgVO.getItemImgOriginName());
 		uploadImg.put("attached", attachedImgVO.getItemImgAttachedName());
-
 		//db에 입력
 		adminService.uploadMainSlideImg(uploadImg);
 
@@ -511,10 +507,37 @@ public class AdminController {
 	@GetMapping("/deleteMainSlideImg")
 	public String deleteMainSlideImg(String imgCode){
 
-		System.out.println(imgCode);
 		adminService.deleteMainSlideImg(imgCode);
 		return "redirect:/admin/setMainPage";
 	}
+
+	//-----------------------상품 상세 설정---------------------------//
+
+	//호텔 목록 관리
+	@GetMapping("hotelManage")
+	public String hotelManage(){
+
+		return "/content/admin/item/hotel_manage";
+	}
+	//호텔 목록 관리
+	@GetMapping("airlineManage")
+	public String airlineManage(){
+
+		return "/content/admin/item/airline_manage";
+	}
+	//호텔 목록 관리
+	@GetMapping("tourManage")
+	public String tourManage(){
+
+		return "/content/admin/item/tour_manage";
+	}
+	//호텔 목록 관리
+	@GetMapping("itemDailyManage")
+	public String itemDailyManage(){
+
+		return "/content/admin/item/item_daily_manage";
+	}
+
 
 
 }

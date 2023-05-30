@@ -93,7 +93,26 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemPw(String memId) {
 		return sqlSession.selectOne("memberMapper.getMemPw", memId);
 	}
+		
+	// 비밀번호 조회 
+	@Override
+	public MemberVO getMemInfo(String memId) {
+		return sqlSession.selectOne("memberMapper.getMemInfo", memId);
+	}
+	// 휴대폰 번호 중복 확인 
+	@Override
+	public boolean isDuplicateMemDTell(String memDTell) {
+		int result = sqlSession.selectOne("memberMapper.isDuplicateMemDTell", memDTell);
+		return result != 0 ? true : false;
+	}
 	
+	// 회원 정보 수정  
+		@Override
+		@Transactional(rollbackFor = Exception.class)
+		public void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO) {
+			sqlSession.update("memberMapper.updateMyInfo", memberDetailVO);
+			sqlSession.update("memberMapper.updateMyInfoName", memberVO);
+		}
 	
 	
 	
@@ -131,6 +150,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	
-	
+	@Override
+	public String getMemCode(String memid) {
+		return sqlSession.selectOne("adminMapper.getMemCode", memid);
+	}
 
 }

@@ -361,9 +361,11 @@
 	<insert id="addRecomImgForPKG">
 		INSERT INTO PKG_RECOM_ITEM (
 		    ITEM_CODE
+		    , SORT_INDEX
 		)
 		<foreach collection="list" item="item" separator="UNION ALL">
-			SELECT #{item}
+			SELECT #{item.itemCode}
+				, ${item.sortIndex}
 			FROM DUAL
 		</foreach>
 	</insert>
@@ -376,26 +378,13 @@
 		WHERE PKG.ITEM_CODE = ITEM.ITEM_CODE
 		AND PKG.ITEM_CODE = IMG.ITEM_CODE
 		AND IS_MAIN = 'Y'
+		ORDER BY SORT_INDEX
 	</select>
 
 
 	
 	<!-- 심영홍  -->
-	<select id="getBoardNoticeCode" resultType="String">
-		SELECT 'B_NOTICE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_ADMIN_NUM, 10))), 0) + 1, 3, '0')
-		FROM HBT_BOARD_ADMIN
-	</select>
 
-	<select id="getBoardNoticeList" resultMap="boardMapper.boardNotice">
-		SELECT HBT_BOARD_ADMIN_NUM
-			, HBT_BOARD_ADMIN_TITLE
-			, HBT_BOARD_ADMIN_REG_DATE
-			, HBT_BOARD_ADMIN_LIKE
-			, HBT_BOARD_ADMIN_CNT
-			, (SELECT MEM_ID
-				FROM HBT_MEM) MEM_ID
-		FROM HBT_BOARD_ADMIN
-	</select>
 	
 	<select id="getMemCode" resultType="String">
 		SELECT MEM_CODE

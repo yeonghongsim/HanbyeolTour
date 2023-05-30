@@ -6,8 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.team.board.vo.BoardNoticeVO;
 import com.project.team.board.vo.BoardSideMenuVO;
+import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.TypeRequestVO;
 
@@ -38,23 +38,23 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public void regBoardNotice(BoardNoticeVO boardNoticeVO) {
-		sqlSession.insert("boardMapper.regBoardNotice", boardNoticeVO);
+	public void regBoard(BoardVO boardVO) {
+		sqlSession.insert("boardMapper.regBoard", boardVO);
 	}
 
 	@Override
-	public List<BoardNoticeVO> getBoardNoticeList() {
-		return sqlSession.selectList("boardMapper.getBoardNoticeList");
+	public List<BoardVO> getBoardList(BoardVO boardVO) {
+		return sqlSession.selectList("boardMapper.getBoardList", boardVO);
 	}
 
 	@Override
-	public String getBoardNoticeCode() {
-		return sqlSession.selectOne("boardMapper.getBoardNoticeCode");
+	public String getNextByBoardNum() {
+		return sqlSession.selectOne("boardMapper.getNextByBoardNum");
 	}
 
 	@Override
-	public BoardNoticeVO getBoardNoticeDetail(String hbtBoardNoticeNum) {
-		return sqlSession.selectOne("boardMapper.getBoardNoticeDetail", hbtBoardNoticeNum);
+	public BoardVO getBoardNoticeDetail(String hbtBoardNum) {
+		return sqlSession.selectOne("boardMapper.getBoardNoticeDetail", hbtBoardNum);
 	}
 
 	@Override
@@ -63,9 +63,10 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public void updateBoardNotice(BoardNoticeVO boardNoticeVO) {
-		sqlSession.update("boardMapper.updateBoardNotice", boardNoticeVO);
+	public void updateBoardNotice(BoardVO boardVO) {
+		sqlSession.update("boardMapper.updateBoardNotice", boardVO);
 	}
+
 
 	
 	

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/admin_layout}">
+<!-- 연결해야 할 외부 CSS파일 -->
+<th:block layout:fragment="content_css">
+</th:block>
+<!-- 본문 내용 -->
+<th:block layout:fragment="adminContent">
+<div class="row">
+    <div class="row text-center">
+        <h3>투어 상품 관리</h3>
+    </div>
+
+    <!-- 투어상품등록    -->
+    <form action="" method="post">
+    <div class="row">
+        <div class="row mb-3">
+            <div class="col">
+                <select class="form-select">
+                    <option>지역리스트</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="투어이름">
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="소요시간">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="가격">
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col">
+                <input type="file" class="form-control">메인파일
+            </div>
+            <div class="col">
+                <input type="file" class="form-control">서브파일
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <textarea class="form-control"></textarea>
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-4 offset-4 d-gird">
+                <input type="submit" class="form-control ye-S-bc" value="등 록">
+            </div>
+        </div>
+
+
+
+    </div>
+    </form>
+
+
+
+    <!--투어상품관리-->
+    <div class="row">
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped">
+                    <colgroup>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>지역</td>
+                            <td>상품명</td>
+                            <td>소요시간</td>
+                            <td>가격</td>
+                            <td>사용여부</td>
+                            <td>상세정보</td>
+                            <td>삭제버튼</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</th:block>
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+</th:block>
+</html>

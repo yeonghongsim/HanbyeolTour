@@ -47,14 +47,14 @@ public class MemberController {
 	
 	
 	//아이디 중복 확인 
-	@PostMapping("/isDuplicateMemId")
+	@PostMapping("/isDuplicateMemIdAJAX")
 	@ResponseBody
 	public boolean isDuplicateMemId(String memId) {
 		return memberService.isDuplicateMemId(memId);
 	}
 	
 	//이메일 중복 확인 
-	@PostMapping("/isDuplicateMemEmail")
+	@PostMapping("/isDuplicateMemEmailAJAX")
 	@ResponseBody
 	public boolean isDuplicateMemEmail(String memEmail) {
 		return memberService.isDuplicateMemEmail(memEmail);
@@ -206,6 +206,18 @@ public class MemberController {
 		return "content/member/info_manage";
 	
 	}
+	
+	//휴대폰 번호 중복 확인 
+	@PostMapping("/isDuplicateMemDTellAJAX")
+	@ResponseBody
+	public boolean isDuplicateMemDTell(String memDTell) {
+		return memberService.isDuplicateMemDTell(memDTell);
+	}
+	
+	
+	
+	
+	
 	
 	/*---------- 심영홍 ------------*/
 	@GetMapping("/checkMyRequest")

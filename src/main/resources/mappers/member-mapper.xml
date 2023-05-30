@@ -180,6 +180,58 @@
 		WHERE MEM_ID = #{memId}
 	</select>
 	
+	<!-- 마이페이지 회원 정보조회 -->
+	<select id="getMemInfo" resultMap="member">
+		SELECT
+		    M.MEM_CODE,
+		    M.MEM_ID,
+		    M.MEM_NAME,
+		    D.MEM_D_CODE,
+		    D.MEM_D_TELL,
+		    D.MEM_D_ADDR,
+		    D.MEM_D_ADDR2,
+		    D.MEM_D_GEN,
+		    D.MEM_EMAIL,
+		    TO_CHAR(D.MEM_D_BIR, 'YYYY-MM-DD') AS MEM_D_BIR
+		FROM
+		    HBT_MEM M
+		JOIN
+		    HBT_MEM_DETAIL D ON M.MEM_CODE = D.MEM_CODE
+		WHERE
+		    M.MEM_ID = #{memId}
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateMyInfo">
+	    UPDATE HBT_MEM_DETAIL
+	    SET 
+	        HBT_MEM_DETAIL.MEM_D_TELL = #{memDTell},
+	        HBT_MEM_DETAIL.MEM_D_ADDR = #{memDAddr},
+	        HBT_MEM_DETAIL.MEM_D_ADDR2 = #{memDAddr2},
+	        HBT_MEM_DETAIL.MEM_D_GEN = #{memDGen},
+	        HBT_MEM_DETAIL.MEM_EMAIL = #{memEmail},
+	        HBT_MEM_DETAIL.MEM_D_BIR = #{memDBir}
+	    WHERE MEM_CODE = #{memCode}
+	</update>
+	
+	<!-- 회원 정보 수정 (이름만) -->
+	<update id="updateMyInfoName">
+	    UPDATE HBT_MEM
+	    SET 
+	        MEM_NAME = #{memName}
+	    WHERE MEM_CODE = #{memCode}
+	</update>
+	
+	<!--회원가입시 memDTell 중복 체크  -->
+	<select id="isDuplicateMemDTell" resultType="int">
+	SELECT COUNT(MEM_D_TELL)
+	FROM HBT_MEM_DETAIL
+	WHERE MEM_D_TELL = #{memDTell}
+	</select>
+	
+	
+	
+	
 	
 	
 	
@@ -192,6 +244,12 @@
 		    , MS_MENU_NAME
 		    , MS_MENU_URL
 		FROM MEMBER_SIDE_MENU
+	</select>
+	
+	<select id="getMemCode" resultType="String">
+		SELECT MEM_CODE
+			FROM HBT_MEM
+		WHERE MEM_ID = #{memId}
 	</select>
 	
 </mapper>

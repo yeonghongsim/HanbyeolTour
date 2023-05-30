@@ -44,8 +44,22 @@ public interface MemberService {
 	//비밀번호 조회 
 	String getMemPw(String memId);
 	
+	//회원정보 조회 - myPage
+	MemberVO getMemInfo(String memId);
+	
+	//휴대폰 번호 중복 확인 
+	boolean isDuplicateMemDTell(String memDTell);
+	
+	//회원정보 변경
+	void updateMyInfo (MemberVO memberVO, MemberDetailVO memberDetailVO);
+	
+	
+	
 	
 		
 	// 회원 사이드 메뉴 목록 조회
 	List<MemberSideMenuVO> getMsMenuList();
+	
+	// 회원 코드 조회 By 회원 아이디
+	String getMemCode(String memid);
 }
