@@ -43,6 +43,9 @@ body {
 textarea {
 	resize: none;
 }
+.pointer {
+	cursor: pointer;
+}
 
 .show {
 	display: block;
