@@ -11,6 +11,7 @@ function getMemDetail(memId){
 			
 			const memDetailDiv = document.querySelector('.memDetailDiv');
 			memDetailDiv.replaceChildren();
+			console.log(result)
 			
 			let str = '';
 			
@@ -31,7 +32,7 @@ function getMemDetail(memId){
 			str += `			<td>이름</td>         `;
 			str += `			<td>${result.memName}</td>             `;
 			str += `			<td>성별</td>         `;
-			str += `			<td>${result.memberDetailVO.memDGen}</td>             `;
+			str += `			<td colspan="2">${result.memberDetailVO.memDGen}</td>             `;
 			str += `		</tr>                     `;
 			str += `		<tr>                      `;
 			str += `			<td>연락처</td>       `;
@@ -39,7 +40,7 @@ function getMemDetail(memId){
 			str += `			<td>생일</td>         `;
 			str += `			<td>${result.memberDetailVO.memDBir}</td>             `;
 			str += `			<td>이메일</td>       `;
-			str += `			<td>${result.memberDetailVO.memEmail}</td>             `;
+			str += `			<td colspan="2">${result.memberDetailVO.memEmail}</td>             `;
 			str += `		</tr>                     `;
 			str += `		<tr>                      `;
 			str += `			<td>주소</td>         `;
@@ -54,8 +55,17 @@ function getMemDetail(memId){
 			str += `			<td>${result.memStatusVO.memStatusName}</td>             `;
 			str += `			<td>가입일</td>       `;
 			str += `			<td>${result.memberDetailVO.memDJoindate}</td>             `;
-			str += `			<td colspan="2"></td> `;
-			str += `			<td></td>             `;
+			str += `			<td>권한</td> `;
+			str += `			<td> `;
+			str += `				<select class="form-select">`;
+			str += `					<option value="">USR</option>`;
+			str += `					<option value="">AD</option>`;
+			str += `					<option value="">MNG</option>`;
+			str += `				</select>`;
+			str += `			</td>             `;
+			str += `			<td>             `;
+			str += `				<input type=button value="권한 변경" class="btn btn-outline">`;
+			str += `			</td>             `;
 			str += `		</tr>                     `;
 			str += `	</thead>                      `;
 			str += `</table>                          `;
