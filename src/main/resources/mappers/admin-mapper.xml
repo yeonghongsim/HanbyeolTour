@@ -277,6 +277,19 @@
 		FROM HBT_ITEM_IMG
 		WHERE ITEM_IMG_CODE = #{itemImgCode}
 	</select>
+	
+	<!-- 회원 권한 변경 -->
+	<update id="updateMemRole">
+		UPDATE HBT_MEM
+		SET
+			MEM_ROLE = #{memRole}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	
+	
+	
+	
 
 	<!--  메인페이지 이미지 업로드	-->
 	<insert id="uploadMainSlideImg">

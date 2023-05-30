@@ -253,6 +253,16 @@ public class AdminController {
 		return adminService.getMemDetailInfo(memId);
 	}
 	
+	//회원 권한 변경
+	@GetMapping("/updateMemRole")
+	public String updateMemRole(MemberVO memberVO) {
+		System.out.println(memberVO);
+		
+		adminService.updateMemRole(memberVO);
+		
+		return "redirect:/admin/memInfo";
+	}
+	
 	
 	
 	

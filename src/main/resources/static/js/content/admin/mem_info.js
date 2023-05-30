@@ -15,7 +15,7 @@ function getMemDetail(memId){
 			
 			let str = '';
 			
-			str += `<h5 style="font-style: italic;">회원 상세 정보</h5>`                                        
+			str += `<h5 style="font-style: italic; margin-top:50px;">${result.memName}님의 상세 정보</h5>`                                        
 			str += `<table class="table">             `;
 			str += `	<colgroup>                    `;
 			str += `		<col width="10%">       `;
@@ -57,14 +57,26 @@ function getMemDetail(memId){
 			str += `			<td>${result.memberDetailVO.memDJoindate}</td>             `;
 			str += `			<td>권한</td> `;
 			str += `			<td> `;
-			str += `				<select class="form-select">`;
-			str += `					<option value="">USR</option>`;
-			str += `					<option value="">AD</option>`;
-			str += `					<option value="">MNG</option>`;
+			str += `				<select id="memRoleSelectbox" class="form-select" style="width:80%;">`;
+										if(result.memRole == 'USR'){
+			str += `						<option value="USR" selected>USR</option>`;
+			str += `						<option value="MNG">MNG</option>`;
+			str += `						<option value="AD">AD</option>`;
+										}
+										else if(result.memRole == 'MNG'){
+			str += `						<option value="USR">USR</option>`;
+			str += `						<option value="MNG" selected>MNG</option>`;
+			str += `						<option value="AD">AD</option>`;
+											
+										}else{
+			str += `						<option value="USR">USR</option>`;
+			str += `						<option value="MNG">MNG</option>`;
+			str += `						<option value="AD" selected>AD</option>`;
+										}
 			str += `				</select>`;
 			str += `			</td>             `;
 			str += `			<td>             `;
-			str += `				<input type=button value="권한 변경" class="btn btn-outline">`;
+			str += `				<input type=button value="권한 변경" class="btn" style="background-color: #ffd000;" onclick="updateMemRole('${result.memId}');">`;
 			str += `			</td>             `;
 			str += `		</tr>                     `;
 			str += `	</thead>                      `;
@@ -89,4 +101,11 @@ function getMemListPaging(pageNum){
 	
 	searchForm.submit();
 
+}
+
+//회원 권한 변경
+function updateMemRole(memId){
+	const memRole = document.querySelector('#memRoleSelectbox').value
+	
+	location.href=`/admin/updateMemRole?memRole=${memRole}&memId=${memId}`;
 }

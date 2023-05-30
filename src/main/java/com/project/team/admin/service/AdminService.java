@@ -72,6 +72,9 @@ public interface AdminService {
 	
 	//첨부 파일명 조회
 	String getAttachedFileName(String itemImgCode);
+	
+	//회원 권한 변경
+	void updateMemRole(MemberVO memberVO);
 
 	
 	

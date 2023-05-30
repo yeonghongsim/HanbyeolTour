@@ -146,6 +146,14 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectOne("adminMapper.getMemDetailInfo", memId);
 	}
+	
+	//회원 권한 변경
+	@Override
+	public void updateMemRole(MemberVO memberVO) {
+		sqlSession.update("adminMapper.updateMemRole", memberVO);
+		
+	}
+
 
 
 
@@ -242,6 +250,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
 
 
 
