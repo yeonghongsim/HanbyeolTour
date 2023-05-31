@@ -27,7 +27,9 @@
 		<result column="HBT_BOARD_NUM" 					property="hbtBoardNum"/>
 		<result column="HBT_BOARD_REPLY_CONTENT" 		property="hbtBoardReplyContent"/>
 		<result column="HBT_BOARD_REPLY_REG_DATE" 		property="hbtBoardReplyRegDate"/>
-		<association property="boardVO" 				resultMap="board"/>
+		<result column="REPLY_DEPTH" 					property="replyDepth"/>
+		<result column="HBT_BOARD_REPLY_NUM_FK" 		property="hbtBoardReplyNumFk"/>
+		<result column="RE_REPLY_CNT" 					property="reReplyCnt"/>
 		<association property="memberVO" 				resultMap="memberMapper.member"/>
 	</resultMap>
 	
@@ -187,28 +189,64 @@
 		    , HBT_BOARD_REPLY_CONTENT
 		    , MEM_CODE
 		    , HBT_BOARD_NUM
+			<if test="replyDepth == 2">
+			, REPLY_DEPTH
+			, HBT_BOARD_REPLY_NUM_FK
+			</if>
 		) VALUES(
 		    #{hbtBoardReplyNum}
 		    , #{hbtBoardReplyContent}
 		    , #{memberVO.memCode}
-		    , #{boardVO.hbtBoardNum}
+		    , #{hbtBoardNum}
+		    <if test="replyDepth == 2">
+		    , #{replyDepth}
+		    , #{hbtBoardReplyNumFk}
+		    </if>
 		)
 	</insert>
 	
 	<select id="getReplyList" resultMap="boardReply">
 		SELECT HBT_BOARD_REPLY_NUM
 		    , HBT_BOARD_REPLY_CONTENT
-		    , MEM_CODE
+		    , HBT_BOARD_REPLY.MEM_CODE
 		    , TO_CHAR(HBT_BOARD_REPLY_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REPLY_REG_DATE
 		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD_REPLY.MEM_CODE) MEM_ID
-		FROM HBT_BOARD_REPLY
-		WHERE HBT_BOARD_NUM = #{boardNum}
+		    , HBT_BOARD_NUM
+		    , MEM_ROLE
+		    , HBT_BOARD_REPLY_NUM_FK
+		    , REPLY_DEPTH
+		    , RE_REPLY_CNT
+		FROM HBT_BOARD_REPLY, HBT_MEM
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+		AND HBT_BOARD_REPLY.MEM_CODE = HBT_MEM.MEM_CODE
+		ORDER BY HBT_BOARD_REPLY_NUM
 	</select>
 	
 	<update id="addReplyCnt">
 		UPDATE HBT_BOARD SET REPLY_CNT = REPLY_CNT +1
-		WHERE HBT_BOARD_NUM = #{boardNum}
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
 	</update>
+	
+	<delete id="delReply">
+		DELETE HBT_BOARD_REPLY
+		WHERE HBT_BOARD_REPLY_NUM = #{hbtBoardReplyNum}
+	</delete>
+	
+	<update id="reduceReplyCnt">
+		UPDATE HBT_BOARD SET REPLY_CNT = REPLY_CNT - 1
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</update>
+	
+	<update id="updateReplyContent">
+		UPDATE HBT_BOARD_REPLY SET HBT_BOARD_REPLY_CONTENT = #{hbtBoardReplyContent}
+		WHERE HBT_BOARD_REPLY_NUM = #{hbtBoardReplyNum}
+	</update>
+	
+	<update id="addReReplyCnt">
+		UPDATE HBT_BOARD_REPLY SET RE_REPLY_CNT = RE_REPLY_CNT + 1
+		WHERE HBT_BOARD_REPLY_NUM = #{hbtBoardReplyNumFk}
+	</update>
+	
 	
 </mapper>
 

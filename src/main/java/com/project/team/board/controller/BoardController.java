@@ -87,14 +87,20 @@ public class BoardController {
 		String hbtBoardReplyCode = boardService.getNextByReplyNum();
 		boardReplyVO.setHbtBoardReplyNum(hbtBoardReplyCode);
 		
-		System.out.println("regReplyAJAX run");
 		System.out.println("@@@@@@@@@@@@@" + boardReplyVO);
 		
 		boardService.regBoardReply(boardReplyVO);
 		
 	}
 	
-	
+	@ResponseBody
+	@PostMapping("/delReplyAJAX")
+	public List<BoardReplyVO> delReplyAJAX(BoardReplyVO boardReplyVO) {
+		
+		boardService.delReply(boardReplyVO);
+		
+		return boardService.getReplyList(boardReplyVO.getHbtBoardNum());
+	}
 	
 	
 	@PostMapping("/regBoard")
@@ -126,6 +132,40 @@ public class BoardController {
 		return "content/board/board_gound_detail";
 		
 	}
+	
+	@ResponseBody
+	@PostMapping("/getReplyListAJAX")
+	public List<BoardReplyVO> getReplyListAJAX(String hbtBoardNum) {
+		
+		return boardService.getReplyList(hbtBoardNum);
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateReplyAJAX")
+	public String updateReplyAJAX(BoardReplyVO boardReplyVO) {
+		
+		boardService.updateReplyContent(boardReplyVO);
+		
+		return boardReplyVO.getHbtBoardReplyContent();
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/regReReplyAJAX")
+	public void regReReplyAJAX(BoardReplyVO boardReplyVO) {
+		String hbtBoardReplyNum = boardService.getNextByReplyNum();
+		String memCode = memberService.getMemCode(boardReplyVO.getMemberVO().getMemId());
+
+		boardReplyVO.setHbtBoardReplyNum(hbtBoardReplyNum);
+		boardReplyVO.getMemberVO().setMemCode(memCode);
+		
+		System.out.println(boardReplyVO);
+		
+		boardService.regBoardReply(boardReplyVO);
+		
+		
+	}
+	
 	
 	@GetMapping("/frequentlyRequestPage")
 	public String frequentlyRequestPage(Model model, String typeRequestCode) {
