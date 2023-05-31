@@ -179,17 +179,16 @@ function changeAreaIsUse(areaCode){
 function checkIsExposeMain() {
     const isExposeMainRadios = document.querySelectorAll('.isExposeRadio:checked');
     let cnt = 0;
-   // alert(isExposeMainRadios.length);
+   
     for(let i =0; i < isExposeMainRadios.length ; i++){
 		if (isExposeMainRadios[i].value == 'Y') {
 			cnt++;
 		}
 	}
 	if(cnt >= 4){
-		alert('3개의 국가만 메인에 노출 가능합니다.');
+		alert('메인 노출은 3개까지만 가능합니다.');
 		return false;
 	}
-	
 	return true; 
 
 
@@ -198,12 +197,14 @@ function checkIsExposeMain() {
 
 //카테고리 메인 노출 여부
 function changeIsExposeMain(areaCode, selectedRadio){
-	const nonSelectedRadio = selectedRadio.parentElement.nextElementSibling.firstElementChild
-	
-	
+	//클릭한 라디오 버튼의 페어 라디오 버튼
+	const selectedRadioPair = selectedRadio.parentElement.nextElementSibling.firstElementChild
+		
 	if(!checkIsExposeMain()){
+		//노출된 국가 수 3개이상이면 누른 라디오 노출 버튼 false
 		selectedRadio.checked = false;
-		nonSelectedRadio.checked = true;
+		//페어 라디오 버튼 true
+		selectedRadioPair.checked = true;
 		return ;
 	}
 	

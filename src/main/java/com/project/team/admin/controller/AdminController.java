@@ -235,6 +235,13 @@ public class AdminController {
 		return "redirect:/admin/itemManageForSale";
 	}
 	
+	//회원 관리 페이지
+	@GetMapping("/memManage")
+	public String memManage() {
+		
+		return "redirect:/admin/memInfo";
+	}
+	
 	
 	//회원 리스트 조회
 	@RequestMapping("/memInfo")
