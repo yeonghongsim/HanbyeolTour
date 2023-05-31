@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -199,9 +200,13 @@ public class MemberController {
 		
 	//마이 페이지로 이동 
 	@GetMapping("/infoManage")	
-	public String infoManage(Model model) {
+	public String infoManage(Model model, Authentication authentication) {
 		
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
+		//회원 정보 
+		model.addAttribute("memInfo", memInfo);
 		
 		return "content/member/info_manage";
 	
