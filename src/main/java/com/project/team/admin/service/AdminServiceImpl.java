@@ -48,6 +48,13 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.update("adminMapper.changeAreaIsUse", areaCode);
 	}
 	
+	//여행국가 카테고리 메인 노출 여부
+	@Override
+	public int changeIsExposeMain(String areaCode) {
+		
+		return sqlSession.update("adminMapper.changeIsExposeMain", areaCode);
+	}
+	
 	//여행국가 카테고리 삭제
 	@Override
 	public void deleteAreaCate(String areaCode) {
@@ -146,6 +153,14 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectOne("adminMapper.getMemDetailInfo", memId);
 	}
+	
+	//회원 권한 변경
+	@Override
+	public void updateMemRole(MemberVO memberVO) {
+		sqlSession.update("adminMapper.updateMemRole", memberVO);
+		
+	}
+
 
 
 
@@ -242,6 +257,9 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
+
 
 
 

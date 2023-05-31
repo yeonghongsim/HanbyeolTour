@@ -1,14 +1,14 @@
 package com.project.team.admin.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminItemDetailService;
 import com.project.team.admin.service.AdminService;
-import com.project.team.admin.vo.AirlineVO;
-import com.project.team.admin.vo.HotelVO;
-import com.project.team.admin.vo.ImgVO;
-import com.project.team.admin.vo.TourItemVO;
+import com.project.team.admin.vo.*;
 import com.project.team.util.UploadPath;
 import com.project.team.util.UploadUtil;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.transform.Source;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/itemDetail")
@@ -26,22 +31,26 @@ public class AdminItemDetailController {
     private AdminService adminService;
     @Resource(name = "adminItemDetailService")
     private AdminItemDetailService adminItemDetailService;
+    @Autowired
+    private ObjectMapper mapper;
+    @Autowired
+    private DateFormat dateFormat;
 
 
 
     //-----------------------상품 상세 설정---------------------------//
 
-    //호텔 목록 관리
+    //호텔 목록 관리 페이지 이동
     @GetMapping("hotelManage")
     public String hotelManage(Model model){
-
+        model.addAttribute("hotelList", adminItemDetailService.getHotelList());
         model.addAttribute("areaList", adminService.getAreaCateList());
         return "/content/admin/item/hotel_manage";
     }
 
 
 
-    //항공사 목록 관리
+    //항공사 목록 관리 페이지 이동
     @GetMapping("airlineManage")
     public String airlineManage(Model model){
 
@@ -124,26 +133,94 @@ public class AdminItemDetailController {
         adminItemDetailService.updateTourItemIsUseAJAX(tourItemVO);
     }
 
+    //호텔상품 등록
+    @PostMapping("addHotel")
+    public String addHotel(HotelVO hotelVO, MultipartFile mainImg, MultipartFile[] subImg){
+        //호텔코드 가져오기
+        String hotelCode = adminItemDetailService.getNextHotelCode();
+        //메인이미지파일처리
+        ImgVO mainImgInfo = UploadUtil.uploadFile(mainImg, UploadPath.TOUR_IMG_UPLOAD_PATH);
+        //서브이미지파일처리
+        List<ImgVO> subImgInfo = UploadUtil.multiFileUpload(subImg, UploadPath.TOUR_IMG_UPLOAD_PATH);
 
-    
+        hotelVO.setHbtHotelCode(hotelCode);
+        mainImgInfo.setItemCode(hotelCode);
+        subImgInfo.forEach(subImgVO -> {
+            subImgVO.setItemCode(hotelCode);
+        });
+        subImgInfo.add(mainImgInfo);
+        hotelVO.setImgVOList(subImgInfo);
 
+        System.out.println(hotelVO);
+        adminItemDetailService.addHotel(hotelVO);
 
+        return "redirect:/admin/itemDetail/hotelManage";
+    }
+    //호텔삭제
+    @PostMapping("deleteHotel")
+    public String deleteHotel(String hbtHotelCode, String hbtHotelImgCode){
+        adminItemDetailService.deleteHotel(hbtHotelCode, hbtHotelImgCode);
 
-
-
-
-
-
-
+        return "redirect:/admin/itemDetail/hotelManage";
+    }
+    //호텔사용여부변경
+    @PostMapping("updateHotelIsUseAJAX")
+    @ResponseBody
+    public void updateHotelIsUseAJAX(HotelVO hotelVO){
+        adminItemDetailService.updateHotelIsUseAJAX(hotelVO);
+    }
 
 
 
     //투어상품 상세 일정 관리
     @GetMapping("itemDailyManage")
-    public String itemDailyManage(){
+    public String itemDailyManage(Model model,String itemCode){
+        System.out.println(itemCode + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        //상품목록
+        model.addAttribute("itemList", adminItemDetailService.getItemCodeListNotDetail());
+        //항공사목록
+        model.addAttribute("airlineList", adminItemDetailService.getAirline());
+        //아이템코드를 가지고 왔을때
+        if (itemCode != null) {
+            Map<String,String> map = adminItemDetailService.getItemInfoByItemCode(itemCode);
+            map.put("days", map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0]);
+            //선택상품의 정보
+            model.addAttribute("itemInfo", map);
+            //선택상품의 해당지역 호텔, 투어목록
+            model.addAttribute("hotelList", adminItemDetailService.getHotelListByItemCode(itemCode));
+            model.addAttribute("tourList", adminItemDetailService.getTourListByItemCode(itemCode));
+            model.addAttribute("itemCode", itemCode);
+        }
 
         return "/content/admin/item/item_daily_manage";
     }
+
+    @PostMapping("setItemDailyPlan")
+    public String setItemDailyPlan(ItemPlanVO itemPlanVO){
+
+        System.out.println(itemPlanVO);
+
+        return "redirect:/admin/itemDetail/itemDailyManage";
+    }
+
+
+
+
+
+
+
+    //상품기본정보 조회
+//    @PostMapping("getItemInfoByItemCodeAJAX")
+//    @ResponseBody
+//    public String getItemInfoByItemCode(String itemCode) throws JsonProcessingException {
+//
+//        Map<String,String> map = adminItemDetailService.getItemInfoByItemCode(itemCode);
+//        map.put("days", map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0]);
+//        map.put("SELLING_START", format.format(map.get("SELLING_START")));
+//        map.put("SELLING_END", format.format(map.get("SELLING_END")));
+//
+//        return mapper.writeValueAsString(map);
+//    }
 
 
 }

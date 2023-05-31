@@ -3,7 +3,39 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="buyMapper">
-
+	<resultMap type="com.project.team.buy.vo.BuyVO" id="buy">
+		<id column="BUY_CODE" 					property="buyCode"/>
+		<result column="MEM_CODE" 				property="memCode"/>
+		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
+		<result column="BUY_TOTAL_PRICE" 		property="buyTotalPrice"/>
+		<result column="BUY_DATE" 				property="buyDate"/>
+		<association property="buyStateVO"  	resultMap="buyState"></association>
+		<collection property="buyDetailList" 	resultMap="buyDetail"></collection>
+	</resultMap>
+	
+	<resultMap type="com.project.team.buy.vo.BuyDetailVO" id="buyDetail">
+		<id column="BUY_D_CODE" 				property="buyDCode"/>
+		<result column="ITEM_CODE" 				property="itemCode"/>
+		<result column="BUY_CODE" 				property="buyCode"/>
+		<result column="AREA_CODE" 				property="areaCode"/>
+		<result column="DEPART_DATE" 			property="departDate"/>
+		<result column="ARRIVE_DATE" 			property="arriveDate"/>
+		<result column="RESERVED_PEOPLE_NUM"	property="reservedPeopleNum"/>
+		<result column="BUY_D_PRICE" 			property="buyDPrice"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.buy.vo.BuyStateVO" id="buyState">
+		<id column="BUY_STATUS_CODE" 			property="buyStatusCode"/>
+		<result column="BUY_STATUS_NAME" 		property="buyStatusName"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 </mapper>

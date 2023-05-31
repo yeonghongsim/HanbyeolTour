@@ -1,9 +1,13 @@
 package com.project.team.member.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.team.buy.service.BuyService;
+import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
@@ -38,6 +45,8 @@ public class MemberController {
 	@Resource(name = "mailService")
 	private MailService mailService;
 	
+	@Resource(name = "buyService")
+	private BuyService buyService;
 	
 	//회원가입 페이지로 이동 
 	@GetMapping("/join")
@@ -199,9 +208,37 @@ public class MemberController {
 		
 	//마이 페이지로 이동 
 	@GetMapping("/infoManage")	
-	public String infoManage(Model model) {
-		
+	public String infoManage(Model model, Authentication authentication) {
+		//side menu 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		//회원 정보 
+		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
+		model.addAttribute("memInfo", memInfo);
+		String memCode = memberService.getMemCode(memInfo.getMemId());
+		
+		// 구매상태 코드 
+		List<BuyVO> buyStatusCodeList = memberService.getBuyStatusCode(memCode);
+		System.out.println("@@@@@" + buyStatusCodeList);
+	    // model.addAttribute("buyStatusCodeList", buyStatusCodeList); // 속성의 이름을 지정해줌
+		
+		// buyStatusCodeList에 있는 BuyVO 객체들의 buyStatusCode 값을 추출하여 
+		//새로운 List<Integer>인 statusCodeList에 저장
+		List<Integer> statusCodeList = buyStatusCodeList.stream()
+	            .map(BuyVO::getBuyStatusCode)
+	            .collect(Collectors.toList());
+		System.out.println("!!!!!!" + statusCodeList);
+				
+		
+		//Map<Integer, Integer> buyStatusCodeCount = memberService.getBuyStatusCodeCount(statusCodeList);
+	    //System.out.println(buyStatusCodeCount);
+		//model.addAttribute("buyStatusCodeCount", buyStatusCodeCount);
+		
+		
+		List<BuyStateVO> buyStatusCodeNameList = memberService.getBuyStatusCodeName();
+		System.out.println("@@@ 이름 리스트:" + buyStatusCodeNameList);
+		model.addAttribute("buyStatusCodeNameList", buyStatusCodeNameList);
+		
 		
 		return "content/member/info_manage";
 	
@@ -227,15 +264,7 @@ public class MemberController {
 		
 		return "content/member/check_my_request";
 	}
-//	// 회원 탈퇴 페이지로 이동 
-//	@GetMapping("/accountDeletion")
-//	public String accountDeletion(Model model) {
-//		
-//		model.addAttribute("msMenuList", memberService.getMsMenuList());
-//		
-//		return "content/member/myPage/account_deletion";
-//	}
-//	
+
 	
 
 }

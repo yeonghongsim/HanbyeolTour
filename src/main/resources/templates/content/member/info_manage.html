@@ -6,7 +6,7 @@
 
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/content/member/info_manage.css"> -->
+	<link rel="stylesheet" href="/css/content/member/info_manage.css">
 </th:block>
 
 <th:block layout:fragment="member_content">
@@ -22,6 +22,129 @@
 			[[${msMenuList}]]
 		</div>
 	</div>
+	
+	<div class="row profile-bar mt-3">
+		<div class="col">
+			<div><span id="hello-sign">[[${memInfo.memName}]]님 반갑습니다.</span>
+			<a th:href="@{/myPage/updateMyInfo}"  class="justify-content-end"><span class="more-btn">정보 더보기</span></a>
+			</div>
+		</div>
+	</div>
+	<div class="row profile-bar-second mb-4">
+		<div class="col">
+			<span class="col-4">아이디 : [[${memInfo.memId}]]</span>
+			<span class="col-4">가입일 : [[${memInfo.memberDetailVO.memDJoindate}]]</span>
+		</div>
+	</div>
+	
+	<div class="row mb-1">
+		<div class="col title">
+			여행 예약 조회 <span class="title-sm">(최근 1개월)</span>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col">
+		  <div th:each="code : ${buyStatusCodeList}">
+            [[${code.buyStatusCode}]]
+        	</div>
+		</div>
+	</div>
+	<div class="row mb-4">
+		<div class="col content-box">
+			<a th:href="@{/myPage/checkMyReservation}">
+				<ul class="my-page-step">
+					<li><!-- 예약 상태 코드별 갯수 count (날짜 필요 1개월 내로) -->
+						<em>1</em>
+						<span th:text="${buyStatusCodeNameList[0].buyStatusName}"></span>
+					<li>
+						<em>1</em>
+						<span th:text="${buyStatusCodeNameList[1].buyStatusName}"></span>
+					</li>		
+					<li>
+						<em>1</em>
+						<span th:text="${buyStatusCodeNameList[2].buyStatusName}"></span>
+					</li>		
+					<li>
+						<em>1</em>
+						<span th:text="${buyStatusCodeNameList[3].buyStatusName}"></span>
+					</li>		
+					<li>
+						<em>1</em>
+						<span th:text="${buyStatusCodeNameList[4].buyStatusName}"></span>
+					</li>		
+				</ul>
+			</a>
+		</div>
+	</div>
+	
+	<!-- 선 -->
+	<div class="row">
+		<div class="col	mb-1">
+			<hr width="100%;" color="#fff" noshade/>
+		</div>
+	</div>
+	
+	<div class="row mb-4">
+		<div class="col title">
+			어떤 기능이 들어가야할까요? 
+		</div>
+	</div>
+	
+	<!-- 선 -->
+	<div class="row">
+		<div class="col	mb-1">
+			<hr width="100%;" color="#fff" noshade/>
+		</div>
+	</div>
+	
+	
+    <div class="area-over">
+	    <div class="col-6" style="display: inline-block;">
+	        
+	        <div class="row">
+	            <div class="col-8">
+	                <div class="title">
+	                    1:1 문의 내역 
+	                </div>
+	            </div>
+	            <div class="offset-1 col-2">
+	                <a class="" id="qnaListMore" href="/myPage/checkMyRequest">더보기</a>
+	            </div>
+	        </div>
+	        
+	        <div>
+	        
+	        
+	        </div>
+	        
+	        
+	        
+	    </div>
+	    <div class="col-6" style="display: inline-block;">
+	       
+	        <div class="row">
+	            <div class="col-8">
+	                <div class="title">
+	                    나의 후기 내역 
+	                </div>
+	            </div>
+	            <div class="offset-1 col-2">
+	                <a class="" id="reviewListMore" href="/myPage/checkMyReview">더보기</a>
+	            </div>
+	        </div>
+	    	<div class="row">
+	    		<div class="col list-area">
+	    		
+	    		</div>
+	    	</div>	    	
+	    	
+	    </div>
+	</div>
+    
+    
+    
+	
 	
 </th:block>
 

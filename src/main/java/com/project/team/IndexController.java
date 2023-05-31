@@ -88,7 +88,7 @@ public class IndexController {
 					path = "redirect:/main";
 				}
 				else {
-					path = "redirect:" + prevPage;
+					path = "redirect:/main";
 					// logout 후 관리자 페이지에서 메인으로 이동하도록 하는 조건
 					if(prevPage.contains("/admin")) {
 						path = "redirect:/main";

@@ -13,6 +13,7 @@
 		<result column="IS_TEMPORARY_PW" 		property="isTemporaryPw"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 		<association property="memStatusVO"		resultMap="memStatus"></association>
+		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
@@ -39,6 +40,8 @@
 		<result column="MS_MENU_NAME" 	property="msMenuName"/>
 		<result column="MS_MENU_URL" 	property="msMenuUrl"/>
 	</resultMap>
+			
+	
 	
 	
 	<!--회원가입시 ID 중복 체크  -->
@@ -192,7 +195,8 @@
 		    D.MEM_D_ADDR2,
 		    D.MEM_D_GEN,
 		    D.MEM_EMAIL,
-		    TO_CHAR(D.MEM_D_BIR, 'YYYY-MM-DD') AS MEM_D_BIR
+		    TO_CHAR(D.MEM_D_BIR, 'YYYY-MM-DD') AS MEM_D_BIR,
+		    TO_CHAR(D.MEM_D_JOINDATE, 'YYYY-MM-DD') AS MEM_D_JOINDATE
 		FROM
 		    HBT_MEM M
 		JOIN
@@ -229,8 +233,23 @@
 	WHERE MEM_D_TELL = #{memDTell}
 	</select>
 	
-	
-	
+	<!-- 1개월 내 구매건 - 구매 상태 코드 조회 -->
+	<select id="getBuyStatusCode" resultMap="buyMapper.buy">
+		SELECT BUY_STATUS_CODE
+		FROM HBT_BUY
+		WHERE MEM_CODE = #{memCode}
+	    AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYYMMDD')
+   		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &lt;= TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+		
+	<!-- 예약상태 코드 이름 조회 -->
+	<select id="getBuyStatusCodeName" resultMap="buyMapper.buyState">
+		SELECT BUY_STATUS_CODE,
+			   BUY_STATUS_NAME
+		FROM HBT_BUY_STATE
+		WHERE BUY_STATUS_CODE &gt;= 1
+		AND BUY_STATUS_CODE &lt;= 5
+	</select>
 	
 	
 	

@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+
+/* 상단 프로빌 바 */
+.profile-bar{
+	height: 60px;
+	background-color: #ffd000;
+	color: white;
+	font-size: 1.8rem;
+	font-weight: bolder;
+	letter-spacing: -1px;
+	padding: 3px;
+	
+}
+
+.profile-bar-second{
+	height: 60px;
+	border-bottom: 1px solid #666;
+	border-left: 1px solid #666;
+	border-right: 1px solid #666;
+	font-size: 1.3rem;
+	letter-spacing: -1px;
+	padding: 3px;
+}
+
+
+.more-btn{
+	font-size: 1rem;
+	color: black;
+}
+
+/* 예약 조회 */
+
+.title{
+	font-size: 1.6rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+}
+
+.title-sm{
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+
+/* 문의 내역, 후기 내역 */
+
+.area-over{
+	display: flex; 
+	height: 50vh; 
+	width: 100%;
+
+}
+
+.content-box{
+	background-color: #fff9d4;
+	border-radius: 10px;
+	height: 120px;
+}
+
+
+.content-box a > ul{
+	list-style: none;
+	display: flex;
+	justify-content: space-between; 
+	width: 100%;
+	margin-top: 10px;
+}
+
+.content-box a > ul > li{
+	display: inline-block;
+	margin-right: 2rem;
+	text-align: center;
+}
+
+.content-box a > ul > li > span{
+	display: block;
+	font-size: 1.2rem;
+	text-align: center;
+	
+}
+.content-box a > ul > li > em {
+	margin-top: 1rem;
+	display: block;
+	font-size: 1.5rem;
+	font-weight: bolder;
+}
+
+
+
+

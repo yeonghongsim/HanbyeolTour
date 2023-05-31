@@ -1,7 +1,10 @@
 package com.project.team.member.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
@@ -51,8 +54,26 @@ public interface MemberService {
 	boolean isDuplicateMemDTell(String memDTell);
 	
 	//회원정보 변경
-	void updateMyInfo (MemberVO memberVO, MemberDetailVO memberDetailVO);
+	void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO);
 	
+	// 1개월 내 주문 - 구매 상태 코드 조회 
+	List<BuyVO> getBuyStatusCode(String memCode);
+
+	// 구매 상태 코드별 갯수 조회
+	//Map<Integer, Integer> getBuyStatusCodeCount(List<Integer> statusCodeList);
+
+	// 구매 상태 코드 이름 조회
+	List<BuyStateVO> getBuyStatusCodeName();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//----------------------------------------
 	
 	
 	

@@ -83,7 +83,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-4">                                                                             `;
 			str += `					<label for="" class="form-label">패키지 기간</label>                                        `;
-			str += `					<input type="text" class="form-control" id="" name="traverPeriod" value="${result.traverPeriod}">                          `;
+			str += `					<input type="text" class="form-control" id="" name="traverPeriod" value="${result.traverPeriod}" onkeyup="noSpaceInput(this)">                          `;
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-4">                                                                             `;
 			str += `					<label for="" class="form-label">판매시작일</label>                                         `;
