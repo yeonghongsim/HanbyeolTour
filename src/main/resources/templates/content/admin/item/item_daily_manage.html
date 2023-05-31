@@ -8,27 +8,132 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
 <div class="row">
-    <div class="row">
-
-        <div class="row">
-            <div class="col"></div>
+    <form action="/admin/itemDetail/setItemDailyPlan" method="post">
+        <input type="text" name="itemCode" th:value="${itemCode}">
+<!--        <input type="text" name="hbtPlanPeriod" th:value="${itemInfo['days']}">-->
+        <div class="row text-center">
+            <h3>일자별 상세 일정</h3>
         </div>
+        <!-- 추가할 아이템선택    -->
+        <div class="row">
+            <div class="row mb-3">
+                <div class="col">
+                    <select class="form-select" onchange="getItemInfo(this);">
+                        <option disabled>상품선택</option>
+                        <th:block th:each="item : ${itemList}">
+                            <option th:value="${item.itemCode}"  th:selected="${#strings.equals(item.itemCode, itemCode)}">[[${item.itemTitle}]]</option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="row itemInfo">
+                <th:block th:if="${itemInfo} != null">
+                <div class="row mb-3">
+                    <div class="col">지역이름
+                        <span th:text="${itemInfo['AREA_KOR_NAME']}"></span>
+                    </div>
+                    <div class="col">
+                        <span th:text="${itemInfo['SELLING_START']}"></span>
+                        <span >~</span>
+                        <span th:text="${itemInfo['SELLING_END']}"></span>
+                    </div>
+                    <div class="col">
+                        <span th:text="${itemInfo['TRAVER_PERIOD']}"></span>
+                    </div>
+                </div>
+                </th:block>
+            </div>
+        </div>
+        <!-- 일자별 일정 추가 (여행일자만큼 반복)-->
+        <div class="row mb-3 text-center">
+            <h4>항공사 선택</h4>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select class="form-select" name="hbtAirlineCode">
+                    <option disabled selected>항공사 선택</option>
+                    <th:block th:each="airline : ${airlineList}">
+                        <option th:value="${airline.hbtAirlineCode}">[[${airline.hbtAirlineName}]]</option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <!-- 일자별상세    -->
+        <div class="row text-center" th:if="${itemInfo} != null" >
+            <h4>일자별 상세 일정 선택</h4>
+            <th:block th:each="i,state : ${#numbers.sequence(1, itemInfo['days'])}">
+                <div class="row mb-3">
+                    <h5 th:text="${state.count} + '일차 일정'" ></h5>
+                    <input type="hidden" name="itemPlanVOList.hbtPlanDay" th:value="${state.count}">
+                </div>
+                <div class="row mb-3">
+                    <div class="col">오전 일정 선택</div>
+                    <div class="col">
+                        <input type="hidden" name="hbtPlanTime" th:value="AM">
+                        <select class="form-select" name="hbtTourItemCode">
+                            <th:block th:if="${itemInfo} != null" th:each="tour : ${tourList}">
+                                <option th:value="${tour['HBT_TOUR_ITEM_CODE']}"
+                                        th:text="${tour['HBT_TOUR_ITEM_NAME']}">
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <!-- 오전일정이 전일 일정일시 삭제        -->
+                <div class="row mb-3">
+                    <div class="col">오후 일정 선택</div>
+                    <div class="col">
+                        <input type="hidden" name="hbtPlanTime" th:value="PM">
+                        <select class="form-select">
+                            <th:block th:if="${itemInfo} != null" th:each="tour : ${tourList}">
+                                <option th:value="${tour['HBT_TOUR_ITEM_CODE']}"
+                                        th:text="${tour['HBT_TOUR_ITEM_NAME']}">
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <!-- 숙박일정선택        -->
+                <div class="row mb-3">
+                    <div class="col">호텔선택</div>
+                    <div class="col">
+                        <select class="form-select" name="hbtHotelCode">
+                            <th:block th:if="${itemInfo} != null" th:each="hotel : ${hotelList}">
+                                <option th:value="${hotel['HBT_HOTEL_CODE']}" th:text="${hotel['HBT_HOTEL_NAME']}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <textarea class="form-control" placeholder="상세일정설명"></textarea>
+                </div>
+            </th:block>
+        </div>
+        <div class="row">
+            <div class="col-4 offset-4">
+                <input type="submit" class="btn ye-S-bc" value="등록">
+            </div>
+        </div>
+    </form>
 
 
 
 
 
+
+    <div class="row">
     </div>
 
 
 
+    <div class="row"></div>
 
-    <div class="row"></div>
-    <div class="row"></div>
+<!-- 등록최종확인 모달 -->
 
 </div>
 </th:block>
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+    <script src="/js/content/admin/item_detail/item_daily_manage.js"></script>
 </th:block>
 </html>

@@ -476,15 +476,15 @@
 		)								<!-- imgVO -->
 		<foreach collection="imgVOList" item="img" separator="UNION ALL" index="i">
 			SELECT (SELECT 'HBT_TOUR_ITEM_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_TOUR_ITEM_IMG_CODE, 19))), 0) + 1 + #{i}, 3, '0')
-			FROM HBT_TOUR_IMG)   <!-- db에 IMG_002까지 있다면 이미지 insert 시 003, 그러나 한번에 여러개 첨부 하면 003으로 중복 됨 -->
+			FROM HBT_TOUR_IMG)
 			, #{img.itemCode}
-			, #{img.itemImgOriginName}		<!-- db IMG_CODE 최대값 + 1 값에 또 첨부 수만큼 +1씩 증가해야 함 for문의 index 활용하여 i값 더해줌 -->
+			, #{img.itemImgOriginName}
 			, #{img.itemImgAttachedName}
 			, #{img.isMain}
 			FROM DUAL
 		</foreach>
 	</insert>
-
+	<!-- 투어아이템리스트 전체 조회-->
 	<select id="getTourItemList" resultType="map">
 		SELECT ITEM.HBT_TOUR_ITEM_CODE
 			, ITEM.HBT_TOUR_ITEM_NAME
@@ -511,12 +511,146 @@
 		DELETE HBT_TOUR_IMG
 		WHERE HBT_TOUR_ITEM_IMG_CODE = #{hbtTourItemImgCode}
 	</delete>
-
+	<!-- 투어상품사용여부변경	-->
 	<update id="updateTourItemIsUseAJAX">
-		UPDATE HBT_AIRLINE
+		UPDATE HBT_TOUR_ITEM
 		SET IS_USE = #{isUse}
-		WHERE HBT_AIRLINE_CODE = #{hbtTourItemCode}
+		WHERE HBT_TOUR_ITEM_CODE = #{hbtTourItemCode}
 	</update>
+	<!-- 호텔코드조회		-->
+	<select id="getNextHotelCode" resultType="string">
+		SELECT 'HBT_HOTEL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_HOTEL_CODE, 11))), 0) + 1, 3, '0')
+		FROM HBT_HOTEL
+	</select>
+	<!-- 호텔상품등록	-->
+	<insert id="addHotel">
+		INSERT INTO HBT_HOTEL (
+				HBT_HOTEL_CODE
+			  , HBT_HOTEL_NAME
+			  , HBT_HOTEL_GRADE
+			  , IS_USE
+			  , HBT_HOTEL_INTRO
+			  , HBT_HOTEL_PRICE
+			  , AREA_CODE
+		)
+		values (
+			   #{hbtHotelCode}
+			   , #{hbtHotelName}
+			   , #{hbtHotelGrade}
+			   , #{isUse}
+			   , #{hbtHotelIntro}
+			   , #{hbtHotelPrice}
+			   , #{areaCode}
+			   )
+	</insert>
+
+	<!-- 호텔상품이미지 등록	-->
+	<insert id="addHotelImg">
+		INSERT INTO HBT_HOTEL_IMG (
+		HBT_HOTEL_IMG_CODE
+		, HBT_HOTEL_CODE
+		, HBT_HOTEL_ORIGIN_FILE_NAME
+		, HBT_HOTEL_ATTECHED_FILE_NAME
+		, IS_MAIN
+		)								<!-- imgVO -->
+		<foreach collection="imgVOList" item="img" separator="UNION ALL" index="i">
+			SELECT (SELECT 'HBT_HOTEL_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_HOTEL_IMG_CODE, 15))), 0) + 1 + #{i}, 3, '0')
+			FROM HBT_HOTEL_IMG)
+			, #{img.itemCode}
+			, #{img.itemImgOriginName}
+			, #{img.itemImgAttachedName}
+			, #{img.isMain}
+			FROM DUAL
+		</foreach>
+	</insert>
+	<!-- 호텔 아이템삭제	-->
+	<delete id="deleteHotel">
+		DELETE HBT_HOTEL
+		WHERE HBT_HOTEL_CODE = #{hbtHotelCode}
+	</delete>
+	<!-- 호텔 이미지 삭제-->
+	<delete id="deleteHotelImg">
+		DELETE HBT_HOTEL_IMG
+		WHERE HBT_HOTEL_IMG_CODE = #{hbtHotelImgCode}
+	</delete>
+	<!-- 호텔상품사용여부변경	-->
+	<update id="updateHotelIsUseAJAX">
+		UPDATE HBT_HOTEL
+		SET IS_USE = #{isUse}
+		WHERE HBT_HOTEL_CODE = #{hbtHotelCode}
+	</update>
+	<!-- 호텔목록 조회	-->
+	<select id="getHotelList" resultType="map">
+		SELECT ITEM.HBT_HOTEL_CODE
+			 , ITEM.HBT_HOTEL_NAME
+			 , ITEM.HBT_HOTEL_GRADE
+			 , ITEM.IS_USE
+			 , ITEM.HBT_HOTEL_PRICE
+			 , ITEM.HBT_HOTEL_INTRO
+			 , AREA.AREA_CODE
+			 , IMG.HBT_HOTEL_IMG_CODE
+			 , IMG.HBT_HOTEL_ATTECHED_FILE_NAME
+			 , AREA.AREA_KOR_NAME
+		FROM HBT_HOTEL ITEM, HBT_HOTEL_IMG IMG, HBT_TOUR_AREA AREA
+		WHERE ITEM.HBT_HOTEL_CODE = IMG.HBT_HOTEL_CODE
+		  AND IS_MAIN = 'Y'
+		  AND AREA.AREA_CODE = ITEM.AREA_CODE
+	</select>
+	<!-- 상세일정이 없는 아이템조회	-->
+	<select id="getItemCodeListNotDetail" resultMap="itemMapper.item">
+		SELECT ITEM_CODE
+			 , ITEM_TITLE
+		FROM HBT_ITEM
+		WHERE ITEM_CODE NOT IN (SELECT ITEM_CODE FROM HBT_ITEM_PLAN)
+	</select>
+	<!-- 아이템정보조회	-->
+	<select id="getItemInfoByItemCode" resultType="map">
+		SELECT ITEM_CODE
+			, AREA_KOR_NAME
+		    , TO_CHAR(SELLING_START, 'YYYY-MM-DD') AS SELLING_START
+		    , TO_CHAR(SELLING_END, 'YYYY-MM-DD') AS SELLING_END
+			, TRAVER_PERIOD
+			, IS_EXTRA_CHARGE
+			, IS_PEAK
+			, IS_BOMB_SALE
+			, STATUS_NAME
+		FROM HBT_ITEM ITEM, HBT_TOUR_AREA AREA, HBT_ITEM_STATE STATE
+		WHERE ITEM.AREA_CODE = AREA.AREA_CODE
+		AND STATE.STATUS_CODE = ITEM.STATUS_CODE
+		AND ITEM_CODE = #{itemCode}
+	</select>
+	<select id="getTourListByItemCode" resultType="map">
+		SELECT HBT_TOUR_ITEM_CODE
+			 , HBT_TOUR_ITEM_NAME
+			 , HBT_TOUR_ITEM_RUNTIME
+		FROM HBT_TOUR_ITEM TOUR, HBT_ITEM ITEM
+		WHERE TOUR.AREA_CODE = ITEM.AREA_CODE
+		  AND ITEM.ITEM_CODE = #{itemCode}
+	</select>
+	<select id="getHotelListByItemCode" resultType="map">
+		SELECT  HBT_HOTEL_CODE
+			 , HBT_HOTEL_NAME
+			 , HBT_HOTEL_GRADE
+		FROM HBT_HOTEL HOTEL, HBT_ITEM ITEM
+		WHERE ITEM.AREA_CODE = HOTEL.AREA_CODE
+		  AND ITEM.ITEM_CODE = #{itemCode}
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
