@@ -4,78 +4,7 @@
       layout:decorate="~{fragment/admin_layout}">
 <!-- 연결해야 할 외부 CSS파일 -->
 <th:block layout:fragment="content_css">
-    <style>
-        /* The switch - the box around the slider */
-        .switch {
-            font-size: 15px;
-            position: relative;
-            display: inline-block;
-            width: 3em;
-            height: 1.5em;
-        }
 
-        /* Hide default HTML checkbox */
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        /* The slider */
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #B0B0B0;
-            border: 1px solid #B0B0B0;
-            transition: .4s;
-            border-radius: 32px;
-            outline: none;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 1.5rem;
-            width: 1.5rem;
-            border-radius: 50%;
-            outline: 2px solid #B0B0B0;
-            left: -1.5px;
-            bottom: -1.5px;
-            background-color: #fff;
-            transition: transform .25s ease-in-out 0s;
-        }
-
-        .slider-icon {
-            opacity: 0;
-            height: 12px;
-            width: 12px;
-            stroke-width: 8;
-            position: absolute;
-            z-index: 999;
-            stroke: #222222;
-            right: 60%;
-            top: 30%;
-            transition: right ease-in-out .3s, opacity ease-in-out .15s;
-        }
-
-        input:checked + .slider {
-            background-color: #222222;
-        }
-
-        input:checked + .slider .slider-icon {
-            opacity: 1;
-            right: 10%;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(1.5em);
-            outline-color: #181818;
-        }
-    </style>
 </th:block>
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
@@ -84,27 +13,23 @@
         <h3>항공사 목록 관리</h3>
     </div>
     <!-- 항공사등록    -->
-    <form action="" method="post">
+    <form action="/admin/itemDetail/addAirline" method="post" enctype="multipart/form-data">
     <div class="row mb-3">
         <div class="col">
             <div class="row mb-2">
-                <input type="text" class="form-control" placeholder="항공사명">
+                <input type="text" name="hbtAirlineName" class="form-control" placeholder="항공사명">
             </div>
             <div class="row mb-2">
                 <label for="formFileSm" class="form-label">아이콘 업로드</label>
-                <input type="file" class="form-control form-control-sm" id="formFileSm" placeholder="아이콘업로드">
+                <input type="file" name="airlineIcon" class="form-control form-control-sm" id="formFileSm" placeholder="아이콘업로드">
             </div>
             <div class="row mb-2">
                 <div class="col-3">
                     <span>사용여부 : </span>
                 </div>
                 <div class="col">
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider">
-                            <svg class="slider-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation"><path fill="none" d="m4 16.5 8 8 16-16"></path></svg>
-                        </span>
-                    </label>
+                    <input type="radio" selected name="isUse" value="Y">사용
+                    <input type="radio" name="isUse" value="N">미사용
                 </div>
             </div>
         </div>
@@ -119,9 +44,9 @@
     <div class="row">
         <div class="row">
             <div class="col">
-                <table class="table table-striped ye-S-bc">
+                <table class="table table-striped">
                     <colgroup></colgroup>
-                    <thead>
+                    <thead class="ye-S-bc">
                         <tr>
                             <td>No</td>
                             <td>항공사명</td>
@@ -130,7 +55,25 @@
                             <td>삭제</td>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody class="ye-bc">
+                        <th:block th:each="airline, state : ${airlineList}">
+                            <tr>
+                                <form action="/admin/itemDetail/delAirline" method="post">
+                                    <input type="hidden" name="hbtAirlineCode" th:value="${airline.hbtAirlineCode}">
+                                    <td>[[${state.count}]]</td>
+                                    <td>[[${airline.hbtAirlineName}]]</td>
+                                    <td>
+                                        <img width="40px;" th:src="@{/img/item/airlineIcon/} + ${airline.hbtAirlineIcon}">
+                                    </td>
+                                    <td>
+                                        <input type="radio" class="form-check-input" name="isUse" value="Y" th:checked="${airline.isUse == 'Y'}" onchange="updateAirlineIsUseAJAX(this);">사용
+                                        <input type="radio" class="form-check-input" name="isUse" value="N" th:checked="${airline.isUse == 'N'}" onchange="updateAirlineIsUseAJAX(this);">미사용
+                                    </td>
+                                    <td><input type="submit" class="btn" value="삭제"></td>
+                                </form>
+                            </tr>
+                        </th:block>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -140,5 +83,6 @@
 </th:block>
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+    <script src="/js/content/admin/item_detail/airline_manage.js"></script>
 </th:block>
 </html>

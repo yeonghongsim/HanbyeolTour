@@ -22,16 +22,10 @@
 		<div class="col" id="wholeViewDiv">
 		
 		<div class="row mb-3">
-			<div class="col text-center">
-				<h3>놀이터</h3>
-			</div>
-		</div>
-	
-		<div class="row mb-5">
 			<div class="col-2">
 				<select class="form-select text-center" name="searchKey" id="searchKey">
-					<option value="hbtBoardTitle">제목</option>
-					<option value="hbtBoardContent">내용</option>
+					<option value="HBT_BOARD_TITLE">제목</option>
+					<option value="(SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE)">작성자</option>
 				</select>
 			</div>
 			<div class="col-8">
@@ -47,7 +41,7 @@
 				
 				<div class="row mb-3 text-end">
 					<div class="col">
-						<input th:onclick="regBoardForm();" class="btn btn-success" type="button" value="게시글 작성">
+						<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-success" type="button" value="게시글 작성">
 					</div>
 				</div>
 				
@@ -73,48 +67,70 @@
 								</tr>
 							</thead>
 							<tbody id="board-tbody">
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
+								<th:block th:each="board, state : ${boardList}">
+									<tr class="align-middle">
+										<td>[[${boardList.size() - state.index}]]</td>
+										<td>
+										<th:block th:if="${board.isPrivate} == 'N'">
+											<div>
+												<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]])" class="pointer">[[${board.hbtBoardTitle}]]</span>
+											</div>
+										</th:block>
+										<th:block th:unless="${board.isPrivate} == 'N'">
+											<div>
+												<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]], this)" class="pointer">[[${board.hbtBoardTitle}]]</span>
+												<img src="/imageForUse/lock.jpeg" style="width: 30px;">
+											</div>
+											<div class="row chkDiv">
+											</div>
+										</th:block>
+										</td>
+										<td>[[${board.hbtBoardCnt}]]</td>
+										<td>[[${board.replyCnt}]]</td>
+										<td>[[${board.hbtBoardRegDate}]]</td>
+										<td>[[${board.memberVO.memId}]]</td>
+									</tr>
+								</th:block>
 							</tbody>
 						</table>
 					</div>
 				</div>
-			
+				
+				
 				
 			</div>
 		</div>
-	
-		<div class="row mb-3 text-center">
+		
+		<div class="row mb-3">
 			<div class="col">
-				페이지 처리예정
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a class="page-link" href="#"aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Next"> 
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	
 		</div>
 	</div>
-	
 	
 </th:block>
 

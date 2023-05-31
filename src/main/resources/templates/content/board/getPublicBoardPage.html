@@ -32,32 +32,20 @@
 						<td>번호</td>
 						<td>제목</td>
 						<td>조회수</td>
-						<td>추천수</td>
+						<td>댓글수</td>
 						<td>작성일</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>2</td>
-						<td>2</td>
-						<td>2</td>
-						<td>2</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>3</td>
-						<td>3</td>
-						<td>3</td>
-						<td>3</td>
-					</tr>
+					<th:block th:each="notice, state : ${noticeList}">
+						<tr>
+							<td>[[${noticeList.size() - state.index}]]</td>
+							<td>[[${notice.hbtBoardTitle}]]</td>
+							<td>[[${notice.hbtBoardCnt}]]</td>
+							<td>[[${notice.replyCnt}]]</td>
+							<td>[[${notice.hbtBoardRegDate}]]</td>
+						</tr>
+					</th:block>
 				</tbody>
 			</table>
 		</div>

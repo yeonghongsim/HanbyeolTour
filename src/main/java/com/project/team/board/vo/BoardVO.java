@@ -20,4 +20,5 @@ public class BoardVO {
 	private String isNotice;
 	private int replyCnt;
 	private MemberVO memberVO;
+	private GroundSearchVO groundSearchVO;
 }
