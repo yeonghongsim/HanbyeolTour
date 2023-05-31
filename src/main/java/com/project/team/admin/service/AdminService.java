@@ -26,6 +26,9 @@ public interface AdminService {
 	
 	//카테고리 사용여부 변경 (정현 추가)
 	int changeAreaIsUse(String areaCode);
+	
+	//여행 국가 카테고리 메인 노출 여부
+	int changeIsExposeMain(String areaCode);
 		
 	//여행국가 카테고리 삭제
 	void deleteAreaCate(String areaCode);
@@ -72,6 +75,9 @@ public interface AdminService {
 	
 	//첨부 파일명 조회
 	String getAttachedFileName(String itemImgCode);
+	
+	//회원 권한 변경
+	void updateMemRole(MemberVO memberVO);
 
 	
 	

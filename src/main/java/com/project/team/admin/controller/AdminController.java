@@ -89,6 +89,14 @@ public class AdminController {
 		return adminService.changeAreaIsUse(areaCode);
 	}
 	
+	//여행지 카테고리 메인 노출 여부
+	@ResponseBody
+	@PostMapping("/changeIsExposeMainAJAX")
+	public int changeIsExposeMain(String areaCode) {
+		
+		return adminService.changeIsExposeMain(areaCode);
+	}
+	
 	//여행지 카테고리 삭제
 	@GetMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {
@@ -227,6 +235,13 @@ public class AdminController {
 		return "redirect:/admin/itemManageForSale";
 	}
 	
+	//회원 관리 페이지
+	@GetMapping("/memManage")
+	public String memManage() {
+		
+		return "redirect:/admin/memInfo";
+	}
+	
 	
 	//회원 리스트 조회
 	@RequestMapping("/memInfo")
@@ -251,6 +266,16 @@ public class AdminController {
 		System.out.println(memId);
 		
 		return adminService.getMemDetailInfo(memId);
+	}
+	
+	//회원 권한 변경
+	@GetMapping("/updateMemRole")
+	public String updateMemRole(MemberVO memberVO) {
+		System.out.println(memberVO);
+		
+		adminService.updateMemRole(memberVO);
+		
+		return "redirect:/admin/memInfo";
 	}
 	
 	

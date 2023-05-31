@@ -26,8 +26,9 @@
 		<id 	column="HBT_AIRLINE_CODE" 		property="hbtAirlineCode"/>
 		<result column="HBT_AIRLINE_NAME" 		property="hbtAirlineName"/>
 		<result column="HBT_AIRLINE_ICON" 		property="hbtAirlineIcon"/>
-		<result column="IS_USE" 					property="isUse"/>
+		<result column="IS_USE" 				property="isUse"/>
 	</resultMap>
+	
 	<!-- 카테고리 관리 페이지 - 여행국가 카테고리 등록 -->
 	<insert id="regArea">
 		INSERT INTO HBT_TOUR_AREA (
@@ -35,10 +36,12 @@
 			, AREA_ENG_NAME
 			, AREA_KOR_NAME
 			, IS_USE
+			, IS_EXPOSE_MAIM
 		) VALUES (
 			#{areaCode}
 			, #{areaEngName}
 			, #{areaKorName}
+			, 'Y'
 			, 'Y'
 		)
 	</insert>
@@ -60,6 +63,7 @@
 			, AREA_ENG_NAME
 			, AREA_KOR_NAME
 			, IS_USE
+			, IS_EXPOSE_MAIN
 		FROM HBT_TOUR_AREA
 		ORDER BY AREA_KOR_NAME
 	</select>
@@ -69,6 +73,14 @@
 		UPDATE HBT_TOUR_AREA 
 		SET
 			IS_USE = DECODE(IS_USE, 'Y', 'N', 'N', 'Y')
+		WHERE AREA_CODE = #{areaCode}
+	</update>
+	
+	<!-- 여행 국가 카테고리 메인 노출 여부 -->
+	<update id="changeIsExposeMain">
+		UPDATE HBT_TOUR_AREA 
+		SET
+			IS_EXPOSE_MAIN = DECODE(IS_EXPOSE_MAIN, 'Y', 'N', 'N', 'Y')
 		WHERE AREA_CODE = #{areaCode}
 	</update>
 
@@ -301,6 +313,19 @@
 		FROM HBT_ITEM_IMG
 		WHERE ITEM_IMG_CODE = #{itemImgCode}
 	</select>
+	
+	<!-- 회원 권한 변경 -->
+	<update id="updateMemRole">
+		UPDATE HBT_MEM
+		SET
+			MEM_ROLE = #{memRole}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	
+	
+	
+	
 
 	<!--  메인페이지 이미지 업로드	-->
 	<insert id="uploadMainSlideImg">
