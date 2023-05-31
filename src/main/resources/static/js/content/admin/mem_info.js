@@ -27,7 +27,7 @@ function getMemDetail(memId){
 			str += `	</colgroup>                   `;
 			str += `	<thead>                       `;
 			str += `		<tr>                      `;
-			str += `			<td>아이디</td>       `;
+			str += `			<td class="tableColums">아이디</td>       `;
 			str += `			<td>${result.memId}</td>             `;
 			str += `			<td>이름</td>         `;
 			str += `			<td>${result.memName}</td>             `;
