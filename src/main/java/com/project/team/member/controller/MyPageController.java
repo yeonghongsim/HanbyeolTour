@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.team.buy.service.BuyService;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
@@ -29,6 +30,8 @@ public class MyPageController {
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	@Resource(name = "buyService")
+	private BuyService buyService;
 	
 	
 	// 회원 탈퇴 페이지로 이동 
@@ -168,6 +171,52 @@ public class MyPageController {
 	}
 	
 
+	
+	//예약확인 페이지로 이동 
+	@GetMapping("/checkMyReservation")
+	public String checkMyReservation(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/myPage/check_my_reservation";
+	}
+	
+	
+	//예약취소 내역 확인 페이지로 이동 
+	@GetMapping("/checkMyCancelation")
+	public String checkMyCancelation(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/myPage/check_my_cancelation";
+	}
+	
+	
+	// 1:1 문의 내역 페이지로 이동 
+	@GetMapping("/checkMyRequest")
+	public String checkMyRequest(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/myPage/check_my_request";
+	}
+	
+	
+	
+	// 나의 여행 후기 목록 페이지로 이동 
+	@GetMapping("/checkMyReview")
+	public String checkMyReview(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/myPage/check_my_review";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
