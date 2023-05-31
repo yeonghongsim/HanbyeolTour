@@ -191,14 +191,14 @@ public class AdminController {
 		adminService.deleteItemImg(imgVO);
 	}
 	
-	
+
 	//상품 수정 (이미지 포함)
 	@PostMapping("/updateItem")
 	public String updateItem(ItemVO itemVO, MultipartFile mainImg, MultipartFile[] subImg) {
 		//아이템 코드 세팅
 		String itemCode = itemVO.getItemCode();
 		itemVO.setItemCode(itemCode);
-		
+
 		ImgVO attachecdImgVO = null;
 		if(mainImg != null) {
 			//단일 첨부 - 첨부 없으면 null
@@ -207,9 +207,9 @@ public class AdminController {
 		
 		//다중 첨부 - 첨부 없으면 빈 리스트
 		List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg, UploadPath.ITEM_IMG_UPLOAD_PATH);
-		
+
 		adminService.updateItem(itemVO);
-		
+
 		if(attachecdImgVO != null || attachedImgList.size() != 0){
 			List<ImgVO> imgList = new ArrayList<>();
 			
@@ -219,7 +219,7 @@ public class AdminController {
 			if(attachedImgList.size() != 0) {
 				imgList.addAll(attachedImgList);
 			}
-			
+
 			itemVO.setImgList(imgList);
 			//이미지 수정 쿼리
 			adminService.regImgsForItemDetail(itemVO);
@@ -236,10 +236,10 @@ public class AdminController {
 		memListSearchVO.setTotalDataCnt(totalDataCnt);
 		
 		memListSearchVO.setPageInfo();
-		
+
 		//전체 회원 조회
 		model.addAttribute("memList", adminService.getMemList(memListSearchVO));
-		
+
 		return "content/admin/mem_info";
 	}
 	
@@ -270,7 +270,7 @@ public class AdminController {
 	
 	
 	
-	
+
 	
 	
 	
@@ -311,11 +311,11 @@ public class AdminController {
 	}
 	
 	
-	// 공지사항 상세 조회
+	// 공지사항 상세 조회------
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(String hbtBoardNum, Model model) {
 		
-		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
+		model.addAttribute("noticeDetail", boardService.getBoardDetail(hbtBoardNum));
 		
 		return "content/admin/board/notice_detail";
 		
@@ -325,7 +325,7 @@ public class AdminController {
 	@GetMapping("/updateNoticeForm")
 	public String updateNoticeForm(String hbtBoardNum, Model model) {
 		
-		model.addAttribute("noticeDetail", boardService.getBoardNoticeDetail(hbtBoardNum));
+		model.addAttribute("noticeDetail", boardService.getBoardDetail(hbtBoardNum));
 		
 		return "content/admin/board/update_notice_form";
 		
@@ -370,9 +370,9 @@ public class AdminController {
 	
 	// 자주 묻는 문의 사항 관리 페이지
 	@GetMapping("/frequncyRequestMng")
-	public String frequncyRequestMng(Model model) {
+	public String frequncyRequestMng(Model model, String typeRequestCode) {
 
-		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList());
+		model.addAttribute("getFreqRequestList", boardService.getFreqRequestList(typeRequestCode));
 
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 
@@ -384,7 +384,7 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/searchFreqRequestByCodeAJAX")
 	public List<FreqRequestVO> searchFreqRequestByCodeAJAX(String typeRequestCode) {
-		
+
 		return adminService.getFreqRequestList(typeRequestCode);
 		
 	}
@@ -461,20 +461,19 @@ public class AdminController {
 		return "content/admin/page/set_package_page";
 	}
 
-	//상품 메인 페이지 추천 아이템 등록
+	//페키지 페이지 추천 아이템 등록
 	@PostMapping("/addRecomImgForPKGAJAX")
 	@ResponseBody
-	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCode, @RequestParam(value = "sortIndex[]") List<String> sortIndex){
-
+	public void addRecomImgForPKMenu(@RequestParam(value = "itemCode[]") List<String> itemCodes , @RequestParam(value = "sortIndex[]") List<String> sortIndex){
 
 		List<Map<String, String>> list = new ArrayList<>();
-
-		for(int i = 0; i<itemCode.size(); i++){
-			Map<String,String> map = new HashMap<>();
-			map.put("itemCode", itemCode.get(i));
+		for(int i = 0; i < itemCodes.size(); i++){
+			Map<String, String> map = new HashMap<>();
+			map.put("itemCode", itemCodes.get(i));
 			map.put("sortIndex", sortIndex.get(i));
 			list.add(map);
 		}
+
 		adminService.addRecomImgForPKG(list);
 	}
 
@@ -495,7 +494,7 @@ public class AdminController {
 		return "redirect:/admin/setMainPage";
 	}
 
-	//추천 아이템 등록
+	//메인 페이지 추천 아이템 등록
 	@PostMapping("/setRecomItemListAJAX")
 	@ResponseBody
 	public void setRecomItemList(@RequestParam(value = "itemCode[]") List<String> itemCode, @RequestParam(value = "comment[]") List<String> comment){
@@ -520,34 +519,6 @@ public class AdminController {
 		adminService.deleteMainSlideImg(imgCode);
 		return "redirect:/admin/setMainPage";
 	}
-
-	//-----------------------상품 상세 설정---------------------------//
-
-	//호텔 목록 관리
-	@GetMapping("hotelManage")
-	public String hotelManage(){
-
-		return "/content/admin/item/hotel_manage";
-	}
-	//호텔 목록 관리
-	@GetMapping("airlineManage")
-	public String airlineManage(){
-
-		return "/content/admin/item/airline_manage";
-	}
-	//호텔 목록 관리
-	@GetMapping("tourManage")
-	public String tourManage(){
-
-		return "/content/admin/item/tour_manage";
-	}
-	//호텔 목록 관리
-	@GetMapping("itemDailyManage")
-	public String itemDailyManage(){
-
-		return "/content/admin/item/item_daily_manage";
-	}
-
 
 
 }

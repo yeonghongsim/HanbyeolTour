@@ -6,30 +6,128 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/board/getBoardGroundPage.css">
+	<link rel="stylesheet" href="/css/content/board/board_gound_detail.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="board_content">
-
+	
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span> > 게시글 상세</h3>
 		</div>
 	</div>
 	
-	
-	<div class="row">
+	<div class="row mb-3">
 		<div class="col">
-		1
+			<h4>게시글</h4>
 		</div>
 	</div>
+	
+	<div class="row mb-2">
+		<div class="col">
+			<table class="table text-center detail_table">
+				<colgroup>
+					<col width="25%">
+					<col width="25%">
+					<col width="25%">
+					<col width="25%">
+				</colgroup>
+				<tbody>
+					<tr>
+						<td>작성자</td>
+						<td>[[${boardDetail.memberVO.memId}]]</td>
+						<td>작성일</td>
+						<td>[[${boardDetail.hbtBoardRegDate}]]</td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td>[[${boardDetail.hbtBoardTitle}]]</td>
+						<td>조회수</td>
+						<td>[[${boardDetail.hbtBoardCnt}]]</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="3">[[${boardDetail.hbtBoardContent}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col text-end">
+			<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-secondary" type="button" value="뒤로 가기">
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col-10">
+			<input class="form-control" type="text" name="">
+		</div>
+		<div class="col-2">
+			<input th:onclick="regReply([[${boardDetail.memberVO.memId}]], [[${#authentication.name}]], [[${boardDetail.hbtBoardNum}]], this);" class="btn btn-primary w-100" type="button" value="댓글 달기">
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col reply_con">
+			<div class="row" th:each="reply : ${replyList}">
+				<div class="offset-1 col reply_div">
+					<div class="row mt-3 mb-3">
+						<div class="col-11">
+							<div class="row">
+								<div class="col">
+									<span>[[${reply.memberVO.memId}]]</span>
+									<span style="color: grey; font-size: 0.8rem;">/ [[${reply.hbtBoardReplyRegDate}]]</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									[[${reply.hbtBoardReplyContent}]]
+								</div>
+							</div>
+						</div>
+						<div class="col-1">
+							<div class="row mb-1" th:if="${reply.memberVO.memId} == ${#authentication.name}">
+								<div class="col">
+									<input class="btn btn-secondary w-100" type="button" value="수정">
+								</div>
+							</div>
+							<div class="row mb-1" th:if="${reply.memberVO.memId} != ${#authentication.name}">
+								<div class="col">
+									<input class="btn btn-primary w-100" type="button" value="댓글">
+								</div>
+							</div>
+							<div class="row mb-1" sec:authorize="hasRole('ROLE_USR')">
+								<div class="col" th:if="${reply.memberVO.memId} == ${#authentication.name}">
+									<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${reply.memberVO.memId}]], [[${#authentication.name}]])" class="btn btn-danger w-100" type="button" value="삭제">
+								</div>
+							</div>
+							<div class="row mb-1" sec:authorize="hasRole('ROLE_AD')">
+								<div class="col" th:if="${reply.memberVO.memId} != ${#authentication.name}">
+									<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${reply.memberVO.memId}]], [[${#authentication.name}]])" class="btn btn-danger w-100" type="button" value="삭제">
+								</div>
+								<div class="col" th:if="${reply.memberVO.memId} == ${#authentication.name}">
+									<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${reply.memberVO.memId}]], [[${#authentication.name}]])" class="btn btn-danger w-100" type="button" value="삭제">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
 	
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/board/getBoardGroundPage.js"></script>
+	<script type="text/javascript" src="/js/content/board/board_gound_detail.js"></script>
 </th:block>
 
 

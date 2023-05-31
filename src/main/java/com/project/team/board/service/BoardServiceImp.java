@@ -5,7 +5,9 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
@@ -33,8 +35,8 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public List<FreqRequestVO> getFreqRequestList() {
-		return sqlSession.selectList("boardMapper.getFreqRequestList");
+	public List<FreqRequestVO> getFreqRequestList(String typeRequestCode) {
+		return sqlSession.selectList("boardMapper.getFreqRequestList", typeRequestCode);
 	}
 
 	@Override
@@ -52,9 +54,12 @@ public class BoardServiceImp implements BoardService{
 		return sqlSession.selectOne("boardMapper.getNextByBoardNum");
 	}
 
+	@Transactional
 	@Override
-	public BoardVO getBoardNoticeDetail(String hbtBoardNum) {
-		return sqlSession.selectOne("boardMapper.getBoardNoticeDetail", hbtBoardNum);
+	public BoardVO getBoardDetail(String hbtBoardNum) {
+		sqlSession.update("boardMapper.addBoardCnt", hbtBoardNum);
+		
+		return sqlSession.selectOne("boardMapper.getBoardDetail", hbtBoardNum);
 	}
 
 	@Override
@@ -65,6 +70,28 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public void updateBoardNotice(BoardVO boardVO) {
 		sqlSession.update("boardMapper.updateBoardNotice", boardVO);
+	}
+
+	@Override
+	public String getBoardPrivatePw(String hbtBoardNum) {
+		return sqlSession.selectOne("boardMapper.getBoardPrivatePw", hbtBoardNum);
+	}
+
+	@Override
+	public String getNextByReplyNum() {
+		return sqlSession.selectOne("boardMapper.getNextByReplyNum");
+	}
+
+	@Transactional
+	@Override
+	public void regBoardReply(BoardReplyVO boardReplyVO) {
+		sqlSession.insert("boardMapper.regBoardReply", boardReplyVO);
+		sqlSession.update("boardMapper.addReplyCnt", boardReplyVO.getBoardVO().getHbtBoardNum());
+	}
+
+	@Override
+	public List<BoardReplyVO> getReplyList(String hbtBoardNum) {
+		return sqlSession.selectList("boardMapper.getReplyList", hbtBoardNum);
 	}
 
 

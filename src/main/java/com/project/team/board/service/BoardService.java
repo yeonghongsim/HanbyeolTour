@@ -2,6 +2,7 @@ package com.project.team.board.service;
 
 import java.util.List;
 
+import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
@@ -18,7 +19,7 @@ public interface BoardService {
 	String getNextByFreqReqCode();
 	
 	// board freq-req list
-	List<FreqRequestVO> getFreqRequestList();
+	List<FreqRequestVO> getFreqRequestList(String typeRequestCode);
 	
 	// reg-board
 	void regBoard(BoardVO boardVO);
@@ -29,13 +30,26 @@ public interface BoardService {
 	// get board-num
 	String getNextByBoardNum();
 	
+	// get reply-num
+	String getNextByReplyNum();
+	
 	// select board-notice-detail
-	BoardVO getBoardNoticeDetail(String hbtBoardNum);
+	BoardVO getBoardDetail(String hbtBoardNum);
 	
 	// delete board-notice
 	void delNotice(String hbtBoardNoticeNum);
 	
 	// update board-notice
 	void updateBoardNotice(BoardVO boardVO);
+	
+	// select board-privatePw
+	String getBoardPrivatePw(String hbtBoardNum);
+	
+	// insert reply
+	void regBoardReply(BoardReplyVO boardReplyVO);
+	
+	// select reply-list
+	List<BoardReplyVO> getReplyList(String hbtBoardNum);
+	
 	
 }

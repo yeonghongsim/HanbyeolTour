@@ -13,42 +13,49 @@
     </div>
 
     <!-- 투어상품등록    -->
-    <form action="" method="post">
+    <form action="/admin/itemDetail/addTourItem" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="row mb-3">
             <div class="col">
-                <select class="form-select">
-                    <option>지역리스트</option>
+                <select class="form-select" name="areaCode">
+                    <th:block th:each="area : ${areaList}">
+                        <option th:value="${area.areaCode}">[[${area.areaKorName}]]</option>
+                    </th:block>
                 </select>
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="투어이름">
+                <input type="text" class="form-control" name="hbtTourItemName" placeholder="투어이름">
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-4">
+                <input class="form-check-input" checked type="radio" name="hbtTourItemRunTime" value="Half">HalfDay
+                <input class="form-check-input" type="radio" name="hbtTourItemRunTime" value="Day">Day
+            </div>
+            <div class="col-4">
+                <input class="form-check-input" checked type="radio" name="isUse" value="Y">사용
+                <input class="form-check-input" type="radio" name="isUse" value="N">미사용
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" name="hbtTourItemPrice" placeholder="가격">
             </div>
         </div>
 
 
         <div class="row mb-3">
             <div class="col">
-                <input type="text" class="form-control" placeholder="소요시간">
+                <input type="file" name="mainImg" class="form-control" accept="image/*">메인파일
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="가격">
-            </div>
-        </div>
-
-
-        <div class="row mb-3">
-            <div class="col">
-                <input type="file" class="form-control">메인파일
-            </div>
-            <div class="col">
-                <input type="file" class="form-control">서브파일
+                <input type="file" name="subImg" class="form-control" multiple accept="image/*">서브파일
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col">
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" name="hbtTourItemIntro"></textarea>
             </div>
         </div>
 
@@ -73,7 +80,7 @@
                 <table class="table table-striped">
                     <colgroup>
                     </colgroup>
-                    <thead>
+                    <thead class="ye-S-bc">
                         <tr>
                             <td>No</td>
                             <td>지역</td>
@@ -85,8 +92,28 @@
                             <td>삭제버튼</td>
                         </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody class="ye-bc">
+                        <th:block th:each="item,state : ${tourItemList}">
+                            <form action="/admin/itemDetail/deleteTourItem" method="post">
+                                <input type="hidden" class="hbtTourItemCode" name="hbtTourItemCode" th:value="${item['HBT_TOUR_ITEM_CODE']}">
+                                <input type="hidden" class="hbtTourItemImgCode" name="hbtTourItemImgCode" th:value="${item['HBT_TOUR_ITEM_IMG_CODE']}">
+                                <tr>
+                                    <td>[[${state.count}]]</td>
+                                    <td>[[${item["AREA_KOR_NAME"]}]]</td>
+                                    <td>[[${item["HBT_TOUR_ITEM_NAME"]}]]</td>
+                                    <td>[[${item["HBT_TOUR_ITEM_RUNTIME"]}]]</td>
+                                    <td>[[${item["HBT_TOUR_ITEM_PRICE"]}]]</td>
+                                    <td>
+                                        <input type="radio" class="form-check-input" name="isUse" value="Y" th:checked='${item["IS_USE"] == "Y"}' onchange="updateTourItemIsUseAJAX(this);">사용
+                                        <input type="radio" class="form-check-input" name="isUse" value="N" th:checked='${item["IS_USE"] == "N"}' onchange="updateTourItemIsUseAJAX(this);">미사용
+                                    </td>
+                                    <td>[[${item["HBT_TOUR_ITEM_INTRO"]}]]</td>
+                                    <td>
+                                        <input type="submit" value="삭제">
+                                    </td>
+                                </tr>
+                            </form>
+                        </th:block>
                     </tbody>
                 </table>
             </div>
@@ -97,5 +124,6 @@
 </th:block>
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+    <script src="/js/content/admin/item_detail/tour_manage.js"></script>
 </th:block>
 </html>

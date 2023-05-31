@@ -71,14 +71,19 @@
 									<tr class="align-middle">
 										<td>[[${boardList.size() - state.index}]]</td>
 										<td>
+										<th:block th:if="${board.isPrivate} == 'N'">
 											<div>
-												<a th:href="@{/board/boardGroundDetail(hbtBoardNum=${board.hbtBoardNum})}">
-													<span>[[${board.hbtBoardTitle}]]</span>
-													<img th:if="${board.isPrivate} == 'Y'" src="/imageForUse/lock.jpeg" style="width: 30px;">
-												</a>
+												<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]])" class="pointer">[[${board.hbtBoardTitle}]]</span>
 											</div>
+										</th:block>
+										<th:block th:unless="${board.isPrivate} == 'N'">
 											<div>
+												<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]], this)" class="pointer">[[${board.hbtBoardTitle}]]</span>
+												<img src="/imageForUse/lock.jpeg" style="width: 30px;">
 											</div>
+											<div class="row chkDiv">
+											</div>
+										</th:block>
 										</td>
 										<td>[[${board.hbtBoardCnt}]]</td>
 										<td>[[${board.replyCnt}]]</td>

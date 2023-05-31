@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.team.admin.service.AdminService;
 import com.project.team.board.service.BoardService;
+import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.member.service.MemberService;
@@ -23,6 +25,8 @@ public class BoardController {
 	private BoardService boardService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	@Resource(name = "adminService")
+	private AdminService adminService;
 	
 	@GetMapping("/boardMain")
 	public String boardMain(Model model) {
@@ -64,6 +68,34 @@ public class BoardController {
 		
 		
 	}
+
+	@ResponseBody
+	@PostMapping("/chkPrivatePwAJAX")
+	public String chkPrivatePwAJAX(String hbtBoardNum) {
+		
+		return boardService.getBoardPrivatePw(hbtBoardNum); 
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/regReplyAJAX")
+	public void regReplyAJAX(BoardReplyVO boardReplyVO) {
+		
+		String memCode = memberService.getMemCode(boardReplyVO.getMemberVO().getMemId());
+		boardReplyVO.getMemberVO().setMemCode(memCode);
+		
+		String hbtBoardReplyCode = boardService.getNextByReplyNum();
+		boardReplyVO.setHbtBoardReplyNum(hbtBoardReplyCode);
+		
+		System.out.println("regReplyAJAX run");
+		System.out.println("@@@@@@@@@@@@@" + boardReplyVO);
+		
+		boardService.regBoardReply(boardReplyVO);
+		
+	}
+	
+	
+	
 	
 	@PostMapping("/regBoard")
 	public String regBoard(BoardVO boardVO) {
@@ -87,29 +119,35 @@ public class BoardController {
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
-		model.addAttribute("boardDetail", hbtBoardNum);
+		model.addAttribute("boardDetail", boardService.getBoardDetail(hbtBoardNum));
+		
+		model.addAttribute("replyList", boardService.getReplyList(hbtBoardNum));
 		
 		return "content/board/board_gound_detail";
 		
 	}
 	
 	@GetMapping("/frequentlyRequestPage")
-	public String frequentlyRequestPage(Model model) {
+	public String frequentlyRequestPage(Model model, String typeRequestCode) {
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
+		model.addAttribute("freqReqList", boardService.getFreqRequestList(typeRequestCode));
+		
 		return "content/board/frequentlyRequestPage";
 	}
 	
-	
 	@ResponseBody
-	@PostMapping("/searchFreqRequestByInputAjax")
-	public void searchFreqRequestByInputAjax(String searchInputValue) {
+	@PostMapping("/searchFreqRequestByCodeAJAX")
+	public List<FreqRequestVO> searchFreqRequestByCodeAJAX(String typeRequestCode) {
 		
-		System.out.println("searchFreqRequestByInputAjax run~");
-		System.out.println("@@@@@@@" + searchInputValue);
+		System.out.println("searchFreqRequestByCodeAJAX run~");
+		System.out.println("@@@@@@@" + typeRequestCode);
+		System.out.println(boardService.getFreqRequestList(typeRequestCode));
+		
+		return boardService.getFreqRequestList(typeRequestCode);
 		
 	}
 	
