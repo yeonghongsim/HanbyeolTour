@@ -26,6 +26,7 @@
 		<result column="AREA_ENG_NAME" 		property="areaEngName"/>
 		<result column="AREA_KOR_NAME" 		property="areaKorName"/>
 		<result column="IS_USE" 			property="isUse"/>
+		<result column="IS_EXPOSE_MAIN" 	property="isExposeMain"/>
 	</resultMap>
 	
 	

@@ -12,4 +12,5 @@ public class TourAreaVO {
 	private String areaEngName;
 	private String areaKorName;
 	private String isUse;
+	private String isExposeMain;
 }

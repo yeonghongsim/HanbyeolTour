@@ -15,7 +15,7 @@ function getMemDetail(memId){
 			
 			let str = '';
 			
-			str += `<h5 style="font-style: italic; margin-top:50px;">${result.memName}님의 상세 정보</h5>`                                        
+			str += `<h5 style="font-style: italic; margin-top:50px; margin-bottom:30px;">${result.memName}님의 상세 정보</h5>`                                        
 			str += `<table class="table">             `;
 			str += `	<colgroup>                    `;
 			str += `		<col width="10%">       `;
@@ -25,9 +25,9 @@ function getMemDetail(memId){
 			str += `		<col width="10%">       `;
 			str += `		<col width="23.3%">		`;						
 			str += `	</colgroup>                   `;
-			str += `	<thead>                       `;
+			str += `	<thead class="tableColums">                       `;
 			str += `		<tr>                      `;
-			str += `			<td class="tableColums">아이디</td>       `;
+			str += `			<td>아이디</td>       `;
 			str += `			<td>${result.memId}</td>             `;
 			str += `			<td>이름</td>         `;
 			str += `			<td>${result.memName}</td>             `;
@@ -50,7 +50,7 @@ function getMemDetail(memId){
 			//str += `			<td></td> `;
 			//str += `			<td></td>             `;
 			str += `		</tr>                     `;
-			str += `		<tr>                      `;
+			str += `		<tr class="align-middle">                      `;
 			str += `			<td>활동상태</td>     `;
 			str += `			<td>${result.memStatusVO.memStatusName}</td>             `;
 			str += `			<td>가입일</td>       `;

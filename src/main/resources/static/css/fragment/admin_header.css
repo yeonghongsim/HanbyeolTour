@@ -163,6 +163,10 @@ a{
 	font-size: 0.8rem;
 }
 
-.tableColums {
-	background-color: eeeeee;
-}
+  
+.tableColums tr td:nth-child(1),
+.tableColums tr td:nth-child(3),
+.tableColums tr td:nth-child(5){
+    background-color: #eeeeee;
+    text-align: center;
+  }

@@ -89,6 +89,14 @@ public class AdminController {
 		return adminService.changeAreaIsUse(areaCode);
 	}
 	
+	//여행지 카테고리 메인 노출 여부
+	@ResponseBody
+	@PostMapping("/changeIsExposeMainAJAX")
+	public int changeIsExposeMain(String areaCode) {
+		
+		return adminService.changeIsExposeMain(areaCode);
+	}
+	
 	//여행지 카테고리 삭제
 	@GetMapping("/deleteAreaCate")
 	public String deleteAreaCate(String areaCode) {
