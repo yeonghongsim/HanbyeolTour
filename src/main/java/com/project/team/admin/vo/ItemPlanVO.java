@@ -12,12 +12,13 @@ import java.util.List;
 public class ItemPlanVO {
     private String hbtPlanCode;
     private String hbtPlanPeriod;
-    private String hbtPlanDay;
-    private String hbtPlanTime;
     private String hbtPlanIntro;
     private String itemCode;
+    private String hbtAirlineC명ode;
+    List<ItemPlanVO> itemPlanVOList;
+
+    private String hbtPlanDay;
+    private String hbtPlanTime;
     private String hbtHotelCode;
     private String hbtTourItemCode;
-    private String hbtAirlineCode;
-    List<ItemPlanVO> itemPlanVOList;
 }

@@ -46,4 +46,7 @@ public interface AdminItemDetailService {
     List<Map<String, String>> getHotelListByItemCode(String itemCode);
     //상품코드의 지역에 해당하는 투어상품정보조회
     List<Map<String, String>> getTourListByItemCode(String itemCode);
+    //상품상세 일정 설정
+    void setItemDailyPlan(List<Map<String, Object>> list);
+
 }

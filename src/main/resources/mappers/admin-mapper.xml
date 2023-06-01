@@ -661,6 +661,32 @@
 		  AND ITEM.ITEM_CODE = #{itemCode}
 	</select>
 
+	<insert id="setItemDailyPlan">
+		INSERT INTO HBT_ITEM_PLAN (
+			HBT_PLAN_CODE
+			, HBT_PLAN_PERIOD
+			, HBT_PLAN_DAY
+			, HBT_PLAN_TIME
+			, HBT_PLAN_INTRO
+			, ITEM_CODE
+			, HBT_HOTEL_CODE
+			, HBT_TOUR_ITEM_CODE
+			, HBT_AIRLINE_CODE
+		)
+	<foreach collection="list" item="item" separator="UNION ALL" index="i">
+		SELECT (SELECT 'HBT_PLAN_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_PLAN_CODE, 14))), 0) + 1 + #{i}, 3, '0')
+		FROM HBT_ITEM_PLAN)
+		, #{item.hbtPlanPeriod}
+		, #{item.planDay}
+		, #{item.planTime}
+		, #{item.planIntro}
+		, #{item.itemCode}
+		, #{item.hotelCode}
+		, #{item.tourCode}
+		, #{item.airlineCode}
+		FROM DUAL
+	</foreach>
+	</insert>
 
 
 
