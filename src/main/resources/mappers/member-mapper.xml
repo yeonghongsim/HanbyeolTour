@@ -251,6 +251,36 @@
 		AND BUY_STATUS_CODE &lt;= 5
 	</select>
 	
+	<!-- 예약 조회 상태별 갯수 조회 -->
+	<select id="getBuyStatusCodeCount" resultMap="buyMapper.buyState">
+		SELECT
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME,
+		  NVL(COUNT(HB.BUY_STATUS_CODE), 0) AS BUY_STATUS_COUNT
+		FROM
+		  HBT_BUY_STATE HBS LEFT JOIN HBT_BUY HB 
+		ON 
+		  HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
+          AND HB.MEM_CODE = #{memCode}
+          AND TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD')
+          AND TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		WHERE HBS.BUY_STATUS_CODE &lt;= 5
+		GROUP BY
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME
+		ORDER BY HBS.BUY_STATUS_CODE ASC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

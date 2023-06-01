@@ -234,7 +234,7 @@ public class MemberController {
 	    //System.out.println(buyStatusCodeCount);
 		//model.addAttribute("buyStatusCodeCount", buyStatusCodeCount);
 		
-		
+		// 예약 내역에 보여줄 예약 상태 이름 리스트 
 		List<BuyStateVO> buyStatusCodeNameList = memberService.getBuyStatusCodeName();
 		System.out.println("@@@ 이름 리스트:" + buyStatusCodeNameList);
 		model.addAttribute("buyStatusCodeNameList", buyStatusCodeNameList);
