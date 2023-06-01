@@ -1,6 +1,10 @@
 function regReply(writer, memId, hbtBoardNum, inpTag, userRole){
 	const hbtBoardReplyContent = inpTag.parentElement.previousElementSibling.children[0];
-	const roleStr = userRole[0]['authority'].substr(5);
+	if(userRole == 'AD' || userRole == 'USR'){
+		userRole = userRole;
+	} else {
+		userRole = userRole[0]['authority'].substr(5);
+	}
 	
 	if(memId == 'anonymousUser'){
 		const must_login = confirm('회원 이용 서비스 입니다. 로그인하시겠습니까?');
@@ -40,7 +44,7 @@ function regReply(writer, memId, hbtBoardNum, inpTag, userRole){
 		success: function(result) {
 			hbtBoardReplyContent.value = "";
 			
-			getReplyList(hbtBoardNum, memId, roleStr);
+			getReplyList(hbtBoardNum, memId, userRole);
 
 		},
 		error: function() {
@@ -50,7 +54,8 @@ function regReply(writer, memId, hbtBoardNum, inpTag, userRole){
     //ajax end
 }
 
-function regReReply(inputBtn, hbtBoardReplyNum, memId, hbtBoardNum){
+function regReReply(inputBtn, hbtBoardReplyNum, memId, hbtBoardNum, writerId, userRole){
+	
 	const input_btn_div = inputBtn.parentElement;
 	const cancel_re_reply_input = document.querySelector('.cancel_re_reply_input');
 	
@@ -99,7 +104,7 @@ function regReReply(inputBtn, hbtBoardReplyNum, memId, hbtBoardNum){
 			success: function(result) {
 				inputBtn.value = '대댓글';
 				
-				getReplyList(hbtBoardNum, memId)
+				getReplyList(hbtBoardNum, memId, userRole)
 				
 			},
 			error: function() {
@@ -125,7 +130,8 @@ function returnRegReReply(cancelBtn){
 	}	
 }
 
-function delReply(hbtBoardReplyNum, memId, hbtBoardNum, roleStr){
+function delReply(hbtBoardReplyNum, memId, hbtBoardNum, userRole){
+	
 	const ask = confirm('정말로 해당 댓글을 삭제하시겠습니까?');
 	
 	if(ask){
@@ -142,7 +148,7 @@ function delReply(hbtBoardReplyNum, memId, hbtBoardNum, roleStr){
 					,'hbtBoardNum' : hbtBoardNum},
 			success: function(result) {
 				
-				getReplyList(hbtBoardNum, memId, roleStr);
+				getReplyList(hbtBoardNum, memId, userRole);
 				
 			},
 			error: function() {
@@ -151,6 +157,38 @@ function delReply(hbtBoardReplyNum, memId, hbtBoardNum, roleStr){
 		});
 		//ajax end
 	}
+}
+
+function delReReply(hbtBoardReplyNum, hbtBoardNum, memId, hbtBoardReplyNumFk, userRole){
+	
+	const ask = confirm('해당 댓글을 삭제하시겠습니까');
+	
+	if(ask){
+		//ajax start
+		$.ajax({
+			url: '/board/delReplyAJAX', //요청경로
+			type: 'post',
+			async: true, // 동기방식(Ajax사용), false == 비동기방식
+			//contentType: 'application/json; charset=UTF-8',
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			//필요한 데이터
+			// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+			data: {'hbtBoardReplyNum' : hbtBoardReplyNum
+					,'hbtBoardNum' : hbtBoardNum
+					, 'hbtBoardReplyNumFk' : hbtBoardReplyNumFk},
+			success: function(result) {
+				
+				getReplyList(hbtBoardNum, memId, userRole);
+				
+			},
+			error: function() {
+				alert('실패');
+			}
+		});
+	   //ajax end
+		
+	}
+	
 }
 
 function updateFormReply(btn, hbtBoardReplyNum){
@@ -251,39 +289,9 @@ function cancelUpdateReply(cancelBtn, contentVal){
 	}
 }
 
-function delReReply(hbtBoardReplyNum, hbtBoardNum, memId, hbtBoardReplyNumFk, roleStr){
-	const ask = confirm('해당 댓글을 삭제하시겠습니까');
-	
-	if(ask){
-		//ajax start
-		$.ajax({
-			url: '/board/delReplyAJAX', //요청경로
-			type: 'post',
-			async: true, // 동기방식(Ajax사용), false == 비동기방식
-			//contentType: 'application/json; charset=UTF-8',
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			//필요한 데이터
-			// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
-			data: {'hbtBoardReplyNum' : hbtBoardReplyNum
-					,'hbtBoardNum' : hbtBoardNum
-					, 'hbtBoardReplyNumFk' : hbtBoardReplyNumFk},
-			success: function(result) {
-				
-				getReplyList(hbtBoardNum, memId, roleStr);
-				
-			},
-			error: function() {
-				alert('실패');
-			}
-		});
-	   //ajax end
-		
-	}
-	
-}
 
-function getReplyList(hbtBoardNum, memId, roleStr){
-	
+
+function getReplyList(hbtBoardNum, memId, userRole){
 	
 	//ajax start
 	$.ajax({
@@ -311,7 +319,7 @@ function getReplyList(hbtBoardNum, memId, roleStr){
 					str += `				<div class="col">`;
 					str += `					<div class="row">`;
 					str += `						<div class="col">`;
-					str += `							<span>${reply.memberVO.memId} / ${reply.memberVO.memRole} / ${roleStr}</span>`;
+					str += `							<span>${reply.memberVO.memId} / 게시글 작성자 권한${reply.memberVO.memRole} / 로그인한 유저 권한${userRole}</span>`;
 					str += `							<span style="color: grey; font-size: 0.8rem;">/ ${reply.hbtBoardReplyRegDate}</span>`;
 					str += `						</div>`;
 					str += `					</div>`;
@@ -323,7 +331,7 @@ function getReplyList(hbtBoardNum, memId, roleStr){
 					str += `					<div class="row">`;
 						if(memId != 'anonymousUser' && reply.memberVO.memId != memId){
 					str += `						<div class="col-1 me-3">`;
-					str += `							<input th:onclick="regReReply(this, '${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${reply.memberVO.memId}');" class="btn btn-primary" type="button" value="대댓글">`;
+					str += `							<input onclick="regReReply(this, '${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${reply.memberVO.memId}', '${userRole}');" class="btn btn-primary" type="button" value="대댓글">`;
 					str += `						</div>`;
 						}
 						if(reply.memberVO.memId == memId){
@@ -331,19 +339,19 @@ function getReplyList(hbtBoardNum, memId, roleStr){
 					str += `							<input onclick="updateFormReply(this, '${reply.hbtBoardReplyNum}')" class="btn btn-secondary" type="button" value="수정">`;
 					str += `						</div>`;
 						}
-						if(roleStr == 'USR' && reply.memberVO.memId == memId){
+						if(userRole == 'USR' && reply.memberVO.memId == memId){
 					str += `						<div class="col-1 me-3">`;
-					str += `							<input onclick="delReply('${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${roleStr}')" class="btn btn-danger" type="button" value="삭제4">`;
+					str += `							<input onclick="delReply('${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${userRole}')" class="btn btn-danger" type="button" value="삭제4">`;
 					str += `						</div>`;
 						}
-						if(roleStr == 'AD' && reply.memberVO.memId != memId){
+						if(userRole == 'AD' && reply.memberVO.memId != memId){
 					str += `						<div class="col-1 me-3">`;
-					str += `							<input onclick="delReply('${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${roleStr}')" class="btn btn-danger" type="button" value="삭제5">`;
+					str += `							<input onclick="delReply('${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${userRole}')" class="btn btn-danger" type="button" value="삭제5">`;
 					str += `						</div>`;
 						}
-						if(roleStr == 'AD' && reply.memberVO.memId == memId){
+						if(userRole == 'AD' && reply.memberVO.memId == memId){
 					str += `						<div class="col-1 me-3">`;
-					str += `							<input onclick="delReply('${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${roleStr}')" class="btn btn-danger" type="button" value="삭제6">`;
+					str += `							<input onclick="delReply('${reply.hbtBoardReplyNum}', '${memId}', '${reply.hbtBoardNum}', '${userRole}')" class="btn btn-danger" type="button" value="삭제6">`;
 					str += `						</div>`;
 							}
 					str += `					</div>`
@@ -362,19 +370,19 @@ function getReplyList(hbtBoardNum, memId, roleStr){
 					str += `						<span>${reReply.hbtBoardReplyContent}</span>`;
 					str += `					</div>`;
 					str += `				</div>`;
-						if(roleStr == 'USR' && reReply.memberVO.memId == memId){
+						if(userRole == 'USR' && reReply.memberVO.memId == memId){
 					str += `				<div class="col-1">`;
-					str += `					<input onclick="delReReply('${reReply.hbtBoardReplyNum}', '${reReply.hbtBoardNum}', '${memId}', '${reReply.hbtBoardReplyNumFk}', '${roleStr}');" type="button" class="btn btn-danger" value="삭제1">`;
+					str += `					<input onclick="delReReply('${reReply.hbtBoardReplyNum}', '${reReply.hbtBoardNum}', '${memId}', '${reReply.hbtBoardReplyNumFk}', '${userRole}');" type="button" class="btn btn-danger" value="삭제1">`;
 					str += `				</div>`;
 						}
-						if(roleStr == 'AD' && reReply.memberVO.memId == memId){
+						if(userRole == 'AD' && reReply.memberVO.memId == memId){
 					str += `				<div class="col-1">`;
-					str += `					<input onclick="delReReply('${reReply.hbtBoardReplyNum}', '${reReply.hbtBoardNum}', '${memId}', '${reReply.hbtBoardReplyNumFk}', '${roleStr}');" type="button" class="btn btn-danger" value="삭제2">`;
+					str += `					<input onclick="delReReply('${reReply.hbtBoardReplyNum}', '${reReply.hbtBoardNum}', '${memId}', '${reReply.hbtBoardReplyNumFk}', '${userRole}');" type="button" class="btn btn-danger" value="삭제2">`;
 					str += `				</div>`;
 						}
-						if(roleStr == 'AD' && reReply.memberVO.memId != memId){
+						if(userRole == 'AD' && reReply.memberVO.memId != memId){
 					str += `				<div class="col-1">`;
-					str += `					<input onclick="delReReply('${reReply.hbtBoardReplyNum}', '${reReply.hbtBoardNum}', '${memId}', '${reReply.hbtBoardReplyNumFk}', '${roleStr}');" type="button" class="btn btn-danger" value="삭제3">`;
+					str += `					<input onclick="delReReply('${reReply.hbtBoardReplyNum}', '${reReply.hbtBoardNum}', '${memId}', '${reReply.hbtBoardReplyNumFk}', '${userRole}');" type="button" class="btn btn-danger" value="삭제3">`;
 					str += `				</div>`;
 						}
 					str += `			</div>`;	
