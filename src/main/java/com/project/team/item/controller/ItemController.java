@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.project.team.admin.service.AdminService;
+import com.project.team.buy.vo.BuyDetailVO;
 import com.project.team.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -94,7 +95,7 @@ public class ItemController {
 
 	//상품상세정보조회
 	@GetMapping("/tourItemListDetail")
-	public String tourItemListDetail(Model model) {
+	public String tourItemListDetail(Model model, BuyDetailVO buyDetailVO) {
 		//상품상세정보
 		model.addAttribute("itemDetail", itemService.getItemDetail("ITEM_021"));
 		//상품이미지
