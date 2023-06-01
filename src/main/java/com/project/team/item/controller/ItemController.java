@@ -92,6 +92,21 @@ public class ItemController {
 		return mapper.writeValueAsString(addArrDate(itemService.getTourItemListGroupAJAX(searchKeyword),searchDate));
 	}
 
+	//상품상세정보조회
+	@GetMapping("/tourItemListDetail")
+	public String tourItemListDetail(Model model) {
+		//상품상세정보
+		model.addAttribute("itemDetail", itemService.getItemDetail("ITEM_021"));
+		//상품이미지
+
+		//호텔이미지
+
+		//투어 이미지
+
+
+		return "content/item/tour_item_list_detail";
+	}
+
 
 	//패키지상품 메인페이지
 	@GetMapping("/tourItemListMain")
@@ -101,11 +116,6 @@ public class ItemController {
 		return "content/item/tour_item_list_main";
 	}
 	//패키지상품 상세페이지
-	@GetMapping("/tourItemListDetail")
-	public String tourItemListDetail() {
-		
-		return "content/item/tour_item_list_detail";
-	}
 	//호텔페이지 이동
 	@GetMapping("/hotelPage")
 	public String goHotelPage(){

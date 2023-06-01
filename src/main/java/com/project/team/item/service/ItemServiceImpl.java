@@ -24,6 +24,11 @@ public class ItemServiceImpl implements ItemService{
 	public List<HashMap<String, Object>> getTourItemListGroupAJAX(Map<String, String> searchKeyword){
 		return sqlSession.selectList("itemMapper.getTourItemListGroupAJAX", searchKeyword);
 	}
-	
-	
+
+	@Override
+	public List<HashMap<String, Object>> getItemDetail(String itemCode) {
+		return sqlSession.selectList("itemMapper.getItemDetail", itemCode);
+	}
+
+
 }

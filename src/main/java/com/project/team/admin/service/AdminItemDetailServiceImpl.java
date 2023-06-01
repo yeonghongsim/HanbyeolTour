@@ -113,5 +113,10 @@ public class AdminItemDetailServiceImpl implements AdminItemDetailService {
         return sqlSession.selectList("adminMapper.getTourListByItemCode", itemCode);
     }
 
+    @Override
+    public void setItemDailyPlan(List<Map<String, Object>> list) {
+        sqlSession.insert("adminMapper.setItemDailyPlan", list);
+    }
+
 
 }

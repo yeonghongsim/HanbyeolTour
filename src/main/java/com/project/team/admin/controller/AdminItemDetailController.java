@@ -2,22 +2,23 @@ package com.project.team.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.project.team.admin.service.AdminItemDetailService;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.*;
 import com.project.team.util.UploadPath;
 import com.project.team.util.UploadUtil;
+import groovyjarjarasm.asm.TypeReference;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.transform.Source;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -175,7 +176,6 @@ public class AdminItemDetailController {
     //투어상품 상세 일정 관리
     @GetMapping("itemDailyManage")
     public String itemDailyManage(Model model,String itemCode){
-        System.out.println(itemCode + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         //상품목록
         model.addAttribute("itemList", adminItemDetailService.getItemCodeListNotDetail());
         //항공사목록
@@ -195,19 +195,16 @@ public class AdminItemDetailController {
         return "/content/admin/item/item_daily_manage";
     }
 
-    @PostMapping("setItemDailyPlan")
-    public String setItemDailyPlan(ItemPlanVO itemPlanVO){
+    @PostMapping("setItemDailyPlanAJAX")
+    @ResponseBody
+    public void setItemDailyPlan(@RequestParam(value = "itemDailyPlan") String itemDailyPlan){
 
-        System.out.println(itemPlanVO);
+        Gson gson = new Gson();
+        Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
+        List<Map<String, Object>> list = gson.fromJson(itemDailyPlan, resultType);
 
-        return "redirect:/admin/itemDetail/itemDailyManage";
+        adminItemDetailService.setItemDailyPlan(list);
     }
-
-
-
-
-
-
 
     //상품기본정보 조회
 //    @PostMapping("getItemInfoByItemCodeAJAX")
