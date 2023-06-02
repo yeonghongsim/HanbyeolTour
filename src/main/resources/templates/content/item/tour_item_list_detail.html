@@ -11,12 +11,29 @@
 <th:block layout:fragment="content">
 	<div class="row justify-content-center mx-auto" style="width: 80%;">
 		<div class="col">
-		
+			<!--	임시		-->
+			<div class="row">
+				<div class="col">
+					<form action="/buy/buyItem" method="post">
+						<input type="number" id="numOfPeople" name="reservedPeopleNum" value="1">명
+						<input type="hidden" th:value="${buyDetailVO.departDate}" name="departDate">
+						<input type="hidden" th:value="${buyDetailVO.arriveDate}" name="arriveDate">
+						<input type="hidden" th:value="${itemDetail[0]['ITEM_PRICE']}" name="buyDPrice">
+						<input type="hidden" id="itemCode" th:value="${itemDetail[0]['ITEM_CODE']}" name="itemCode">
+						<input type="hidden" th:value="${itemDetail[0]['AREA_CODE']}" name="areaCode">
+						<input type="submit" value="구매">
+					</form>
+				</div>
+				<div class="col">
+					<input type="button" value="장바구니" onclick="addCartAJAX();">
+				</div>
+			</div>
+
 		
 		<!-- 상품 제목  -->
 			<div class="row">
 				<div class="col">
-					<h3>상품제목 들어올자리</h3>	
+					<h3>[[${itemDetail[0]['ITEM_TITLE']}]]</h3>
 				</div>
 			</div>
 		
@@ -151,6 +168,6 @@
 
 <!--  연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
- <!--	<script type="text/javascript" src="/"></script> -->
+<script type="text/javascript" src="/js/content/item/tour_item_detail.js"></script>
 </th:block>
 </html>

@@ -51,5 +51,11 @@ public interface BoardService {
 	// select reply-list
 	List<BoardReplyVO> getReplyList(String hbtBoardNum);
 	
+	// delete board-reply
+	void delReply(BoardReplyVO boardReplyVO);
+	
+	// update board-reply content
+	void updateReplyContent(BoardReplyVO boardReplyVO);
+	
 	
 }

@@ -86,12 +86,27 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public void regBoardReply(BoardReplyVO boardReplyVO) {
 		sqlSession.insert("boardMapper.regBoardReply", boardReplyVO);
-		sqlSession.update("boardMapper.addReplyCnt", boardReplyVO.getBoardVO().getHbtBoardNum());
+		sqlSession.update("boardMapper.addReplyCnt", boardReplyVO);
+		if(boardReplyVO.getReplyDepth() > 1) {
+			sqlSession.update("boardMapper.addReReplyCnt", boardReplyVO);
+		}
 	}
 
 	@Override
 	public List<BoardReplyVO> getReplyList(String hbtBoardNum) {
 		return sqlSession.selectList("boardMapper.getReplyList", hbtBoardNum);
+	}
+
+	@Transactional
+	@Override
+	public void delReply(BoardReplyVO boardReplyVO) {
+		sqlSession.delete("boardMapper.delReply", boardReplyVO);
+		sqlSession.update("boardMapper.reduceReplyCnt", boardReplyVO);
+	}
+
+	@Override
+	public void updateReplyContent(BoardReplyVO boardReplyVO) {
+		sqlSession.update("boardMapper.updateReplyContent", boardReplyVO);
 	}
 
 

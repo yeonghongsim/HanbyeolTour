@@ -30,7 +30,62 @@
 	</resultMap>
 	
 	
-	
+	<select id="getNextItemCode" resultType="string">
+		SELECT 'BUY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_CODE, 5))), 0) + 1, 3, '0')
+		FROM HBT_BUY
+	</select>
+
+	<insert id="setBuy">
+		INSERT INTO HBT_BUY (
+		                     BUY_CODE, MEM_CODE, BUY_STATUS_CODE, BUY_TOTAL_PRICE
+		) VALUES (
+		          #{buyCode}
+		          , (SELECT MEM_CODE FROM HBT_MEM WHERE MEM_ID = #{memCode})
+		          , 1
+		          , ${buyTotalPrice}
+				)
+	</insert>
+
+	<insert id="setBuyDetail">
+		INSERT INTO HBT_BUY_DETAIL (
+		            BUY_D_CODE
+					, ITEM_CODE
+					, BUY_CODE
+					, AREA_CODE
+					, DEPART_DATE
+					, ARRIVE_DATE
+					, RESERVED_PEOPLE_NUM
+					, BUY_D_PRICE
+		) VALUES (
+		          (SELECT 'BUY_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_D_CODE, 7))), 0) + 1, 3, '0')
+				   FROM HBT_BUY_DETAIL)
+				, #{itemCode}
+				, #{buyCode}
+				, #{areaCode}
+				, #{departDate}
+				, #{arriveDate}
+				, #{reservedPeopleNum}
+				, #{buyDPrice}
+				 )
+	</insert>
+
+	<insert id="addCartAJAX">
+	INSERT INTO HBT_CART
+			(CART_CODE
+			, MEM_CODE
+			, ITEM_CODE
+			, NUM_OF_PEOPLE
+			, CART_TOTAL_PRICE
+			) VALUES
+		   (
+			(SELECT 'CART_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CART_CODE, 6))), 0) + 1, 3, '0')
+			 FROM HBT_CART)
+			 , (SELECT MEM_CODE FROM HBT_MEM WHERE MEM_ID = #{memCode})
+			 , #{itemCode}
+			 , ${numOfPeople}
+			 , ((SELECT ITEM_PRICE FROM HBT_ITEM WHERE ITEM_CODE = #{itemCode}) * ${numOfPeople})
+		  )
+	</insert>
 	
 	
 	
