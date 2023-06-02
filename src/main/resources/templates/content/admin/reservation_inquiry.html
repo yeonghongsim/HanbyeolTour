@@ -107,12 +107,15 @@
 					<div class="row">
 						<div class="col-2">
 							<select class="form-select">
+							<th:block>
 								<option>주문상태변경</option>
 								<option>결제 완료</option>
 								<option>예약 완료</option>
 								<option>취소 요청</option>
 								<option>취소 완료</option>
+							</th:block>
 							</select>
+							
 						</div>
 						<div class="col-1">
 							<input type="button" value="변경" class="btn">
@@ -135,22 +138,29 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><input type="checkbox"> </td>
-								<td>1</td>
-								<td>2</td>
-								<td>3</td>
-								<td>
-									이름
-									연락처
-								</td>
-								<td>
-									<select>
-										<option>결제 완료</option>
-										<option>예약 완료</option>
-									</select>
-								</td>
-							</tr>
+							<th:block th:if="${#lists.size(buyList) == 0}">
+								<tr>
+									<td colspan="6">조회할 예약 내역이 없습니다.</td>
+								</tr>
+							</th:block>
+							<th:block th:unless="${#lists.size(buyList) == 0}">
+								<tr th:each="buy : ${buyList}">
+									<td><input type="checkbox"></td>
+									<td>[[${buy.buyVO.buyCode}]]</td>
+									<td>[[${buy.buyVO.buyDate}]]</td>
+									<td></td>
+									<td>
+										<div>[[${buy.memName}]]</div>
+										<div>[[${buy.memberDetailVO.memDTell}]]</div>
+									</td>
+									<td>
+										<select>
+											<option></option>
+											<option></option>
+										</select>
+									</td>
+								</tr>
+							</th:block>
 						</tbody>
 					</table>
 				</div>
