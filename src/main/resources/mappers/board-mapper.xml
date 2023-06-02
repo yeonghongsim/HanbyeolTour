@@ -141,16 +141,17 @@
 		<if test='isNotice != null'>
 		WHERE IS_NOTICE = #{isNotice}
 		</if>
-		<if test="groundSearchVO != null">
+		<if test='groundSearchVO.searchVal != null and !groundSearchVO.searchVal.equals("")'>
 		AND UPPER(${groundSearchVO.searchKey}) LIKE '%'||UPPER(#{groundSearchVO.searchVal})||'%'
 		</if>
 		ORDER BY HBT_BOARD_NUM DESC
+		OFFSET #{groundSearchVO.offsetCnt} ROWS FETCH NEXT #{groundSearchVO.displayCnt} ROWS ONLY
 	</select>
 	
 	<select id="getBoardListCnt" resultType="int">
 		SELECT COUNT(HBT_BOARD_NUM)
 		FROM HBT_BOARD
-		<if test="searchVal != null">
+		<if test='searchVal != null and !searchVal.equals("")'>
 		WHERE UPPER(${searchKey}) LIKE '%'||UPPER(#{searchVal})||'%'
 		</if>
 	</select>
