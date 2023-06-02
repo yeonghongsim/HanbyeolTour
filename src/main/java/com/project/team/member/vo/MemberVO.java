@@ -19,7 +19,6 @@ public class MemberVO {
 	private String isTemporaryPw;
 	private MemberDetailVO memberDetailVO;
 	private MemStatusVO memStatusVO;
-	private SearchMemVO searchMemVO;
 	private BuyVO buyVO;
 
 }
