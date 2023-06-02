@@ -1,6 +1,9 @@
 package com.project.team.member.controller;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.team.buy.service.BuyService;
+import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
@@ -174,9 +179,24 @@ public class MyPageController {
 	
 	//예약확인 페이지로 이동 
 	@GetMapping("/checkMyReservation")
-	public String checkMyReservation(Model model) {
+	public String checkMyReservation(Model model, Authentication authentication) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		String memCode = memberService.getMemCode(authentication.getName());
+		System.out.println("memCode : " + memCode);
+		// 1개월 내 구매상태 정보 조회 
+		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
+		System.out.println(buyStatusInOneMonthList);
+		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
+		
+		//구매 내역 리스트 조회 
+		List<BuyVO> buyList = memberService.getBuyList(memCode);
+		System.out.println("@@@@ 구매내역 조회 :" + buyList);
+		model.addAttribute("buyList",buyList);
+		
+		
+		
 		
 		return "content/member/myPage/check_my_reservation";
 	}

@@ -22,11 +22,13 @@
 		<result column="ARRIVE_DATE" 			property="arriveDate"/>
 		<result column="RESERVED_PEOPLE_NUM"	property="reservedPeopleNum"/>
 		<result column="BUY_D_PRICE" 			property="buyDPrice"/>
+		<association property="itemVO" resultMap="itemMapper.item"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.buy.vo.BuyStateVO" id="buyState">
 		<id column="BUY_STATUS_CODE" 			property="buyStatusCode"/>
 		<result column="BUY_STATUS_NAME" 		property="buyStatusName"/>
+		<result column="BUY_STATUS_COUNT" 		property="buyStatusCount"/>
 	</resultMap>
 	
 	

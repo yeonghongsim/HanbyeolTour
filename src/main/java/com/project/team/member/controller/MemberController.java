@@ -216,28 +216,12 @@ public class MemberController {
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		model.addAttribute("memInfo", memInfo);
 		String memCode = memberService.getMemCode(memInfo.getMemId());
-		
-		// 구매상태 코드 
-		List<BuyVO> buyStatusCodeList = memberService.getBuyStatusCode(memCode);
-		System.out.println("@@@@@" + buyStatusCodeList);
-	    // model.addAttribute("buyStatusCodeList", buyStatusCodeList); // 속성의 이름을 지정해줌
-		
-		// buyStatusCodeList에 있는 BuyVO 객체들의 buyStatusCode 값을 추출하여 
-		//새로운 List<Integer>인 statusCodeList에 저장
-		List<Integer> statusCodeList = buyStatusCodeList.stream()
-	            .map(BuyVO::getBuyStatusCode)
-	            .collect(Collectors.toList());
-		System.out.println("!!!!!!" + statusCodeList);
 				
+		// 1개월 내 구매상태 정보 조회 
+		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
+		System.out.println(buyStatusInOneMonthList);
+		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
 		
-		//Map<Integer, Integer> buyStatusCodeCount = memberService.getBuyStatusCodeCount(statusCodeList);
-	    //System.out.println(buyStatusCodeCount);
-		//model.addAttribute("buyStatusCodeCount", buyStatusCodeCount);
-		
-		// 예약 내역에 보여줄 예약 상태 이름 리스트 
-		List<BuyStateVO> buyStatusCodeNameList = memberService.getBuyStatusCodeName();
-		System.out.println("@@@ 이름 리스트:" + buyStatusCodeNameList);
-		model.addAttribute("buyStatusCodeNameList", buyStatusCodeNameList);
 		
 		
 		return "content/member/info_manage";

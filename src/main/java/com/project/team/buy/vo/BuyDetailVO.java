@@ -1,5 +1,7 @@
 package com.project.team.buy.vo;
 
+import com.project.team.item.vo.ItemVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,4 +19,6 @@ public class BuyDetailVO {
 	private String arriveDate;
 	private int reservedPeopleNum;
 	private int buyDPrice;
+	
+	private ItemVO itemVO;
 }
