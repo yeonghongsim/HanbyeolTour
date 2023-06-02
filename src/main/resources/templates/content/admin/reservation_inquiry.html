@@ -13,15 +13,138 @@
 <th:block layout:fragment="adminContent">
 	<div class="row">
 		<div class="col">
-			<h3 class="menuTitle">예약 조회</h3>
+			<h3 class="menuTitle">전체 예약 관리</h3>
 			<div class="row">
 				<div class="col">
-					검색 기능
+					<div class="row">
+						<div class="col">
+							<form>
+								<table class="table">
+									<colgroup>
+										<col width="">
+									</colgroup>
+									<tr>
+										<td>
+										<div class="row">
+											검색조건
+											<div class="col-2">
+												<select class="form-select">
+													<option>예약코드</option>
+													<option>예약자명</option>
+													<option>아이디</option>
+												</select>
+											</div>
+											<div class="col-3">
+												<input type="text" class="form-control">
+											
+											</div>
+										</div>
+										</td>
+									<tr>	
+									<tr>	
+										<td>
+											<div class="row">
+												주문상태
+												
+												<div class="col-6">
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">전체</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">결제 완료</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">예약 완료</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">취소 요청</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">취소 완료</label>
+												</div>
+												<div class="col-4">
+													
+												</div>
+												
+											</div>
+										</td>
+										
+										
+									</tr>
+									<tr>	
+										<td>
+											<div class="row">
+												기간
+											
+												<div class="col-2">
+													
+													<select class="form-select">
+														<option>주문일</option>
+														<option>취소관리</option>
+													</select>
+												</div>
+												<div class="col-4">
+													<input type="button"  class="btn" value="전체">
+													<input type="button" class="btn" value="7일">
+													<input type="button" class="btn" value="1개월">
+													<input type="button" class="btn" value="3개월">
+												</div>
+												<div class="col-2">
+													<input type="date" class="form-control">
+												</div>
+												
+												<div class="col-2">
+													<input type="date" class="form-control">
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+									<input type="submit" value="검색" class="btn">
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row mt-5">
 				<div class="col">
-					예약 목록 나오는 곳
+					<div class="row">
+						<div class="col-2">
+							<select class="form-select">
+								<option>주문상태변경</option>
+								<option>결제 완료</option>
+								<option>예약 완료</option>
+								<option>취소 요청</option>
+								<option>취소 완료</option>
+							</select>
+						</div>
+						<div class="col-1">
+							<input type="button" value="변경" class="btn">
+						</div>
+					</div>
+					<table class="table">
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<thead>
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>예약코드</td>
+								<td>예약일</td>
+								<td>예약상품명</td>
+								<td>예약자정보</td>
+								<td>예약상태</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox"> </td>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
