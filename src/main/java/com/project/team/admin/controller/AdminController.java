@@ -278,6 +278,27 @@ public class AdminController {
 		return "redirect:/admin/memInfo";
 	}
 	
+	//예약 관리 페이지
+	@GetMapping("/reserveManage")
+	public String reserveManage() {
+		
+		return "redirect:/admin/reservationInquiry";
+	}
+	
+	//예약 조회
+	@GetMapping("/reservationInquiry")
+	public String reservationInquiry() {
+		
+		return "content/admin/reservation_inquiry";
+	}
+	
+	//예약 상태 변경
+	@GetMapping("/updateReservation")
+	public String updateReservation() {
+		
+		return "content/admin/update_reservation";
+	}
+	
 	
 	
 	

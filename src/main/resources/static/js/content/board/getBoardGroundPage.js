@@ -1,4 +1,5 @@
 function searchBoard() {
+	const searchForm = document.querySelector('#searchForm');
 	
 	const searchKey = document.querySelector('#searchKey');
 	const searchVal = document.querySelector('#searchVal');
@@ -9,6 +10,10 @@ function searchBoard() {
 		return ;
 	}
 	
+	//console.log(searchForm);
+	searchForm.submit();
+	
+	return;
 	
 	//ajax start
     $.ajax({
@@ -64,7 +69,15 @@ function searchBoard() {
     });
 	//ajax end
 	
+	
 }
+
+function getOrderListPaging(){
+	alert(11);
+	
+	return ;
+}
+
 
 function getBoardDetail(isPrivate, hbtBoardNum, aTag){
 	

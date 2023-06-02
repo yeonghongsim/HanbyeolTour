@@ -14,6 +14,7 @@ import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.member.service.MemberService;
 
 import jakarta.annotation.Resource;
@@ -47,14 +48,42 @@ public class BoardController {
 		
 		return "content/board/getPublicBoardPage";
 	}
-
-	@GetMapping("/getBoardGroundPage")
-	public String getBoardGroundPage(Model model,BoardVO boardVO) {
+	
+	@GetMapping("/getPublicDetail")
+	public String getPublicDetail(Model model, String hbtBoardNum) {
 		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		model.addAttribute("publicDetail", boardService.getBoardDetail(hbtBoardNum));
+		
+		
+		return "content/board/get_public_detail";
+	}
+	
+
+	@RequestMapping("/getBoardGroundPage")
+	public String getBoardGroundPage(Model model,BoardVO boardVO) {
+
+		int totalDataCnt = boardService.getBoardListCnt(boardVO.getGroundSearchVO());
+		
+		int dataCnt = (boardVO.getGroundSearchVO() == null) ? totalDataCnt : boardService.getBoardListCnt(boardVO.getGroundSearchVO());
+		
+		if(boardVO.getGroundSearchVO() != null) {
+			boardVO.getGroundSearchVO().setPageInfo();
+			System.out.println("!@#!@#!@#!@#" + boardVO);
+		}
+		
+		
+		System.out.println("!@#!@#!@#" + dataCnt);
+		
+		
+
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		boardVO.setIsNotice("N");
 		
 		model.addAttribute("boardList", boardService.getBoardList(boardVO));
+		model.addAttribute("search", boardVO.getGroundSearchVO());
+		
 		
 		return "content/board/getBoardGroundPage";
 	}

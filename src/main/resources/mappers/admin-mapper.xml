@@ -322,6 +322,11 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
+	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 -->
+	<select id="getBuyList" resultMap="buy">
+		
+	</select>
+	
 	
 	
 	

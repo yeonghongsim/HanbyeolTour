@@ -16,6 +16,5 @@ public class BoardReplyVO {
 	private String hbtBoardNum;
 	private int replyDepth;
 	private String hbtBoardReplyNumFk;
-	private String reReplyCnt;
 	private MemberVO memberVO;
 }

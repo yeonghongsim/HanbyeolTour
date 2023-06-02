@@ -6,6 +6,7 @@ import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 public interface BoardService {
@@ -57,5 +58,6 @@ public interface BoardService {
 	// update board-reply content
 	void updateReplyContent(BoardReplyVO boardReplyVO);
 	
-	
+	// get board list cnt
+	int getBoardListCnt(GroundSearchVO groundSearchVO);
 }

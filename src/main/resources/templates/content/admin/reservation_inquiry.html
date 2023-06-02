@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+<th:block layout:fragment="adminContent">
+	<div class="row">
+		<div class="col">
+			<h3 class="menuTitle">전체 예약 관리</h3>
+			<div class="row">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							<form>
+								<table class="table">
+									<colgroup>
+										<col width="">
+									</colgroup>
+									<tr>
+										<td>
+										<div class="row">
+											검색조건
+											<div class="col-2">
+												<select class="form-select">
+													<option>예약코드</option>
+													<option>예약자명</option>
+													<option>아이디</option>
+												</select>
+											</div>
+											<div class="col-3">
+												<input type="text" class="form-control">
+											
+											</div>
+										</div>
+										</td>
+									<tr>	
+									<tr>	
+										<td>
+											<div class="row">
+												주문상태
+												
+												<div class="col-6">
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">전체</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">결제 완료</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">예약 완료</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">취소 요청</label>
+													<input type="checkbox" class="form-check-input">
+													<label class="form-check-label">취소 완료</label>
+												</div>
+												<div class="col-4">
+													
+												</div>
+												
+											</div>
+										</td>
+										
+										
+									</tr>
+									<tr>	
+										<td>
+											<div class="row">
+												기간
+											
+												<div class="col-2">
+													
+													<select class="form-select">
+														<option>주문일</option>
+														<option>취소관리</option>
+													</select>
+												</div>
+												<div class="col-4">
+													<input type="button"  class="btn" value="전체">
+													<input type="button" class="btn" value="7일">
+													<input type="button" class="btn" value="1개월">
+													<input type="button" class="btn" value="3개월">
+												</div>
+												<div class="col-2">
+													<input type="date" class="form-control">
+												</div>
+												
+												<div class="col-2">
+													<input type="date" class="form-control">
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+									<input type="submit" value="검색" class="btn">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-5">
+				<div class="col">
+					<div class="row">
+						<div class="col-2">
+							<select class="form-select">
+								<option>주문상태변경</option>
+								<option>결제 완료</option>
+								<option>예약 완료</option>
+								<option>취소 요청</option>
+								<option>취소 완료</option>
+							</select>
+						</div>
+						<div class="col-1">
+							<input type="button" value="변경" class="btn">
+						</div>
+					</div>
+					<table class="table">
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<thead>
+							<tr>
+								<td><input type="checkbox"></td>
+								<td>예약코드</td>
+								<td>예약일</td>
+								<td>예약상품명</td>
+								<td>예약자정보</td>
+								<td>예약상태</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox"> </td>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>
+									이름
+									연락처
+								</td>
+								<td>
+									<select>
+										<option>결제 완료</option>
+										<option>예약 완료</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/mem_info.js"></script> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+</html>
