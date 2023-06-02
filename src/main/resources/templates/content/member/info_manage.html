@@ -10,18 +10,6 @@
 </th:block>
 
 <th:block layout:fragment="member_content">
-	<div class="row mb-3">
-		<div class="col">
-			info_manage
-		</div>
-	</div>
-	
-	
-	<div class="row">
-		<div class="col">
-			[[${msMenuList}]]
-		</div>
-	</div>
 	
 	<div class="row profile-bar mt-3">
 		<div class="col">
@@ -43,41 +31,22 @@
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col">
-		  <div th:each="code : ${buyStatusCodeList}">
-            [[${code.buyStatusCode}]]
-        	</div>
-		</div>
-	</div>
+
 	<div class="row mb-4">
-		<div class="col content-box">
-			<a th:href="@{/myPage/checkMyReservation}">
-				<ul class="my-page-step">
-					<li><!-- 예약 상태 코드별 갯수 count (날짜 필요 1개월 내로) -->
-						<em>1</em>
-						<span th:text="${buyStatusCodeNameList[0].buyStatusName}"></span>
-					<li>
-						<em>1</em>
-						<span th:text="${buyStatusCodeNameList[1].buyStatusName}"></span>
-					</li>		
-					<li>
-						<em>1</em>
-						<span th:text="${buyStatusCodeNameList[2].buyStatusName}"></span>
-					</li>		
-					<li>
-						<em>1</em>
-						<span th:text="${buyStatusCodeNameList[3].buyStatusName}"></span>
-					</li>		
-					<li>
-						<em>1</em>
-						<span th:text="${buyStatusCodeNameList[4].buyStatusName}"></span>
-					</li>		
-				</ul>
-			</a>
-		</div>
+	    <div class="col content-box">
+	        <a th:href="@{/myPage/checkMyReservation}">
+	            <ul class="my-page-step">
+	                <li th:each="buyStatus : ${buyStatusInOneMonthList}">
+	                    <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
+	                    <span  th:text="${buyStatus.buyStatusName}"></span>
+	                </li>
+	            </ul>
+	        </a>
+	    </div>
 	</div>
+
 	
+		
 	<!-- 선 -->
 	<div class="row">
 		<div class="col	mb-1">
@@ -100,6 +69,7 @@
 	
 	
     <div class="area-over">
+    	<!-- 1:1 문의 내역 -->
 	    <div class="col-6" style="display: inline-block;">
 	        
 	        <div class="row">
@@ -113,14 +83,15 @@
 	            </div>
 	        </div>
 	        
-	        <div>
-	        
-	        
-	        </div>
-	        
-	        
+	       <div class="row">
+	    		<div class="col list-area">
+	    		 리뷰 데이터 올 공간 
+	    		</div>
+	    	</div>	
 	        
 	    </div>
+	    
+	    <!-- 나의 후기 내역 -->
 	    <div class="col-6" style="display: inline-block;">
 	       
 	        <div class="row">
@@ -135,11 +106,12 @@
 	        </div>
 	    	<div class="row">
 	    		<div class="col list-area">
-	    		
+	    			후기 데이터 올 공간 
 	    		</div>
 	    	</div>	    	
 	    	
 	    </div>
+	    
 	</div>
     
     

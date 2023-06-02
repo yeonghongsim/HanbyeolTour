@@ -11,4 +11,5 @@ import lombok.ToString;
 public class BuyStateVO {
 	private int buyStatusCode;
 	private String buyStatusName;
+	private int buyStatusCount;
 }

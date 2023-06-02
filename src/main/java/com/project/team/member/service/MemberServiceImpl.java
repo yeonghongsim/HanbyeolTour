@@ -118,23 +118,29 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.update("memberMapper.updateMyInfoName", memberVO);
 	}
 	
-	// 회원 상태 코드 조회 
+	// 주문 상태 코드 갯수 조회
 	@Override
-	public List<BuyVO> getBuyStatusCode(String memCode) {
-		return sqlSession.selectList("memberMapper.getBuyStatusCode", memCode);
-	}
-		
-//	@Override
-//	public Map<Integer, Integer> getBuyStatusCodeCount(List<Integer> statusCodeList) {
-//	    return sqlSession.selectMap("memberMapper.getBuyStatusCodeCount", statusCodeList, "BUY_STATUS_CODE");
-//	}
-	// 주문 상태 코드 이름 조회 
-	@Override
-	public List<BuyStateVO> getBuyStatusCodeName() {
-	    return sqlSession.selectList("memberMapper.getBuyStatusCodeName");
+	public List<BuyStateVO> getBuyStatusInOneMonth(String memCode) {
+		return sqlSession.selectList("memberMapper.getBuyStatusInOneMonth", memCode);
 	}
 
-
+	// 구매 내역 조회 
+	@Override
+	public List<BuyVO> getBuyList(String memCode) {
+		return sqlSession.selectList("memberMapper.getBuyList", memCode);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -173,6 +179,10 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemCode(String memid) {
 		return sqlSession.selectOne("adminMapper.getMemCode", memid);
 	}
+
+
+
+	
 
 	
 	

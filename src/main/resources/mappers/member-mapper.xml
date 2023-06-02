@@ -233,23 +233,59 @@
 	WHERE MEM_D_TELL = #{memDTell}
 	</select>
 	
-	<!-- 1개월 내 구매건 - 구매 상태 코드 조회 -->
-	<select id="getBuyStatusCode" resultMap="buyMapper.buy">
-		SELECT BUY_STATUS_CODE
-		FROM HBT_BUY
-		WHERE MEM_CODE = #{memCode}
-	    AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYYMMDD')
-   		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &lt;= TO_CHAR(SYSDATE, 'YYYYMMDD')
-	</select>
 		
-	<!-- 예약상태 코드 이름 조회 -->
-	<select id="getBuyStatusCodeName" resultMap="buyMapper.buyState">
-		SELECT BUY_STATUS_CODE,
-			   BUY_STATUS_NAME
-		FROM HBT_BUY_STATE
-		WHERE BUY_STATUS_CODE &gt;= 1
-		AND BUY_STATUS_CODE &lt;= 5
+	<!-- 예약 조회 상태별 갯수 조회 -->
+	<select id="getBuyStatusInOneMonth" resultMap="buyMapper.buyState">
+		SELECT
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME,
+		  NVL(COUNT(HB.BUY_STATUS_CODE), 0) AS BUY_STATUS_COUNT
+		FROM
+		  HBT_BUY_STATE HBS LEFT JOIN HBT_BUY HB 
+		ON 
+		  HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
+          AND HB.MEM_CODE = #{memCode}
+          AND TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD')
+          AND TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		WHERE HBS.BUY_STATUS_CODE &lt;= 5
+		GROUP BY
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME
+		ORDER BY HBS.BUY_STATUS_CODE ASC
 	</select>
+	
+	<!-- 배송목록 조회 -->
+	<select id="getBuyList" resultMap="buyMapper.buy">
+		SELECT HB.BUY_CODE
+		    , HB.BUY_TOTAL_PRICE
+		    , HBD.BUY_D_CODE
+		    , TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') AS BUY_DATE
+		    , HTA.AREA_KOR_NAME
+		    , HI.ITEM_TITLE
+		    , HII.ITEM_IMG_ATTACHED_NAME
+		    , HBD.RESERVED_PEOPLE_NUM
+		    , TO_CHAR(HBD.DEPART_DATE, 'YYYY-MM-DD') AS DEPART_DATE
+		    , TO_CHAR(HBD.ARRIVE_DATE, 'YYYY-MM-DD') AS ARRIVE_DATE
+		    , HBD.BUY_D_PRICE
+		    , HBS.BUY_STATUS_NAME
+		FROM HBT_BUY HB, HBT_BUY_DETAIL HBD, HBT_TOUR_AREA HTA,
+		    HBT_ITEM HI, HBT_ITEM_IMG HII, HBT_BUY_STATE HBS
+		WHERE HB.BUY_CODE = HBD.BUY_CODE
+		AND HBD.AREA_CODE = HTA.AREA_CODE
+		AND HI.ITEM_CODE = HBD.ITEM_CODE
+		AND HI.ITEM_CODE = HII.ITEM_CODE
+        AND HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
+		AND HB.MEM_CODE = #{memCode}
+		ORDER BY BUY_DATE DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
