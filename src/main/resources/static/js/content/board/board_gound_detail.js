@@ -55,6 +55,13 @@ function regReply(writer, memId, hbtBoardNum, inpTag, userRole){
 }
 
 function regReReply(inputBtn, hbtBoardReplyNum, memId, hbtBoardNum, writerId, userRole){
+	if(userRole == 'AD' || userRole == 'USR'){
+		userRole = userRole;
+	} else {
+		userRole = userRole[0]['authority'].substr(5);
+	}
+	
+	alert(memId + '/' + writerId + '/' + userRole);
 	
 	const input_btn_div = inputBtn.parentElement;
 	const cancel_re_reply_input = document.querySelector('.cancel_re_reply_input');
@@ -131,6 +138,11 @@ function returnRegReReply(cancelBtn){
 }
 
 function delReply(hbtBoardReplyNum, memId, hbtBoardNum, userRole){
+	if(userRole == 'AD' || userRole == 'USR'){
+		userRole = userRole;
+	} else {
+		userRole = userRole[0]['authority'].substr(5);
+	}
 	
 	const ask = confirm('정말로 해당 댓글을 삭제하시겠습니까?');
 	
@@ -160,6 +172,11 @@ function delReply(hbtBoardReplyNum, memId, hbtBoardNum, userRole){
 }
 
 function delReReply(hbtBoardReplyNum, hbtBoardNum, memId, hbtBoardReplyNumFk, userRole){
+	if(userRole == 'AD' || userRole == 'USR'){
+		userRole = userRole;
+	} else {
+		userRole = userRole[0]['authority'].substr(5);
+	}
 	
 	const ask = confirm('해당 댓글을 삭제하시겠습니까');
 	
@@ -319,7 +336,7 @@ function getReplyList(hbtBoardNum, memId, userRole){
 					str += `				<div class="col">`;
 					str += `					<div class="row">`;
 					str += `						<div class="col">`;
-					str += `							<span>${reply.memberVO.memId} / 게시글 작성자 권한${reply.memberVO.memRole} / 로그인한 유저 권한${userRole}</span>`;
+					str += `							<span>${reply.memberVO.memId}</span>`;
 					str += `							<span style="color: grey; font-size: 0.8rem;">/ ${reply.hbtBoardReplyRegDate}</span>`;
 					str += `						</div>`;
 					str += `					</div>`;

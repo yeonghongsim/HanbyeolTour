@@ -11,36 +11,41 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="board_content">
-	
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
-	
 	<div class="row">
 		<div class="col" id="wholeViewDiv">
 		
-		<div class="row mb-3">
-			<div class="col-2">
-				<select class="form-select text-center" name="searchKey" id="searchKey">
-					<option value="HBT_BOARD_TITLE">제목</option>
-					<option value="(SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE)">작성자</option>
-				</select>
+		<form th:action="@{/board/getBoardGroundPage}" method="post" id="searchForm">
+			<div class="row mb-3">
+				<div class="col-2">
+					<select class="form-select text-center" name="groundSearchVO.searchKey" id="searchKey">
+						<option value="HBT_BOARD_TITLE" th:selected="${boardVO.groundSearchVO == null or boardVO.groundSearchVO.searchKey == 'HBT_BOARD_TITLE'}">제목</option>
+						<option value="(SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE)"
+						th:selected="${boardVO.groundSearchVO != null and boardVO.groundSearchVO.searchKey == 
+						'(SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE)'}">작성자</option>
+					</select>
+				</div>
+				<div class="col-8">
+					<input class="form-control" type="text" name="groundSearchVO.searchVal" id="searchVal" th:value="${boardVO.groundSearchVO == null ? '' : boardVO.groundSearchVO.searchVal}">
+				</div>
+				<div class="col-2">
+					<input th:onclick="searchBoard()" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
+				</div>
 			</div>
-			<div class="col-8">
-				<input class="form-control" type="text" name="searchVal" id="searchVal">
-			</div>
-			<div class="col-2">
-				<input th:onclick="searchBoard()" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
-			</div>
-		</div>
-	
+		</form>
+		
 		<div class="row mb-3">
 			<div class="col">
 				
-				<div class="row mb-3 text-end">
+				<div class="row mb-3">
 					<div class="col">
+						<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-secondary" type="button" value="전체 보기">
+					</div>
+					<div class="col text-end">
 						<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-success" type="button" value="게시글 작성">
 					</div>
 				</div>
@@ -111,13 +116,13 @@
 							</a>
 						</li>
 						<li class="page-item">
-							<a class="page-link" href="#">1</a>
+							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging()">1</a>
 						</li>
 						<li class="page-item">
-							<a class="page-link" href="#">2</a>
+							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging()">2</a>
 						</li>
 						<li class="page-item">
-							<a class="page-link" href="#">3</a>
+							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging()">3</a>
 						</li>
 						<li class="page-item">
 							<a class="page-link" href="#" aria-label="Next"> 

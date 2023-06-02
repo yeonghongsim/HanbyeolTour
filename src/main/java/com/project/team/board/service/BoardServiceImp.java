@@ -11,6 +11,7 @@ import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 
@@ -87,9 +88,6 @@ public class BoardServiceImp implements BoardService{
 	public void regBoardReply(BoardReplyVO boardReplyVO) {
 		sqlSession.insert("boardMapper.regBoardReply", boardReplyVO);
 		sqlSession.update("boardMapper.addReplyCnt", boardReplyVO);
-		if(boardReplyVO.getReplyDepth() > 1) {
-			sqlSession.update("boardMapper.addReReplyCnt", boardReplyVO);
-		}
 	}
 
 	@Override
@@ -107,6 +105,11 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public void updateReplyContent(BoardReplyVO boardReplyVO) {
 		sqlSession.update("boardMapper.updateReplyContent", boardReplyVO);
+	}
+
+	@Override
+	public int getBoardListCnt(GroundSearchVO groundSearchVO) {
+		return sqlSession.selectOne("boardMapper.getBoardListCnt", groundSearchVO);
 	}
 
 
