@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+ul{
+	list-style: none;
+}
+
+li{
+	display: inline-block;
+	text-align: -webkit-match-parent;
+}
+
+.search-period .select_con li:first-child {
+    margin-left: 0;
+}
+.select_con li{
+	float: left;
+    width: auto;
+    height: 28px;
+    margin-left: 4px;
+    font-size: 0;
+    line-height: 0;
+}
+    
+.search-period .select_con p {
+    float: left;
+    margin-right: 20px;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -.48px;
+}
+
+option{
+	font-size: 0.7rem;
+}
+
+
+
+.form-select{
+	font-size: 0.8rem;
+}
+
+
+
+
+
+

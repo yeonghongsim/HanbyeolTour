@@ -36,17 +36,17 @@
 	    <div class="col content-box">
 	        <a th:href="@{/myPage/checkMyReservation}">
 	            <ul class="my-page-step">
-	                <li th:each="buyStatus : ${buyStatusInOneMonthList}">
+	                <li th:each="buyStatus, status : ${buyStatusInOneMonthList}">
 	                    <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
-	                    <span  th:text="${buyStatus.buyStatusName}"></span>
+	                    <span th:text="${buyStatus.buyStatusName}"></span>
+	                    <!-- <span><i class="bi bi-chevron-right" th:if="${!status.last}"></i></span> -->
 	                </li>
 	            </ul>
 	        </a>
 	    </div>
 	</div>
 
-	
-		
+			
 	<!-- 선 -->
 	<div class="row">
 		<div class="col	mb-1">
