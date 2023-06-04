@@ -63,27 +63,23 @@ public class BoardController {
 
 	@RequestMapping("/getBoardGroundPage")
 	public String getBoardGroundPage(Model model,BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
+		System.out.println("!@#!@#!@#" + boardVO.getGroundSearchVO().getNowPage());
 
 		int totalDataCnt = boardService.getBoardListCnt(boardVO.getGroundSearchVO());
-		
-		int dataCnt = (boardVO.getGroundSearchVO() == null) ? totalDataCnt : boardService.getBoardListCnt(boardVO.getGroundSearchVO());
-		
-		if(boardVO.getGroundSearchVO() != null) {
-			boardVO.getGroundSearchVO().setPageInfo();
-			System.out.println("!@#!@#!@#!@#" + boardVO);
-		}
-		
-		
-		System.out.println("!@#!@#!@#" + dataCnt);
-		
-		
 
+		boardVO.getGroundSearchVO().setTotalDataCnt(totalDataCnt);
+		boardVO.getGroundSearchVO().setPageInfo();
+		
+		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		boardVO.setIsNotice("N");
 		
 		model.addAttribute("boardList", boardService.getBoardList(boardVO));
-		model.addAttribute("search", boardVO.getGroundSearchVO());
 		
+		//System.out.println("!@#!@!@#!@#" + boardVO.getGroundSearchVO());
 		
 		return "content/board/getBoardGroundPage";
 	}

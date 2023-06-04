@@ -12,4 +12,5 @@ import lombok.ToString;
 public class GroundSearchVO extends PageVO{
 	private String searchKey;
 	private String searchVal;
+	private String orderBy;
 }

@@ -11,6 +11,7 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="board_content">
+
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
@@ -20,6 +21,8 @@
 		<div class="col" id="wholeViewDiv">
 		
 		<form th:action="@{/board/getBoardGroundPage}" method="post" id="searchForm">
+			<input type="hidden" name="orderBy" id="orderBy" th:value="${boardVO.groundSearchVO.orderBy}">
+			<input type="hidden" name="groundSearchVO.nowPage" id="nowPage" th:value="${boardVO.groundSearchVO.nowPage}">
 			<div class="row mb-3">
 				<div class="col-2">
 					<select class="form-select text-center" name="groundSearchVO.searchKey" id="searchKey">
@@ -30,10 +33,10 @@
 					</select>
 				</div>
 				<div class="col-8">
-					<input class="form-control" type="text" name="groundSearchVO.searchVal" id="searchVal" th:value="${boardVO.groundSearchVO == null ? '' : boardVO.groundSearchVO.searchVal}">
+					<input class="form-control" type="text" name="groundSearchVO.searchVal" id="searchVal" th:value="${boardVO.groundSearchVO.searchVal}">
 				</div>
 				<div class="col-2">
-					<input th:onclick="searchBoard()" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
+					<input th:onclick="searchBoard();" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
 				</div>
 			</div>
 		</form>
@@ -45,14 +48,14 @@
 					<div class="col">
 						<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-secondary" type="button" value="전체 보기">
 					</div>
-					<div class="col text-end">
+					<div class="col text-end" sec:authorize="isAuthenticated()">
 						<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-success" type="button" value="게시글 작성">
 					</div>
 				</div>
 				
 				<div class="row">
 					<div class="col">
-						<table class="table text-center table-hover">
+						<table class="table text-center table-hover list-table">
 							<colgroup>
 								<col width="10%">
 								<col width="">
@@ -110,22 +113,18 @@
 			<div class="col">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
-						<li class="page-item">
-							<a class="page-link" href="#"aria-label="Previous">
+						<li class="page-item" th:classappend="${boardVO.groundSearchVO.prev ? '' : 'disabled'}">
+							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${boardVO.groundSearchVO.beginPage - 1}]]);" aria-label="Previous">
 								<span aria-hidden="true">&laquo;</span>
 							</a>
 						</li>
-						<li class="page-item">
-							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging()">1</a>
+						<li class="page-item"
+						th:each="pageNum : ${#numbers.sequence(boardVO.groundSearchVO.beginPage, boardVO.groundSearchVO.endPage)}">
+							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${pageNum}]]);"
+							th:classappend="${pageNum == boardVO.groundSearchVO.nowPage ? 'active' : ''}">[[${pageNum}]]</a>
 						</li>
-						<li class="page-item">
-							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging()">2</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging()">3</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Next"> 
+						<li class="page-item" th:classappend="${boardVO.groundSearchVO.next ? '' : 'disabled'}">
+							<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${boardVO.groundSearchVO.endPage + 1}]]);" aria-label="next"> 
 								<span aria-hidden="true">&raquo;</span>
 							</a>
 						</li>
