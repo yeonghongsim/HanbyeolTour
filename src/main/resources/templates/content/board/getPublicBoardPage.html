@@ -24,7 +24,6 @@
 					<col width="15%">
 					<col width="*">
 					<col width="10%">
-					<col width="10%">
 					<col width="15%">
 				</colgroup>
 				<thead class="board-thead">
@@ -32,7 +31,6 @@
 						<td>번호</td>
 						<td>제목</td>
 						<td>조회수</td>
-						<td>댓글수</td>
 						<td>작성일</td>
 					</tr>
 				</thead>
@@ -40,9 +38,8 @@
 					<th:block th:each="notice, state : ${noticeList}">
 						<tr>
 							<td>[[${noticeList.size() - state.index}]]</td>
-							<td>[[${notice.hbtBoardTitle}]]</td>
+							<td th:onclick="|location.href='@{/board/getPublicDetail(hbtBoardNum=${notice.hbtBoardNum})}'|" class="pointer">[[${notice.hbtBoardTitle}]]</td>
 							<td>[[${notice.hbtBoardCnt}]]</td>
-							<td>[[${notice.replyCnt}]]</td>
 							<td>[[${notice.hbtBoardRegDate}]]</td>
 						</tr>
 					</th:block>

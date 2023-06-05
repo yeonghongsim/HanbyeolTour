@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.team.board.vo.BoardReplyVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 
@@ -86,12 +88,44 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public void regBoardReply(BoardReplyVO boardReplyVO) {
 		sqlSession.insert("boardMapper.regBoardReply", boardReplyVO);
-		sqlSession.update("boardMapper.addReplyCnt", boardReplyVO.getBoardVO().getHbtBoardNum());
+		sqlSession.update("boardMapper.addReplyCnt", boardReplyVO);
 	}
 
 	@Override
 	public List<BoardReplyVO> getReplyList(String hbtBoardNum) {
 		return sqlSession.selectList("boardMapper.getReplyList", hbtBoardNum);
+	}
+
+	@Transactional
+	@Override
+	public void delReply(BoardReplyVO boardReplyVO) {
+		sqlSession.delete("boardMapper.delReply", boardReplyVO);
+		sqlSession.update("boardMapper.reduceReplyCnt", boardReplyVO);
+	}
+
+	@Override
+	public void updateReplyContent(BoardReplyVO boardReplyVO) {
+		sqlSession.update("boardMapper.updateReplyContent", boardReplyVO);
+	}
+
+	@Override
+	public int getBoardListCnt(GroundSearchVO groundSearchVO) {
+		return sqlSession.selectOne("boardMapper.getBoardListCnt", groundSearchVO);
+	}
+
+	@Override
+	public String getNextByBoardRequestNum() {
+		return sqlSession.selectOne("boardMapper.getNextByBoardRequestNum");
+	}
+
+	@Override
+	public void regRequest(BoardRequestVO boardRequestVO) {
+		sqlSession.insert("boardMapper.regRequest", boardRequestVO);
+	}
+
+	@Override
+	public List<BoardRequestVO> getBoardReqList(BoardRequestVO boardRequestVO) {
+		return sqlSession.selectList("boardMapper.getBoardReqList", boardRequestVO);
 	}
 
 

@@ -91,17 +91,21 @@
 						<th:block th:each="tourItem, state : ${tourItemList}">
 							<input type="hidden" name="endDate" id="endDate" th:value='${tourItem["END_DATE"]}'>
 							<input type="hidden" name="listIndex" th:value='${#lists.size(tourItemList)}'>
-							<tr class="searchResultByDate">
-								<td><img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'></td>
-								<td>
-									<div>[[${tourItem["DEP_DATE"]}]]</div>
-									<div>[[${tourItem["ARR_DATE"]}]]</div>
-								</td>
-								<td>[[${tourItem["TRAVER_PERIOD"]}]]</td>
-								<td>[[${tourItem["ITEM_TITLE"]}]]</td>
-								<td>[[${tourItem["ITEM_PRICE"]}]]</td>
-								<td>[[${tourItem["STATUS_NAME"]}]]</td>
-							</tr>
+								<tr class="searchResultByDate">
+									<td>
+										<a th:href="@{/item/tourItemListDetail(departDate = ${tourItem['DEP_DATE']},arriveDate = ${tourItem['ARR_DATE']},itemCode = ${tourItem['ITEM_CODE']})}">
+											<img th:src='@{/img/item/itemImg/} + ${tourItem["ITEM_IMG_ATTACHED_NAME"]}'>
+										</a>
+									</td>
+									<td>
+										<div>[[${tourItem["DEP_DATE"]}]]</div>
+										<div>[[${tourItem["ARR_DATE"]}]]</div>
+									</td>
+									<td>[[${tourItem["TRAVER_PERIOD"]}]]</td>
+									<td>[[${tourItem["ITEM_TITLE"]}]]</td>
+									<td>[[${tourItem["ITEM_PRICE"]}]]</td>
+									<td>[[${tourItem["STATUS_NAME"]}]]</td>
+								</tr>
 						</th:block>
 					</tbody>
 				</table>				

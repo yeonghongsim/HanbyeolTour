@@ -13,7 +13,7 @@ public class HotelVO {
     private String hbtHotelCode;
     private String hbtHotelName;
     private String hbtHotelGrade;
-    private String isUser;
+    private String isUse;
     private String hbtHotelIntro;
     private String areaCode;
     private String hbtHotelPrice;

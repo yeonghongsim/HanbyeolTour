@@ -13,6 +13,7 @@
 		<result column="IS_TEMPORARY_PW" 		property="isTemporaryPw"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 		<association property="memStatusVO"		resultMap="memStatus"></association>
+		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
@@ -39,6 +40,8 @@
 		<result column="MS_MENU_NAME" 	property="msMenuName"/>
 		<result column="MS_MENU_URL" 	property="msMenuUrl"/>
 	</resultMap>
+			
+	
 	
 	
 	<!--회원가입시 ID 중복 체크  -->
@@ -186,13 +189,15 @@
 		    M.MEM_CODE,
 		    M.MEM_ID,
 		    M.MEM_NAME,
+		    M.MEM_ROLE,
 		    D.MEM_D_CODE,
 		    D.MEM_D_TELL,
 		    D.MEM_D_ADDR,
 		    D.MEM_D_ADDR2,
 		    D.MEM_D_GEN,
 		    D.MEM_EMAIL,
-		    TO_CHAR(D.MEM_D_BIR, 'YYYY-MM-DD') AS MEM_D_BIR
+		    TO_CHAR(D.MEM_D_BIR, 'YYYY-MM-DD') AS MEM_D_BIR,
+		    TO_CHAR(D.MEM_D_JOINDATE, 'YYYY-MM-DD') AS MEM_D_JOINDATE
 		FROM
 		    HBT_MEM M
 		JOIN
@@ -228,6 +233,59 @@
 	FROM HBT_MEM_DETAIL
 	WHERE MEM_D_TELL = #{memDTell}
 	</select>
+	
+		
+	<!-- 예약 조회 상태별 갯수 조회 -->
+	<select id="getBuyStatusInOneMonth" resultMap="buyMapper.buyState">
+		SELECT
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME,
+		  NVL(COUNT(HB.BUY_STATUS_CODE), 0) AS BUY_STATUS_COUNT
+		FROM
+		  HBT_BUY_STATE HBS LEFT JOIN HBT_BUY HB 
+		ON 
+		  HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
+          AND HB.MEM_CODE = #{memCode}
+          AND TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD')
+          AND TO_CHAR(HB.BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		WHERE HBS.BUY_STATUS_CODE &lt;= 5
+		GROUP BY
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME
+		ORDER BY HBS.BUY_STATUS_CODE ASC
+	</select>
+	
+	<!-- 배송목록 조회 -->
+	<select id="getBuyList" resultMap="buyMapper.buy">
+		SELECT BUY.BUY_CODE
+		    , BUY.BUY_TOTAL_PRICE
+		    , DETAIL.BUY_D_CODE
+		    , TO_CHAR(BUY.BUY_DATE, 'YYYY.MM.DD') AS BUY_DATE
+		    , AREA.AREA_CODE
+		    , AREA.AREA_KOR_NAME
+		    , ITEM.ITEM_TITLE
+		    , ITEM.ITEM_CODE
+		    , IMG.ITEM_IMG_ATTACHED_NAME
+		    , DETAIL.RESERVED_PEOPLE_NUM
+		    , TO_CHAR(DETAIL.DEPART_DATE, 'YYYY-MM-DD') AS DEPART_DATE
+		    , TO_CHAR(DETAIL.ARRIVE_DATE, 'YYYY-MM-DD') AS ARRIVE_DATE
+		    , DETAIL.BUY_D_PRICE
+		    , STATE.BUY_STATUS_NAME
+		FROM HBT_BUY BUY, HBT_BUY_DETAIL DETAIL, HBT_TOUR_AREA AREA,
+		    HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_BUY_STATE STATE
+		WHERE BUY.BUY_CODE = DETAIL.BUY_CODE
+		AND DETAIL.AREA_CODE = AREA.AREA_CODE
+		AND ITEM.ITEM_CODE = DETAIL.ITEM_CODE
+		AND ITEM.ITEM_CODE = IMG.ITEM_CODE
+        AND STATE.BUY_STATUS_CODE = BUY.BUY_STATUS_CODE
+		AND BUY.MEM_CODE = #{memCode}
+		ORDER BY BUY_CODE DESC
+	</select>
+	
+	
+	
+	
+	
 	
 	
 	

@@ -29,7 +29,7 @@
 					<form class="row g-3">
 						<div class="col-9">
 							<input id="areaCode" type="text" class="form-control EnglargeDiv" placeholder="추가할 2자리 국가 코드 입력" style="margin-bottom: 10px;" required>
-							<input id="areaKorName" type="text" class="form-control onlyKor" placeholder="한글 국가명 입력" style="margin-bottom: 10px;" required>
+							<input id="areaKorName" type="text" class="form-control onlyKor" placeholder="한글 국가명 입력" style="margin-bottom: 10px;" onkeyup="onlyKor(event)" required>
 							<input id="areaEngName" type="text" class="form-control EnglargeDiv" placeholder="영문 국가명 입력" style="margin-bottom: 10px;" required>
 						</div>       <!-- d-grid : col-영역만큼 버튼 사이즈 커짐 -->
 						<div class="col-2 d-grid">
@@ -52,14 +52,15 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<table id="areaCateTable" class="table table-striped table-hover text-center" style="width: 900px;">
+							<table id="areaCateTable" class="table table-striped table-hover text-center" style="width: 1000px;">
 								<colgroup>
 				                  <col width="5%">
-				                  <col width="15%">
-				                  <col width="20%">
-				                  <col width="25%">
-				                  <col width="*%">
 				                  <col width="10%">
+				                  <col width="15%">
+				                  <col width="*%">
+				                  <col width="18%">
+				                  <col width="18%">
+				                  <col width="7%">
 				                </colgroup>
 								<thead class="table-head text-center">
 									<tr>
@@ -68,6 +69,7 @@
 										<td>한글 국가명</td>
 										<td>영문 국가명</td>
 										<td>사용여부</td>
+										<td>메인노출여부</td>
 										<td> </td>
 									</tr>
 								</thead>
@@ -89,13 +91,33 @@
 														<input th:name="${'isUse_' + state.count}" type="radio"
 															class="form-check-input"
 															th:checked="${area.isUse == 'Y'}"
-															th:onchange="changeAreaIsUse([[${area.areaCode}]]);">사용중
+															th:onchange="changeAreaIsUse([[${area.areaCode}]]);"
+															>사용중
 													</div>
 													<div class="form-check col-6">
 														<input th:name="${'isUse_' + state.count}" type="radio"
 															class="form-check-input"
 															th:checked="${area.isUse == 'N'}"
-															th:onchange="changeAreaIsUse([[${area.areaCode}]]);">미사용
+															th:onchange="changeAreaIsUse([[${area.areaCode}]]);"
+															>미사용
+													</div>
+												</div>
+											</td>
+											<td>
+												<div class="row">
+													<div class="form-check col-6">
+														<input th:name="${'isExposeMain_' + state.count}" type="radio"
+															class="form-check-input isExposeRadio"  value="Y"
+															th:checked="${area.isExposeMain == 'Y'}"
+															th:onchange="changeIsExposeMain([[${area.areaCode}]], this);"
+															>노출
+													</div>
+													<div class="form-check col-6">
+														<input th:name="${'isExposeMain_' + state.count}" type="radio"
+															class="form-check-input isExposeRadio" value="N"
+															th:checked="${area.isExposeMain == 'N'}" 
+															th:onchange="changeIsExposeMain([[${area.areaCode}]], this);"
+															>비노출
 													</div>
 												</div>
 											</td>

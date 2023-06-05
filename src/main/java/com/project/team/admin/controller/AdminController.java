@@ -27,6 +27,7 @@ import jakarta.annotation.Resource;
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
@@ -87,6 +88,14 @@ public class AdminController {
 	@PostMapping("/changeAreaIsUseAJAX")
 	public int changeAreaIsUse(String areaCode) {
 		return adminService.changeAreaIsUse(areaCode);
+	}
+	
+	//여행지 카테고리 메인 노출 여부
+	@ResponseBody
+	@PostMapping("/changeIsExposeMainAJAX")
+	public int changeIsExposeMain(String areaCode) {
+		
+		return adminService.changeIsExposeMain(areaCode);
 	}
 	
 	//여행지 카테고리 삭제
@@ -227,6 +236,13 @@ public class AdminController {
 		return "redirect:/admin/itemManageForSale";
 	}
 	
+	//회원 관리 페이지
+	@GetMapping("/memManage")
+	public String memManage() {
+		
+		return "redirect:/admin/memInfo";
+	}
+	
 	
 	//회원 리스트 조회
 	@RequestMapping("/memInfo")
@@ -253,6 +269,37 @@ public class AdminController {
 		return adminService.getMemDetailInfo(memId);
 	}
 	
+	//회원 권한 변경
+	@GetMapping("/updateMemRole")
+	public String updateMemRole(MemberVO memberVO) {
+		System.out.println(memberVO);
+		
+		adminService.updateMemRole(memberVO);
+		
+		return "redirect:/admin/memInfo";
+	}
+	
+	//예약 관리 페이지
+	@GetMapping("/reserveManage")
+	public String reserveManage() {
+		
+		return "redirect:/admin/reservationInquiry";
+	}
+	
+	//예약 조회
+	@GetMapping("/reservationInquiry")
+	public String reservationInquiry() {
+		
+		return "content/admin/reservation_inquiry";
+	}
+	
+	//예약 상태 변경
+	@GetMapping("/updateReservation")
+	public String updateReservation() {
+		
+		return "content/admin/update_reservation";
+	}
+	
 	
 	
 	
@@ -267,6 +314,9 @@ public class AdminController {
 	// 공지사항
 	@GetMapping("/noticeManage")
 	public String noticeManage(Model model, BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
 		boardVO.setIsNotice("Y");
 		boardVO.setIsPrivate("N");
 		model.addAttribute("noticeList", boardService.getBoardList(boardVO));

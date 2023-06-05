@@ -1,6 +1,5 @@
 function searchBoard() {
-	
-	const searchKey = document.querySelector('#searchKey');
+	const searchForm = document.querySelector('#searchForm');
 	const searchVal = document.querySelector('#searchVal');
 	
 	if(searchVal.value == ''){
@@ -9,62 +8,17 @@ function searchBoard() {
 		return ;
 	}
 	
-	
-	//ajax start
-    $.ajax({
-    	url: '/board/getBoardGroundBySearchAJAX', //요청경로
-    	type: 'post',
-    	async: true, // 동기방식(Ajax사용), false == 비동기방식
-    	//contentType: 'application/json; charset=UTF-8',
-    	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-    	//필요한 데이터
-    	// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
-    	data: {'groundSearchVO.searchKey' : searchKey.value
-    			, 'groundSearchVO.searchVal' : searchVal.value},
-    	success: function(result) {
-        	const board_tbody = document.querySelector('#board-tbody');
-        	
-        	board_tbody.replaceChildren();
-        	
-        	let str = '';
-        	
-			result.forEach(function(board, index){
-				str += `<tr class="align-middle">`;
-				str += `	<td>${result.length - index}</td>`;
-				str += `	<td>`;
-					if(board.isPrivate == 'N'){
-				str += `	<div>`;
-				str += `		<span onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}')" class="pointer">${board.hbtBoardTitle}</span>`;
-				str += `	</div>`;
-					} else {
-				str += `	<div>`;
-				str += `		<span onclick="getBoardDetail('${board.isPrivate}', '${board.hbtBoardNum}', this)" class="pointer">${board.hbtBoardTitle}</span>`;
-				str += `		<img src="/imageForUse/lock.jpeg" style="width: 30px;">`;		
-				str += `	</div>`;
-				str += `	<div class="row chkDiv">`;
-				str += `	</div>`;
-					}
-						
-				str += `	</td>`;
-				str += `	<td>${board.hbtBoardCnt}</td>`;
-				str += `	<td>${board.replyCnt}</td>`;
-				str += `	<td>${board.hbtBoardRegDate}</td>`;
-				str += `	<td>${board.memberVO.memId}</td>`;
-				str += `</tr>`;	
-			});
-        	
-        	
-        	board_tbody.insertAdjacentHTML('afterbegin', str);
-        	
-        	
-    	},
-     	error: function() {
-        	alert('실패');
-    	}
-    });
-	//ajax end
+	searchForm.submit();
 	
 }
+
+function getOrderListPaging(pageNum){
+	document.querySelector('#nowPage').value = pageNum;
+	const searchForm = document.querySelector('#searchForm');
+	
+	searchForm.submit();
+}
+
 
 function getBoardDetail(isPrivate, hbtBoardNum, aTag){
 	

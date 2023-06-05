@@ -1,5 +1,6 @@
 package com.project.team.board.vo;
 
+import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 
 import lombok.Getter;
@@ -16,4 +17,7 @@ public class BoardRequestVO {
 	private String hbtBoardRequestRegDate;
 	private MemberVO memberVO;
 	private TypeRequestVO typeRequestVO;
+	private String isAnswer;
+	private String requestPw;
+	private ItemVO itemVO;
 }

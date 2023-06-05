@@ -3,9 +3,11 @@ package com.project.team.board.service;
 import java.util.List;
 
 import com.project.team.board.vo.BoardReplyVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 public interface BoardService {
@@ -51,5 +53,21 @@ public interface BoardService {
 	// select reply-list
 	List<BoardReplyVO> getReplyList(String hbtBoardNum);
 	
+	// delete board-reply
+	void delReply(BoardReplyVO boardReplyVO);
 	
+	// update board-reply content
+	void updateReplyContent(BoardReplyVO boardReplyVO);
+	
+	// get board list cnt
+	int getBoardListCnt(GroundSearchVO groundSearchVO);
+	
+	// get b-req-num
+	String getNextByBoardRequestNum();
+	
+	// insert b-req
+	void regRequest(BoardRequestVO boardRequestVO);
+	
+	// select b-req-list
+	List<BoardRequestVO> getBoardReqList(BoardRequestVO boardRequestVO);
 }

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/member/member_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/member/info_manage.css">
+	<link rel="stylesheet" href="/css/content/member/myPage/check_my_reservation.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="member_content">
+
+<div class="row mb-1 mt-2">
+	<div class="col title">
+		여행 예약 조회 
+	</div>
+</div>
+	
+
+<div class="row mb-4">
+    <div class="col content-box">
+        <a th:href="@{/myPage/checkMyReservation}">
+            <ul class="my-page-step">
+                <li th:each="buyStatus : ${buyStatusInOneMonthList}">
+                    <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
+                    <span  th:text="${buyStatus.buyStatusName}"></span>
+                </li>
+            </ul>
+        </a>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col search-period">
+		<form id="month-form" th:action="@{/myPage/checkMyReservation}" method="post">
+				<input type="hidden" value="" name="month">
+		</form>
+		<form th:action="@{/myPage/checkMyReservation}" method="post">
+			<div class="row">
+				<div class="col select_con">
+					<p>구매기간</p>
+					<ul class="select-month">
+						<li>
+							<input type="button" class="btn btn-outline-dark" value="1개월" onclick="get_buy_list(-1);">
+						</li>
+						<li>
+							<input type="button" class="btn btn-outline-dark" value="3개월" onclick="get_buy_list(-3);">
+						</li>
+						<li>
+							<input type="button" class="btn btn-outline-dark" value="6개월" onclick="get_buy_list(-6);">
+						</li>
+						<li>
+							<input type="button" class="btn btn-outline-dark" value="12개월" onclick="get_buy_list(-12);">
+						</li>
+					</ul>
+				</div>			
+			</div>
+			
+			<!-- <label class="col-1 col-form-label">직접 입력</label>
+			<div class="col-2 d-grid">
+				<input name="fromDate" type="date" class="form-control" th:value="${buyVO.fromDate}">
+			</div>
+			<div class="col-2 d-grid">
+				<input  name="toDate" type="date" class="form-control" th:value="${buyVO.toDate}">				
+			</div>
+			<div class="col-1 d-grid">
+				<input type="submit" class="btn btn-primary" value="검색">
+			</div> -->
+			
+		</form>
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="col">
+		<table class="table table-hover">
+			<colgroup>
+				<col width="10%">
+				<col width="10%">
+				<col width="*">
+				<col width="5%">
+				<col width="15%">
+				<col width="15%">
+				<col width="10%">
+				<col width="10%">
+			</colgroup>
+			<thead class="text-center">
+				<tr>
+					<td>결제일자</td>
+					<td>여행국가</td>
+					<td>상품</td>
+					<td>인원</td>
+					<td>출발일자</td>
+					<td>도착일자</td>
+					<td>결제금액</td>
+					<td>상태</td>
+				</tr>
+			</thead>
+			
+			<th:block th:if="${#lists.size(buyList) == 0}">
+				<tbody>
+					<tr class="text-center">
+						<td colspan="8">
+						<br>
+						<br>
+						<br>
+							<div style="font-size: 4rem; color: #bbb;">
+								<i class="bi bi-exclamation-circle"></i>
+							</div>
+							<div>
+								기간내 예약내역이 없습니다.
+							</div>
+						<br>	
+						<br>	
+						<br>	
+						</td>
+					</tr>
+				</tbody>
+			</th:block>
+			<th:block th:if="${#lists.size(buyList) != 0}">
+				<tbody th:each="buy : ${buyList}">
+					<tr th:each="buyDetail : ${buy.buyDetailList}">
+			            <td th:text="${buy.buyDate}" style="color: #131518; font-weight: 500;"></td>
+				        <td th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="color: #c6df5f; font-weight: 700;"></td>
+				        <td>
+				        	<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
+				        	style="width: 85px; height: 85px;">
+				            <span th:text="${buyDetail.itemVO.itemTitle}" style="color: #333; word-spacing: -1px;"></span>
+				        </td>
+				        <td th:text="${buyDetail.reservedPeopleNum}"></td>
+				        <td th:text="${buyDetail.departDate}"></td>
+				        <td th:text="${buyDetail.arriveDate}"></td>
+				        <td style="color: #f27370;">
+				        	[[${#numbers.formatCurrency(buyDetail.buyDPrice)}]] 원
+			        	</td>
+				        <td>
+					        <div>
+					        	<span style="font-weight: bolder;">[[${buy.buyStateVO.buyStatusName}]]</span>
+					        </div>
+					        <div>
+					        	<button class="btn btn-outline-secondary btn-sm mt-2">리뷰작성</button>
+					        </div>
+				        </td>
+					</tr>
+				</tbody>
+			</th:block>
+			 
+		</table>
+	
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+	<div class="col">
+		
+	</div>
+</div>
+
+
+
+
+
+
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src="/"></script>-->
+</th:block>
+
+
+
+</html>

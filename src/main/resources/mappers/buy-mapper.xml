@@ -3,7 +3,96 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="buyMapper">
+	<resultMap type="com.project.team.buy.vo.BuyVO" id="buy">
+		<id column="BUY_CODE" 					property="buyCode"/>
+		<result column="MEM_CODE" 				property="memCode"/>
+		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
+		<result column="BUY_TOTAL_PRICE" 		property="buyTotalPrice"/>
+		<result column="BUY_DATE" 				property="buyDate"/>
+		<association property="buyStateVO"  	resultMap="buyState"></association>
+		<collection property="buyDetailList" 	resultMap="buyDetail"></collection>
+	</resultMap>
+	
+	<resultMap type="com.project.team.buy.vo.BuyDetailVO" id="buyDetail">
+		<id column="BUY_D_CODE" 				property="buyDCode"/>
+		<result column="ITEM_CODE" 				property="itemCode"/>
+		<result column="BUY_CODE" 				property="buyCode"/>
+		<result column="AREA_CODE" 				property="areaCode"/>
+		<result column="DEPART_DATE" 			property="departDate"/>
+		<result column="ARRIVE_DATE" 			property="arriveDate"/>
+		<result column="RESERVED_PEOPLE_NUM"	property="reservedPeopleNum"/>
+		<result column="BUY_D_PRICE" 			property="buyDPrice"/>
+		<association property="itemVO" resultMap="itemMapper.item"></association>
+	</resultMap>
+	
+	<resultMap type="com.project.team.buy.vo.BuyStateVO" id="buyState">
+		<id column="BUY_STATUS_CODE" 			property="buyStatusCode"/>
+		<result column="BUY_STATUS_NAME" 		property="buyStatusName"/>
+		<result column="BUY_STATUS_COUNT" 		property="buyStatusCount"/>
+	</resultMap>
+	
+	
+	<select id="getNextItemCode" resultType="string">
+		SELECT 'BUY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_CODE, 5))), 0) + 1, 3, '0')
+		FROM HBT_BUY
+	</select>
 
+	<insert id="setBuy">
+		INSERT INTO HBT_BUY (
+		                     BUY_CODE, MEM_CODE, BUY_STATUS_CODE, BUY_TOTAL_PRICE
+		) VALUES (
+		          #{buyCode}
+		          , (SELECT MEM_CODE FROM HBT_MEM WHERE MEM_ID = #{memCode})
+		          , 1
+		          , ${buyTotalPrice}
+				)
+	</insert>
+
+	<insert id="setBuyDetail">
+		INSERT INTO HBT_BUY_DETAIL (
+		            BUY_D_CODE
+					, ITEM_CODE
+					, BUY_CODE
+					, AREA_CODE
+					, DEPART_DATE
+					, ARRIVE_DATE
+					, RESERVED_PEOPLE_NUM
+					, BUY_D_PRICE
+		) VALUES (
+		          (SELECT 'BUY_D_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_D_CODE, 7))), 0) + 1, 3, '0')
+				   FROM HBT_BUY_DETAIL)
+				, #{itemCode}
+				, #{buyCode}
+				, #{areaCode}
+				, #{departDate}
+				, #{arriveDate}
+				, #{reservedPeopleNum}
+				, #{buyDPrice}
+				 )
+	</insert>
+
+	<insert id="addCartAJAX">
+	INSERT INTO HBT_CART
+			(CART_CODE
+			, MEM_CODE
+			, ITEM_CODE
+			, NUM_OF_PEOPLE
+			, CART_TOTAL_PRICE
+			) VALUES
+		   (
+			(SELECT 'CART_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CART_CODE, 6))), 0) + 1, 3, '0')
+			 FROM HBT_CART)
+			 , (SELECT MEM_CODE FROM HBT_MEM WHERE MEM_ID = #{memCode})
+			 , #{itemCode}
+			 , ${numOfPeople}
+			 , ((SELECT ITEM_PRICE FROM HBT_ITEM WHERE ITEM_CODE = #{itemCode}) * ${numOfPeople})
+		  )
+	</insert>
+	
+	
+	
+	
+	
 
 	
 </mapper>

@@ -1,6 +1,9 @@
 package com.project.team.member.controller;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.team.board.service.BoardService;
+import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.buy.service.BuyService;
+import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.service.ItemService;
+import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
@@ -29,7 +39,14 @@ public class MyPageController {
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	@Resource(name = "buyService")
+	private BuyService buyService;
 	
+	@Resource(name = "boardService")
+	private BoardService boardService;
+	
+	@Resource(name = "itemService")
+	private ItemService itemService;
 	
 	// 회원 탈퇴 페이지로 이동 
 	@GetMapping("/accountDeletion")
@@ -168,6 +185,104 @@ public class MyPageController {
 	}
 	
 
+	
+	//예약확인 페이지로 이동 
+	@GetMapping("/checkMyReservation")
+	public String checkMyReservation(Model model, Authentication authentication) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		String memCode = memberService.getMemCode(authentication.getName());
+		System.out.println("memCode : " + memCode);
+		// 1개월 내 구매상태 정보 조회 
+		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
+		System.out.println(buyStatusInOneMonthList);
+		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
+		
+		//구매 내역 리스트 조회 
+		List<BuyVO> buyList = memberService.getBuyList(memCode);
+		System.out.println("@@@@ 구매내역 조회 :" + buyList);
+		model.addAttribute("buyList",buyList);
+		
+		
+		
+		
+		return "content/member/myPage/check_my_reservation";
+	}
+	
+	
+	//예약취소 내역 확인 페이지로 이동 
+	@GetMapping("/checkMyCancelation")
+	public String checkMyCancelation(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/myPage/check_my_cancelation";
+	}
+	
+	
+	// 1:1 문의 내역 페이지로 이동 
+	@GetMapping("/checkMyRequest")
+	public String checkMyRequest(Model model, Authentication authentication, BoardRequestVO boardRequestVO) {
+		//회원 정보 
+		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
+		model.addAttribute("memInfo", memInfo);
+		
+		boardRequestVO.setIsAnswer("N");
+		
+		if(boardRequestVO.getMemberVO() == null) {
+			boardRequestVO.setMemberVO(new MemberVO());
+		}
+		boardRequestVO.getMemberVO().setMemCode(memInfo.getMemCode());
+		boardRequestVO.getMemberVO().setMemRole(memInfo.getMemRole());
+		
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		model.addAttribute("requestList", boardService.getBoardReqList(boardRequestVO));
+		
+		return "content/member/myPage/check_my_request";
+	}
+	
+	@GetMapping("/regRequestForm")
+	public String regRequestForm(MemberVO memberVO, Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		model.addAttribute("memInfo", memberVO);
+		model.addAttribute("itemImgList", itemService.getItemMainImg());
+		
+		return "content/member/myPage/reg_request_form";
+		
+		
+	}
+	
+	@PostMapping("/regRequest")
+	public String regRequest(BoardRequestVO boardRequestVO) {
+		String reqNum = boardService.getNextByBoardRequestNum();
+		boardRequestVO.setHbtBoardRequestNum(reqNum);
+		
+		System.out.println("!@#!@#!@#!@#" + boardRequestVO);
+		boardService.regRequest(boardRequestVO);
+		
+		return "redirect:/myPage/checkMyRequest";
+	}
+	
+	
+	// 나의 여행 후기 목록 페이지로 이동 
+	@GetMapping("/checkMyReview")
+	public String checkMyReview(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		return "content/member/myPage/check_my_review";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

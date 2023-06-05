@@ -14,6 +14,7 @@ import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardReplyVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.member.service.MemberService;
 
 import jakarta.annotation.Resource;
@@ -39,6 +40,9 @@ public class BoardController {
 	
 	@GetMapping("/getPublicBoardPage")
 	public String getPublicBoardPage(Model model, BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
@@ -47,14 +51,38 @@ public class BoardController {
 		
 		return "content/board/getPublicBoardPage";
 	}
+	
+	@GetMapping("/getPublicDetail")
+	public String getPublicDetail(Model model, String hbtBoardNum) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		
+		model.addAttribute("publicDetail", boardService.getBoardDetail(hbtBoardNum));
+		
+		
+		return "content/board/get_public_detail";
+	}
+	
 
-	@GetMapping("/getBoardGroundPage")
+	@RequestMapping("/getBoardGroundPage")
 	public String getBoardGroundPage(Model model,BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
+		System.out.println("!@#!@#!@#" + boardVO.getGroundSearchVO().getNowPage());
+
+		int totalDataCnt = boardService.getBoardListCnt(boardVO.getGroundSearchVO());
+
+		boardVO.getGroundSearchVO().setTotalDataCnt(totalDataCnt);
+		boardVO.getGroundSearchVO().setPageInfo();
+		
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		boardVO.setIsNotice("N");
 		
 		model.addAttribute("boardList", boardService.getBoardList(boardVO));
+		
+		//System.out.println("!@#!@!@#!@#" + boardVO.getGroundSearchVO());
 		
 		return "content/board/getBoardGroundPage";
 	}
@@ -87,14 +115,20 @@ public class BoardController {
 		String hbtBoardReplyCode = boardService.getNextByReplyNum();
 		boardReplyVO.setHbtBoardReplyNum(hbtBoardReplyCode);
 		
-		System.out.println("regReplyAJAX run");
 		System.out.println("@@@@@@@@@@@@@" + boardReplyVO);
 		
 		boardService.regBoardReply(boardReplyVO);
 		
 	}
 	
-	
+	@ResponseBody
+	@PostMapping("/delReplyAJAX")
+	public List<BoardReplyVO> delReplyAJAX(BoardReplyVO boardReplyVO) {
+		
+		boardService.delReply(boardReplyVO);
+		
+		return boardService.getReplyList(boardReplyVO.getHbtBoardNum());
+	}
 	
 	
 	@PostMapping("/regBoard")
@@ -126,6 +160,40 @@ public class BoardController {
 		return "content/board/board_gound_detail";
 		
 	}
+	
+	@ResponseBody
+	@PostMapping("/getReplyListAJAX")
+	public List<BoardReplyVO> getReplyListAJAX(String hbtBoardNum) {
+		
+		return boardService.getReplyList(hbtBoardNum);
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateReplyAJAX")
+	public String updateReplyAJAX(BoardReplyVO boardReplyVO) {
+		
+		boardService.updateReplyContent(boardReplyVO);
+		
+		return boardReplyVO.getHbtBoardReplyContent();
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/regReReplyAJAX")
+	public void regReReplyAJAX(BoardReplyVO boardReplyVO) {
+		String hbtBoardReplyNum = boardService.getNextByReplyNum();
+		String memCode = memberService.getMemCode(boardReplyVO.getMemberVO().getMemId());
+
+		boardReplyVO.setHbtBoardReplyNum(hbtBoardReplyNum);
+		boardReplyVO.getMemberVO().setMemCode(memCode);
+		
+		System.out.println(boardReplyVO);
+		
+		boardService.regBoardReply(boardReplyVO);
+		
+		
+	}
+	
 	
 	@GetMapping("/frequentlyRequestPage")
 	public String frequentlyRequestPage(Model model, String typeRequestCode) {

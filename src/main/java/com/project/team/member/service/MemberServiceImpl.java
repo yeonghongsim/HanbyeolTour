@@ -1,6 +1,8 @@
 package com.project.team.member.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.project.team.member.vo.MemberSideMenuVO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
 
@@ -107,12 +111,33 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 회원 정보 수정  
-		@Override
-		@Transactional(rollbackFor = Exception.class)
-		public void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO) {
-			sqlSession.update("memberMapper.updateMyInfo", memberDetailVO);
-			sqlSession.update("memberMapper.updateMyInfoName", memberVO);
-		}
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO) {
+		sqlSession.update("memberMapper.updateMyInfo", memberDetailVO);
+		sqlSession.update("memberMapper.updateMyInfoName", memberVO);
+	}
+	
+	// 주문 상태 코드 갯수 조회
+	@Override
+	public List<BuyStateVO> getBuyStatusInOneMonth(String memCode) {
+		return sqlSession.selectList("memberMapper.getBuyStatusInOneMonth", memCode);
+	}
+
+	// 구매 내역 조회 
+	@Override
+	public List<BuyVO> getBuyList(String memCode) {
+		return sqlSession.selectList("memberMapper.getBuyList", memCode);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -154,5 +179,14 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemCode(String memid) {
 		return sqlSession.selectOne("adminMapper.getMemCode", memid);
 	}
+
+
+
+	
+
+	
+	
+
+	
 
 }

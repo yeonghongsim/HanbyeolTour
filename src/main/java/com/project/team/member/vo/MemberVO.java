@@ -1,5 +1,7 @@
 package com.project.team.member.vo;
 
+import com.project.team.buy.vo.BuyVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +19,6 @@ public class MemberVO {
 	private String isTemporaryPw;
 	private MemberDetailVO memberDetailVO;
 	private MemStatusVO memStatusVO;
-	private SearchMemVO searchMemVO;
+	private BuyVO buyVO;
 
 }
