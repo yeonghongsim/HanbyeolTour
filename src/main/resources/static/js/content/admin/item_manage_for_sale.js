@@ -25,7 +25,7 @@ function openModal(itemCode, areaCateList){
 
 
 
-			str += `	<form class="row" id="itemDetailForm" action="/admin/updateItem" method="post" enctype="multipart/form-data"> `;
+			str += `	<form class="row g-3" id="itemDetailForm" action="/admin/updateItem" method="post" enctype="multipart/form-data"> `;
 			str += `		<input type="hidden" name="itemCode" value="${result.itemCode}"> `;     
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">여행 국가</label>                                          `;
