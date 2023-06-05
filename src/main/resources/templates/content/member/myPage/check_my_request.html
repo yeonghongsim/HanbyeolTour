@@ -6,18 +6,107 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/">-->
+	<link rel="stylesheet" href="/css/content/member/myPage/check_my_request.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
-1:1 문의 내역 페이지 입니다. 
+<div class="row mb-3">
+	<div class="col">
+		<h2>문의 현황</h2>
+	</div>
+	<div class="offset-7 col-2">
+		<input th:onclick="|location.href='@{/myPage/regRequestForm(memCode=${memInfo.memCode}, memId=${memInfo.memId})}'|" class="btn btn-primary w-100" type="button" value="문의 하기">
+	</div>
+</div>
+
+
+<div class="row mb-3">
+	<div class="col">
+		<h4>문의 내역</h4>
+		<table class="table text-center my-req-table">
+			<colgroup>
+				<col width="">
+				<col width="">
+				<col width="">
+				<col width="">
+				<col width="">
+			</colgroup>
+			<thead>
+				<tr>
+					<td>No</td>
+					<td>문의 유형</td>
+					<td>문의 제목</td>
+					<td>문의 일자</td>
+					<td>답변 여부</td>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${requestList.size() == 0}">
+					<tr>
+						<td colspan="5">
+							<span>문의 하신 내용이 없습니다.</span>
+						</td>
+					</tr>
+				</th:block>
+				<th:block th:unless="${requestList.size() == 0}">
+					<tr th:each="request, state : ${requestList}">
+						<td>[[${requestList.size() - state.index}]]</td>
+						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
+						<td>[[${request.hbtBoardRequestTitle}]]</td>
+						<td>[[${request.hbtBoardRequestRegDate}]]</td>
+						<td>[[${request.isAnswer}]]</td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col">
+		<h4>답변 내역</h4>
+		<table class="table text-center">
+			<colgroup>
+				<col width="">
+				<col width="">
+				<col width="">
+				<col width="">
+				<col width="">
+			</colgroup>
+			<thead>
+				<tr>
+					<td>1</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1</td>
+					<td>1</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		2
+	</div>
+</div>
 
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/"></script>-->
+	<script type="text/javascript" src="/js/content/member/myPage/check_my_request.js"></script>
 </th:block>
 
 

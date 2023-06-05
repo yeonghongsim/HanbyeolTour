@@ -27,6 +27,7 @@ import jakarta.annotation.Resource;
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
@@ -313,6 +314,9 @@ public class AdminController {
 	// 공지사항
 	@GetMapping("/noticeManage")
 	public String noticeManage(Model model, BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
 		boardVO.setIsNotice("Y");
 		boardVO.setIsPrivate("N");
 		model.addAttribute("noticeList", boardService.getBoardList(boardVO));

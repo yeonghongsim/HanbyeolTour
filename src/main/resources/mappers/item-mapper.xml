@@ -115,6 +115,15 @@
 		ORDER BY PLAN.HBT_PLAN_DAY, PLAN.HBT_PLAN_TIME
 	</select>
 
+	<select id="getItemMainImg" resultMap="item">
+		SELECT ITEM.ITEM_CODE
+		    , ITEM_TITLE
+		    , ITEM_IMG_ORIGIN_NAME
+		    , ITEM_IMG_ATTACHED_NAME
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG
+		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+		AND IS_MAIN = 'Y'
+	</select>
 
 
 </mapper>

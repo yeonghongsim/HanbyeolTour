@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.project.team.item.vo.ItemVO;
+
 
 public interface ItemService {
 	//국가명으로 여행상품 검색
@@ -14,4 +16,6 @@ public interface ItemService {
 	List<HashMap<String, Object>> getTourItemListGroupAJAX(Map<String, String> searchKeyword);
 	//상세정보조회
 	List<HashMap<String, Object>> getItemDetail(String itemCode);
+	//상품메인이미지조회
+	List<ItemVO> getItemMainImg();
 }
