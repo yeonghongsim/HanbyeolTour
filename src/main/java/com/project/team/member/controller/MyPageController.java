@@ -228,7 +228,6 @@ public class MyPageController {
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		model.addAttribute("memInfo", memInfo);
 		
-		boardRequestVO.setIsAnswer("N");
 		
 		if(boardRequestVO.getMemberVO() == null) {
 			boardRequestVO.setMemberVO(new MemberVO());
@@ -239,7 +238,10 @@ public class MyPageController {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
-		model.addAttribute("requestList", boardService.getBoardReqList(boardRequestVO));
+		boardRequestVO.setIsAnswer("N");
+		model.addAttribute("requestListN", boardService.getBoardReqList(boardRequestVO));
+		boardRequestVO.setIsAnswer("Y");
+		model.addAttribute("requestListY", boardService.getBoardReqList(boardRequestVO));
 		
 		return "content/member/myPage/check_my_request";
 	}

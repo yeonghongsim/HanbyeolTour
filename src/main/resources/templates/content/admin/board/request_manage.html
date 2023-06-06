@@ -87,7 +87,7 @@
 	<div class="row mb-3">
 		<div class="col">
 			<h4>검색된 문의사항</h4>
-			<table class="table table-striped table-hover text-center">
+			<table class="table table-striped table-hover text-center req-table">
 				<colgroup>
 					<col width="">
 					<col width="">
@@ -133,45 +133,48 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<h4>답변 전 문의사항</h4>
-			<table class="table table-striped table-hover text-center">
+			<h4>답변 요청</h4>
+			<table class="table table-hover text-center req-table">
 				<colgroup>
-					<col width="">
-					<col width="">
-					<col width="">
-					<col width="">
-					<col width="">
-					<col width="">
+					<col width="10%">
+					<col width="18%">
+					<col width="*">
+					<col width="12%">
+					<col width="18%">
 				</colgroup>
 				<thead>
 					<tr>
 						<td>문의번호</td>
-						<td>문의내용</td>
+						<td>문의유형</td>
 						<td>문의제목</td>
 						<td>문의자</td>
-						<td>구매코드</td>
 						<td>문의일자</td>
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:if="${1 == 1}">
+					<th:block th:each="req, state : ${reqListN}">
 						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td>[[${reqListN.size() - state.index}]]</td>
+							<td th:if="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+								<div>( [[${req.itemVO.itemCode}]] )</div>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+							</td>
+							<td th:if="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum}, itemCode=${req.itemVO.itemCode})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
 						</tr>
 					</th:block>
-					<th:block th:unless="${1 == 1}">
+					<th:block th:if="${reqListN.size() == 0}">
 						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td colspan="5">작성된 문의글이 없습니다.</td>
 						</tr>
 					</th:block>
 				</tbody>
@@ -180,45 +183,86 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<h4>답변 후 문의사항</h4>
-			<table class="table table-striped table-hover text-center">
+			<h4>재문의</h4>
+			<table class="table table-hover text-center req-table">
 				<colgroup>
-					<col width="">
-					<col width="">
-					<col width="">
-					<col width="">
-					<col width="">
-					<col width="">
+					<col width="10%">
+					<col width="18%">
+					<col width="*">
+					<col width="12%">
+					<col width="18%">
 				</colgroup>
 				<thead>
 					<tr>
 						<td>문의번호</td>
-						<td>문의내용</td>
+						<td>문의유형</td>
 						<td>문의제목</td>
 						<td>문의자</td>
-						<td>구매코드</td>
 						<td>문의일자</td>
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:if="${1 == 1}">
+					<th:block th:each="req, state : ${requestListN}">
 						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td>[[${requestListN.size() - state.index}]]</td>
+							<td th:if="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+								<div>( [[${req.itemVO.itemCode}]] )</div>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+							</td>
+							<td>
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
 						</tr>
 					</th:block>
-					<th:block th:unless="${1 == 1}">
+					<th:block th:if="${requestListN.size() == 0}">
 						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td colspan="5">작성된 문의글이 없습니다.</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<h4>답변 응답</h4>
+			<table class="table table-hover text-center req-table">
+				<colgroup>
+					<col width="10%">
+					<col width="18%">
+					<col width="*">
+					<col width="12%">
+					<col width="18%">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>문의번호</td>
+						<td>문의유형</td>
+						<td>문의제목</td>
+						<td>문의자</td>
+						<td>문의일자</td>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="req, state : ${reqListY}">
+						<tr>
+							<td>[[${reqListY.size() - state.index}]]</td>
+							<td>[[${req.typeRequestVO.typeRequestName}]]</td>
+							<td>
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
+						</tr>
+					</th:block>
+					<th:block th:if="${reqListY.size() == 0}">
+						<tr>
+							<td colspan="5">답변이 필요한 문의글이 없습니다.</td>
 						</tr>
 					</th:block>
 				</tbody>

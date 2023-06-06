@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/admin/board/reg_req_reply_form.css">
+</th:block>
+
+<th:block layout:fragment="adminContent">
+	<div class="row mb-3">
+		<div class="col">
+		</div>
+		<div class="col-2">
+			<input onclick="location.href='/admin/requestManage'" type="button" class="btn btn-secondary w-100" value="뒤로 가기">
+		</div>
+		<div class="col-2">
+			<input onclick="location.href='/admin/requestManage'" type="button" class="btn btn-danger w-100" value="문의 삭제">
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<div class="row">
+				<div class="col">
+					<h4 >초기 문의글</h4>
+					<table class="table text-center only-tbody">
+						<colgroup>
+							<col width="15%">
+							<col width="*%">
+							<col width="15%">
+							<col width="25%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>제목</td>
+								<td>[[${reqDetail.hbtBoardRequestTitle}]]</td>
+								<td>문의 일</td>
+								<td>[[${reqDetail.hbtBoardRequestRegDate}]]</td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<th:block th:if="${itemCode == null}">
+									<td colspan="3"></td>
+								</th:block>
+								<th:block th:if="${itemCode != null}">
+									<td></td>
+									<td>상품코드</td>
+									<td>[[${itemCode}]]</td>
+								</th:block>
+							</tr>
+							<tr>
+								<td colspan="4" style="text-align: left; padding-left: 3rem;">
+									<span>[[${reqDetail.hbtBoardRequestContent}]]</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<input type="text" class="form-control" name="reqReplyContent" id="first_reqReplyContent">
+				</div>
+				<div class="col-2">
+					<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-primary w-100" value="답변 하기">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<th:block th:if="${reqReplyList.size() != 0}">
+		<th:block th:each="reqReply, state : ${reqReplyList}">
+			<div class="row" th:if="${state.index == 0}">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							<h4>답변 내용</h4>
+							<table class="table text-center only-tbody">
+								<colgroup>
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td>내용</td>
+										<td></td>
+										<td>문의 일</td>
+										<td>[[${reqReply.reqReplyAnswerDate}]]</td>
+									</tr>
+									<tr>
+										<td colspan="4" style="text-align: left; padding-left: 5rem;">
+											<span>[[${reqReply.reqReplyContent}]]</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>				
+						</div>
+					</div>
+					<div class="row">
+						<div class="offset-10 col-2">
+							<input type="button" onclick="delFirstResponse();" class="btn btn-danger w-100" value="삭제">
+						</div>
+					</div>
+				</div>
+			</div>	
+		</th:block>
+	</th:block>
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/board/reg_req_reply_form.js"></script>
+</th:block>
+
+
+</html>
