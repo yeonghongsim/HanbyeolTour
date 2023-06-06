@@ -293,7 +293,11 @@ public class AdminController {
 	
 	//예약 조회
 	@GetMapping("/reservationInquiry")
-	public String reservationInquiry() {
+	public String reservationInquiry(Model model) {
+		
+		model.addAttribute("buyList", adminService.getBuyListForAdmin());
+		
+		System.out.println(adminService.getBuyListForAdmin());
 		
 		return "content/admin/reservation_inquiry";
 	}
