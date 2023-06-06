@@ -25,11 +25,14 @@ import com.project.team.admin.vo.TourAreaVO;
 import jakarta.annotation.Resource;
 
 import com.project.team.board.service.BoardService;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.GroundSearchVO;
+import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.item.vo.ItemVO;
+import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.UploadUtil;
 
@@ -42,6 +45,8 @@ public class AdminController {
 	private BoardService boardService;
 	@Resource(name = "adminService")
 	private AdminService adminService;
+	@Resource(name = "memberService")
+	private MemberService memberService;
 
 	
 	//상품 관리 페이지(관리자 페이지 첫 화면)
@@ -392,15 +397,43 @@ public class AdminController {
 	
 	// 1대1문의 관리 페이지
 	@RequestMapping("/requestManage")
-	public String requestManage(Model model, RequestSearchVO requestSearchVO) {
+	public String requestManage(Model model, RequestSearchVO requestSearchVO, BoardRequestVO boardRequestVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
-		
+		boardRequestVO.setIsAnswer("Y");
+		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));		
+		boardRequestVO.setIsAnswer("N");
+		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));		
 		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
 		return "content/admin/board/request_manage";
 		
 	}
+	
+	@GetMapping("/regReqReplyForm")
+	public String regReqReplyForm(Model model, String hbtBoardRequestNum, String itemCode) {
+		System.out.println("!@#" + itemCode + "!@#!@#!@");
+		
+		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
+		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		model.addAttribute("itemCode", itemCode);
+		
+		return "content/admin/board/reg_req_reply_form";
+	}
+	
+	@ResponseBody
+	@PostMapping("/regReqReplyAJAX")
+	public void regReqReplyAJAX(ReqReplyVO reqReplyVO) {
+		reqReplyVO.setReplyDepth(1);
+		String memCode = memberService.getMemCode(reqReplyVO.getMemberVO().getMemId());
+		reqReplyVO.getMemberVO().setMemCode(memCode);
+		String reqReplyNum = boardService.getNextByReqReplyNum();
+		reqReplyVO.setReqReplyNum(reqReplyNum);
+		
+		boardService.insertReqReply(reqReplyVO);
+		
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")

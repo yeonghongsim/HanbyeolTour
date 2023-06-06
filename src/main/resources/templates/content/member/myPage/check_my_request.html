@@ -26,11 +26,11 @@
 		<h4>문의 내역</h4>
 		<table class="table text-center my-req-table">
 			<colgroup>
-				<col width="">
-				<col width="">
-				<col width="">
-				<col width="">
-				<col width="">
+				<col width="10%">
+				<col width="15%">
+				<col width="*">
+				<col width="18%">
+				<col width="12%">
 			</colgroup>
 			<thead>
 				<tr>
@@ -42,16 +42,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<th:block th:if="${requestList.size() == 0}">
+				<th:block th:if="${requestListN.size() == 0}">
 					<tr>
 						<td colspan="5">
 							<span>문의 하신 내용이 없습니다.</span>
 						</td>
 					</tr>
 				</th:block>
-				<th:block th:unless="${requestList.size() == 0}">
-					<tr th:each="request, state : ${requestList}">
-						<td>[[${requestList.size() - state.index}]]</td>
+				<th:block th:unless="${requestListN.size() == 0}">
+					<tr th:each="request, state : ${requestListY}">
+						<td>[[${requestListN.size() - state.index}]]</td>
 						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
 						<td>[[${request.hbtBoardRequestTitle}]]</td>
 						<td>[[${request.hbtBoardRequestRegDate}]]</td>
@@ -66,31 +66,40 @@
 <div class="row mb-3">
 	<div class="col">
 		<h4>답변 내역</h4>
-		<table class="table text-center">
+		<table class="table text-center my-req-table">
 			<colgroup>
-				<col width="">
-				<col width="">
-				<col width="">
-				<col width="">
-				<col width="">
+				<col width="10%">
+				<col width="15%">
+				<col width="*">
+				<col width="18%">
+				<col width="12%">
 			</colgroup>
 			<thead>
 				<tr>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
+					<td>No</td>
+					<td>문의 유형</td>
+					<td>문의 제목</td>
+					<td>문의 일자</td>
+					<td>답변 여부</td>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-					<td>1</td>
-				</tr>
+				<th:block th:if="${requestListY.size() == 0}">
+					<tr>
+						<td colspan="5">
+							<span>문의 하신 내용이 없습니다.</span>
+						</td>
+					</tr>
+				</th:block>
+				<th:block th:unless="${requestListY.size() == 0}">
+					<tr th:each="request, state : ${requestListY}">
+						<td>[[${requestListY.size() - state.index}]]</td>
+						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
+						<td>[[${request.hbtBoardRequestTitle}]]</td>
+						<td>[[${request.hbtBoardRequestRegDate}]]</td>
+						<td>[[${request.isAnswer}]]</td>
+					</tr>
+				</th:block>
 			</tbody>
 		</table>
 	</div>
