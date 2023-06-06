@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+.req-detail-table > tbody > tr > td {
+	border: 1px solid #eee;
+}

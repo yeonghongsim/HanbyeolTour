@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.team.admin.service.AdminService;
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardReplyVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.member.service.MemberService;
+import com.project.team.member.vo.MemberVO;
 
 import jakarta.annotation.Resource;
 
@@ -40,6 +42,9 @@ public class BoardController {
 	
 	@GetMapping("/getPublicBoardPage")
 	public String getPublicBoardPage(Model model, BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
@@ -221,15 +226,34 @@ public class BoardController {
 	
 	
 	@GetMapping("/regRequestPage")
-	public String regRequestPage(Model model) {
+	public String regRequestPage(Model model, BoardRequestVO boardRequestVO) {
+		boardRequestVO.setIsAnswer("");
+		
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
-		
+		model.addAttribute("requestList", boardService.getBoardReqList(boardRequestVO));
 		
 		return "content/board/regRequestPage";
 	}
 	
+	@ResponseBody
+	@PostMapping("/chkReqPwAJAX")
+	public boolean chkReqPwAJAX(String hbtBoardRequestNum, String chkPwVal) {
+		
+		boolean result = boardService.chkReqPw(hbtBoardRequestNum).equals(chkPwVal);
+		
+		return result;
+		
+	}
 	
+	@GetMapping("/RequestDetail")
+	public String RequestDetail(Model model, String hbtBoardRequestNum) {
+		
+		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
+		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
+		
+		return "content/board/request_detail";
+	}
 	
 	
 	

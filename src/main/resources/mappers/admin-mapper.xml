@@ -322,11 +322,23 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
-	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 / 빈 쿼리라서 주석해어
-	<select id="getBuyList" resultMap="buy">
-		
+	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 -->
+	<select id="getBuyListForAdmin" resultMap="memberMapper.member">
+		 SELECT HB.BUY_CODE
+		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD') BUY_DATE
+		 	, ITEM_TITLE
+		 	, MEM_NAME
+		 	, MEM_D_TELL
+		 	, HB.BUY_STATUS_CODE
+		 	, BUY_STATUS_NAME
+		 FROM HBT_BUY HB, HBT_BUY_STATE HBS, HBT_MEM HM
+		 	, HBT_MEM_DETAIL HMD, HBT_ITEM HI, HBT_BUY_DETAIL HBD
+		 WHERE HB.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		 AND HB.MEM_CODE = HM.MEM_CODE
+		 AND HMD.MEM_CODE = HM.MEM_CODE
+		 AND HI.ITEM_CODE = HBD.ITEM_CODE
 	</select>
-	-->
+	
 	
 	
 	

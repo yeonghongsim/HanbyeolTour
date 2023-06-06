@@ -6,4 +6,6 @@
 	border: 1px solid #eee;
 }
 
-
+.req-table > tbody > tr {
+	vertical-align: middle;
+}

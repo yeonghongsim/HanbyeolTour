@@ -189,6 +189,7 @@
 		    M.MEM_CODE,
 		    M.MEM_ID,
 		    M.MEM_NAME,
+		    M.MEM_ROLE,
 		    D.MEM_D_CODE,
 		    D.MEM_D_TELL,
 		    D.MEM_D_ADDR,
