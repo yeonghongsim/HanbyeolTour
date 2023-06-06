@@ -80,6 +80,11 @@
 	font-style: normal;
 }
 
+.bi-chevron-right{
+	font-weight: bolder;
+	font-size: 1.6rem;
+}
+
 
 
 /* 문의 내역, 후기 내역 */

@@ -40,6 +40,9 @@ public class BoardController {
 	
 	@GetMapping("/getPublicBoardPage")
 	public String getPublicBoardPage(Model model, BoardVO boardVO) {
+		if(boardVO.getGroundSearchVO() == null) {
+			boardVO.setGroundSearchVO(new GroundSearchVO());
+		}
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		
