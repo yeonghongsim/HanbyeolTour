@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 
-public class BuyVO {
+public class BuyVO extends SearchVO{
 	private String buyCode;
 	private String memCode;
 	private int buyStatusCode;

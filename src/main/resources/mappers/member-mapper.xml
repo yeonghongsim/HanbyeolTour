@@ -255,6 +255,31 @@
 		ORDER BY HBS.BUY_STATUS_CODE ASC
 	</select>
 	
+	<select id="getBuyStatusCount" resultMap="buyMapper.buyState">
+		SELECT
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME,
+		  NVL(COUNT(HB.BUY_STATUS_CODE), 0) AS BUY_STATUS_COUNT
+		FROM
+	      HBT_BUY_STATE HBS 
+	      LEFT JOIN 
+	      HBT_BUY HB ON HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
+	                 AND HB.MEM_CODE = #{memCode}
+	                <if test="month != null and month != 0">
+		 			 AND TO_CHAR(HB.BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
+		  			</if>
+		  			<if test="fromDate != null">
+					AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+					AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+					</if>
+	                 AND HB.BUY_DATE &lt;= SYSDATE
+	    WHERE HBS.BUY_STATUS_CODE &lt;= 5
+	    GROUP BY
+	      HBS.BUY_STATUS_CODE,
+	      HBS.BUY_STATUS_NAME
+	    ORDER BY HBS.BUY_STATUS_CODE ASC
+	</select>
+	
 	<!-- 배송목록 조회 -->
 	<select id="getBuyList" resultMap="buyMapper.buy">
 		SELECT BUY.BUY_CODE
@@ -278,7 +303,15 @@
 		AND ITEM.ITEM_CODE = DETAIL.ITEM_CODE
 		AND ITEM.ITEM_CODE = IMG.ITEM_CODE
         AND STATE.BUY_STATUS_CODE = BUY.BUY_STATUS_CODE
+        AND IS_MAIN = 'Y'
 		AND BUY.MEM_CODE = #{memCode}
+		<if test="month != null and month != 0">
+		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
+		</if>
+		<if test="fromDate != null">
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>	
 		ORDER BY BUY_CODE DESC
 	</select>
 	

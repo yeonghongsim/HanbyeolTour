@@ -160,6 +160,14 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.update("adminMapper.updateMemRole", memberVO);
 		
 	}
+	
+	//구매(예약) 리스트 조회
+	@Override
+	public List<MemberVO> getBuyListForAdmin() {
+		return sqlSession.selectList("adminMapper.getBuyListForAdmin");
+	}
+
+
 
 
 

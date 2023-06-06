@@ -78,6 +78,9 @@ public interface AdminService {
 	
 	//회원 권한 변경
 	void updateMemRole(MemberVO memberVO);
+	
+	//구매(예약) 리스트 조회
+	List<MemberVO> getBuyListForAdmin();
 
 	
 	
