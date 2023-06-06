@@ -20,11 +20,11 @@
 </div>
 	
 
-<div class="row mb-4">
+<div class="row mb-3">
     <div class="col content-box">
         <a th:href="@{/myPage/checkMyReservation}">
             <ul class="my-page-step">
-                <li th:each="buyStatus : ${buyStatusInOneMonthList}">
+                <li th:each="buyStatus : ${buyStatusCodeCountList}">
                     <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
                     <span  th:text="${buyStatus.buyStatusName}"></span>
                 </li>
@@ -37,39 +37,49 @@
 <div class="row">
 	<div class="col search-period">
 		<form id="month-form" th:action="@{/myPage/checkMyReservation}" method="post">
-				<input type="hidden" value="" name="month">
+			<input type="hidden" value="" name="month">
 		</form>
 		<form th:action="@{/myPage/checkMyReservation}" method="post">
 			<div class="row">
-				<div class="col select_con">
-					<p>구매기간</p>
+				<div class="col select-range">
+					<p id="first">구매기간</p>
 					<ul class="select-month">
 						<li>
-							<input type="button" class="btn btn-outline-dark" value="1개월" onclick="get_buy_list(-1);">
+							<input type="button" class="btn btn-dark" value="전체" onclick="get_buy_list(0);">
 						</li>
 						<li>
-							<input type="button" class="btn btn-outline-dark" value="3개월" onclick="get_buy_list(-3);">
+							<input type="button" class="btn btn-dark" value="1개월" onclick="get_buy_list(-1);">
 						</li>
 						<li>
-							<input type="button" class="btn btn-outline-dark" value="6개월" onclick="get_buy_list(-6);">
+							<input type="button" class="btn btn-dark" value="3개월" onclick="get_buy_list(-3);">
 						</li>
 						<li>
-							<input type="button" class="btn btn-outline-dark" value="12개월" onclick="get_buy_list(-12);">
+							<input type="button" class="btn btn-dark" value="6개월" onclick="get_buy_list(-6);">
+						</li>
+						<li>
+							<input type="button" class="btn btn-dark" value="12개월" onclick="get_buy_list(-12);">
 						</li>
 					</ul>
-				</div>			
+				</div>
 			</div>
-			
-			<!-- <label class="col-1 col-form-label">직접 입력</label>
-			<div class="col-2 d-grid">
-				<input name="fromDate" type="date" class="form-control" th:value="${buyVO.fromDate}">
+				
+			<div class="row">
+			    <div class="col select-range" style="display: flex;">
+			        <p style="margin-right: 14px;">직접 입력</p>
+			        <div class="col-4 d-grid" style="margin-right: 10px;">
+			            <input name="fromDate" type="date" class="form-control" th:value="${buyVO.fromDate}">
+			        </div>
+			        <div class="col-1 text-center" style="margin-right: 10px;">
+			            <span class="">~</span>
+			        </div>
+			        <div class="col-4 d-grid" style="margin-right: 10px;">
+			            <input name="toDate" type="date" class="form-control" th:value="${buyVO.toDate}">
+			        </div>
+			        <div class="col-1 d-grid">
+			            <input type="submit" class="btn btn-secondary" value="검색">
+			        </div>
+			    </div>
 			</div>
-			<div class="col-2 d-grid">
-				<input  name="toDate" type="date" class="form-control" th:value="${buyVO.toDate}">				
-			</div>
-			<div class="col-1 d-grid">
-				<input type="submit" class="btn btn-primary" value="검색">
-			</div> -->
 			
 		</form>
 	</div>
@@ -78,7 +88,7 @@
 
 
 <div class="row">
-	<div class="col">
+	<div class="col mb-5">
 		<table class="table table-hover">
 			<colgroup>
 				<col width="10%">
@@ -157,30 +167,11 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-<div class="row">
-	<div class="col">
-		
-	</div>
-</div>
-
-
-
-
-
-
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/"></script>-->
+	<script type="text/javascript" src="/js/content/member/myPage/check_my_reservation.js"></script>
 </th:block>
 
 
