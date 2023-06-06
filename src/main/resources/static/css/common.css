@@ -54,3 +54,6 @@ textarea {
 .hide {
 	display: none;
 }
+.only-tbody > tbody > tr > td{
+	border: 1px solid #eee;
+}

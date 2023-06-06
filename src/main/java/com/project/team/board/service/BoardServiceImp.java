@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.team.board.vo.BoardReplyVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.GroundSearchVO;
+import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 
@@ -110,6 +112,48 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public int getBoardListCnt(GroundSearchVO groundSearchVO) {
 		return sqlSession.selectOne("boardMapper.getBoardListCnt", groundSearchVO);
+	}
+
+	@Override
+	public String getNextByBoardRequestNum() {
+		return sqlSession.selectOne("boardMapper.getNextByBoardRequestNum");
+	}
+
+	@Override
+	public void regRequest(BoardRequestVO boardRequestVO) {
+		sqlSession.insert("boardMapper.regRequest", boardRequestVO);
+	}
+
+	@Override
+	public List<BoardRequestVO> getBoardReqList(BoardRequestVO boardRequestVO) {
+		return sqlSession.selectList("boardMapper.getBoardReqList", boardRequestVO);
+	}
+
+	@Override
+	public String chkReqPw(String hbtBoardRequestNum) {
+		return sqlSession.selectOne("boardMapper.chkReqPw", hbtBoardRequestNum);
+	}
+
+	@Override
+	public BoardRequestVO getRequestDetail(String hbtBoardRequestNum) {
+		return sqlSession.selectOne("boardMapper.getRequestDetail", hbtBoardRequestNum);
+	}
+
+	@Override
+	public String getNextByReqReplyNum() {
+		return sqlSession.selectOne("boardMapper.getNextByReqReplyNum");
+	}
+
+	@Transactional
+	@Override
+	public void insertReqReply(ReqReplyVO reqReplyVO) {
+		sqlSession.insert("boardMapper.insertReqReply", reqReplyVO);
+		sqlSession.update("boardMapper.updateBoardRequestIsAnswer", reqReplyVO.getHbtBoardRequestNum());
+	}
+
+	@Override
+	public List<ReqReplyVO> getReqReplyList(String hbtBoardRequestNum) {
+		return sqlSession.selectList("boardMapper.getReqReplyList", hbtBoardRequestNum);
 	}
 
 

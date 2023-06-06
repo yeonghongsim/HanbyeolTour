@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/board/board_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/board/request_detail.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="board_content">
+	<div class="row mb-3 under-line-ylS">
+		<div class="col">
+			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col">
+			<table class="table text-center req-detail-table">
+				<colgroup>
+					<col width="25%">
+					<col width="25%">
+					<col width="25%">
+					<col width="25%">
+				</colgroup>
+				<tbody>
+					<tr>
+						<td>작성자</td>
+						<td>[[${reqDetail.memberVO.memId}]]</td>
+						<td>작성일</td>
+						<td>[[${reqDetail.hbtBoardRequestRegDate}]]</td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td>
+							<span>[[${reqDetail.hbtBoardRequestTitle}]]</span>
+						</td>
+						<td>1</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="3">
+							<span>[[${reqDetail.hbtBoardRequestContent}]]</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col">
+			1차 답변
+		</div>
+	</div>
+
+	<div class="row mb-3">
+		<div class="col">
+			1차 재문의
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col">
+			2차 답변
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col">
+			2차 재문의
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col">
+			3차 답변
+		</div>
+	</div>
+	
+	
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/board/request_detail.js"></script>
+</th:block>
+
+
+
+</html>

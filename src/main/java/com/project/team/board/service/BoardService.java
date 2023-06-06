@@ -3,10 +3,12 @@ package com.project.team.board.service;
 import java.util.List;
 
 import com.project.team.board.vo.BoardReplyVO;
+import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.BoardSideMenuVO;
 import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.GroundSearchVO;
+import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 public interface BoardService {
@@ -60,4 +62,28 @@ public interface BoardService {
 	
 	// get board list cnt
 	int getBoardListCnt(GroundSearchVO groundSearchVO);
+	
+	// get b-req-num
+	String getNextByBoardRequestNum();
+	
+	// insert b-req
+	void regRequest(BoardRequestVO boardRequestVO);
+	
+	// select b-req-list
+	List<BoardRequestVO> getBoardReqList(BoardRequestVO boardRequestVO);
+	
+	// chk reqPw
+	String chkReqPw(String hbtBoardRequestNum);
+	
+	// select req detail
+	BoardRequestVO getRequestDetail(String hbtBoardRequestNum);
+	
+	// select req-rpl-num
+	String getNextByReqReplyNum();
+	
+	// insert req-rpl
+	void insertReqReply(ReqReplyVO reqReplyVO);
+	
+	// select req-reply list
+	List<ReqReplyVO> getReqReplyList(String hbtBoardRequestNum);
 }

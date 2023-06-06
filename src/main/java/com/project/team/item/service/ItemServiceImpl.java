@@ -9,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.team.item.vo.ItemVO;
+
 @Service("itemService")
 public class ItemServiceImpl implements ItemService{
 	@Autowired
@@ -28,6 +30,11 @@ public class ItemServiceImpl implements ItemService{
 	@Override
 	public List<HashMap<String, Object>> getItemDetail(String itemCode) {
 		return sqlSession.selectList("itemMapper.getItemDetail", itemCode);
+	}
+
+	@Override
+	public List<ItemVO> getItemMainImg() {
+		return sqlSession.selectList("itemMapper.getItemMainImg");
 	}
 
 
