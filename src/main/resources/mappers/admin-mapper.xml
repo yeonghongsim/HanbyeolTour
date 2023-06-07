@@ -335,10 +335,15 @@
 		 	, HBT_MEM_DETAIL HMD, HBT_ITEM HI, HBT_BUY_DETAIL HBD
 		 WHERE HB.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
 		 AND HB.MEM_CODE = HM.MEM_CODE
-		 AND HMD.MEM_CODE = HM.MEM_CODE
-		 AND HI.ITEM_CODE = HBD.ITEM_CODE
+		 AND HB.MEM_CODE = HMD.MEM_CODE
+		 AND HB.BUY_CODE = HBD.BUY_CODE
+         AND HBD.ITEM_CODE = HI.ITEM_CODE
 	</select>
 	
+	<!-- 예약 관리 페이지 구매(예약)상태 -->
+	<!-- <select id="getBuyStatus" resultMap="">
+		
+	</select> -->
 	
 	
 	
