@@ -338,12 +338,16 @@
 		 AND HB.MEM_CODE = HMD.MEM_CODE
 		 AND HB.BUY_CODE = HBD.BUY_CODE
          AND HBD.ITEM_CODE = HI.ITEM_CODE
+         ORDER BY BUY_DATE DESC
 	</select>
 	
 	<!-- 예약 관리 페이지 구매(예약)상태 -->
-	<!-- <select id="getBuyStatus" resultMap="">
-		
-	</select> -->
+	<select id="getBuyStatus" resultMap="buyMapper.buyState">
+		SELECT BUY_STATUS_CODE
+			, BUY_STATUS_NAME
+		FROM HBT_BUY_STATE
+		ORDER BY BUY_STATUS_CODE
+	</select>
 	
 	
 	

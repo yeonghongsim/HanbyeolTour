@@ -43,19 +43,15 @@
 									<tr>	
 										<td>
 											<div class="row">
-												주문상태
+												예약상태
 												
 												<div class="col-6">
-													<input type="checkbox" class="form-check-input">
+													<input type="checkbox" class="form-check-input" id="searchAllCheck">
 													<label class="form-check-label">전체</label>
-													<input type="checkbox" class="form-check-input">
-													<label class="form-check-label">결제 완료</label>
-													<input type="checkbox" class="form-check-input">
-													<label class="form-check-label">예약 완료</label>
-													<input type="checkbox" class="form-check-input">
-													<label class="form-check-label">취소 요청</label>
-													<input type="checkbox" class="form-check-input">
-													<label class="form-check-label">취소 완료</label>
+													<th:block th:each="buyStatus : ${buyStatusList}">
+														<input type="checkbox" class="form-check-input searchChk" name="" >
+														<label class="form-check-label">[[${buyStatus.buyStatusName}]]</label>
+													</th:block>
 												</div>
 												<div class="col-4">
 													
@@ -78,10 +74,10 @@
 													</select>
 												</div>
 												<div class="col-4">
-													<input type="button"  class="btn" value="전체">
-													<input type="button" class="btn" value="7일">
-													<input type="button" class="btn" value="1개월">
-													<input type="button" class="btn" value="3개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="전체">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="7일">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="1개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="3개월">
 												</div>
 												<div class="col-2">
 													<input type="date" class="form-control">
@@ -105,18 +101,15 @@
 					<div class="row">
 						<div class="col-2">
 							<select class="form-select">
-							<th:block>
-								<option>주문상태변경</option>
-								<option>결제 완료</option>
-								<option>예약 완료</option>
-								<option>취소 요청</option>
-								<option>취소 완료</option>
+								<option>예약상태변경</option>
+							<th:block th:each="buyStatus : ${buyStatusList}">
+								<option th:value="${buyStatus.buyStatusCode}">[[${buyStatus.buyStatusName}]]</option>
 							</th:block>
 							</select>
 							
 						</div>
 						<div class="col-1">
-							<input type="button" value="변경" class="btn">
+							<input type="button" value="변경" class="btn" style="background-color: #ffd000;">
 						</div>
 					</div>
 					<table class="table">
@@ -124,10 +117,13 @@
 							<col width="">
 							<col width="">
 							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
 						</colgroup>
 						<thead>
 							<tr>
-								<td><input type="checkbox" class="form-check-input"></td>
+								<td><input type="checkbox" class="form-check-input" id="allCheck" onclick="AllCheckboxControl();"></td>
 								<td>예약코드</td>
 								<td>예약일</td>
 								<td>예약상품명</td>
@@ -143,7 +139,7 @@
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
-									<td><input type="checkbox" class="form-check-input"></td>
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();"></td>
 									<td>[[${buy.buyVO.buyCode}]]</td>
 									<td>[[${buy.buyVO.buyDate}]]</td>
 									<td>
