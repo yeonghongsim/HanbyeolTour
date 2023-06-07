@@ -257,6 +257,7 @@ public class MyPageController {
 		
 		boardRequestVO.setIsAnswer("N");
 		model.addAttribute("requestListN", boardService.getBoardReqList(boardRequestVO));
+		
 		boardRequestVO.setIsAnswer("Y");
 		model.addAttribute("requestListY", boardService.getBoardReqList(boardRequestVO));
 		
@@ -272,7 +273,17 @@ public class MyPageController {
 		model.addAttribute("itemImgList", itemService.getItemMainImg());
 		
 		return "content/member/myPage/reg_request_form";
+	}
+	
+	@GetMapping("/reqDetail")
+	public String reqDetail(Model model, String hbtBoardRequestNum, String itemCode) {
 		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
+		model.addAttribute("itemCode", itemCode);
+		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		
+		return "content/member/myPage/req_detail";
 		
 	}
 	
@@ -285,6 +296,24 @@ public class MyPageController {
 		boardService.regRequest(boardRequestVO);
 		
 		return "redirect:/myPage/checkMyRequest";
+	}
+	
+	@ResponseBody
+	@PostMapping("/delMyRequestAJAX")
+	public void delMyRequestAJAX(String hbtBoardRequestNum) {
+		
+		boardService.delMyRequest(hbtBoardRequestNum);
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/chkMyRequestAJAX")
+	public String chkMyRequestAJAX(String hbtBoardRequestNum) {
+		
+		System.out.println("chkMyRequestAJAX run~" + hbtBoardRequestNum);
+		
+		return boardService.chkMyRequest(hbtBoardRequestNum);
+		
 	}
 	
 	

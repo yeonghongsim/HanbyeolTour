@@ -405,9 +405,11 @@ public class AdminController {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		boardRequestVO.setIsAnswer("Y");
-		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));		
+		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));
+		
 		boardRequestVO.setIsAnswer("N");
-		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));		
+		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));
+		
 		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
 		return "content/admin/board/request_manage";
@@ -416,8 +418,7 @@ public class AdminController {
 	
 	@GetMapping("/regReqReplyForm")
 	public String regReqReplyForm(Model model, String hbtBoardRequestNum, String itemCode) {
-		System.out.println("!@#" + itemCode + "!@#!@#!@");
-		
+
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
 		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
 		model.addAttribute("itemCode", itemCode);

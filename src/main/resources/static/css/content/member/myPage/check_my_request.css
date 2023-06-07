@@ -6,3 +6,6 @@
 	background-color: #eee;
 }
 
+.my-req-table > tbody > tr {
+	vertical-align: middle;
+}

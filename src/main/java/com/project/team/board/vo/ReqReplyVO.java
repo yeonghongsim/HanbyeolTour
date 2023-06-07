@@ -16,5 +16,4 @@ public class ReqReplyVO {
 	private int replyDepth;
 	private MemberVO memberVO;
 	private String hbtBoardRequestNum;
-	private String regReplyParentKey;
 }
