@@ -127,7 +127,7 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" class="form-check-input"></td>
 								<td>예약코드</td>
 								<td>예약일</td>
 								<td>예약상품명</td>
@@ -142,19 +142,19 @@
 								</tr>
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
-								<tr th:each="buy : ${buyList}">
-									<td><input type="checkbox"></td>
+								<tr th:each="buy, state : ${buyList}">
+									<td><input type="checkbox" class="form-check-input"></td>
 									<td>[[${buy.buyVO.buyCode}]]</td>
 									<td>[[${buy.buyVO.buyDate}]]</td>
-									<td></td>
+									<td>
+										[[${buy.buyVO.buyDetailList[0].itemVO.itemTitle}]]
+									</td>
 									<td>
 										<div>[[${buy.memName}]]</div>
 										<div>[[${buy.memberDetailVO.memDTell}]]</div>
 									</td>
 									<td>
-										<select>
-										
-										</select>
+										<span>[[${buy.buyVO.buyStateVO.buyStatusName}]]</span>
 									</td>
 								</tr>
 							</th:block>
