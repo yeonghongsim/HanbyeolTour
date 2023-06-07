@@ -207,6 +207,11 @@ public class MyPageController {
 		System.out.println(buyStatusCodeCountList);
 		model.addAttribute("buyStatusCodeCountList", buyStatusCodeCountList);
 		
+		// 조회될 데이터 수 조회
+		int totalDataCnt = memberService.getBuyListCount(buyVO);
+		buyVO.setTotalDataCnt(totalDataCnt);
+		buyVO.setPageInfo();
+		
 		// 구매 내역 리스트 데이터 조회 
 		List<BuyVO> buyList = memberService.getBuyList(buyVO);
 		System.out.println("@@@@ 구매내역 조회 :" + buyList);

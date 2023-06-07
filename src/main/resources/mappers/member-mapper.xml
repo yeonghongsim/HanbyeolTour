@@ -235,7 +235,7 @@
 	</select>
 	
 		
-	<!-- 예약 조회 상태별 갯수 조회 -->
+	<!-- myPage 첫 화면 - 예약 조회 상태별 갯수 조회 -->
 	<select id="getBuyStatusInOneMonth" resultMap="buyMapper.buyState">
 		SELECT
 		  HBS.BUY_STATUS_CODE,
@@ -255,6 +255,7 @@
 		ORDER BY HBS.BUY_STATUS_CODE ASC
 	</select>
 	
+	<!-- 예약 조회 페이지 - 예약 상태별 갯수 조회 -->
 	<select id="getBuyStatusCount" resultMap="buyMapper.buyState">
 		SELECT
 		  HBS.BUY_STATUS_CODE,
@@ -280,7 +281,7 @@
 	    ORDER BY HBS.BUY_STATUS_CODE ASC
 	</select>
 	
-	<!-- 배송목록 조회 -->
+	<!-- 조건에 따른 예약 내역 조회 -->
 	<select id="getBuyList" resultMap="buyMapper.buy">
 		SELECT BUY.BUY_CODE
 		    , BUY.BUY_TOTAL_PRICE
@@ -295,6 +296,7 @@
 		    , TO_CHAR(DETAIL.DEPART_DATE, 'YYYY-MM-DD') AS DEPART_DATE
 		    , TO_CHAR(DETAIL.ARRIVE_DATE, 'YYYY-MM-DD') AS ARRIVE_DATE
 		    , DETAIL.BUY_D_PRICE
+		    , STATE.BUY_STATUS_CODE
 		    , STATE.BUY_STATUS_NAME
 		FROM HBT_BUY BUY, HBT_BUY_DETAIL DETAIL, HBT_TOUR_AREA AREA,
 		    HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_BUY_STATE STATE
@@ -317,7 +319,18 @@
 	
 	
 	
-	
+	<select id="getBuyListCnt" resultType="int">
+		SELECT COUNT(BUY_CODE)
+		FROM HBT_BUY
+		WHERE MEM_CODE = #{memCode}
+		<if test="month != null and month != 0">
+		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
+		</if>
+		<if test="fromDate != null">
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>	
+	</select>
 	
 	
 	

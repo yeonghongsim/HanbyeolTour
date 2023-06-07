@@ -60,4 +60,11 @@ option{
 	margin-top: 0.5rem;
 }
 
+.table-reservation thead{
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
+	background-color: #eee;
+
+}
+
 
