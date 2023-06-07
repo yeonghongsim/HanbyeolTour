@@ -50,7 +50,6 @@
 		<result column="REQ_REPLY_ANSWER_DATE" 		property="reqReplyAnswerDate"/>
 		<result column="REPLY_DEPTH" 				property="replyDepth"/>
 		<result column="HBT_BOARD_REQUEST_NUM" 		property="hbtBoardRequestNum"/>
-		<result column="REQ_REPLY_PARENT_KEY"		property="regReplyParentKey"/>
 		<association property="memberVO" 			resultMap="memberMapper.member"/>
 	</resultMap>
 	
@@ -371,8 +370,23 @@
 			, REPLY_DEPTH
 			, MEM_CODE
 			, HBT_BOARD_REQUEST_NUM
-			, REQ_REPLY_PARENT_KEY
 		FROM HBT_REQ_REPLY
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</select>
+	
+	<delete id="delMyRequest">
+		DELETE HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</delete>
+	
+	<delete id="delMyRequestReply">
+		DELETE HBT_REQ_REPLY
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</delete>
+	
+	<select id="chkMyRequest" resultType="String">
+		SELECT IS_ANSWER
+		FROM HBT_BOARD_REQUEST
 		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
 	</select>
 	

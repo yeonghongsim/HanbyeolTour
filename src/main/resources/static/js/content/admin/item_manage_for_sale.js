@@ -1,3 +1,24 @@
+//이미지 팝업 모달
+const imgModal = new bootstrap.Modal('#imgModal');
+
+
+//이미지명 클릭 시 이미지 모달창 띄우기
+function openImgModal(itemImgAttachedName, itemImgOriginName){
+	//모달 안에서 보여질 이미지 정보 세팅 (모달 태그 안의 이미지 태그 선택)	
+	const modalTag = document.querySelector('#imgModal');
+	//모달 태그에서 img 태그 선택(선택한 태그에서도 querySelector 쓰기 가능)
+	modalTag.querySelector('img').src = `/upload/${itemImgAttachedName}`;
+	
+	//모달창의 이미지 제목 세팅 (원본파일명으로) 태그.textContent : 태그의 글자 바꾸기
+	modalTag.querySelector('h1').textContent = itemImgOriginName;
+	
+	//modal 띄우기
+	imgModal.show();  //imgModal.hide() > 모달 숨김.
+	
+	
+}
+
+
 //상품 상세 정보
 function openModal(itemCode, areaCateList){
 	const itemDetailModal = new bootstrap.Modal('#itemDetailModal');

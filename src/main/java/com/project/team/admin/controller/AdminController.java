@@ -295,9 +295,15 @@ public class AdminController {
 	@GetMapping("/reservationInquiry")
 	public String reservationInquiry(Model model) {
 		
+		//구매 내역
 		model.addAttribute("buyList", adminService.getBuyListForAdmin());
 		
 		System.out.println(adminService.getBuyListForAdmin());
+		
+		//구매 상태 
+		model.addAttribute("buyStatusList", adminService.getBuyStatus());
+		
+		System.out.println(adminService.getBuyStatus());
 		
 		return "content/admin/reservation_inquiry";
 	}
@@ -405,9 +411,11 @@ public class AdminController {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		boardRequestVO.setIsAnswer("Y");
-		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));		
+		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));
+		
 		boardRequestVO.setIsAnswer("N");
-		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));		
+		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));
+		
 		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
 		return "content/admin/board/request_manage";
@@ -416,8 +424,7 @@ public class AdminController {
 	
 	@GetMapping("/regReqReplyForm")
 	public String regReqReplyForm(Model model, String hbtBoardRequestNum, String itemCode) {
-		System.out.println("!@#" + itemCode + "!@#!@#!@");
-		
+
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
 		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
 		model.addAttribute("itemCode", itemCode);

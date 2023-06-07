@@ -15,6 +15,7 @@ import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.buy.vo.BuyStateVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -166,6 +167,14 @@ public class AdminServiceImpl implements AdminService{
 	public List<MemberVO> getBuyListForAdmin() {
 		return sqlSession.selectList("adminMapper.getBuyListForAdmin");
 	}
+	
+	//구매(예약) 상태 조회
+	@Override
+	public List<BuyStateVO> getBuyStatus() {
+		
+		return sqlSession.selectList("adminMapper.getBuyStatus");
+	}
+
 
 
 
@@ -265,6 +274,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
 
 
 
