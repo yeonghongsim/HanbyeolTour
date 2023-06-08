@@ -318,7 +318,7 @@
 	</select>
 	
 	
-	
+	<!-- 예약 조회될 데이터 갯수 -->
 	<select id="getBuyListCnt" resultType="int">
 		SELECT COUNT(BUY_CODE)
 		FROM HBT_BUY
@@ -332,7 +332,13 @@
 		</if>	
 	</select>
 	
-	
+	<!--  -->
+	<update id="cancelReservation">
+		UPDATE HBT_BUY 
+		SET BUY_STATUS_CODE = 3
+		WHERE BUY_CODE = #{buyCode}
+	</update>
+		
 	
 	
 	

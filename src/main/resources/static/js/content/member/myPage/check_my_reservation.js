@@ -23,7 +23,42 @@ function get_buy_list_paging(pageNum){
 
 
 
-
+function cancel_reservation(buyDCode){
+	
+		      console.log(buyDCode);
+	// Confirmation
+	const result = confirm(`정말 예약을 취소하시겠어요?`);
+	
+	if(result){
+		//ajax start
+		$.ajax({
+		   url: '/myPage/checkMyReservationAJAX', //요청경로
+		   type: 'post',
+		   async: true, // 비동기 , 동기 설정
+		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
+		   data: {'buyDCode':buyDCode}, //필요한 데이터
+		   success: function(result) {
+			  console.log(result);
+		      alert('ajax 통신 성공');
+		   },
+		   error: function() {
+		      alert('실패');
+		   }
+		});
+		//ajax end
+		
+	}
+	else{
+		return;		
+	}
+	
+	
+	
+	
+	
+	
+	
+}
 
 
 

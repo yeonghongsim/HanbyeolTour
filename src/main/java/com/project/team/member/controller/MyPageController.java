@@ -232,6 +232,17 @@ public class MyPageController {
 		return "content/member/myPage/check_my_reservation";
 	}
 	
+	// 예약 취소 처리 
+	@PostMapping("/checkMyReservationAJAX")
+	@ResponseBody
+	public void cancelReservation(String buyDCode) {
+		memberService.cancelReservation(buyDCode);
+	}
+	
+	
+	
+	
+	
 	
 	//예약취소 내역 확인 페이지로 이동 
 	@GetMapping("/checkMyCancelation")
