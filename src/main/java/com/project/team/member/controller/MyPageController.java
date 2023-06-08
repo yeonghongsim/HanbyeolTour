@@ -329,14 +329,30 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/reqDetail")
-	public String reqDetail(Model model, String hbtBoardRequestNum, String itemCode) {
+	public String reqDetail(Model model, String hbtBoardRequestNum, String itemCode, Authentication authentication) {
+		//회원 정보 
+		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
+		model.addAttribute("memInfo", memInfo);
 		
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
 		model.addAttribute("itemCode", itemCode);
 		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
 		return "content/member/myPage/req_detail";
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateMyReqAJAX")
+	public void updateMyReqAJAX(BoardRequestVO boardRequestVO) {
+		String requestPw = boardService.chkReqPw(boardRequestVO.getHbtBoardRequestNum());
+		boardRequestVO.setRequestPw(requestPw);
+		
+		System.out.println("!@#!D@#!@D!S#S!S#" + boardRequestVO);
+		
+		boardService.regRequest(boardRequestVO);
 		
 	}
 	

@@ -24,7 +24,8 @@
 		<div class="col">
 			<div class="row">
 				<div class="col">
-					<h4 >초기 문의글</h4>
+					<h4>문의글</h4>
+					<input type="hidden" name="itemCode" id="reqItemCode" th:value="${itemCode}">
 					<table class="table text-center only-tbody">
 						<colgroup>
 							<col width="15%">
@@ -59,17 +60,62 @@
 					</table>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col">
-					<input type="text" class="form-control" name="reqReplyContent" id="first_reqReplyContent">
-				</div>
-				<div class="col-2">
-					<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-primary w-100" value="답변 하기">
+					<div class="row mb-3">
+						<div class="col">
+							<input type="text" class="form-control" name="reqReplyContent" id="reqReplyContent">
+						</div>
+					</div>
+					<div class="row">
+						<th:block th:if="${reqReplyList.size() == 0}">
+							<th:block th:if="${itemCode == null}">
+								<div class="offset-8 col-2">
+									<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+								</div>
+								<div class="col-2">
+									<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-primary w-100" value="답변 달기">
+								</div>
+							</th:block>
+							<th:block th:unless="${itemCode == null}">
+								<div class="offset-8 col-2">
+									<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+								</div>
+								<div class="col-2">
+									<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-primary w-100" value="답변 달기">
+								</div>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${reqReplyList.size() == 0}">
+							<th:block th:if="${itemCode == null}">
+								<div class="offset-6 col-2">
+									<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+								</div>
+								<div class="col-2">
+									<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]], [[${reqReplyList[0].reqReplyNum}]]);" class="btn btn-primary w-100" value="답변 수정">
+								</div>
+								<div class="col-2">
+									<input type="button" th:onclick="delFirstResponse([[${reqReplyList[0].reqReplyNum}]], [[${reqReplyList[0].hbtBoardRequestNum}]]);" class="btn btn-danger w-100" value="답변 삭제">
+								</div>
+							</th:block>
+							<th:block th:unless="${itemCode == null}">
+								<div class="offset-6 col-2">
+									<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+								</div>
+								<div class="col-2">
+									<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]], [[${reqReplyList[0].reqReplyNum}]]);" class="btn btn-primary w-100" value="답변 수정">
+								</div>
+								<div class="col-2">
+									<input type="button" th:onclick="delFirstResponse([[${reqReplyList[0].reqReplyNum}]], [[${reqReplyList[0].hbtBoardRequestNum}]]);" class="btn btn-danger w-100" value="답변 삭제">
+								</div>
+							</th:block>
+						</th:block>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 	<th:block th:if="${reqReplyList.size() != 0}">
 		<th:block th:each="reqReply, state : ${reqReplyList}">
 			<div class="row" th:if="${state.index == 0}">
@@ -93,21 +139,19 @@
 									</tr>
 									<tr>
 										<td colspan="4" style="text-align: left; padding-left: 5rem;">
-											<span>[[${reqReply.reqReplyContent}]]</span>
+											<span class="contentSpan">[[${reqReply.reqReplyContent}]]</span>
 										</td>
 									</tr>
 								</tbody>
 							</table>				
 						</div>
 					</div>
-					<div class="row">
-						<div class="offset-10 col-2">
-							<input type="button" onclick="delFirstResponse();" class="btn btn-danger w-100" value="삭제">
-						</div>
-					</div>
 				</div>
 			</div>	
 		</th:block>
+	</th:block>
+	<th:block th:unless="${reqReplyList.size() != 0}">
+		<div><span>답변된 내용이 없습니다.</span></div>
 	</th:block>
 	
 </th:block>

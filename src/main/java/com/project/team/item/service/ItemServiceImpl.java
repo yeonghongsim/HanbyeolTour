@@ -37,5 +37,20 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getItemMainImg");
 	}
 
+	@Override
+	public List<Map<String, Object>> getItemDetailImg(String itemCode) {
+		return sqlSession.selectList("itemMapper.getItemDetailImg", itemCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> getHotelImg(String hbtHotelCode) {
+		return sqlSession.selectList("itemMapper.getHotelImg", hbtHotelCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> getTourImg(String hbtTourItemCode) {
+		return sqlSession.selectList("itemMapper.getTourImg", hbtTourItemCode);
+	}
+
 
 }

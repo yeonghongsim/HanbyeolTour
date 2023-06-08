@@ -61,8 +61,6 @@ function regReReply(inputBtn, hbtBoardReplyNum, memId, hbtBoardNum, writerId, us
 		userRole = userRole[0]['authority'].substr(5);
 	}
 	
-	alert(memId + '/' + writerId + '/' + userRole);
-	
 	const input_btn_div = inputBtn.parentElement;
 	const cancel_re_reply_input = document.querySelector('.cancel_re_reply_input');
 	
