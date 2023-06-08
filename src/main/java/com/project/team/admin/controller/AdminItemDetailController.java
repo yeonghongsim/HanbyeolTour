@@ -11,6 +11,7 @@ import com.project.team.util.UploadPath;
 import com.project.team.util.UploadUtil;
 import groovyjarjarasm.asm.TypeReference;
 import jakarta.annotation.Resource;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -190,6 +191,7 @@ public class AdminItemDetailController {
             model.addAttribute("hotelList", adminItemDetailService.getHotelListByItemCode(itemCode));
             model.addAttribute("tourList", adminItemDetailService.getTourListByItemCode(itemCode));
             model.addAttribute("itemCode", itemCode);
+
         }
 
         return "/content/admin/item/item_daily_manage";
@@ -203,7 +205,9 @@ public class AdminItemDetailController {
         Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
         List<Map<String, Object>> list = gson.fromJson(itemDailyPlan, resultType);
 
+        System.out.println(list.toString());
         adminItemDetailService.setItemDailyPlan(list);
+        adminItemDetailService.updateItemState(list.get(0).get("itemCode").toString());
     }
 
     //상품기본정보 조회

@@ -678,6 +678,7 @@
 		WHERE TOUR.AREA_CODE = ITEM.AREA_CODE
 		  AND ITEM.ITEM_CODE = #{itemCode}
 	</select>
+<!--	아이템코드로 호텔리스트조회 -->
 	<select id="getHotelListByItemCode" resultType="map">
 		SELECT  HBT_HOTEL_CODE
 			 , HBT_HOTEL_NAME
@@ -686,7 +687,7 @@
 		WHERE ITEM.AREA_CODE = HOTEL.AREA_CODE
 		  AND ITEM.ITEM_CODE = #{itemCode}
 	</select>
-
+<!--일정상세정보등록-->
 	<insert id="setItemDailyPlan">
 		INSERT INTO HBT_ITEM_PLAN (
 			HBT_PLAN_CODE
@@ -713,6 +714,12 @@
 		FROM DUAL
 	</foreach>
 	</insert>
+
+	<update id="updateItemState">
+		UPDATE HBT_ITEM
+		SET STATUS_CODE = 1
+		WHERE #{itemCode}
+	</update>
 
 
 
