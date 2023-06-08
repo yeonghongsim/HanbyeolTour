@@ -332,7 +332,7 @@
 		</if>	
 	</select>
 	
-	<!--  -->
+	<!-- 예약 취소 버튼 -> 예약 상태 코드 변경 -->
 	<update id="cancelReservation">
 		UPDATE HBT_BUY 
 		SET BUY_STATUS_CODE = 3

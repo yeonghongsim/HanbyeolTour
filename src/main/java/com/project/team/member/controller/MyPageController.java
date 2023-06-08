@@ -2,7 +2,10 @@ package com.project.team.member.controller;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -191,16 +194,16 @@ public class MyPageController {
 	@RequestMapping("/checkMyReservation")
 	public String checkMyReservation(Model model, BuyVO buyVO, Authentication authentication) {
 		
-		// 오늘 날짜 
-		String nowDate = DateUtil.getNowDateToString();
-		// 이번 달의 첫번째 날짜
-		String firstDate = DateUtil.getFirstDateOfMonth();
-		
 		// 로그인 정보 이용 -> memCode 가져오기 
 		String memCode = memberService.getMemCode(authentication.getName());
 		System.out.println("memCode : " + memCode);
 		
 		buyVO.setMemCode(memCode);
+		
+		//month 설정 
+		if(buyVO.getMonth() == 0) {
+			buyVO.setMonth(-1);
+		}
 		
 		// 구매상태 정보 조회 (상단바)
 		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
@@ -218,11 +221,14 @@ public class MyPageController {
 		model.addAttribute("buyList",buyList);
 		
 		// 넘어온 날짜 데이터 없을 경우 기본값으로 날짜 세팅
-		if(buyVO.getFromDate() == null) {
-			buyVO.setFromDate(firstDate);
-		}
+		String nowDate = DateUtil.getNowDateToString(); // 오늘 날짜
+		String firstDate = DateUtil.getFirstDateOfMonth(); // 이번 달의 첫번째 날짜
+		
 		if(buyVO.getToDate() == null) {
 			buyVO.setToDate(nowDate);
+		}
+		if (buyVO.getFromDate() == null) {
+			buyVO.setFromDate(firstDate);
 		}
 		
 		
@@ -233,10 +239,41 @@ public class MyPageController {
 	}
 	
 	// 예약 취소 처리 
+	@PostMapping("/getUpdatedTableDataAJAX")
+	@ResponseBody
+	public Map<String, Object> getUpdatedTableData(BuyVO buyVO, int month, Authentication authentication) {
+		// 로그인 정보 이용 -> memCode 가져오기 
+		String memCode = memberService.getMemCode(authentication.getName());
+		System.out.println("memCode : " + memCode);
+		
+		buyVO.setMemCode(memCode);
+		
+		//month데이터 이용 
+		buyVO.setMonth(month);
+		
+		// 구매 내역 리스트 데이터 조회 
+		List<BuyVO> buyList = memberService.getBuyList(buyVO);
+		
+		// 상단바 데이터 조회 
+		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
+		
+		// 보낼 때에는 Map 데이터에 넣어서 보내기 
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("buyList", buyList);
+		responseMap.put("buyStatusCodeCountList", buyStatusCodeCountList);
+		
+		return responseMap;
+	}
+	
+	
+	
+	// 예약 취소 처리 
 	@PostMapping("/checkMyReservationAJAX")
 	@ResponseBody
-	public void cancelReservation(String buyDCode) {
-		memberService.cancelReservation(buyDCode);
+	public void cancelReservation(String buyCode) {
+		memberService.cancelReservation(buyCode);
+		
+		
 	}
 	
 	
