@@ -141,9 +141,9 @@ public class AdminItemDetailController {
         //호텔코드 가져오기
         String hotelCode = adminItemDetailService.getNextHotelCode();
         //메인이미지파일처리
-        ImgVO mainImgInfo = UploadUtil.uploadFile(mainImg, UploadPath.TOUR_IMG_UPLOAD_PATH);
+        ImgVO mainImgInfo = UploadUtil.uploadFile(mainImg, UploadPath.HOTEL_IMG_UPLOAD_PATH);
         //서브이미지파일처리
-        List<ImgVO> subImgInfo = UploadUtil.multiFileUpload(subImg, UploadPath.TOUR_IMG_UPLOAD_PATH);
+        List<ImgVO> subImgInfo = UploadUtil.multiFileUpload(subImg, UploadPath.HOTEL_IMG_UPLOAD_PATH);
 
         hotelVO.setHbtHotelCode(hotelCode);
         mainImgInfo.setItemCode(hotelCode);

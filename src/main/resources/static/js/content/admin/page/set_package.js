@@ -37,11 +37,11 @@ function addRecomImgForPKMenu(){
         sortIndex.push(index);
     });
 
-    if(isDuplicate(itemCode)){
-        alert('중복상품등록불가');
-        reLoad();
-        return;
-    }
+    // if(isDuplicate(itemCode)){
+    //     alert('중복상품등록불가');
+    //     reLoad();
+    //     return;
+    // }
 
     $.ajax({
         url: '/admin/addRecomImgForPKGAJAX', //요청경로

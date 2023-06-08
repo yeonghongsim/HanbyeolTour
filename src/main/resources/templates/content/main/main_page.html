@@ -62,7 +62,7 @@
 			<th:block th:each="item : ${recomItem}">
 				<div class="col col-2 offset-1 recomImg">
 					<div class="row mb-3">
-						<img th:src="@{/img/item/itemImg/} + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" alt="/img/item/xbox.jpg">
+						<img th:src="@{/img/item/itemImg/} + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" onerror="this.src='/img/item/xbox.jpg'">
 						<h4 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h4>
 					</div>
 				</div>
@@ -79,7 +79,7 @@
 		</div>
 		<div class="row">
 			<div class="col mb-3 mx-0 px-0">
-				<img src="/img/main/timedeal.jpg" class="d-block w-100 rounded" alt="/img/item/xbox.jpg">
+				<img src="/img/main/timedeal.jpg" class="d-block w-100 rounded" onerror="this.src='/img/item/xbox.jpg'" alt="이미지">
 			</div>
 		</div>
 		<div class="row">
@@ -101,7 +101,7 @@
 			<div class="col mb-3 mx-0 px-0">
 			
 				<div class="card" style="width: 18rem;">
-				  <img src="/img/item/recomImg/638022863183380383.jpg" class="card-img-top" alt="/img/item/xbox.jpg">
+				  <img src="/img/item/recomImg/638022863183380383.jpg" onerror="this.src='/img/item/xbox.jpg'" class="card-img-top" alt="/img/item/xbox.jpg">
 				  <div class="card-body">
 				    <p class="card-text">이거반복문</p>
 				  </div>
@@ -122,7 +122,7 @@
 		<div class="row">
 			<div class="col mb-3 mx-0 px-0">
 				<div class="card" style="width: 18rem;">
-				  <img src="/img/item/recomImg/638041254584397388.jpg" class="card-img-top" alt="/img/item/xbox.jpg">
+				  <img src="/img/item/recomImg/638041254584397388.jpg" onerror="this.src='/img/item/xbox.jpg'" class="card-img-top" alt="/img/item/xbox.jpg">
 				  <div class="card-body">
 				    <p class="card-text">이거반복문2</p>
 				  </div>
