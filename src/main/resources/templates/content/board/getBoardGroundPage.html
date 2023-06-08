@@ -79,12 +79,12 @@
 									<tr class="align-middle">
 										<td>[[${boardList.size() - state.index}]]</td>
 										<td>
-										<th:block th:if="${board.isPrivate} == 'N'">
+										<th:block th:if="${board.isPrivate } == null or ${board.isPrivate} == 'N'">
 											<div>
 												<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]])" class="pointer">[[${board.hbtBoardTitle}]]</span>
 											</div>
 										</th:block>
-										<th:block th:unless="${board.isPrivate} == 'N'">
+										<th:block th:if="${board.isPrivate } != null or ${board.isPrivate} == 'Y'">
 											<div>
 												<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]], this)" class="pointer">[[${board.hbtBoardTitle}]]</span>
 												<img src="/imageForUse/lock.jpeg" style="width: 30px;">
