@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -164,8 +165,8 @@ public class AdminServiceImpl implements AdminService{
 	
 	//구매(예약) 리스트 조회
 	@Override
-	public List<MemberVO> getBuyListForAdmin() {
-		return sqlSession.selectList("adminMapper.getBuyListForAdmin");
+	public List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
+		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
 	}
 	
 	//구매(예약) 상태 조회

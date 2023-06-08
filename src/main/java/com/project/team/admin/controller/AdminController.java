@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
+import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -292,25 +293,24 @@ public class AdminController {
 	}
 	
 	//예약 조회
-	@GetMapping("/reservationInquiry")
-	public String reservationInquiry(Model model) {
+	@RequestMapping("/reservationInquiry")
+	public String reservationInquiry(Model model, BuyListSearchVO buyListSearchVO) {
+		
+		System.out.println(buyListSearchVO);
 		
 		//구매 내역
-		model.addAttribute("buyList", adminService.getBuyListForAdmin());
-		
-		System.out.println(adminService.getBuyListForAdmin());
+		model.addAttribute("buyList", adminService.getBuyListForAdmin(buyListSearchVO));
 		
 		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
-		
-		System.out.println(adminService.getBuyStatus());
 		
 		return "content/admin/reservation_inquiry";
 	}
 	
 	
-	//예약 상태 변경 버튼 클릭 시 
-	@PostMapping("/changeBuyStatusAjax")
+	//예약 상태 변경 버튼 클릭 시
+	@ResponseBody
+	@PostMapping("/changeBuyStatusAJAX")
 	public void changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) {
 		
 		System.out.println(map);
