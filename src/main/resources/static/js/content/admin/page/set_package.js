@@ -10,7 +10,7 @@ function showItemImg(itemInfo){
 
     let imgTag = `
                   <div class="col-4 offset-4 imgArea mb-3">
-                    <img class="imgArea d-block w-100 h-100 rounded" data-item="${itemCode}" src="/img/item/itemImg/${imgName}" draggable="true">
+                    <img class="imgArea d-block w-100 h-100 rounded" data-item="${itemCode}" src="/img/item/itemImg/${imgName}" draggable="true" alt="/img/item/xbox.jpg">
                   </div>
     `;
     previeDiv.replaceChildren();
@@ -37,11 +37,11 @@ function addRecomImgForPKMenu(){
         sortIndex.push(index);
     });
 
-    if(isDuplicate(itemCode)){
-        alert('중복상품등록불가');
-        reLoad();
-        return;
-    }
+    // if(isDuplicate(itemCode)){
+    //     alert('중복상품등록불가');
+    //     reLoad();
+    //     return;
+    // }
 
     $.ajax({
         url: '/admin/addRecomImgForPKGAJAX', //요청경로
