@@ -300,13 +300,30 @@ public class AdminController {
 		
 		System.out.println(adminService.getBuyListForAdmin());
 		
-		//구매 상태 
+		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
 		System.out.println(adminService.getBuyStatus());
 		
 		return "content/admin/reservation_inquiry";
 	}
+	
+	
+	//예약 상태 변경 버튼 클릭 시 
+	@PostMapping("/changeBuyStatusAjax")
+	public void changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) {
+		
+		System.out.println(map);
+		
+		//쿼리 빈값 채우기
+		Map<String, Object> mapData = new HashMap<>();
+		mapData.put("buyStatusCode", map.get("buyStatusCode"));
+		mapData.put("buyCodeList", map.get("buyCodeList"));
+		
+		adminService.changeBuyStatus(mapData);
+		
+	}
+	
 	
 	//예약 상태 변경
 	@GetMapping("/updateReservation")

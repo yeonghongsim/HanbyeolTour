@@ -100,7 +100,7 @@
 				<div class="col">
 					<div class="row">
 						<div class="col-2">
-							<select class="form-select">
+							<select class="form-select" id="buyStatusSelect">
 								<option>예약상태변경</option>
 							<th:block th:each="buyStatus : ${buyStatusList}">
 								<option th:value="${buyStatus.buyStatusCode}">[[${buyStatus.buyStatusName}]]</option>
@@ -109,10 +109,10 @@
 							
 						</div>
 						<div class="col-1">
-							<input type="button" value="변경" class="btn" style="background-color: #ffd000;">
+							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeBuyStatus();">
 						</div>
 					</div>
-					<table class="table">
+					<table class="table text-center">
 						<colgroup>
 							<col width="">
 							<col width="">
@@ -139,7 +139,7 @@
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
-									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();"></td>
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyVO.buyCode}"></td>
 									<td>[[${buy.buyVO.buyCode}]]</td>
 									<td>[[${buy.buyVO.buyDate}]]</td>
 									<td>

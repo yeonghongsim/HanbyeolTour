@@ -349,6 +349,16 @@
 		ORDER BY BUY_STATUS_CODE
 	</select>
 	
+	<!-- 예약관리 페이지 예약 상태 변경 -->
+	<update id="changeBuyStatus">
+		UPDATE HBT_BUY
+		SET
+			BUY_STATUS_CODE = #{buyStatusCode}
+		WHERE BUY_CODE IN
+		<foreach collection="buyCodeList" item="buyCode" open="(" close=")" separator=",">
+			#{buyCode}
+		</foreach>
+	</update>
 	
 	
 	

@@ -174,6 +174,14 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectList("adminMapper.getBuyStatus");
 	}
+	
+	//구매(예약) 상태 변경
+	@Override
+	public void changeBuyStatus(Map<String, Object> map) {
+		sqlSession.update("adminMapper.changeBuyStatus", map);
+		
+	}
+
 
 
 
@@ -274,6 +282,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
 
 
 
