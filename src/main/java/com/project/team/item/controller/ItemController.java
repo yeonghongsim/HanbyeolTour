@@ -97,7 +97,7 @@ public class ItemController {
 	@GetMapping("/tourItemListDetail")
 	public String tourItemListDetail(Model model, BuyDetailVO buyDetailVO) {
 		//상품상세정보
-		model.addAttribute("itemDetail", itemService.getItemDetail("ITEM_021"));
+		model.addAttribute("itemDetail", itemService.getItemDetail("ITEM_001"));
 		//상품이미지
 
 		//호텔이미지
