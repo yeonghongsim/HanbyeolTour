@@ -336,7 +336,25 @@
 		 AND HB.MEM_CODE = HMD.MEM_CODE
 		 AND HB.BUY_CODE = HBD.BUY_CODE
          AND HBD.ITEM_CODE = HI.ITEM_CODE
-         ORDER BY BUY_DATE DESC
+         <!-- 검색 기능 주문상태 체크박스 -->
+        <if test="statusCodeList != null">
+		AND HB.BUY_STATUS_CODE IN
+			<foreach collection="statusCodeList" item="statusCode" open="(" close=")" separator=",">
+				#{statusCode}
+			</foreach>
+		</if>
+		<!-- 검색 기능 날짜  -->
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<!-- 검색 기능 셀렉트박스 -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+       	ORDER BY BUY_DATE DESC
 	</select>
 	
 	<!-- 예약 관리 페이지 구매(예약)상태 -->
@@ -347,6 +365,16 @@
 		ORDER BY BUY_STATUS_CODE
 	</select>
 	
+	<!-- 예약관리 페이지 예약 상태 변경 -->
+	<update id="changeBuyStatus">
+		UPDATE HBT_BUY
+		SET
+			BUY_STATUS_CODE = #{buyStatusCode}
+		WHERE BUY_CODE IN
+		<foreach collection="buyCodeList" item="buyCode" open="(" close=")" separator=",">
+			#{buyCode}
+		</foreach>
+	</update>
 	
 	
 	
