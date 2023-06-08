@@ -1,11 +1,7 @@
 package com.project.team.item.controller;
 
 import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.project.team.admin.service.AdminService;
 import com.project.team.buy.vo.BuyDetailVO;
@@ -13,10 +9,7 @@ import com.project.team.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,16 +89,57 @@ public class ItemController {
 	//상품상세정보조회
 	@GetMapping("/tourItemListDetail")
 	public String tourItemListDetail(Model model, BuyDetailVO buyDetailVO) {
+		//임시 아이템코드세팅
+		String itemCode = "ITEM_001";
+
 		//상품상세정보
-		model.addAttribute("itemDetail", itemService.getItemDetail("ITEM_001"));
+		List<HashMap<String, Object>> list = itemService.getItemDetail(itemCode);
+		model.addAttribute("itemDetail", list);
+		//일자별 상품상세정보 데이터가공
+		Map<String, List<HashMap<String, Object>>> result = new HashMap<>();
+
+		for(int i = 0; i < Integer.parseInt(list.get(1).get("HBT_PLAN_PERIOD").toString()); i++){
+		}
+
+		List<HashMap<String, Object>> originalList = list; // 원본 리스트
+		String targetColumn = "HBT_PLAN_DAY"; // 기준이 될 컬럼 이름
+
+		TreeMap<Object, List<HashMap<String, Object>>> groupedMap = new TreeMap<>();
+		for (HashMap<String, Object> data : originalList) {
+			Object columnValue = data.get(targetColumn);
+			List<HashMap<String, Object>> groupedList = groupedMap.getOrDefault(columnValue, new ArrayList<>());
+			groupedList.add(data);
+			groupedMap.put(columnValue, groupedList);
+		}
+
+		List<List<HashMap<String, Object>>> groupedLists = new ArrayList<>(groupedMap.values());
+
+		model.addAttribute("itemDetail", groupedLists);
 		//상품이미지
-
+		model.addAttribute("itemImg", itemService.getItemDetailImg(itemCode));
 		//호텔이미지
-
+		model.addAttribute("day", list.get(0).get("HBT_PLAN_PERIOD"));
 		//투어 이미지
 
-
 		return "content/item/tour_item_list_detail";
+	}
+
+	//상세페이지 이미지 조회
+	@PostMapping("/getImgsAJAX")
+	@ResponseBody
+	public String getImgs(String hbtHotelCode, @RequestParam(value = "hbtTourItemCode[]") List<String> hbtTourItemCode) throws JsonProcessingException {
+		List<List<Map<String, Object>>> resultList = new ArrayList<>();
+		//호텔이미지들
+		resultList.add(itemService.getHotelImg(hbtHotelCode));
+
+		System.out.println(hbtTourItemCode);
+
+		//투어상품이미지
+		hbtTourItemCode.forEach(i ->{
+			resultList.add(itemService.getTourImg(i));
+		});
+
+		return mapper.writeValueAsString(resultList);
 	}
 
 

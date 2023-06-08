@@ -18,9 +18,9 @@
 						<input type="number" id="numOfPeople" name="reservedPeopleNum" value="1">명
 						<input type="hidden" th:value="${buyDetailVO.departDate}" name="departDate">
 						<input type="hidden" th:value="${buyDetailVO.arriveDate}" name="arriveDate">
-						<input type="hidden" th:value="${itemDetail[0]['ITEM_PRICE']}" name="buyDPrice">
-						<input type="hidden" id="itemCode" th:value="${itemDetail[0]['ITEM_CODE']}" name="itemCode">
-						<input type="hidden" th:value="${itemDetail[0]['AREA_CODE']}" name="areaCode">
+						<input type="hidden" th:value="${itemDetail[0][0]['ITEM_PRICE']}" name="buyDPrice">
+						<input type="hidden" id="itemCode" th:value="${itemDetail[0][0]['ITEM_CODE']}" name="itemCode">
+						<input type="hidden" th:value="${itemDetail[0][0]['AREA_CODE']}" name="areaCode">
 						<input type="submit" value="구매">
 					</form>
 				</div>
@@ -33,7 +33,7 @@
 		<!-- 상품 제목  -->
 			<div class="row">
 				<div class="col">
-					<h3>[[${itemDetail[0]['ITEM_TITLE']}]]</h3>
+					<h3>[[${itemDetail[0][0]['ITEM_TITLE']}]]</h3>
 				</div>
 			</div>
 		
@@ -44,18 +44,14 @@
 				
 					<div id="itemLIstMainImg" class="carousel slide" data-bs-ride="carousel">
 						<div class="carousel-inner">
-							<div class="carousel-item active" data-bs-interval="2000">
-								<img src="/img/itempageMain/1100_10912.jpg"
-									class="d-block w-100 rounded" alt="/img/item/xbox.jpg">
-							</div>
-							<div class="carousel-item" data-bs-interval="2000">
-								<img src="/img/itempageMain/1100_12089.jpg"
-									class="d-block w-100 rounded" alt="/img/item/xbox.jpg">
-							</div>
-							<div class="carousel-item" data-bs-interval="2000">
-								<img src="/img/itempageMain/1100_11682.jpg"
-									class="d-block w-100 rounded" alt="/img/item/xbox.jpg">
-							</div>
+
+							<th:block th:each="img,state : ${itemImg}">
+								<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="2000">
+									<img th:src="@{/img/item/itemImg/} + ${img['ITEM_IMG_ATTACHED_NAME']}"
+										class="d-block rounded" alt="슬라이드이미지">
+								</div>
+							</th:block>
+
 						</div>
 						<button class="carousel-control-prev" type="button"
 							data-bs-target="itemLIstMainImg" data-bs-slide="prev">
@@ -74,19 +70,22 @@
 				
 				<div class="col">
 					<div class="row">
-						<span>[[${itemDetail[0]['ITEM_TITLE']}]]</span>
+						<span>[[${itemDetail[0][0]['ITEM_TITLE']}]]</span>
 					</div>
 					
 					
 					<div class="row">
-						<span>[[${itemDetail[0]['AREA_KOR_NAME']}]]</span>
+						<span>[[${itemDetail[0][0]['AREA_KOR_NAME']}]]</span>
 					</div>
 					
 					
 					<div class="row">
-						<span>[[${itemDetail[0]['ITEM_PRICE']}]]</span>
+						<span>[[${itemDetail[0][0]['ITEM_PRICE']}]]</span>
 					</div>
-					
+					<div class="row">
+						<span>[[${itemDetail[0][0]['HBT_AIRLINE_NAME']}]]</span>
+					</div>
+
 					<div class="row">
 						<input type="button" value="예약하기">				
 					</div>
@@ -101,66 +100,70 @@
 
 			<div class="row my-3">
 				<div class="col">
+					<div class="accordion" id="accordionPanelsStayOpenExample">
+						<th:block th:each="number, state : ${#numbers.sequence(0 , day - 1)}">
+
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+											th:data-bs-target="${'#panelsStayOpen-collapseOne'} + ${state.count}"
+											aria-expanded="false" th:onclick="getImgs([[${state.index}]])"
+											aria-controls="panelsStayOpen-collapseOne +  + ${state.count}">
+										[[${state.count}]]일차 일정
+									</button>
+								</h2>
+								<div th:id="panelsStayOpen-collapseOne + ${state.count}" class="accordion-collapse collapse">
+									<div class="accordion-body text-center">
+										<div class="row mb-3 dailyPlanDivs">
+											<th:block th:each="dailyPlan, index : ${itemDetail.get(state.index)}">
+												<th:block th:if="${index.index == 0}">
+													<div class="col">
+														호텔이미지
+													</div>
+													<div class="col">
+														<div class="row mb-3">
+															<input type="hidden" th:value='${dailyPlan["HBT_HOTEL_CODE"]}'>
+															<div class="col">이용호텔 : </div>
+															<div class="col">[[${dailyPlan["HBT_HOTEL_NAME"]}]]</div>
+															<div class="col">[[${dailyPlan["HBT_HOTEL_GRADE"]} + 성]]</div>
+														</div>
+														<div class="row mb-3">
+															<div class="row">[[${dailyPlan["HBT_HOTEL_INTRO"]}]]</div>
+														</div>
+													</div>
+												</th:block>
+
+
+												<div class="row mb-3">
+													<div class="col">
+														투어이미지
+													</div>
+													<div class="col">
+														<div class="row mb-3">
+															<input type="hidden" th:value="${dailyPlan['HBT_TOUR_ITEM_CODE']}">
+															<div class="col">[[${dailyPlan["HBT_TOUR_ITEM_NAME"]}]]</div>
+														</div>
+														<div class="row mb-3">
+															<div class="row">[[${dailyPlan["HBT_TOUR_ITEM_NAME"]}]]</div>
+														</div>
+													</div>
+												</div>
+											</th:block>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</th:block>
+					</div>
 				
 				
-					<span>주요일정 & 가격 db에서 세팅</span>
+
 					
 					
-					
 				</div>
 			</div>
 			
-			
-			<!-- 포함/불포함/선택경비 -->
-
-
-			<div class="row">
-			
-			<div class="col col-auto">
-				<div class="row d-grid">
-
-				</div>
-				<div class="row">
-
-				</div>
-				<div class="row">
-
-				</div>
-			</div>
-			</div>
-			
-			
-			<!-- 여행상세일정 -->
-			<div class="row">
-				<div class="col">
-				
-				</div>
-			</div>
-			
-			<!-- 방문도시정보 -->
-			<div class="row">
-				<div class="col">
-				
-				</div>
-			</div>
-			
-			
-			<!-- 여행후기 -->
-			<div class="row">
-				<div class="col">
-				
-				</div>
-			</div>
-			<!-- 방문도시정보 -->
-			<div class="row">
-				<div class="col">
-				
-				</div>
-			</div>
-
-			<!-- 끝!!!  -->
-
-
 
 		</div>
 	</div>

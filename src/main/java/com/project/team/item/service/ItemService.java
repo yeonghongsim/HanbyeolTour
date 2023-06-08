@@ -18,4 +18,10 @@ public interface ItemService {
 	List<HashMap<String, Object>> getItemDetail(String itemCode);
 	//상품메인이미지조회
 	List<ItemVO> getItemMainImg();
+	//상품상세이미지조회
+	List<Map<String, Object>> getItemDetailImg(String itemCode);
+	//호텔이미지조회
+	List<Map<String, Object>> getHotelImg(String hbtHotelCode);
+	//투어상품이미지조회
+	List<Map<String, Object>> getTourImg(String hbtTourItemCode);
 }
