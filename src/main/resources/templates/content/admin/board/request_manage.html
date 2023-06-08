@@ -131,6 +131,7 @@
 			</table>
 		</div>
 	</div>
+	
 	<div class="row mb-3">
 		<div class="col">
 			<h4>답변 요청</h4>
@@ -183,53 +184,6 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<h4>재문의</h4>
-			<table class="table table-hover text-center req-table">
-				<colgroup>
-					<col width="10%">
-					<col width="18%">
-					<col width="*">
-					<col width="12%">
-					<col width="18%">
-				</colgroup>
-				<thead>
-					<tr>
-						<td>문의번호</td>
-						<td>문의유형</td>
-						<td>문의제목</td>
-						<td>문의자</td>
-						<td>문의일자</td>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="req, state : ${requestListN}">
-						<tr>
-							<td>[[${requestListN.size() - state.index}]]</td>
-							<td th:if="${req.itemVO != null}">
-								[[${req.typeRequestVO.typeRequestName}]]
-								<div>( [[${req.itemVO.itemCode}]] )</div>
-							</td>
-							<td th:unless="${req.itemVO != null}">
-								[[${req.typeRequestVO.typeRequestName}]]
-							</td>
-							<td>
-								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
-							</td>
-							<td>[[${req.memberVO.memId}]]</td>
-							<td>[[${req.hbtBoardRequestRegDate}]]</td>
-						</tr>
-					</th:block>
-					<th:block th:if="${requestListN.size() == 0}">
-						<tr>
-							<td colspan="5">작성된 문의글이 없습니다.</td>
-						</tr>
-					</th:block>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col">
 			<h4>답변 응답</h4>
 			<table class="table table-hover text-center req-table">
 				<colgroup>
@@ -252,8 +206,17 @@
 					<th:block th:each="req, state : ${reqListY}">
 						<tr>
 							<td>[[${reqListY.size() - state.index}]]</td>
-							<td>[[${req.typeRequestVO.typeRequestName}]]</td>
-							<td>
+							<td th:if="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+								<div>( [[${req.itemVO.itemCode}]] )</div>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+							</td>
+							<td th:if="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum}, itemCode=${req.itemVO.itemCode})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td th:unless="${req.itemVO != null}">
 								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
 							</td>
 							<td>[[${req.memberVO.memId}]]</td>
@@ -269,6 +232,8 @@
 			</table>
 		</div>
 	</div>
+	
+	
 </th:block>
 
 <!-- 연결해야 할 외부 js 파일-->

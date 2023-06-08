@@ -126,13 +126,21 @@ public class MemberServiceImpl implements MemberService{
 
 	// 구매 내역 조회 
 	@Override
-	public List<BuyVO> getBuyList(String memCode) {
-		return sqlSession.selectList("memberMapper.getBuyList", memCode);
+	public List<BuyVO> getBuyList(BuyVO buyVO) {
+		return sqlSession.selectList("memberMapper.getBuyList", buyVO);
 	}
 	
+	// 특정 기간 별 주문 상태 코드 갯수 조회 
+	@Override
+	public List<BuyStateVO> getBuyStatusCount(BuyVO buyVO) {
+		return sqlSession.selectList("memberMapper.getBuyStatusCount", buyVO);
+	}
 	
-	
-	
+	// 구매내역 갯수 조회 
+	@Override
+	public int getBuyListCount(BuyVO buyVO) {
+		return sqlSession.selectOne("memberMapper.getBuyListCnt", buyVO);
+	}
 	
 	
 	
@@ -179,6 +187,10 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemCode(String memid) {
 		return sqlSession.selectOne("adminMapper.getMemCode", memid);
 	}
+
+	
+
+	
 
 
 

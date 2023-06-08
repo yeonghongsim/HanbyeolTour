@@ -26,6 +26,7 @@ import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
+import com.project.team.util.DateUtil;
 
 import jakarta.annotation.Resource;
 
@@ -187,25 +188,46 @@ public class MyPageController {
 
 	
 	//예약확인 페이지로 이동 
-	@GetMapping("/checkMyReservation")
-	public String checkMyReservation(Model model, Authentication authentication) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+	@RequestMapping("/checkMyReservation")
+	public String checkMyReservation(Model model, BuyVO buyVO, Authentication authentication) {
 		
+		// 오늘 날짜 
+		String nowDate = DateUtil.getNowDateToString();
+		// 이번 달의 첫번째 날짜
+		String firstDate = DateUtil.getFirstDateOfMonth();
+		
+		// 로그인 정보 이용 -> memCode 가져오기 
 		String memCode = memberService.getMemCode(authentication.getName());
 		System.out.println("memCode : " + memCode);
-		// 1개월 내 구매상태 정보 조회 
-		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
-		System.out.println(buyStatusInOneMonthList);
-		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
 		
-		//구매 내역 리스트 조회 
-		List<BuyVO> buyList = memberService.getBuyList(memCode);
+		buyVO.setMemCode(memCode);
+		
+		// 구매상태 정보 조회 (상단바)
+		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
+		System.out.println(buyStatusCodeCountList);
+		model.addAttribute("buyStatusCodeCountList", buyStatusCodeCountList);
+		
+		// 조회될 데이터 수 조회
+		int totalDataCnt = memberService.getBuyListCount(buyVO);
+		buyVO.setTotalDataCnt(totalDataCnt);
+		buyVO.setPageInfo();
+		
+		// 구매 내역 리스트 데이터 조회 
+		List<BuyVO> buyList = memberService.getBuyList(buyVO);
 		System.out.println("@@@@ 구매내역 조회 :" + buyList);
 		model.addAttribute("buyList",buyList);
 		
+		// 넘어온 날짜 데이터 없을 경우 기본값으로 날짜 세팅
+		if(buyVO.getFromDate() == null) {
+			buyVO.setFromDate(firstDate);
+		}
+		if(buyVO.getToDate() == null) {
+			buyVO.setToDate(nowDate);
+		}
 		
 		
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
 		return "content/member/myPage/check_my_reservation";
 	}
@@ -240,6 +262,7 @@ public class MyPageController {
 		
 		boardRequestVO.setIsAnswer("N");
 		model.addAttribute("requestListN", boardService.getBoardReqList(boardRequestVO));
+		
 		boardRequestVO.setIsAnswer("Y");
 		model.addAttribute("requestListY", boardService.getBoardReqList(boardRequestVO));
 		
@@ -255,7 +278,33 @@ public class MyPageController {
 		model.addAttribute("itemImgList", itemService.getItemMainImg());
 		
 		return "content/member/myPage/reg_request_form";
+	}
+	
+	@GetMapping("/reqDetail")
+	public String reqDetail(Model model, String hbtBoardRequestNum, String itemCode, Authentication authentication) {
+		//회원 정보 
+		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
+		model.addAttribute("memInfo", memInfo);
 		
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
+		model.addAttribute("itemCode", itemCode);
+		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		return "content/member/myPage/req_detail";
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateMyReqAJAX")
+	public void updateMyReqAJAX(BoardRequestVO boardRequestVO) {
+		String requestPw = boardService.chkReqPw(boardRequestVO.getHbtBoardRequestNum());
+		boardRequestVO.setRequestPw(requestPw);
+		
+		System.out.println("!@#!D@#!@D!S#S!S#" + boardRequestVO);
+		
+		boardService.regRequest(boardRequestVO);
 		
 	}
 	
@@ -268,6 +317,24 @@ public class MyPageController {
 		boardService.regRequest(boardRequestVO);
 		
 		return "redirect:/myPage/checkMyRequest";
+	}
+	
+	@ResponseBody
+	@PostMapping("/delMyRequestAJAX")
+	public void delMyRequestAJAX(String hbtBoardRequestNum) {
+		
+		boardService.delMyRequest(hbtBoardRequestNum);
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/chkMyRequestAJAX")
+	public String chkMyRequestAJAX(String hbtBoardRequestNum) {
+		
+		System.out.println("chkMyRequestAJAX run~" + hbtBoardRequestNum);
+		
+		return boardService.chkMyRequest(hbtBoardRequestNum);
+		
 	}
 	
 	

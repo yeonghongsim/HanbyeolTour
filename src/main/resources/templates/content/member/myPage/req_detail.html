@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/member/member_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/member/myPage/req_detail.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="member_content">
+	[[${reqDetail.requestPw}]]
+	<div class="row mb-3" id="btns">
+		<div class="col">
+		</div>
+		<div class="col-2">
+			<input onclick="location.href='/myPage/checkMyRequest'" type="button" class="btn btn-secondary w-100" value="뒤로 가기">
+		</div>
+		<div class="col-2">
+			<input th:onclick="updateMyRequest([[${reqDetail.hbtBoardRequestNum}]], [[${reqDetail.memberVO.memId}]], [[${reqDetail.memberVO.memCode}]], [[${itemCode}]]);" type="button" class="btn btn-primary w-100" value="문의 수정">
+		</div>
+		<div class="col-2">
+			<input th:onclick="delMyRequest([[${reqDetail.hbtBoardRequestNum}]]);" type="button" class="btn btn-danger w-100" value="문의 삭제">
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col">
+			<div class="row req_table_row">
+				<div class="col">
+					<h4 >초기 문의글</h4>
+					<input class="typeRequestCode" type="hidden" th:value="${reqDetail.typeRequestVO.typeRequestCode}">
+					<input class="typeRequestName" type="hidden" th:value="${reqDetail.typeRequestVO.typeRequestName}">
+					<table class="table text-center only-tbody req_info">
+						<colgroup>
+							<col width="15%">
+							<col width="*%">
+							<col width="15%">
+							<col width="25%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>제목</td>
+								<td class="titleSpan">[[${reqDetail.hbtBoardRequestTitle}]]</td>
+								<td>문의 일</td>
+								<td>[[${reqDetail.hbtBoardRequestRegDate}]]</td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<th:block th:if="${itemCode == null}">
+									<td colspan="3"></td>
+								</th:block>
+								<th:block th:if="${itemCode != null}">
+									<td></td>
+									<td>상품코드</td>
+									<td>[[${reqDetail.itemVO.itemCode}]]</td>
+								</th:block>
+							</tr>
+							<tr>
+								<td colspan="4" style="text-align: left; padding-left: 3rem;">
+									<span class="contentSpan">[[${reqDetail.hbtBoardRequestContent}]]</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<th:block th:if="${reqReplyList.size() != 0}">
+		<th:block th:each="reqReply, state : ${reqReplyList}">
+			<div class="row" th:if="${state.index == 0}">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							<h4>답변 내용</h4>
+							<table class="table text-center only-tbody">
+								<colgroup>
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td>내용</td>
+										<td></td>
+										<td>답변 일</td>
+										<td>[[${reqReply.reqReplyAnswerDate}]]</td>
+									</tr>
+									<tr>
+										<td colspan="4" style="text-align: left; padding-left: 5rem;">
+											<span>[[${reqReply.reqReplyContent}]]</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>				
+						</div>
+					</div>
+				</div>
+			</div>	
+		</th:block>
+	</th:block>
+	
+	
+	
+	
+	
+	
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/member/myPage/req_detail.js"></script>
+</th:block>
+
+
+
+</html>

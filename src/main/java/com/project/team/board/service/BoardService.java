@@ -86,4 +86,13 @@ public interface BoardService {
 	
 	// select req-reply list
 	List<ReqReplyVO> getReqReplyList(String hbtBoardRequestNum);
+	
+	// del my-req
+	void delMyRequest(String hbtBoardRequestNum);
+	
+	// chk my-req
+	String chkMyRequest(String hbtBoardRequestNum);
+	
+	// del priv-req
+	void delPrivateReqReply(ReqReplyVO reqReplyVO);
 }

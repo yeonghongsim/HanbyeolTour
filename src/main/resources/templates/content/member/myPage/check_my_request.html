@@ -19,8 +19,6 @@
 		<input th:onclick="|location.href='@{/myPage/regRequestForm(memCode=${memInfo.memCode}, memId=${memInfo.memId})}'|" class="btn btn-primary w-100" type="button" value="문의 하기">
 	</div>
 </div>
-
-
 <div class="row mb-3">
 	<div class="col">
 		<h4>문의 내역</h4>
@@ -50,14 +48,26 @@
 					</tr>
 				</th:block>
 				<th:block th:unless="${requestListN.size() == 0}">
-					<tr th:each="request, state : ${requestListY}">
+					<tr th:each="request, state : ${requestListN}">
 						<td>[[${requestListN.size() - state.index}]]</td>
-						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
-						<td>[[${request.hbtBoardRequestTitle}]]</td>
+						<td th:if="${request.itemVO == null}">
+							[[${request.typeRequestVO.typeRequestName}]]
+						</td>
+						<td th:unless="${request.itemVO == null}">
+							<div>[[${request.typeRequestVO.typeRequestName}]]</div>
+							<span>( [[${request.itemVO.itemCode}]] )</span>
+						</td>
+						<td th:if="${request.itemVO == null}">
+							<a th:href="@{/myPage/reqDetail(hbtBoardRequestNum=${request.hbtBoardRequestNum})}">[[${request.hbtBoardRequestTitle}]]</a>
+						</td>
+						<td th:unless="${request.itemVO == null}">
+							<a th:href="@{/myPage/reqDetail(hbtBoardRequestNum=${request.hbtBoardRequestNum}, itemCode=${request.itemVO.itemCode})}">[[${request.hbtBoardRequestTitle}]]</a>
+						</td>
 						<td>[[${request.hbtBoardRequestRegDate}]]</td>
 						<td>[[${request.isAnswer}]]</td>
 					</tr>
 				</th:block>
+				
 			</tbody>
 		</table>
 	</div>
@@ -94,8 +104,19 @@
 				<th:block th:unless="${requestListY.size() == 0}">
 					<tr th:each="request, state : ${requestListY}">
 						<td>[[${requestListY.size() - state.index}]]</td>
-						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
-						<td>[[${request.hbtBoardRequestTitle}]]</td>
+						<td th:if="${request.itemVO == null}">
+							[[${request.typeRequestVO.typeRequestName}]]
+						</td>
+						<td th:unless="${request.itemVO == null}">
+							<div>[[${request.typeRequestVO.typeRequestName}]]</div>
+							<span>( [[${request.itemVO.itemCode}]] )</span>
+						</td>
+						<td th:if="${request.itemVO == null}">
+							<a th:href="@{/myPage/reqDetail(hbtBoardRequestNum=${request.hbtBoardRequestNum})}">[[${request.hbtBoardRequestTitle}]]</a>
+						</td>
+						<td th:unless="${request.itemVO == null}">
+							<a th:href="@{/myPage/reqDetail(hbtBoardRequestNum=${request.hbtBoardRequestNum}, itemCode=${request.itemVO.itemCode})}">[[${request.hbtBoardRequestTitle}]]</a>
+						</td>
 						<td>[[${request.hbtBoardRequestRegDate}]]</td>
 						<td>[[${request.isAnswer}]]</td>
 					</tr>
@@ -104,13 +125,6 @@
 		</table>
 	</div>
 </div>
-
-<div class="row">
-	<div class="col">
-		2
-	</div>
-</div>
-
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   

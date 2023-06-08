@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -15,6 +16,7 @@ import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.buy.vo.BuyStateVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -160,6 +162,30 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.update("adminMapper.updateMemRole", memberVO);
 		
 	}
+	
+	//구매(예약) 리스트 조회
+	@Override
+	public List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
+		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
+	}
+	
+	//구매(예약) 상태 조회
+	@Override
+	public List<BuyStateVO> getBuyStatus() {
+		
+		return sqlSession.selectList("adminMapper.getBuyStatus");
+	}
+	
+	//구매(예약) 상태 변경
+	@Override
+	public void changeBuyStatus(Map<String, Object> map) {
+		sqlSession.update("adminMapper.changeBuyStatus", map);
+		
+	}
+
+
+
+
 
 
 
@@ -257,6 +283,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
 
 
 

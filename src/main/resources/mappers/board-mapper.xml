@@ -50,7 +50,6 @@
 		<result column="REQ_REPLY_ANSWER_DATE" 		property="reqReplyAnswerDate"/>
 		<result column="REPLY_DEPTH" 				property="replyDepth"/>
 		<result column="HBT_BOARD_REQUEST_NUM" 		property="hbtBoardRequestNum"/>
-		<result column="REQ_REPLY_PARENT_KEY"		property="regReplyParentKey"/>
 		<association property="memberVO" 			resultMap="memberMapper.member"/>
 	</resultMap>
 	
@@ -274,28 +273,36 @@
 	
 	
 	<insert id="regRequest">
-		INSERT INTO HBT_BOARD_REQUEST (
-		    HBT_BOARD_REQUEST_NUM
-		    , HBT_BOARD_REQUEST_TITLE
-		    , HBT_BOARD_REQUEST_CONTENT
-		    , MEM_CODE
-		    , TYPE_REQUEST_CODE
-		    , REQUEST_PW
-		    <if test='itemVO != null or !itemVO.itemCode.equals("")'>
-		    , ITEM_CODE
-		    </if>
-		)
-		VALUES (
-		    #{hbtBoardRequestNum}
-		    , #{hbtBoardRequestTitle}
-		    , #{hbtBoardRequestContent}
-		    , #{memberVO.memCode}
-		    , ${typeRequestVO.typeRequestCode}
-		    , #{requestPw}
-		    <if test='itemVO != null or !itemVO.itemCode.equals("")'>
-		    , #{itemVO.itemCode}
-		    </if>
-		)
+	MERGE INTO HBT_BOARD_REQUEST
+		USING DUAL
+		ON (HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum})
+		WHEN MATCHED THEN
+			UPDATE
+			SET HBT_BOARD_REQUEST_TITLE = #{hbtBoardRequestTitle},
+				HBT_BOARD_REQUEST_CONTENT = #{hbtBoardRequestContent}
+		WHEN NOT MATCHED THEN
+			INSERT (
+			    HBT_BOARD_REQUEST_NUM
+			    , HBT_BOARD_REQUEST_TITLE
+			    , HBT_BOARD_REQUEST_CONTENT
+			    , MEM_CODE
+			    , TYPE_REQUEST_CODE
+			    , REQUEST_PW
+			    <if test='itemVO != null or !itemVO.itemCode.equals("")'>
+			    , ITEM_CODE
+			    </if>
+			)
+			VALUES (
+			    #{hbtBoardRequestNum}
+			    , #{hbtBoardRequestTitle}
+			    , #{hbtBoardRequestContent}
+			    , #{memberVO.memCode}
+			    , ${typeRequestVO.typeRequestCode}
+			    , #{requestPw}
+			    <if test='itemVO != null or !itemVO.itemCode.equals("")'>
+			    , #{itemVO.itemCode}
+			    </if>
+			)
 	</insert>
 	
 	<select id="getBoardReqList" resultMap="boardRequest">
@@ -313,7 +320,7 @@
 		    	FROM HBT_MEM WHERE MEM_CODE = BOARD.MEM_CODE) MEM_ID
 		FROM HBT_BOARD_REQUEST BOARD, TYPE_REQUEST REQ
 		WHERE BOARD.TYPE_REQUEST_CODE = REQ.TYPE_REQUEST_CODE
-		<if test='isAnswer.equals("N") or isAnswer.equals("Y") or isAnswer.equals("R")'>
+		<if test='isAnswer.equals("N") or isAnswer.equals("Y")'>
 		AND IS_ANSWER = #{isAnswer}
 		</if>
 		<if test='memberVO != null and !memberVO.memRole.equals("AD")'>
@@ -335,6 +342,8 @@
 			, TO_CHAR(HBT_BOARD_REQUEST_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REQUEST_REG_DATE
 			, MEM_CODE
 			, TYPE_REQUEST_CODE
+			, (SELECT TYPE_REQUEST_NAME
+				FROM TYPE_REQUEST WHERE TYPE_REQUEST_CODE = HBT_BOARD_REQUEST.TYPE_REQUEST_CODE) TYPE_REQUEST_NAME
 			, IS_ANSWER
 			, ITEM_CODE
 			, (SELECT MEM_ID 
@@ -344,19 +353,27 @@
 	</select>
 	
 	<insert id="insertReqReply">
-		INSERT INTO HBT_REQ_REPLY (
-		    REQ_REPLY_NUM
-		    , REQ_REPLY_CONTENT
-		    , REPLY_DEPTH
-		    , MEM_CODE
-		    , HBT_BOARD_REQUEST_NUM
-		) VALUES(
-		    #{reqReplyNum}
-		    , #{reqReplyContent}
-		    , ${replyDepth}
-		    , #{memberVO.memCode}
-		    , #{hbtBoardRequestNum}
-		)
+		MERGE INTO HBT_REQ_REPLY
+			USING DUAL
+			ON (REQ_REPLY_NUM = #{reqReplyNum})
+			WHEN MATCHED THEN
+				UPDATE SET
+					REQ_REPLY_CONTENT = #{reqReplyContent}, 
+					REQ_REPLY_ANSWER_DATE = SYSDATE
+			WHEN NOT MATCHED THEN
+				INSERT (
+				    REQ_REPLY_NUM
+				    , REQ_REPLY_CONTENT
+				    , REPLY_DEPTH
+				    , MEM_CODE
+				    , HBT_BOARD_REQUEST_NUM
+				) VALUES(
+				    #{reqReplyNum}
+				    , #{reqReplyContent}
+				    , ${replyDepth}
+				    , #{memberVO.memCode}
+				    , #{hbtBoardRequestNum}
+				)
 	</insert>
 	
 	<update id="updateBoardRequestIsAnswer">
@@ -371,11 +388,36 @@
 			, REPLY_DEPTH
 			, MEM_CODE
 			, HBT_BOARD_REQUEST_NUM
-			, REQ_REPLY_PARENT_KEY
 		FROM HBT_REQ_REPLY
 		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
 	</select>
 	
+	<delete id="delMyRequest">
+		DELETE HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</delete>
+	
+	<delete id="delMyRequestReply">
+		DELETE HBT_REQ_REPLY
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</delete>
+	
+	<select id="chkMyRequest" resultType="String">
+		SELECT IS_ANSWER
+		FROM HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</select>
+	
+	<delete id="delPrivateReqReply">
+		DELETE HBT_REQ_REPLY
+		WHERE REQ_REPLY_NUM = #{reqReplyNum}
+	</delete>
+	
+	<update id="chageIsAnswerAfterDelReqRpl">
+		UPDATE HBT_BOARD_REQUEST 
+		SET IS_ANSWER = 'N' 
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</update>
 	
 </mapper>
 

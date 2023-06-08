@@ -156,6 +156,25 @@ public class BoardServiceImp implements BoardService{
 		return sqlSession.selectList("boardMapper.getReqReplyList", hbtBoardRequestNum);
 	}
 
+	@Transactional
+	@Override
+	public void delMyRequest(String hbtBoardRequestNum) {
+		sqlSession.delete("boardMapper.delMyRequestReply", hbtBoardRequestNum);
+		sqlSession.delete("boardMapper.delMyRequest", hbtBoardRequestNum);
+	}
+
+	@Override
+	public String chkMyRequest(String hbtBoardRequestNum) {
+		return sqlSession.selectOne("boardMapper.chkMyRequest", hbtBoardRequestNum);
+	}
+
+	@Transactional
+	@Override
+	public void delPrivateReqReply(ReqReplyVO reqReplyVO) {
+		sqlSession.delete("boardMapper.delPrivateReqReply", reqReplyVO);
+		sqlSession.update("boardMapper.chageIsAnswerAfterDelReqRpl", reqReplyVO);
+	}
+
 
 	
 	

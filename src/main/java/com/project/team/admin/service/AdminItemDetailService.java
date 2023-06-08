@@ -48,5 +48,7 @@ public interface AdminItemDetailService {
     List<Map<String, String>> getTourListByItemCode(String itemCode);
     //상품상세 일정 설정
     void setItemDailyPlan(List<Map<String, Object>> list);
+    //아이템상세정보등록시 상품상태 판매중으로변경
+    void updateItemState(String itemCode);
 
 }

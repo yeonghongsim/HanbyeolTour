@@ -118,5 +118,10 @@ public class AdminItemDetailServiceImpl implements AdminItemDetailService {
         sqlSession.insert("adminMapper.setItemDailyPlan", list);
     }
 
+    @Override
+    public void updateItemState(String itemCode) {
+        sqlSession.update("adminMapper.updateItemState", itemCode);
+    }
+
 
 }

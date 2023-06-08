@@ -7,6 +7,9 @@ import java.util.Map;
 
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
+import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
+import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -78,6 +81,15 @@ public interface AdminService {
 	
 	//회원 권한 변경
 	void updateMemRole(MemberVO memberVO);
+	
+	//구매(예약) 리스트 조회
+	List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO);
+	
+	//예약(구매) 상태 리스트 조회
+	List<BuyStateVO> getBuyStatus();
+	
+	//예약 상태 변경
+	void changeBuyStatus(Map<String, Object> map);
 
 	
 	

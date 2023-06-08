@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
+import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
@@ -292,11 +293,37 @@ public class AdminController {
 	}
 	
 	//예약 조회
-	@GetMapping("/reservationInquiry")
-	public String reservationInquiry() {
+	@RequestMapping("/reservationInquiry")
+	public String reservationInquiry(Model model, BuyListSearchVO buyListSearchVO) {
+		
+		System.out.println(buyListSearchVO);
+		
+		//구매 내역
+		model.addAttribute("buyList", adminService.getBuyListForAdmin(buyListSearchVO));
+		
+		//구매 상태 리스트
+		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
 		return "content/admin/reservation_inquiry";
 	}
+	
+	
+	//예약 상태 변경 버튼 클릭 시
+	@ResponseBody
+	@PostMapping("/changeBuyStatusAJAX")
+	public void changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) {
+		
+		System.out.println(map);
+		
+		//쿼리 빈값 채우기
+		Map<String, Object> mapData = new HashMap<>();
+		mapData.put("buyStatusCode", map.get("buyStatusCode"));
+		mapData.put("buyCodeList", map.get("buyCodeList"));
+		
+		adminService.changeBuyStatus(mapData);
+		
+	}
+	
 	
 	//예약 상태 변경
 	@GetMapping("/updateReservation")
@@ -401,9 +428,11 @@ public class AdminController {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		boardRequestVO.setIsAnswer("Y");
-		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));		
+		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));
+		
 		boardRequestVO.setIsAnswer("N");
-		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));		
+		model.addAttribute("reqListN", boardService.getBoardReqList(boardRequestVO));
+		
 		System.out.println("@@@@@@@@@" +requestSearchVO);
 		
 		return "content/admin/board/request_manage";
@@ -412,8 +441,7 @@ public class AdminController {
 	
 	@GetMapping("/regReqReplyForm")
 	public String regReqReplyForm(Model model, String hbtBoardRequestNum, String itemCode) {
-		System.out.println("!@#" + itemCode + "!@#!@#!@");
-		
+
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
 		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
 		model.addAttribute("itemCode", itemCode);
@@ -427,13 +455,27 @@ public class AdminController {
 		reqReplyVO.setReplyDepth(1);
 		String memCode = memberService.getMemCode(reqReplyVO.getMemberVO().getMemId());
 		reqReplyVO.getMemberVO().setMemCode(memCode);
-		String reqReplyNum = boardService.getNextByReqReplyNum();
+
+		
+		String reqReplyNum = null;
+		if(reqReplyVO.getReqReplyNum() == null) {
+			reqReplyNum = boardService.getNextByReqReplyNum();
+		} else {
+			reqReplyNum = reqReplyVO.getReqReplyNum();
+		}
 		reqReplyVO.setReqReplyNum(reqReplyNum);
 		
 		boardService.insertReqReply(reqReplyVO);
 		
 	}
 	
+	@ResponseBody
+	@PostMapping("/delReqRplAJAX")
+	public void delReqRplAJAX(ReqReplyVO reqReplyVO) {
+		
+		boardService.delPrivateReqReply(reqReplyVO);
+		
+	}
 	
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")

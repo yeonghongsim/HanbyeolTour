@@ -38,7 +38,7 @@ function getBoardDetail(isPrivate, hbtBoardNum, aTag){
 		str += `		<input class="chkVal form-control w-100" type="password">`;
 		str += `	</div>`;
 		str += `	<div class="col-4">`;
-		str += `		<input onclick="chkPw('${hbtBoardNum}', this);" class="chkBtn btn btn-secondary w-100" type="button" value="확인">`;
+		str += `		<input onclick="chkPw('${hbtBoardNum}', this);" class="chkBtn btn btn-secondary w-100" type="button" value="확인1">`;
 		str += `	</div>`;
 		
 		

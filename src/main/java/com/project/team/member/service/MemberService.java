@@ -56,16 +56,17 @@ public interface MemberService {
 	//회원정보 변경
 	void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO);
 	
-	// 1개월 내 구매 - 상태 코드별 갯수 조회
+	// 1개월 내 구매 - 상태 코드별 갯수 조회 (마이페이지 첫 화면 조회)
 	List<BuyStateVO> getBuyStatusInOneMonth(String memCode);
 	
 	//구매내역 조회
-	List<BuyVO> getBuyList(String memCode);
+	List<BuyVO> getBuyList(BuyVO buyVO);
 
+	// 구매 기간에 따른 상태 코드별 갯수 조회 (예약 내역 조회 페이지)
+	List<BuyStateVO> getBuyStatusCount(BuyVO buyVO);
 	
-	
-	
-	
+	// 구매내역 갯수 조회 
+	int getBuyListCount(BuyVO buyVO);
 	
 	
 	

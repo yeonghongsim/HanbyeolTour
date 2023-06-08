@@ -21,7 +21,7 @@ li{
     line-height: 0;
 }
     
-.search-period .select_con p {
+.search-period .select-range p {
     float: left;
     margin-right: 20px;
     color: #666;
@@ -29,20 +29,42 @@ li{
     font-weight: 700;
     line-height: 30px;
     letter-spacing: -.48px;
+    padding-left: 1rem;
+}
+.search-period .select-range > #first{
+	margin-top: 1.6rem;
+}
+
+.select-month li{
+	margin-right: 0.7rem;
+	margin-top: 1.7rem;
 }
 
 option{
 	font-size: 0.7rem;
 }
 
-
-
 .form-select{
 	font-size: 0.8rem;
 }
 
+.form-control {
+    border-width: 1px;
+  }
 
+/*  검색 조건 선택하는 공간 */
+.search-period {
+	background-color: #fafafa;
+	border-radius: 10px;
+	height: 170px;
+	margin-top: 0.5rem;
+}
 
+.table-reservation thead{
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
+	background-color: #eee;
 
+}
 
 

@@ -75,7 +75,7 @@
 	AND ITEM.ITEM_CODE = #{itemCode}
 	AND #{searchDate} BETWEEN ITEM.SELLING_START AND ITEM.SELLING_END
 	</select>
-
+	<!--	상품상세정보조회(이미지제외)-->
 	<select id="getItemDetail" resultType="map">
 		SELECT DISTINCT ITEM.ITEM_CODE
 					  , ITEM.ITEM_TITLE
@@ -123,6 +123,28 @@
 		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG
 		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
 		AND IS_MAIN = 'Y'
+	</select>
+
+	<select id="getItemDetailImg" resultType="map">
+		SELECT ITEM_IMG_CODE
+				, ITEM_IMG_ATTACHED_NAME
+				, IS_MAIN
+		FROM HBT_ITEM_IMG
+		WHERE ITEM_CODE = #{itemCode}
+	</select>
+
+	<select id="getHotelImg" resultType="map">
+		SELECT HBT_HOTEL_IMG_CODE
+				, HBT_HOTEL_ATTECHED_FILE_NAME
+		FROM HBT_HOTEL_IMG
+		WHERE HBT_HOTEL_CODE = #{hbtHotelCode}
+	</select>
+
+	<select id="getTourImg" resultType="map">
+		SELECT HBT_TOUR_ITEM_IMG_CODE
+			, HBT_TOUR_ITEM_ATTECHED_FILE_NAME
+		FROM HBT_TOUR_IMG
+		WHERE HBT_TOUR_ITEM_CODE = #{hbtTourItemCode}
 	</select>
 
 
