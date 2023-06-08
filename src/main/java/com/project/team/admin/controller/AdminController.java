@@ -48,9 +48,8 @@ public class AdminController {
 	private AdminService adminService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
-
 	
-	//상품 관리 페이지(관리자 페이지 첫 화면)
+	//상품 관리 페이지
 	@GetMapping("/itemManage")
 	public String itemManage() {
 		
