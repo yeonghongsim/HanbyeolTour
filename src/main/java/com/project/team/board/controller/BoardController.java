@@ -71,8 +71,6 @@ public class BoardController {
 		if(boardVO.getGroundSearchVO() == null) {
 			boardVO.setGroundSearchVO(new GroundSearchVO());
 		}
-		System.out.println("!@#!@#!@#" + boardVO.getGroundSearchVO().getNowPage());
-
 		int totalDataCnt = boardService.getBoardListCnt(boardVO.getGroundSearchVO());
 
 		boardVO.getGroundSearchVO().setTotalDataCnt(totalDataCnt);
@@ -83,8 +81,6 @@ public class BoardController {
 		boardVO.setIsNotice("N");
 		
 		model.addAttribute("boardList", boardService.getBoardList(boardVO));
-		
-		//System.out.println("!@#!@!@#!@#" + boardVO.getGroundSearchVO());
 		
 		return "content/board/getBoardGroundPage";
 	}
