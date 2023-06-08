@@ -103,7 +103,6 @@
 			, IS_PEAK
 			, IS_BOMB_SALE
 			, ITEM_INTRO
-			, STATUS_CODE
 			, TRAVER_PERIOD
 		) VALUES (
 			#{itemCode}
@@ -116,7 +115,6 @@
 			, #{isPeak}
 			, #{isBombSale}
 			, #{itemIntro}
-			, #{statusCode}
 			, #{traverPeriod}
 		)
 	</insert>
@@ -404,7 +402,6 @@
 		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
 		  AND IMG.IS_MAIN = 'Y'
 		  AND STATE.STATUS_CODE = ITEM.STATUS_CODE
-		  AND STATE.STATUS_NAME = '판매중'
 		  AND ITEM.ITEM_CODE NOT IN (SELECT ITEM_CODE FROM HBT_RECOM_ITEM)
 	</select>
 	<!--	추천아이템 삭제-->
@@ -436,7 +433,6 @@
 		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG
 		WHERE IMG.ITEM_CODE = ITEM.ITEM_CODE
 		AND IMG.IS_MAIN = 'Y'
-		AND STATUS_CODE = 1
 	</select>
 	<!-- 패키지 추천 아이템 목록 전체 삭제	-->
 	<delete id="deleteRecomImgForPKG">
@@ -688,6 +684,7 @@
 		WHERE TOUR.AREA_CODE = ITEM.AREA_CODE
 		  AND ITEM.ITEM_CODE = #{itemCode}
 	</select>
+<!--	아이템코드로 호텔리스트조회 -->
 	<select id="getHotelListByItemCode" resultType="map">
 		SELECT  HBT_HOTEL_CODE
 			 , HBT_HOTEL_NAME
@@ -696,7 +693,7 @@
 		WHERE ITEM.AREA_CODE = HOTEL.AREA_CODE
 		  AND ITEM.ITEM_CODE = #{itemCode}
 	</select>
-
+<!--일정상세정보등록-->
 	<insert id="setItemDailyPlan">
 		INSERT INTO HBT_ITEM_PLAN (
 			HBT_PLAN_CODE
@@ -723,6 +720,12 @@
 		FROM DUAL
 	</foreach>
 	</insert>
+
+	<update id="updateItemState">
+		UPDATE HBT_ITEM
+		SET STATUS_CODE = 1
+		WHERE #{itemCode}
+	</update>
 
 
 

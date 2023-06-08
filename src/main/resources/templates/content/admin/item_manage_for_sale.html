@@ -48,7 +48,7 @@
 								<tr th:each="item : ${itemSaleList}">
 									<td><input type="checkbox" class="chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
 									<td>
-										<img th:src="${'/img/' + item.imgList[0].itemImgAttachedName}">
+										<img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px">
 									</td>
 									<td><span th:onclick="openModal([[${item.itemCode}]], [[${areaCateList}]]);"
 										style="cursor: pointer;">[[${item.itemTitle}]]</span></td>
