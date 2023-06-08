@@ -438,13 +438,27 @@ public class AdminController {
 		reqReplyVO.setReplyDepth(1);
 		String memCode = memberService.getMemCode(reqReplyVO.getMemberVO().getMemId());
 		reqReplyVO.getMemberVO().setMemCode(memCode);
-		String reqReplyNum = boardService.getNextByReqReplyNum();
+
+		
+		String reqReplyNum = null;
+		if(reqReplyVO.getReqReplyNum() == null) {
+			reqReplyNum = boardService.getNextByReqReplyNum();
+		} else {
+			reqReplyNum = reqReplyVO.getReqReplyNum();
+		}
 		reqReplyVO.setReqReplyNum(reqReplyNum);
 		
 		boardService.insertReqReply(reqReplyVO);
 		
 	}
 	
+	@ResponseBody
+	@PostMapping("/delReqRplAJAX")
+	public void delReqRplAJAX(ReqReplyVO reqReplyVO) {
+		
+		boardService.delPrivateReqReply(reqReplyVO);
+		
+	}
 	
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")

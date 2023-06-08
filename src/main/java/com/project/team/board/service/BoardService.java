@@ -92,4 +92,7 @@ public interface BoardService {
 	
 	// chk my-req
 	String chkMyRequest(String hbtBoardRequestNum);
+	
+	// del priv-req
+	void delPrivateReqReply(ReqReplyVO reqReplyVO);
 }

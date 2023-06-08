@@ -206,8 +206,17 @@
 					<th:block th:each="req, state : ${reqListY}">
 						<tr>
 							<td>[[${reqListY.size() - state.index}]]</td>
-							<td>[[${req.typeRequestVO.typeRequestName}]]</td>
-							<td>
+							<td th:if="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+								<div>( [[${req.itemVO.itemCode}]] )</div>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+							</td>
+							<td th:if="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum}, itemCode=${req.itemVO.itemCode})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td th:unless="${req.itemVO != null}">
 								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
 							</td>
 							<td>[[${req.memberVO.memId}]]</td>
