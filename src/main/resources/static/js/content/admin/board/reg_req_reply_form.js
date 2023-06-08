@@ -1,8 +1,9 @@
 init()
 
 
-function regReqReply(userId, hbtBoardRequestNum, reqReplyNum, itemCode){
+function regReqReply(userId, hbtBoardRequestNum, reqReplyNum){
 	const reqReplyContent = document.querySelector('#reqReplyContent');
+	const itemCode = document.querySelector('#reqItemCode').value;
 	
 	if(reqReplyContent.value == ''){
 		reqReplyContent.placeholder = '답변 내용은 필수입니다.';
@@ -24,7 +25,7 @@ function regReqReply(userId, hbtBoardRequestNum, reqReplyNum, itemCode){
 				, 'reqReplyContent' : reqReplyContent.value
 				, 'reqReplyNum' : reqReplyNum},
 		success: function(result) {
-			location.href='/admin/regReqReplyForm?hbtBoardRequestNum=' +hbtBoardRequestNum + '&itemCode' + itemCode;
+			location.href='/admin/regReqReplyForm?hbtBoardRequestNum=' +hbtBoardRequestNum + '&itemCode=' + itemCode;
 		},
 		error: function() {
 			alert('실패');
