@@ -70,11 +70,11 @@ public class IndexController {
 			// 권한 정보에 따른 페이지 이동
 			// [ROLE_MNG] / [ROLE_AD] : 페이지 지정 필요 
 			if(strAuthoList.contains("ROLE_AD")) {
-				path = "redirect:/admin/firstPage";
+				path = "redirect:/adminFirstPage/";
 			}
 			
 			else if(strAuthoList.contains("ROLE_MNG")) {
-				path = "redirect:/admin/firstPage";
+				path = "redirect:/adminFirstPage/";
 			}
 			
 			// 권한 정보 : [ROLE_USR] , [ROLE_ANONYMOUS]
