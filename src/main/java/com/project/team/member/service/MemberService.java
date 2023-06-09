@@ -68,6 +68,10 @@ public interface MemberService {
 	// 구매내역 갯수 조회 
 	int getBuyListCount(BuyVO buyVO);
 	
+	// 예약 취소 
+	void cancelReservation(String buyCode);
+	
+	
 	
 	
 	

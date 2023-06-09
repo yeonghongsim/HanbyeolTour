@@ -1,5 +1,44 @@
 @charset "UTF-8";
 
+/* 상태 조회 상단바 */
+
+.content-box{
+	background-color: #fff9d4;
+	border-radius: 10px;
+	height: 130px;
+	margin-top: 0.5rem;
+}
+
+
+.content-box > ul{
+	list-style: none;
+	display: flex;
+	justify-content: space-between; 
+	width: 100%;
+	margin-top: 10px;
+}
+
+.content-box > ul > li{
+	display: inline-block;
+	margin-right: 2rem;
+	text-align: center;
+}
+
+.content-box > ul > li > span{
+	display: block;
+	font-size: 1.2rem;
+	text-align: center;
+	color: black;
+	
+}
+.content-box > ul > li > em {
+	margin-top: 1rem;
+	display: block;
+	font-size: 1.9rem;
+	font-weight: bolder;
+	font-style: normal;
+}
+
 ul{
 	list-style: none;
 }
@@ -63,8 +102,10 @@ option{
 .table-reservation thead{
 	border-top: 1px solid grey;
 	border-bottom: 1px solid grey;
-	background-color: #eee;
+	background-color: #fafafa;
 
 }
 
-
+.table-reservation tr td {
+	vertical-align: middle;
+}

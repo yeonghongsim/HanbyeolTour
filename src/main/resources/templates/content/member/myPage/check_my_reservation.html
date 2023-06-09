@@ -22,14 +22,12 @@
 	
 	<div class="row mb-3">
 	    <div class="col content-box">
-	        <a th:href="@{/myPage/checkMyReservation}">
-	            <ul class="my-page-step">
-	                <li th:each="buyStatus : ${buyStatusCodeCountList}">
-	                    <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
-	                    <span  th:text="${buyStatus.buyStatusName}"></span>
-	                </li>
-	            </ul>
-	        </a>
+            <ul class="my-page-step">
+                <li th:each="buyStatus : ${buyStatusCodeCountList}">
+                    <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
+                    <span  th:text="${buyStatus.buyStatusName}"></span>
+                </li>
+            </ul>
 	    </div>
 	</div>
 	
@@ -68,13 +66,13 @@
 				    <div class="col select-range" style="display: flex;">
 				        <p style="margin-right: 14px;">직접 입력</p>
 				        <div class="col-4 d-grid" style="margin-right: 10px;">
-				            <input name="fromDate" type="date" class="form-control" th:value="${buyVO.fromDate}">
+				            <input name="fromDate"id="fromDate" type="date" class="form-control" th:value="${buyVO.fromDate}">
 				        </div>
 				        <div class="col-1 text-center" style="margin-right: 10px;">
 				            <span class="">~</span>
 				        </div>
 				        <div class="col-4 d-grid" style="margin-right: 10px;">
-				            <input name="toDate" type="date" class="form-control" th:value="${buyVO.toDate}">
+				            <input name="toDate" id="toDate" type="date" class="form-control" th:value="${buyVO.toDate}">
 				        </div>
 				        <div class="col-1 d-grid">
 				            <input type="submit" class="btn btn-secondary" value="검색">
@@ -114,58 +112,64 @@
 					</tr>
 				</thead>
 				
-				<th:block th:if="${#lists.size(buyList) == 0}">
-					<tbody>
-						<tr class="text-center">
-							<td colspan="8">
-							<br>
-							<br>
-							<br>
-								<div style="font-size: 4rem; color: #bbb;">
-									<i class="bi bi-exclamation-circle"></i>
-								</div>
-								<div>
-									기간내 예약내역이 없습니다.
-								</div>
-							<br>	
-							<br>	
-							<br>	
-							</td>
-						</tr>
-					</tbody>
-				</th:block>
-				<th:block th:if="${#lists.size(buyList) != 0}">
-					<tbody th:each="buy : ${buyList}">
-						<tr th:each="buyDetail : ${buy.buyDetailList}">
-				            <td th:text="${buy.buyDate}" style="color: #131518; font-weight: 500;"></td>
-					        <td th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="color: #c6df5f; font-weight: 700;"></td>
-					        <td>
-					        	<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
-					        	style="width: 85px; height: 85px;">
-					            <span th:text="${buyDetail.itemVO.itemTitle}" style="color: #333; word-spacing: -1px;"></span>
-					        </td>
-					        <td th:text="${buyDetail.reservedPeopleNum}"></td>
-					        <td th:text="${buyDetail.departDate}"></td>
-					        <td th:text="${buyDetail.arriveDate}"></td>
-					        <td style="color: #f27370;">
-					        	[[${#numbers.formatCurrency(buyDetail.buyDPrice)}]] 원
-				        	</td>
-					        <td>
-						        <div>
-						        	<span id="statusCode" style="font-weight: bolder;" th:value="${buy.buyStateVO.buyStatusCode}">[[${buy.buyStateVO.buyStatusName}]]</span>
-						        </div>
-						        <div id="reviewBtn">
-						        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
-						        	th:if="${buy.buyStateVO.buyStatusCode == 1 || buy.buyStateVO.buyStatusCode == 2}" >예약취소</button>
-						        </div>
-						        <div id="cancelBtn">
-						        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" 
-						        	th:if="${buy.buyStateVO.buyStatusCode == 4}">리뷰작성</button>
-						        </div>
-					        </td>
-						</tr>
-					</tbody>
-				</th:block>
+				<tbody>
+					<th:block th:if="${#lists.size(buyList) == 0}">
+							<tr class="text-center">
+								<td colspan="8">
+								<br>
+								<br>
+								<br>
+									<div style="font-size: 4rem; color: #bbb;">
+										<i class="bi bi-exclamation-circle"></i>
+									</div>
+									<div>
+										기간내 예약내역이 없습니다.
+									</div>
+								<br>	
+								<br>	
+								<br>	
+								</td>
+							</tr>
+					</th:block>
+					<th:block th:if="${#lists.size(buyList) != 0}">
+						<th:block th:each="buy : ${buyList}">
+							<tr th:each="buyDetail : ${buy.buyDetailList}">
+					            <td class="text-center">
+					            <div style="color: #131518; font-weight: 500;">[[${buy.buyDate}]]</div>
+					            <div>
+					            	<a th:href="@{/myPage/reservationDetail}">상세보기</a>
+					            </div>
+					            </td>
+						        <td th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="color: #c6df5f; font-weight: 700;"></td>
+						        <td>
+						        	<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
+						        	style="width: 85px; height: 85px;">
+						            <span th:text="${buyDetail.itemVO.itemTitle}" style="color: #333; word-spacing: -1px;"></span>
+						        </td>
+						        <td th:text="${buyDetail.reservedPeopleNum}"></td>
+						        <td th:text="${buyDetail.departDate}"></td>
+						        <td th:text="${buyDetail.arriveDate}"></td>
+						        <td style="color: #f27370;">
+						        	[[${#numbers.formatCurrency(buyDetail.buyDPrice)}]] 원
+					        	</td>
+						        <td>
+							        <div>
+							        	<span id="statusCode" style="font-weight: bolder;" th:value="${buy.buyStateVO.buyStatusCode}">[[${buy.buyStateVO.buyStatusName}]]</span>
+							        </div>
+							        <div id="reviewBtn">
+							        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
+							        	th:if="${buy.buyStateVO.buyStatusCode == 1}"
+							        	th:onclick="cancel_reservation(this, [[${buy.buyCode}]])">예약취소</button>
+							        </div>
+							        <div id="cancelBtn">
+							        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" 
+							        	th:if="${buy.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
+							        </div>
+						        </td>
+							</tr>
+						</th:block>
+					</th:block>
+				</tbody>
 				 
 			</table>
 		
