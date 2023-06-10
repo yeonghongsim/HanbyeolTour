@@ -11,8 +11,8 @@ import com.project.team.member.service.MemberService;
 import jakarta.annotation.Resource;
 
 @Controller
-@RequestMapping("/adminFirstPage")
-public class AdminFirstPageController {
+@RequestMapping("/adminIndex")
+public class AdminIndexController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	@Resource(name = "adminService")
@@ -20,10 +20,16 @@ public class AdminFirstPageController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
-	// 로그인 성공 후 관리자 인증 시 오는 관리자 첫 페이지
+	// 로그인 성공 후 관리자 인증 시 오는 관리자 첫 페이지 및 우측 상단의 그래프 버튼 클릭 시
 	@GetMapping("/")
-	public String index() {
-		return "content/admin/firstPage/first_page";
+	public String indexBar() {
+		return "content/admin/Index/index_bar";
+	}
+	
+	// 우측 상단의 통계 버튼 클릭 시
+	@GetMapping("/indexStatictics")
+	public String indexStatistics() {
+		return "content/admin/Index/index_statistics";
 	}
 	
 	
