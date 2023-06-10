@@ -767,8 +767,6 @@
 
 
 	
-	<!-- 심영홍  -->
-
 	
 	<select id="getMemCode" resultType="String">
 		SELECT MEM_CODE
@@ -837,7 +835,57 @@
 
 
 	<!-- 심영홍 작업 부분 시작 -->
-
+	<select id="getPieByIndexStatistics" resultType="map">
+		SELECT <if test="searchValue.equals('M/F')">
+				(SELECT COUNT(MEM_CODE)
+				FROM HBT_MEM_DETAIL
+				WHERE MEM_D_GEN = '남') AS 남자,
+				(SELECT COUNT(MEM_CODE)
+				FROM HBT_MEM_DETAIL
+				WHERE MEM_D_GEN = '여') AS 여자
+				</if>
+				<if test="searchValue.equals('insited')">
+				(SELECT NVL(COUNT(MEM_CODE), 0)
+		        FROM HBT_MEM
+		        WHERE MEM_STATUS_CODE = 1) AS 활동중,
+		        (SELECT NVL(COUNT(MEM_CODE), 0)
+		        FROM HBT_MEM
+		        WHERE MEM_STATUS_CODE = 2) AS 휴면,
+		        (SELECT NVL(COUNT(MEM_CODE), 0)
+		        FROM HBT_MEM
+		        WHERE MEM_STATUS_CODE = 3) AS 탈퇴
+				</if>
+				<if test="searchValue.equals('requestType')">
+				(SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 1) AS 회원정보,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 패키지,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 예약및구매,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 교환및취소,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 문의글이용,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 서비스및기타
+				</if>
+				<if test="searchValue.equals('isAnswer')">
+				(SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE IS_ANSWER = 'Y') AS 답변완료,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE IS_ANSWER = 'N') AS 답변필요
+				</if>
+		FROM DUAL
+	</select>
+		
 
 
 	<!-- 심영홍 작업 부분 끝 -->
