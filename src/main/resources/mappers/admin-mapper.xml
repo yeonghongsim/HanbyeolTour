@@ -834,6 +834,7 @@
 
 
 
+	<!-- 의문점 1. 트리맵으로 할경우는? 2. 컬럼명(AS)할때 숫자문자 조합 안된다? -->
 	<!-- 심영홍 작업 부분 시작 -->
 	<select id="getPieByIndexStatistics" resultType="map">
 		SELECT <if test="searchValue.equals('M/F')">
@@ -882,6 +883,30 @@
 		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
 		        FROM HBT_BOARD_REQUEST
 		        WHERE IS_ANSWER = 'N') AS 답변필요
+				</if>
+				<if test="searchValue.equals('boardType')">
+				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'Y') 공지글,
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'N'
+		        AND IS_PRIVATE = 'Y') 일반글,
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'N'
+		        AND IS_PRIVATE IS NULL) 비밀글
+				</if>
+				<if test="searchValue.equals('boardCnt')">
+				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &lt; 5) AS "5회미만",
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &gt;= 5 AND HBT_BOARD_CNT &lt; 10) AS "10회미만",
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &gt;= 10) AS "10회이상"
 				</if>
 		FROM DUAL
 	</select>
