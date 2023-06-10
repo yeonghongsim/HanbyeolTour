@@ -142,7 +142,11 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.getBuyListCnt", buyVO);
 	}
 	
-	
+	// 예약 취소 
+	@Override
+	public void cancelReservation(String buyCode) {
+		sqlSession.update("memberMapper.cancelReservation", buyCode);
+	}
 	
 	
 	
@@ -187,6 +191,8 @@ public class MemberServiceImpl implements MemberService{
 	public String getMemCode(String memid) {
 		return sqlSession.selectOne("adminMapper.getMemCode", memid);
 	}
+
+	
 
 	
 

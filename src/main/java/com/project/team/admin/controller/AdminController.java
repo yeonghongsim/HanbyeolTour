@@ -49,6 +49,13 @@ public class AdminController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
+	// 초기화면 이동
+	@GetMapping("/")
+	public String index() {
+		
+		return "redirect:/adminIndex/";
+	}
+	
 	//상품 관리 페이지
 	@GetMapping("/itemManage")
 	public String itemManage() {
