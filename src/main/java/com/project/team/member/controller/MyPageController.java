@@ -238,7 +238,7 @@ public class MyPageController {
 		return "content/member/myPage/check_my_reservation";
 	}
 	
-	// 예약 취소 처리 
+	// 버튼으로 조회해도 화면에서 동일하게 유지 
 	@PostMapping("/getUpdatedTableDataAJAX")
 	@ResponseBody
 	public Map<String, Object> getUpdatedTableData(BuyVO buyVO, int month, Authentication authentication) {
@@ -268,12 +268,28 @@ public class MyPageController {
 	
 	
 	// 예약 취소 처리 
-	@PostMapping("/checkMyReservationAJAX")
+	@PostMapping("/cancelReservationAJAX")
 	@ResponseBody
-	public void cancelReservation(String buyCode) {
+	public Map<String, Object> cancelReservation(String buyCode, Authentication authentication, BuyVO buyVO) {
+		//예약 상태 코드 변경 
 		memberService.cancelReservation(buyCode);
 		
+		// 로그인 정보 이용 -> memCode 가져오기 
+		String memCode = memberService.getMemCode(authentication.getName());
+		buyVO.setMemCode(memCode);
 		
+		// 구매 내역 리스트 데이터 조회 
+		List<BuyVO> buyList = memberService.getBuyList(buyVO);
+		
+		// 상단바 데이터 조회 
+		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
+		
+		// 보낼 때에는 Map 데이터에 넣어서 보내기 
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("buyList", buyList);
+		responseMap.put("buyStatusCodeCountList", buyStatusCodeCountList);
+	
+		return responseMap;
 	}
 	
 	

@@ -117,7 +117,7 @@ function get_buy_list(month) {
 		                                <span id="statusCode" style="font-weight: bolder;">${buy.buyStateVO.buyStatusName}</span>
 		                            </div>
 		                            <div id="reviewBtn">
-		                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancelReservation(${buy.buyCode})">예약취소</button>
+		                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
 		                            </div>
 		                            <div id="cancelBtn">
 		                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
@@ -130,7 +130,7 @@ function get_buy_list(month) {
 		
 		    table.innerHTML = str;
 		    
-		    //여기에 상단바 선택해서 글씨 내용 지워주고, 다시 내용 채워 넣어주기.
+		    // 상단바 선택해서 글씨 내용 지워주고, 다시 내용 채워 넣어주기.
 		    
 		    const countBox = document.querySelector('.content-box');	    
 		    //countBox.querySelector('a').replaceChildren();
@@ -197,7 +197,147 @@ function get_buy_list_paging(pageNum){
 }
 
 
+// 예약 취소 버튼 
+function cancel_reservation(buyCode){
+	// Confirmation
+	const result = confirm(`정말 예약을 취소하시겠어요?`);
+	
+	if(result){
+		//ajax start
+		$.ajax({
+		   url: '/myPage/cancelReservationAJAX', //요청경로
+		   type: 'post',
+		   async: true, // 비동기 , 동기 설정
+		   contentType: 'application/json; charset=UTF-8', //json쓸거라는 거다 (복잡한 데이터 넘길 때 사용)
+		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
+		   data: {'buyCode':buyCode}, //필요한 데이터
+		   success: function(responseMap) {
+	        //기존 테이블 그림 삭제 
+			const table = document.querySelector('.table-reservation')
+			const tableBody = table.querySelector('tbody');
+			if (tableBody) {
+			  tableBody.replaceChildren();
+			}
 
+			
+			//태그 삭제시, 부모태그.replaceChildren 하면 안의 것 다지워짐 
+			//table.querySelector('tbody').replaceChildren();
+			
+			const buyList = responseMap.buyList; // Retrieve buyList from responseData
+	        const buyStatusCodeCountList = responseMap.buyStatusCodeCountList; // Retrieve buyStatusCodeCountList from responseData
+					 
+			let str = ``;
+			
+			str = `<colgroup>
+						<col width="10%">
+						<col width="10%">
+						<col width="*">
+						<col width="5%">
+						<col width="15%">
+						<col width="15%">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<thead class="text-center">
+						<tr>
+							<td>결제일자</td>
+							<td>여행국가</td>
+							<td>상품</td>
+							<td>인원</td>
+							<td>출발일자</td>
+							<td>도착일자</td>
+							<td>결제금액</td>
+							<td>상태</td>
+						</tr>
+					</thead>`;
+			
+		    if (buyList.length == 0) {
+		    str += `<tr class="text-center">
+		                <td colspan="8">
+		                    <br><br><br>
+		                    <div style="font-size: 4rem; color: #bbb;">
+		                        <i class="bi bi-exclamation-circle"></i>
+		                    </div>
+		                    <div>
+		                        기간내 예약내역이 없습니다.
+		                    </div>
+		                    <br><br><br>
+		                </td>
+		            </tr>`;
+		    } 
+		    else {
+		        buyList.forEach(function (buy) {
+		            buy.buyDetailList.forEach(function (buyDetail) {
+		            str += `<tr>
+		                        <td class="text-center">
+		                            <div style="color: #131518; font-weight: 500;">${buy.buyDate}</div>
+		                            <div>
+		                                <a href="/myPage/reservationDetail">상세보기</a>
+		                            </div>
+		                        </td>
+		                        <td style="color: #c6df5f; font-weight: 700;">${buyDetail.itemVO.tourAreaVO.areaKorName}</td>
+		                        <td>
+		                            <img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
+		                            <span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+		                        </td>
+		                        <td>${buyDetail.reservedPeopleNum}</td>
+		                        <td>${buyDetail.departDate}</td>
+		                        <td>${buyDetail.arriveDate}</td>
+		                        <td style="color: #f27370;">
+		                            ${buyDetail.buyDPrice} 원
+		                        </td>
+		                        <td>
+		                            <div>
+		                                <span id="statusCode" style="font-weight: bolder;">${buy.buyStateVO.buyStatusName}</span>
+		                            </div>
+		                            <div id="reviewBtn">
+		                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
+		                            </div>
+		                            <div id="cancelBtn">
+		                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
+		                            </div>
+		                        </td>
+		                    </tr>`;
+		            });
+		        });
+		    }
+		
+		    table.innerHTML = str;
+		    
+		    // 상단바 선택해서 글씨 내용 지워주고, 다시 내용 채워 넣어주기.
+		    
+		    const countBox = document.querySelector('.content-box');	    
+		    //countBox.querySelector('a').replaceChildren();
+		    const countLink = countBox.querySelector('ul');
+			if (countLink) {
+			  countLink.replaceChildren();
+			}
+		    
+		    let str_second = ``;
+		    
+		    str_second += `<ul class="my-page-step">`;
+		    buyStatusCodeCountList.forEach(function (buyStatus) {
+		    str_second += `<li>
+		            <em class="num">${buyStatus.buyStatusCount}</em>
+		            <span>${buyStatus.buyStatusName}</span>
+		          </li>`;
+			});
+			str_second += `</ul>`;
+
+			countBox.innerHTML = str_second;
+		      
+		   },
+		   error: function() {
+		      alert('실패');
+		   }
+		});
+		//ajax end
+	}
+	else{
+		return;		
+	}
+	
+}
 
 
 

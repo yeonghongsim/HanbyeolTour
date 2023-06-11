@@ -159,7 +159,7 @@
 							        <div id="reviewBtn">
 							        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
 							        	th:if="${buy.buyStateVO.buyStatusCode == 1}"
-							        	th:onclick="cancel_reservation(this, [[${buy.buyCode}]])">예약취소</button>
+							        	th:onclick="cancel_reservation([[${buy.buyCode}]])">예약취소</button>
 							        </div>
 							        <div id="cancelBtn">
 							        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" 
