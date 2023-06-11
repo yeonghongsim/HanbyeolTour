@@ -304,6 +304,13 @@ public class AdminController {
 		
 		System.out.println(buyListSearchVO);
 		
+		//검색 조건에 맞는 예약 수 조회
+		int totalDataCnt = adminService.getBuyListCnt(buyListSearchVO);
+		buyListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이지 정보 세팅
+		buyListSearchVO.setPageInfo();
+		
 		//구매 내역
 		model.addAttribute("buyList", adminService.getBuyListForAdmin(buyListSearchVO));
 		

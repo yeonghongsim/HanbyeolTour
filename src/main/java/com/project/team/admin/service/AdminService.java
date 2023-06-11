@@ -85,6 +85,9 @@ public interface AdminService {
 	//구매(예약) 리스트 조회
 	List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO);
 	
+	//검색 조건에 맞는 구매(예약) 내역 수
+	int getBuyListCnt(BuyListSearchVO buyListSearchVO);
+	
 	//예약(구매) 상태 리스트 조회
 	List<BuyStateVO> getBuyStatus();
 	

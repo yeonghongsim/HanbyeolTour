@@ -354,8 +354,41 @@
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
-       	ORDER BY BUY_DATE DESC
+       	ORDER BY HB.BUY_CODE DESC
+       	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
+	
+	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
+	<select id="getBuyListCnt" resultType="int">
+		SELECT COUNT(HB.BUY_CODE)
+		FROM HBT_BUY HB, HBT_BUY_STATE HBS, HBT_MEM HM
+		 	, HBT_MEM_DETAIL HMD, HBT_ITEM HI, HBT_BUY_DETAIL HBD
+		WHERE HB.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND HB.MEM_CODE = HM.MEM_CODE
+		AND HB.MEM_CODE = HMD.MEM_CODE
+		AND HB.BUY_CODE = HBD.BUY_CODE
+        AND HBD.ITEM_CODE = HI.ITEM_CODE
+        <if test="statusCodeList != null">
+		AND HB.BUY_STATUS_CODE IN
+			<foreach collection="statusCodeList" item="statusCode" open="(" close=")" separator=",">
+				#{statusCode}
+			</foreach>
+		</if>
+		<!-- 검색 기능 날짜  -->
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<!-- 검색 기능 셀렉트박스 -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		 
+	</select>
+	
+	
 	
 	<!-- 예약 관리 페이지 구매(예약)상태 -->
 	<select id="getBuyStatus" resultMap="buyMapper.buyState">
