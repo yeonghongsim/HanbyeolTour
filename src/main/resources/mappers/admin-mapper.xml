@@ -354,8 +354,41 @@
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
-       	ORDER BY BUY_DATE DESC
+       	ORDER BY HB.BUY_CODE DESC
+       	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
+	
+	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
+	<select id="getBuyListCnt" resultType="int">
+		SELECT COUNT(HB.BUY_CODE)
+		FROM HBT_BUY HB, HBT_BUY_STATE HBS, HBT_MEM HM
+		 	, HBT_MEM_DETAIL HMD, HBT_ITEM HI, HBT_BUY_DETAIL HBD
+		WHERE HB.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND HB.MEM_CODE = HM.MEM_CODE
+		AND HB.MEM_CODE = HMD.MEM_CODE
+		AND HB.BUY_CODE = HBD.BUY_CODE
+        AND HBD.ITEM_CODE = HI.ITEM_CODE
+        <if test="statusCodeList != null">
+		AND HB.BUY_STATUS_CODE IN
+			<foreach collection="statusCodeList" item="statusCode" open="(" close=")" separator=",">
+				#{statusCode}
+			</foreach>
+		</if>
+		<!-- 검색 기능 날짜  -->
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<!-- 검색 기능 셀렉트박스 -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		 
+	</select>
+	
+	
 	
 	<!-- 예약 관리 페이지 구매(예약)상태 -->
 	<select id="getBuyStatus" resultMap="buyMapper.buyState">
@@ -767,8 +800,6 @@
 
 
 	
-	<!-- 심영홍  -->
-
 	
 	<select id="getMemCode" resultType="String">
 		SELECT MEM_CODE
@@ -836,8 +867,83 @@
 
 
 
+	<!-- 의문점 1. 트리맵으로 할경우는? 2. 컬럼명(AS)할때 숫자문자 조합 안된다? -->
 	<!-- 심영홍 작업 부분 시작 -->
-
+	<select id="getPieByIndexStatistics" resultType="map">
+		SELECT <if test="searchValue.equals('M/F')">
+				(SELECT COUNT(MEM_CODE)
+				FROM HBT_MEM_DETAIL
+				WHERE MEM_D_GEN = '남') AS 남자,
+				(SELECT COUNT(MEM_CODE)
+				FROM HBT_MEM_DETAIL
+				WHERE MEM_D_GEN = '여') AS 여자
+				</if>
+				<if test="searchValue.equals('insited')">
+				(SELECT NVL(COUNT(MEM_CODE), 0)
+		        FROM HBT_MEM
+		        WHERE MEM_STATUS_CODE = 1) AS 활동중,
+		        (SELECT NVL(COUNT(MEM_CODE), 0)
+		        FROM HBT_MEM
+		        WHERE MEM_STATUS_CODE = 2) AS 휴면,
+		        (SELECT NVL(COUNT(MEM_CODE), 0)
+		        FROM HBT_MEM
+		        WHERE MEM_STATUS_CODE = 3) AS 탈퇴
+				</if>
+				<if test="searchValue.equals('requestType')">
+				(SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 1) AS 회원정보,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 패키지,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 예약및구매,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 교환및취소,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 문의글이용,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE TYPE_REQUEST_CODE = 2) AS 서비스및기타
+				</if>
+				<if test="searchValue.equals('isAnswer')">
+				(SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE IS_ANSWER = 'Y') AS 답변완료,
+		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
+		        FROM HBT_BOARD_REQUEST
+		        WHERE IS_ANSWER = 'N') AS 답변필요
+				</if>
+				<if test="searchValue.equals('boardType')">
+				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'Y') 공지글,
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'N'
+		        AND IS_PRIVATE = 'Y') 일반글,
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'N'
+		        AND IS_PRIVATE IS NULL) 비밀글
+				</if>
+				<if test="searchValue.equals('boardCnt')">
+				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &lt; 5) AS "5회미만",
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &gt;= 5 AND HBT_BOARD_CNT &lt; 10) AS "10회미만",
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &gt;= 10) AS "10회이상"
+				</if>
+		FROM DUAL
+	</select>
+		
 
 
 	<!-- 심영홍 작업 부분 끝 -->

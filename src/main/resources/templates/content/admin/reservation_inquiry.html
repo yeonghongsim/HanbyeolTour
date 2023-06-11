@@ -26,6 +26,8 @@
 					<div class="row">
 						<div class="col">
 							<form th:action="@{/admin/reservationInquiry}" method="post" id="searchForm">
+							<!-- <input type="hidden" name="buyCode" th:value="${orderListSearchVO.buyCode}" id="orderBy"> -->
+							<input type="hidden" name="nowPage" th:value="${buyListSearchVO.nowPage}" id="nowPage">
 								<table class="table" id="searchTable">
 									<colgroup>
 										<col width="">
@@ -173,30 +175,30 @@
 				</div>
 			</div>
 			<!-- 페이징 처리 -->
-<!-- 			<div class="row justify-content-center">
+ 			<div class="row justify-content-center">
 				<div class="col-3">
 					<nav aria-label="Page navigation example">
 					  <ul class="pagination">
 					    <li class="page-item" th:classappend="${buyListSearchVO.prev ? '' : 'disabled'}">
-					      <a class="page-link" href="javascript:void(0);" th:onclick="getMemListPaging([[${buyListSearchVO.beginPage - 1}]]);" aria-label="Previous">
+					      <a class="page-link" href="javascript:void(0);" th:onclick="getBuyListPaging([[${buyListSearchVO.beginPage - 1}]]);" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
 					    
 					    <li class="page-item"   
-					    	th:each="pageNum : ${#numbers.sequence(memListSearchVO.beginPage, memListSearchVO.endPage)}">
+					    	th:each="pageNum : ${#numbers.sequence(buyListSearchVO.beginPage, buyListSearchVO.endPage)}">
 					    	<a class="page-link"  th:classappend="${buyListSearchVO.nowPage == pageNum ? 'active' : ''}" 
-					    		href="javascript:void(0);" th:onclick="getMemListPaging([[${pageNum}]]);">[[${pageNum}]]</a>
+					    		href="javascript:void(0);" th:onclick="getBuyListPaging([[${pageNum}]]);">[[${pageNum}]]</a>
 					    </li>
 					    
 					    <li class="page-item" th:classappend="${buyListSearchVO.next ? '' : 'disabled'}">
-					      <a class="page-link" href="javascript:void(0);" th:onclick="getMemListPaging([[${buyListSearchVO.endPage + 1}]]);" aria-label="Next">
+					      <a class="page-link" href="javascript:void(0);" th:onclick="getBuyListPaging([[${buyListSearchVO.endPage + 1}]]);" aria-label="Next">
 					        <span aria-hidden="true">&raquo;</span>
 					      </a>
 					    </li>
 					  </ul>
 					</nav>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	</div>

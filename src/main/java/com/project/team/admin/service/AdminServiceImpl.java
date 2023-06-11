@@ -169,6 +169,13 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
 	}
 	
+	//검색 조건에 맞는 구매(예약) 수
+	@Override
+	public int getBuyListCnt(BuyListSearchVO buyListSearchVO) {
+		
+		return sqlSession.selectOne("adminMapper.getBuyListCnt", buyListSearchVO);
+	}
+	
 	//구매(예약) 상태 조회
 	@Override
 	public List<BuyStateVO> getBuyStatus() {
@@ -283,6 +290,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
 
 
 

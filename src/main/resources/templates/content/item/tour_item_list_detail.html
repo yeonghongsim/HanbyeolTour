@@ -12,22 +12,6 @@
 	<div class="row justify-content-center mx-auto" style="width: 80%;">
 		<div class="col">
 			<!--	임시		-->
-			<div class="row">
-				<div class="col">
-					<form action="/buy/buyItem" method="post">
-						<input type="number" id="numOfPeople" name="reservedPeopleNum" value="1">명
-						<input type="hidden" th:value="${buyDetailVO.departDate}" name="departDate">
-						<input type="hidden" th:value="${buyDetailVO.arriveDate}" name="arriveDate">
-						<input type="hidden" th:value="${itemDetail[0][0]['ITEM_PRICE']}" name="buyDPrice">
-						<input type="hidden" id="itemCode" th:value="${itemDetail[0][0]['ITEM_CODE']}" name="itemCode">
-						<input type="hidden" th:value="${itemDetail[0][0]['AREA_CODE']}" name="areaCode">
-						<input type="submit" value="구매">
-					</form>
-				</div>
-				<div class="col">
-					<input type="button" value="장바구니" onclick="addCartAJAX();">
-				</div>
-			</div>
 
 		
 		<!-- 상품 제목  -->
@@ -39,7 +23,7 @@
 		
 	<!-- 상품이미지 + 상품 제목 간단설명  -->
 	
-			<div class="row">
+			<div class="row text-center justify-content-center">
 				<div class="col">
 				
 					<div id="itemLIstMainImg" class="carousel slide" data-bs-ride="carousel">
@@ -69,31 +53,89 @@
 				
 				
 				<div class="col">
-					<div class="row">
-						<span>[[${itemDetail[0][0]['ITEM_TITLE']}]]</span>
-					</div>
-					
-					
-					<div class="row">
-						<span>[[${itemDetail[0][0]['AREA_KOR_NAME']}]]</span>
-					</div>
-					
-					
-					<div class="row">
-						<span>[[${itemDetail[0][0]['ITEM_PRICE']}]]</span>
-					</div>
-					<div class="row">
-						<span>[[${itemDetail[0][0]['HBT_AIRLINE_NAME']}]]</span>
-					</div>
-
-					<div class="row">
-						<input type="button" value="예약하기">				
-					</div>
-					
-				
+					<form action="/buy/buyItem" method="post">
+						<table class="table text-center justify-content-center">
+							<tbody>
+								<tr>
+									<td>
+										<span>
+											상품명
+										</span>
+									</td>
+									<td><span>[[${itemDetail[0][0]['ITEM_TITLE']}]]</span></td>
+								</tr>
+								<tr>
+									<td>
+										<span>
+											여행지역
+										</span>
+									</td>
+									<td>
+										<span>[[${itemDetail[0][0]['AREA_KOR_NAME']}]]</span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span>
+											항공사
+										</span>
+									</td>
+									<td>
+										<img height="40px" th:src="@{/img/item/airlineIcon/} + ${itemDetail[0][0]['HBT_AIRLINE_ICON']}">
+										<span>[[${itemDetail[0][0]['HBT_AIRLINE_NAME']}]]</span>
+									</td>
+								</tr>
+								<tr>
+									<td>가격</td>
+									<td>
+										<span>[[${itemDetail[0][0]['ITEM_PRICE']} + 원]]</span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span>
+											출발일자
+										</span>
+									</td>
+									<td>
+										<input class="form-control" type="date" th:value="${buyDetailVO.departDate}" name="departDate">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span>
+											도착일자
+										</span>
+									</td>
+									<td>
+										<input class="form-control" type="date" th:value="${buyDetailVO.arriveDate}" name="arriveDate">
+									</td>
+								</tr>
+								<tr>
+									<td>예약인원</td>
+									<td>
+										<input class="form-control" type="number" id="numOfPeople" name="reservedPeopleNum" value="1">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<input class="btn ye-bc" type="submit" value="예약하기">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<input class="btn ye-bc" type="button" value="장바구니" onclick="addCartAJAX();">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="hidden" th:value="${itemDetail[0][0]['ITEM_PRICE']}" name="buyDPrice">
+						<input type="hidden" id="itemCode" th:value="${itemDetail[0][0]['ITEM_CODE']}" name="itemCode">
+						<input type="hidden" th:value="${itemDetail[0][0]['AREA_CODE']}" name="areaCode">
+					</form>
 				</div>
 			</div>
-			
+
 			
 			<!-- 주요 일정 & 가격 -->
 
@@ -117,35 +159,54 @@
 										<div class="row mb-3 dailyPlanDivs">
 											<th:block th:each="dailyPlan, index : ${itemDetail.get(state.index)}">
 												<th:block th:if="${index.index == 0}">
-													<div class="col">
+													<div class="col hotelImg">
 														호텔이미지
 													</div>
 													<div class="col">
 														<div class="row mb-3">
+															<table class="table text-center">
+																<tr>
+																	<td>호텔명</td>
+																	<td>
+																		<div class="col">[[${dailyPlan["HBT_HOTEL_NAME"]}]]</div>
+																	</td>
+																	<td>
+																		<div class="col">[[${dailyPlan["HBT_HOTEL_GRADE"]} + 성]]</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td colspan="3">
+																		<div class="row">[[${dailyPlan["HBT_HOTEL_INTRO"]}]]</div>
+																	</td>
+																</tr>
+															</table>
 															<input type="hidden" th:value='${dailyPlan["HBT_HOTEL_CODE"]}'>
-															<div class="col">이용호텔 : </div>
-															<div class="col">[[${dailyPlan["HBT_HOTEL_NAME"]}]]</div>
-															<div class="col">[[${dailyPlan["HBT_HOTEL_GRADE"]} + 성]]</div>
 														</div>
 														<div class="row mb-3">
-															<div class="row">[[${dailyPlan["HBT_HOTEL_INTRO"]}]]</div>
 														</div>
 													</div>
 												</th:block>
 
 
 												<div class="row mb-3">
-													<div class="col">
+													<div class="col tourImg">
 														투어이미지
 													</div>
 													<div class="col">
-														<div class="row mb-3">
-															<input type="hidden" th:value="${dailyPlan['HBT_TOUR_ITEM_CODE']}">
-															<div class="col">[[${dailyPlan["HBT_TOUR_ITEM_NAME"]}]]</div>
-														</div>
-														<div class="row mb-3">
-															<div class="row">[[${dailyPlan["HBT_TOUR_ITEM_NAME"]}]]</div>
-														</div>
+														<table class="table">
+															<tr>
+																<td>
+																	<input type="hidden" th:value="${dailyPlan['HBT_TOUR_ITEM_CODE']}">
+																	<div class="col">[[${dailyPlan["HBT_TOUR_ITEM_NAME"]}]]</div>
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<div class="row">[[${dailyPlan["HBT_TOUR_ITEM_NAME"]}]]</div>
+
+																</td>
+															</tr>
+														</table>
 													</div>
 												</div>
 											</th:block>
@@ -156,15 +217,13 @@
 
 						</th:block>
 					</div>
-				
-				
-
-					
-					
 				</div>
 			</div>
-			
 
+			<div>
+				상품후기
+			</div>
+			
 		</div>
 	</div>
 </th:block>

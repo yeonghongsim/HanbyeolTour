@@ -49,6 +49,13 @@ public class AdminController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
+	// 초기화면 이동
+	@GetMapping("/")
+	public String index() {
+		
+		return "redirect:/adminIndex/";
+	}
+	
 	//상품 관리 페이지
 	@GetMapping("/itemManage")
 	public String itemManage() {
@@ -296,6 +303,13 @@ public class AdminController {
 	public String reservationInquiry(Model model, BuyListSearchVO buyListSearchVO) {
 		
 		System.out.println(buyListSearchVO);
+		
+		//검색 조건에 맞는 예약 수 조회
+		int totalDataCnt = adminService.getBuyListCnt(buyListSearchVO);
+		buyListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이지 정보 세팅
+		buyListSearchVO.setPageInfo();
 		
 		//구매 내역
 		model.addAttribute("buyList", adminService.getBuyListForAdmin(buyListSearchVO));
