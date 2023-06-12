@@ -5,7 +5,7 @@
 
 <th:block th:fragment="headerFragment">
 	<!-- 상단바 1 -->
-	<div class="row header-bar">
+	<div class="row header-bar mt-1 pb-1 my-0">
 		<div class="col text-end">
 			<!-- 비로그인 시 -->
 			<div sec:authorize="isAnonymous()">
@@ -39,13 +39,13 @@
 	</div>
 	
 	<!-- 카테고리 목록 메뉴 바( 우선 사이트 명만 로고 대신 놔둠) -->
-	<div class="row header-bar-2">
+	<div class="row my-0 py-0 header-bar-2">
 		<div class="col logo">
 			<span onclick="location.href='/'" style="cursor: pointer;" class="header-title">✈️한별투어</span>
 		</div>
 	</div>
 	
-	<div class="row mb-3 text-center header-navbar">
+	<div class="row mb-0 py-1 text-center header-navbar">
 		<div class="col dropdown-1-span">
 			<a href="/item/tourItemListMain">
 				<span class="dropdown-1-span">해외패키지</span>
@@ -63,73 +63,17 @@
 			</div>
 		</div>
 		<div class="col dropdown-2-span">
-			<a href="/item/tourItemList">
-				<span class="dropdown-2-span">테마여행</span>
+			<a href="/item/diyTourItem">
+				<span class="dropdown-2-span">
+					패키지만들기
+				</span>
 			</a>
-			<div class="dropdown-2-div">
-				<ul class="dropdown-2-ul">
-					<th:block th:each="menuList : ${locMenuList}">	
-						<li>
-							<a th:href="@{/item/tourItemListGroup(areaName=${menuList.areaKorName})}">
-								<span>[[${menuList.areaKorName}]]</span>
-							</a>
-						</li>
-					</th:block>
-				</ul>
-			</div>
 		</div>
-		<div class="col dropdown-3-span">
-			<a href="/item/tourItemListDetail">
-				<span class="dropdown-3-span">개별여행</span>
-			</a>
-			<div class="dropdown-3-div">
-				<ul class="dropdown-3-ul">
-					<th:block>	
-					<li>
-						<a>
-							<span>1</span>
-						</a>
-					</li>
-				</th:block>
-				</ul>
-			</div>
-		</div>
-		<div class="col dropdown-4-span">
-			<a href="#">
-				<span class="dropdown-4-span">국내/제주</span>
-			</a>
-			<div class="dropdown-4-div">
-				<ul class="dropdown-4-ul">
-					<th:block>	
-					<li>
-						<a>
-							<span>1</span>
-						</a>
-					</li>
-				</th:block>
-				</ul>
-			</div>
-		</div>
+
 		<div class="col dropdown-5-span">
-			<a href="#">
+			<a href="/item/airLinePage">
 				<span class="dropdown-5-span">항공</span>
 			</a>
-			<div class="dropdown-5-div">
-				<ul class="dropdown-5-ul">
-					<th:block>	
-					<li>
-						<a>
-							<span>국내항공권 조회</span>
-						</a>
-					</li>
-					<li>
-						<a>
-							<span>해외항공권 조회</span>
-						</a>
-					</li>
-				</th:block>
-				</ul>
-			</div>
 		</div>
 		<div class="col">
 			<a href="/item/hotelPage">

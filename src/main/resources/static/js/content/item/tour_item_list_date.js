@@ -142,7 +142,11 @@ function getSearchByDateAJAX(getDate){
 			let str = '';
 			for(const i of resultArray){
 				str += `<tr>`;
-				str += `<td><img src="/img/item/itemImg/${i["ITEM_IMG_ATTACHED_NAME"]}"></td>`
+				str += `<td>`;
+				str += `<a href="/item/tourItemListDetail?departDate=${i["DEP_DATE"]}&arriveDate=${i["ARR_DATE"]}&itemCode=${i["ITEM_CODE"]}">`;
+				str += `<img width="150px;" src="/img/item/itemImg/${i["ITEM_IMG_ATTACHED_NAME"]}"></td>`;
+				str += `</a>`;
+				str += `</td>`;
 				str += `<td>`;
 				str += `<div>${i["DEP_DATE"]}</div>`;
 				str += `<div>${i["ARR_DATE"]}</div>`;
