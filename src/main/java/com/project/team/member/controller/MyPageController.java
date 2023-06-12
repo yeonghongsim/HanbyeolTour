@@ -3,6 +3,7 @@ package com.project.team.member.controller;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,9 +202,9 @@ public class MyPageController {
 		buyVO.setMemCode(memCode);
 		
 		//month 설정 
-		if(buyVO.getMonth() == 0) {
-			buyVO.setMonth(-1);
-		}
+//		if(buyVO.getMonth() == 0) {
+//			buyVO.setMonth(-1);
+//		}
 		
 		// 구매상태 정보 조회 (상단바)
 		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
@@ -293,11 +294,23 @@ public class MyPageController {
 		// 검색 시 예약 상태 조건 
 		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
 		buyVO.setSearchStatusCode(searchStatusCode);
-		// 날짜 조건 
-		buyVO.setFromDate(fromDate);
-		buyVO.setToDate(toDate);
+		
+		// 날짜 조건
+		// 넘어온 날짜 데이터 없을 경우 기본값으로 날짜 세팅
+		String nowDate = DateUtil.getNowDateToString(); // 오늘 날짜
+		String firstDate = DateUtil.getFirstDateOfMonth(); // 이번 달의 첫번째 날짜
+		
+		if(buyVO.getMonth() == 0) {
+			buyVO.setToDate(nowDate);
+			buyVO.setFromDate(firstDate);
+		}
+		else {
+			buyVO.setFromDate(fromDate);
+			buyVO.setToDate(toDate);
+		}
 		System.out.println("@@@@@ fromDate : " + fromDate);
 		System.out.println("@@@@@ toDate : " + toDate);
+				
 		
 		// 구매 내역 리스트 데이터 조회 
 		List<BuyVO> buyList = memberService.getBuyList(buyVO);
@@ -315,9 +328,17 @@ public class MyPageController {
 	
 	//예약 상세 페이지로 이동 
 	@GetMapping("/reservationDetail")
-	public String reservationDetail(Model model) {
+	public String reservationDetail(Model model, String buyCode, BuyVO buyVO, Authentication authentication) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// id, buyCode set 
+		buyVO.setBuyCode(buyCode);
+		String memCode = memberService.getMemCode(authentication.getName());
+		buyVO.setMemCode(memCode);
+		
+		
+		model.addAttribute("buyDetail", memberService.getBuyDetail(buyVO));
+		
 		
 		
 		return"content/member/myPage/reservation_detail";

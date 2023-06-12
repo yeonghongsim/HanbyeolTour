@@ -71,6 +71,11 @@ public interface MemberService {
 	// 예약 취소 
 	void cancelReservation(String buyCode);
 	
+	//예약 상세 정보 
+	BuyVO getBuyDetail(BuyVO buyVO);
+	
+	
+	
 	
 	
 	

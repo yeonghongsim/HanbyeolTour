@@ -145,12 +145,12 @@
 					</th:block>
 					<th:block th:if="${#lists.size(buyList) != 0}">
 						<th:block th:each="buy : ${buyList}">
-							<tr th:each="buyDetail : ${buy.buyDetailList}">
+							<tr th:each="buyDetail : ${buy.buyDetailVO}">
 					            <td class="text-center">
 						            <div style="color: #131518; font-weight:bolder;">[[${buy.buyDate}]]</div>
 						            <div style="color: #ffd000;">[[${buy.buyCode}]]</div>
 						            <div>
-						            	<a th:href="@{/myPage/reservationDetail}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
+						            	<a th:href="@{/myPage/reservationDetail(buyCode=${buy.buyCode})}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
 						            </div>
 					            </td>
 						        <td class="text-center" th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="font-weight: 700; font-weight: bolder;"></td>
@@ -163,7 +163,7 @@
 						        <td th:text="${buyDetail.departDate}"></td>
 						        <td th:text="${buyDetail.arriveDate}"></td>
 						        <td style="color: #f27370;">
-						        	[[${#numbers.formatCurrency(buyDetail.buyDPrice)}]] 원
+						        	 [[${#numbers.formatCurrency(buyDetail.buyDPrice).substring(1)}]] 원
 					        	</td>
 						        <td>
 							        <div>
