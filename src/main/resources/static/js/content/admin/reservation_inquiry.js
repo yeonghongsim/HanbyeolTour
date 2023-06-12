@@ -107,7 +107,9 @@ function searchBuyList(){
 //페이지 번호 누를 때 검색 영역 submit
 function getBuyListPaging(pageNum){
 	document.querySelector('#nowPage').value = pageNum;
-	searchBuyList();	
+	const search_form = document.querySelector('#searchForm');
+	
+	search_form.submit();	
 }
 
 

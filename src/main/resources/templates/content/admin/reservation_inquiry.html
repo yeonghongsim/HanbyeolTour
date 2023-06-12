@@ -155,18 +155,18 @@
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
-									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyVO.buyCode}"></td>
-									<td>[[${buy.buyVO.buyCode}]]</td>
-									<td>[[${buy.buyVO.buyDate}]]</td>
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyCode}"></td>
+									<td><a th:href="@{/admin/reservDetail}">[[${buy.buyCode}]]</a></td>
+									<td>[[${buy.buyDate}]]</td>
 									<td>
-										[[${buy.buyVO.buyDetailList[0].itemVO.itemTitle}]]
+										[[${buy.buyDetailVO.itemVO.itemTitle}]]
 									</td>
 									<td>
-										<div>[[${buy.memName}]]</div>
-										<div>[[${buy.memberDetailVO.memDTell}]]</div>
+										<div>[[${buy.memberVO.memName}]]</div>
+										<div>[[${buy.memberVO.memberDetailVO.memDTell}]]</div>
 									</td>
 									<td>
-										<span style="font-weight: bold;">[[${buy.buyVO.buyStateVO.buyStatusName}]]</span>
+										<span style="font-weight: bold;">[[${buy.buyStateVO.buyStatusName}]]</span>
 									</td>
 								</tr>
 							</th:block>

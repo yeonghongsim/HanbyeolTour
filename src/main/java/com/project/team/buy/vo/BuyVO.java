@@ -2,6 +2,8 @@ package com.project.team.buy.vo;
 
 import java.util.List;
 
+import com.project.team.member.vo.MemberVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +18,8 @@ public class BuyVO extends BuySearchVO{
 	private int buyStatusCode;
 	private int buyTotalPrice;
 	private String buyDate;
-	private List<BuyDetailVO> buyDetailList;
+	private BuyDetailVO buyDetailVO;
 	private BuyStateVO buyStateVO;
+	private MemberVO memberVO;
 	
 }

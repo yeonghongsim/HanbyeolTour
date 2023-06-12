@@ -13,7 +13,7 @@
 		<result column="IS_TEMPORARY_PW" 		property="isTemporaryPw"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 		<association property="memStatusVO"		resultMap="memStatus"></association>
-		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
+		<!-- <association property="buyVO" 			resultMap="buyMapper.buy"></association> -->
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
