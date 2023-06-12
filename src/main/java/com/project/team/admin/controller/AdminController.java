@@ -350,7 +350,9 @@ public class AdminController {
 	
 	//예약 상세 페이지
 	@GetMapping("/reservDetail")
-	public String reservDetail() {
+	public String reservDetail(Model model, String buyCode) {
+		
+		model.addAttribute("reservDetail", adminService.getReservDetail(buyCode));
 		
 		return "content/admin/reservation_detail";
 	}
