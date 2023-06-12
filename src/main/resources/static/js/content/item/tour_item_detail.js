@@ -43,8 +43,6 @@ function getImgs(index){
         hbtTourItemCode.push(codes[2].value);
     }
 
-    console.log(hbtTourItemCode);
-
     $.ajax({
         url: '/item/getImgsAJAX', //요청경로
         type: 'post',
@@ -53,7 +51,8 @@ function getImgs(index){
         //async : true,
         data: {'hbtHotelCode': hbtHotelCode, 'hbtTourItemCode': hbtTourItemCode},
         success: function(result) {
-            console.log(result);
+
+            drawImg(JSON.parse(result),index);
         },
         error: function() {
             alert('실패');
@@ -63,21 +62,51 @@ function getImgs(index){
 }
 
 
+function drawImg(result, index){
+
+    const drawTarget = document.querySelectorAll('.dailyPlanDivs');
+    const drawHotelImg = drawTarget[index].querySelector('.hotelImg');
+    const drawTourImg = drawTarget[index].querySelectorAll('.tourImg');
+
+    let hotelImg = [];
+    let tourImg = [];
+
+    result.forEach((imgs, index) => {
+        if(index == 0){
+            hotelImg = imgs;
+        }
+        else if(index > 0){
+            tourImg.push(imgs);
+        }
+    });
+
+    console.log(tourImg.length);
+
+    let hotelImgStr = '';
+    //호텔이미지 세팅
+    hotelImg.forEach((hotelImg) => {
+        hotelImgStr += `
+            <img width="100px;" class="rounded" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}">
+        `;
+    });
+    drawHotelImg.replaceChildren();
+    drawHotelImg.insertAdjacentHTML('afterbegin', hotelImgStr);
+
+
+    tourImg.forEach((imgs,index)=>{
+        let tourImgStr = '';
+        console.log(imgs);
+
+        imgs.forEach(img => {
+            tourImgStr += `
+                <img width="100px;" class="rounded" src="/img/item/tourItem/${img['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}">
+            `;
+        });
+        drawTourImg[index].replaceChildren();
+        drawTourImg[index].insertAdjacentHTML('afterbegin', tourImgStr);
+
+    });
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

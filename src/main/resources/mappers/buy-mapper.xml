@@ -10,7 +10,8 @@
 		<result column="BUY_TOTAL_PRICE" 		property="buyTotalPrice"/>
 		<result column="BUY_DATE" 				property="buyDate"/>
 		<association property="buyStateVO"  	resultMap="buyState"></association>
-		<collection property="buyDetailList" 	resultMap="buyDetail"></collection>
+		<association property="buyDetailVO" 	resultMap="buyDetail"></association>
+		<association property="memberVO" 	resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.buy.vo.BuyDetailVO" id="buyDetail">
