@@ -18,6 +18,7 @@ toDateInput.addEventListener('change', function() {
 
 // 기간별 검색 버튼 클릭시 실행 
 function get_buy_list(month) {
+  // 특정 태그 선택 
   const monthForm = document.querySelector('#month-form');
   const fromDateInput = document.querySelector('#fromDate');
 
@@ -28,7 +29,11 @@ function get_buy_list(month) {
   const formattedDate = formatDate(previousDate);
 
   fromDateInput.value = formattedDate;
-  console.log(formattedDate);
+  console.log("변환된 날짜 : " + formattedDate);
+  
+  //검색 조건 상태 코드 가져오기
+  const searchStatusCode = document.querySelector('#searchStatusCode').value;
+  
   
 	//ajax start
 	$.ajax({
@@ -36,7 +41,10 @@ function get_buy_list(month) {
 	   type: 'post',
 	   async: true, // 비동기 , 동기 설정
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
-	   data: {'month':month}, //필요한 데이터
+	   data: {
+			'month':month,
+			'searchStatusCode':searchStatusCode
+			}, //필요한 데이터
 	   success: function(responseMap) {
 	     	//기존 테이블 그림 삭제 
 			const table = document.querySelector('.table-reservation')
@@ -44,11 +52,7 @@ function get_buy_list(month) {
 			if (tableBody) {
 			  tableBody.replaceChildren();
 			}
-
-			
-			//태그 삭제시, 부모태그.replaceChildren 하면 안의 것 다지워짐 
-			//table.querySelector('tbody').replaceChildren();
-			
+						
 			const buyList = responseMap.buyList; // Retrieve buyList from responseData
 	        const buyStatusCodeCountList = responseMap.buyStatusCodeCountList; // Retrieve buyStatusCodeCountList from responseData
 					 
@@ -203,6 +207,12 @@ function cancel_reservation(buyCode){
 	const result = confirm(`정말 예약을 취소하시겠어요?`);
 	
 	if(result){
+		// 상태코드 
+		const searchStatusCode = document.querySelector('#searchStatusCode').value;
+		// 검색 조건 날짜 
+		const fromDate = document.querySelector('#fromDate').value;
+		const toDate = document.querySelector('#toDate').value;
+				
 		//ajax start
 		$.ajax({
 		   url: '/myPage/cancelReservationAJAX', //요청경로
@@ -210,7 +220,12 @@ function cancel_reservation(buyCode){
 		   async: true, // 비동기 , 동기 설정
 		   contentType: 'application/json; charset=UTF-8', //json쓸거라는 거다 (복잡한 데이터 넘길 때 사용)
 		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
-		   data: {'buyCode':buyCode}, //필요한 데이터
+		   data:{ 
+				'buyCode': buyCode,
+        		'searchStatusCode': searchStatusCode,
+        		'fromDate': fromDate,
+        		'toDate': toDate
+        	},
 		   success: function(responseMap) {
 	        //기존 테이블 그림 삭제 
 			const table = document.querySelector('.table-reservation')
@@ -218,10 +233,6 @@ function cancel_reservation(buyCode){
 			if (tableBody) {
 			  tableBody.replaceChildren();
 			}
-
-			
-			//태그 삭제시, 부모태그.replaceChildren 하면 안의 것 다지워짐 
-			//table.querySelector('tbody').replaceChildren();
 			
 			const buyList = responseMap.buyList; // Retrieve buyList from responseData
 	        const buyStatusCodeCountList = responseMap.buyStatusCodeCountList; // Retrieve buyStatusCodeCountList from responseData

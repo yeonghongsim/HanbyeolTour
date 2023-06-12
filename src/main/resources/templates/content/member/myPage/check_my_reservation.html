@@ -15,7 +15,7 @@
 
 	<div class="row mb-1 mt-2">
 		<div class="col title">
-			여행 예약 조회 
+			예약 및 취소 조회 
 		</div>
 	</div>
 		
@@ -40,7 +40,7 @@
 			<form th:action="@{/myPage/checkMyReservation}" method="post">
 				<input type="hidden" name="nowPage" th:value="${buyVO.nowPage}" id="nowPage">
 				<div class="row">
-					<div class="col select-range">
+					<div class="col-7 select-range">
 						<p id="first">구매기간</p>
 						<ul class="select-month">
 							<li>
@@ -59,6 +59,18 @@
 								<input type="button" class="btn btn-dark" value="12개월" onclick="get_buy_list(-12);">
 							</li>
 						</ul>
+					</div>
+					<div class="col-1 select-range mt-4">
+						<span id="first">구매기간</span>
+					</div>
+					<div class="col-3 select-range mt-4">
+						<select class="form-select" name="searchStatusCode" id="searchStatusCode">
+							<option value="0" th:selected="${buyVO == null or buyVO.searchStatusCode == 0}">전체</option>
+							<option value="1" th:selected="${buyVO != null and buyVO.searchStatusCode == 1}">결제완료</option>
+							<option value="2" th:selected="${buyVO != null and buyVO.searchStatusCode == 2}">예약완료</option>
+							<option value="3" th:selected="${buyVO != null and buyVO.searchStatusCode == 3}">취소요청</option>
+							<option value="4" th:selected="${buyVO != null and buyVO.searchStatusCode == 4}">취소완료</option>
+						</select>
 					</div>
 				</div>
 					
@@ -135,12 +147,13 @@
 						<th:block th:each="buy : ${buyList}">
 							<tr th:each="buyDetail : ${buy.buyDetailList}">
 					            <td class="text-center">
-					            <div style="color: #131518; font-weight: 500;">[[${buy.buyDate}]]</div>
-					            <div>
-					            	<a th:href="@{/myPage/reservationDetail}">상세보기</a>
-					            </div>
+						            <div style="color: #131518; font-weight:bolder;">[[${buy.buyDate}]]</div>
+						            <div style="color: #ffd000;">[[${buy.buyCode}]]</div>
+						            <div>
+						            	<a th:href="@{/myPage/reservationDetail}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
+						            </div>
 					            </td>
-						        <td th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="color: #c6df5f; font-weight: 700;"></td>
+						        <td class="text-center" th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="font-weight: 700; font-weight: bolder;"></td>
 						        <td>
 						        	<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
 						        	style="width: 85px; height: 85px;">
@@ -162,8 +175,10 @@
 							        	th:onclick="cancel_reservation([[${buy.buyCode}]])">예약취소</button>
 							        </div>
 							        <div id="cancelBtn">
+							        	<a th:href="@{/myPage/reservationDetail}">
 							        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" 
 							        	th:if="${buy.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
+							        	</a>
 							        </div>
 						        </td>
 							</tr>

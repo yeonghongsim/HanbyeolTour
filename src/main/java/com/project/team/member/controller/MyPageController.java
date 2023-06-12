@@ -215,6 +215,11 @@ public class MyPageController {
 		buyVO.setTotalDataCnt(totalDataCnt);
 		buyVO.setPageInfo();
 		
+		// 검색 시 예약 상태 조건 
+		int searchStatusCode = buyVO.getSearchStatusCode();
+		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
+		buyVO.setSearchStatusCode(searchStatusCode);
+		
 		// 구매 내역 리스트 데이터 조회 
 		List<BuyVO> buyList = memberService.getBuyList(buyVO);
 		System.out.println("@@@@ 구매내역 조회 :" + buyList);
@@ -241,7 +246,7 @@ public class MyPageController {
 	// 버튼으로 조회해도 화면에서 동일하게 유지 
 	@PostMapping("/getUpdatedTableDataAJAX")
 	@ResponseBody
-	public Map<String, Object> getUpdatedTableData(BuyVO buyVO, int month, Authentication authentication) {
+	public Map<String, Object> getUpdatedTableData(BuyVO buyVO, int month, int searchStatusCode, Authentication authentication) {
 		// 로그인 정보 이용 -> memCode 가져오기 
 		String memCode = memberService.getMemCode(authentication.getName());
 		System.out.println("memCode : " + memCode);
@@ -250,6 +255,10 @@ public class MyPageController {
 		
 		//month데이터 이용 
 		buyVO.setMonth(month);
+		
+		// 검색 시 예약 상태 조건 
+		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
+		buyVO.setSearchStatusCode(searchStatusCode);
 		
 		// 구매 내역 리스트 데이터 조회 
 		List<BuyVO> buyList = memberService.getBuyList(buyVO);
@@ -270,13 +279,25 @@ public class MyPageController {
 	// 예약 취소 처리 
 	@PostMapping("/cancelReservationAJAX")
 	@ResponseBody
-	public Map<String, Object> cancelReservation(String buyCode, Authentication authentication, BuyVO buyVO) {
+	public Map<String, Object> cancelReservation(String buyCode, Authentication authentication, BuyVO buyVO, int searchStatusCode, String toDate, String fromDate) {
 		//예약 상태 코드 변경 
 		memberService.cancelReservation(buyCode);
 		
 		// 로그인 정보 이용 -> memCode 가져오기 
 		String memCode = memberService.getMemCode(authentication.getName());
 		buyVO.setMemCode(memCode);
+		
+		//month데이터 이용 
+		//buyVO.setMonth(month);
+		
+		// 검색 시 예약 상태 조건 
+		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
+		buyVO.setSearchStatusCode(searchStatusCode);
+		// 날짜 조건 
+		buyVO.setFromDate(fromDate);
+		buyVO.setToDate(toDate);
+		System.out.println("@@@@@ fromDate : " + fromDate);
+		System.out.println("@@@@@ toDate : " + toDate);
 		
 		// 구매 내역 리스트 데이터 조회 
 		List<BuyVO> buyList = memberService.getBuyList(buyVO);
@@ -292,7 +313,15 @@ public class MyPageController {
 		return responseMap;
 	}
 	
-	
+	//예약 상세 페이지로 이동 
+	@GetMapping("/reservationDetail")
+	public String reservationDetail(Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		
+		return"content/member/myPage/reservation_detail";
+	}
 	
 	
 	

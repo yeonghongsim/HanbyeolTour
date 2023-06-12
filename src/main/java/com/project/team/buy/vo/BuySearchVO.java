@@ -14,4 +14,5 @@ public class BuySearchVO extends PageVO{
 	private int month;
 	private String fromDate;
 	private String toDate;
+	private int searchStatusCode;
 }

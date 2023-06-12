@@ -265,15 +265,15 @@
 	      HBT_BUY_STATE HBS 
 	      LEFT JOIN 
 	      HBT_BUY HB ON HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
-	                 AND HB.MEM_CODE = #{memCode}
-	                <if test="month != null and month != 0">
-		 			 AND TO_CHAR(HB.BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
-		  			</if>
-		  			<if test="fromDate != null">
-					AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
-					AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-					</if>
-	                 AND HB.BUY_DATE &lt;= SYSDATE
+                 AND HB.MEM_CODE = #{memCode}
+                <if test="month != null and month != 0">
+	 			 AND TO_CHAR(HB.BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
+	  			</if>
+	  			<if test="fromDate != null">
+				AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+				AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+				</if>
+                 AND HB.BUY_DATE &lt;= SYSDATE
 	    WHERE HBS.BUY_STATUS_CODE &lt;= 5
 	    GROUP BY
 	      HBS.BUY_STATUS_CODE,
@@ -313,6 +313,9 @@
 		<if test="fromDate != null">
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>
+		<if test="searchStatusCode != 0">
+		AND BUY.BUY_STATUS_CODE = #{searchStatusCode}
 		</if>	
 		ORDER BY BUY_CODE DESC
 	</select>
