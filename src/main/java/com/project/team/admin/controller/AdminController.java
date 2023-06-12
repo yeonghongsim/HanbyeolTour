@@ -502,8 +502,12 @@ public class AdminController {
 	
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")
-	public void searchRequestAjax() {
-		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
+	public List<BoardRequestVO> searchRequestAjax(RequestSearchVO requestSearchVO) {
+		
+		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax" + requestSearchVO);
+		
+		return boardService.getBoardReqListBySearch(requestSearchVO);
+		
 	}
 	
 	// 자주 묻는 문의 사항 관리 페이지
