@@ -93,6 +93,9 @@ public interface AdminService {
 	
 	//예약 상태 변경
 	void changeBuyStatus(Map<String, Object> map);
+	
+	//예약 상세 조회 페이지
+	BuyVO getReservDetail(String buyCode);
 
 	
 	

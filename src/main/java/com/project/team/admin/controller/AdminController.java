@@ -32,6 +32,7 @@ import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.board.vo.RequestSearchVO;
+import com.project.team.buy.vo.BuyVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberVO;
@@ -302,11 +303,13 @@ public class AdminController {
 	@RequestMapping("/reservationInquiry")
 	public String reservationInquiry(Model model, BuyListSearchVO buyListSearchVO) {
 		
-		System.out.println(buyListSearchVO);
+		//System.out.println(buyListSearchVO);
 		
 		//검색 조건에 맞는 예약 수 조회
 		int totalDataCnt = adminService.getBuyListCnt(buyListSearchVO);
 		buyListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		//buyListSearchVO.setDisplayCnt(10);
 		
 		//페이지 정보 세팅
 		buyListSearchVO.setPageInfo();
@@ -343,6 +346,13 @@ public class AdminController {
 	public String updateReservation() {
 		
 		return "content/admin/update_reservation";
+	}
+	
+	//예약 상세 페이지
+	@GetMapping("/reservDetail")
+	public String reservDetail() {
+		
+		return "content/admin/reservation_detail";
 	}
 	
 	

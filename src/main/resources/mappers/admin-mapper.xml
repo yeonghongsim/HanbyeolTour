@@ -241,10 +241,10 @@
 	<!-- 회원 리스트 조회 -->
 	<select id="getMemList" resultMap="memberMapper.member">
 		SELECT MEM_CODE
-		, MEM_ID
-		, MEM_NAME
-		, MEM.MEM_STATUS_CODE
-		, MEM_STATUS_NAME
+			, MEM_ID
+			, MEM_NAME
+			, MEM.MEM_STATUS_CODE
+			, MEM_STATUS_NAME
 		FROM HBT_MEM MEM, HBT_MEM_STATUS STATUS
 		WHERE MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
 		<!-- 상단,사이드 메뉴 주문관리 눌러서 들어올 때 null. 입력 값없이 검색 시 빈값. 이 모두가 아닐 때 작동 searchKeyword는 
@@ -321,12 +321,13 @@
 	</update>
 	
 	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 -->
-	<select id="getBuyListForAdmin" resultMap="memberMapper.member">
+	<select id="getBuyListForAdmin" resultMap="buyMapper.buy">
 		 SELECT HB.BUY_CODE
 		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD') BUY_DATE
 		 	, ITEM_TITLE
 		 	, MEM_NAME
 		 	, MEM_D_TELL
+		 	, HB.MEM_CODE
 		 	, HB.BUY_STATUS_CODE
 		 	, BUY_STATUS_NAME
 		 FROM HBT_BUY HB, HBT_BUY_STATE HBS, HBT_MEM HM
@@ -408,6 +409,33 @@
 			#{buyCode}
 		</foreach>
 	</update>
+	
+	<!-- 예약 상세 내역 -->
+	<select id="getReservDetail" resultMap="buyMapper.buy">
+        SELECT IMG.ITEM_IMG_CODE 
+			, IMG.ITEM_IMG_ATTACHED_NAME
+			, HI.ITEM_CODE
+			, HI.ITEM_TITLE
+			, HB.BUY_CODE
+			, DEPART_DATE
+			, ARRIVE_DATE
+			, BUY_D_PRICE
+			, RESERVED_PEOPLE_NUM
+			, BUY_TOTAL_PRICE
+			, HM.MEM_CODE
+			, MEM_ID
+			, MEM_D_TELL
+			, MEM_EMAIL
+        FROM HBT_BUY HB, HBT_MEM HM, HBT_MEM_DETAIL HMD
+		 	, HBT_ITEM HI, HBT_ITEM_IMG IMG, HBT_BUY_DETAIL HBD
+		WHERE HB.MEM_CODE = HM.MEM_CODE
+		AND HB.MEM_CODE = HMD.MEM_CODE
+		AND HB.BUY_CODE = HBD.BUY_CODE
+        AND HBD.ITEM_CODE = HI.ITEM_CODE
+        AND HI.ITEM_CODE = IMG.ITEM_CODE
+        AND HB.BUY_CODE = #{buyCode}
+        AND IS_MAIN = 'Y'
+	</select>
 	
 	
 	
