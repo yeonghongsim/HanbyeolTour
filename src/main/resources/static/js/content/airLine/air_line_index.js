@@ -13,18 +13,18 @@ function chkWay(selectTag, areaList){
 		
 	} else {
 		
-		draw_round_cols += `<div class="col-3">`;
-		draw_round_cols += `	<input type="text" class="form-control" id="roundGoCountry" name="roundGoCountry" disabled>`;
-		draw_round_cols += `</div>`;
-		draw_round_cols += `<div class="col-3">`;
-		draw_round_cols += `	<input type="text" class="form-control" id="roundComeCountry" name="roundComeCountry" disabled>`;
-		draw_round_cols += `</div>`;
-		draw_round_cols += `<div class="col-3">`;
-		draw_round_cols += `	<input type="date" class="form-control" id="roundGoDate" name="roundGoDate">`;
-		draw_round_cols += `</div>`;
-		draw_round_cols += `<div class="col-3">`;
-		draw_round_cols += `	<input type="date" class="form-control" id="roundComeDate" name="roundComeDate">`;
-		draw_round_cols += `</div>`;
+		draw_round_cols += `	<div class="col-3">`;
+		draw_round_cols += `		<input type="text" class="form-control" id="roundGoCountry" name="roundGoCountry" disabled>`;
+		draw_round_cols += `	</div>`;
+		draw_round_cols += `	<div class="col-3">`;
+		draw_round_cols += `		<input type="text" class="form-control" id="roundComeCountry" name="roundComeCountry" disabled>`;
+		draw_round_cols += `	</div>`;
+		draw_round_cols += `	<div class="col-3">`;
+		draw_round_cols += `		<input type="date" class="form-control" id="roundGoDate" name="roundGoDate">`;
+		draw_round_cols += `	</div>`;
+		draw_round_cols += `	<div class="col-3">`;
+		draw_round_cols += `		<input type="date" class="form-control" id="roundComeDate" name="roundComeDate">`;
+		draw_round_cols += `	</div>`;
 		
 		round_div.insertAdjacentHTML('afterbegin', draw_round_cols);
 		
@@ -42,7 +42,9 @@ function arrival(tag, areaList){
 	const roundComeCountry = document.querySelector('#roundComeCountry');
 	
 	if(tag.value == '선택'){
-		roundComeCountry.value = '선택';
+		if(roundComeCountry != null){
+			roundComeCountry.value = '선택';
+		}
 	} else {
 		if(roundComeCountry != null){
 			areaList.forEach(function(areaInfo){
@@ -61,7 +63,9 @@ function departure(tag, areaList){
 	const roundGoCountry = document.querySelector('#roundGoCountry');
 	
 	if(tag.value == '선택') {
-		roundGoCountry.value = '선택';
+		if(roundGoCountry != null){
+			roundGoCountry.value = '선택';
+		}
 	} else {
 		if(roundGoCountry != null){
 			areaList.forEach(function(areaInfo){
@@ -75,22 +79,14 @@ function departure(tag, areaList){
 
 
 function getTicketList(){
+	const oneWay_div = document.querySelector('.oneWay-div');
+	const round_div_chk = oneWay_div.nextElementSibling.children[0];
 	// 모든 인풋/셀렉트의 벨류값
 	const onewayGoCountry = document.querySelector('#onewayGoCountry').value;
 	const onewayGoDateStr = document.querySelector('#onewayGoDate').value;
 	const onewayComeCountry = document.querySelector('#onewayComeCountry').value;
 	const onewayComeDateStr = document.querySelector('#onewayComeDate').value;
-	const roundGoCountry = document.querySelector('#roundGoCountry').value;
-	const roundGoDateStr = document.querySelector('#roundGoDate').value;
-	const roundComeCountry = document.querySelector('#roundComeCountry').value;
-	const roundComeDateStr = document.querySelector('#roundComeDate').value;
-	// 잘못된 검색 결과의 내용을 보여줄 div
-	const oneWay_div = document.querySelector('.oneWay-div');
-	const err_div = oneWay_div.parentElement.nextElementSibling;
-	let err_text = '';
-	
-	
-	// 날짜 형식 변경
+	// 출발 날짜 형식 변경
 	let onewayGoDate = '';
 	onewayGoDateStr.split('-').forEach(function(word){
 		onewayGoDate += word;
@@ -99,21 +95,45 @@ function getTicketList(){
 	onewayComeDateStr.split('-').forEach(function(word){
 		onewayComeDate += word;
 	})
+	
+	let roundGoCountry = '';
+	let roundGoDateStr = '';
+	let roundComeCountry = '';
+	let roundComeDateStr = '';
 	let roundGoDate = '';
+	let roundComeDate = '';
+
+	if(round_div_chk != null){
+	roundGoCountry = document.querySelector('#roundGoCountry').value;
+	roundGoDateStr = document.querySelector('#roundGoDate').value;
+	roundComeCountry = document.querySelector('#roundComeCountry').value;
+	roundComeDateStr = document.querySelector('#roundComeDate').value;
+	
+	
+	// 도착 날짜 형식 변경
 	roundGoDateStr.split('-').forEach(function(word){
 		roundGoDate += word;
 	})
-	let roundComeDate = '';
 	roundComeDateStr.split('-').forEach(function(word){
 		roundComeDate += word;
 	})
+	
+	}	
+	
+	// 잘못된 검색 결과의 내용을 보여줄 div
+	const err_div = oneWay_div.parentElement.nextElementSibling;
+	let err_text = '';
+	
+	
+	
+	
 	
 	
 	console.log(onewayGoCountry + " / " + onewayGoDate+ " / " + onewayComeCountry+ " / "+ onewayComeDate);
 	console.log(roundGoCountry + " / " + roundGoDate+ " / " + roundComeCountry+ " / "+ roundComeDate);
 	
 	// 잘못된 검색 결과의 내용
-	if(onewayGoCountry == '' || onewayComeCountry == ''){
+	if(onewayGoCountry == '선택' || onewayComeCountry == '선택'){
 		err_div.replaceChildren();
 		err_text += `<div>`;
 		err_text += `<span>출발/도착 국가를 확인해주세요.</span>`;
