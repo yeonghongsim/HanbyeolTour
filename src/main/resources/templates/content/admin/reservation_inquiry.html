@@ -156,7 +156,7 @@
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
 									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyCode}"></td>
-									<td><a th:href="@{/admin/reservDetail}">[[${buy.buyCode}]]</a></td>
+									<td><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">[[${buy.buyCode}]]</a></td>
 									<td>[[${buy.buyDate}]]</td>
 									<td>
 										[[${buy.buyDetailVO.itemVO.itemTitle}]]
