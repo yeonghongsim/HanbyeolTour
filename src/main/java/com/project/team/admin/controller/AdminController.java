@@ -350,9 +350,33 @@ public class AdminController {
 	
 	//예약 상세 페이지
 	@GetMapping("/reservDetail")
-	public String reservDetail() {
+	public String reservDetail(Model model, String buyCode) {
+		
+		model.addAttribute("reservDetail", adminService.getReservDetail(buyCode));
 		
 		return "content/admin/reservation_detail";
+	}
+	
+	
+	//매출 관리 페이지
+	@GetMapping("/salesManage")
+	public String salesManage() {
+		
+		return "redirect:/admin/salesStatisticsByPeriod";
+	}
+	
+	//기간별 매출 현황 페이지
+	@GetMapping("/salesStatisticsByPeriod")
+	public String salesStatisticsByPeriod() {
+		
+		return "content/admin/sales_statistics_by_period";
+	}
+	
+	//카테고리별 매출 현황 페이지
+	@GetMapping("/salesStatisticsByCategory")
+	public String salesStatisticsByCategory() {
+		
+		return "content/admin/sales_statistics_by_category";
 	}
 	
 	
@@ -502,8 +526,12 @@ public class AdminController {
 	
 	@ResponseBody
 	@PostMapping("/searchRequestAjax")
-	public void searchRequestAjax() {
-		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax");
+	public List<BoardRequestVO> searchRequestAjax(RequestSearchVO requestSearchVO) {
+		
+		System.out.println("@@@@@@@@@ 문의 사항 검색 ajax" + requestSearchVO);
+		
+		return boardService.getBoardReqListBySearch(requestSearchVO);
+		
 	}
 	
 	// 자주 묻는 문의 사항 관리 페이지

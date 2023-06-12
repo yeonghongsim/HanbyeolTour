@@ -329,6 +329,27 @@
 		ORDER BY HBT_BOARD_REQUEST_NUM
 	</select>
 	
+	<select id="getBoardReqListBySearch" resultMap="boardRequest">
+		SELECT HBT_BOARD_REQUEST_NUM
+		    , HBT_BOARD_REQUEST_TITLE
+		    , HBT_BOARD_REQUEST_CONTENT
+		    , MEM_CODE
+		    , TO_CHAR(HBT_BOARD_REQUEST_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REQUEST_REG_DATE
+		    , REQUEST_PW
+		    , ITEM_CODE
+		    , IS_ANSWER
+		    , BOARD.TYPE_REQUEST_CODE
+		    , TYPE_REQUEST_NAME
+		    , (SELECT MEM_ID 
+		    	FROM HBT_MEM WHERE MEM_CODE = BOARD.MEM_CODE) MEM_ID
+		FROM HBT_BOARD_REQUEST BOARD, TYPE_REQUEST REQ
+		WHERE BOARD.TYPE_REQUEST_CODE = REQ.TYPE_REQUEST_CODE
+		<if test='!hbtBoardRequestTitle.equals("")'>
+			AND UPPER(HBT_BOARD_REQUEST_TITLE) LIKE '%'||UPPER(#{hbtBoardRequestTitle})||'%'
+		</if>
+	</select>
+	
+	
 	<select id="chkReqPw" resultType="String">
 		SELECT REQUEST_PW
 		FROM HBT_BOARD_REQUEST

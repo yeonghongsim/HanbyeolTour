@@ -195,7 +195,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public BuyVO getReservDetail(String buyCode) {
 		
-		return sqlSession.selectOne(buyCode);
+		return sqlSession.selectOne("adminMapper.getReservDetail", buyCode);
 	}
 
 

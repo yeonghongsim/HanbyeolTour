@@ -17,6 +17,7 @@ function chkMainSelect(mainSlcVal){
 		
 	} else if(mainSlcVal.value == 'item'){
 
+		options += `<option value="registeredItems">카테고리별 등록된 상품 비율</option>`;
 		options += `<option value="sellingItems">카테고리별 판매 중 인 상품 비율</option>`;
 		
 		sub_select.insertAdjacentHTML('afterbegin', options);

@@ -52,5 +52,10 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getTourImg", hbtTourItemCode);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getFavoriteArea() {
+		return sqlSession.selectList("itemMapper.getFavoriteArea");
+	}
+
 
 }
