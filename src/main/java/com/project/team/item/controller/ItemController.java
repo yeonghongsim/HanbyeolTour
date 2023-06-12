@@ -157,7 +157,16 @@ public class ItemController {
 		return "content/hotels/searchHotels";
 	}
 	
-
+	//패키지상품 상세페이지
+	//호텔페이지 이동
+	@GetMapping("/airLinePage")
+	public String airLinePage(Model model){
+		
+		model.addAttribute("areaCateList", adminService.getAreaCateList());
+		
+		return "content/airLine/air_line_index";
+	}
+	
 
 
 

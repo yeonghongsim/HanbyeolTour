@@ -941,6 +941,58 @@
 		        FROM HBT_BOARD
 		        WHERE HBT_BOARD_CNT &gt;= 10) AS "10회이상"
 				</if>
+				<if test="searchValue.equals('registeredItems')">
+				(SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'JP'
+		        AND STATUS_CODE = 2) AS "일본",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'KR'
+		        AND STATUS_CODE = 2) AS "대한민국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'TH'
+		        AND STATUS_CODE = 2) AS "태국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'PH'
+		        AND STATUS_CODE = 2) AS "필리핀",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'CN'
+		        AND STATUS_CODE = 2) AS "중국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'US'
+		        AND STATUS_CODE = 2) AS "미국"
+				</if>
+				<if test="searchValue.equals('sellingItems')">
+				(SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'JP'
+		        AND STATUS_CODE = 1) AS "일본",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'KR'
+		        AND STATUS_CODE = 1) AS "대한민국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'TH'
+		        AND STATUS_CODE = 1) AS "태국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'PH'
+		        AND STATUS_CODE = 1) AS "필리핀",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'CN'
+		        AND STATUS_CODE = 1) AS "중국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'US'
+		        AND STATUS_CODE = 1) AS "미국"
+				</if>
 		FROM DUAL
 	</select>
 		
