@@ -88,17 +88,17 @@
 													</select>
 												</div> -->
 												<div class="col-4">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="7일">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="1개월">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="3개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="7일">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="1개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="3개월">
 												</div>
 												<div class="col-1" style="padding-left: 0px;">기간설정</div>
 												<div class="col-2">
-													<input type="date" class="form-control" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
+													<input type="date" class="form-control datepicker" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
 												</div>
 												<div class="col-1" style="padding-left: 0px;">부터</div>
 												<div class="col-2">
-													<input type="date" class="form-control" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
+													<input type="date" class="form-control datepicker" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
 												</div>
 												<div class="col-1" style="padding-left: 0px;">까지</div>
 											</div>
