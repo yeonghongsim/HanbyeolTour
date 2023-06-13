@@ -458,6 +458,11 @@ public class MyPageController {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
+		
+		
+		
+		
+		
 		return "content/member/myPage/check_my_review";
 	}
 	
