@@ -3,6 +3,9 @@ package com.project.team.buy.service;
 import com.project.team.buy.vo.BuyDetailVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.CartVO;
+
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +32,15 @@ public class BuyServiceImpl implements BuyService{
 	@Override
 	public void addCartAJAX(CartVO cartVO) {
 		sqlSession.insert("buyMapper.addCartAJAX", cartVO);
+	}
+
+	@Override
+	public List<BuyVO> getBuyList(String memCode) {
+		return sqlSession.selectList("buyMapper.getBuyList", memCode);
+	}
+
+	@Override
+	public BuyVO getBuyDetail(String buyCode) {
+		return sqlSession.selectOne("buyMapper.getBuyDetail", buyCode);
 	}
 }

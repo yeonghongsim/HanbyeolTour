@@ -29,6 +29,7 @@ import com.project.team.item.service.ItemService;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.DateUtil;
 
@@ -453,25 +454,44 @@ public class MyPageController {
 	
 	// 나의 여행 후기 목록 페이지로 이동 
 	@GetMapping("/checkMyReview")
-	public String checkMyReview(Model model, String memCode) {
+	public String checkMyReview(Model model, MemberVO memberVO) {
+		String memCode = memberService.getMemCode(memberVO.getMemId());
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
-		System.out.println("받아온 memCode : " + memCode);
-		model.addAttribute("memCode", memCode);
+		System.out.println("받아온 memCode : " + memberVO.getMemCode());
+		model.addAttribute("memCode", memberVO.getMemCode());
 		
-		
-		
-		
-		
+		model.addAttribute("myBuyList", buyService.getBuyList(memCode));
 		
 		return "content/member/myPage/check_my_review";
 	}
 	
+	@ResponseBody
+	@PostMapping("/getBuyDetailAJAX")
+	public BuyVO getBuyDetailAjax(String buyCode) {
+		
+		return buyService.getBuyDetail(buyCode);
+		
+	}
 	
+	@ResponseBody
+	@PostMapping("/chkMyReviewAJAX")
+	public MemberReviewVO chkMyReviewAJAX(String buyCode) {
+		
+		return memberService.chkIsReviewed(buyCode);
+		
+	}
 	
-	
-	
-	
+	@ResponseBody
+	@PostMapping("/regMyReviewAJAX")
+	public void regMyReviewAJAX(MemberReviewVO memberReviewVO) {
+		String hbtMemReviewNum = memberService.getNextMyReviewNum();
+		memberReviewVO.setHbtMemReviewNum(hbtMemReviewNum);
+		memberReviewVO.setIsReviewed("N");
+
+		System.out.println("regMyReviewAJAX run~" + memberReviewVO);
+		
+	}
 	
 	
 	

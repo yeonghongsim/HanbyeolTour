@@ -18,7 +18,7 @@
 			<div th:each="msMenu : ${msMenuList}" class="row">
 				<div class="col ms_side_div">
 					<h5>
-						<a th:href="@{'/myPage/' + ${msMenu.msMenuUrl}}">[[${msMenu.msMenuName}]]</a>
+						<a th:href="@{'/myPage/' + ${msMenu.msMenuUrl}(memId=${#authentication.name})}">[[${msMenu.msMenuName}]]</a>
 					</h5>
 				</div>
 			</div>
