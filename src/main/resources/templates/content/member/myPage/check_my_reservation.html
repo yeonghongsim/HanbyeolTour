@@ -163,21 +163,21 @@
 						        <td th:text="${buyDetail.departDate}"></td>
 						        <td th:text="${buyDetail.arriveDate}"></td>
 						        <td style="color: #f27370;">
-						        	 [[${#numbers.formatCurrency(buyDetail.buyDPrice).substring(1)}]] 원
+						        	 [[${#numbers.formatCurrency(buy.buyTotalPrice).substring(1)}]] 원
 					        	</td>
 						        <td>
 							        <div>
 							        	<span id="statusCode" style="font-weight: bolder;" th:value="${buy.buyStateVO.buyStatusCode}">[[${buy.buyStateVO.buyStatusName}]]</span>
 							        </div>
-							        <div id="reviewBtn">
-							        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
+							        <div id="cancelBtn">
+							        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn"
 							        	th:if="${buy.buyStateVO.buyStatusCode == 1}"
 							        	th:onclick="cancel_reservation([[${buy.buyCode}]])">예약취소</button>
 							        </div>
-							        <div id="cancelBtn">
-							        	<a th:href="@{/myPage/reservationDetail}">
-							        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" 
-							        	th:if="${buy.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
+							        <div id="reviewBtn">
+							        	<a th:href="@{/myPage/checkMyReview(memCode=${buy.memberVO.memCode})}">
+							        		<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" 
+							        		th:if="${buy.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
 							        	</a>
 							        </div>
 						        </td>
