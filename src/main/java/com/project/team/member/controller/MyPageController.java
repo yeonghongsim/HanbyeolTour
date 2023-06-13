@@ -225,7 +225,6 @@ public class MyPageController {
 		List<BuyVO> buyList = memberService.getBuyList(buyVO);
 		System.out.println("@@@@ 구매내역 조회 :" + buyList);
 		model.addAttribute("buyList",buyList);
-		
 		// 넘어온 날짜 데이터 없을 경우 기본값으로 날짜 세팅
 		String nowDate = DateUtil.getNowDateToString(); // 오늘 날짜
 		String firstDate = DateUtil.getFirstDateOfMonth(); // 이번 달의 첫번째 날짜
@@ -454,9 +453,11 @@ public class MyPageController {
 	
 	// 나의 여행 후기 목록 페이지로 이동 
 	@GetMapping("/checkMyReview")
-	public String checkMyReview(Model model) {
+	public String checkMyReview(Model model, String memCode) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		System.out.println("받아온 memCode : " + memCode);
+		model.addAttribute("memCode", memCode);
 		
 		return "content/member/myPage/check_my_review";
 	}

@@ -121,17 +121,21 @@ function get_buy_list(month) {
 	                            <div>
 	                                <span id="statusCode" style="font-weight: bolder;">${buy.buyStateVO.buyStatusName}</span>
 	                            </div>
-	                            <div id="reviewBtn">
-	                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
-	                            </div>
 	                            <div id="cancelBtn">
-	                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
+	                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
+	                            </div>
+	                            <div id="reviewBtn">
+	                            	<a href="/myPage/checkMyReview?memCode=[[${buy.memberVO.memCode}]]">
+	                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
+	                                </a>
 	                            </div>
 	                        </td>
 	                    </tr>`;
 	        });
 	    }
 	
+	
+
 	    table.innerHTML = str;
 	    
 	    // 상단바 선택해서 글씨 내용 지워주고, 다시 내용 채워 넣어주기.
@@ -302,11 +306,13 @@ function cancel_reservation(buyCode){
 		                            <div>
 		                                <span id="statusCode" style="font-weight: bolder;">${buy.buyStateVO.buyStatusName}</span>
 		                            </div>
-		                            <div id="reviewBtn">
-		                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
-		                            </div>
 		                            <div id="cancelBtn">
-		                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
+		                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
+		                            </div>
+		                            <div id="reviewBtn">
+		                            	<a href="/myPage/checkMyReview?memCode=[[${buy.memberVO.memCode}]]">
+		                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
+		                                </a>
 		                            </div>
 		                        </td>
 		                    </tr>`;
