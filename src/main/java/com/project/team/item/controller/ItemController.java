@@ -183,9 +183,22 @@ public class ItemController {
 	
 	//패키지만들기 페이지 이동
 	@GetMapping("/diyTourItem")
-	public String goDiyTourItem(){
-
+	public String goDiyTourItem(Model model){
+		//지역정보및이미지
+		model.addAttribute("location", itemService.getLocationImg());
+		//항공사전체이름및아이콘
+		model.addAttribute("airline", itemService.getAirlineIcon());
 		return "content/item/diy_tour_item";
+	}
+	@PostMapping("/getHotelnTourAJAX")
+	@ResponseBody
+	public String getHotelnTourAJAX(String areaKorName) throws JsonProcessingException {
+		Map<String, List<HashMap<String, Object>>> result = new HashMap<>();
+
+		result.put("HOTEL", itemService.getHotelAJAX(areaKorName));
+		result.put("TOUR", itemService.getTourAJAX(areaKorName));
+
+		return mapper.writeValueAsString(result);
 	}
 
 
