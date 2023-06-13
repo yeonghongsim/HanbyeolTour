@@ -3,6 +3,8 @@ package com.project.team.member.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.MemberDetailVO;
@@ -73,6 +75,10 @@ public interface MemberService {
 	
 	//예약 상세 정보 
 	BuyVO getBuyDetail(BuyVO buyVO);
+	
+	// 문의 내역 조회 
+	List<BoardRequestVO> getQnaList(String memCode);
+	List<ReqReplyVO> getQnaReplyList(String memCode);
 	
 	
 	
