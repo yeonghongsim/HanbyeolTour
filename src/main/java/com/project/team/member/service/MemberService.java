@@ -8,6 +8,7 @@ import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 
@@ -96,4 +97,13 @@ public interface MemberService {
 	
 	// 회원 코드 조회 By 회원 아이디
 	String getMemCode(String memid);
+	
+	// 회원 리뷰 리스트
+	List<MemberReviewVO> getMyReviewList(String memCode);
+	
+	// 리뷰 여부 체크
+	MemberReviewVO chkIsReviewed(String BuyCode);
+	
+	// 리뷰 코드 조회
+	String getNextMyReviewNum();
 }

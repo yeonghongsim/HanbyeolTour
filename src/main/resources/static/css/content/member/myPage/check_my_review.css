@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.table-thead {
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid grey;
+}
+
+.main_img > img {
+	width: 100%;
+}

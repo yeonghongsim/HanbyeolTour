@@ -40,6 +40,16 @@
 		<result column="MS_MENU_NAME" 	property="msMenuName"/>
 		<result column="MS_MENU_URL" 	property="msMenuUrl"/>
 	</resultMap>
+
+	<!-- 회원 리뷰 -->
+	<resultMap type="com.project.team.member.vo.MemberReviewVO" id="myReview">
+		<id		column="HBT_MEM_REVIEW_NUM" 	property="hbtMemReviewNum"/>
+		<result column="HBT_MEM_REVIEW_CONTENT" property="hbtMemReviewContent"/>
+		<result column="STARS" 					property="stars"/>
+		<result column="IS_REVIEWED" 			property="isReviewed"/>
+		<association property="memberVO"		resultMap="member"></association>
+		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
+	</resultMap>
 			
 	
 	
@@ -430,6 +440,32 @@
 		SELECT MEM_CODE
 			FROM HBT_MEM
 		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<select id="getMyReviewList" resultMap="myReview">
+		SELECT HBT_MEM_REVIEW_NUM
+			, HBT_MEM_REVIEW_CONTENT
+			, STARS
+			, IS_REVIEWED
+			, MEM_CODE
+			, BUY_CODE
+		FROM HBT_MEM_REVIEW
+	</select>
+	
+	<select id="chkIsReviewed" resultMap="myReview">
+		SELECT HBT_MEM_REVIEW_NUM
+		    , HBT_MEM_REVIEW_CONTENT
+		    , STARS
+		    , IS_REVIEWED
+		    , MEM_CODE
+		    , BUY_CODE
+		FROM HBT_MEM_REVIEW
+		WHERE BUY_CODE = #{buyCode}
+	</select>
+	
+	<select id="getNextMyReviewNum" resultType="string">
+		SELECT 'M_REVIEW_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_MEM_REVIEW_NUM, 10))), 0) + 1, 3, '0')
+		FROM HBT_MEM_REVIEW
 	</select>
 	
 </mapper>
