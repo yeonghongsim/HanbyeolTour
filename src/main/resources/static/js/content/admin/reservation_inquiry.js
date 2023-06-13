@@ -163,3 +163,25 @@ for(const checkbox of checkboxes){
 		}
 	});
 }
+
+
+//기간 버튼 눌렀을 때
+$(function() {
+	$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+})
+
+// 날짜 포맷 변경
+dateFormatter = function(newDay, today) {
+	let year = newDay.getFullYear()
+	let month = newDay.getMonth()+1
+	let date = newDay.getDate()
+	
+	//기존 날짜와 새로운 날짜가 다를 경우
+	if(date != todayDate) {
+		if(month == 0) year -= 1
+		month = (month + 11) % 12
+		date = new Date(year, month, 0).getDate() //해당 달 마지막 날짜
+		
+	}
+}
+
