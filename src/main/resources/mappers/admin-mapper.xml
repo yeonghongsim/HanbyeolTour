@@ -241,10 +241,10 @@
 	<!-- 회원 리스트 조회 -->
 	<select id="getMemList" resultMap="memberMapper.member">
 		SELECT MEM_CODE
-		, MEM_ID
-		, MEM_NAME
-		, MEM.MEM_STATUS_CODE
-		, MEM_STATUS_NAME
+			, MEM_ID
+			, MEM_NAME
+			, MEM.MEM_STATUS_CODE
+			, MEM_STATUS_NAME
 		FROM HBT_MEM MEM, HBT_MEM_STATUS STATUS
 		WHERE MEM.MEM_STATUS_CODE = STATUS.MEM_STATUS_CODE
 		<!-- 상단,사이드 메뉴 주문관리 눌러서 들어올 때 null. 입력 값없이 검색 시 빈값. 이 모두가 아닐 때 작동 searchKeyword는 
@@ -321,12 +321,13 @@
 	</update>
 	
 	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 -->
-	<select id="getBuyListForAdmin" resultMap="memberMapper.member">
+	<select id="getBuyListForAdmin" resultMap="buyMapper.buy">
 		 SELECT HB.BUY_CODE
 		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD') BUY_DATE
 		 	, ITEM_TITLE
 		 	, MEM_NAME
 		 	, MEM_D_TELL
+		 	, HB.MEM_CODE
 		 	, HB.BUY_STATUS_CODE
 		 	, BUY_STATUS_NAME
 		 FROM HBT_BUY HB, HBT_BUY_STATE HBS, HBT_MEM HM
@@ -354,8 +355,41 @@
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
-       	ORDER BY BUY_DATE DESC
+       	ORDER BY HB.BUY_CODE DESC
+       	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
+	
+	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
+	<select id="getBuyListCnt" resultType="int">
+		SELECT COUNT(HB.BUY_CODE)
+		FROM HBT_BUY HB, HBT_BUY_STATE HBS, HBT_MEM HM
+		 	, HBT_MEM_DETAIL HMD, HBT_ITEM HI, HBT_BUY_DETAIL HBD
+		WHERE HB.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND HB.MEM_CODE = HM.MEM_CODE
+		AND HB.MEM_CODE = HMD.MEM_CODE
+		AND HB.BUY_CODE = HBD.BUY_CODE
+        AND HBD.ITEM_CODE = HI.ITEM_CODE
+        <if test="statusCodeList != null">
+		AND HB.BUY_STATUS_CODE IN
+			<foreach collection="statusCodeList" item="statusCode" open="(" close=")" separator=",">
+				#{statusCode}
+			</foreach>
+		</if>
+		<!-- 검색 기능 날짜  -->
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR (BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<!-- 검색 기능 셀렉트박스 -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		 
+	</select>
+	
+	
 	
 	<!-- 예약 관리 페이지 구매(예약)상태 -->
 	<select id="getBuyStatus" resultMap="buyMapper.buyState">
@@ -375,6 +409,70 @@
 			#{buyCode}
 		</foreach>
 	</update>
+	
+	<!-- 예약 상세 내역 -->
+	<select id="getReservDetail" resultMap="buyMapper.buy">
+        SELECT IMG.ITEM_IMG_CODE 
+			, IMG.ITEM_IMG_ATTACHED_NAME
+			, HI.ITEM_CODE
+			, HI.ITEM_TITLE
+			, HB.BUY_CODE
+			, TO_CHAR (DEPART_DATE, 'YYYY-MM-DD') DEPART_DATE
+			, TO_CHAR (ARRIVE_DATE, 'YYYY-MM-DD') ARRIVE_DATE
+			, BUY_D_PRICE
+			, RESERVED_PEOPLE_NUM
+			, BUY_TOTAL_PRICE
+			, HM.MEM_CODE
+			, MEM_ID
+			, MEM_NAME
+			, MEM_D_TELL
+			, MEM_EMAIL
+        FROM HBT_BUY HB, HBT_MEM HM, HBT_MEM_DETAIL HMD
+		 	, HBT_ITEM HI, HBT_ITEM_IMG IMG, HBT_BUY_DETAIL HBD
+		WHERE HB.MEM_CODE = HM.MEM_CODE
+		AND HB.MEM_CODE = HMD.MEM_CODE
+		AND HB.BUY_CODE = HBD.BUY_CODE
+        AND HBD.ITEM_CODE = HI.ITEM_CODE
+        AND HI.ITEM_CODE = IMG.ITEM_CODE
+        AND HB.BUY_CODE = #{buyCode}
+        AND IS_MAIN = 'Y'
+	</select>
+	
+	
+	<!-- 기간별 매출 현황 조회 -->
+	<select id="getSaleStatusPerMonth2" resultType="HashMap">
+		<!-- 월별 구매건수 -->
+		SELECT NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '01', 1, 0)), 0) AS "MONTH_01"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '02', 1, 0)), 0) AS "MONTH_02"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '03', 1, 0)), 0) AS "MONTH_03"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '04', 1, 0)), 0) AS "MONTH_04"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '05', 1, 0)), 0) AS "MONTH_05"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '06', 1, 0)), 0) AS "MONTH_06"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '07', 1, 0)), 0) AS "MONTH_07"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '08', 1, 0)), 0) AS "MONTH_08"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '09', 1, 0)), 0) AS "MONTH_09"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '10', 1, 0)), 0) AS "MONTH_10"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '11', 1, 0)), 0) AS "MONTH_11"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '12', 1, 0)), 0) AS "MONTH_12"
+		FROM HBT_BUY
+		WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year}
+		UNION ALL
+		<!-- 월별 구매 금액 합 -->
+		SELECT NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '01', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_01"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '02', BUY_TOTAL_PRICE, 0)) ,0) AS "MONTH_02"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '03', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_03"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '04', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_04"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '05', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_05"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '06', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_06"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '07', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_07"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '08', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_08"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '09', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_09"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '10', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_10"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '11', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_11"
+			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '12', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_12"
+		FROM HBT_BUY
+		WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year}
+	</select>
 	
 	
 	
@@ -834,6 +932,7 @@
 
 
 
+	<!-- 의문점 1. 트리맵으로 할경우는? 2. 컬럼명(AS)할때 숫자문자 조합 안된다? -->
 	<!-- 심영홍 작업 부분 시작 -->
 	<select id="getPieByIndexStatistics" resultType="map">
 		SELECT <if test="searchValue.equals('M/F')">
@@ -882,6 +981,82 @@
 		        (SELECT NVL(COUNT(HBT_BOARD_REQUEST_NUM), 0)
 		        FROM HBT_BOARD_REQUEST
 		        WHERE IS_ANSWER = 'N') AS 답변필요
+				</if>
+				<if test="searchValue.equals('boardType')">
+				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'Y') 공지글,
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'N'
+		        AND IS_PRIVATE = 'Y') 일반글,
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE IS_NOTICE = 'N'
+		        AND IS_PRIVATE IS NULL) 비밀글
+				</if>
+				<if test="searchValue.equals('boardCnt')">
+				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &lt; 5) AS "5회미만",
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &gt;= 5 AND HBT_BOARD_CNT &lt; 10) AS "10회미만",
+		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
+		        FROM HBT_BOARD
+		        WHERE HBT_BOARD_CNT &gt;= 10) AS "10회이상"
+				</if>
+				<if test="searchValue.equals('registeredItems')">
+				(SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'JP'
+		        AND STATUS_CODE = 2) AS "일본",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'KR'
+		        AND STATUS_CODE = 2) AS "대한민국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'TH'
+		        AND STATUS_CODE = 2) AS "태국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'PH'
+		        AND STATUS_CODE = 2) AS "필리핀",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'CN'
+		        AND STATUS_CODE = 2) AS "중국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'US'
+		        AND STATUS_CODE = 2) AS "미국"
+				</if>
+				<if test="searchValue.equals('sellingItems')">
+				(SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'JP'
+		        AND STATUS_CODE = 1) AS "일본",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'KR'
+		        AND STATUS_CODE = 1) AS "대한민국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'TH'
+		        AND STATUS_CODE = 1) AS "태국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'PH'
+		        AND STATUS_CODE = 1) AS "필리핀",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'CN'
+		        AND STATUS_CODE = 1) AS "중국",
+		        (SELECT NVL(COUNT(ITEM_CODE), 0)
+		        FROM HBT_ITEM
+		        WHERE AREA_CODE = 'US'
+		        AND STATUS_CODE = 1) AS "미국"
 				</if>
 		FROM DUAL
 	</select>

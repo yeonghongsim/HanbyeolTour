@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/user_layout}">
+<!-- 연결해야할 외부 CSS파  -->
+<th:block layout:fragment="content_css">
+<link rel="stylesheet" href="/css/content/airLine/air_line_index.css">
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="container mt-3 mb-3">
+		<div class="row mb-1 text_info_div">
+			<div class="col-1"></div>
+			<div class="col-7">
+				<div class="row">
+					<div class="col-3">
+						<span>출발국가</span>
+					</div>
+					<div class="col-3">
+						<span>도착국가</span>
+					</div>
+					<div class="col-3">
+						<span>출발일</span>
+					</div>
+				</div>
+			</div>
+			<div class="col"></div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-1">
+				<select th:onchange="chkWay(this, [[${areaCateList}]]);" class="form-control" name="howToWay" id="howToWay">
+					<option value="oneWay">편도</option>
+					<option value="round">왕복</option>
+				</select>
+			</div>
+			<div class="col-7">
+				<div class="row mb-3 oneWay-div">
+					<div class="col-3">
+						<select th:onchange="arrival(this, [[${areaCateList}]]);" class="form-control" id="onewayGoCountry" name="onewayGoCountry">
+							<option value="선택">선택</option>
+							<th:block th:each="area : ${areaCateList}">
+								<option th:value="${area.areaCode}">[[${area.areaKorName}]]</option>
+							</th:block>
+						</select>
+					</div>
+					<div class="col-3">
+						<select th:onchange="departure(this, [[${areaCateList}]]);" class="form-control" id="onewayComeCountry" name="onewayComeCountry">
+							<option value="선택">선택</option>
+							<th:block th:each="area : ${areaCateList}">
+								<option th:value="${area.areaCode}">[[${area.areaKorName}]]</option>
+							</th:block>
+						</select>
+					</div>
+					<div class="col-3">
+						<input type="date" class="form-control" name="onewayGoDate" id="onewayGoDate">
+					</div>
+				</div>
+				
+				<div class="row round-div">
+				</div>
+				
+			</div>
+			<div class="col-3">
+				err_text
+			</div>
+			
+			<div class="col-1">
+				<input type="button" onclick="getTicketList();" class="btn btn-primary w-100" value="보기">
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="row result_area">
+			<div class="col">
+				search result area
+			</div>
+		</div>
+	</div>
+	
+	
+
+</th:block>
+
+<!--  연결해야할 외부 js 파일 -->
+<th:block layout:fragment="content_js">
+<script type="text/javascript" src="/js/content/airLine/air_line_index.js"></script>
+</th:block>
+</html>

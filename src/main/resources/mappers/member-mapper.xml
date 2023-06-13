@@ -13,7 +13,7 @@
 		<result column="IS_TEMPORARY_PW" 		property="isTemporaryPw"/>
 		<association property="memberDetailVO"  resultMap="memberDetail"></association>
 		<association property="memStatusVO"		resultMap="memStatus"></association>
-		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
+		<!-- <association property="buyVO" 			resultMap="buyMapper.buy"></association> -->
 	</resultMap>
 	
 	<resultMap type="com.project.team.member.vo.MemberDetailVO" id="memberDetail">
@@ -39,6 +39,16 @@
 		<id		column="MS_MENU_CODE" 	property="msMenuCode"/>
 		<result column="MS_MENU_NAME" 	property="msMenuName"/>
 		<result column="MS_MENU_URL" 	property="msMenuUrl"/>
+	</resultMap>
+
+	<!-- 회원 리뷰 -->
+	<resultMap type="com.project.team.member.vo.MemberReviewVO" id="myReview">
+		<id		column="HBT_MEM_REVIEW_NUM" 	property="hbtMemReviewNum"/>
+		<result column="HBT_MEM_REVIEW_CONTENT" property="hbtMemReviewContent"/>
+		<result column="STARS" 					property="stars"/>
+		<result column="IS_REVIEWED" 			property="isReviewed"/>
+		<association property="memberVO"		resultMap="member"></association>
+		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
 	</resultMap>
 			
 	
@@ -265,15 +275,15 @@
 	      HBT_BUY_STATE HBS 
 	      LEFT JOIN 
 	      HBT_BUY HB ON HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
-	                 AND HB.MEM_CODE = #{memCode}
-	                <if test="month != null and month != 0">
-		 			 AND TO_CHAR(HB.BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
-		  			</if>
-		  			<if test="fromDate != null">
-					AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
-					AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-					</if>
-	                 AND HB.BUY_DATE &lt;= SYSDATE
+                 AND HB.MEM_CODE = #{memCode}
+                <if test="month != null and month != 0">
+	 			 AND TO_CHAR(HB.BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
+	  			</if>
+	  			<if test="fromDate != null">
+				AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+				AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+				</if>
+                 AND HB.BUY_DATE &lt;= SYSDATE
 	    WHERE HBS.BUY_STATUS_CODE &lt;= 5
 	    GROUP BY
 	      HBS.BUY_STATUS_CODE,
@@ -284,6 +294,7 @@
 	<!-- 조건에 따른 예약 내역 조회 -->
 	<select id="getBuyList" resultMap="buyMapper.buy">
 		SELECT BUY.BUY_CODE
+			, BUY.MEM_CODE
 		    , BUY.BUY_TOTAL_PRICE
 		    , DETAIL.BUY_D_CODE
 		    , TO_CHAR(BUY.BUY_DATE, 'YYYY.MM.DD') AS BUY_DATE
@@ -313,6 +324,9 @@
 		<if test="fromDate != null">
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>
+		<if test="searchStatusCode != 0">
+		AND BUY.BUY_STATUS_CODE = #{searchStatusCode}
 		</if>	
 		ORDER BY BUY_CODE DESC
 	</select>
@@ -339,7 +353,43 @@
 		WHERE BUY_CODE = #{buyCode}
 	</update>
 		
-	
+	<!-- 예약 내역 상세 보기 -->
+	<select id="getBuyDetail" resultMap="buyMapper.buy">
+		SELECT BUY.BUY_CODE
+		    , BUY.BUY_TOTAL_PRICE
+		    , DETAIL.BUY_D_CODE
+		    , TO_CHAR(BUY.BUY_DATE, 'YYYY.MM.DD') AS BUY_DATE
+		    , AREA.AREA_CODE
+		    , AREA.AREA_KOR_NAME
+		    , ITEM.ITEM_TITLE
+		    , ITEM.ITEM_CODE
+		    , ITEM.ITEM_INTRO
+		    , ITEM.ITEM_PRICE
+		    , IMG.ITEM_IMG_ATTACHED_NAME
+		    , DETAIL.RESERVED_PEOPLE_NUM
+		    , TO_CHAR(DETAIL.DEPART_DATE, 'YYYY-MM-DD') AS DEPART_DATE
+		    , TO_CHAR(DETAIL.ARRIVE_DATE, 'YYYY-MM-DD') AS ARRIVE_DATE
+		    , DETAIL.BUY_D_PRICE
+		    , STATE.BUY_STATUS_CODE
+		    , STATE.BUY_STATUS_NAME
+		    , MEM_ID
+		    , BUY.MEM_CODE
+		    , MEM_NAME
+		    , MEM_D_TELL
+		    , MEM_D_ADDR
+		    , MEM_D_ADDR2
+		FROM HBT_BUY BUY, HBT_BUY_DETAIL DETAIL, HBT_TOUR_AREA AREA,
+		    HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_BUY_STATE STATE, HBT_MEM MEM, HBT_MEM_DETAIL MEMD
+		WHERE BUY.BUY_CODE = DETAIL.BUY_CODE
+		AND DETAIL.AREA_CODE = AREA.AREA_CODE
+		AND ITEM.ITEM_CODE = DETAIL.ITEM_CODE
+		AND ITEM.ITEM_CODE = IMG.ITEM_CODE
+        AND STATE.BUY_STATUS_CODE = BUY.BUY_STATUS_CODE
+        AND IS_MAIN = 'Y'
+        AND MEM.MEM_CODE = MEMD.MEM_CODE
+		AND MEM.MEM_CODE = #{memCode}
+		AND BUY.BUY_CODE = #{buyCode}
+	</select>
 	
 	
 	
@@ -360,6 +410,32 @@
 		SELECT MEM_CODE
 			FROM HBT_MEM
 		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<select id="getMyReviewList" resultMap="myReview">
+		SELECT HBT_MEM_REVIEW_NUM
+			, HBT_MEM_REVIEW_CONTENT
+			, STARS
+			, IS_REVIEWED
+			, MEM_CODE
+			, BUY_CODE
+		FROM HBT_MEM_REVIEW
+	</select>
+	
+	<select id="chkIsReviewed" resultMap="myReview">
+		SELECT HBT_MEM_REVIEW_NUM
+		    , HBT_MEM_REVIEW_CONTENT
+		    , STARS
+		    , IS_REVIEWED
+		    , MEM_CODE
+		    , BUY_CODE
+		FROM HBT_MEM_REVIEW
+		WHERE BUY_CODE = #{buyCode}
+	</select>
+	
+	<select id="getNextMyReviewNum" resultType="string">
+		SELECT 'M_REVIEW_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_MEM_REVIEW_NUM, 10))), 0) + 1, 3, '0')
+		FROM HBT_MEM_REVIEW
 	</select>
 	
 </mapper>

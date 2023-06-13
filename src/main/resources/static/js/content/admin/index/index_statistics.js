@@ -17,13 +17,20 @@ function chkMainSelect(mainSlcVal){
 		
 	} else if(mainSlcVal.value == 'item'){
 
-		options += `<option value="sellingItems">카테고리별 판매 중 인 상품 비</option>`;
+		options += `<option value="registeredItems">카테고리별 등록된 상품 비율</option>`;
+		options += `<option value="sellingItems">카테고리별 판매 중 인 상품 비율</option>`;
+		
+		sub_select.insertAdjacentHTML('afterbegin', options);
+	} else if(mainSlcVal.value == 'board'){
+
+		options += `<option value="boardType">분포도 (공지글, 비밀글, 문의글)</option>`;
+		options += `<option value="boardCnt">조회수</option>`;
 		
 		sub_select.insertAdjacentHTML('afterbegin', options);
 	} else if(mainSlcVal.value == 'request'){
 
 		options += `<option value="requestType">카테고리별 문의 비율</option>`;
-		options += `<option value="isAnswer">담변된 문의 비율</option>`;
+		options += `<option value="isAnswer">문의별 답변 여부 비율</option>`;
 		
 		sub_select.insertAdjacentHTML('afterbegin', options);
 	}

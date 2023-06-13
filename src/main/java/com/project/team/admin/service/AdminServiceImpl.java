@@ -17,6 +17,7 @@ import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.buy.vo.BuyStateVO;
+import com.project.team.buy.vo.BuyVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
@@ -169,6 +170,13 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
 	}
 	
+	//검색 조건에 맞는 구매(예약) 수
+	@Override
+	public int getBuyListCnt(BuyListSearchVO buyListSearchVO) {
+		
+		return sqlSession.selectOne("adminMapper.getBuyListCnt", buyListSearchVO);
+	}
+	
 	//구매(예약) 상태 조회
 	@Override
 	public List<BuyStateVO> getBuyStatus() {
@@ -181,6 +189,13 @@ public class AdminServiceImpl implements AdminService{
 	public void changeBuyStatus(Map<String, Object> map) {
 		sqlSession.update("adminMapper.changeBuyStatus", map);
 		
+	}
+	
+	//예약 상세 정보 조회
+	@Override
+	public BuyVO getReservDetail(String buyCode) {
+		
+		return sqlSession.selectOne("adminMapper.getReservDetail", buyCode);
 	}
 
 
@@ -283,6 +298,10 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
+
+
 
 
 

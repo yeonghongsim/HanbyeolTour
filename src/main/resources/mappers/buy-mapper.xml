@@ -10,7 +10,8 @@
 		<result column="BUY_TOTAL_PRICE" 		property="buyTotalPrice"/>
 		<result column="BUY_DATE" 				property="buyDate"/>
 		<association property="buyStateVO"  	resultMap="buyState"></association>
-		<collection property="buyDetailList" 	resultMap="buyDetail"></collection>
+		<association property="buyDetailVO" 	resultMap="buyDetail"></association>
+		<association property="memberVO" 	resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.project.team.buy.vo.BuyDetailVO" id="buyDetail">
@@ -89,7 +90,43 @@
 		  )
 	</insert>
 	
+	<select id="getBuyList" resultMap="buy">
+		SELECT BUY_CODE
+			, MEM_CODE
+			, BUY_STATUS_CODE
+			, BUY_TOTAL_PRICE
+			, TO_CHAR(BUY_DATE, 'YYYY-MM-DD') BUY_DATE
+		FROM HBT_BUY
+		WHERE MEM_CODE = #{memCode}
+		ORDER BY BUY_DATE DESC
+	</select>
 	
+	<select id="getBuyDetail" resultMap="buy">
+		SELECT BUY.BUY_CODE
+		    , MEM_CODE
+		    , BUY_STATUS_CODE
+		    , BUY_TOTAL_PRICE
+		    , TO_CHAR(BUY_DATE, 'YYYY-MM-DD') BUY_DATE
+		    , BUY_D_CODE
+		    , BD.ITEM_CODE
+		    , BD.AREA_CODE
+		    , DEPART_DATE
+		    , ARRIVE_DATE
+		    , RESERVED_PEOPLE_NUM
+		    , BUY_D_PRICE
+		    , ITEM_TITLE
+		    , ITEM_INTRO
+		    , TRAVER_PERIOD
+		    , ITEM_IMG_CODE
+		    , ITEM_IMG_ATTACHED_NAME
+		    , IS_MAIN
+		FROM HBT_BUY BUY, HBT_BUY_DETAIL BD, HBT_ITEM_IMG IMG, HBT_ITEM ITEM
+		WHERE BUY.BUY_CODE = BD.BUY_CODE
+		AND BD.ITEM_CODE = IMG.ITEM_CODE
+		AND BD.AREA_CODE = ITEM.AREA_CODE
+		AND BUY.BUY_CODE = #{buyCode}
+		ORDER BY BUY_DATE DESC
+	</select>
 	
 	
 	

@@ -19,7 +19,7 @@
             <div class="row mb-3">
                 <div class="col">
                     <select class="form-select" onchange="getItemInfo(this);">
-                        <option disabled>상품선택</option>
+                        <option selected>상품선택</option>
                         <th:block th:each="item : ${itemList}">
                             <option th:value="${item.itemCode}"  th:selected="${#strings.equals(item.itemCode, itemCode)}">[[${item.itemTitle}]]</option>
                         </th:block>
@@ -74,6 +74,7 @@
                         <div class="col">
                             <input type="hidden" name="hbtPlanTime" th:value="AM">
                             <select class="form-select tourSelect" name="hbtTourItemCode">
+                                    <option>종일투어 선택시 오후 일정 선택 불가</option>
                                 <th:block th:if="${itemInfo} != null" th:each="tour : ${tourList}">
                                     <option th:value="${tour['HBT_TOUR_ITEM_CODE']}"
                                             th:data-runt="${tour['HBT_TOUR_ITEM_RUNTIME']}"
@@ -110,7 +111,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <textarea class="form-control" placeholder="상세일정설명"></textarea>
+                        <textarea class="form-control" placeholder="상세일정설명" required></textarea>
                     </div>
                 </div>
             </th:block>

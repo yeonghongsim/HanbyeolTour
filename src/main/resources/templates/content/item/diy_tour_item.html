@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/user_layout}">
+<!-- 연결해야할 외부 CSS파  -->
+<th:block layout:fragment="content_css">
+<link rel="stylesheet" href="/css/item/diy_tour_item.css">
+</th:block>
+
+<th:block layout:fragment="content">
+  <div class="row text-center">
+    <!--  국가선택 -->
+    <div class="row my-3">
+      <h3>국가를 선택하세요</h3>
+    </div>
+
+    <div class="row">
+      <th:block th:each="loc : ${location}">
+        <div class="col">
+          <a href="javascript:void(0)" onclick="selectArea(this);">
+
+            <div class="card areaDiv" style="width: 18rem;">
+              <img th:src="@{/img/item/itemImg/} + ${loc['ITEM_IMG_ATTACHED_NAME']}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">[[${loc['AREA_KOR_NAME']}]]</p>
+              </div>
+            </div>
+
+          </a>
+        </div>
+      </th:block>
+    </div>
+<!--  날짜선택 -->
+    <div class="row">
+      <h3>여행 날짜를 선택하세요</h3>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <span>출발일</span>
+        <input type="date" name="depDate" class="form-control depDate">
+      </div>
+      <div class="col">
+        <span>출발일</span>
+        <input type="date" name="arrDate" class="form-control arrDate">
+      </div>
+    </div>
+<!--  항공편선택-->
+    <div class="row mb-3">
+      <h3>항공사 선택</h3>
+    </div>
+    <div class="row">
+      <th:block th:each="air : ${airline}">
+        <div class="col">
+
+          <div class="radio-inputs">
+            <label>
+              <input class="radio-input" type="radio" name="engine">
+              <span class="radio-tile">
+                <span class="radio-icon">
+                  <img th:src="@{/img/item/airlineIcon/} + ${air['HBT_AIRLINE_ICON']}">
+                </span>
+                <span class="radio-label">[[${air['HBT_AIRLINE_NAME']}]]</span>
+              </span>
+            </label>
+          </div>
+
+
+        </div>
+      </th:block>
+
+    </div>
+<!-- 호텔선택  -->
+    <div class="row mb-3">
+      <div class="col">
+        <input type="button" data-bs-toggle="collapse" data-bs-target="#hotelNTourcollapse" aria-expanded="false" aria-controls="hotelNTourcollapse" class="btn ye-bc" value="국가 날짜 선택 완료" onclick="getHotelnTourAJAX()">
+      </div>
+    </div>
+
+<!--    <div class="row hotelDiv">-->
+<!--      <div class="col">-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+<!--  일자별 투어선택 -->
+
+    <div class="collapse" id="hotelNTourcollapse">
+      <div class="card card-body">
+        <div class="row">
+          <h4>호텔 목록</h4>
+        </div>
+
+        <div class="row hotelDiv">
+
+        </div>
+        <div class="row">
+          <h4>투어 목록</h4>
+        </div>
+
+        <div class="row tourDiv">
+
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <a href="javascript:void(0)" onclick="test();">test</a>
+    </div>
+
+
+
+
+
+<!--    모달창!!! -->
+
+    <div class="modal fade" id="hotelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <div id="carouselExample" class="carousel slide">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+
+
+              </div>
+              <div class="col">
+                <table class="table">
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              N일차 일정에 추가
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              전체 선택 결과 표시
+            </div>
+            <div class="row">
+              바로구매 // 장바구니
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</th:block>
+
+<!--  연결해야할 외부 js 파일 -->
+<th:block layout:fragment="content_js">
+<script type="text/javascript" src="/js/content/item/diy_tour_item.js"></script>
+</th:block>
+</html>

@@ -62,7 +62,7 @@ li{
     
 .search-period .select-range p {
     float: left;
-    margin-right: 20px;
+    margin-right: 15px;
     color: #666;
     font-size: 1rem;
     font-weight: 700;
@@ -72,6 +72,7 @@ li{
 }
 .search-period .select-range > #first{
 	margin-top: 1.6rem;
+	
 }
 
 .select-month li{
@@ -84,7 +85,7 @@ option{
 }
 
 .form-select{
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 }
 
 .form-control {

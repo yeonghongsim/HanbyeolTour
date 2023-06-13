@@ -119,14 +119,18 @@ function getSearchByGroupAJAX(year, month, date, e){
 			let str = '';
 			for(const i of resultArray){
 				str += `<tr>`;
-				str += `<td><img src="/img/item/itemImg/${i.ITEM_IMG_ATTACHED_NAME}"></td>`
+				str += `<td>
+							<a href="/item/tourItemListDetail?departDate=${i["DEP_DATE"]}&arriveDate=${i["ARR_DATE"]}&itemCode=${i["ITEM_CODE"]}">
+								<img width="150px;" src="/img/item/itemImg/${i['ITEM_IMG_ATTACHED_NAME']}">
+							</a>
+						</td>`
 				str += `<td>`;
-				str += `<div>${i.DEP_DATE}</div>`;
-				str += `<div>${i.ARR_DATE}</div>`;
+				str += `<div>${i['DEP_DATE']}</div>`;
+				str += `<div>${i['ARR_DATE']}</div>`;
 				str += `</td>`;
-				str += `<td>${i.TRAVER_PERIOD}</td>`;
-				str += `<td>${i.ITEM_TITLE}</td>`;
-				str += `<td>${i.ITEM_PRICE}</td>`;
+				str += `<td>${i['TRAVER_PERIOD']}</td>`;
+				str += `<td>${i['ITEM_TITLE']}</td>`;
+				str += `<td>${i['ITEM_PRICE']}</td>`;
 				str += `<td>${i["STATUS_NAME"]}</td>`;
 				str += `</tr>`;
 			}

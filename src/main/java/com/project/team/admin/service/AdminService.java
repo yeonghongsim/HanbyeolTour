@@ -85,11 +85,17 @@ public interface AdminService {
 	//구매(예약) 리스트 조회
 	List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO);
 	
+	//검색 조건에 맞는 구매(예약) 내역 수
+	int getBuyListCnt(BuyListSearchVO buyListSearchVO);
+	
 	//예약(구매) 상태 리스트 조회
 	List<BuyStateVO> getBuyStatus();
 	
 	//예약 상태 변경
 	void changeBuyStatus(Map<String, Object> map);
+	
+	//예약 상세 조회 페이지
+	BuyVO getReservDetail(String buyCode);
 
 	
 	

@@ -52,5 +52,35 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getTourImg", hbtTourItemCode);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getFavoriteArea() {
+		return sqlSession.selectList("itemMapper.getFavoriteArea");
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getLocationImg() {
+		return sqlSession.selectList("itemMapper.getLocationImg");
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getAirlineIcon() {
+		return sqlSession.selectList("itemMapper.getAirlineIcon");
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getHotelAJAX(String areaKorName) {
+		return sqlSession.selectList("itemMapper.getHotelAJAX", areaKorName);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getTourAJAX(String areaKorName) {
+		return sqlSession.selectList("itemMapper.getTourAJAX", areaKorName);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getHotelDetailAJAX(String hbtHotelCode) {
+		return sqlSession.selectList("itemMapper.getHotelDetailAJAX", hbtHotelCode);
+	}
+
 
 }

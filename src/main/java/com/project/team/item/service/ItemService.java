@@ -24,4 +24,13 @@ public interface ItemService {
 	List<Map<String, Object>> getHotelImg(String hbtHotelCode);
 	//투어상품이미지조회
 	List<Map<String, Object>> getTourImg(String hbtTourItemCode);
+	//많이가는여행지조회
+	List<HashMap<String, Object>> getFavoriteArea();
+	//국가명 국가대표이미지 조회
+	List<HashMap<String, Object>> getLocationImg();
+	//항공사전체조회
+	List<HashMap<String, Object>> getAirlineIcon();
+	List<HashMap<String, Object>> getHotelAJAX(String areaKorName);
+	List<HashMap<String, Object>> getTourAJAX(String areaKorName);
+	List<HashMap<String, Object>> getHotelDetailAJAX(String hbtHotelCode);
 }

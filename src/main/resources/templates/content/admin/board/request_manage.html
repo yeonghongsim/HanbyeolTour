@@ -29,24 +29,21 @@
 								<div class="col-6">
 									<div class="input-group">
 										<span class="input-group-text">From</span>
-										<input type="date" class="form-control" name="searchFromDate">
+										<input type="date" class="form-control" name="searchFromDate" id="searchFromDate">
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="input-group">
 										<span class="input-group-text">To</span>
-										<input type="date" class="form-control" name="searchToDate" th:value="${nowDate}">
+										<input type="date" class="form-control" name="searchToDate" id="searchToDate">
 									</div>
 								</div>
 							</div>
 						</td>
 						<td>
 							<div class="row">
-								<div class="col-6">
+								<div class="col">
 									<input onclick="location.href='/admin/requestManage'" class="btn btn-secondary w-100" type="button" value="초기화">
-								</div>
-								<div class="col-6">
-									<input onclick="searchRequest()" class="btn btn-success w-100" type="button" value="전체">
 								</div>
 							</div>
 						</td>
@@ -56,7 +53,7 @@
 					<tr>
 						<td>문의유형</td>
 						<td>
-							<select class="form-select text-center" name="typeRequestVO.typeRequestCode">
+							<select class="form-select text-center" name="typeRequestVO.typeRequestCode" id="typeRequestCode">
 								<th:block th:each="typeRequest : ${typeRequestList}">
 									<option th:value="${typeRequest.typeRequestCode}">[[${typeRequest.typeRequestName}]]</option>
 								</th:block>
@@ -64,7 +61,7 @@
 						</td>
 						<td>문의자</td>
 						<td>
-							<input class="form-control text-center" type="text" name="memberVO.memId" value="" placeholder="회원 ID 입력">
+							<input class="form-control text-center" type="text" name="memberVO.memId" id="memId" value="" placeholder="회원 ID 입력">
 						</td>
 						<td rowspan="2">
 							<input onclick="searchRequest()" type="button" class="btn btn-primary w-100" value="검색">
@@ -73,11 +70,11 @@
 					<tr>
 						<td>문의제목</td>
 						<td>
-							<input class="form-control text-center" type="text" name="hbtBoardRequestTitle" value="" placeholder="문의글 제목 입력">
+							<input class="form-control text-center" type="text" name="hbtBoardRequestTitle" id="hbtBoardRequestTitle" value="" placeholder="문의글 제목 입력">
 						</td>
 						<td>구매코드</td>
 						<td>
-							<input class="form-control text-center" type="text" name="buyCode" value="" placeholder="구매코드 입력">
+							<input class="form-control text-center" type="text" name="itemVO.itemCode" id="itemCode" value="" placeholder="구매코드 입력">
 						</td>
 					</tr>
 				</tbody>
@@ -94,37 +91,36 @@
 					<col width="">
 					<col width="">
 					<col width="">
-					<col width="">
 				</colgroup>
 				<thead>
 					<tr>
 						<td>문의번호</td>
-						<td>문의내용</td>
 						<td>문의제목</td>
 						<td>문의자</td>
-						<td>구매코드</td>
+						<td>상품코드</td>
 						<td>문의일자</td>
+						<td>답변유무</td>
 					</tr>
 				</thead>
 				<tbody id="searched-tbody">
-					<th:block th:if="${1 == 1}">
+					<th:block th:if="${reqListN.size() != 0}" th:each="req, state : ${reqListN}">
 						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td>[[${reqListN.size - state.index}]]</td>
+							<td>[[${req.hbtBoardRequestTitle}]]</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td th:if="${req.itemVO == null}">
+								
+							</td>
+							<td th:unless="${req.itemVO == null}">
+								[[${req.itemVO.itemCode}]]
+							</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
+							<td>[[${req.isAnswer}]]</td>
 						</tr>
 					</th:block>
-					<th:block th:unless="${1 == 1}">
+					<th:block th:unless="${reqListN.size() != 0}">
 						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
+							<td colspan="6"><span>검색결과에 맞는 데이터가 존재하지 않습니다.</span></td>
 						</tr>
 					</th:block>
 				</tbody>

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberVO;
 
 
@@ -148,6 +149,11 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.update("memberMapper.cancelReservation", buyCode);
 	}
 	
+	// 예약 상세 조회 
+	@Override
+	public BuyVO getBuyDetail(BuyVO buyVO) {
+		return sqlSession.selectOne("memberMapper.getBuyDetail", buyVO);
+	}
 	
 	
 	
@@ -156,8 +162,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	
-	
-	//-------------------------------------------------------------------
+	// 심영홍  -------------------------------------------------------------------
 	
 		
 	// 회원 사이드 메뉴 목록 조회
@@ -166,31 +171,53 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectList("memberMapper.getMsMenuList");
 	}
 
-	
-
-	
-
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public String getMemCode(String memid) {
 		return sqlSession.selectOne("adminMapper.getMemCode", memid);
 	}
+
+	@Override
+	public List<MemberReviewVO> getMyReviewList(String memCode) {
+		return sqlSession.selectList("memberMapper.getMyReviewList", memCode);
+	}
+	@Override
+	public MemberReviewVO chkIsReviewed(String BuyCode) {
+		return sqlSession.selectOne("memberMapper.chkIsReviewed", BuyCode);
+	}
+	
+	@Override
+	public String getNextMyReviewNum() {
+		return sqlSession.selectOne("memberMapper.getNextMyReviewNum");
+	}
+	
+	
+	// -----------------------------
+
+	
+
+	
+	
+
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 
 	
 

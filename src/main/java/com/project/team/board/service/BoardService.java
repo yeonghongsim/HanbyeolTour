@@ -9,6 +9,7 @@ import com.project.team.board.vo.BoardVO;
 import com.project.team.board.vo.FreqRequestVO;
 import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.ReqReplyVO;
+import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.board.vo.TypeRequestVO;
 
 public interface BoardService {
@@ -95,4 +96,7 @@ public interface BoardService {
 	
 	// del priv-req
 	void delPrivateReqReply(ReqReplyVO reqReplyVO);
+	
+	// list req search
+	List<BoardRequestVO> getBoardReqListBySearch(RequestSearchVO requestSearchVO);
 }

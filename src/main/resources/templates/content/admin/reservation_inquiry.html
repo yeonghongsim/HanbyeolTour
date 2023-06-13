@@ -26,6 +26,8 @@
 					<div class="row">
 						<div class="col">
 							<form th:action="@{/admin/reservationInquiry}" method="post" id="searchForm">
+							<!-- <input type="hidden" name="buyCode" th:value="${orderListSearchVO.buyCode}" id="orderBy"> -->
+							<input type="hidden" name="nowPage" th:value="${buyListSearchVO.nowPage}" id="nowPage">
 								<table class="table" id="searchTable">
 									<colgroup>
 										<col width="">
@@ -57,17 +59,14 @@
 													예약상태
 												</div>
 												
-												<div class="col-7">
+												<div class="col-11">
 													<input type="checkbox" class="form-check-input" id="searchAllCheck">
 													<label class="form-check-label">전체</label>
 													<th:block th:each="buyStatus : ${buyStatusList}">
-														<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}"
+														<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}" style="margin-left: 20px;"
 															name="statusCodeList" th:checked="${buyListSearchVO.statusCodeList == null ? 'false' : #lists.contains(buyListSearchVO.statusCodeList, buyStatus.buyStatusCode)}">
 														<label class="form-check-label">[[${buyStatus.buyStatusName}]]</label>
 													</th:block>
-												</div>
-												<div class="col-4">
-													
 												</div>
 												
 											</div>
@@ -78,28 +77,30 @@
 										<td>
 											<div class="row">
 												<div class="col-1">
-													기간
+													예약일
 												</div>
 											
-												<div class="col-3">
+												<!-- <div class="col-3">
 													
 													<select class="form-select">
 														<option>주문일</option>
 														<option>취소관리</option>
 													</select>
-												</div>
+												</div> -->
 												<div class="col-4">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="7일">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="1개월">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="3개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="7일">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="1개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="3개월">
 												</div>
+												<div class="col-1" style="padding-left: 0px;">기간설정</div>
 												<div class="col-2">
-													<input type="date" class="form-control" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
-													
+													<input type="date" class="form-control datepicker" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
 												</div>
+												<div class="col-1" style="padding-left: 0px;">부터</div>
 												<div class="col-2">
-													<input type="date" class="form-control" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
+													<input type="date" class="form-control datepicker" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
 												</div>
+												<div class="col-1" style="padding-left: 0px;">까지</div>
 											</div>
 										</td>
 									</tr>
@@ -153,18 +154,18 @@
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
-									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyVO.buyCode}"></td>
-									<td>[[${buy.buyVO.buyCode}]]</td>
-									<td>[[${buy.buyVO.buyDate}]]</td>
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyCode}"></td>
+									<td><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">[[${buy.buyCode}]]</a></td>
+									<td>[[${buy.buyDate}]]</td>
 									<td>
-										[[${buy.buyVO.buyDetailList[0].itemVO.itemTitle}]]
+										[[${buy.buyDetailVO.itemVO.itemTitle}]]
 									</td>
 									<td>
-										<div>[[${buy.memName}]]</div>
-										<div>[[${buy.memberDetailVO.memDTell}]]</div>
+										<div>[[${buy.memberVO.memName}]]</div>
+										<div>[[${buy.memberVO.memberDetailVO.memDTell}]]</div>
 									</td>
 									<td>
-										<span style="font-weight: bold;">[[${buy.buyVO.buyStateVO.buyStatusName}]]</span>
+										<span style="font-weight: bold;">[[${buy.buyStateVO.buyStatusName}]]</span>
 									</td>
 								</tr>
 							</th:block>
@@ -173,30 +174,30 @@
 				</div>
 			</div>
 			<!-- 페이징 처리 -->
-<!-- 			<div class="row justify-content-center">
+ 			<div class="row justify-content-center">
 				<div class="col-3">
 					<nav aria-label="Page navigation example">
 					  <ul class="pagination">
 					    <li class="page-item" th:classappend="${buyListSearchVO.prev ? '' : 'disabled'}">
-					      <a class="page-link" href="javascript:void(0);" th:onclick="getMemListPaging([[${buyListSearchVO.beginPage - 1}]]);" aria-label="Previous">
+					      <a class="page-link" href="javascript:void(0);" th:onclick="getBuyListPaging([[${buyListSearchVO.beginPage - 1}]]);" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
 					    
 					    <li class="page-item"   
-					    	th:each="pageNum : ${#numbers.sequence(memListSearchVO.beginPage, memListSearchVO.endPage)}">
+					    	th:each="pageNum : ${#numbers.sequence(buyListSearchVO.beginPage, buyListSearchVO.endPage)}">
 					    	<a class="page-link"  th:classappend="${buyListSearchVO.nowPage == pageNum ? 'active' : ''}" 
-					    		href="javascript:void(0);" th:onclick="getMemListPaging([[${pageNum}]]);">[[${pageNum}]]</a>
+					    		href="javascript:void(0);" th:onclick="getBuyListPaging([[${pageNum}]]);">[[${pageNum}]]</a>
 					    </li>
 					    
 					    <li class="page-item" th:classappend="${buyListSearchVO.next ? '' : 'disabled'}">
-					      <a class="page-link" href="javascript:void(0);" th:onclick="getMemListPaging([[${buyListSearchVO.endPage + 1}]]);" aria-label="Next">
+					      <a class="page-link" href="javascript:void(0);" th:onclick="getBuyListPaging([[${buyListSearchVO.endPage + 1}]]);" aria-label="Next">
 					        <span aria-hidden="true">&raquo;</span>
 					      </a>
 					    </li>
 					  </ul>
 					</nav>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 package com.project.team.item.controller;
 
+import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -90,7 +91,8 @@ public class ItemController {
 	@GetMapping("/tourItemListDetail")
 	public String tourItemListDetail(Model model, BuyDetailVO buyDetailVO) {
 		//임시 아이템코드세팅
-		String itemCode = "ITEM_001";
+		String itemCode = buyDetailVO.getItemCode();
+
 
 		//상품상세정보
 		List<HashMap<String, Object>> list = itemService.getItemDetail(itemCode);
@@ -132,8 +134,6 @@ public class ItemController {
 		//호텔이미지들
 		resultList.add(itemService.getHotelImg(hbtHotelCode));
 
-		System.out.println(hbtTourItemCode);
-
 		//투어상품이미지
 		hbtTourItemCode.forEach(i ->{
 			resultList.add(itemService.getTourImg(i));
@@ -148,15 +148,66 @@ public class ItemController {
 	public String tourItemListMain(Model model) {
 		//추천상품 등록이미지 목록
 		model.addAttribute("recomImgList", adminService.getRecomImgListForPKG());
+		//많이가는 여행지
+
+		List<HashMap<String, Object>> originalList = itemService.getFavoriteArea(); // 원본 리스트
+		String targetColumn = "AREA_KOR_NAME"; // 기준이 될 컬럼 이름
+
+		TreeMap<Object, List<HashMap<String, Object>>> groupedMap = new TreeMap<>();
+		for (HashMap<String, Object> data : originalList) {
+			Object columnValue = data.get(targetColumn);
+			List<HashMap<String, Object>> groupedList = groupedMap.getOrDefault(columnValue, new ArrayList<>());
+			groupedList.add(data);
+			groupedMap.put(columnValue, groupedList);
+		}
+		System.out.println(groupedMap);
+		model.addAttribute("favoriteArea", groupedMap);
+
 		return "content/item/tour_item_list_main";
 	}
-	//패키지상품 상세페이지
 	//호텔페이지 이동
 	@GetMapping("/hotelPage")
 	public String goHotelPage(){
 		return "content/hotels/searchHotels";
 	}
 	
+	//패키지상품 상세페이지
+	//호텔페이지 이동
+	@GetMapping("/airLinePage")
+	public String airLinePage(Model model){
+		
+		model.addAttribute("areaCateList", adminService.getAreaCateList());
+		
+		return "content/airLine/air_line_index";
+	}
+	
+	//패키지만들기 페이지 이동
+	@GetMapping("/diyTourItem")
+	public String goDiyTourItem(Model model){
+		//지역정보및이미지
+		model.addAttribute("location", itemService.getLocationImg());
+		//항공사전체이름및아이콘
+		model.addAttribute("airline", itemService.getAirlineIcon());
+		return "content/item/diy_tour_item";
+	}
+	@PostMapping("/getHotelnTourAJAX")
+	@ResponseBody
+	public String getHotelnTourAJAX(String areaKorName) throws JsonProcessingException {
+		Map<String, List<HashMap<String, Object>>> result = new HashMap<>();
+
+		result.put("HOTEL", itemService.getHotelAJAX(areaKorName));
+		result.put("TOUR", itemService.getTourAJAX(areaKorName));
+
+		return mapper.writeValueAsString(result);
+	}
+
+
+	@PostMapping("/getHotelDetailAJAX")
+	@ResponseBody
+	public String getHotelDetailAJAX(String hbtHotelCode) throws JsonProcessingException {
+
+		return mapper.writeValueAsString(itemService.getHotelDetailAJAX(hbtHotelCode));
+	}
 
 
 
