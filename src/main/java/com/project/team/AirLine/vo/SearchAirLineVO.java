@@ -11,9 +11,7 @@ public class SearchAirLineVO {
 	private String onewayGoCountry;
 	private String onewayGoDate;
 	private String onewayComeCountry;
-	private String onewayComeDate;
 	private String roundGoCountry;
 	private String roundGoDate;
 	private String roundComeCountry;
-	private String roundComeDate;
 }
