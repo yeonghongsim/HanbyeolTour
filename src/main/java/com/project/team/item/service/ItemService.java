@@ -32,4 +32,5 @@ public interface ItemService {
 	List<HashMap<String, Object>> getAirlineIcon();
 	List<HashMap<String, Object>> getHotelAJAX(String areaKorName);
 	List<HashMap<String, Object>> getTourAJAX(String areaKorName);
+	List<HashMap<String, Object>> getHotelDetailAJAX(String hbtHotelCode);
 }

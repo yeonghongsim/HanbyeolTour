@@ -191,6 +191,14 @@ public class ItemController {
 	}
 
 
+	@PostMapping("/getHotelDetailAJAX")
+	@ResponseBody
+	public String getHotelDetailAJAX(String hbtHotelCode) throws JsonProcessingException {
+
+		return mapper.writeValueAsString(itemService.getHotelDetailAJAX(hbtHotelCode));
+	}
+
+
 
 
 
