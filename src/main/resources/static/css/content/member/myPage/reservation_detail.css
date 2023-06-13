@@ -139,14 +139,16 @@
 	vertical-align: middle;
 	word-spacing: -2px;
 	padding-top: 5px;
+	margin-right: 0;
 }
 
 .total-price{
-	font-size: 1.5rem;
+	font-size: 1.4rem;
 	font-weight: bolder;
 	color: #f27370;
 	vertical-align: middle;
 	word-spacing: 2px;
+	padding-right: 2rem;
 }
 
 

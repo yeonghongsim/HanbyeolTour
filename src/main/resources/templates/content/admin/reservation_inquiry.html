@@ -59,17 +59,14 @@
 													예약상태
 												</div>
 												
-												<div class="col-7">
+												<div class="col-11">
 													<input type="checkbox" class="form-check-input" id="searchAllCheck">
 													<label class="form-check-label">전체</label>
 													<th:block th:each="buyStatus : ${buyStatusList}">
-														<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}"
+														<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}" style="margin-left: 20px;"
 															name="statusCodeList" th:checked="${buyListSearchVO.statusCodeList == null ? 'false' : #lists.contains(buyListSearchVO.statusCodeList, buyStatus.buyStatusCode)}">
 														<label class="form-check-label">[[${buyStatus.buyStatusName}]]</label>
 													</th:block>
-												</div>
-												<div class="col-4">
-													
 												</div>
 												
 											</div>
@@ -80,28 +77,30 @@
 										<td>
 											<div class="row">
 												<div class="col-1">
-													기간
+													예약일
 												</div>
 											
-												<div class="col-3">
+												<!-- <div class="col-3">
 													
 													<select class="form-select">
 														<option>주문일</option>
 														<option>취소관리</option>
 													</select>
-												</div>
+												</div> -->
 												<div class="col-4">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="7일">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="1개월">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000;" value="3개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="7일">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="1개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="3개월">
 												</div>
+												<div class="col-1" style="padding-left: 0px;">기간설정</div>
 												<div class="col-2">
 													<input type="date" class="form-control" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
-													
 												</div>
+												<div class="col-1" style="padding-left: 0px;">부터</div>
 												<div class="col-2">
 													<input type="date" class="form-control" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
 												</div>
+												<div class="col-1" style="padding-left: 0px;">까지</div>
 											</div>
 										</td>
 									</tr>

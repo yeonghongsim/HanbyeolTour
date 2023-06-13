@@ -284,6 +284,7 @@
 	<!-- 조건에 따른 예약 내역 조회 -->
 	<select id="getBuyList" resultMap="buyMapper.buy">
 		SELECT BUY.BUY_CODE
+			, BUY.MEM_CODE
 		    , BUY.BUY_TOTAL_PRICE
 		    , DETAIL.BUY_D_CODE
 		    , TO_CHAR(BUY.BUY_DATE, 'YYYY.MM.DD') AS BUY_DATE
@@ -362,6 +363,7 @@
 		    , STATE.BUY_STATUS_CODE
 		    , STATE.BUY_STATUS_NAME
 		    , MEM_ID
+		    , BUY.MEM_CODE
 		    , MEM_NAME
 		    , MEM_D_TELL
 		    , MEM_D_ADDR

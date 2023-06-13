@@ -76,7 +76,7 @@
 				        	[[${buyDetail.buyDetailVO.arriveDate}]]
 				        </td>
 				        <td style="color: #f27370;">
-				        	 [[${#numbers.formatCurrency(buyDetail.buyDetailVO.buyDPrice).substring(1)}]] 원
+				        	 [[${#numbers.formatCurrency(buyDetail.buyTotalPrice).substring(1)}]] 원
 			        	</td>
 				        <td>
 					        <div>
@@ -88,9 +88,9 @@
 					        	th:onclick="cancel_reservation([[${buyDetail.buyCode}]])">예약취소</button>
 					        </div>
 					        <div id="cancelBtn">
-					        	<a th:href="@{/myPage/reservationDetail}">
-					        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" 
-					        	th:if="${buyDetail.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
+					        	<a th:href="@{/myPage/checkMyReview(memCode=${buyDetail.memberVO.memCode})}">
+					        		<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" 
+					        		th:if="${buyDetail.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
 					        	</a>
 					        </div>
 				        </td>
@@ -162,16 +162,17 @@
 				[[${buyDetail.buyDetailVO.reservedPeopleNum}]] x [[${#numbers.formatCurrency(buyDetail.buyDetailVO.itemVO.itemPrice)}]]
 			</div>
 			<div class="col-2 text-center cal-price">
-				[[${#numbers.formatCurrency(buyDetail.buyDetailVO.buyDPrice).substring(1)}]]<span>원</span>
+				[[${#numbers.formatCurrency(buyDetail.buyTotalPrice).substring(1)}]]<span>원</span>
 			</div>
 		</div>
 		<hr class="price-box-line">
 		<div class="row">
-			<div class="col-10 text-end total-price-tit">
-				총 여행 금액
-			</div>
-			<div class="col-2 total-price">
-				[[${#numbers.formatCurrency(buyDetail.buyDetailVO.buyDPrice).substring(1)}]] 원
+			<!-- <div class="col-9 text-end total-price-tit">
+				
+			</div> -->
+			<div class="col text-end">
+				<span class="total-price-tit">총 여행 금액</span>
+				<span class="total-price">[[${#numbers.formatCurrency(buyDetail.buyTotalPrice).substring(1)}]] 원</span>
 			</div>
 		</div>
 	</div>
