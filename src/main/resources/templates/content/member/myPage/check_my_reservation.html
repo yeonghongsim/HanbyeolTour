@@ -155,9 +155,13 @@
 					            </td>
 						        <td class="text-center" th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="font-weight: 700; font-weight: bolder;"></td>
 						        <td>
-						        	<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
-						        	style="width: 85px; height: 85px;">
-						            <span th:text="${buyDetail.itemVO.itemTitle}" style="color: #333; word-spacing: -1px;"></span>
+						        	<a class="thum" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.itemVO.itemCode})}">
+						        		<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
+						        		style="width: 85px; height: 85px;">
+						        	</a>
+						        	<a class="" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.itemVO.itemCode})}">
+						            	<span th:text="${buyDetail.itemVO.itemTitle}" style="color: #333; word-spacing: -1px;"></span>
+						        	</a>
 						        </td>
 						        <td th:text="${buyDetail.reservedPeopleNum}"></td>
 						        <td th:text="${buyDetail.departDate}"></td>

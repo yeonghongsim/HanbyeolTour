@@ -29,7 +29,6 @@ function get_buy_list(month) {
   const formattedDate = formatDate(previousDate);
 
   fromDateInput.value = formattedDate;
-  console.log("변환된 날짜 : " + formattedDate);
   
   //검색 조건 상태 코드 가져오기
   const searchStatusCode = document.querySelector('#searchStatusCode').value;
@@ -108,14 +107,18 @@ function get_buy_list(month) {
 	                        </td>
 	                        <td class="text-center" style="font-weight: 700; font-weight: bolder;">${buyDetail.itemVO.tourAreaVO.areaKorName}</td>
 	                        <td>
-	                            <img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
-	                            <span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+	                        	<a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+	                            	<img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
+	                            </a>
+								<a class="" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+	                            	<span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+	                            </a>
 	                        </td>
 	                        <td>${buyDetail.reservedPeopleNum}</td>
 	                        <td>${buyDetail.departDate}</td>
 	                        <td>${buyDetail.arriveDate}</td>
 	                        <td style="color: #f27370;">
-	                            ${buyDetail.buyDPrice.toLocaleString()} 원
+	                            ${buy.buyTotalPrice.toLocaleString()} 원
 	                        </td>
 	                        <td>
 	                            <div>
@@ -293,14 +296,18 @@ function cancel_reservation(buyCode){
 		                        </td>
 		                        <td class="text-center" style="font-weight: 700; font-weight: bolder;">${buyDetail.itemVO.tourAreaVO.areaKorName}</td>
 		                        <td>
-		                            <img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
-		                            <span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+		                        	<a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+		                            	<img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
+		                            </a>
+		                            <a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+		                            	<span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+		                            </a>
 		                        </td>
 		                        <td>${buyDetail.reservedPeopleNum}</td>
 		                        <td>${buyDetail.departDate}</td>
 		                        <td>${buyDetail.arriveDate}</td>
 		                        <td style="color: #f27370;">
-		                          ${buyDetail.buyDPrice.toLocaleString()} 원
+		                          ${buy.buyTotalPrice.toLocaleString()} 원
 		                        </td>
 		                        <td>
 		                            <div>

@@ -82,5 +82,10 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getHotelDetailAJAX", hbtHotelCode);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getTourDetailAJAX(String hbtTourCode) {
+		return sqlSession.selectList("itemMapper.getTourDetailAJAX", hbtTourCode);
+	}
+
 
 }

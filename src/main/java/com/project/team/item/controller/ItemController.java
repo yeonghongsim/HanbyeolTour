@@ -201,12 +201,18 @@ public class ItemController {
 		return mapper.writeValueAsString(result);
 	}
 
-
 	@PostMapping("/getHotelDetailAJAX")
 	@ResponseBody
 	public String getHotelDetailAJAX(String hbtHotelCode) throws JsonProcessingException {
 
 		return mapper.writeValueAsString(itemService.getHotelDetailAJAX(hbtHotelCode));
+	}
+
+	@PostMapping("/getTourDetailAJAX")
+	@ResponseBody
+	public String getTourDetailAJAX(String hbttourCode) throws JsonProcessingException {
+
+		return mapper.writeValueAsString(itemService.getTourDetailAJAX(hbttourCode));
 	}
 
 

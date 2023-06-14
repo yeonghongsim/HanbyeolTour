@@ -336,15 +336,21 @@ public class MyPageController {
 		String memCode = memberService.getMemCode(authentication.getName());
 		buyVO.setMemCode(memCode);
 		
-		
 		model.addAttribute("buyDetail", memberService.getBuyDetail(buyVO));
-		
-		
-		
+			
 		return"content/member/myPage/reservation_detail";
 	}
 	
-	
+	// 예약 상세 페이지 - 예약 취소 
+	@GetMapping("/cancelReservation")
+	public String cancelReservation(Model model , String buyCode) {
+		System.out.println("@@@@@ 전달받은 buyCode :" + buyCode);
+		//예약 취소
+		memberService.cancelReservation(buyCode);
+		
+		return "redirect:/myPage/reservationDetail?buyCode=" + buyCode;
+
+	}
 	
 	
 	//예약취소 내역 확인 페이지로 이동 

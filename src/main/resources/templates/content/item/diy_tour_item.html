@@ -12,6 +12,7 @@
     <!--  국가선택 -->
     <div class="row my-3">
       <h3>국가를 선택하세요</h3>
+      <input type="button" value="test" onclick="drawResultModal()">
     </div>
 
     <div class="row">
@@ -37,11 +38,11 @@
     <div class="row mb-3">
       <div class="col">
         <span>출발일</span>
-        <input type="date" name="depDate" class="form-control depDate">
+        <input type="date" value="2023-06-29" name="depDate" class="form-control depDate">
       </div>
       <div class="col">
         <span>출발일</span>
-        <input type="date" name="arrDate" class="form-control arrDate">
+        <input type="date" value="2023-07-02" name="arrDate" class="form-control arrDate">
       </div>
     </div>
 <!--  항공편선택-->
@@ -54,7 +55,7 @@
 
           <div class="radio-inputs">
             <label>
-              <input class="radio-input" type="radio" name="engine">
+              <input class="radio-input airlineInput" type="radio" name="">
               <span class="radio-tile">
                 <span class="radio-icon">
                   <img th:src="@{/img/item/airlineIcon/} + ${air['HBT_AIRLINE_ICON']}">
@@ -101,31 +102,29 @@
 
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <input class="btn ye-bc" type="button" value="상품 선택 완료" onclick="drawResultModal();">
+        </div>
+      </div>
     </div>
-
-    <div>
-      <a href="javascript:void(0)" onclick="test();">test</a>
-    </div>
-
-
 
 
 
 <!--    모달창!!! -->
 
-    <div class="modal fade" id="hotelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal modal-lg fade" id="hotelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
+            <h4>호텔 상세 정보</h4>
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row mb-3">
               <div class="col">
                 <div id="carouselExample" class="carousel slide">
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img src="" class="d-block w-100" alt="...">
-                    </div>
+                  <div class="carousel-inner hotelModalImg">
+
                   </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -136,48 +135,104 @@
                     <span class="visually-hidden">Next</span>
                   </button>
                 </div>
+              </div>
+
+              <div class="col">
+                <table class="table hotelInfoTable">
+                </table>
+              </div>
+            </div>
+
+            <div class="row selectHotel mb-3">
+
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <input type="button" class="btn ye-bc" value="선택완료" onclick="selectedHotel();">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!--    투어상품모달-->
+
+    <div class="modal modal-lg fade" id="tourModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>투어 상세 정보</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col">
+                <div id="carouselTour" class="carousel slide">
+                  <div class="carousel-inner tourModalImg">
+
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselTour" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselTour" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
 
 
               </div>
               <div class="col">
-                <table class="table">
+                <table class="table tourInfoTable">
+                </table>
+              </div>
+            </div>
+            <div class="row selectTour mb-3">
+
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="button" class="btn ye-bc" value="선택완료" onclick="selectedTour();">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    전체결과 모달-->
+
+    <div class="modal fade modal-lg text-center" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>선택한 전체 일정</h3>
+          </div>
+            <form action="" method="post">
+              <div class="modal-body">
+                <table class="table resultTable">
                   <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                   </tr>
                 </table>
+                선택한 호텔목록
+                선택한 투어목록
+                총 가격
+                전체 선택 결과 표시
               </div>
-            </div>
-            <div class="row">
-              N일차 일정에 추가
-            </div>
+              <div class="row">
+                바로구매 // 장바구니
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-
-
-    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              전체 선택 결과 표시
-            </div>
-            <div class="row">
-              바로구매 // 장바구니
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
 </th:block>
 
 <!--  연결해야할 외부 js 파일 -->

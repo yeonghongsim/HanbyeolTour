@@ -1,8 +1,10 @@
 package com.project.team.admin.controller;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.project.team.item.controller.ItemController;
+import com.project.team.util.DateUtil;
 import com.project.team.util.UploadPath;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +23,11 @@ import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
+import com.project.team.admin.vo.StatisticsVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
+import oracle.net.aso.l;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardRequestVO;
@@ -367,10 +371,67 @@ public class AdminController {
 	
 	//기간별 매출 현황 페이지
 	@GetMapping("/salesStatisticsByPeriod")
-	public String salesStatisticsByPeriod() {
+	public String salesStatisticsByPeriod(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+		//year 데이터 안 넘어오는 경우
+		if(year == 0) {
+			year = DateUtil.getYear();
+		}
+		
+		List<Map<String, Integer>> mapList = adminService.getSalesStatisticsByPeriod(year);
+		System.out.println(mapList.get(0));
+		System.out.println(adminService.getSalesStatisticsByPeriod(year));
+		
+		//hashMap으로 받아온 데이터 treeMap으로 변경(월별 순서대로 뽑기 위함)
+		List<Map<String, Integer>> dataList = new ArrayList<>();
+		
+		for(Map<String, Integer> map : mapList) {
+			
+			Map<String, Integer> data1 = new TreeMap<>(map);
+			dataList.add(data1);
+			
+			System.out.println(data1);
+			
+			Set<String> keySet = data1.keySet();
+			
+			for(String key : keySet) {
+				System.out.println("key : " + key + " / value : " + data1.get(key));
+			}
+			System.out.println();
+		}
+		
+		model.addAttribute("dataList", dataList);
+		model.addAttribute("year", year);
+		model.addAttribute("thisYear", DateUtil.getYear());
+		
 		
 		return "content/admin/sales_statistics_by_period";
 	}
+	
+	//기간별 매출 현황 페이지 오면 바로 실행(차트)
+	@ResponseBody
+	@PostMapping("/getChartDataAJAX")
+	public Map<String, List<Object>> getChartDataAJAX(int year) {
+		List<Map<String, Integer>> mapList = adminService.getSalesStatisticsByPeriod(year);
+		List<Map<String, Integer>> resultList = new ArrayList<>();
+		
+		//해쉬맵으로 변환
+		for(Map<String, Integer> map : mapList) {
+			Map<String, Integer> map1 = new TreeMap<>(map);
+			resultList.add(map1);
+		}
+		//자료형 Integer로 하면 json에서 인식 오류남!
+		List<Object> thisYearCntList = resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> thisYearSaleList = resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> lastYearSaleList = resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		
+		Map<String, List<Object>> map = new HashMap<>();
+		map.put("thisYearCntList", thisYearCntList);
+		map.put("thisYearSaleList", thisYearSaleList);
+		map.put("lastYearSaleList", lastYearSaleList);
+		
+		return map;
+	}
+	
 	
 	//카테고리별 매출 현황 페이지
 	@GetMapping("/salesStatisticsByCategory")
