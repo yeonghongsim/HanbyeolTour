@@ -13,14 +13,15 @@
 <th:block layout:fragment="member_content">
 	<div class="row mb-3">
 		<div class="offset-8 col-2">
-			<input onclick="getNeedReview();" type="button" class="btn ye-bc w-100" value="후기 필요" style="color: grey;">
+			<input onclick="getNeedReview();" type="button" class="btn ye-bc w-100" value="미작성 후기" style="color: grey;">
 		</div>
 		<div class="col-2">
-			<input onclick="getAllReview();" type="button" class="btn ye-S-bc w-100" value="모든 후기 보기" style="color: grey;">
+			<input th:onclick="getAllReview([[${#authentication.name}]]);" type="button" class="btn ye-S-bc w-100" value="작성 후기" style="color: grey;">
 		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="col-md-5">
+			<h3 class="mb-2">구매 내역</h3>
 			<table class="table text-center table-hover">
 				<colgroup>
 					<col width="8%">
@@ -46,7 +47,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-7 show_buy_detail">
+		<div class="col-md-7 get_result_area">
 			review area
 		</div>
 	</div>
