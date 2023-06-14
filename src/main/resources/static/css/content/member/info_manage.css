@@ -2,16 +2,35 @@
 
 
 /* 상단 프로빌 바 */
+.header-area{
+	height: 7vh; 
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+
 .profile-bar{
-	height: 60px;
-	background-color: #ffd000;
-	color: white;
+	background-color: white;
+	color: black;;
+	font-size: 1.6rem;
+	font-weight: bolder;
+	letter-spacing: -1px;
+	padding: 0.8rem;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	vertical-align: middle;
+	margin-bottom: 2rem;
+	margin-top: 60px;
+}
+
+.profile-name{
+	color: #ffd000;
 	font-size: 1.8rem;
 	font-weight: bolder;
 	letter-spacing: -1px;
-	padding: 3px;
-	
 }
+
 
 .profile-bar-second{
 	height: 60px;
@@ -26,7 +45,7 @@
 
 .more-btn{
 	font-size: 1rem;
-	color: black;
+	color: white;
 }
 
 /* 예약 조회 */
@@ -93,9 +112,88 @@
 	display: flex; 
 	height: 50vh; 
 	width: 100%;
-
+	margin-top: 15px;
 }
 
+.list-area{
+	width: 99.9%;
+	margin-top: 15px;
+}
+
+.qna-header-status-y{
+	background-color: #ffd000;
+	border-radius: 12px;
+	font-size: 0.8rem;
+	padding:3px;
+	color: white;
+	font-weight: bolder;
+	margin-right: 1rem;
+}
+
+.qna-header-status-n{
+	background-color: #666;
+	border-radius: 12px;
+	font-size: 0.8rem;
+	color: white;
+	padding:3px;
+	font-weight: bolder;
+	margin-right: 1rem;
+}
+
+.qna-header-date{
+	font-size: 0.8rem;
+	color:#888;
+	margin-right: 4px;
+}
+
+.qna-tit{
+	font-weight:bolder; 
+	color: #666;
+	font-size: 1.2rem;
+}
+.qna-topic{
+	border: 1px solid #666;
+	border-radius: 13px;
+	font-size: 0.95rem;
+	vertical-align: middle;
+	text-align:center;
+	padding:0;
+	letter-spacing: 4px;
+	background-color: white;
+}
+
+.accordion-body{
+	padding: 1.2rem;
+	background-color: #fafafa;
+}
+
+.item-name{
+	color: #888;
+	font-size: 0.95rem;
+}
+
+.answer-title{
+	font-weight:bolder; 
+	color: #ffd000;
+	font-size: 1.2rem;
+}
+
+.answer-date{
+	font-weight:bolder; 
+	color: #888;
+	font-size: 0.8rem;
+}
+
+.final-mention{
+	font-size: 0.7rem;
+	color: #888;
+}
+
+/* 스크롤 */
+.accordion-scroll {
+    max-height: 200px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+}
 
 
 

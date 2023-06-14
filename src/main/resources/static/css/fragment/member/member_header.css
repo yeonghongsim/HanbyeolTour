@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+
+.ms_side_div h5 a.on{
+	color: #ffd000;
+	font-weight: bolder;
+	
+}
+
+.ms_side_div h5 a:hover {
+	color: #ffd000;
+	font-weight: bolder;
+}

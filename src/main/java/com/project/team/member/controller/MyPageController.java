@@ -30,6 +30,7 @@ import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
+import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.DateUtil;
 
@@ -60,6 +61,8 @@ public class MyPageController {
 	
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_007");
+		
 		
 		return "content/member/myPage/account_deletion";
 	}
@@ -84,6 +87,7 @@ public class MyPageController {
 	public String changeMyPwPage(Model model) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_006");
 		
 		return "content/member/myPage/check_pw";
 	}
@@ -119,6 +123,7 @@ public class MyPageController {
 	public String changeMyPwForm(Model model) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_006");
 		
 		return "content/member/myPage/change_my_pw";
 	}
@@ -169,6 +174,7 @@ public class MyPageController {
 	public String updateMyInfoPage(Model model, Authentication authentication) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_005");
 		
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		System.out.println("@@ Info 정보 :" + memInfo);
@@ -240,6 +246,7 @@ public class MyPageController {
 		
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
 		return "content/member/myPage/check_my_reservation";
 	}
@@ -331,6 +338,8 @@ public class MyPageController {
 	public String reservationDetail(Model model, String buyCode, BuyVO buyVO, Authentication authentication) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_001");
+		
 		// id, buyCode set 
 		buyVO.setBuyCode(buyCode);
 		String memCode = memberService.getMemCode(authentication.getName());
@@ -358,6 +367,7 @@ public class MyPageController {
 	public String checkMyCancelation(Model model) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
 		return "content/member/myPage/check_my_cancelation";
 	}

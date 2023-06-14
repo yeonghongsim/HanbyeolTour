@@ -12,20 +12,17 @@
 <th:block layout:fragment="member_content">
 	
 	<!-- 프로필 상단바 -->
-	<div class="row profile-bar mt-3">
-		<div class="col">
-			<div><span id="hello-sign">[[${memInfo.memName}]]님 반갑습니다.</span>
-			<a th:href="@{/myPage/updateMyInfo}"  class="justify-content-end"><span class="more-btn">정보 더보기</span></a>
+	<div class="header-area">
+		<div class="row mt-3 profile-bar">
+			<div class="col-8 inner-bar"><span class="profile-name">[[${memInfo.memName}]]님</span> 반갑습니다!
+			&nbsp;<i class="bi bi-emoji-wink" style="color: #ffd000; font-weight: bolder;"></i>
+			</div>
+			<div class="col-4 inner-bar text-end">
+				<a th:href="@{/myPage/updateMyInfo}"  class="btn btn-outline-warning"><span class="">내정보 수정</span></a>
 			</div>
 		</div>
-	</div>
-	<div class="row profile-bar-second mb-4">
-		<div class="col">
-			<span class="col-4">아이디 : [[${memInfo.memId}]]</span>
-			<span class="col-4">가입일 : [[${memInfo.memberDetailVO.memDJoindate}]]</span>
-		</div>
-	</div>
-	
+	</div>	
+		
 	<!-- 예약 조회 현황 (1개월 내 기록) -->
 	<div class="row mb-1">
 		<div class="col title">
@@ -86,53 +83,83 @@
 	            </div>
 	        </div>
 	        
-	       <div class="row">
-	    		<div class="col list-area">
-	    		 	<div class="accordion" id="accordionPanelsStayOpen">
-						<th:block th:each="qna : ${qnaMap.qnaList}">
-							 <div class="accordion-item">
-							    <h2 class="accordion-header">
-							       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + qna.hbtBoardRequestNum}" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-			                        <span class="qna-title" th:text="${qna.isAnswer == 'Y' ? '답변완료' : '미답변'}"></span>
-			                        <span class="qna-title" th:text="${qna.hbtBoardRequestTitle}"></span>
-			                        <span class="qna-title" th:text="${qna.hbtBoardRequestRegDate}"></span>
-			                    </button>
-							    </h2>
-							    <div th:id="${'panel_' + qna.hbtBoardRequestNum}" class="accordion-collapse collapse">
-							      <div class="accordion-body">
-						      		<div class="col">
-							      		<span>문의</span>
-						      		</div>
-						      		<div class="col">
-							      		<span>문의 내용</span>
-						      		</div>
-						      		<div class="col">
-						      			<span>답변완료</span>
-						      			<span>답변일자</span>
-						      		</div>
-						      		<div class="col">
-						      			<span>답변내용</span>
-						      		</div>
-						      		<div>
-						      			<a>
-						      				<input type="button" value="새로운 문의">
-						      			</a>
-						      		</div>
-							      </div>
-							    </div>
-							  </div>
-						</th:block>
+	       <div class="row list-area">
+	    		<div class="col mt-3">
+	    		 	<div class="accordion" id="accordionPanels">
+		    		 	
+							<th:block th:each="question, iter : ${qnaMap.qnaList}" th:if="${iter.index < 3}">
+								 <div class="accordion-item">
+								    <h2 class="accordion-header">
+								       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + question.hbtBoardRequestNum}" aria-expanded="true" th:aria-controls="${'panel_' + question.hbtBoardRequestNum}">
+				                        <div th:if="${question.isAnswer == 'Y'}" class="qna-header-status-y col-2 text-center">답변완료</div>
+				                        <div th:if="${question.isAnswer != 'Y'}" class="qna-header-status-n col-2 text-center">답변대기</div>
+				                        <div class="qna-header-title col-7" th:text="${question.hbtBoardRequestTitle}"></div>
+				                    </button>
+								    </h2>
+								    <!-- <div th:id="${'panel_' + question.hbtBoardRequestNum}" class="accordion-collapse collapse" data-bs-parent="#accordionPanels"> -->
+								      <div th:id="${'panel_' + question.hbtBoardRequestNum}" class="accordion-collapse collapse" data-bs-parent="#accordionPanels" th:classappend="${iter.index == 0 ? 'show' : ''}">
+								      <div class="accordion-body">
+								       <div class="accordion-scroll">
+							      		<div class="row">
+								      		<div class="qna-tit col-8">문의</div>
+								      		<div class="qna-topic col-3 text-center">[[${question.typeRequestVO.typeRequestName}]]</div>
+							      		</div>
+							      		 <div class="qna-header-date text-end mt-3 mb-2">
+							      		 	문의 작성 일자 : [[${question.hbtBoardRequestRegDate}]]
+							      		 </div>
+							      		<div th:if="${question.typeRequestVO.typeRequestCode == 2}">
+							      			<th:block th:each="item : ${qnaMap.itemDetailList}">
+								      			<div th:if="${item.itemCode == question.itemVO.itemCode}" class="item-name mb-3">
+								      				<b>|</b> <b>문의 상품</b> : [[${item.itemTitle}]]
+								      			</div>
+							      			</th:block>
+							      		</div>
+							      		
+							      		<div class="col qna-content mb-4">
+								      		<span>[[${question.hbtBoardRequestContent}]]</span>
+							      		</div>
+							      		<hr>
+							      		<div class="col mt-4">
+								      		<th:block th:each="answer : ${qnaMap.qnaReplyList}">
+								      		     <th:block th:if="${answer.hbtBoardRequestNum == question.hbtBoardRequestNum}">
+								      				<th:block th:if="${question.isAnswer == 'Y'}">
+											      		<div class="row">
+											      			<div class="col-9 answer-title">답변완료</div>
+											      			<div class="col-3 answer-date">[[${answer.reqReplyAnswerDate}]]</div>
+											      		</div>
+											      		<div class="col mt-3 mb-4">
+											      			<span>[[${answer.reqReplyContent}]]</span>
+											      		</div>
+									      			</th:block>
+								      			</th:block>
+								      		</th:block>
+							      			<th:block th:if="${question.isAnswer == 'N'}">
+									      		<div class="col text-center mb-3">
+									      			<span>조금만 기다려주시면 빠르게 답변드리겠습니다! <i class="bi bi-emoji-smile"></i></span>
+									      		</div>
+							      			</th:block>
+								      	</div>	
+							      			<div class="col mb-4">
+								      			<span class="final-mention">
+								      				<i class="bi bi-dot"></i>
+								      				문의에 대한 답변이 부족하거나 추가문의사항이 있으시면 새로운 문의사항으로 등록해주세요.
+								      			</span>
+							      			</div>
+							      			<div class="col offset-9">
+								      			<a th:href="@{/myPage/regRequestForm(memCode=${memInfo.memCode}, memId=${memInfo.memId})}">
+								      				<input type="button" class="btn btn-outline-warning" value="새로운 문의">
+								      			</a>
+							      			</div> 
+								      </div>
+								      </div>
+								    </div>
+								  </div>
+							</th:block>
+
 					</div>
-	    		 
-	    		 
-	    		 
-	    		 
-	    		 
-	    		 
-	    		 
-	    		 
 	    		</div>
 	    	</div>	
+	        
 	        
 	    </div>
 	    
