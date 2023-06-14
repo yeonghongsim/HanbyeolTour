@@ -14,6 +14,7 @@ import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberVO;
@@ -167,6 +168,19 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectList("memberMapper.getQnaReplyList", memCode);
 	}
 	
+	//상품 정보 조회 
+	@Override
+	public ItemVO getItemDetailForQna(String itemCode) {
+		return sqlSession.selectOne("memberMapper.getItemDetailForQna", itemCode);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -199,6 +213,8 @@ public class MemberServiceImpl implements MemberService{
 	public String getNextMyReviewNum() {
 		return sqlSession.selectOne("memberMapper.getNextMyReviewNum");
 	}
+
+	
 	
 	
 	// -----------------------------

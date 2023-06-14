@@ -102,19 +102,18 @@
 		<div class="col mb-5 mt-4">
 			<table class="table table-reservation">
 				<colgroup>
-					<col width="10%">
-					<col width="10%">
+					<col width="15%">
+					<!-- <col width="10%"> -->
 					<col width="*">
 					<col width="5%">
-					<col width="15%">
-					<col width="15%">
 					<col width="10%">
+					<col width="10%">
+					<col width="15%">
 					<col width="10%">
 				</colgroup>
 				<thead class="text-center">
 					<tr>
 						<td>결제일자</td>
-						<td>여행국가</td>
 						<td>상품</td>
 						<td>인원</td>
 						<td>출발일자</td>
@@ -145,7 +144,7 @@
 					</th:block>
 					<th:block th:if="${#lists.size(buyList) != 0}">
 						<th:block th:each="buy : ${buyList}">
-							<tr th:each="buyDetail : ${buy.buyDetailVO}">
+							<tr th:each="buyDetail : ${buy.buyDetailVO}" class="table-tr">
 					            <td class="text-center">
 						            <div style="color: #131518; font-weight:bolder;">[[${buy.buyDate}]]</div>
 						            <div style="color: #ffd000;">[[${buy.buyCode}]]</div>
@@ -153,19 +152,23 @@
 						            	<a th:href="@{/myPage/reservationDetail(buyCode=${buy.buyCode})}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
 						            </div>
 					            </td>
-						        <td class="text-center" th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="font-weight: 700; font-weight: bolder;"></td>
-						        <td>
-						        	<a class="thum" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.itemVO.itemCode})}">
+						        <td class="row">
+						        	<div class="col-5" style="padding: 0;">
+						        		<a class="thum" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.itemVO.itemCode})}">
 						        		<img th:src="${'/img/item/itemImg/' + buyDetail.itemVO.imgList[0].itemImgAttachedName}" 
 						        		style="width: 85px; height: 85px;">
 						        	</a>
+						        	</div>
+						        	<div class="col-7 item-td" style="padding: 0;">
+										<span class="text-center" th:text="${buyDetail.itemVO.tourAreaVO.areaKorName}" style="color: #777; font-weight: bolder;"></span><br>
 						        	<a class="" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.itemVO.itemCode})}">
 						            	<span th:text="${buyDetail.itemVO.itemTitle}" style="color: #333; word-spacing: -1px;"></span>
-						        	</a>
+						        	</a>	        		
+						        	</div>
 						        </td>
-						        <td th:text="${buyDetail.reservedPeopleNum}"></td>
-						        <td th:text="${buyDetail.departDate}"></td>
-						        <td th:text="${buyDetail.arriveDate}"></td>
+						        <td th:text="${buyDetail.reservedPeopleNum}" class="text-center"></td>
+						        <td th:text="${buyDetail.departDate}" class="date-td"></td>
+						        <td th:text="${buyDetail.arriveDate}" class="date-td"></td>
 						        <td style="color: #f27370;">
 						        	 [[${#numbers.formatCurrency(buy.buyTotalPrice).substring(1)}]] 원
 					        	</td>

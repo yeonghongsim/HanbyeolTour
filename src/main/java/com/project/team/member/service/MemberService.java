@@ -7,6 +7,7 @@ import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberSideMenuVO;
@@ -81,7 +82,8 @@ public interface MemberService {
 	List<BoardRequestVO> getQnaList(String memCode);
 	List<ReqReplyVO> getQnaReplyList(String memCode);
 	
-	
+	//상품 문의 관련 
+	ItemVO getItemDetailForQna(String itemCode);
 	
 	
 	
