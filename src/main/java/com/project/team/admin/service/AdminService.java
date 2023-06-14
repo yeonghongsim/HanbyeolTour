@@ -96,6 +96,10 @@ public interface AdminService {
 	
 	//예약 상세 조회 페이지
 	BuyVO getReservDetail(String buyCode);
+	
+	//기간별 매출 조회
+	List<Map<String, Integer>> getSalesStatisticsByPeriod(int year);
+	
 
 	
 	
