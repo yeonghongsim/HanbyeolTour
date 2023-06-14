@@ -482,6 +482,28 @@ public class MyPageController {
 		return "content/member/myPage/check_my_review";
 	}
 	
+	@GetMapping("/getMyReview")
+	public String getMyReview(String buyCode, Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		System.out.println("!@#!@#@!#!@#!@#" + buyCode);
+		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
+		
+		
+		return "content/member/myPage/my_review_form";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/getAllReviewAJAX")
+	public List<MemberReviewVO> getAllReviewAJAX(String memId) {
+		String memCode = memberService.getMemCode(memId);
+		
+		System.out.println("getAllReviewAJAX run~");
+		return memberService.getMyReviewList(memCode);
+	}
+	
 	@ResponseBody
 	@PostMapping("/getBuyDetailAJAX")
 	public BuyVO getBuyDetailAjax(String buyCode) {

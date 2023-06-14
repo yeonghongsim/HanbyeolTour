@@ -5,8 +5,8 @@
 	layout:decorate="~{fragment/admin_layout}">
 
 <!-- 연결해야 할 외부 css 파일 -->
-<th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+<th:block layout:fragment="content_css"> 
+	
 </th:block>
 
 
@@ -79,33 +79,25 @@
 												<div class="col-1">
 													예약일
 												</div>
-											
-												<!-- <div class="col-3">
-													
-													<select class="form-select">
-														<option>주문일</option>
-														<option>취소관리</option>
-													</select>
-												</div> -->
 												<div class="col-4">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="7일">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="1개월">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" name="filterDate" value="3개월">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="7일" onclick="setDate(this);">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="1개월" onclick="setDate(this);">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="3개월" onclick="setDate(this);">
 												</div>
-												<div class="col-1" style="padding-left: 0px;">기간설정</div>
+												<div class="col-1" style="padding-left: 0px;">기간 설정</div>
 												<div class="col-2">
-													<input type="date" class="form-control datepicker" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
+													<input type="date" class="form-control" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
 												</div>
 												<div class="col-1" style="padding-left: 0px;">부터</div>
 												<div class="col-2">
-													<input type="date" class="form-control datepicker" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
+													<input type="date" class="form-control" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
 												</div>
 												<div class="col-1" style="padding-left: 0px;">까지</div>
 											</div>
 										</td>
 									</tr>
 								</table>
-								<input type="submit" value="검색" class="btn" onclick="searchBuyList();">
+								<input type="submit" value="검색" class="btn btn-block" style="background-color: #ffd000;" onclick="searchBuyList();">
 							</form>
 						</div>
 					</div>
