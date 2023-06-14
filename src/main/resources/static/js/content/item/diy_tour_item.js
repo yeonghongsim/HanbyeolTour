@@ -1,3 +1,5 @@
+let hotelInfo = {};
+let tourInfo = {};
 
 //지역선택시 색상변경
 function selectArea(event){
@@ -105,22 +107,56 @@ function drawItem(resultList){
                     </div>
                     `;
     });
+    //호텔목록숫자체우기
+    if(resultList['HOTEL'].length < 5){
+        for(let i = 0; i < (5 - parseInt(resultList['HOTEL'].length)); i++){
+            hotelStr +=  `
+                    <div class="col">
+                        <a href="javascript:void(0)">
+                            <div class="card" style="width: 18rem;">
+                                <img width="150px;" src="/img/item/xbox.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">준비중</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    `;
+        }
+    }
 
     resultList['TOUR'].forEach((tour) => {
         tourStr +=  `
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
-                            <img width="150px;" height="100px;" src="/img/item/tourItem/${tour['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p class="card-text">${tour['HBT_TOUR_ITEM_NAME']}</p>
-                                <input type="hidden" value="${tour['HBT_TOUR_ITEM_CODE']}">
+                        <a href="javascript:void(0)" onclick="tourModal(this);">
+                            <div class="card" style="width: 18rem;">
+                                <img width="150px;" src="/img/item/tourItem/${tour['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">${tour['HBT_TOUR_ITEM_NAME']}</p>
+                                    <input type="hidden" value="${tour['HBT_TOUR_ITEM_CODE']}">
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     `;
     });
 
-
+    if(resultList['TOUR'].length < 5){
+        for(let i = 0; i < (5 - parseInt(resultList['TOUR'].length)); i++){
+            tourStr +=  `
+                    <div class="col">
+                        <a href="javascript:void(0)" onclick="">
+                            <div class="card" style="width: 18rem;">
+                                <img width="150px;" src="/img/item/xbox.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">준비중</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    `;
+        }
+    }
 
     hotelDiv.replaceChildren();
     tourDiv.replaceChildren();
@@ -131,7 +167,7 @@ function drawItem(resultList){
 function hotelModal(e){
     //클릭한 아이템 코드
     const hbtHotelCode = e.querySelector('input[type=hidden]').value;
-    console.log(hbtHotelCode);
+
     //ajax요청
     $.ajax({
         url: '/item/getHotelDetailAJAX', //요청경로
@@ -141,27 +177,266 @@ function hotelModal(e){
         async : true,
         data: {'hbtHotelCode': hbtHotelCode},
         success: function(result) {
-            console.log(result);
+            result = JSON.parse(result);
+            drawHotelModal(result);
         },
         error: function() {
             alert('실패');
         }
     });
-
     //요청결과로 그림그리기
 
     //모달창띄우기
     $('#hotelModal').modal('show');
-
 }
 
 function drawHotelModal(result){
-    //
-    // <div className="carousel-item active">
-    //     <img src="" className="d-block w-100" alt="...">
-    // </div>
+
+    const imgDiv = document.querySelector('.hotelModalImg');
+    const hotelDetailInfoTable = document.querySelector('.hotelInfoTable');
+    const selectHotel = document.querySelector('.selectHotel');
+
+    let imgStr = '';
+    let infoStr = '';
+    let selectStr = '';
+
+    //호텔상세이미지
+    result.forEach((img) => {
+        imgStr +=  `
+                    <div class="carousel-item">
+                      <img src="/img/item/hotel/${img['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="d-block w-100" alt="...">
+                    </div>
+                   `;
+
+    });
+
+    //호텔상세정보
+    infoStr += `    <tr> 
+                      <td>${result[0]['HBT_HOTEL_NAME']}</td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <span>`;
+    //호텔등급 별그리기
+    for(let i = 0; i < result[0]['HBT_HOTEL_GRADE']; i++){
+        infoStr += `★`;
+    }
+
+    infoStr += `    </span></td>
+                    </tr>
+                    <tr>
+                       <td>${result[0]['HBT_HOTEL_PRICE']}</td>
+                    </tr>
+                    <tr>
+                      <td>${result[0]['HBT_HOTEL_INTRO']}</td>
+                    </tr>
+             `;
+
+    //해당호텔 일정에 추가 체크박스
+    for(let i = 0; i < getDate(); i++){
+
+        selectStr += `
+        <div class="col">
+            <input class="selectHotelInput form-check-input" type="checkbox" value="${i+1}" name="selectHotel">
+            <input type="hidden" class="hotelCode" value="${result[0]['HBT_HOTEL_CODE']}">
+            <label class="form-check-label" for="">
+              ${i+1}일차 일정에 추가
+            </label>
+        </div>
+        
+        `;
+    }
+
+    //모달창안에 그림그리기
+    selectHotel.replaceChildren();
+    selectHotel.insertAdjacentHTML('afterbegin', selectStr);
+    imgDiv.replaceChildren();
+    imgDiv.insertAdjacentHTML('afterbegin', imgStr);
+    hotelDetailInfoTable.replaceChildren();
+    hotelDetailInfoTable.insertAdjacentHTML('afterbegin', infoStr);
+
+    imgDiv.querySelectorAll('div')[0].classList.add('active');
+}
+//투어상세모달창
+function tourModal(e){
+    //클릭한 아이템 코드
+    const hbttourCode = e.querySelector('input[type=hidden]').value;
+
+    //ajax요청
+    $.ajax({
+        url: '/item/getTourDetailAJAX', //요청경로
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {'hbttourCode': hbttourCode},
+        success: function(result) {
+            result = JSON.parse(result);
+            drawTourModal(result);
+            console.log(result)
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
+    //모달창띄우기
+    $('#tourModal').modal('show');
+}
+
+function drawTourModal(result){
+
+    const tourModalImg = document.querySelector('.tourModalImg');
+    const tourInfoTable = document.querySelector('.tourInfoTable');
 
 
+    let imgStr = '';
+    let infoStr = '';
+
+    //이미지 그리기
+    result.forEach((img) => {
+        imgStr +=  `
+                    <div class="carousel-item">
+                      <img src="/img/item/tourItem/${img['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="d-block w-100" alt="...">
+                    </div>
+                   `;
+    });
+
+    infoStr += `
+                <tr>
+                    <td>${result[0]['HBT_TOUR_ITEM_NAME']}</td>
+                </tr>
+                <tr>
+                    <td>${result[0]['HBT_TOUR_ITEM_RUNTIME']}</td>
+                </tr>
+                <tr>
+                    <td>${result[0]['HBT_TOUR_ITEM_PRICE']}</td>
+                </tr>
+                <tr>
+                    <td>${result[0]['HBT_TOUR_ITEM_INTRO']}</td>
+                </tr>
+                <tr>
+                    <select class="form-control tourSelectTag">
+                        <option>
+                            일정선택
+                        </option>
+    `;
+
+    for(let i = 0; i < getDate();i++){
+        infoStr += `
+                        <option value="${i+1}">
+                        ${i+1}일차 일정으로 선택
+                        </option>
+        `;
+    }
+        infoStr += `</select>
+                    <input type="hidden" value="${result[0]['HBT_TOUR_ITEM_CODE']}">
+                    </tr>`;
+
+
+
+    tourInfoTable.replaceChildren();
+    tourInfoTable.insertAdjacentHTML('afterbegin', infoStr);
+
+    tourModalImg.replaceChildren();
+    tourModalImg.insertAdjacentHTML('afterbegin', imgStr);
+
+    tourModalImg.querySelectorAll('div')[0].classList.add('active');
+
+}
+
+//최종 결과 화면
+function drawResultModal(){
+    //그림그릴위치
+    const resultTable = document.querySelector('.resultTable');
+
+    //지역정보
+    const area = document.querySelector('.selected p').textContent;
+    console.log(area);
+    //출발일
+    const depDate = document.querySelector('.depDate').value;
+    //도착일
+    const arrDate = document.querySelector('.arrDate').value;
+    //항공사정보
+    const airlineInput = document.querySelectorAll('.airlineInput');
+    let airlineName;
+    airlineInput.forEach((airline) => {
+        if(airline.checked){
+            airlineName = airline.nextElementSibling.querySelector('.radio-label').textContent
+        }
+    });
+    console.log(airlineName);
+
+    //호텔정보들
+    hotelInfo
+
+    //투어정보들
+    tourInfo
+
+    let resultTableStr = '';
+
+    resultTableStr += `
+            <tr>
+                <td>여행 국가</td>
+                <td>${area}</td>
+            </tr>
+            <tr>
+                <td>여행 기간</td>
+                <td>${depDate} ~ ${arrDate}</td>
+            </tr>
+            <tr>
+                <td>항공사</td>
+                <td>${airlineName}</td>
+            </tr>
+    `;
+
+    console.log(Object.keys(hotelInfo).length);
+
+    resultTable.replaceChildren();
+    resultTable.insertAdjacentHTML('afterbegin', resultTableStr);
+
+    $('#resultModal').modal('show');
+}
+
+function selectedHotel(){
+    const hotelInputs = document.querySelectorAll('.selectHotelInput')
+    hotelInfo = {};
+
+    hotelInputs.forEach((hotel) => {
+        if (hotel.checked) {
+            hotelInfo[hotel.value] = hotel.nextElementSibling.value;
+        }
+    });
+
+    console.log(hotelInfo);
+    $('#hotelModal').modal('hide');
+}
+function selectedTour(){
+    //변수초기화
+    tourInfo = {};
+
+    const tourSelectTag = document.querySelector('.tourSelectTag');
+
+    tourInfo[tourSelectTag.value] = tourSelectTag.nextElementSibling.value;
+
+    $('#tourModal').modal('hide');
+}
+
+
+
+
+//날짜계산함수
+function getDate(){
+    const depDate = document.querySelector('.depDate').value;
+    const arrDate = document.querySelector('.arrDate').value;
+
+    let date1 = new Date(arrDate);
+    let date2 = new Date(depDate);
+
+    let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return diffDays;
 }
 
 

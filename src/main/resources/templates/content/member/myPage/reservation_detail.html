@@ -38,8 +38,8 @@
 					<col width="10%">
 					<col width="5%">
 					<col width="15%">
-					<col width="10%">
-					<col width="10%">
+					<col width="15%">
+					<col width="15%">
 				</colgroup>
 				<thead class="text-center">
 					<tr>
@@ -56,12 +56,12 @@
 					<tr>
 				        <td>
 				        	<div class="area">
-								<a class="thum" href="">
+								<a class="thum" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.buyDetailVO.itemVO.itemCode})}">
 									<img th:src="${'/img/item/itemImg/' + buyDetail.buyDetailVO.itemVO.imgList[0].itemImgAttachedName}" 
 				        			style="width: 85px; height: 85px;">
 								</a>
 								<div class="textus">
-									<a class="" href="">
+									<a class="" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.buyDetailVO.itemVO.itemCode})}">
 										<span class="tit" style="font-weight: bolder; font-size: 1.2rem;">[[${buyDetail.buyDetailVO.itemVO.tourAreaVO.areaKorName}]]</span><br>
 							            <span  class="txt" th:text="${buyDetail.buyDetailVO.itemVO.itemTitle}" style="word-spacing: -1px;"></span><br>
 							            <span  class="txt" th:text="${buyDetail.buyDetailVO.itemVO.itemIntro}" style="font-weight:lighter; font-size: 0.9rem;"></span>
@@ -83,9 +83,11 @@
 					        	<span id="statusCode" style="font-weight: bolder;">[[${buyDetail.buyStateVO.buyStatusName}]]</span>
 					        </div>
 					        <div id="reviewBtn">
-					        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
+					        	<!-- <a th:href="@{/myPage/checkMyReview(buyCode=${buyDetail.buyCode})}">
+-->					        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
 					        	th:if="${buyDetail.buyStateVO.buyStatusCode == 1}"
-					        	th:onclick="cancel_reservation([[${buyDetail.buyCode}]])">예약취소</button>
+					        	th:onclick="detail_cancel([[${buyDetail.buyCode}]])">예약취소</button>
+					        	<!-- </a> -->
 					        </div>
 					        <div id="cancelBtn">
 					        	<a th:href="@{/myPage/checkMyReview(memCode=${buyDetail.memberVO.memCode})}">
@@ -159,17 +161,14 @@
 				[[${buyDetail.buyDetailVO.itemVO.itemTitle}]]
 			</div>
 			<div class="col-3 text-end price-cal">
-				[[${buyDetail.buyDetailVO.reservedPeopleNum}]] x [[${#numbers.formatCurrency(buyDetail.buyDetailVO.itemVO.itemPrice)}]]
+				[[${buyDetail.buyDetailVO.reservedPeopleNum}]] x [[${#numbers.formatCurrency(buyDetail.buyDetailVO.itemVO.itemPrice).substring(1)}]] = 
 			</div>
-			<div class="col-2 text-center cal-price">
+			<div class="col-2 cal-price">
 				[[${#numbers.formatCurrency(buyDetail.buyTotalPrice).substring(1)}]]<span>원</span>
 			</div>
 		</div>
 		<hr class="price-box-line">
 		<div class="row">
-			<!-- <div class="col-9 text-end total-price-tit">
-				
-			</div> -->
 			<div class="col text-end">
 				<span class="total-price-tit">총 여행 금액</span>
 				<span class="total-price">[[${#numbers.formatCurrency(buyDetail.buyTotalPrice).substring(1)}]] 원</span>
@@ -207,7 +206,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/"></script>-->
+	<script type="text/javascript" src="/js/content/member/myPage/reservation_detail.js"></script>
 </th:block>
 
 

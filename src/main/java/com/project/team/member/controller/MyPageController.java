@@ -336,15 +336,21 @@ public class MyPageController {
 		String memCode = memberService.getMemCode(authentication.getName());
 		buyVO.setMemCode(memCode);
 		
-		
 		model.addAttribute("buyDetail", memberService.getBuyDetail(buyVO));
-		
-		
-		
+			
 		return"content/member/myPage/reservation_detail";
 	}
 	
-	
+	// 예약 상세 페이지 - 예약 취소 
+	@GetMapping("/cancelReservation")
+	public String cancelReservation(Model model , String buyCode) {
+		System.out.println("@@@@@ 전달받은 buyCode :" + buyCode);
+		//예약 취소
+		memberService.cancelReservation(buyCode);
+		
+		return "redirect:/myPage/reservationDetail?buyCode=" + buyCode;
+
+	}
 	
 	
 	//예약취소 내역 확인 페이지로 이동 
@@ -464,6 +470,28 @@ public class MyPageController {
 		model.addAttribute("myBuyList", buyService.getBuyList(memCode));
 		
 		return "content/member/myPage/check_my_review";
+	}
+	
+	@GetMapping("/getMyReview")
+	public String getMyReview(String buyCode, Model model) {
+		// side 메뉴 리스트 
+		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		
+		System.out.println("!@#!@#@!#!@#!@#" + buyCode);
+		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
+		
+		
+		return "content/member/myPage/my_review_form";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/getAllReviewAJAX")
+	public List<MemberReviewVO> getAllReviewAJAX(String memId) {
+		String memCode = memberService.getMemCode(memId);
+		
+		System.out.println("getAllReviewAJAX run~");
+		return memberService.getMyReviewList(memCode);
 	}
 	
 	@ResponseBody

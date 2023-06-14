@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.member.vo.MemberDetailVO;
@@ -155,7 +157,15 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.getBuyDetail", buyVO);
 	}
 	
-	
+	// 문의 내역 조회 
+	@Override
+	public List<BoardRequestVO> getQnaList(String memCode) {
+		return sqlSession.selectList("memberMapper.getQnaList", memCode);
+	}
+	@Override
+	public List<ReqReplyVO> getQnaReplyList(String memCode) {
+		return sqlSession.selectList("memberMapper.getQnaReplyList", memCode);
+	}
 	
 	
 	
@@ -215,6 +225,8 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	
+	
+
 	
 
 	

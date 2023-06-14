@@ -1,20 +1,73 @@
 init()
 
+function getMyReview(buyCode){
+	location.href='/myPage/getMyReview?buyCode=' + buyCode;
+}
 
 function getNeedReview(){
 	alert('getNeedReview btn');
 }
 
-function getAllReview(){
-	alert('getAllReview btn');
-}
-
-function getMyReview(buyCode){
-
-	drawReviewDiv(buyCode);
+function getAllReview(memId){
+	const get_result_area = document.querySelector('.get_result_area');
 	
+	//ajax start
+	$.ajax({
+		url: '/myPage/getAllReviewAJAX', //요청경로
+		type: 'post',
+		async: true, // 동기방식(Ajax사용), false == 비동기방식
+		//contentType: 'application/json; charset=UTF-8',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		//필요한 데이터
+		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+		data: {'memId' : memId},
+		success: function(result) {
+			console.log(result);
+				let str = '';
+				
+				str += `<table class="table text-center">`;
+				str += `	<colgroup>`;
+				str += `		<col width="15%">`;
+				str += `		<col width="30%">`;
+				str += `		<col width="*">`;
+				str += `		<col width="15%">`;
+				str += `	</colgroup>`;
+				str += `	<thead>`;
+				str += `		<tr>`;
+				str += `			<td>No.</td>`;
+				str += `			<td>구매코드</td>`;
+				str += `			<td>후기 내용</td>`;
+				str += `			<td>별점</td>`;
+				str += `		</tr>`;
+				str += `	</thead>`;
+			
+			if(result.size == null){
+				get_result_area.replaceChildren();
+				
+				str += `	<tbody>`;
+				str += `		<tr>`;
+				str += `			<td colspan="4">후기를 작성해 주세요.</td>`;
+				str += `		</tr>`;
+				str += `	</tbody>`;
+				str += `</table>`;
+				
+				get_result_area.insertAdjacentHTML('afterbegin', str);
+				
+				
+				
+			} else{
+				alert(1);
+			}
+			
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+   //ajax end
+   
 }
-
+/*
 function drawReviewDiv(buyCode){
 	
 	//ajax start
@@ -164,6 +217,6 @@ function regMyReview(buyCode, memCode){
 	
 	
 }
-
+*/
 function init(){
 }

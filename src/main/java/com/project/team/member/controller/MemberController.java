@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.team.board.vo.BoardRequestVO;
+import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.service.BuyService;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
@@ -208,7 +210,7 @@ public class MemberController {
 		
 	//마이 페이지로 이동 
 	@GetMapping("/infoManage")	
-	public String infoManage(Model model, Authentication authentication) {
+	public String infoManage(Model model, Authentication authentication, ReqReplyVO reqReplyVO) {
 		//side menu 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
@@ -222,7 +224,16 @@ public class MemberController {
 		System.out.println(buyStatusInOneMonthList);
 		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
 		
+		//문의 내역 조회 
+		List<BoardRequestVO> qnaList =  memberService.getQnaList(memCode);
+		List<ReqReplyVO> qnaReplyList = memberService.getQnaReplyList(memCode);
 		
+		Map<String, Object> qnaMap = new HashMap<>();
+		qnaMap.put("qnaList", qnaList);
+		qnaMap.put("qnaReplyList", qnaReplyList);
+		
+		model.addAttribute("qnaMap", qnaMap);
+		System.out.println("*** MAP DATA : " + qnaMap);
 		
 		return "content/member/info_manage";
 	
