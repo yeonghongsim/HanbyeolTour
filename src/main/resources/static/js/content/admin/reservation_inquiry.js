@@ -165,23 +165,48 @@ for(const checkbox of checkboxes){
 }
 
 
-//기간 버튼 눌렀을 때
-$(function() {
-	$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
-})
+//검색 기간 버튼 날짜 세팅
+function setDate(dateButton) {
+	let dateButtonValue = dateButton.value;
 
-// 날짜 포맷 변경
-dateFormatter = function(newDay, today) {
-	let year = newDay.getFullYear()
-	let month = newDay.getMonth()+1
-	let date = newDay.getDate()
+	//날짜 구하는 함수
+	function getFormattedDate(date) {
+
+		let year = date.getFullYear();
+		let month = String(date.getMonth() + 1).padStart(2, '0');
+		let day = String(date.getDate()).padStart(2, '0');
+		return year + '-' + month + '-' + day;
+	}
+
+	function getPreviousDates() {
+		let today = new Date(); // 오늘 날짜
+		let oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000); // 일주일 전
+		let oneMonthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()); // 1개월 전
+		let threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate()); // 3개월 전
+
+		return {
+			today: getFormattedDate(today),
+			oneWeekAgo: getFormattedDate(oneWeekAgo),
+			oneMonthAgo: getFormattedDate(oneMonthAgo),
+			threeMonthsAgo: getFormattedDate(threeMonthsAgo)
+		};
+	}
+
+	let dates = getPreviousDates();
 	
-	//기존 날짜와 새로운 날짜가 다를 경우
-	if(date != todayDate) {
-		if(month == 0) year -= 1
-		month = (month + 11) % 12
-		date = new Date(year, month, 0).getDate() //해당 달 마지막 날짜
-		
+	const todayInput = document.querySelector('#endDate');
+	todayInput.value = dates.today;
+	
+	const setDayInput = document.querySelector('#strtDate');
+
+	if (dateButtonValue == '7일') {
+		setDayInput. value = dates.oneWeekAgo;
+	}
+	else if(dateButtonValue == '1개월'){
+		setDayInput. value = dates.oneMonthAgo;
+	}
+	else if(dateButtonValue == '3개월'){
+		setDayInput. value = dates.threeMonthsAgo;
 	}
 }
 

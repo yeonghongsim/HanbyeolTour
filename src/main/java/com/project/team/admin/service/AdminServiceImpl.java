@@ -197,6 +197,13 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectOne("adminMapper.getReservDetail", buyCode);
 	}
+	
+	//기간별 매출 조회
+	@Override
+	public List<Map<String, Integer>> getSalesStatisticsByPeriod(int year) {
+		
+		return sqlSession.selectList("adminMapper.getSalesStatisticsByPeriod", year);
+	}
 
 
 
@@ -298,6 +305,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
 
 
 
