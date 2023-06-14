@@ -46,7 +46,7 @@ function getAllReview(memId){
 				
 				str += `	<tbody>`;
 				str += `		<tr>`;
-				str += `			<td colspan="4">후기를 작성해 주세요.</td>`;
+				str += `			<td colspan="4">후기를 작성해 주세요1.</td>`;
 				str += `		</tr>`;
 				str += `	</tbody>`;
 				str += `</table>`;
