@@ -238,7 +238,9 @@ function drawHotelModal(result){
         selectStr += `
         <div class="col">
             <input class="selectHotelInput form-check-input" type="checkbox" value="${i+1}" name="selectHotel">
-            <input type="hidden" class="hotelCode" value="${result[0]['HBT_HOTEL_CODE']}">
+            <input type="hidden" value="${result[0]['HBT_HOTEL_NAME']}">
+            <input type="hidden" value="${result[0]['HBT_HOTEL_PRICE']}">
+            <input type="hidden" value="${result[0]['HBT_HOTEL_CODE']}">
             <label class="form-check-label" for="">
               ${i+1}일차 일정에 추가
             </label>
@@ -282,7 +284,7 @@ function tourModal(e){
     //모달창띄우기
     $('#tourModal').modal('show');
 }
-
+//투어상품 모달창
 function drawTourModal(result){
 
     const tourModalImg = document.querySelector('.tourModalImg');
@@ -329,8 +331,13 @@ function drawTourModal(result){
         `;
     }
         infoStr += `</select>
-                    <input type="hidden" value="${result[0]['HBT_TOUR_ITEM_CODE']}">
+                    <input type="hidden" class="tourInfoHidden" value="${result[0]['HBT_TOUR_ITEM_NAME']}">
+                    <input type="hidden" class="tourInfoHidden" value="${result[0]['HBT_TOUR_ITEM_PRICE']}">
+                    <input type="hidden" class="tourInfoHidden" value="${result[0]['HBT_TOUR_ITEM_CODE']}">
                     </tr>`;
+
+
+
 
 
 
@@ -346,12 +353,14 @@ function drawTourModal(result){
 
 //최종 결과 화면
 function drawResultModal(){
+    //합계가격 저장용 변수
+    let totalPrice = 0;
     //그림그릴위치
     const resultTable = document.querySelector('.resultTable');
-
     //지역정보
-    const area = document.querySelector('.selected p').textContent;
-    console.log(area);
+    const area = document.querySelector('.selected p');
+    console.log(area.textContent);
+    console.log(area.nextElementSibling.value);
     //출발일
     const depDate = document.querySelector('.depDate').value;
     //도착일
@@ -359,37 +368,82 @@ function drawResultModal(){
     //항공사정보
     const airlineInput = document.querySelectorAll('.airlineInput');
     let airlineName;
+    let airlineCode;
     airlineInput.forEach((airline) => {
         if(airline.checked){
-            airlineName = airline.nextElementSibling.querySelector('.radio-label').textContent
+            airlineName = airline.nextElementSibling.querySelector('.radio-label').textContent;
+            airlineCode = airline.value;
         }
     });
-    console.log(airlineName);
-
-    //호텔정보들
-    hotelInfo
-
-    //투어정보들
-    tourInfo
-
     let resultTableStr = '';
 
+    //호텔정보들
     resultTableStr += `
             <tr>
                 <td>여행 국가</td>
-                <td>${area}</td>
+                <td colspan="2">${area.textContent}
+                    <input type="hidden" class="areaCode" name="areaCode" value="${area.nextElementSibling.value}">
+                </td>
             </tr>
             <tr>
                 <td>여행 기간</td>
-                <td>${depDate} ~ ${arrDate}</td>
+                <td colspan="2">${depDate} ~ ${arrDate}
+                    <input type="hidden" class="departDate" name="departDate" value="${depDate}">
+                    <input type="hidden" class="arriveDate" name="arriveDate" value="${arrDate}">
+                </td>
             </tr>
             <tr>
                 <td>항공사</td>
-                <td>${airlineName}</td>
+                <td colspan="2">${airlineName}
+                    <input type="hidden" class="airlineCode" name="airlineCode" value="${airlineCode}">
+                </td>
             </tr>
     `;
+    //호텔정보오브젝트의 키값을 배열로
+    let hotelInfoKey = Object.keys(hotelInfo);
 
-    console.log(Object.keys(hotelInfo).length);
+    for (let i = 0; i < hotelInfoKey.length;i++) {
+        resultTableStr += `
+            <tr>
+                <td>${hotelInfoKey[i]}일차 숙박일정</td>
+                <td>${hotelInfo[hotelInfoKey[i]][0]}</td>
+                <td>가격 : ${hotelInfo[hotelInfoKey[i]][1]}
+                    <input type="hidden" class="hotelDay" name="hbtHotelCode" value="${i}">
+                    <input type="hidden" class="hbtHotelCode$" name="hbtHotelCode" value="${hotelInfo[hotelInfoKey[i]][2]}">
+                </td>
+            </tr>
+        `;
+        totalPrice += parseInt(hotelInfo[hotelInfoKey[i]][1]);
+
+    }
+
+    //투어정보들
+    //투어상품의 키값들을 배열로
+    let tourInfoKey = Object.keys(tourInfo);
+    for (let i = 0; i < tourInfoKey.length;i++) {
+        resultTableStr += `
+            <tr>
+                <td>${tourInfoKey[i]}일차 투어일정</td>
+                <td>${tourInfo[tourInfoKey[i]][0]}</td>
+                <td>가격 : ${tourInfo[tourInfoKey[i]][1]}
+<!--                    <input type="hidden" name="hbtTourItemCode[${i}].${i+1}" value="${tourInfo[tourInfoKey[i]][2]}">-->
+                </td>
+            </tr>
+        `;
+        totalPrice += parseInt(tourInfo[tourInfoKey[i]][1]);
+    }
+
+    //합계가격 구하기
+    resultTableStr += `
+              <tr>
+                <td>최종 결제 금액 : </td>
+                <td colspan="2">
+                    ${totalPrice}
+                    <input type="hidden" name="totalPrice" value="${totalPrice}">
+                    <input type="hidden" name="traverPeriod" value="${getDate()}">
+                </td>
+              </tr>
+    `;
 
     resultTable.replaceChildren();
     resultTable.insertAdjacentHTML('afterbegin', resultTableStr);
@@ -397,26 +451,58 @@ function drawResultModal(){
     $('#resultModal').modal('show');
 }
 
+//구매 및 장바구니 AJAX
+function buyNCart(){
+    //국가코드
+    const areaCode = document.querySelector('.areaCode').value;
+    //여행기간
+    const departDate = document.querySelector('.departDate').value;
+    const arriveDate = document.querySelector('.arriveDate').value;
+    //항공사정보
+    const airlineCode = document.querySelector('.airlineCode').value;
+    //일자별 일정데이터세팅
+
+
+
+    //ajax요청
+
+
+
+
+
+}
+
+
+
+
+
+
+
+//호텔선택
 function selectedHotel(){
+
     const hotelInputs = document.querySelectorAll('.selectHotelInput')
     hotelInfo = {};
 
     hotelInputs.forEach((hotel) => {
         if (hotel.checked) {
-            hotelInfo[hotel.value] = hotel.nextElementSibling.value;
+            hotelInfo[hotel.value] = [hotel.nextElementSibling.value, hotel.nextElementSibling.nextElementSibling.value, hotel.nextElementSibling.nextElementSibling.nextElementSibling.value];
         }
     });
 
     console.log(hotelInfo);
     $('#hotelModal').modal('hide');
 }
+
+//투어선택
 function selectedTour(){
     //변수초기화
     tourInfo = {};
 
     const tourSelectTag = document.querySelector('.tourSelectTag');
+    const tourInfoHidden = document.querySelectorAll('.tourInfoHidden');
 
-    tourInfo[tourSelectTag.value] = tourSelectTag.nextElementSibling.value;
+    tourInfo[tourSelectTag.value] = [tourInfoHidden[0].value, tourInfoHidden[1].value,tourInfoHidden[2].value ];
 
     $('#tourModal').modal('hide');
 }
@@ -439,7 +525,24 @@ function getDate(){
     return diffDays;
 }
 
+function checkHotel(){
 
+    hotelInfo
+
+}
+
+function checkTour(){
+
+    tourInfo
+}
+
+
+//구매완료 or 장바구니 ajax
+function buyNcart(isPaid){
+
+
+
+}
 
 
 

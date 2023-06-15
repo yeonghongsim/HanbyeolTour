@@ -6,8 +6,13 @@ import java.util.*;
 
 import com.project.team.admin.service.AdminService;
 import com.project.team.buy.vo.BuyDetailVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
+import com.project.team.member.service.MemberService;
 import com.project.team.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +30,8 @@ public class ItemController {
 	private ItemService itemService;
 	@Resource(name = "adminService")
 	private AdminService adminService;
+	@Resource(name = "memberService")
+	private MemberService memberService;
 	@Autowired
 	private DateFormat dateFormat;
 	@Autowired
@@ -213,6 +220,37 @@ public class ItemController {
 	public String getTourDetailAJAX(String hbttourCode) throws JsonProcessingException {
 
 		return mapper.writeValueAsString(itemService.getTourDetailAJAX(hbttourCode));
+	}
+
+	@PostMapping("/buyNcart")
+	private String buyNcart(String buttonType, DiyDetailVO diyDetailVO, DiyTourVO diyTourVO, Authentication authentication, @RequestParam Map<String,String> hbtHotelCode){
+
+		//시큐리티세션에서 로그인한 회원정보받아오기
+		User user  = (User)authentication.getPrincipal();
+		//회원코드
+		String memCode = memberService.getMemCode(user.getUsername());
+		diyTourVO.setMemCode(memCode);
+		//diyCode
+		String hbtDiyCode = itemService.getNextDiyCode();
+		diyTourVO.setHbtDiyCode(hbtDiyCode);
+
+		//선택한 버튼에따라 데이터변경
+		if (buttonType.equals("장바구니")) {
+			diyTourVO.setIsPaid("N");
+			// Submit 1 버튼이 클릭된 경우 처리
+		} else if (buttonType.equals("바로구매")) {
+			diyTourVO.setIsPaid("Y");
+			// Submit 2 버튼이 클릭된 경우 처리
+		}
+
+		System.out.println(hbtHotelCode);
+		//diyDetailVO.setHbtHotelCode();
+
+
+		System.out.println(diyTourVO);
+		System.out.println(diyDetailVO);
+
+		return "redirect:/item/diyTourItem";
 	}
 
 
