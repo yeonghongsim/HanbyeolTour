@@ -101,7 +101,7 @@ public interface MemberService {
 	String getMemCode(String memid);
 	
 	// 회원 리뷰 리스트
-	List<MemberReviewVO> getMyReviewList(String memCode);
+	List<MemberReviewVO> getMyReviewList(MemberReviewVO memberReviewVO);
 	
 	// 리뷰 여부 체크
 	MemberReviewVO chkIsReviewed(String BuyCode);
@@ -111,4 +111,10 @@ public interface MemberService {
 	
 	// 리브 등록
 	void regMyReivew(MemberReviewVO memberReviewVO);
+	
+	// 리뷰 삭제
+	void delMyReview(String hbtMemReviewNum);
+	
+	// 논 리뷰 리스트
+	List<BuyVO> getNeedReviewList(String memCode);
 }
