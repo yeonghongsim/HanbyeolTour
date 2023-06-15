@@ -214,6 +214,11 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.getNextMyReviewNum");
 	}
 
+	@Override
+	public void regMyReivew(MemberReviewVO memberReviewVO) {
+		sqlSession.insert("memberMapper.regMyReivew", memberReviewVO);
+	}
+
 	
 	
 	

@@ -482,6 +482,24 @@
 		FROM HBT_MEM_REVIEW
 	</select>
 	
+	<insert id="regMyReivew">
+		INSERT INTO HBT_MEM_REVIEW (
+		    HBT_MEM_REVIEW_NUM
+		    , HBT_MEM_REVIEW_CONTENT
+		    , STARS
+		    , IS_REVIEWED
+		    , MEM_CODE
+		    , BUY_CODE
+		) VALUES (
+		    #{hbtMemReviewNum}
+		    , #{hbtMemReviewContent}
+		    , ${stars}
+		    , #{isReviewed}
+		    , #{memberVO.memCode}
+		    , #{buyVO.buyCode}
+		)
+	</insert>
+	
 </mapper>
 
 

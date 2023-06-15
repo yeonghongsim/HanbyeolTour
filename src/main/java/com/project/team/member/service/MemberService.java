@@ -108,4 +108,7 @@ public interface MemberService {
 	
 	// 리뷰 코드 조회
 	String getNextMyReviewNum();
+	
+	// 리브 등록
+	void regMyReivew(MemberReviewVO memberReviewVO);
 }

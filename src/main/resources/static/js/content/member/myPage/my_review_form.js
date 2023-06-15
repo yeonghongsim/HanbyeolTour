@@ -13,7 +13,6 @@ function isReviewed(buyCode, memCode){
 		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
 		data: {'buyCode' : buyCode},
 		success: function(result) {
-			console.log(result);
 			const review_area = document.querySelector('.review_area');
 
 			review_area.replaceChildren();
@@ -22,8 +21,17 @@ function isReviewed(buyCode, memCode){
 			
 			if(result == ''){
 				str += `<div class="row">`;
-				str += `	<div class="col mb-1">`;
-				str += `		별점 넣을곳`;
+				str += `	<div class="col mb-1 rating">`;
+				str += `		<input type="radio" id="star5" class="stars" name="stars" value="5">`;
+				str += `		<label for="star5" title="text"></label>`;
+				str += `		  <input type="radio" id="star4" class="stars" name="stars" value="4"> `;
+				str += `		  <label for="star4" title="text"></label>`;
+				str += `		  <input checked type="radio" id="star3" class="stars" name="stars" value="3">`;
+				str += `		  <label for="star3" title="text"></label>`;
+				str += `		  <input type="radio" id="star2" class="stars" name="stars" value="2">`;
+				str += `		  <label for="star2" title="text"></label>`;
+				str += `		  <input type="radio" id="star1" class="stars" name="stars" value="1">`;
+				str += `		  <label for="star1" title="text"></label>`;
 				str += `	</div>`;
 				str += `</div>`;
 				str += `<div class="row">`;
@@ -35,7 +43,40 @@ function isReviewed(buyCode, memCode){
 				str += `	</div>`;
 				str += `</div>`;
 			} else {
-				str += `2222`;
+				str += `<div class="row mb-2">`;
+				str += `	<div class="col">`;
+				str += `		<span>내 후기</span>`;
+				str += `	</div>`;
+				str += `</div>`;
+				str += `<div class="row">`;
+				str += `	<div class="col">`;
+				str += `		<div class="row mb-2">`;
+				str += `			<div class="offset-10 col-2">`;
+				str += `			</div>`;
+				str += `		</div>`;
+				str += `		<div class="row">`;
+				str += `			<div class="col">`;
+				str += `				<table class="review_table">`;
+				str += `				<colgroup>`;
+				str += `					<col width="70%">`;
+				str += `					<col width="18%">`;
+				str += `					<col width="12%">`;
+				str += `				</colgroup>`;
+				str += `				<tbody class="review_tbody">`;
+				str += `					<tr>`;
+				str += `						<td>${result.hbtMemReviewContent}</td>`;
+				str += `						<td>${result.stars}</td>`;
+				str += `					<td>`;
+				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}');" type="button" class="btn btn-primary w-100" value="수정하기">`;
+				str += `					</td>`;
+				str += `					</tr>`;
+				str += `				</tbody>`;
+				str += `				</table>`;
+				str += `			</div>`;
+				str += `		</div>`;
+				str += `	</div>`;
+				str += `</div>`;
+				
 			}
 			
 			review_area.insertAdjacentHTML('afterbegin', str);
@@ -47,9 +88,26 @@ function isReviewed(buyCode, memCode){
 	});
    //ajax end
 }
+function askToChange(buyCode, memCode){
+	const ask = confirm('후기를 수정하시겠습니까?');
+	let hbtMemReviewContent = document.querySelector('#hbtMemReviewContent').value;
+	
+	if(ask){
+		alert(buyCode + ' / ' + memCode + ' / ' + hbtMemReviewContent);
+	}
+}
 
 function regMyReview(buyCode, memCode){
 	let hbtMemReviewContent = document.querySelector('#hbtMemReviewContent');
+	
+	// 후기 별점 세팅
+	const starsAll = document.querySelectorAll('.stars');
+	let stars = 0;
+	starsAll.forEach(function(star){
+		if(star.checked){
+			stars = star.value;
+		}
+	});
 	
 	if(hbtMemReviewContent.value == ''){
 		hbtMemReviewContent.placeholder = '후기 내용을 입력해주세요.';
@@ -67,9 +125,11 @@ function regMyReview(buyCode, memCode){
 		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
 		data: {'hbtMemReviewContent' : hbtMemReviewContent.value
 				, 'buyVO.buyCode' : buyCode
-				, 'memberVO.memCode' : memCode},
+				, 'memberVO.memCode' : memCode
+				, 'stars' : stars},
 		success: function(result) {
-			alert('ajax 통신 성공');
+			
+			location.href='/myPage/getMyReview?buyCode='+buyCode;
 		},
 		error: function() {
 			alert('실패');
@@ -77,6 +137,39 @@ function regMyReview(buyCode, memCode){
 	});
    //ajax end
 	
+}
+
+function changeReivew(hbtMemReviewContent, stars, buyCode, memCode){
+	const review_tbody = document.querySelector('.review_tbody');
+	review_tbody.replaceChildren();
+	
+	let str = '';
+	
+	str += `<tr>`;
+	str += `	<td>`;
+	str += `		<input type="text" value="${hbtMemReviewContent}" id="hbtMemReviewContent" class="form-control">`;
+	str += `	</td>`;
+	str += `	<td>`;
+	str += `		<div class="row">`;
+	str += `			<div class="col mb-1 rating">`;
+	for(let i =5; i > 0; i--){
+		if(stars == i){
+	str += `	  			<input type="radio" checked id="star${i}" class="stars" name="stars" value="${i}">`;
+	str += `	  			<label for="star${i}" title="text"></label>`;		
+		} else {
+	str += `	  			<input type="radio" id="star${i}" class="stars" name="stars" value="${i}">`;
+	str += `	  			<label for="star${i}" title="text"></label>`;		
+		}
+	}
+	str += `			</div>`;
+	str += `		</div>`;
+	str += `	</td>`;
+	str += `	<td>`;
+	str += `		<input onclick="askToChange('${buyCode}', '${memCode}');" type="button" class="btn btn-primary w-100" value="변경하기">`;
+	str += `	</td>`;
+	str += `</tr>`;
+	
+	review_tbody.insertAdjacentHTML('afterbegin', str);
 	
 }
 

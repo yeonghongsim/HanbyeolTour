@@ -487,9 +487,7 @@ public class MyPageController {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
-		System.out.println("!@#!@#@!#!@#!@#" + buyCode);
 		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
-		
 		
 		return "content/member/myPage/my_review_form";
 	}
@@ -525,9 +523,9 @@ public class MyPageController {
 	public void regMyReviewAJAX(MemberReviewVO memberReviewVO) {
 		String hbtMemReviewNum = memberService.getNextMyReviewNum();
 		memberReviewVO.setHbtMemReviewNum(hbtMemReviewNum);
-		memberReviewVO.setIsReviewed("N");
-
-		System.out.println("regMyReviewAJAX run~" + memberReviewVO);
+		memberReviewVO.setIsReviewed("Y");
+		
+		memberService.regMyReivew(memberReviewVO);
 		
 	}
 	
