@@ -4,6 +4,7 @@ import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.util.*;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.project.team.admin.service.AdminService;
 import com.project.team.buy.vo.BuyDetailVO;
 import com.project.team.item.vo.DiyDetailVO;
@@ -222,33 +223,29 @@ public class ItemController {
 		return mapper.writeValueAsString(itemService.getTourDetailAJAX(hbttourCode));
 	}
 
-	@PostMapping("/buyNcart")
-	private String buyNcart(String buttonType, DiyDetailVO diyDetailVO, DiyTourVO diyTourVO, Authentication authentication, @RequestParam Map<String,String> hbtHotelCode){
+	@PostMapping("/buyNcartAJAX")
+	@ResponseBody
+	private String buyNcart(String diyTour,String diyTourDetail,
+							Authentication authentication) throws JsonProcessingException {
 
 		//시큐리티세션에서 로그인한 회원정보받아오기
 		User user  = (User)authentication.getPrincipal();
 		//회원코드
 		String memCode = memberService.getMemCode(user.getUsername());
-		diyTourVO.setMemCode(memCode);
 		//diyCode
 		String hbtDiyCode = itemService.getNextDiyCode();
-		diyTourVO.setHbtDiyCode(hbtDiyCode);
+		Map<String, Object> diyTourMap = mapper.readValue(diyTour, new TypeReference<Map<String, Object>>() {});
+		Map<String, List<Object>> diyTourDetailMap = mapper.readValue(diyTourDetail, new TypeReference<Map<String, List<Object>>>() {});
+		System.out.println(diyTourMap);
+		System.out.println(diyTourDetailMap);
 
-		//선택한 버튼에따라 데이터변경
-		if (buttonType.equals("장바구니")) {
-			diyTourVO.setIsPaid("N");
-			// Submit 1 버튼이 클릭된 경우 처리
-		} else if (buttonType.equals("바로구매")) {
-			diyTourVO.setIsPaid("Y");
-			// Submit 2 버튼이 클릭된 경우 처리
-		}
+		
+		
+		//디테일 세팅
 
-		System.out.println(hbtHotelCode);
-		//diyDetailVO.setHbtHotelCode();
+		//System.out.println(diyTourVO1);
 
 
-		System.out.println(diyTourVO);
-		System.out.println(diyDetailVO);
 
 		return "redirect:/item/diyTourItem";
 	}

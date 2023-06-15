@@ -16,6 +16,6 @@ public class DiyTourVO {
     private String areaCode;
     private String departDate;
     private String arriveDate;
-    private int traverPeriod;
+    private String traverPeriod;
     private String isPaid;
 }
