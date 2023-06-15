@@ -473,7 +473,6 @@ public class MyPageController {
 	@GetMapping("/getMyReview")
 	public String getMyReview(String buyCode, Model model) {
 		
-		System.out.println("!@#!@#@!#!@#!@#" + buyCode);
 		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
@@ -482,14 +481,26 @@ public class MyPageController {
 		return "content/member/myPage/my_review_form";
 	}
 	
+	@ResponseBody
+	@PostMapping("/getNeedReviewAJAX")
+	public List<BuyVO> getNeedReviewAJAX(BuyVO buyVO) {
+		
+		String memCode = memberService.getMemCode(buyVO.getMemberVO().getMemId());
+		
+		return memberService.getNeedReviewList(memCode);
+
+	}
+	
+	
 	
 	@ResponseBody
 	@PostMapping("/getAllReviewAJAX")
-	public List<MemberReviewVO> getAllReviewAJAX(String memId) {
-		String memCode = memberService.getMemCode(memId);
+	public List<MemberReviewVO> getAllReviewAJAX(MemberReviewVO memberReviewVO) {
+		String memCode = memberService.getMemCode(memberReviewVO.getMemberVO().getMemId());
+		memberReviewVO.getMemberVO().setMemCode(memCode);
 		
 		System.out.println("getAllReviewAJAX run~");
-		return memberService.getMyReviewList(memCode);
+		return memberService.getMyReviewList(memberReviewVO);
 	}
 	
 	@ResponseBody
@@ -508,14 +519,28 @@ public class MyPageController {
 		
 	}
 	
+	
+	
+	@ResponseBody
+	@PostMapping("/delMyReviewAJAX")
+	public void delMyReviewAJAX(String hbtMemReviewNum) {
+		
+		memberService.delMyReview(hbtMemReviewNum);
+
+	}
+	
 	@ResponseBody
 	@PostMapping("/regMyReviewAJAX")
 	public void regMyReviewAJAX(MemberReviewVO memberReviewVO) {
-		String hbtMemReviewNum = memberService.getNextMyReviewNum();
-		memberReviewVO.setHbtMemReviewNum(hbtMemReviewNum);
-		memberReviewVO.setIsReviewed("N");
-
-		System.out.println("regMyReviewAJAX run~" + memberReviewVO);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@" +memberReviewVO);
+		
+		if(memberReviewVO.getHbtMemReviewNum() == null) {
+			String hbtMemReviewNum = memberService.getNextMyReviewNum();
+			memberReviewVO.setHbtMemReviewNum(hbtMemReviewNum);
+		}
+		memberReviewVO.setIsReviewed("Y");
+		
+		memberService.regMyReivew(memberReviewVO);
 		
 	}
 	

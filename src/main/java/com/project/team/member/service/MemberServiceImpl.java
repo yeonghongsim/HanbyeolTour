@@ -201,8 +201,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<MemberReviewVO> getMyReviewList(String memCode) {
-		return sqlSession.selectList("memberMapper.getMyReviewList", memCode);
+	public List<MemberReviewVO> getMyReviewList(MemberReviewVO memberReviewVO) {
+		return sqlSession.selectList("memberMapper.getMyReviewList", memberReviewVO);
 	}
 	@Override
 	public MemberReviewVO chkIsReviewed(String BuyCode) {
@@ -212,6 +212,22 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public String getNextMyReviewNum() {
 		return sqlSession.selectOne("memberMapper.getNextMyReviewNum");
+	}
+
+	@Override
+	public void regMyReivew(MemberReviewVO memberReviewVO) {
+		sqlSession.insert("memberMapper.regMyReivew", memberReviewVO);
+		
+	}
+
+	@Override
+	public void delMyReview(String hbtMemReviewNum) {
+		sqlSession.delete("memberMapper.delMyReview", hbtMemReviewNum);
+	}
+
+	@Override
+	public List<BuyVO> getNeedReviewList(String memCode) {
+		return sqlSession.selectList("memberMapper.getNeedReviewList", memCode);
 	}
 
 	

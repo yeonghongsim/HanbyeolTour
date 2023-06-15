@@ -233,6 +233,12 @@
 		ORDER BY IS_MAIN DESC
 	</select>
 
+<!--	DIY_CODE 생성-->
+	<select id="getNextDiyCode" resultType="string">
+		SELECT 'HBT_DIY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_DIY_CODE, 9))), 0) + 1, 3, '0')
+		FROM HBT_DIY_TOUR
+	</select>
+
 
 
 </mapper>

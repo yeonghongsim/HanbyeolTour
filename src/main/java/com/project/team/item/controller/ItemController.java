@@ -4,10 +4,16 @@ import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.util.*;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.project.team.admin.service.AdminService;
 import com.project.team.buy.vo.BuyDetailVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
+import com.project.team.member.service.MemberService;
 import com.project.team.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +31,8 @@ public class ItemController {
 	private ItemService itemService;
 	@Resource(name = "adminService")
 	private AdminService adminService;
+	@Resource(name = "memberService")
+	private MemberService memberService;
 	@Autowired
 	private DateFormat dateFormat;
 	@Autowired
@@ -213,6 +221,33 @@ public class ItemController {
 	public String getTourDetailAJAX(String hbttourCode) throws JsonProcessingException {
 
 		return mapper.writeValueAsString(itemService.getTourDetailAJAX(hbttourCode));
+	}
+
+	@PostMapping("/buyNcartAJAX")
+	@ResponseBody
+	private String buyNcart(String diyTour,String diyTourDetail,
+							Authentication authentication) throws JsonProcessingException {
+
+		//시큐리티세션에서 로그인한 회원정보받아오기
+		User user  = (User)authentication.getPrincipal();
+		//회원코드
+		String memCode = memberService.getMemCode(user.getUsername());
+		//diyCode
+		String hbtDiyCode = itemService.getNextDiyCode();
+		Map<String, Object> diyTourMap = mapper.readValue(diyTour, new TypeReference<Map<String, Object>>() {});
+		Map<String, List<Object>> diyTourDetailMap = mapper.readValue(diyTourDetail, new TypeReference<Map<String, List<Object>>>() {});
+		System.out.println(diyTourMap);
+		System.out.println(diyTourDetailMap);
+
+		
+		
+		//디테일 세팅
+
+		//System.out.println(diyTourVO1);
+
+
+
+		return "redirect:/item/diyTourItem";
 	}
 
 

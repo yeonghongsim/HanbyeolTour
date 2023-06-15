@@ -458,12 +458,15 @@
 	
 	<select id="getMyReviewList" resultMap="myReview">
 		SELECT HBT_MEM_REVIEW_NUM
-			, HBT_MEM_REVIEW_CONTENT
+			, RPAD(SUBSTR(HBT_MEM_REVIEW_CONTENT, 0, 20)
+		        , (SELECT LENGTH(HBT_MEM_REVIEW_CONTENT) FROM HBT_MEM_REVIEW WHERE HBT_MEM_REVIEW_NUM = REVIEW.HBT_MEM_REVIEW_NUM)
+		        , '*') HBT_MEM_REVIEW_CONTENT
 			, STARS
 			, IS_REVIEWED
 			, MEM_CODE
 			, BUY_CODE
-		FROM HBT_MEM_REVIEW
+		FROM HBT_MEM_REVIEW REVIEW
+		WHERE MEM_CODE = #{memberVO.memCode}
 	</select>
 	
 	<select id="chkIsReviewed" resultMap="myReview">
@@ -480,6 +483,60 @@
 	<select id="getNextMyReviewNum" resultType="string">
 		SELECT 'M_REVIEW_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_MEM_REVIEW_NUM, 10))), 0) + 1, 3, '0')
 		FROM HBT_MEM_REVIEW
+	</select>
+	
+	<insert id="regMyReivew">
+		MERGE INTO HBT_MEM_REVIEW
+			USING DUAL
+			ON (HBT_MEM_REVIEW_NUM = #{hbtMemReviewNum})
+			WHEN MATCHED THEN
+		UPDATE SET HBT_MEM_REVIEW_CONTENT = #{hbtMemReviewContent}
+					, STARS = ${stars}
+		WHEN NOT MATCHED THEN
+		INSERT (
+		    HBT_MEM_REVIEW_NUM
+		    , HBT_MEM_REVIEW_CONTENT
+		    , STARS
+		    , IS_REVIEWED
+		    , MEM_CODE
+		    , BUY_CODE
+		) VALUES (
+		    #{hbtMemReviewNum}
+		    , #{hbtMemReviewContent}
+		    , ${stars}
+		    , #{isReviewed}
+		    , #{memberVO.memCode}
+		    , #{buyVO.buyCode}
+		)
+	</insert>
+	
+	<delete id="delMyReview">
+		DELETE HBT_MEM_REVIEW
+		WHERE HBT_MEM_REVIEW_NUM = #{hbtMemReviewNum}
+	</delete>
+	
+	<select id="getNeedReviewList" resultMap="buyMapper.buy">
+		SELECT BUY.BUY_CODE
+		    , BUY_TOTAL_PRICE
+		    , TO_CHAR(BUY_DATE, 'YYYY-MM-DD') BUY_DATE
+			FROM HBT_BUY BUY
+		LEFT JOIN HBT_MEM_REVIEW REVIEW
+			ON BUY.BUY_CODE = REVIEW.BUY_CODE
+			WHERE REVIEW.BUY_CODE IS NULL
+			AND BUY.MEM_CODE = #{memberVO.memCode}
+		<!-- 
+		SELECT BUY_CODE
+		    , BUY_TOTAL_PRICE
+		    , BUY_DATE
+		FROM HBT_BUY
+		WHERE MEM_CODE = 'MEM_008'
+		AND BUY_CODE NOT IN (
+		                            SELECT BUY_CODE
+		                            FROM HBT_MEM_REVIEW
+		                            WHERE MEM_CODE = 'MEM_008'
+		                        )
+		 -->	
+			
 	</select>
 	
 </mapper>
