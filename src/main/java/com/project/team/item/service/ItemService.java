@@ -34,4 +34,6 @@ public interface ItemService {
 	List<HashMap<String, Object>> getTourAJAX(String areaKorName);
 	List<HashMap<String, Object>> getHotelDetailAJAX(String hbtHotelCode);
 	List<HashMap<String, Object>> getTourDetailAJAX(String hbtTourCode);
+	//다음번 diyCode조회
+	String getNextDiyCode();
 }

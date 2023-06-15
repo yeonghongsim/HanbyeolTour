@@ -7,6 +7,7 @@ import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberSideMenuVO;
@@ -81,7 +82,8 @@ public interface MemberService {
 	List<BoardRequestVO> getQnaList(String memCode);
 	List<ReqReplyVO> getQnaReplyList(String memCode);
 	
-	
+	//상품 문의 관련 
+	ItemVO getItemDetailForQna(String itemCode);
 	
 	
 	
@@ -99,11 +101,20 @@ public interface MemberService {
 	String getMemCode(String memid);
 	
 	// 회원 리뷰 리스트
-	List<MemberReviewVO> getMyReviewList(String memCode);
+	List<MemberReviewVO> getMyReviewList(MemberReviewVO memberReviewVO);
 	
 	// 리뷰 여부 체크
 	MemberReviewVO chkIsReviewed(String BuyCode);
 	
 	// 리뷰 코드 조회
 	String getNextMyReviewNum();
+	
+	// 리브 등록
+	void regMyReivew(MemberReviewVO memberReviewVO);
+	
+	// 리뷰 삭제
+	void delMyReview(String hbtMemReviewNum);
+	
+	// 논 리뷰 리스트
+	List<BuyVO> getNeedReviewList(String memCode);
 }

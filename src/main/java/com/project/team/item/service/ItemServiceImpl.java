@@ -87,5 +87,10 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getTourDetailAJAX", hbtTourCode);
 	}
 
+	@Override
+	public String getNextDiyCode() {
+		return sqlSession.selectOne("itemMapper.getNextDiyCode");
+	}
+
 
 }

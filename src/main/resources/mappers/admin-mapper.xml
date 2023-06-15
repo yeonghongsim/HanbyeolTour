@@ -473,6 +473,7 @@
 		FROM HBT_BUY
 		WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year}
 		UNION ALL
+		<!-- 작년 매출 현황 -->
 		SELECT NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '01', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_01"
 			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '02', BUY_TOTAL_PRICE, 0)) ,0) AS "MONTH_02"
 			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '03', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_03"
@@ -489,6 +490,56 @@
         WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year} - 1
 	</select>
 	
+	<!-- 분기별 매출 현황 -->
+	<select id="getQuarterlySales" resultType="HashMap">
+		SELECT *
+		FROM (
+		    SELECT
+		        '1분기' AS Quarter,
+		        NVL(SUM(BUY_TOTAL_PRICE), 0) AS QUARTERLY_SALES
+		    FROM
+		        HBT_BUY
+		    WHERE
+		        EXTRACT(YEAR FROM BUY_DATE) = #{year}
+		        AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 1 AND 3
+		    UNION ALL 
+		    SELECT
+		        '2분기' AS Quarter,
+		        NVL(SUM(BUY_TOTAL_PRICE), 0) AS QUARTERLY_SALES
+		    FROM
+		        HBT_BUY
+		    WHERE
+		        EXTRACT(YEAR FROM BUY_DATE) = #{year}
+		        AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 4 AND 6
+		    UNION ALL 
+		    SELECT
+		        '3분기' AS Quarter,
+		        NVL(SUM(BUY_TOTAL_PRICE), 0) AS QUARTERLY_SALES
+		    FROM
+		        HBT_BUY
+		    WHERE
+		        EXTRACT(YEAR FROM BUY_DATE) = #{year}
+		        AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 7 AND 9
+		    UNION ALL 
+		    SELECT
+		        '4분기' AS Quarter,
+		        NVL(SUM(BUY_TOTAL_PRICE), 0) AS QUARTERLY_SALES
+		    FROM
+		        HBT_BUY
+		    WHERE
+		        EXTRACT(YEAR FROM BUY_DATE) = #{year}
+		        AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 10 AND 12
+		)
+		PIVOT (
+		    MAX(QUARTERLY_SALES)
+		    FOR Quarter IN (
+		        '1분기' AS "1분기",
+		        '2분기' AS "2분기",
+		        '3분기' AS "3분기",
+		        '4분기' AS "4분기"
+		    )
+		)
+	</select>
 	
 	
 
