@@ -37,18 +37,22 @@
 			<div class="col-6">
 				<canvas id="myChart1"></canvas>
 			</div>  
+			<div class="col-6">
+				<canvas id="myChart2"></canvas>
+			</div>  
 		</div>
 		<div class="row mt-5">
-			<div class="col-5">
+			<div class="col">
 				<table class="table text-center">
 					<colgroup>
 						<col width="">
 					</colgroup>
 					<thead>
 						<tr>
-							<td colspan="12">매출 표(보류)</td>
+							<td colspan="13">매출 표(보류)</td>
 						</tr>
 						<tr>
+							<td></td>
 			               <th:block th:each="month : ${#numbers.sequence(1,12)}">
 			                	<!-- 자릿수 맞춰주기 -->
 			               <td>[[${#numbers.formatInteger(month, 2)}]]월</td>
@@ -56,10 +60,11 @@
 	            		</tr>
 					</thead>
 					<tbody>
-						<tr th:each = "mapData, state :${dataList}" > 
-			               <td>
-			               
-			               </td>
+						<tr th:each = "mapData, state :${dataList}" >
+							<td th:if="${state.index == 0}">올해 판매량</td>
+							<td th:if="${state.index == 1}">올해 매출액</td>
+							<td th:if="${state.index == 2}">작년 매출액</td>
+							<!-- <td>[[${state.index == 0 ? '판매 건수' : '판매 금액'}]]</td> -->
 			               <!-- 여러개의 mapData를 또 반복 돌리면서 해당 각각의 mapData의 value 값을 뽑음 -->
 			               <th:block th:each="data : ${mapData}">
 			                  <td>[[${data.value}]]</td>

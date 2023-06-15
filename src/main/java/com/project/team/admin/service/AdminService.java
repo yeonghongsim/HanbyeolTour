@@ -100,6 +100,9 @@ public interface AdminService {
 	//기간별 매출 조회
 	List<Map<String, Integer>> getSalesStatisticsByPeriod(int year);
 	
+	//분기별 매출 조회
+	List<Map<String, Integer>> getQuarterlySales(int year);
+	
 
 	
 	
