@@ -30,6 +30,7 @@ import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
+import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.DateUtil;
 
@@ -60,6 +61,8 @@ public class MyPageController {
 	
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_007");
+		
 		
 		return "content/member/myPage/account_deletion";
 	}
@@ -84,6 +87,7 @@ public class MyPageController {
 	public String changeMyPwPage(Model model) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_006");
 		
 		return "content/member/myPage/check_pw";
 	}
@@ -119,6 +123,7 @@ public class MyPageController {
 	public String changeMyPwForm(Model model) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_006");
 		
 		return "content/member/myPage/change_my_pw";
 	}
@@ -169,6 +174,7 @@ public class MyPageController {
 	public String updateMyInfoPage(Model model, Authentication authentication) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_005");
 		
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		System.out.println("@@ Info 정보 :" + memInfo);
@@ -240,6 +246,7 @@ public class MyPageController {
 		
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
 		return "content/member/myPage/check_my_reservation";
 	}
@@ -331,6 +338,8 @@ public class MyPageController {
 	public String reservationDetail(Model model, String buyCode, BuyVO buyVO, Authentication authentication) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_001");
+		
 		// id, buyCode set 
 		buyVO.setBuyCode(buyCode);
 		String memCode = memberService.getMemCode(authentication.getName());
@@ -358,6 +367,7 @@ public class MyPageController {
 	public String checkMyCancelation(Model model) {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
 		return "content/member/myPage/check_my_cancelation";
 	}
@@ -477,21 +487,31 @@ public class MyPageController {
 		// side 메뉴 리스트 
 		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
-		System.out.println("!@#!@#@!#!@#!@#" + buyCode);
 		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
-		
 		
 		return "content/member/myPage/my_review_form";
 	}
 	
+	@ResponseBody
+	@PostMapping("/getNeedReviewAJAX")
+	public List<BuyVO> getNeedReviewAJAX(BuyVO buyVO) {
+		
+		String memCode = memberService.getMemCode(buyVO.getMemberVO().getMemId());
+		
+		return memberService.getNeedReviewList(memCode);
+
+	}
+	
+	
 	
 	@ResponseBody
 	@PostMapping("/getAllReviewAJAX")
-	public List<MemberReviewVO> getAllReviewAJAX(String memId) {
-		String memCode = memberService.getMemCode(memId);
+	public List<MemberReviewVO> getAllReviewAJAX(MemberReviewVO memberReviewVO) {
+		String memCode = memberService.getMemCode(memberReviewVO.getMemberVO().getMemId());
+		memberReviewVO.getMemberVO().setMemCode(memCode);
 		
 		System.out.println("getAllReviewAJAX run~");
-		return memberService.getMyReviewList(memCode);
+		return memberService.getMyReviewList(memberReviewVO);
 	}
 	
 	@ResponseBody
@@ -510,14 +530,28 @@ public class MyPageController {
 		
 	}
 	
+	
+	
+	@ResponseBody
+	@PostMapping("/delMyReviewAJAX")
+	public void delMyReviewAJAX(String hbtMemReviewNum) {
+		
+		memberService.delMyReview(hbtMemReviewNum);
+
+	}
+	
 	@ResponseBody
 	@PostMapping("/regMyReviewAJAX")
 	public void regMyReviewAJAX(MemberReviewVO memberReviewVO) {
-		String hbtMemReviewNum = memberService.getNextMyReviewNum();
-		memberReviewVO.setHbtMemReviewNum(hbtMemReviewNum);
-		memberReviewVO.setIsReviewed("N");
-
-		System.out.println("regMyReviewAJAX run~" + memberReviewVO);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@" +memberReviewVO);
+		
+		if(memberReviewVO.getHbtMemReviewNum() == null) {
+			String hbtMemReviewNum = memberService.getNextMyReviewNum();
+			memberReviewVO.setHbtMemReviewNum(hbtMemReviewNum);
+		}
+		memberReviewVO.setIsReviewed("Y");
+		
+		memberService.regMyReivew(memberReviewVO);
 		
 	}
 	

@@ -4,8 +4,68 @@ function getMyReview(buyCode){
 	location.href='/myPage/getMyReview?buyCode=' + buyCode;
 }
 
-function getNeedReview(){
-	alert('getNeedReview btn');
+function getNeedReview(memId){
+	const get_result_area = document.querySelector('.get_result_area');
+	
+	//ajax start
+	$.ajax({
+		url: '/myPage/getNeedReviewAJAX', //요청경로
+		type: 'post',
+		async: true, // 동기방식(Ajax사용), false == 비동기방식
+		//contentType: 'application/json; charset=UTF-8',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		//필요한 데이터
+		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+		data: {'memberVO.memId' : memId},
+		success: function(result) {
+			console.log(result.length);
+			
+			
+			get_result_area.replaceChildren();
+			
+			let str = '';
+			
+			str += `<h3 class="mb-2">미작성 후기 목록 <span style="font-size: 1rem;">( ${result.length} )</span></h3>`;
+			str += `<table class="table table-hover text-center">`;
+			str += `	<colgroup>`;
+			str += `		<col width="26%">`;
+			str += `		<col width="37%">`;
+			str += `		<col width="37%">`;
+			str += `	</colgroup>`;
+			str += `	<thead class="table-thead ye-bc">`;
+			str += `		<tr>`;
+			str += `			<td>구매 코드</td>`;
+			str += `			<td>구매 가격</td>`;
+			str += `			<td>구매 일자</td>`;
+			str += `		</tr>`;
+			str += `	</thead>`;	
+			if(result.length == 0){
+				
+			str += `		<tr>`;
+			str += `			<td colspan="3">후기를 작성해 주세요</td>`;
+			str += `		</tr>`;
+				
+			} else {
+				
+				result.forEach(function(buy){
+			str += `		<tr onclick="getMyReview('${buy.buyCode}');" class="pointer">`;
+			str += `			<td>${buy.buyCode}</td>`;
+			str += `			<td>${buy.buyTotalPrice}</td>`;
+			str += `			<td>${buy.buyDate}</td>`;
+			str += `		</tr>`;
+				});
+			}
+			
+			get_result_area.insertAdjacentHTML('afterbegin', str);
+			
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+   //ajax end
+	
+	
 }
 
 function getAllReview(memId){
@@ -20,44 +80,54 @@ function getAllReview(memId){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		//필요한 데이터
 		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
-		data: {'memId' : memId},
+		data: {'memberVO.memId' : memId},
 		success: function(result) {
-			console.log(result);
-				let str = '';
 				
-				str += `<table class="table text-center">`;
-				str += `	<colgroup>`;
-				str += `		<col width="15%">`;
-				str += `		<col width="30%">`;
-				str += `		<col width="*">`;
-				str += `		<col width="15%">`;
-				str += `	</colgroup>`;
-				str += `	<thead>`;
-				str += `		<tr>`;
-				str += `			<td>No.</td>`;
-				str += `			<td>구매코드</td>`;
-				str += `			<td>후기 내용</td>`;
-				str += `			<td>별점</td>`;
-				str += `		</tr>`;
-				str += `	</thead>`;
+			get_result_area.replaceChildren();
+			let str = '';
 			
-			if(result.size == null){
-				get_result_area.replaceChildren();
+			str += `<h3 class="mb-2">후기 목록 <span style="font-size: 1rem;">( ${result.length} )</span></h3>`;
+			str += `<table class="table table-hover text-center">`;
+			str += `	<colgroup>`;
+			str += `		<col width="20%">`;
+			str += `		<col width="*">`;
+			str += `		<col width="15%">`;
+			str += `	</colgroup>`;
+			str += `	<thead class="table-thead ye-S-bc">`;
+			str += `		<tr>`;
+			str += `			<td>구매코드</td>`;
+			str += `			<td>후기 내용</td>`;
+			str += `			<td>별점</td>`;
+			str += `		</tr>`;
+			str += `	</thead>`;
+			str += `	<tbody>`;
+			
+			if(result.length == 0){
 				
-				str += `	<tbody>`;
-				str += `		<tr>`;
-				str += `			<td colspan="4">후기를 작성해 주세요.</td>`;
-				str += `		</tr>`;
-				str += `	</tbody>`;
-				str += `</table>`;
-				
-				get_result_area.insertAdjacentHTML('afterbegin', str);
-				
-				
+			str += `		<tr>`;
+			str += `			<td colspan="3">후기를 작성해 주세요.</td>`;
+			str += `		</tr>`;
 				
 			} else{
-				alert(1);
+			
+			result.forEach(function(review, idx){
+			str += `		<tr onclick="getMyReview('${review.buyVO.buyCode}');" class="pointer">`;
+			str += `			<td>${review.buyVO.buyCode}</td>`;
+			str += `			<td style="text-align: left; padding-left: 1rem;">${review.hbtMemReviewContent}</td>`;
+			str += `			<td>${review.stars}</td>`;
+			str += `		</tr>`;
+				
+			});	
+				
+				
+				
 			}
+
+			str += `	</tbody>`;
+			str += `</table>`;
+			
+			
+			get_result_area.insertAdjacentHTML('afterbegin', str);
 			
 		},
 		error: function() {
@@ -219,4 +289,5 @@ function regMyReview(buyCode, memCode){
 }
 */
 function init(){
+
 }

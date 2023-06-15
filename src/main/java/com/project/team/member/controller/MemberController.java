@@ -22,6 +22,7 @@ import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.service.BuyService;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
@@ -218,7 +219,7 @@ public class MemberController {
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		model.addAttribute("memInfo", memInfo);
 		String memCode = memberService.getMemCode(memInfo.getMemId());
-				
+		
 		// 1개월 내 구매상태 정보 조회 
 		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
 		System.out.println(buyStatusInOneMonthList);
@@ -226,11 +227,31 @@ public class MemberController {
 		
 		//문의 내역 조회 
 		List<BoardRequestVO> qnaList =  memberService.getQnaList(memCode);
+		System.out.println("*** qnaList : " + qnaList);
+		
+		// 상품 정보 조회를 위한 itemCodeList
+		List<String> itemCodeList = new ArrayList<>();
+		for (BoardRequestVO question : qnaList) {
+			if(question.getItemVO()!= null) {
+				itemCodeList.add(question.getItemVO().getItemCode());
+			}
+		}
+		System.out.println("*** itemCodeList : " + itemCodeList);
+		// 아이템 상세 정보 조회
+		List<ItemVO> itemDetailList = new ArrayList<>();
+		for (String itemCode : itemCodeList) {
+		    ItemVO itemDetail = memberService.getItemDetailForQna(itemCode);
+		    itemDetailList.add(itemDetail);
+		}
+		System.out.println("*** itemDetailList : " + itemDetailList);
+		
 		List<ReqReplyVO> qnaReplyList = memberService.getQnaReplyList(memCode);
 		
 		Map<String, Object> qnaMap = new HashMap<>();
 		qnaMap.put("qnaList", qnaList);
 		qnaMap.put("qnaReplyList", qnaReplyList);
+		qnaMap.put("itemDetailList", itemDetailList);
+		
 		
 		model.addAttribute("qnaMap", qnaMap);
 		System.out.println("*** MAP DATA : " + qnaMap);

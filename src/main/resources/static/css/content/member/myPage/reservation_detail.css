@@ -17,7 +17,7 @@
 	letter-spacing: -2px;
 	vertical-align: middle;
 	margin-top: 1.5rem;
-	color:#ffd000;
+	color: black;
 }
 
 /* 상단바 */
@@ -110,7 +110,7 @@
 /* 결제 정보 */
 
 .price-box{
-    background-color: #fff9d4;
+    background-color: #fafafa;
     border-radius: 6px;
     margin: 16px 0;
     padding: 1.5rem;

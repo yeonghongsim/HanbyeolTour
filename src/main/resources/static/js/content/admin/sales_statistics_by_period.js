@@ -20,6 +20,7 @@ function getChartDataAJAX(){
 			//차트 그리는 함수
 			drawContrastChart(result); //받아온 데이터 매개변수로 사용
 			drawthisYearChart(result);
+			drawQuarterSaleChart(result);
 			
 		},
 		error: function() {
@@ -68,7 +69,10 @@ const ctx = document.getElementById('myChart');
 				title: {
 					display: true,
 					text: (ctx) => '당해년도 / 작년 매출 비교 그래프'
-				}
+				},
+				legend: {
+					position: 'top',
+				},
 			},
 			interaction: {
 				intersect: false,
@@ -93,7 +97,9 @@ function drawthisYearChart(data){
 		        label: '판매 건수',
 		        data: data['thisYearCntList'], //월별 판매건수
 		        borderWidth: 2,
-		        yAxisID: 'y' //차트와 연결되는 y축
+		        yAxisID: 'y', //차트와 연결되는 y축
+		        borderColor: "rgba(255, 176, 100, 1)",
+		        backgroundColor: "rgba(255, 207, 159, 0.5)",
 	      	}
 	      ]
 	    },
@@ -102,7 +108,10 @@ function drawthisYearChart(data){
 				title: {
 					display: true,
 					text: (ctx) => '당해년도 월별 판매량'
-				}
+				},
+				legend: {
+					position: 'bottom',
+				},
 			},
 	      scales: {
 	        y: { 
@@ -114,6 +123,57 @@ function drawthisYearChart(data){
 	      }
 	    }
 	  });
+}
+
+//분기별 매출 차트 그리기
+function drawQuarterSaleChart(data){
+	
+	const ctx = document.getElementById('myChart2');
+
+	//차트
+	new Chart(ctx, {
+		type: 'polarArea',
+		data: {
+			labels: ['1분기', '2분기', '3분기', '4분기'],
+			datasets: [
+				{
+					data: data['quarterSaleList'],
+					backgroundColor: [
+						"rgba(255, 201, 14, 0.5)",
+						"rgba(255, 177, 193, 0.5)",
+						"rgba(154, 208, 245, 0.5)",
+						"rgba(153, 206, 206, 0.5)",
+					]
+				}
+			]
+
+		},
+		options: {
+			responsive: true,
+			scales: {
+				r: {
+					pointLabels: {
+						display: true,
+						centerPointLabels: true,
+						font: {
+							size: 12
+						}
+					}
+				}
+			},
+			plugins: {
+				legend: {
+					position: 'bottom',
+				},
+				title: {
+					display: true,
+					text: '분기별 매출 현황'
+				}
+			}
+		},
+		
+	})
+	
 }
 
 //select 박스 년도 변경 시 차트 다시 그리기
