@@ -23,7 +23,6 @@ import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
-import com.project.team.admin.vo.StatisticsVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
