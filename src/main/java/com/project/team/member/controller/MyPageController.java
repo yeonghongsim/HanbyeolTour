@@ -58,23 +58,17 @@ public class MyPageController {
 	// 회원 탈퇴 페이지로 이동 
 	@GetMapping("/accountDeletion")
 	public String accountDeletionPage(Model model) {
-	
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_007");
-		
 		
 		return "content/member/myPage/account_deletion";
 	}
 	
 	
 	//탈퇴 기능 실행 
-	@PostMapping("/accountDeletion")
+	@PostMapping("/accountDeletionAJAX")
 	@ResponseBody
 	public String accountDeletion(Model model, String memId) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
-		
 		//상태코드 변경 (2)
 		memberService.updateMemStatusCodeTo2(memId);
 		
@@ -85,8 +79,7 @@ public class MyPageController {
 	//비밀번호 변경 페이지로 이동
 	@GetMapping("/changeMyPwPage")
 	public String changeMyPwPage(Model model) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_006");
 		
 		return "content/member/myPage/check_pw";
@@ -96,8 +89,6 @@ public class MyPageController {
 	@PostMapping("/checkPwAJAX")
 	@ResponseBody
 	public boolean checkPwAjax(Model model, String checkPw, Authentication authentication) {
-		// side 메뉴 리스트 
-		//model.addAttribute("msMenuList", memberService.getMsMenuList());
 		System.out.println("@@ 인풋태그 입력값 : " + checkPw);
 		
 		//입력한 비밀번호 가져와서 암호화 처리 
@@ -121,8 +112,7 @@ public class MyPageController {
 	// 새로운 비밀번호 입력 페이지로 이동
 	@GetMapping("/changeMyPwForm")
 	public String changeMyPwForm(Model model) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_006");
 		
 		return "content/member/myPage/change_my_pw";
@@ -132,9 +122,7 @@ public class MyPageController {
 	@PostMapping("/changeMyPwFormAJAX")
 	@ResponseBody
 	public boolean changeMyPwFormAjax(Model model, String memId, String memPw, Authentication authentication) {
-		// side 메뉴 리스트 
-		//model.addAttribute("msMenuList", memberService.getMsMenuList());
-		
+				
 		//기존의 비밀번호 
 		String encodedPw = memberService.getMemPw(memId);
 		System.out.println("@@회원의 DB에 등록된 비번 : " + encodedPw);
@@ -172,8 +160,7 @@ public class MyPageController {
 	// 내정보 수정 페이지로 이동 
 	@GetMapping("/updateMyInfo")
 	public String updateMyInfoPage(Model model, Authentication authentication) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_005");
 		
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
@@ -243,9 +230,7 @@ public class MyPageController {
 			buyVO.setFromDate(firstDate);
 		}
 		
-		
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// sideMenu colorActivate를 위한 msMenuCode  
 		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
 		return "content/member/myPage/check_my_reservation";
@@ -336,8 +321,7 @@ public class MyPageController {
 	//예약 상세 페이지로 이동 
 	@GetMapping("/reservationDetail")
 	public String reservationDetail(Model model, String buyCode, BuyVO buyVO, Authentication authentication) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
 		// id, buyCode set 
@@ -365,9 +349,8 @@ public class MyPageController {
 	//예약취소 내역 확인 페이지로 이동 
 	@GetMapping("/checkMyCancelation")
 	public String checkMyCancelation(Model model) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
-		model.addAttribute("msMenuCode", "MS_MENU_001");
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_002");
 		
 		return "content/member/myPage/check_my_cancelation";
 	}
@@ -387,25 +370,26 @@ public class MyPageController {
 		boardRequestVO.getMemberVO().setMemCode(memInfo.getMemCode());
 		boardRequestVO.getMemberVO().setMemRole(memInfo.getMemRole());
 		
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
-		
 		boardRequestVO.setIsAnswer("N");
 		model.addAttribute("requestListN", boardService.getBoardReqList(boardRequestVO));
 		
 		boardRequestVO.setIsAnswer("Y");
 		model.addAttribute("requestListY", boardService.getBoardReqList(boardRequestVO));
 		
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_003");
+		
 		return "content/member/myPage/check_my_request";
 	}
 	
 	@GetMapping("/regRequestForm")
 	public String regRequestForm(MemberVO memberVO, Model model) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		model.addAttribute("memInfo", memberVO);
 		model.addAttribute("itemImgList", itemService.getItemMainImg());
+		
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_003");
 		
 		return "content/member/myPage/reg_request_form";
 	}
@@ -416,11 +400,13 @@ public class MyPageController {
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		model.addAttribute("memInfo", memInfo);
 		
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
 		model.addAttribute("itemCode", itemCode);
 		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_003");
 		
 		return "content/member/myPage/req_detail";
 		
@@ -472,24 +458,26 @@ public class MyPageController {
 	@GetMapping("/checkMyReview")
 	public String checkMyReview(Model model, MemberVO memberVO) {
 		String memCode = memberService.getMemCode(memberVO.getMemId());
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
+
 		System.out.println("받아온 memCode : " + memberVO.getMemCode());
 		model.addAttribute("memCode", memberVO.getMemCode());
 		
 		model.addAttribute("myBuyList", buyService.getBuyList(memCode));
+		
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_004");
 		
 		return "content/member/myPage/check_my_review";
 	}
 	
 	@GetMapping("/getMyReview")
 	public String getMyReview(String buyCode, Model model) {
-		// side 메뉴 리스트 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
 		System.out.println("!@#!@#@!#!@#!@#" + buyCode);
 		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
 		
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_004");
 		
 		return "content/member/myPage/my_review_form";
 	}

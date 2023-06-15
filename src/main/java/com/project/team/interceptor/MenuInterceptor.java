@@ -1,4 +1,4 @@
-package com.project.team.interepter;
+package com.project.team.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,7 +9,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class MenuIntercepter implements HandlerInterceptor {
+public class MenuInterceptor implements HandlerInterceptor {
 	
 	@Resource(name = "adminService")
 	private AdminService adminService;
