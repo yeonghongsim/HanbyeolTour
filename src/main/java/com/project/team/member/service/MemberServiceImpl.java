@@ -96,6 +96,12 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.update("memberMapper.updateMemStatusCodeTo2", memId);
 	}
 	
+	// 아이디 조회
+	@Override
+	public String getMemId(String memCode) {
+		return sqlSession.selectOne("memberMapper.getMemId", memCode);
+	}
+	
 	// 비밀번호 조회 
 	@Override
 	public String getMemPw(String memId) {
@@ -229,6 +235,8 @@ public class MemberServiceImpl implements MemberService{
 	public List<BuyVO> getNeedReviewList(String memCode) {
 		return sqlSession.selectList("memberMapper.getNeedReviewList", memCode);
 	}
+
+	
 
 	
 	
