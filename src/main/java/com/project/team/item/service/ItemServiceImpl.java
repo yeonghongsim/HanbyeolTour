@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.team.item.vo.ItemVO;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("itemService")
 public class ItemServiceImpl implements ItemService{
@@ -90,6 +93,13 @@ public class ItemServiceImpl implements ItemService{
 	@Override
 	public String getNextDiyCode() {
 		return sqlSession.selectOne("itemMapper.getNextDiyCode");
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void setDiyTour(DiyTourVO diyTourVO, List<DiyDetailVO> detailList) {
+		sqlSession.insert("itemMapper.setDiyTour", diyTourVO);
+		sqlSession.insert("itemMapper.setDiyTourDetail", detailList);
 	}
 
 
