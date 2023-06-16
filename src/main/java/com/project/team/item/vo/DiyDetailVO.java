@@ -14,10 +14,7 @@ public class DiyDetailVO {
     private String hbtDiyDetailCode;
     private int hbtDiyDay;
     private String hbtDiyCode;
-    //private String hbtTourItemCode;
-    //private String hbtHotelCode;
-
-    private List<Map<String,String>> hbtTourItemCode;
-    private List<Map<String,String>> hbtHotelCode;
+    private String hbtTourItemCode;
+    private String hbtHotelCode;
 
 }

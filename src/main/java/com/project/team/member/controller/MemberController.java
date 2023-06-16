@@ -27,11 +27,13 @@ import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.MailService;
+import com.project.team.util.MailVO;
 
 import jakarta.annotation.Resource;
 import jakarta.mail.Address;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 
 
 
@@ -89,11 +91,47 @@ public class MemberController {
 		return "content/member/join_notice";
 	}
 	
-	// 임시로 페이지 보기 위해 만들어 놓음 (회원가입 없이 페이지 보려고)
-	@GetMapping("/notice")
-	public String joinnotice() {
-		return "content/member/join_notice";
+	//회원가입시 인증 기능 
+	@PostMapping("/emailCheckAJAX")
+	@ResponseBody
+	public String emailCheck(String memEmail) {
+	
+	  // 입력받은 이메일 주소
+	  System.out.println("@@@ 입력받은 이메일 주소 : " + memEmail);
+		
+	  
+		 if(memEmail != null) {
+			// 이메일 인증 코드 생성 
+			  String authCode = mailService.createKey();
+			  
+			  // 간단한 메일 발송 (실행할 떄 mailVO 전달받아야한다.(내용, 수신자 필요) 
+			   MailVO mailVO = new MailVO();
+			   mailVO.setTitle("한별투어 - 이메일 인증 코드가 전송되었습니다.");
+			   List<String> emailList = new ArrayList<>(); //이메일 리스트 만들어주기 
+			   emailList.add(memEmail);
+			   System.out.println("@@@@@" + emailList);
+			   mailVO.setRecipientList(emailList); //문자열 리스트 넣어줘야함.
+			   mailVO.setContent("이메일 인증 코드 : " + authCode);// 메일 본문에는 암호화 안된 비번 보내기 
+			   
+			   mailService.sendSimpleEmail(mailVO); // 메일 전송 메소드 실행 
+			 
+			 return authCode;
+		 } 
+	  
+		 return "fail";
 	}
+	
+	@PostMapping("/verifyAuthCode")
+	@ResponseBody
+	public boolean verifyAuthCode(String authCode) {
+	    // 서버에서 저장된 인증 코드와 입력된 인증 코드를 비교하여 일치 여부를 판단합니다.
+	    // 여기서는 간단히 문자열 비교를 사용하였습니다.
+	    String savedAuthCode = ""; // 서버에 저장된 인증 코드를 가져와야 합니다.
+
+	    return authCode.equals(savedAuthCode);
+	}
+
+	
 	
 	
 
@@ -212,9 +250,7 @@ public class MemberController {
 	//마이 페이지로 이동 
 	@GetMapping("/infoManage")	
 	public String infoManage(Model model, Authentication authentication, ReqReplyVO reqReplyVO) {
-		//side menu 
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
-		
+				
 		//회원 정보 
 		MemberVO memInfo = memberService.getMemInfo(authentication.getName());
 		model.addAttribute("memInfo", memInfo);
@@ -276,7 +312,6 @@ public class MemberController {
 	@GetMapping("/checkMyRequest")
 	public String checkMyRequest(Model model) {
 		
-		model.addAttribute("msMenuList", memberService.getMsMenuList());
 		
 		return "content/member/check_my_request";
 	}

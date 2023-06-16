@@ -14,9 +14,8 @@ function join(){
     const memDTellValid = memDTellValidate();
     const memDAddrValid = memDAddrValidate();
     const memDAddr2Valid = memDAddr2Validate();
-
-    if (!idValid || !pwValid || !pwCheckValid || !nameValid || !emailValid || !memDTellValid || !memDAddrValid || !memDAddr2Valid) {
-    	alert('모든 입력사항들이 올바르게 입력되어 있는지 확인해주세요!');
+	    if (!idValid || !pwValid || !pwCheckValid || !nameValid || !emailValid || !memDTellValid || !memDAddrValid || !memDAddr2Valid) {
+    	alert('모든 입력사항들과 인증이 올바르게 처리되어 있는지 확인해주세요!');
     	return ;
     }
     
@@ -370,7 +369,8 @@ function isDuplicateMemEmail(){
 			}
 			else{
 				alert('사용 가능한 이메일 주소입니다.');
-				
+				authBtn = document.querySelector('#sendAuthCode');
+				authBtn.disabled = false;
 			}
 	   },
 	   error: function() {
@@ -571,6 +571,104 @@ function isDuplicateMemDTell(){
 	   }
 	});
 	//ajax end
+}
+
+
+
+//이메일 인증 
+function emailCheck(){
+	// email 주소
+	const memEmail = document.querySelector('#memEmail').value;
+	
+	//ajax start
+	$.ajax({
+	   url: '/member/emailCheckAJAX', 
+	   type: 'post',
+	   async: false, 
+	   data: {'memEmail' : memEmail}, 
+	   success: function(authCode) {
+			alert('입력하신 이메일로 인증코드가 발송되었습니다!');
+			console.log(authCode);
+			
+			if(authCode == 'fail'){
+				return;
+			}
+			else{
+				verifyAuthCode(authCode);
+			}
+	   },
+	   error: function() {
+	      console.log('이메일 인증 시도 실패');
+	   }
+	});
+	//ajax end
+	
+}
+
+// 이메일 인증 코드 확인 함수 
+function verifyAuthCode(authCode) {
+	console.log('Received authCode:', authCode);
+	 
+	// 인증번호 입력칸 선택 
+	const authCodeInputDiv = document.querySelector('#memEmailCheckDiv');
+	const authCodeInputTag = document.querySelector('#authCodeInput');
+    	
+	//기존 오류 메시지 제거 
+	const resultAuthCodeTag = document.querySelector('#resultAuthCodeTag');
+	if (resultAuthCodeTag) {
+		resultAuthCodeTag.remove();
+	}
+	
+	//함수 리턴 결과 저장할 함수 
+	let resultAuthCode= true;
+	
+	//오류 메세지 저장 
+	let strResultAuthCode =``;
+	
+	// 인증번호 확인 이벤트 
+    authCodeInputTag.addEventListener("keyup", function(event){
+		
+		console.log( "원본 " + authCode);
+					
+		//기존 오류 메시지 제거 
+		const existingResultAuthCodeTag = document.querySelector('#resultAuthCodeTag');
+		if (existingResultAuthCodeTag) {
+			existingResultAuthCodeTag.remove();
+		}
+		
+		if (event.target.value == authCode) { // 인증 성공 
+			resultAuthCode = true;
+			
+			strResultAuthCode = `인증번호 확인에 성공하였습니다.`;
+			
+			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: green; margin-top: 0.3rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
+			authCodeInputTag.insertAdjacentHTML('afterend', resultHTML);
+			
+			authCodeInputTag.style.borderColor = "green";
+        	authCodeInputTag.style.borderWidth = "2px";
+        	
+        	document.querySelector('.joinBtn').disabled = false;
+			
+		} 
+		else { // 인증 실패 
+			resultAuthCode = false;
+			strResultAuthCode = `인증번호가 잘못되었습니다`;
+			
+			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
+			authCodeInputDiv.insertAdjacentHTML('afterend', resultHTML);
+			authCodeInputTag.style.borderColor = "#dc3545";
+        	authCodeInputTag.style.borderWidth = "2px";
+		}
+		
+		if(resultAuthCode == true){
+			const emailTag = document.querySelector('#memEmail');
+        	emailTag.readOnly = true;
+        	document.querySelector('#authCodeInput').readOnly = true;
+		}
+		
+   		return resultAuthCode;
+	});
+ 
 }
 
 

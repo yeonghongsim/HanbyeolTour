@@ -2,16 +2,49 @@
 
 .content-container{
 	width: 60%;
+	height:55vh;
 	margin: 0 auto;
 	text-align: center;
-	margin-top: 4rem;
-	margin-bottom: 4rem;
-	font-size: 2rem;
+	margin-top: 3rem;
+	margin-bottom: 7rem;
+	font-size: 1.1rem;
+	align-items: center;	
+	
 }
 
 
+.page-title{
+	font-size: 1.5rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+	text-align: left;
+	margin-left: 4rem;
+	margin-top: 2rem;
+	color: #ffd000;
+}
 
+.page-title #check{
+	margin-right: 0.7rem;
+}
 
+.del-container{
+	background-color: #fafafa;
+    border-radius: 6px;
+    margin: 0 auto;
+    margin-top:2rem;
+    padding: 3rem;
+    vertical-align: middle;
+    align-items: center;	
+    width: 450px;
+}
+
+.mention{
+	margin-top: 10px;
+	letter-spacing: -1px;
+	text-align: left;
+	margin-left: 1rem;
+}
 
 
 

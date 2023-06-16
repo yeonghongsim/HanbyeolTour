@@ -6,39 +6,46 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/">-->
+	<link rel="stylesheet" href="/css/content/member/myPage/account_deletion.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
 	
 	
-	<div class="row">
-		<div class="col page-title">
-			비밀번호 변경을 위한 정보 확인 
+		
+	<div class="content-container">
+		<div class="row">
+			<div class="col page-title">
+				<span id="check"><i class="bi bi-check2-circle"></i></span> 개인 정보 확인 
+			</div>
+		</div>
+		
+		<div class="row justify-content-center">
+			<div class="col-8 mt-4">
+				
+				<div class="row mb-3">
+					<div class="col-4 d-flex align-items-center" style="font-size: 1.2rem;">
+						<label class="form-label">비밀번호 확인</label>
+					</div>
+					<div class="col-8">
+						<input type="password" id="checkPw" name="memPw" class="form-control form-control-lg">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-12 d-grid mb-5">
+						<button id="checkPwBtn" class="btn btn-warning" onclick="check_pw();">비밀번호 확인</button>
+					</div>
+				</div>
+				
+			</div>
 		</div>
 	</div>
 	
-	<div class="row justify-content-center">
-		<div class="col-8 mt-4">
-			
-			<div class="row mb-3">
-				<div class="col-4 d-flex align-items-center" style="font-size: 1.2rem;">
-					<label class="form-label">비밀번호 확인</label>
-				</div>
-				<div class="col-8">
-					<input type="password" id="checkPw" name="memPw" class="form-control form-control-lg">
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-12 d-grid mb-5">
-					<button id="checkPwBtn" class="btn btn-warning" onclick="check_pw();">비밀번호 확인</button>
-				</div>
-			</div>
-			
-		</div>
-	</div>
+	
+	
+	
 
 	
 </th:block>

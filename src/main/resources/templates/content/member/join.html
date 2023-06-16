@@ -109,14 +109,21 @@
 			
 			<div class="col-12">
 				<div class="row" id="memEmailDiv">
-					<div class="col-9">
+					<div class="col-6">
 						<input type="email" class="form-control form-control-lg" placeholder="이메일  예시) ID@example.com" 
 						id="memEmail" name="memEmail" onclick="emailValidate();" oninput="emailValidate()">
 					</div>
 					<div class="col-3 d-grid">	
 						<input type="button" class="btn btn-lg btn-outline-light" id="checkEmail" value="중복확인" onclick="isDuplicateMemEmail();" disabled>
 					</div>
+					<div class="col-3 d-grid">	
+						<input type="button" class="btn btn-lg btn-outline-light" id="sendAuthCode" value="인증하기" onclick="emailCheck();" disabled>
+					</div>
 				</div>
+			</div>
+			
+			<div class="col" id="memEmailCheckDiv">
+				<input type="text" class="form-control form-control-lg" placeholder="인증코드를 입력하여 주세요." id="authCodeInput">
 			</div>
 			
 			
@@ -190,7 +197,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="d-grid">
-						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn">회원가입</button>
+						<button onclick="join();" type="button" class="btn btn-outline-light joinBtn" disabled>회원가입</button>
 					</div>
 				</div>
 			</div>
