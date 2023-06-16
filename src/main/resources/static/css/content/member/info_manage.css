@@ -195,5 +195,21 @@
     overflow-y: auto;
 }
 
+/* 리뷰 내역 */
+.review-item-tit{
+	font-weight:bolder; 
+	color: #666;
+	font-size: 1.1rem;
+	margin-bottom: 10px;
+	
+}
+.review-item-info{
+	padding: 0.7rem;
+}
+.review-content{
+	padding: 0.5rem;
+}
+
+
 
 

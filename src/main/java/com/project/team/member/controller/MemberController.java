@@ -25,6 +25,7 @@ import com.project.team.buy.vo.BuyVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.MailService;
 import com.project.team.util.MailVO;
@@ -245,7 +246,26 @@ public class MemberController {
 		   	   
 		   return false;
 	}
-		
+	
+	// 별점 
+	private List<String> getStarIcons(List<Integer> starList) {
+	    List<String> stars = new ArrayList<>();
+	    
+	    for (int rating : starList) {
+	        StringBuilder star = new StringBuilder();
+	        for (int i = 1; i <= 5; i++) {
+	            if (i <= rating) {
+	                star.append("<i class=\"bi bi-star-fill\"></i>"); // 별 아이콘
+	            } else {
+	                star.append("<i class=\"bi bi-star\"></i>"); // 빈 별 아이콘
+	            }
+	        }
+	        stars.add(star.toString());
+	    }
+	    return stars;
+	}
+
+	
 		
 	//마이 페이지로 이동 
 	@GetMapping("/infoManage")	
@@ -286,7 +306,20 @@ public class MemberController {
 		
 		// 리뷰 리스트 
 		model.addAttribute("reviewList", memberService.getMyPageReviewList(memCode));
-		//System.out.println("@@ 리뷰리스트 : " + memberService.getMyPageReviewList(memCode));
+		
+		List<MemberReviewVO> reviewList = memberService.getMyPageReviewList(memCode);
+		
+		List<Integer> starList = new ArrayList<>();
+		for(MemberReviewVO review : reviewList) {
+			starList.add(review.getStars());
+		}
+		
+		
+		//별점 
+		List<String> starIcons = getStarIcons(starList);
+		model.addAttribute("starList", starList);
+		model.addAttribute("starIcons", starIcons);
+		
 		
 		Map<String, Object> qnaMap = new HashMap<>();
 		qnaMap.put("qnaList", qnaList);

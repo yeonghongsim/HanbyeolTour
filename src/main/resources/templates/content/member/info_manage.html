@@ -102,7 +102,7 @@
 								      <div class="accordion-body">
 								       <div class="accordion-scroll">
 							      		<div class="row">
-								      		<div class="qna-tit col-8">문의</div>
+								      		<div class="qna-tit col-8">[ 문의 ]</div>
 								      		<div class="qna-topic col-3 text-center">[[${question.typeRequestVO.typeRequestName}]]</div>
 							      		</div>
 							      		 <div class="qna-header-date text-end mt-3 mb-2">
@@ -186,15 +186,72 @@
 	    						<!-- header -->
     							<h2 class="accordion-header">
 							       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + review.hbtMemReviewNum}" aria-expanded="true" th:aria-controls="${'panel_' + review.hbtMemReviewNum}">
-			                        <div class="col-5" th:text="${review.stars}"></div>
+			                        <!-- <div class="col-5" th:text="${review.stars}"></div> -->
+			                        <div class="col-2" th:utext="${starIcons[state.index]}" style="font-size: 0.8rem; color: #ffd000;"></div>
+			                        <div class="col-2" style="font-size: 0.9rem;">
+				                        <span><strong>[[${review.stars}]]</strong> / 5</span> 	
+			                        </div>
 			                        <div class="col-6" th:text="${review.buyVO.buyDetailVO.itemVO.itemTitle}"></div>
 			                       </button>
 							    </h2>
 	    						<!-- body -->
 	    						 <div th:id="${'panel_' + review.hbtMemReviewNum}" class="accordion-collapse collapse" data-bs-parent="#accordionPanelsReview" th:classappend="${state.index == 0 ? 'show' : ''}">
-	    						
-	    						</div>
-	    					</div>
+	    							 <div class="accordion-body">
+								       <div class="accordion-scroll">
+							      			<!-- 상품 정보 -->
+											<div class="row">
+												<div class="col review-item-tit">
+													[ 예약 상품 ]  								
+												</div>
+											</div>							      			
+											<div class="row review-item-info">
+											    <div class="col-auto">
+											        <a class="thum" th:href="@{/item/tourItemListDetail(itemCode=${review.buyVO.buyDetailVO.itemVO.itemCode})}">
+											            <img th:src="${'/img/item/itemImg/' + review.buyVO.buyDetailVO.itemVO.imgList[0].itemImgAttachedName}" 
+											                style="width: 60px; height: 60px;">
+											        </a>
+											    </div>
+											    <div class="col">
+											        <div class="textus">
+											            <a class="" th:href="@{/item/tourItemListDetail(itemCode=${review.buyVO.buyDetailVO.itemVO.itemCode})}">
+											                <span class="tit" style="font-weight: bolder;">[[${review.buyVO.buyDetailVO.itemVO.tourAreaVO.areaKorName}]]</span><br>
+											                <span class="txt" th:text="${review.buyVO.buyDetailVO.itemVO.itemTitle}" style="word-spacing: -1px;"></span><br>
+											                <span class="txt" th:text="${review.buyVO.buyDetailVO.itemVO.itemIntro}" style="font-weight:lighter; font-size: 0.9rem;"></span>
+											            </a>
+											        </div>
+											    </div>
+											</div>
+
+											<hr>
+											
+											<!-- 작성한 리뷰 내용  -->
+											<div class="review-content">
+												<div class="row">
+													<div class="col-2"> 별점 : </div>
+													<div class="col-3" th:utext="${starIcons[state.index]}" style="color: #ffd000; letter-spacing: 2px; padding: 0; vertical-align: middle;"></div>
+				                       				<div class="col-2" style="font-size: 0.9rem; padding: 0;">
+							                       		 <span><strong>[[${review.stars}]]</strong>&nbsp;&nbsp;/&nbsp;&nbsp;5</span> 	
+						                        	</div>
+												</div>
+												
+												<div class="row">
+													<div class="col mt-2">
+														리뷰 내용 : 								
+													</div>
+												</div>
+												
+												<div class="row">
+													<div class="col mt-1">
+														<span>[[${review.hbtMemReviewContent}]]</span>										
+													</div>
+												</div>
+											</div>
+											
+											
+										</div>
+									</div>
+								</div>
+    						</div>
 	    				</th:block>
 	    			</div>
 	    		</div>

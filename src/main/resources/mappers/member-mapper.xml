@@ -432,17 +432,16 @@
 	
 	<!-- 마이페이지 메인 - 리뷰 리스트 조회 -->
 	<select id="getMyPageReviewList" resultMap="myReview">
-		SELECT HBT_MEM_REVIEW_NUM
-			, HBT_MEM_REVIEW_CONTENT
-			, STARS
-			, ITEM.ITEM_TITLE
-			, IMG.ITEM_IMG_ATTACHED_NAME
-			, REV.BUY_CODE
-			, AREA.AREA_KOR_NAME  
-			, ITEM.ITEM_PRICE
-            , ITEM.ITEM_CODE
-		FROM
-            HBT_MEM_REVIEW REV,
+		SELECT HBT_MEM_REVIEW_NUM,
+			HBT_MEM_REVIEW_CONTENT,
+			STARS,
+			ITEM.ITEM_TITLE,
+			IMG.ITEM_IMG_ATTACHED_NAME,
+			REV.BUY_CODE,
+			AREA.AREA_KOR_NAME,  
+			ITEM.ITEM_PRICE,
+            ITEM.ITEM_CODE
+		FROM HBT_MEM_REVIEW REV,
             HBT_ITEM ITEM,
             HBT_ITEM_IMG IMG,
             HBT_MEM MEM,
