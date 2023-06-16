@@ -247,6 +247,7 @@ public class BoardController {
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
+		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
 		
 		return "content/board/request_detail";
 	}

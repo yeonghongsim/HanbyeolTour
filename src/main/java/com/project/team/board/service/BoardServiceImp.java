@@ -144,7 +144,7 @@ public class BoardServiceImp implements BoardService{
 	public String getNextByReqReplyNum() {
 		return sqlSession.selectOne("boardMapper.getNextByReqReplyNum");
 	}
-
+	
 	@Transactional
 	@Override
 	public void insertReqReply(ReqReplyVO reqReplyVO) {
@@ -180,6 +180,10 @@ public class BoardServiceImp implements BoardService{
 	public List<BoardRequestVO> getBoardReqListBySearch(RequestSearchVO requestSearchVO) {
 		return sqlSession.selectList("boardMapper.getBoardReqListBySearch", requestSearchVO);
 	}
+
+	
+
+	
 
 
 	
