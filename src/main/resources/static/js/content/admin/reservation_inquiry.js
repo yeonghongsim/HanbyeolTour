@@ -46,6 +46,26 @@ function changeBuyStatus(){
 		alert('변경할 예약 상태를 선택하십시오.');
 		return;
 	}
+		const memNames = [];
+		const memDTells = [];
+	
+	//예약 상태 예약 완료 select한 경우
+	if (buyStatusCode == 2) {
+		
+		//예약 완료로 변경하는 구매건의 구매자 아이디, 휴대폰번호 가져오기
+		checkboxes.forEach(function(checkbox) {
+			const row = checkbox.parentNode.parentNode;
+			const memName = row.querySelector('td:nth-child(5) div:first-child').innerHTML;
+			const memDTell = row.querySelector('td:nth-child(5) div:last-child').innerHTML;
+
+			memNames.push(memName);
+			memDTells.push(memDTell);
+			
+		});
+		
+			console.log(memNames);
+			console.log(memDTells);
+	}
 	
 	//선택한 체크박스 없는 경우
 	if(checkboxes.length == 0) {
@@ -64,6 +84,8 @@ function changeBuyStatus(){
 	let paramData = {
 		'buyStatusCode' : buyStatusCode
 		, 'buyCodeList' : buyCodeList
+		, 'memNames' : memNames
+		, 'memDTells' : memDTells
 	};
 	
 	
@@ -110,6 +132,14 @@ function getBuyListPaging(pageNum){
 	const search_form = document.querySelector('#searchForm');
 	
 	search_form.submit();	
+}
+
+
+//예약 완료로 구매 상태 변경 시 문자 발송
+function sendSMS(){
+	
+	const buyStatus = document.querySelector('#buyStatusSelect').value;
+	console.log(buyStatus);
 }
 
 

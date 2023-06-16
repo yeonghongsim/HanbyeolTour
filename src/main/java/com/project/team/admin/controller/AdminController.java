@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.project.team.item.controller.ItemController;
 import com.project.team.util.DateUtil;
+import com.project.team.util.MessageService;
 import com.project.team.util.UploadPath;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,14 @@ import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
-import com.project.team.admin.vo.StatisticsVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
+
+import net.nurigo.java_sdk.Coolsms;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 //import oracle.net.aso.l;
 
 import com.project.team.board.service.BoardService;
@@ -53,6 +58,9 @@ public class AdminController {
 	private AdminService adminService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	@Resource(name = "messageService")
+	private MessageService messageService;
+	
 	
 	// 초기화면 이동
 	@GetMapping("/")
@@ -331,10 +339,16 @@ public class AdminController {
 	//예약 상태 변경 버튼 클릭 시
 	@ResponseBody
 	@PostMapping("/changeBuyStatusAJAX")
-	public void changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) {
+	public List<Object> changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) throws CoolsmsException{
 		
 		System.out.println(map);
 		
+		List<Object> sendSmsInfo = new ArrayList();
+		sendSmsInfo.add(map.get("memDTells"));
+		sendSmsInfo.add(map.get("memNames"));
+		
+		System.out.println(sendSmsInfo);
+	
 		//쿼리 빈값 채우기
 		Map<String, Object> mapData = new HashMap<>();
 		mapData.put("buyStatusCode", map.get("buyStatusCode"));
@@ -342,6 +356,7 @@ public class AdminController {
 		
 		adminService.changeBuyStatus(mapData);
 		
+		return messageService.sendMessage(sendSmsInfo);
 	}
 	
 	
@@ -433,9 +448,9 @@ public class AdminController {
 			resultList.add(map1);
 		}
 		//자료형 Integer로 하면 json에서 인식 오류남!
-		List<Object> thisYearCntList = 			resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		List<Object> thisYearSaleList = 			resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		List<Object> lastYearSaleList = 			resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> thisYearCntList = resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> thisYearSaleList = resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> lastYearSaleList = resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		
 		
 		//분기별 매출
@@ -449,7 +464,7 @@ public class AdminController {
 			
 		}
 		
-		List<Object> quarterSaleList = 			resultList.get(3).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> quarterSaleList = resultList.get(3).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		
 		Map<String, List<Object>> map = new HashMap<>();
 		map.put("thisYearCntList", thisYearCntList);
