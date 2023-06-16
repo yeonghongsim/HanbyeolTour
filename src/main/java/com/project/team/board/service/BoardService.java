@@ -86,7 +86,7 @@ public interface BoardService {
 	void insertReqReply(ReqReplyVO reqReplyVO);
 	
 	// select req-reply list
-	List<ReqReplyVO> getReqReplyList(String hbtBoardRequestNum);
+	ReqReplyVO getReqReply(String hbtBoardRequestNum);
 	
 	// del my-req
 	void delMyRequest(String hbtBoardRequestNum);

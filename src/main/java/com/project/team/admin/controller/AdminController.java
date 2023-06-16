@@ -581,7 +581,10 @@ public class AdminController {
 	public String regReqReplyForm(Model model, String hbtBoardRequestNum, String itemCode) {
 
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
-		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		if(boardService.getReqReply(hbtBoardRequestNum) != null) {
+			model.addAttribute("reqReply", boardService.getReqReply(hbtBoardRequestNum));
+			model.addAttribute("answerId", memberService.getMemId(boardService.getReqReply(hbtBoardRequestNum).getMemberVO().getMemCode()));
+		}
 		model.addAttribute("itemCode", itemCode);
 		
 		return "content/admin/board/reg_req_reply_form";
