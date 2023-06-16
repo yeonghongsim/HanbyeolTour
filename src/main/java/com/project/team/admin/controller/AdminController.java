@@ -58,7 +58,7 @@ public class AdminController {
 	private AdminService adminService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
-	@Resource(name = "messageService")
+	//@Resource(name = "messageService")
 	//private MessageService messageService;
 	
 	
