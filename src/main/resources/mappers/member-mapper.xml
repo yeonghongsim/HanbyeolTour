@@ -430,8 +430,36 @@
 		AND AREA.AREA_CODE = ITEM.AREA_CODE
 	</select>
 	
-	
-	
+	<!-- 마이페이지 메인 - 리뷰 리스트 조회 -->
+	<select id="getMyPageReviewList" resultMap="myReview">
+		SELECT HBT_MEM_REVIEW_NUM
+			, HBT_MEM_REVIEW_CONTENT
+			, STARS
+			, ITEM.ITEM_TITLE
+			, IMG.ITEM_IMG_ATTACHED_NAME
+			, REV.BUY_CODE
+			, AREA.AREA_KOR_NAME  
+			, ITEM.ITEM_PRICE
+            , ITEM.ITEM_CODE
+		FROM
+            HBT_MEM_REVIEW REV,
+            HBT_ITEM ITEM,
+            HBT_ITEM_IMG IMG,
+            HBT_MEM MEM,
+            HBT_TOUR_AREA AREA,
+            HBT_BUY BUY,
+            HBT_BUY_DETAIL DETAIL        
+        WHERE
+            REV.MEM_CODE = MEM.MEM_CODE
+            AND REV.BUY_CODE = BUY.BUY_CODE
+            AND ITEM.ITEM_CODE = IMG.ITEM_CODE
+            AND DETAIL.BUY_CODE = REV.BUY_CODE
+            AND DETAIL.ITEM_CODE = ITEM.ITEM_CODE
+            AND DETAIL.AREA_CODE = ITEM.AREA_CODE
+            AND ITEM.AREA_CODE = AREA.AREA_CODE 
+            AND IMG.IS_MAIN = 'Y'
+            AND MEM.MEM_CODE = #{memCode}
+	</select>
 	
 	
 	
@@ -443,6 +471,12 @@
 	
 	
 	<!-- 심영홍 -->
+	<select id="getMemId" resultType="String">
+		SELECT MEM_ID
+		FROM HBT_MEM
+		WHERE MEM_CODE = #{memCode}
+	</select>
+	
 	<select id="getMsMenuList" resultMap="msMenu">
 		SELECT MS_MENU_CODE
 		    , MS_MENU_NAME

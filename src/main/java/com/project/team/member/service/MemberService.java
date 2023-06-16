@@ -48,6 +48,9 @@ public interface MemberService {
 	//회원 탈퇴 신청 - 상태코드 변경 
 	void updateMemStatusCodeTo2(String memId);
 	
+	// 아이디 조회
+	String getMemId(String memCode);
+	
 	//비밀번호 조회 
 	String getMemPw(String memId);
 	
@@ -84,6 +87,18 @@ public interface MemberService {
 	
 	//상품 문의 관련 
 	ItemVO getItemDetailForQna(String itemCode);
+	
+	// 마이페이지 메인 - 리뷰 리스트 조회
+	List<MemberReviewVO> getMyPageReviewList(String memCode); 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

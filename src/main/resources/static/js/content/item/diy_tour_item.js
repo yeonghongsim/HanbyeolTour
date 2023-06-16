@@ -557,6 +557,7 @@ function buyNCart(isPaid){
     diyTourVO['departDate'] = departDate;
     diyTourVO['arriveDate'] = arriveDate;
     diyTourVO['arriveDate'] = arriveDate;
+    diyTourVO['totalPrice'] = totalPrice;
     diyTourVO['traverPeriod'] = getDate();
     diyTourVO['isPaid'] = isPaid;
 
@@ -657,7 +658,7 @@ function mergedObj(obj1, obj2){
     for (const key in obj2) {
         if (obj2.hasOwnProperty(key) && !obj1.hasOwnProperty(key)) {
             // obj1에 해당 키가 없을 경우 배열에 null 추가
-            mergedObj[key] = [null, obj2[key]];
+            mergedObj[key] = [null , obj2[key]];
         }
     }
 

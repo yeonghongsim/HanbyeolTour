@@ -12,7 +12,7 @@ import java.util.Map;
 @ToString
 public class DiyDetailVO {
     private String hbtDiyDetailCode;
-    private int hbtDiyDay;
+    private String hbtDiyDay;
     private String hbtDiyCode;
     private String hbtTourItemCode;
     private String hbtHotelCode;

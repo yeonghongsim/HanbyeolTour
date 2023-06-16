@@ -236,16 +236,42 @@ public class ItemController {
 		String hbtDiyCode = itemService.getNextDiyCode();
 		Map<String, Object> diyTourMap = mapper.readValue(diyTour, new TypeReference<Map<String, Object>>() {});
 		Map<String, List<Object>> diyTourDetailMap = mapper.readValue(diyTourDetail, new TypeReference<Map<String, List<Object>>>() {});
-		System.out.println(diyTourMap);
-		System.out.println(diyTourDetailMap);
 
-		
-		
+		//diytourvo 세팅
+		DiyTourVO diyTourVO = new DiyTourVO();
+		diyTourVO.setHbtDiyCode(hbtDiyCode);
+		diyTourVO.setMemCode(memCode);
+		diyTourVO.setAirlineCode(diyTourMap.get("airlineCode").toString());
+		diyTourVO.setAreaCode(diyTourMap.get("areaCode").toString());
+		diyTourVO.setDepartDate(diyTourMap.get("departDate").toString());
+		diyTourVO.setArriveDate(diyTourMap.get("arriveDate").toString());
+		diyTourVO.setTotalPrice(diyTourMap.get("totalPrice").toString());
+		diyTourVO.setTraverPeriod(diyTourMap.get("traverPeriod").toString());
+		diyTourVO.setIsPaid(diyTourMap.get("isPaid").toString());
 		//디테일 세팅
+		List<DiyDetailVO> detailList = new ArrayList<>();
+		//map의 키를 배열로변환
+		String [] keys = diyTourDetailMap.keySet().toArray(new String[0]);
 
-		//System.out.println(diyTourVO1);
+		for (String key: keys) {
 
+			DiyDetailVO diyDetailVO = new DiyDetailVO();
+			diyDetailVO.setHbtDiyDay(key);
+			diyDetailVO.setHbtDiyCode(hbtDiyCode);
+			if(diyTourDetailMap.get(key).get(0) != null){
+				diyDetailVO.setHbtHotelCode(diyTourDetailMap.get(key).get(0).toString());
+			}
+			if(diyTourDetailMap.get(key).get(1) != null) {
+				diyDetailVO.setHbtTourItemCode(diyTourDetailMap.get(key).get(1).toString());
+			}
 
+			detailList.add(diyDetailVO);
+		}
+
+		System.out.println(diyTourVO);
+		System.out.println(detailList);
+
+		itemService.setDiyTour(diyTourVO, detailList);
 
 		return "redirect:/item/diyTourItem";
 	}
