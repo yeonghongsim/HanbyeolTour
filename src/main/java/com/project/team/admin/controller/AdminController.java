@@ -339,15 +339,27 @@ public class AdminController {
 	//예약 상태 변경 버튼 클릭 시
 	@ResponseBody
 	@PostMapping("/changeBuyStatusAJAX")
-	public List<Object> changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) throws CoolsmsException{
+	public List<String> changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) throws CoolsmsException{
 		
-		System.out.println(map);
+		//System.out.println(map);
 		
 		List<Object> sendSmsInfo = new ArrayList();
 		sendSmsInfo.add(map.get("memDTells"));
 		sendSmsInfo.add(map.get("memNames"));
 		
-		System.out.println(sendSmsInfo);
+		List<String> memDTellList = new ArrayList<>();
+		List<String> memNameList = new ArrayList<>();
+		
+	    if (sendSmsInfo.get(0) instanceof List) {
+	        memDTellList = (List<String>) sendSmsInfo.get(0);
+	    }
+
+	    if (sendSmsInfo.get(1) instanceof List) {
+	        memNameList = (List<String>) sendSmsInfo.get(1);
+	    }
+		
+		//System.out.println(sendSmsInfo);
+		
 	
 		//쿼리 빈값 채우기
 		Map<String, Object> mapData = new HashMap<>();
@@ -356,7 +368,7 @@ public class AdminController {
 		
 		adminService.changeBuyStatus(mapData);
 		
-		return messageService.sendMessage(sendSmsInfo);
+		return messageService.sendMessage(memNameList, memDTellList);
 	}
 	
 	
