@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.project.team.item.controller.ItemController;
 import com.project.team.util.DateUtil;
-import com.project.team.util.MessageService;
+//import com.project.team.util.MessageService;
 import com.project.team.util.UploadPath;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +28,10 @@ import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
 
-import net.nurigo.java_sdk.Coolsms;
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import net.nurigo.sdk.message.service.DefaultMessageService;
+//import net.nurigo.java_sdk.Coolsms;
+//import net.nurigo.java_sdk.api.Message;
+//import net.nurigo.java_sdk.exceptions.CoolsmsException;
+//import net.nurigo.sdk.message.service.DefaultMessageService;
 //import oracle.net.aso.l;
 
 import com.project.team.board.service.BoardService;
