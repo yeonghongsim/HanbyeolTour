@@ -15,8 +15,8 @@ import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 @Service("messageService")
 public class MessageService {
 
-	public MultipleDetailMessageSentResponse sendMany() {
-	/*
+	/*public MultipleDetailMessageSentResponse sendMany() {
+	
 	 * ArrayList<Message> messageList = new ArrayList<>();
 	 * 
 	 * for (int i = 0; i < 3; i++) { Message message = new Message(); // 발신번호 및
