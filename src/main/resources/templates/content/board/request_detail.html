@@ -15,8 +15,7 @@
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
-	
-	<div class="row">
+	<div class="row mb-2">
 		<div class="col">
 			<table class="table text-center req-detail-table">
 				<colgroup>
@@ -37,8 +36,7 @@
 						<td>
 							<span>[[${reqDetail.hbtBoardRequestTitle}]]</span>
 						</td>
-						<td>1</td>
-						<td>1</td>
+						<td colspan="2"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
@@ -50,36 +48,31 @@
 			</table>
 		</div>
 	</div>
-	
+	<th:block th:if="${reqReplyList.size != 0}">
+	[[${reqReplyList}]]
+	</th:block>
 	<div class="row mb-3">
 		<div class="col">
-			1차 답변
+			<h4>답변된 내용</h4>
+			<table class="table">
+				<colgroup>
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+				</colgroup>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 
-	<div class="row mb-3">
-		<div class="col">
-			1차 재문의
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			2차 답변
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			2차 재문의
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			3차 답변
-		</div>
-	</div>
 	
 	
 	
