@@ -355,6 +355,16 @@ public class MyPageController {
 		return "content/member/myPage/check_my_cancelation";
 	}
 	
+	// 장바구니 페이지로 이동
+	@GetMapping("/checkMyCart")
+	public String checkMyCart(Model model) {
+		
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_002");
+		
+		
+		return "content/member/myPage/check_my_cart";
+	}
 	
 	// 1:1 문의 내역 페이지로 이동 
 	@GetMapping("/checkMyRequest")

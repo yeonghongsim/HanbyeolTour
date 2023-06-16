@@ -31,14 +31,6 @@ public class BoardController {
 	@Resource(name = "adminService")
 	private AdminService adminService;
 	
-	@GetMapping("/boardMain")
-	public String boardMain(Model model) {
-		
-		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
-		
-		
-		return "content/board/board_main";
-	}
 	
 	@GetMapping("/getPublicBoardPage")
 	public String getPublicBoardPage(Model model, BoardVO boardVO) {

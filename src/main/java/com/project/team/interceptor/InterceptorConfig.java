@@ -24,6 +24,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 			registry.addInterceptor(getMemberSideMenuInterceptor())
 							.addPathPatterns("/member/infoManage")
 							.addPathPatterns("/member/checkMyRequest")
+							.addPathPatterns("/myPage/checkMyCart")
 							.addPathPatterns("/myPage/accountDeletion")
 							.addPathPatterns("/myPage/changeMyPwPage")
 							.addPathPatterns("/myPage/changeMyPwForm")
