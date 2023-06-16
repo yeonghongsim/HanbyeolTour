@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.admin.vo.TourItemVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import org.springframework.stereotype.Service;
 
 import com.project.team.item.vo.ItemVO;
@@ -36,4 +39,5 @@ public interface ItemService {
 	List<HashMap<String, Object>> getTourDetailAJAX(String hbtTourCode);
 	//다음번 diyCode조회
 	String getNextDiyCode();
+	void setDiyTour(DiyTourVO diyTourVO, List<DiyDetailVO> detailList);
 }
