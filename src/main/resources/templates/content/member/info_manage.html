@@ -83,6 +83,7 @@
 	            </div>
 	        </div>
 	        
+	        <!-- 1:1 문의 아코디언 영역 -->
 	       <div class="row list-area">
 	    		<div class="col mt-3">
 	    		 	<div class="accordion" id="accordionPanels">
@@ -155,7 +156,6 @@
 								    </div>
 								  </div>
 							</th:block>
-
 					</div>
 	    		</div>
 	    	</div>	
@@ -176,14 +176,36 @@
 	                <a class="" id="reviewListMore" th:href="@{/myPage/checkMyReview(memId=${memInfo.memId})}">더보기</a>
 	            </div>
 	        </div>
-	    	<div class="row">
-	    		<div class="col list-area">
-	    			후기 데이터 올 공간 
+	        
+	        <!-- 나의 후기 내역 - 아코디언 영역 -->
+	    	<div class="row list-area">
+	    		<div class="col">
+			        <div class="accordion" id="accordionPanelsReview">
+	    				<th:block th:each="review, state: ${reviewList}">
+	    					<div class="accordion-item">
+	    						<!-- header -->
+    							<h2 class="accordion-header">
+							       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + review.hbtMemReviewNum}" aria-expanded="true" th:aria-controls="${'panel_' + review.hbtMemReviewNum}">
+			                        <div class="col-5" th:text="${review.stars}"></div>
+			                        <div class="col-6" th:text="${review.buyVO.buyDetailVO.itemVO.itemTitle}"></div>
+			                       </button>
+							    </h2>
+	    						<!-- body -->
+	    						 <div th:id="${'panel_' + review.hbtMemReviewNum}" class="accordion-collapse collapse" data-bs-parent="#accordionPanelsReview" th:classappend="${state.index == 0 ? 'show' : ''}">
+	    						
+	    						</div>
+	    					</div>
+	    				</th:block>
+	    			</div>
 	    		</div>
 	    	</div>	    	
 	    	
+	    	
+	    	
+	    	<!-- 후기 내역 범위 끝 -->
 	    </div>
 	    
+	    <!-- area-over 끝 -->
 	</div>
     
     
@@ -200,3 +222,4 @@
 
 </html>
 
+5

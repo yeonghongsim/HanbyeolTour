@@ -281,7 +281,12 @@ public class MemberController {
 		}
 		System.out.println("*** itemDetailList : " + itemDetailList);
 		
+		// 답변 조회 
 		List<ReqReplyVO> qnaReplyList = memberService.getQnaReplyList(memCode);
+		
+		// 리뷰 리스트 
+		model.addAttribute("reviewList", memberService.getMyPageReviewList(memCode));
+		//System.out.println("@@ 리뷰리스트 : " + memberService.getMyPageReviewList(memCode));
 		
 		Map<String, Object> qnaMap = new HashMap<>();
 		qnaMap.put("qnaList", qnaList);

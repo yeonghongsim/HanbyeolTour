@@ -180,7 +180,11 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.getItemDetailForQna", itemCode);
 	}
 	
-	
+	// 마이페이지 메인 페이지 - 리뷰 리스트 조회 
+	@Override
+	public List<MemberReviewVO> getMyPageReviewList(String memCode) {
+		return sqlSession.selectList("memberMapper.getMyPageReviewList", memCode);
+	}
 	
 	
 	

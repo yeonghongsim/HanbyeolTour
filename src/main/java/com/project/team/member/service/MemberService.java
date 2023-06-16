@@ -88,6 +88,18 @@ public interface MemberService {
 	//상품 문의 관련 
 	ItemVO getItemDetailForQna(String itemCode);
 	
+	// 마이페이지 메인 - 리뷰 리스트 조회
+	List<MemberReviewVO> getMyPageReviewList(String memCode); 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
