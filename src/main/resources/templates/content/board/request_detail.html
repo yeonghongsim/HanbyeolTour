@@ -15,8 +15,13 @@
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
+	<div class="row mb-3">
+		<div class="offset-10 col-2">
+			<input onclick="location.href='/board/regRequestPage'" type="button" class="btn btn-secondary w-100" value="뒤로 가기">
+		</div>
+	</div>
 	
-	<div class="row">
+	<div class="row mb-2">
 		<div class="col">
 			<table class="table text-center req-detail-table">
 				<colgroup>
@@ -37,12 +42,11 @@
 						<td>
 							<span>[[${reqDetail.hbtBoardRequestTitle}]]</span>
 						</td>
-						<td>1</td>
-						<td>1</td>
+						<td colspan="2"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="3">
+						<td colspan="3" style="text-align: left; padding-left: 5rem;">
 							<span>[[${reqDetail.hbtBoardRequestContent}]]</span>
 						</td>
 					</tr>
@@ -50,36 +54,36 @@
 			</table>
 		</div>
 	</div>
-	
+	<th:block th:if="${reqReplyList.size != 0}">
+	</th:block>
 	<div class="row mb-3">
 		<div class="col">
-			1차 답변
+			<h4>답변된 내용</h4>
+			<table class="table text-center req-detail-table">
+				<colgroup>
+					<col width="20%">
+					<col width="20%">
+					<col width="">
+					<col width="">
+				</colgroup>
+				<tbody>
+					<tr>
+						<td>답변 자</td>
+						<td>[[${answerId}]]</td>
+						<td>답변 일자</td>
+						<td>[[${reqReplyList[0].reqReplyAnswerDate}]]</td>
+					</tr>
+					<tr>
+						<td>답변 내용</td>
+						<td colspan="3" style="text-align: left; padding-left: 5rem;">
+							<span>[[${reqReplyList[0].reqReplyContent}]]</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 
-	<div class="row mb-3">
-		<div class="col">
-			1차 재문의
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			2차 답변
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			2차 재문의
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			3차 답변
-		</div>
-	</div>
 	
 	
 	

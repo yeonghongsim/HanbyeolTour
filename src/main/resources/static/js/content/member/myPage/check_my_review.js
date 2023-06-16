@@ -25,7 +25,7 @@ function getNeedReview(memId){
 			
 			let str = '';
 			
-			str += `<h3 class="mb-2">미작성 후기 목록 <span style="font-size: 1rem;">( ${result.length} )</span></h3>`;
+			str += `<h3 class="mb-2">미작성 후기 <span style="font-size: 1rem;">( ${result.length} )</span></h3>`;
 			str += `<table class="table table-hover text-center">`;
 			str += `	<colgroup>`;
 			str += `		<col width="26%">`;
@@ -86,7 +86,7 @@ function getAllReview(memId){
 			get_result_area.replaceChildren();
 			let str = '';
 			
-			str += `<h3 class="mb-2">후기 목록 <span style="font-size: 1rem;">( ${result.length} )</span></h3>`;
+			str += `<h3 class="mb-2">작성 후기 <span style="font-size: 1rem;">( ${result.length} )</span></h3>`;
 			str += `<table class="table table-hover text-center">`;
 			str += `	<colgroup>`;
 			str += `		<col width="20%">`;
