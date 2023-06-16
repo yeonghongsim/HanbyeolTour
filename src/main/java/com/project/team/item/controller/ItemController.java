@@ -179,16 +179,7 @@ public class ItemController {
 		return "content/hotels/searchHotels";
 	}
 	
-	//패키지상품 상세페이지
-	//호텔페이지 이동
-	@GetMapping("/airLinePage")
-	public String airLinePage(Model model){
-		
-		model.addAttribute("areaCateList", adminService.getAreaCateList());
-		
-		return "content/airLine/air_line_index";
-	}
-	
+
 	//패키지만들기 페이지 이동
 	@GetMapping("/diyTourItem")
 	public String goDiyTourItem(Model model){
@@ -267,9 +258,6 @@ public class ItemController {
 
 			detailList.add(diyDetailVO);
 		}
-
-		System.out.println(diyTourVO);
-		System.out.println(detailList);
 
 		itemService.setDiyTour(diyTourVO, detailList);
 
