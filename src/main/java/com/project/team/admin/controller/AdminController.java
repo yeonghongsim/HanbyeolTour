@@ -27,11 +27,12 @@ import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
+
 import net.nurigo.java_sdk.Coolsms;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import net.nurigo.sdk.message.service.DefaultMessageService;
-import oracle.net.aso.l;
+//import oracle.net.aso.l;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardRequestVO;
