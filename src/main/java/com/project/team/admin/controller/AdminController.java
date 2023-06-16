@@ -335,7 +335,7 @@ public class AdminController {
 		return "content/admin/reservation_inquiry";
 	}
 	
-	
+	/*
 	//예약 상태 변경 버튼 클릭 시
 	@ResponseBody
 	@PostMapping("/changeBuyStatusAJAX")
@@ -386,7 +386,7 @@ public class AdminController {
 		
 		return "";
 	}
-	
+	*/
 	
 	
 	//예약 상세 페이지
