@@ -244,11 +244,14 @@ public class BoardController {
 	
 	@GetMapping("/RequestDetail")
 	public String RequestDetail(Model model, String hbtBoardRequestNum) {
+		System.out.println("!@#!@#" + boardService.getReqReply(hbtBoardRequestNum) + "!@#!@#");
 		
-		model.addAttribute("answerId", memberService.getMemId(boardService.getReqReplyList(hbtBoardRequestNum).get(0).getMemberVO().getMemCode()));
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
-		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		if(boardService.getReqReply(hbtBoardRequestNum) != null) {
+			model.addAttribute("reqReply", boardService.getReqReply(hbtBoardRequestNum));
+			model.addAttribute("answerId", memberService.getMemId(boardService.getReqReply(hbtBoardRequestNum).getMemberVO().getMemCode()));
+		}
 		
 		return "content/board/request_detail";
 	}

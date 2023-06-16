@@ -70,41 +70,45 @@
 		</div>
 	</div>
 	
-	
-	<th:block th:if="${reqReplyList.size() != 0}">
-		<th:block th:each="reqReply, state : ${reqReplyList}">
-			<div class="row" th:if="${state.index == 0}">
-				<div class="col">
-					<div class="row">
-						<div class="col">
-							<h4>답변 내용</h4>
-							<table class="table text-center only-tbody">
-								<colgroup>
-									<col width="25%">
-									<col width="25%">
-									<col width="25%">
-									<col width="25%">
-								</colgroup>
-								<tbody>
-									<tr>
-										<td>내용</td>
-										<td></td>
-										<td>답변 일</td>
-										<td>[[${reqReply.reqReplyAnswerDate}]]</td>
-									</tr>
-									<tr>
-										<td colspan="4" style="text-align: left; padding-left: 5rem;">
-											<span>[[${reqReply.reqReplyContent}]]</span>
-										</td>
-									</tr>
-								</tbody>
-							</table>				
-						</div>
-					</div>
-				</div>
-			</div>	
-		</th:block>
+	<th:block th:if="${reqReply != null}">
+		<div class="row mb-3">
+			<div class="col">
+				<h4>답변된 내용</h4>
+				<table class="table text-center req-detail-table">
+					<colgroup>
+						<col width="20%">
+						<col width="20%">
+						<col width="">
+						<col width="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>답변 자</td>
+							<td>[[${answerId}]]</td>
+							<td>답변 일자</td>
+							<td>[[${reqReply.reqReplyAnswerDate}]]</td>
+						</tr>
+						<tr>
+							<td>답변 내용</td>
+							<td colspan="3" style="text-align: left; padding-left: 5rem;">
+								<span>[[${reqReply.reqReplyContent}]]</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</th:block>
+	<th:block th:unless="${reqReply != null}">
+		<div class="row mb-3">
+			<div class="col">
+				<span>아직 답변글이 작성되지 않았습니다.</span>
+			</div>
+		</div>
+	</th:block>
+	
+	
+	
 	
 	
 	

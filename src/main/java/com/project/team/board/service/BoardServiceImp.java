@@ -153,8 +153,8 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public List<ReqReplyVO> getReqReplyList(String hbtBoardRequestNum) {
-		return sqlSession.selectList("boardMapper.getReqReplyList", hbtBoardRequestNum);
+	public ReqReplyVO getReqReply(String hbtBoardRequestNum) {
+		return sqlSession.selectOne("boardMapper.getReqReply", hbtBoardRequestNum);
 	}
 
 	@Transactional

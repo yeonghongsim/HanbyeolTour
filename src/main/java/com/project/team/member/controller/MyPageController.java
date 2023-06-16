@@ -402,7 +402,12 @@ public class MyPageController {
 		
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
 		model.addAttribute("itemCode", itemCode);
-		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		
+		if(boardService.getReqReply(hbtBoardRequestNum) != null) {
+			model.addAttribute("reqReply", boardService.getReqReply(hbtBoardRequestNum));
+			model.addAttribute("answerId", memberService.getMemId(boardService.getReqReply(hbtBoardRequestNum).getMemberVO().getMemCode()));
+		}
+		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
 		// sideMenu colorActivate를 위한 msMenuCode 

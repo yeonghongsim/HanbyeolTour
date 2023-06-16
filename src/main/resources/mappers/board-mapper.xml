@@ -402,7 +402,7 @@
 		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
 	</update>
 	
-	<select id="getReqReplyList" resultMap="reqReply">
+	<select id="getReqReply" resultMap="reqReply">
 		SELECT REQ_REPLY_NUM
 			, REQ_REPLY_CONTENT
 			, TO_CHAR(REQ_REPLY_ANSWER_DATE, 'YYYY-MM-DD') REQ_REPLY_ANSWER_DATE
