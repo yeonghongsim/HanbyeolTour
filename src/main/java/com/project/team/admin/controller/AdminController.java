@@ -59,7 +59,7 @@ public class AdminController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	@Resource(name = "messageService")
-	private MessageService messageService;
+	//private MessageService messageService;
 	
 	
 	// 초기화면 이동
