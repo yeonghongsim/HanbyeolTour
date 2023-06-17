@@ -91,7 +91,8 @@ public interface MemberService {
 	// 마이페이지 메인 - 리뷰 리스트 조회
 	List<MemberReviewVO> getMyPageReviewList(String memCode); 
 	
-	
+	// 마이페이지 메인 - 예약 1개월내 내역 조회 
+	List<BuyVO> getBuyListInOneMonth(String memCode);
 	
 	
 	

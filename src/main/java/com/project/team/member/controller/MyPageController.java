@@ -346,14 +346,14 @@ public class MyPageController {
 	}
 	
 	
-	//예약취소 내역 확인 페이지로 이동 
-	@GetMapping("/checkMyCancelation")
-	public String checkMyCancelation(Model model) {
-		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_002");
-		
-		return "content/member/myPage/check_my_cancelation";
-	}
+	//예약취소 내역 확인 페이지로 이동 -- 사용하지 않음 (추후 삭제 예정 
+//	@GetMapping("/checkMyCancelation")
+//	public String checkMyCancelation(Model model) {
+//		// sideMenu colorActivate를 위한 msMenuCode 
+//		model.addAttribute("msMenuCode", "MS_MENU_002");
+//		
+//		return "content/member/myPage/check_my_cancelation";
+//	}
 	
 	
 	// 1:1 문의 내역 페이지로 이동 
@@ -377,7 +377,7 @@ public class MyPageController {
 		model.addAttribute("requestListY", boardService.getBoardReqList(boardRequestVO));
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_003");
+		model.addAttribute("msMenuCode", "MS_MENU_004");
 		
 		return "content/member/myPage/check_my_request";
 	}
@@ -389,7 +389,7 @@ public class MyPageController {
 		model.addAttribute("itemImgList", itemService.getItemMainImg());
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_003");
+		model.addAttribute("msMenuCode", "MS_MENU_004");
 		
 		return "content/member/myPage/reg_request_form";
 	}
@@ -411,7 +411,7 @@ public class MyPageController {
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_003");
+		model.addAttribute("msMenuCode", "MS_MENU_004");
 		
 		return "content/member/myPage/req_detail";
 		
@@ -470,7 +470,7 @@ public class MyPageController {
 		model.addAttribute("myBuyList", buyService.getBuyList(memCode));
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_004");
+		model.addAttribute("msMenuCode", "MS_MENU_003");
 		
 		return "content/member/myPage/check_my_review";
 	}
@@ -481,7 +481,7 @@ public class MyPageController {
 		model.addAttribute("buyDetail", buyService.getBuyDetail(buyCode));
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_004");
+		model.addAttribute("msMenuCode", "MS_MENU_003");
 		
 		return "content/member/myPage/my_review_form";
 	}

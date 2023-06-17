@@ -122,20 +122,7 @@ public class MemberController {
 		 return "fail";
 	}
 	
-	@PostMapping("/verifyAuthCode")
-	@ResponseBody
-	public boolean verifyAuthCode(String authCode) {
-	    // 서버에서 저장된 인증 코드와 입력된 인증 코드를 비교하여 일치 여부를 판단합니다.
-	    // 여기서는 간단히 문자열 비교를 사용하였습니다.
-	    String savedAuthCode = ""; // 서버에 저장된 인증 코드를 가져와야 합니다.
-
-	    return authCode.equals(savedAuthCode);
-	}
-
 	
-	
-	
-
 	//로그인 페이지로 이동 
 	@GetMapping("/login")
 	public String loginForm(){
@@ -281,6 +268,12 @@ public class MemberController {
 		System.out.println(buyStatusInOneMonthList);
 		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
 		
+		//1개월 내 구매 관련 정보 리스트
+		List<BuyVO> buyListInOneMonth = memberService.getBuyListInOneMonth(memCode);
+		System.out.println("@@@ 1개월 이내 예약 리스트 : " + buyListInOneMonth);
+		model.addAttribute("buyListInOneMonth", buyListInOneMonth);
+		
+		
 		//문의 내역 조회 
 		List<BoardRequestVO> qnaList =  memberService.getQnaList(memCode);
 		System.out.println("*** qnaList : " + qnaList);
@@ -304,31 +297,28 @@ public class MemberController {
 		// 답변 조회 
 		List<ReqReplyVO> qnaReplyList = memberService.getQnaReplyList(memCode);
 		
-		// 리뷰 리스트 
-		model.addAttribute("reviewList", memberService.getMyPageReviewList(memCode));
-		
-		List<MemberReviewVO> reviewList = memberService.getMyPageReviewList(memCode);
-		
-		List<Integer> starList = new ArrayList<>();
-		for(MemberReviewVO review : reviewList) {
-			starList.add(review.getStars());
-		}
-		
-		
-		//별점 
-		List<String> starIcons = getStarIcons(starList);
-		model.addAttribute("starList", starList);
-		model.addAttribute("starIcons", starIcons);
-		
-		
+		//1:1 문의 관련 데이터 
 		Map<String, Object> qnaMap = new HashMap<>();
 		qnaMap.put("qnaList", qnaList);
 		qnaMap.put("qnaReplyList", qnaReplyList);
 		qnaMap.put("itemDetailList", itemDetailList);
 		
-		
 		model.addAttribute("qnaMap", qnaMap);
 		System.out.println("*** MAP DATA : " + qnaMap);
+
+		// 리뷰 리스트 
+		model.addAttribute("reviewList", memberService.getMyPageReviewList(memCode));
+		List<MemberReviewVO> reviewList = memberService.getMyPageReviewList(memCode);
+		// 리뷰 - 별점 
+		List<Integer> starList = new ArrayList<>();
+		for(MemberReviewVO review : reviewList) {
+			starList.add(review.getStars());
+		}
+		
+		List<String> starIcons = getStarIcons(starList);
+		model.addAttribute("starList", starList);
+		model.addAttribute("starIcons", starIcons);
+		
 		
 		return "content/member/info_manage";
 	

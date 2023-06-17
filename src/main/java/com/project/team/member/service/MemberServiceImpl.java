@@ -186,6 +186,12 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectList("memberMapper.getMyPageReviewList", memCode);
 	}
 	
+	// 마이페이지 메인 - 1개월 내 예약 내역 조회 
+	@Override
+	public List<BuyVO> getBuyListInOneMonth(String memCode) {
+		return sqlSession.selectList("memberMapper.getBuyListInOneMonth", memCode);
+	}
+	
 	
 	
 	
@@ -239,6 +245,8 @@ public class MemberServiceImpl implements MemberService{
 	public List<BuyVO> getNeedReviewList(String memCode) {
 		return sqlSession.selectList("memberMapper.getNeedReviewList", memCode);
 	}
+
+	
 
 	
 

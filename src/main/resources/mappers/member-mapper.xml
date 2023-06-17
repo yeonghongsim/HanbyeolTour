@@ -245,7 +245,7 @@
 	</select>
 	
 		
-	<!-- myPage 첫 화면 - 예약 조회 상태별 갯수 조회 -->
+	<!-- myPage 첫 화면 - 1개월 내 예약 조회 상태별 갯수 조회-->
 	<select id="getBuyStatusInOneMonth" resultMap="buyMapper.buyState">
 		SELECT
 		  HBS.BUY_STATUS_CODE,
@@ -263,6 +263,39 @@
 		  HBS.BUY_STATUS_CODE,
 		  HBS.BUY_STATUS_NAME
 		ORDER BY HBS.BUY_STATUS_CODE ASC
+	</select>
+	
+	<!-- 마이페이지 첫 화면 - 1개월 내 예약 내역 조회 -->
+	<select id="getBuyListInOneMonth" resultMap="buyMapper.buy">
+		SELECT BUY.BUY_CODE
+			, BUY.MEM_CODE
+		    , BUY.BUY_TOTAL_PRICE
+		    , DETAIL.BUY_D_CODE
+		    , TO_CHAR(BUY.BUY_DATE, 'YYYY.MM.DD') AS BUY_DATE
+		    , AREA.AREA_CODE
+		    , AREA.AREA_KOR_NAME
+		    , ITEM.ITEM_TITLE
+		    , ITEM.ITEM_CODE
+		    , IMG.ITEM_IMG_ATTACHED_NAME
+		    , DETAIL.RESERVED_PEOPLE_NUM
+		    , TO_CHAR(DETAIL.DEPART_DATE, 'YYYY-MM-DD') AS DEPART_DATE
+		    , TO_CHAR(DETAIL.ARRIVE_DATE, 'YYYY-MM-DD') AS ARRIVE_DATE
+		    , DETAIL.BUY_D_PRICE
+		    , STATE.BUY_STATUS_CODE
+		    , STATE.BUY_STATUS_NAME
+		FROM HBT_BUY BUY, HBT_BUY_DETAIL DETAIL, HBT_TOUR_AREA AREA,
+		    HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_BUY_STATE STATE
+		WHERE BUY.BUY_CODE = DETAIL.BUY_CODE
+		AND DETAIL.AREA_CODE = AREA.AREA_CODE
+		AND ITEM.ITEM_CODE = DETAIL.ITEM_CODE
+		AND ITEM.ITEM_CODE = IMG.ITEM_CODE
+        AND STATE.BUY_STATUS_CODE = BUY.BUY_STATUS_CODE
+        AND IS_MAIN = 'Y'
+		AND BUY.MEM_CODE = #{memCode}
+        AND TO_CHAR(BUY.BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD')
+        AND TO_CHAR(BUY.BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		AND BUY.BUY_STATUS_CODE  &lt;= 2
+		ORDER BY BUY_CODE DESC	
 	</select>
 	
 	<!-- 예약 조회 페이지 - 예약 상태별 갯수 조회 -->
@@ -332,7 +365,7 @@
 	</select>
 	
 	
-	<!-- 예약 조회될 데이터 갯수 -->
+	<!-- 예약 조회될 데이터 갯수 (페이징 관련) -->
 	<select id="getBuyListCnt" resultType="int">
 		SELECT COUNT(BUY_CODE)
 		FROM HBT_BUY
@@ -414,8 +447,7 @@
 			, HRR.HBT_BOARD_REQUEST_NUM
 			, HBR.HBT_BOARD_REQUEST_NUM
 		FROM HBT_REQ_REPLY HRR, HBT_BOARD_REQUEST HBR
-		WHERE HRR.MEM_CODE = #{memCode}
-		AND HRR.HBT_BOARD_REQUEST_NUM = HBR.HBT_BOARD_REQUEST_NUM
+		WHERE HRR.HBT_BOARD_REQUEST_NUM = HBR.HBT_BOARD_REQUEST_NUM
 		ORDER BY REQ_REPLY_NUM DESC
 	</select>
 	
@@ -458,7 +490,12 @@
             AND ITEM.AREA_CODE = AREA.AREA_CODE 
             AND IMG.IS_MAIN = 'Y'
             AND MEM.MEM_CODE = #{memCode}
+       ORDER BY HBT_MEM_REVIEW_NUM DESC
 	</select>
+	
+	
+	
+	
 	
 	
 	
