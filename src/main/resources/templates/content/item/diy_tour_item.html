@@ -8,106 +8,94 @@
 </th:block>
 
 <th:block layout:fragment="content">
-  <div class="row text-center">
+  <div class="row d-flex justify-content-center my-3">
     <!--  국가선택 -->
-    <div class="row my-3">
-      <h3>국가를 선택하세요</h3>
-    </div>
+    <div class="col-md-10 aa">
 
-    <div class="row">
-      <th:block th:each="loc : ${location}">
-        <div class="col">
-          <a href="javascript:void(0)" onclick="selectArea(this);">
-
-            <div class="card areaDiv" style="width: 18rem;">
-              <img th:src="@{/img/item/itemImg/} + ${loc['ITEM_IMG_ATTACHED_NAME']}" class="card-img-top" alt="...">
-              <div class="card-body">
-                <p class="card-text">[[${loc['AREA_KOR_NAME']}]]</p>
-                <input type="hidden" th:value="${loc['AREA_CODE']}">
+      <div class="row d-flex text-center justify-content-center mb-3 border rounded-5 shadow custom-border py-3">
+        <h2 class="fw-bold my-3 pb-3">국가를 선택하세요</h2>
+        <th:block th:each="loc : ${location}">
+          <div class="col mx-1 px-0 py-3 justify-content-center d-flex areaColDiv">
+            <a href="javascript:void(0)" onclick="selectArea(this);" class="">
+              <input type="hidden" th:value="${loc['AREA_CODE']}" class="areaCode">
+              <div class="card1 areaDiv">
+                <img width="190px;" height="140px;" th:src="'/img/item/itemImg/' + ${loc['ITEM_IMG_ATTACHED_NAME']}" class="rounded-3" alt="...">
+                <div class="card1-front">
+                  <p class="title1">[[${loc['AREA_KOR_NAME']}]]</p>
+                  <p class="subtitle"></p>
+                </div>
               </div>
+            </a>
+          </div>
+        </th:block>
+      </div>
+  <!--  날짜선택 -->
+      <div class="row text-center justify-content-center mb-3 border rounded-5 shadow custom-border py-3">
+        <h3 class="fw-bold">여행 날짜를 선택하세요</h3>
+        <div class="col-md-2">
+          <span>출발일</span>
+          <input type="date" value="2023-06-29" name="depDate" class="form-control depDate">
+        </div>
+        <div class="col-md-2">
+          <span>도착일</span>
+          <input type="date" value="2023-07-02" name="arrDate" class="form-control arrDate">
+        </div>
+      </div>
+  <!--  항공편선택-->
+      <div class="row border text-center rounded-5 shadow custom-border mb-3 py-3">
+        <h3>항공사 선택</h3>
+        <th:block th:each="air : ${airline}">
+          <div class="col my-3">
+
+            <div class="radio-inputs">
+              <label>
+                <input class="radio-input airlineInput" th:value="${air['HBT_AIRLINE_CODE']}" type="radio" name="airlineCode">
+                <span class="radio-tile custom-border">
+                  <span class="radio-icon">
+                    <img th:src="'/img/item/airlineIcon/' + ${air['HBT_AIRLINE_ICON']}">
+                  </span>
+                  <span class="radio-label">[[${air['HBT_AIRLINE_NAME']}]]</span>
+                </span>
+              </label>
             </div>
 
-          </a>
-        </div>
-      </th:block>
-    </div>
-<!--  날짜선택 -->
-    <div class="row">
-      <h3>여행 날짜를 선택하세요</h3>
-    </div>
-    <div class="row mb-3">
-      <div class="col">
-        <span>출발일</span>
-        <input type="date" value="2023-06-29" name="depDate" class="form-control depDate">
-      </div>
-      <div class="col">
-        <span>출발일</span>
-        <input type="date" value="2023-07-02" name="arrDate" class="form-control arrDate">
-      </div>
-    </div>
-<!--  항공편선택-->
-    <div class="row mb-3">
-      <h3>항공사 선택</h3>
-    </div>
-    <div class="row">
-      <th:block th:each="air : ${airline}">
-        <div class="col">
 
-          <div class="radio-inputs">
-            <label>
-              <input class="radio-input airlineInput" th:value="${air['HBT_AIRLINE_CODE']}" type="radio" name="airlineCode">
-              <span class="radio-tile">
-                <span class="radio-icon">
-                  <img th:src="@{/img/item/airlineIcon/} + ${air['HBT_AIRLINE_ICON']}">
-                </span>
-                <span class="radio-label">[[${air['HBT_AIRLINE_NAME']}]]</span>
-              </span>
-            </label>
           </div>
+        </th:block>
 
-
-        </div>
-      </th:block>
-
-    </div>
-<!-- 호텔선택  -->
-    <div class="row mb-3">
-      <div class="col">
-        <input type="button" data-bs-toggle="collapse" data-bs-target="#hotelNTourcollapse" aria-expanded="false" aria-controls="hotelNTourcollapse" class="btn ye-bc" value="국가 날짜 선택 완료" onclick="getHotelnTourAJAX()">
       </div>
-    </div>
-
-<!--    <div class="row hotelDiv">-->
-<!--      <div class="col">-->
-<!--      </div>-->
-<!--    </div>-->
-
-
-<!--  일자별 투어선택 -->
-
-    <div class="collapse" id="hotelNTourcollapse">
-      <div class="card card-body">
-        <div class="row">
-          <h4>호텔 목록</h4>
-        </div>
-
-        <div class="row hotelDiv">
-
-        </div>
-        <div class="row">
-          <h4>투어 목록</h4>
-        </div>
-
-        <div class="row tourDiv">
-
+      <div class="row mb-3 justify-content-center">
+        <div class="col-auto">
+          <input type="button" class="btn ye-S-bc" value="국가 날짜 선택 완료" onclick="getHotelnTourAJAX()">
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <input class="btn ye-bc" type="button" value="상품 선택 완료" onclick="drawResultModal();">
+
+
+  <!--  일자별 투어선택 -->
+    <div class="row">
+
+
+      <div class="collapse mx-0 px-5 custom-border rounded-5 shadow" id="hotelNTourcollapse">
+        <div class="card card-body border-0 mx-0 px-0 text-center">
+
+          <h4 class="py-3">호텔 목록</h4>
+          <div class="row hotelDiv">
+
+          </div>
+          <h4 class="py-3">투어 목록</h4>
+
+          <div class="row tourDiv">
+
+          </div>
+        </div>
+        <div class="row justify-content-center d-flex my-3">
+          <div class="col-md-3 justify-content-center d-flex">
+            <input class="btn ye-S-bc d-gird" type="button" value="상품 선택 완료" onclick="drawResultModal();">
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
 
 
@@ -147,9 +135,9 @@
 
             </div>
 
-            <div class="row">
-              <div class="col">
-                <input type="button" class="btn ye-bc" value="선택완료" onclick="selectedHotel();">
+            <div class="row my-3 justify-content-center d-flex">
+              <div class="col-md-3 justify-content-center d-flex">
+                <input type="button" class="btn ye-S-bc" value="선택완료" onclick="selectedHotel();">
               </div>
             </div>
           </div>
@@ -193,9 +181,9 @@
             <div class="row selectTour mb-3">
 
             </div>
-            <div class="row">
-              <div class="col">
-                <input type="button" class="btn ye-bc" value="선택완료" onclick="selectedTour();">
+            <div class="row justify-content-center d-flex my-3">
+              <div class="col-md-3 justify-content-center d-flex">
+                <input type="button" class="btn ye-S-bc" value="선택완료" onclick="selectedTour();">
               </div>
             </div>
           </div>
@@ -215,22 +203,19 @@
               <div class="modal-body">
                 <table class="table resultTable"></table>
               </div>
-              <div class="row mb-3">
-                <div class="col">
-                  <input type="button" value="test" onclick="buyNCart();" class="btn ye-bc">
+              <div class="row mb-3 justify-content-center d-flex">
+                <div class="col justify-content-center d-flex">
+                  <input type="button" name="buttonType" value="장바구니" onclick="buyNCart('N');" class="btn ye-S-bc">
                 </div>
-                <div class="col">
-                  <input type="button" name="buttonType" value="장바구니" onclick="buyNCart('N');" class="btn ye-bc">
-                </div>
-                <div class="col">
-                  <input type="button" name="buttonType" value="바로구매" onclick="buyNCart('Y')" class="btn ye-bc">
+                <div class="col justify-content-center d-flex">
+                  <input type="button" name="buttonType" value="바로구매" onclick="buyNCart('Y')" class="btn ye-S-bc">
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-    </div>
+  </div>
 
 </th:block>
 

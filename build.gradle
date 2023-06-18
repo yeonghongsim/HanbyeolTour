@@ -18,6 +18,8 @@ dependencies {
 	// 문자 api
 	implementation 'net.nurigo:sdk:4.3.0'
 
+	implementation 'org.jsoup:jsoup:1.16.1' //크롤링
+
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7.1' //jackson 라이브러리
 	implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 발송
 

@@ -102,5 +102,10 @@ public class ItemServiceImpl implements ItemService{
 		sqlSession.insert("itemMapper.setDiyTourDetail", detailList);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getHotelList() {
+		return sqlSession.selectList("itemMapper.getHotelList");
+	}
+
 
 }

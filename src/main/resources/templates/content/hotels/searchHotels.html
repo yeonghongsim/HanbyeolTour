@@ -5,54 +5,72 @@
 <!-- 연결해야할 외부 CSS파  -->
 <th:block layout:fragment="content_css">
   <link rel="stylesheet" href="/css/item/item_header.css">
+  <link rel="stylesheet" href="/css/item/searchHotels.css">
 
-    <style>
-        #map {
-            height: 600px; /* The height is 400 pixels */
-            width: 100%; /* The width is the width of the web page */
-        }
-        img{
-            height: 240;
-            width: 320;
-        }
-    </style>
 </th:block>
 
 <th:block layout:fragment="content">
     <div class="row">
 
 
-<!--        검색어입력-->
-        <div class="row mb-3">
-            <div class="col">
-                <select class="areaName form-select">
-                    <th:block th:each="loc : ${locMenuList}">
-                        <option>[[${loc.areaKorName}]]</option>
-                    </th:block>
-                </select>
-            </div>
-            <div class="col">
-                <input class="form-control" type="text" placeholder="도시명" id="cityName">
-            </div>
-            <div class="col">
-                <input class="btn" type="button" value="검색" onclick="searchHotelsAJAX();">
-            </div>
-        </div>
 
 <!--        아이템 카드-->
-        <div class="row resultDiv mb-3">
-            <div class="col">
-            </div>
-        </div>
+        <div class="row my-5 d-flex justify-content-center">
+            <div class="row">
 
 
-        <div class="row">
-            <div class="col">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-10 mx-0 px-0 d-flex justify-content-center">
+                        <div class="row custom-border text-center mb-3 border rounded-5 shadow py-2 d-flex" style="width: 720px;">
+                            <div class="col-md-4 offset-1">
+                                <select class="areaName ye-bc form-control form-select">
+                                    <th:block th:each="loc : ${locMenuList}">
+                                        <option>[[${loc.areaKorName}]]</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control ye-bc" type="text" placeholder="도시명" id="cityName">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="btn ye-S-bc" type="button" value="검색" onclick="searchHotelsAJAX();">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-10 mx-0 px-0 d-flex justify-content-center">
+                        <h4 class="text-center my-5 fw-bold resultTitle">한별투어 추천 호텔</h4>
+                    </div>
+                </div>
+
+
+                <div class="row d-flex justify-content-center resultDiv" th:each="hotel : ${hotelList}">
+                    <div class="col-md-10 mx-0 px-0 d-flex justify-content-center">
+                        <div class="card mb-3 rounded-3" style="width: 720px; height: 271px; border-color: #ffd000">
+                            <div class="row g-0 shadow">
+                                <div class="col-md-6">
+                                    <div class="card-body d-flex flex-column h-100 ">
+                                        <h5 class="card-title text-center mb-5 fw-bold">[[${hotel['HBT_HOTEL_NAME']}]]</h5>
+                                        <div class="mt-auto">
+                                            <p class="card-text">[[${hotel['HBT_HOTEL_INTRO']}]]</p>
+                                            <p class="card-text hotelGrade" th:data-grade="${hotel['HBT_HOTEL_GRADE']}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img th:src="'/img/item/hotel/' + ${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="img-fluid rounded-3" alt="...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>
     </div>
-
 
 
 
