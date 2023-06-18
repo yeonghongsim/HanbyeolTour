@@ -103,6 +103,13 @@ public interface AdminService {
 	//분기별 매출 조회
 	List<Map<String, Integer>> getQuarterlySales(int year);
 	
+	//할 일 목록 조회
+	Map<String, Integer> getToDoList();
+	
+	//여행 국가별 판매수 조회
+	List<Map<String, Object>> getSalesStatisticsByCategory();
+	
+	
 
 	
 	

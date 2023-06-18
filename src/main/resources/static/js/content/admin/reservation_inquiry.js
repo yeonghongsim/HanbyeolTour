@@ -1,3 +1,42 @@
+init();
+
+function init() {
+
+	let url = location.search
+
+	console.log(location.search)
+	
+
+	if (url == '?buyStatusCode=1') {
+		const checkboxes = document.querySelectorAll('.searchChk');
+
+		// Loop through the checkboxes and check the one with value 1
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].value == '1') {
+				checkboxes[i].checked = true;
+			}
+		}
+
+		const searchButton = document.querySelector("input[type='submit']");
+		searchButton.click();
+	}
+	
+	if (url == '?buyStatusCode=3') {
+		const checkboxes = document.querySelectorAll('.searchChk');
+
+		// Loop through the checkboxes and check the one with value 1
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].value == '3') {
+				checkboxes[i].checked = true;
+			}
+		}
+
+		const searchButton = document.querySelector("input[type='submit']");
+		searchButton.click();
+	}
+}
+	
+
 //예약 목록 전체 체크박스 클릭 컨트롤
 function AllCheckboxControl() {
 	const checkAll = document.querySelector('#allCheck');
@@ -135,18 +174,34 @@ function getBuyListPaging(pageNum){
 }
 
 
-//예약 완료로 구매 상태 변경 시 문자 발송
-function sendSMS(){
+//
+
+
+function aaa(){
 	
-	const buyStatus = document.querySelector('#buyStatusSelect').value;
-	console.log(buyStatus);
+	//ajax start
+	$.ajax({
+		url: '/admin/aaa', //요청경로
+		type: 'post',
+		data: {}, //필요한 데이터
+		async: true, //default 
+		contentType: 'application/json; charset=UTF-8', //json 방식
+		//contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default 방식
+		success: function(result) {
+			alert('ajax 통신 성공');
+			location.reload
+			const bbb = document.querySelector('#allCheck')
+			bbb.checked = true;
+			
+			
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+	
 }
-
-
-
-
-
-
 
 
 

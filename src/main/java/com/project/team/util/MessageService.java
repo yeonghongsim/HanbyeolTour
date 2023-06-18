@@ -3,7 +3,7 @@ package com.project.team.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-/*
+
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
-*//*
+
 @Service("messageService")
 public class MessageService {
 
@@ -47,7 +47,7 @@ public class MessageService {
 	 * System.out.println(exception.getMessage()); } catch (Exception exception) {
 	 * System.out.println(exception.getMessage()); } return null; }
 	 */
-/*
+
 	public List<String> sendMessage(List<String> memDTellList, List<String> memNameList) throws CoolsmsException {
 
 		// memDTellslist 하나의 문자열로 바꾸기
@@ -88,4 +88,3 @@ public class MessageService {
 		return memDTellList;
 	}
 }
-*/

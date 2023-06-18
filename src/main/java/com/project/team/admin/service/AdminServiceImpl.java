@@ -211,6 +211,21 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectList("adminMapper.getQuarterlySales", year);
 	}
+	
+	//할 일 목록 조회
+	@Override
+	public Map<String, Integer> getToDoList() {
+		
+		return sqlSession.selectOne("adminMapper.getToDoList");
+	}
+	
+	//여행 국가별 판매수 조회
+	@Override
+	public List<Map<String, Object>> getSalesStatisticsByCategory() {
+		
+		return sqlSession.selectList("adminMapper.getSalesStatisticsByCategory");
+	}
+
 
 
 
@@ -313,6 +328,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
 
 
 
