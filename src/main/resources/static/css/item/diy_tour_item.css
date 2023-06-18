@@ -14,29 +14,29 @@
 }
 
 .radio-input:checked + .radio-tile {
-    border-color: #2260ff;
+    border-color: #ffd000;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    color: #2260ff;
+    color: #ffd000;
 }
 
 .radio-input:checked + .radio-tile:before {
     transform: scale(1);
     opacity: 1;
-    background-color: #2260ff;
-    border-color: #2260ff;
+    background-color: #ffd000;
+    border-color: #ffd000;
 }
 
 .radio-input:checked + .radio-tile .radio-icon svg {
-    fill: #2260ff;
+    fill: #ffd000;
 }
 
 .radio-input:checked + .radio-tile .radio-label {
-    color: #2260ff;
+    color: #ffd000;
 }
 
 .radio-input:focus + .radio-tile {
-    border-color: #2260ff;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+    border-color: #ffd000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #ffd000;
 }
 
 .radio-input:focus + .radio-tile:before {
@@ -66,7 +66,7 @@
     display: block;
     width: 0.75rem;
     height: 0.75rem;
-    border: 2px solid #b5bfd9;
+    border: 2px solid #ffd000;
     background-color: #fff;
     border-radius: 50%;
     top: 0.25rem;
@@ -77,7 +77,7 @@
 }
 
 .radio-tile:hover {
-    border-color: #2260ff;
+    border-color: #ffd000;
 }
 
 .radio-tile:hover:before {
@@ -109,38 +109,106 @@
     width: 1px;
 }
 
-.rating:not(:checked) > input {
+.custom-border {
+    border: 1px solid #ffd000 !important;
+}
+
+.card > img {
+    width: 285px;
+    height: 215px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0.4rem #ffd000;
+    border: 2px solid #ffd000;
+
+}
+.form-control {
+    border: 1px solid #ffd000;
+    box-shadow: none; /* 선택 사항: 클릭 시 생기는 그림자 제거 */
+}
+
+
+/* CARD */
+
+.card1 img {
+    justify-content: start;
+    align-content: start;
+}
+
+.card1 {
+    color: #1b1b1b;
+    width: 190px;
+    height: 254px;
+    position: relative;
+    outline: 3px solid #fff9d4;
+    border-radius: 8px;
+    line-height: 150%;
+    background: #ff930f;
+    background-blend-mode: multiply;
+    background: linear-gradient(to top, #ffd000, #fff9d4);
+    transition: background-color 1s ease-in-out;
+    overflow: hidden;
+}
+
+.card1border{
+    outline: 6px solid #ffd000; !important;
+}
+
+.card1border-sm{
+    outline: 4px solid #ffd000; !important;
+}
+
+.card1-front {
+    bottom: 16px;
+    left: 0;
     position: absolute;
-    appearance: none;
+    width: 100%;
+    text-align: center;
+    transition: transform 1s cubic-bezier(0.785, 0.135, 0.150, 0.860);
 }
 
-.rating:not(:checked) > label {
-    float: right;
-    cursor: pointer;
-    font-size: 50px;
-    color: #666;
+.card1-back {
+    transform: translateX(120%);
+    transition: transform 1s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+.card1-back p {
+    margin-top: 10px;
 }
 
-.rating:not(:checked) > label:before {
-    content: '★';
+
+/*Text*/
+.title1 {
+    padding-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+/*Text divider*/
+.title1::after {
+    content: "";
+    display: block;
+    width: 50%;
+    border-radius: 50%;
+    height: 2px;
+    margin: 2px auto;
+    background-color: #1b1b1b;
 }
 
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
-    color: #e58e09;
+
+/*Hover*/
+.areaDiv:hover {
+    background-color: #1b1b1b25;
 }
 
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-    color: #ff9e0b;
+.areaDiv:hover .card1-front {
+    transform: translateX(-100%);
 }
 
-.rating > input:checked ~ label {
-    color: #ffa723;
+.areaDiv:hover .card1-back {
+    transform: translateX(0);
 }
+
 
 
 

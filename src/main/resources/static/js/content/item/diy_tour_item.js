@@ -1,18 +1,203 @@
 let hotelInfo = {};
 let tourInfo = {};
+getNationalData();
+
+//환율정보크롤링데이터 가져오기
+function getExchangeData(){
+    $.ajax({
+        url : '/item/getExchange',
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : false,
+        data: {},
+        success: function(result) {
+            drawExchang(JSON.parse(result));
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
+
+}
+
+//환율정보 그리기
+function drawExchang(exchangeData){
+
+    const areaNames = document.querySelectorAll('.card1-front > .title1');
+    const keys = Object.keys(exchangeData);
+
+    areaNames.forEach(area => {
+        keys.forEach(key => {
+            if(area.textContent == key){
+                let str = `
+                    <p class="subtitle">${exchangeData[key][0]}  ${exchangeData[key][1]}</p>
+                `;
+                area.parentElement.nextElementSibling.insertAdjacentHTML('beforeend', str);
+
+            }
+        });
+    });
+
+}
+
+
+//국가정보받아오기
+function getNationalData(){
+    const areaCodeTag = document.querySelectorAll('.areaCode');
+    const servicekey = 'CjAiz1amkVJUNEWgPQo963nHN3%2FmHY1CtYIrTr%2FbyYft8%2FW%2BxX%2Fa%2FMIaAmkR1WBGkxFz1LmAm0Z%2FXKzPCQaylw%3D%3D';
+    let areaCodes = [];
+
+    areaCodeTag.forEach((area) => {
+        areaCodes.push(area.value);
+    });
+    let url = 'https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJd8BlQ2BZwokRAFUEcm_qrcA&key=';
+
+    let resultMap = {};
+
+    areaCodes.forEach((areaCode) => {
+        $.ajax({
+            url: 'https://apis.data.go.kr/1262000/OverviewGnrlInfoService/getOverviewGnrlInfoList?serviceKey=' + servicekey + '&numOfRows=10&pageNo=1&cond[country_iso_alp2::EQ]=' + areaCode, //요청경로
+            type: 'get',
+            //contentType : 'application/json; charset=UTF-8',
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            async : false,
+            data: {},
+            success: function(result) {
+                resultMap[areaCode] = result;
+            },
+            error: function() {
+                alert('실패');
+            }
+        });
+    });
+
+    getLoc(getCaptalName(resultMap));
+
+}
+
+function getCaptalName(resultMap){
+    //키를 배열로 만들고 각배열의값을 순회하면서 ( 전까지 짤라서 변수에 넣기 만약 키값이 kr 이랑 같으면 변수에 강제로 seoul 박기
+    const keys = Object.keys(resultMap);
+    let cityNames = [];
+    keys.forEach((key) => {
+        cityNames.push( key == 'KR' ? '서울' : split(resultMap[key]['data'][0]['capital']));
+    });
+    return cityNames;
+}
+
+//문자열 짜르기
+function split(str){
+    return str.split('(')[0];
+}
+//도시명으로 위경도 받아오기
+function getLoc(cityNames){
+
+    const url = 'http://api.openweathermap.org/geo/1.0/direct?q=';
+    const apiKey = '&limit=1&appid=393e4795a0727352602dbef6958d9a35';
+    let requestData = {};
+    cityNames.forEach((cityName) => {
+        $.ajax({
+            url: url + cityName + apiKey,
+            type: 'get',
+            //contentType : 'application/json; charset=UTF-8',
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            async : false,
+            data: {},
+            success: function(result) {
+                requestData[cityName] = { name : result[0]['local_names']['ko'], lat : result[0]['lat'], lon : result[0]['lon']};
+            },
+            error: function() {
+                alert('실패');
+            }
+        });
+
+    });
+
+    getWeather(requestData);
+}
+
+//날씨api
+function getWeather(requestData){
+
+    const url = 'https://api.openweathermap.org/data/2.5/weather?lat=';
+    const apiKey = '&lang=kr&appid=393e4795a0727352602dbef6958d9a35';
+
+    const keys = Object.keys(requestData);
+    let str ='';
+    const weatherMap = {};
+    keys.forEach((key) => {
+
+        $.ajax({
+            url: url + requestData[key]['lat'] + '&lon=' + requestData[key]['lon'] + apiKey,
+            type: 'get',
+            //contentType : 'application/json; charset=UTF-8',
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            async : false,
+            data: {},
+            success: function(result) {
+                weatherMap[key] = { icon : result['weather'][0]['icon'], main : result['main']['temp'] - 273.15, areaCode : result['sys']['country']}
+
+            },
+            error: function() {
+                alert('실패');
+            }
+        });
+
+    });
+    drawWeather(weatherMap);
+}
+
+//날씨 그림 그리기
+function drawWeather(weatherMap){
+
+    const keys = Object.keys(weatherMap);
+    const areaCodes = document.querySelectorAll('.areaCode');
+    const subtitle = document.querySelectorAll('.subtitle');
+
+
+    keys.forEach((key,index) => {
+        subtitle[index].textContent = key;
+        let weatherStr = `
+                            <div class="card1-back">
+                                <p class="title1">
+                                    <img src="http://openweathermap.org/img/wn/${weatherMap[key]['icon']}.png">
+                                       ${weatherMap[key]['main'].toFixed(1)}℃
+                                </p>
+                            </div>
+                          `;
+        areaCodes.forEach((areaCode) => {
+
+            if(areaCode.value == weatherMap[key]['areaCode'].toString()){
+                areaCode.nextElementSibling.insertAdjacentHTML('beforeend', weatherStr);
+            }
+        });
+    });
+
+
+    getExchangeData();
+}
+
+
+
+
+
+
+
+
 
 //지역선택시 색상변경
 function selectArea(event){
 
-    const areaDiv = event.querySelector('.areaDiv');
-    const allDiv = document.querySelectorAll('.areaDiv');
+    const areaDiv = event.querySelector('.card1');
+    const allDiv = document.querySelectorAll('.card1');
 
     allDiv.forEach((area) => {
-        area.classList.remove('ye-bc')
-        area.classList.remove('selected')
+        area.classList.remove('card1border');
+        area.classList.remove('selected');
     });
-        areaDiv.classList.add('ye-bc')
-        areaDiv.classList.add('selected')
+        areaDiv.classList.add('card1border');
+        areaDiv.classList.add('selected');
     //getHotelnTourAJAX(event);
 }
 
@@ -74,7 +259,12 @@ function getHotelnTourAJAX(){
     });
     //ajax end
 
+    //collapse
+    const hotelNTourcollapse = myCollapse = new bootstrap.Collapse(document.querySelector("#hotelNTourcollapse"));
+    hotelNTourcollapse.show();
+
 }
+
 
 //호텔그림그리기
 function drawItem(resultList){
@@ -86,66 +276,79 @@ function drawItem(resultList){
 
     resultList['HOTEL'].forEach((hotel) => {
         hotelStr +=  `
-                    <div class="col">
-                        <a href="javascript:void(0)" onclick="hotelModal(this);">
-                            <div class="card" style="width: 18rem;">
-                                <img width="150px;" src="/img/item/hotel/${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">${hotel['HBT_HOTEL_NAME']}</p>
-                                    <input type="hidden" value="${hotel['HBT_HOTEL_CODE']}">
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
+                    <a href="javascript:void(0)" onclick="hotelModal(this);" class="">
+                      <input type="hidden" value="${hotel['HBT_HOTEL_CODE']}" class="areaCode">
+                      <div class="card1 card1border-sm">
+                        <img width="190px;" height="140px;" src="/img/item/hotel/${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="rounded-3" alt="...">
+                        <div class="card1-front">
+                          <p class="title1">${hotel['HBT_HOTEL_NAME']}</p>
+                          <p class="subtitle"></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
                     `;
     });
     //호텔목록숫자체우기
     if(resultList['HOTEL'].length < 5){
         for(let i = 0; i < (5 - parseInt(resultList['HOTEL'].length)); i++){
             hotelStr +=  `
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <div class="card" style="width: 18rem;">
-                                <img width="150px;" src="/img/item/xbox.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">준비중</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+
+
+                <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
+                    <a href="javascript:void(0)" class="">
+                      <div class="card1 card1border-sm">
+                        <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
+                        <div class="card1-front">
+                          <p class="title1">준비중</p>
+                          <p class="subtitle"></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
+
+
                     `;
         }
     }
 
     resultList['TOUR'].forEach((tour) => {
         tourStr +=  `
-                    <div class="col">
-                        <a href="javascript:void(0)" onclick="tourModal(this);">
-                            <div class="card" style="width: 18rem;">
-                                <img width="150px;" src="/img/item/tourItem/${tour['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">${tour['HBT_TOUR_ITEM_NAME']}</p>
-                                    <input type="hidden" value="${tour['HBT_TOUR_ITEM_CODE']}">
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+
+                <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
+                    <a href="javascript:void(0)" onclick="tourModal(this);" class="">
+                      <input type="hidden" value="${tour['HBT_TOUR_ITEM_CODE']}">
+                      <div class="card1 card1border-sm">
+                        <img width="190px;" height="140px;" src="/img/item/tourItem/${tour['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="rounded-3" alt="...">
+                        <div class="card1-front">
+                          <p class="title1">${tour['HBT_TOUR_ITEM_NAME']}</p>
+                          <p class="subtitle"></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
+
                     `;
     });
 
     if(resultList['TOUR'].length < 5){
         for(let i = 0; i < (5 - parseInt(resultList['TOUR'].length)); i++){
             tourStr +=  `
-                    <div class="col">
-                        <a href="javascript:void(0)" onclick="">
-                            <div class="card" style="width: 18rem;">
-                                <img width="150px;" src="/img/item/xbox.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">준비중</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
+                    <a href="javascript:void(0)" class="">
+                      <div class="card1 card1border-sm">
+                        <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
+                        <div class="card1-front">
+                          <p class="title1">준비중</p>
+                          <p class="subtitle"></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
                     `;
         }
     }
@@ -335,10 +538,11 @@ function drawTourModal(result){
                     <td>${result[0]['HBT_TOUR_ITEM_INTRO']}</td>
                 </tr>
                 <tr>
-                    <select class="form-control tourSelectTag">
-                        <option value="0" disabled selected>
-                            일정선택
-                        </option>
+                    <td>
+                        <select class="form-control tourSelectTag">
+                            <option value="0" disabled selected>
+                                일정선택
+                            </option>
     `;
 
     for(let i = 0; i < getDate();i++){
@@ -351,6 +555,7 @@ function drawTourModal(result){
                     <input type="hidden" class="tourInfoHidden" value="${result[0]['HBT_TOUR_ITEM_NAME']}">
                     <input type="hidden" class="tourInfoHidden" value="${result[0]['HBT_TOUR_ITEM_PRICE']}">
                     <input type="hidden" class="tourInfoHidden" value="${result[0]['HBT_TOUR_ITEM_CODE']}">
+                    </td>
                     </tr>`;
 
     tourInfoTable.replaceChildren();
@@ -562,10 +767,6 @@ function buyNCart(isPaid){
     diyTourVO['isPaid'] = isPaid;
 
     let diyDetail = mergedObj(hbtHotelCodeMap,tourCodeMap);
-
-    console.log(diyTourVO);
-    console.log(diyDetail);
-
 
     //ajax요청
     $.ajax({

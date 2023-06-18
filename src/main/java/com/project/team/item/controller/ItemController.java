@@ -1,5 +1,7 @@
 package com.project.team.item.controller;
 
+import org.jsoup.Jsoup;
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.util.*;
@@ -7,6 +9,7 @@ import java.util.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.project.team.admin.service.AdminService;
 import com.project.team.buy.vo.BuyDetailVO;
+import com.project.team.item.Exchange;
 import com.project.team.item.vo.DiyDetailVO;
 import com.project.team.item.vo.DiyTourVO;
 import com.project.team.member.service.MemberService;
@@ -175,14 +178,28 @@ public class ItemController {
 	}
 	//호텔페이지 이동
 	@GetMapping("/hotelPage")
-	public String goHotelPage(){
+	public String goHotelPage(Model model){
+		model.addAttribute("hotelList", itemService.getHotelList());
+
 		return "content/hotels/searchHotels";
+	}
+
+	//환율정보 크롤링
+	@PostMapping("getExchange")
+	@ResponseBody
+	public String getExchange() throws IOException {
+		Exchange exchange = new Exchange();
+
+		return mapper.writeValueAsString(exchange.getExchange());
 	}
 	
 
 	//패키지만들기 페이지 이동
 	@GetMapping("/diyTourItem")
-	public String goDiyTourItem(Model model){
+	public String goDiyTourItem(Model model) {
+
+		//크롤링테스트
+
 		//지역정보및이미지
 		model.addAttribute("location", itemService.getLocationImg());
 		//항공사전체이름및아이콘

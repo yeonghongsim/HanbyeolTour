@@ -40,4 +40,6 @@ public interface ItemService {
 	//다음번 diyCode조회
 	String getNextDiyCode();
 	void setDiyTour(DiyTourVO diyTourVO, List<DiyDetailVO> detailList);
+	//호텔리스트조회
+	List<HashMap<String, Object>> getHotelList();
 }
