@@ -252,3 +252,36 @@ a {
 }
 
 
+
+.contain{
+	height: 300px;
+	background-repeat: no-repeat;
+	background-position: center bottom 40%;
+	background-size: cover;
+}
+
+.contain {
+	position: relative;
+	height: 300px;
+	overflow: hidden;
+}
+
+.contain img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+	object-fit: cover;
+}
+
+.contain img.active {
+	opacity: 1;
+}
+
+.overlap-row {
+	position: relative;
+	margin-top: -5%;
+}
