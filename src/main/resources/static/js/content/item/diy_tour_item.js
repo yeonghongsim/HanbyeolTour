@@ -51,7 +51,7 @@ function getNationalData(){
     areaCodeTag.forEach((area) => {
         areaCodes.push(area.value);
     });
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJd8BlQ2BZwokRAFUEcm_qrcA&key=';
+    //let url = 'https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJd8BlQ2BZwokRAFUEcm_qrcA&key=';
 
     let resultMap = {};
 

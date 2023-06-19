@@ -276,6 +276,9 @@ public class ItemController {
 			detailList.add(diyDetailVO);
 		}
 
+		System.out.println(diyTourVO);
+		System.out.println(detailList);
+
 		itemService.setDiyTour(diyTourVO, detailList);
 
 		return "redirect:/item/diyTourItem";

@@ -272,7 +272,7 @@
 		, HBT_TOUR_ITEM_CODE
 		)								<!-- imgVO -->
 		<foreach collection="list" item="item" separator="UNION ALL" index="i">
-			SELECT (SELECT 'HBT_DIY_DETAIL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_DIY_DETAIL_CODE, 14))), 0) + 1 + #{i}, 3, '0')
+			SELECT (SELECT 'HBT_DIY_DETAIL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_DIY_DETAIL_CODE, 16))), 0) + 1 + #{i}, 3, '0')
 			FROM HBT_DIY_DETAIL)
 			, #{item.hbtDiyDay}
 			, #{item.hbtDiyCode}
