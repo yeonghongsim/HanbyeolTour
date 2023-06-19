@@ -5,3 +5,39 @@
 	height: 420px;
 	border: 1px solid #eee;
 }
+
+
+table {
+  border-collapse: collapse;
+  width: 300px;
+  height: 70px; 
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+th, td {
+  border-left: 2px solid orange; 
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
+}
+
+td:nth-child(2) {
+  border-left: none;
+  text-align: right
+}
+
+.tdTitle{
+	font-size: 12px;
+	color: gray;
+}
+
+.tdCnt{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.bi {
+	color: orange;
+}

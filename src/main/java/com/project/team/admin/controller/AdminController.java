@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.project.team.item.controller.ItemController;
 import com.project.team.util.DateUtil;
+import com.project.team.util.MessageService;
 //import com.project.team.util.MessageService;
 import com.project.team.util.UploadPath;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 
 import jakarta.annotation.Resource;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 //import net.nurigo.java_sdk.Coolsms;
 //import net.nurigo.java_sdk.api.Message;
@@ -58,8 +60,8 @@ public class AdminController {
 	private AdminService adminService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
-	//@Resource(name = "messageService")
-	//private MessageService messageService;
+	@Resource(name = "messageService")
+	private MessageService messageService;
 	
 	
 	// 초기화면 이동
@@ -335,7 +337,7 @@ public class AdminController {
 		return "content/admin/reservation_inquiry";
 	}
 	
-	/*
+	
 	//예약 상태 변경 버튼 클릭 시
 	@ResponseBody
 	@PostMapping("/changeBuyStatusAJAX")
@@ -379,14 +381,6 @@ public class AdminController {
 		return "content/admin/update_reservation";
 	}
 	
-	//예약 확정으로 예약 상태 변경 시 문자 전송
-	@ResponseBody
-	@PostMapping("/")
-	public String UpdateReservSendSms() {
-		
-		return "";
-	}
-	*/
 	
 	
 	//예약 상세 페이지
@@ -496,6 +490,15 @@ public class AdminController {
 		
 		return "content/admin/sales_statistics_by_category";
 	}
+	
+	
+	//할일 목록 조회 신규 예약
+	@ResponseBody
+	@PostMapping("/aaa")
+	public void aaa() {
+		
+	}
+	
 	
 	
 	
