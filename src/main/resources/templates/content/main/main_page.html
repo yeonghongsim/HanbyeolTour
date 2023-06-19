@@ -20,8 +20,8 @@
 			<div class="col mb-3 mx-0 px-0 rounded-5">
 			
 			
-				<div id="mainImgSlide" class="carousel slide  custom-border-2 border-2 rounded-5" data-bs-ride="carousel">
-					<div class="carousel-inner rounded-5">
+				<div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner rounded-5 custom-border-2 border-2 shadow">
 						<th:block th:each="img, state : ${mainSlideImg}">
 							<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="2000">
 								<img  th:src="'/img/main/slide/' + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 
-		<div class="row mb-5 resultDiv custom-border-2 rounded-5 px-5 py-5">
+		<div class="row mb-5 resultDiv custom-border-2 rounded-5 px-5 py-5 shadow">
 			<div class="col-6 custom-border-2 rounded-5">
 				<a th:href="@{/item/tourItemListDetail(itemCode = ${recomImgList[0]['ITEM_CODE']})}">
 					<img th:data-item="${recomImgList[0]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded"
