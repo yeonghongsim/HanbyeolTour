@@ -492,13 +492,8 @@ public class AdminController {
 	}
 	
 	
-	//할일 목록 조회 신규 예약
-	@ResponseBody
-	@PostMapping("/aaa")
-	public void aaa() {
-		
-	}
 	
+
 	
 	
 	

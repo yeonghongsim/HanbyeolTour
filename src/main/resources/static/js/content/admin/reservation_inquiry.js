@@ -7,10 +7,10 @@ function init() {
 	console.log(location.search)
 	
 
-	if (url == '?buyStatusCode=1') {
+	if(url == '?buyStatusCode=1') {
 		const checkboxes = document.querySelectorAll('.searchChk');
 
-		// Loop through the checkboxes and check the one with value 1
+		
 		for (let i = 0; i < checkboxes.length; i++) {
 			if (checkboxes[i].value == '1') {
 				checkboxes[i].checked = true;
@@ -19,18 +19,15 @@ function init() {
 
 		const searchButton = document.querySelector("input[type='submit']");
 		searchButton.click();
-	}
-	
-	if (url == '?buyStatusCode=3') {
+	}else if(url == '?buyStatusCode=3'){
 		const checkboxes = document.querySelectorAll('.searchChk');
 
-		// Loop through the checkboxes and check the one with value 1
+		
 		for (let i = 0; i < checkboxes.length; i++) {
 			if (checkboxes[i].value == '3') {
 				checkboxes[i].checked = true;
 			}
 		}
-
 		const searchButton = document.querySelector("input[type='submit']");
 		searchButton.click();
 	}
