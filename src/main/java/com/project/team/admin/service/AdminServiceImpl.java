@@ -221,9 +221,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	//여행 국가별 판매수 조회
 	@Override
-	public List<Map<String, Object>> getSalesStatisticsByCategory() {
+	public List<Map<String, Object>> getSalesStatisticsByCategory(int year) {
 		
-		return sqlSession.selectList("adminMapper.getSalesStatisticsByCategory");
+		return sqlSession.selectList("adminMapper.getSalesStatisticsByCategory", year);
 	}
 
 

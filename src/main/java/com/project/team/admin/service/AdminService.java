@@ -107,7 +107,7 @@ public interface AdminService {
 	Map<String, Integer> getToDoList();
 	
 	//여행 국가별 판매수 조회
-	List<Map<String, Object>> getSalesStatisticsByCategory();
+	List<Map<String, Object>> getSalesStatisticsByCategory(int year);
 	
 	
 

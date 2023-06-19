@@ -17,7 +17,16 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				여행 국가 카테고리별 차트 넣기
+				<select class="form-select" id="yearSelect" onchange="getChart()">
+										 
+					<th:block th:each="num : ${#numbers.sequence(thisYear - 2, thisYear)}">
+						<option th:selected="${year == num}" th:value="${num}">[[${num}]]년</option>
+					</th:block>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
 				<div class="row">
 					<div class="col-6">
 						<canvas id="cateChart"></canvas>
@@ -33,6 +42,7 @@
 
 <!-- 연결해야 할 외부 js 파일-->
 <th:block layout:fragment="content_js">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script type="text/javascript" src="/js/content/admin/sales_statistics_by_category.js"></script> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
 </th:block>
 
