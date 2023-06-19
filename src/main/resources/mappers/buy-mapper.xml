@@ -31,6 +31,16 @@
 		<result column="BUY_STATUS_NAME" 		property="buyStatusName"/>
 		<result column="BUY_STATUS_COUNT" 		property="buyStatusCount"/>
 	</resultMap>
+
+	<resultMap type="com.project.team.cart.vo.CartVO" id="cart">
+		<id column="CART_CODE" 					property="cartCode"/>
+		<result column="REG_DATE" 				property="regDate"/>
+		<result column="NUM_OF_PEOPLE" 			property="numOfPeople"/>
+		<result column="CART_TOTAL_PRICE" 		property="cartTotalPrice"/>
+		<association property="memberVO" 		resultMap="memberMapper.member"/>
+		<association property="itemVO"	 		resultMap="itemMapper.item"/>
+	</resultMap>
+	
 	
 	
 	<select id="getNextItemCode" resultType="string">
@@ -71,6 +81,7 @@
 				, #{buyDPrice}
 				 )
 	</insert>
+	
 
 	<insert id="addCartAJAX">
 	INSERT INTO HBT_CART
@@ -128,6 +139,29 @@
 		ORDER BY BUY_DATE DESC
 	</select>
 	
+	<select id="getCartList" resultMap="cart">
+	SELECT CART_CODE
+			, MEM_CODE
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') REG_DATE
+			, CART.ITEM_CODE
+			, NUM_OF_PEOPLE
+			, CART_TOTAL_PRICE
+            , ITEM_TITLE
+            , ITEM_INTRO
+            , ITEM_PRICE
+            , ITEM.AREA_CODE
+            , TRAVER_PERIOD
+            , STATUS_CODE
+            , ITEM_IMG_CODE
+            , ITEM_IMG_ATTACHED_NAME
+            , IS_MAIN
+            , AREA_KOR_NAME
+		FROM HBT_CART CART, HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA TOUR
+		WHERE MEM_CODE = #{memCode}
+        AND CART.ITEM_CODE = ITEM.ITEM_CODE
+        AND ITEM.ITEM_CODE = IMG.ITEM_CODE
+        AND ITEM.AREA_CODE = TOUR.AREA_CODE
+	</select>
 	
 	
 

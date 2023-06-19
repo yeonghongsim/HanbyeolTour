@@ -357,10 +357,14 @@ public class MyPageController {
 	
 	// 장바구니 페이지로 이동
 	@GetMapping("/checkMyCart")
-	public String checkMyCart(Model model) {
+	public String checkMyCart(Model model, String memId) {
+		String memCode = memberService.getMemCode(memId);
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_002");
+		model.addAttribute("myCartList", buyService.getCartList(memCode));
+		
+		
 		
 		
 		return "content/member/myPage/check_my_cart";
