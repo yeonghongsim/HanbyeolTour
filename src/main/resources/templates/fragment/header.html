@@ -25,7 +25,7 @@
 				<ul class="header-title head-top">
 					<li>[[${#authentication.name}]]님 즐거운 여행되세요! 😉</li>
 					<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
-					<li class="h-btn">장바구니</li>
+					<li class="h-btn"><a th:href="@{/myPage/checkMyCart(memId=${#authentication.name})}">장바구니</a></li>
 					<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>
 					<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
 					<th:block sec:authorize="hasAnyRole('ROLE_AD', 'ROLE_MNG')">
