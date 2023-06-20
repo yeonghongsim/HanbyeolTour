@@ -37,6 +37,30 @@
 		<result column="ITEM_IMG_ATTACHED_NAME" property="itemImgAttachedName"/>
 		<result column="IS_MAIN" 				property="isMain"/>
 	</resultMap>
+
+	<resultMap type="com.project.team.item.vo.DiyTourVO" id="diyTour">
+		<id 	column="HBT_DIY_CODE" 			property="hbtDiyCode"/>
+		<result column="DIY_TOUR_BUY_DATE" 		property="diyTourBuyDate"/>
+		<result column="DEPART_DATE" 			property="departDate"/>
+		<result column="ARRIVE_DATE" 			property="arriveDate"/>
+		<result column="TOTAL_PRICE" 			property="totalPrice"/>
+		<result column="TRAVER_PERIOD" 			property="traverPeriod"/>
+		<result column="IS_PAID" 				property="isPaid"/>
+		<result column="MEM_CODE" 				property="memCode"/>
+		<result column="HBT_AIRLINE_CODE" 		property="airlineCode"/>
+		<result column="AREA_CODE" 				property="areaCode"/>
+		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
+	</resultMap>
+
+	<resultMap type="com.project.team.item.vo.DiyDetailVO" id="diyDetail">
+		<id 	column="HBT_DIY_DETAIL_CODE" 	property="hbtDiyDetailCode"/>
+		<result column="HBT_DIY_DAY" 			property="hbtDiyDay"/>
+		<result column="HBT_DIY_CODE" 			property="hbtDiyCode"/>
+		<result column="HBT_TOUR_ITEM_CODE" 	property="hbtTourItemCode"/>
+		<result column="HBT_HOTEL_CODE" 		property="hbtHotelCode"/>
+	</resultMap>
+	
+	
 	
 	<select id="getItemListByAreaName" resultType="Map">
 	SELECT ITEM.ITEM_CODE
@@ -262,6 +286,21 @@
 			        , #{isPaid}
 				)
 	</insert>
+	
+	<select id="getDiyTourList" resultMap="diyTour">
+		SELECT HBT_DIY_CODE
+			, MEM_CODE
+			, HBT_AIRLINE_CODE
+			, AREA_CODE
+			, TO_CHAR(DEPART_DATE, 'YYYY-MM-DD HH24:MI') DEPART_DATE
+			, TO_CHAR(ARRIVE_DATE, 'YYYY-MM-DD HH24:MI') ARRIVE_DATE
+			, TOTAL_PRICE
+			, TRAVER_PERIOD
+			, IS_PAID
+		FROM HBT_DIY_TOUR
+		WHERE IS_PAID = 'N'
+		AND MEM_CODE = #{memCode}
+	</select>
 
 	<insert id="setDiyTourDetail">
 		INSERT INTO HBT_DIY_DETAIL (
@@ -291,7 +330,7 @@
 			FROM DUAL
 		</foreach>
 	</insert>
-
+	
 	<select id="getHotelList" resultType="map">
 		SELECT HOTEL.HBT_HOTEL_CODE
 			, HBT_HOTEL_NAME

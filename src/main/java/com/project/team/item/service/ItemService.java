@@ -42,4 +42,6 @@ public interface ItemService {
 	void setDiyTour(DiyTourVO diyTourVO, List<DiyDetailVO> detailList);
 	//호텔리스트조회
 	List<HashMap<String, Object>> getHotelList();
+	// diy리스트 조회
+	List<DiyTourVO> getDiyTourList(String memCode);
 }
