@@ -43,4 +43,9 @@ public class BuyServiceImpl implements BuyService{
 	public BuyVO getBuyDetail(String buyCode) {
 		return sqlSession.selectOne("buyMapper.getBuyDetail", buyCode);
 	}
+
+	@Override
+	public List<CartVO> getCartList(String memCode) {
+		return sqlSession.selectList("buyMapper.getCartList", memCode);
+	}
 }

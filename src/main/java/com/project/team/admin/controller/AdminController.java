@@ -486,19 +486,32 @@ public class AdminController {
 	
 	//카테고리별 매출 현황 페이지
 	@GetMapping("/salesStatisticsByCategory")
-	public String salesStatisticsByCategory() {
+	public String salesStatisticsByCategory(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+		
+		//year 데이터 안 넘어오는 경우
+		if(year == 0) {
+			year = DateUtil.getYear();
+		}
+		
+		model.addAttribute("year", year);
+		model.addAttribute("thisYear", DateUtil.getYear());
 		
 		return "content/admin/sales_statistics_by_category";
 	}
 	
-	
-	//할일 목록 조회 신규 예약
+	//카테고리별 차트 데이터 받아오는 ajax
 	@ResponseBody
-	@PostMapping("/aaa")
-	public void aaa() {
+	@PostMapping("/getCateChartDataAJAX")
+	public List<Map<String, Object>> getCateChartDataAJAX(int year) {
 		
+		List<Map<String, Object>> mapList = adminService.getSalesStatisticsByCategory(year);
+		
+		return mapList;
 	}
 	
+	
+	
+
 	
 	
 	

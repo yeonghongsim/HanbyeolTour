@@ -31,7 +31,7 @@ function drawExchang(exchangeData){
         keys.forEach(key => {
             if(area.textContent == key){
                 let str = `
-                    <p class="subtitle">${exchangeData[key][0]}  ${exchangeData[key][1]}</p>
+                    <p class="subtitle mt-0">${exchangeData[key][0]}  ${exchangeData[key][1]}</p>
                 `;
                 area.parentElement.nextElementSibling.insertAdjacentHTML('beforeend', str);
 
@@ -160,8 +160,8 @@ function drawWeather(weatherMap){
         subtitle[index].textContent = key;
         let weatherStr = `
                             <div class="card1-back">
-                                <p class="title1">
-                                    <img src="http://openweathermap.org/img/wn/${weatherMap[key]['icon']}.png">
+                                <p class="title1 align-bottom">
+                                    <img width="25px;" height="25px;" src="http://openweathermap.org/img/wn/${weatherMap[key]['icon']}.png">
                                        ${weatherMap[key]['main'].toFixed(1)}℃
                                 </p>
                             </div>

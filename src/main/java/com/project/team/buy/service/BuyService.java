@@ -18,4 +18,6 @@ public interface BuyService {
     List<BuyVO> getBuyList(String memCode);
     //구매 상세 
     BuyVO getBuyDetail(String buyCode);
+    // 장바구니 목록
+    List<CartVO> getCartList(String memCode);
 }

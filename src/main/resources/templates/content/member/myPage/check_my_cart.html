@@ -6,15 +6,90 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/member/myPage/check_my_request.css">
+	<link rel="stylesheet" href="/css/content/member/myPage/check_my_cart.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
-
 	<div class="row">
 		<div class="col">
-			1
+			<div class="row" th:each="myCart : ${myCartList}">
+				<div class="col">
+					[[${myCart.itemVO.imgList}]]
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mb-3">
+		<div class="col">
+		
+			<h3>DIY 패키지 / 아마 이부분은 한번더 봐야할듯?</h3>
+			
+			<div class="accordion" id="accordionExample" th:each="myCart, state : ${myCartList}">
+				<div class="accordion-item mb-1">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" th:data-bs-target="'#collapse_'+${state.index}"
+							aria-expanded="false" th:aria-controls="'collapse_'+${state.index}">
+							<div class="row" style="width: 100%;">
+								<div class="col">1</div>
+								<div class="col">2</div>
+								<div class="col">[[${#numbers.formatCurrency(myCart.cartTotalPrice)}]]</div>
+								<div class="col">[[${myCart.regDate}]]</div>
+							</div>
+						</button>
+					</h2>
+					<div th:id="'collapse_'+${state.index}" class="accordion-collapse collapse "
+						data-bs-parent="#accordionExample" onclick="chkDetail();">
+						<div class="accordion-body row">
+							<div class="col">1</div>
+							<div class="col">2</div>
+							<div class="col">3</div>
+							<div class="col">4</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<h3>단일 패키지</h3>
+			
+			<div class="accordion" id="accordionExample" th:each="myCart, state : ${myCartList}">
+				<div class="accordion-item mb-1">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" th:data-bs-target="'#collapse'+${state.index}"
+							aria-expanded="false" th:aria-controls="'collapse'+${state.index}">
+							<div class="row" style="width: 100%;">
+								<div class="col-2">[[${myCart.itemVO.traverPeriod}]]</div>
+								<div class="col-5">[[${myCart.itemVO.itemTitle}]]</div>
+								<div class="col-3">[[${#numbers.formatCurrency(myCart.cartTotalPrice)}]]</div>
+								<div class="col-2">[[${myCart.regDate}]]</div>
+							</div>
+						</button>
+					</h2>
+					<div th:id="'collapse'+${state.index}" class="accordion-collapse collapse "
+						data-bs-parent="#accordionExample" onclick="chkDetail();">
+						<div class="accordion-body row">
+							<div class="col-2">이미지</div>
+							<div class="col-5">[[${myCart.itemVO.itemIntro}]]</div>
+							<div class="col-3">[[${myCart.numOfPeople}]] ( 명 )</div>
+							<div class="col-2">[[${myCart.itemVO.tourAreaVO.areaKorName}]]</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			3
 		</div>
 	</div>
 
@@ -22,7 +97,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/member/myPage/check_my_request.js"></script>
+	<script type="text/javascript" src="/js/content/member/myPage/check_my_cart.js"></script>
 </th:block>
 
 
