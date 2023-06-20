@@ -34,7 +34,6 @@ public class HotelSearchController {
             // Place API 호출 및 응답 받기
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-            System.out.println(response);
             //응답받은 데이터에서 location 추출
             String jsonData = response.getBody();
             

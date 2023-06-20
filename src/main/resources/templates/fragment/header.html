@@ -16,21 +16,6 @@
 			</div>
 
 
-
-			<div class="dropdown-1-div">
-				<ul class="dropdown-1-ul">
-					<th:block th:each="menuList : ${locMenuList}">
-						<li>
-							<a th:href="@{/item/tourItemListDate(areaName=${menuList.areaKorName})}">
-								<span>[[${menuList.areaKorName}]]</span>
-							</a>
-						</li>
-					</th:block>
-				</ul>
-			</div>
-
-
-
 			<div class="col text-end">
 				<!-- 비로그인 시 -->
 				<div sec:authorize="isAnonymous()">
@@ -70,7 +55,7 @@
 	</div>
 
 	<div class="row mb-5 py-1 text-center d-flex justify-content-center overlap-row">
-		<div class="col-md-6 rounded-5" style="background-color: white;">
+		<div class="col-md-6 rounded-5 shadow pb-2" style="background-color: white;">
 			<div class="row d-flex justify-content-center">
 				<div class="row d-flex justify-content-center">
 					<div class="col-md-3 shadow rounded-5 py-2 mx-4 my-3 custom-border-2">
@@ -98,7 +83,7 @@
 					</div>
 
 					<div class="col-md-3 shadow rounded-5 py-2 mx-5 my-2 custom-border-2">
-						<a href="/item/diyTourItem">
+						<a href="/member/login">
 								로그인/회원가입
 						</a>
 					</div>

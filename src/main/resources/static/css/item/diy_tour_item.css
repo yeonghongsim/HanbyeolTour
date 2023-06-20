@@ -123,6 +123,7 @@
     border: 2px solid #ffd000;
 
 }
+
 .form-control {
     border: 1px solid #ffd000;
     box-shadow: none; /* 선택 사항: 클릭 시 생기는 그림자 제거 */
@@ -151,12 +152,14 @@
     overflow: hidden;
 }
 
-.card1border{
-    outline: 6px solid #ffd000; !important;
+.card1border {
+    outline: 6px solid #ffd000;
+!important;
 }
 
-.card1border-sm{
-    outline: 4px solid #ffd000; !important;
+.card1border-sm {
+    outline: 4px solid #ffd000;
+!important;
 }
 
 .card1-front {
@@ -169,11 +172,16 @@
 }
 
 .card1-back {
+    bottom: 16px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
     transform: translateX(120%);
     transition: transform 1s cubic-bezier(0.785, 0.135, 0.150, 0.860);
 }
+
 .card1-back p {
-    margin-top: 10px;
 }
 
 
@@ -184,13 +192,14 @@
     font-size: 1.3rem;
     font-weight: bold;
 }
+
 /*Text divider*/
 .title1::after {
     content: "";
     display: block;
     width: 50%;
     border-radius: 50%;
-    height: 2px;
+    height: 1px;
     margin: 2px auto;
     background-color: #1b1b1b;
 }
