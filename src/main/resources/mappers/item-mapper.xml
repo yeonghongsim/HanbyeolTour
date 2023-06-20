@@ -50,6 +50,7 @@
 		<result column="HBT_AIRLINE_CODE" 		property="airlineCode"/>
 		<result column="AREA_CODE" 				property="areaCode"/>
 		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
+		<association property="diyDetailList" 	resultMap="diyDetail"></association>
 	</resultMap>
 
 	<resultMap type="com.project.team.item.vo.DiyDetailVO" id="diyDetail">
@@ -334,6 +335,9 @@
 			FROM DUAL
 		</foreach>
 	</insert>
+	
+	
+	
 	
 	<select id="getHotelList" resultType="map">
 		SELECT HOTEL.HBT_HOTEL_CODE

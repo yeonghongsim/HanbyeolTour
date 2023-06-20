@@ -115,5 +115,7 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getItemReview", itemCode);
 	}
 
+	
+
 
 }
