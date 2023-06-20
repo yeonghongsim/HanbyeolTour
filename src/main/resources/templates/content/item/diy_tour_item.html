@@ -10,7 +10,7 @@
 <th:block layout:fragment="content">
   <div class="row d-flex justify-content-center my-3">
     <!--  국가선택 -->
-    <div class="col-md-10 aa">
+    <div class="col-md-6 aa">
 
       <div class="row d-flex text-center justify-content-center mb-3 border rounded-5 shadow custom-border py-3">
         <h2 class="fw-bold my-3 pb-3">국가를 선택하세요</h2>
@@ -18,6 +18,7 @@
           <div class="col mx-1 px-0 py-3 justify-content-center d-flex areaColDiv">
             <a href="javascript:void(0)" onclick="selectArea(this);" class="">
               <input type="hidden" th:value="${loc['AREA_CODE']}" class="areaCode">
+
               <div class="card1 areaDiv">
                 <img width="190px;" height="140px;" th:src="'/img/item/itemImg/' + ${loc['ITEM_IMG_ATTACHED_NAME']}" class="rounded-3" alt="...">
                 <div class="card1-front">
@@ -25,6 +26,9 @@
                   <p class="subtitle"></p>
                 </div>
               </div>
+
+
+
             </a>
           </div>
         </th:block>
@@ -32,11 +36,11 @@
   <!--  날짜선택 -->
       <div class="row text-center justify-content-center mb-3 border rounded-5 shadow custom-border py-3">
         <h3 class="fw-bold">여행 날짜를 선택하세요</h3>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <span>출발일</span>
           <input type="date" value="2023-06-29" name="depDate" class="form-control depDate">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <span>도착일</span>
           <input type="date" value="2023-07-02" name="arrDate" class="form-control arrDate">
         </div>

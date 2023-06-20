@@ -13,6 +13,7 @@ import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 
@@ -83,13 +84,17 @@ public interface AdminService {
 	void updateMemRole(MemberVO memberVO);
 	
 	//구매(예약) 리스트 조회
-	List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO);
+	List<BuyVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO);
+	
+	//DIY 예약 리스트 조회
+	List<DiyTourVO> getDiyBuyListForAdmin();
 	
 	//검색 조건에 맞는 구매(예약) 내역 수
 	int getBuyListCnt(BuyListSearchVO buyListSearchVO);
 	
 	//예약(구매) 상태 리스트 조회
 	List<BuyStateVO> getBuyStatus();
+	
 	
 	//예약 상태 변경
 	void changeBuyStatus(Map<String, Object> map);
@@ -107,7 +112,7 @@ public interface AdminService {
 	Map<String, Integer> getToDoList();
 	
 	//여행 국가별 판매수 조회
-	List<Map<String, Object>> getSalesStatisticsByCategory();
+	List<Map<String, Object>> getSalesStatisticsByCategory(int year);
 	
 	
 

@@ -1,8 +1,11 @@
 package com.project.team;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
+import com.project.team.item.service.ItemService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,6 +22,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class IndexController {
 	@Resource(name = "adminService")
 	private AdminService adminService;
+	@Resource(name = "itemService")
+	private ItemService itemService;
 
 	@GetMapping("/main")
 	public String main(Model model) {
@@ -30,6 +35,25 @@ public class IndexController {
 
 		//메인페이지 열릴때 해외패키지 하위메뉴 조회
 		model.addAttribute("locMenuList", adminService.getAreaCateList());
+
+		//추천상품 등록이미지 목록
+		model.addAttribute("recomImgList", adminService.getRecomImgListForPKG());
+		//많이가는 여행지
+
+		List<HashMap<String, Object>> originalList = itemService.getFavoriteArea(); // 원본 리스트
+		String targetColumn = "AREA_KOR_NAME"; // 기준이 될 컬럼 이름
+
+		TreeMap<Object, List<HashMap<String, Object>>> groupedMap = new TreeMap<>();
+		for (HashMap<String, Object> data : originalList) {
+			Object columnValue = data.get(targetColumn);
+			List<HashMap<String, Object>> groupedList = groupedMap.getOrDefault(columnValue, new ArrayList<>());
+			groupedList.add(data);
+			groupedMap.put(columnValue, groupedList);
+		}
+		System.out.println(groupedMap);
+		model.addAttribute("favoriteArea", groupedMap);
+
+
 
 		return "content/main/main_page";
 	}

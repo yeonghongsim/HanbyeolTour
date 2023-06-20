@@ -61,13 +61,13 @@ function getSearchByGroupTable(idx, e){
 	for(let i = 0; i < lastDate; i++){
 		
 		if(parseInt(getDays[i]) == 0){
-			drawCalTable += `<td style='background-color: red;'>${dayName[getDays[i]]}</td>`
+			drawCalTable += `<td class="px-0 py-0 rounded-5" style='background-color: #FB9079; width: 25px;'>${dayName[getDays[i]]}</td>`
 		}
 		else if(parseInt(getDays[i]) == 6){
-			drawCalTable += `<td style='background-color: blue;'>${dayName[getDays[i]]}</td>`
+			drawCalTable += `<td class="px-0 py-0 rounded-5" style='background-color: #79B6FB; width: 25px;'>${dayName[getDays[i]]}</td>`
 		}
 		else{
-			drawCalTable += `<td>${dayName[getDays[i]]}</td>`
+			drawCalTable += `<td class="px-0 py-0" style="width: 25px;">${dayName[getDays[i]]}</td>`
 		}
 	}
 	drawCalTable += `</tr>`	
@@ -76,7 +76,7 @@ function getSearchByGroupTable(idx, e){
 	drawCalTable += `<tr>`
 	
 	for(let i = 0; i < lastDate; i++){
-		drawCalTable += `<td onclick="getSearchByGroupAJAX(${nowYear}, ${nowMonth} , ${i+1}, this);">${i+1}</td>`
+		drawCalTable += `<td style="cursor: pointer; width: 21px;" class="px-0 py-0" onclick="getSearchByGroupAJAX(${nowYear}, ${nowMonth} , ${i+1}, this);">${i+1}</td>`
 	}
 	drawCalTable += `</tr>`
 	
@@ -88,7 +88,7 @@ function getSearchByGroupTable(idx, e){
 function getSearchByGroupAJAX(year, month, date, e){
 
 	//현재지역 가져오기
-	const area_name = document.querySelector('#areaName').value;
+	//const area_name = document.querySelector('#areaName').value;
 	//아이템코드 가져오기
 	const item_code = e.parentNode.parentNode.parentNode.parentNode.querySelector('input').value;
 	//결과표가 그려질 자리
@@ -96,6 +96,8 @@ function getSearchByGroupAJAX(year, month, date, e){
 	console.log(resultTbodyTag);
 	//검색할 년 월 정보 가져오기
 	const search_date = new Date(year + '-' +  month + '-' + date);
+
+	console.log(item_code)
 
 	$.ajax({
 		url: '/item/tourItemListGroupAJAX', //요청경로

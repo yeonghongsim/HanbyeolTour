@@ -60,3 +60,13 @@ textarea {
 .only-tbody > tbody > tr > td{
 	border: 1px solid #eee;
 }
+
+.custom-border {
+	border: 1px solid #ffd000 !important;
+}
+.custom-border-2 {
+	border: 2px solid #ffd000 !important;
+}
+.custom-border-3 {
+	border: 3px solid #ffd000 !important;
+}

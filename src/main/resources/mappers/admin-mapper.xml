@@ -320,10 +320,11 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
-	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 -->
+	<!-- 일반 예약 관리 페이지 구매(예약) 리스트 조회 -->
 	<select id="getBuyListForAdmin" resultMap="buyMapper.buy">
 		 SELECT HB.BUY_CODE
 		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD') BUY_DATE
+		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') BUY_DATE_ORDER
 		 	, ITEM_TITLE
 		 	, MEM_NAME
 		 	, MEM_D_TELL
@@ -355,8 +356,28 @@
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
-       	ORDER BY HB.BUY_CODE DESC
+       	ORDER BY BUY_DATE_ORDER DESC
        	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
+	</select>
+	
+	<!-- DIY 예약 구매 리스트 -->
+	<select id="getDiyBuyListForAdmin" resultMap="buyMapper.diyTour">
+		SELECT DISTINCT DIY.HBT_DIY_CODE
+			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
+			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') DIY_TOUR_BUY_DATE_ORDER
+			, HBS.BUY_STATUS_CODE
+			, HBS.BUY_STATUS_NAME
+			, MEM.MEM_CODE
+			, MEM.MEM_NAME
+			, MEMD.MEM_D_TELL
+		FROM HBT_DIY_TOUR DIY, HBT_DIY_DETAIL DIYD, HBT_BUY_STATE HBS,
+			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
+        WHERE IS_PAID = 'Y'
+		AND DIY.HBT_DIY_CODE = DIYD.HBT_DIY_CODE
+		AND DIY.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND DIY.MEM_CODE = MEM.MEM_CODE
+		AND MEM.MEM_CODE = MEMD.MEM_CODE
+		ORDER BY DIY_TOUR_BUY_DATE_ORDER DESC
 	</select>
 	
 	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
@@ -410,7 +431,7 @@
 		</foreach>
 	</update>
 	
-	<!-- 예약 상세 내역 -->
+	<!-- 일반 예약 상세 내역 -->
 	<select id="getReservDetail" resultMap="buyMapper.buy">
         SELECT IMG.ITEM_IMG_CODE 
 			, IMG.ITEM_IMG_ATTACHED_NAME
@@ -572,7 +593,9 @@
 					FROM HBT_ITEM
 					WHERE ITEM_CODE = HBT_BUY_DETAIL.ITEM_CODE) AS AREA_CODE
 				, RESERVED_PEOPLE_NUM
-			FROM HBT_BUY_DETAIL
+			FROM HBT_BUY_DETAIL, HBT_BUY
+            WHERE HBT_BUY_DETAIL.BUY_CODE = HBT_BUY.BUY_CODE
+            AND EXTRACT(YEAR FROM BUY_DATE) = #{year}
 		)
 		SELECT AREA_CODE
 			, (SELECT AREA_KOR_NAME

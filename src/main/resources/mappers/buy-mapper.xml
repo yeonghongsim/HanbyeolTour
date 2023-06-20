@@ -41,6 +41,37 @@
 		<association property="itemVO"	 		resultMap="itemMapper.item"/>
 	</resultMap>
 	
+	<resultMap type="com.project.team.item.vo.DiyTourVO" id="diyTour">
+		<id 	column="HBT_DIY_CODE" 			property="hbtDiyCode"/>
+		<result column="MEM_CODE" 				property="memCode"/>
+		<result column="HBT_AIRLINE_CODE" 		property="airlineCode"/>
+		<result column="DEPART_DATE" 			property="departDate"/>
+		<result column="ARRIVE_DATE" 			property="arriveDate"/>
+		<result column="TOTAL_PRICE" 			property="totalPrice"/>
+		<result column="TRAVER_PERIOD" 			property="traverPeriod"/>
+		<result column="IS_PAID" 				property="isPaid"/>
+		<result column="AREA_CODE" 				property="areaCode"/>
+		<result column="DIY_TOUR_BUY_DATE" 		property="diyTourBuyDate"/>
+		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
+		<association property="memberVO" 		resultMap="memberMapper.member"> </association>
+		<association property="tourAreaVO" 		resultMap="itemMapper.tourArea"> </association>
+		<association property="airlineVO" 		resultMap="adminMapper.airline"> </association>
+		<association property="buyStateVO" 		resultMap="buyState"> </association>
+		<collection property="diyDetailList" 	resultMap="diyDetail"></collection>
+		
+	</resultMap>
+
+
+	<resultMap type="com.project.team.item.vo.DiyDetailVO" id="diyDetail">
+			<id 	column="HBT_DIY_DETAIL_CODE" 	property="hbtDiyDetailCode"/>
+			<result column="HBT_DIY_DAY" 			property="hbtDiyDay"/>
+			<result column="HBT_DIY_CODE" 			property="hbtDiyCode"/>
+			<result column="HBT_HOTEL_CODE" 		property="hbtTourItemCode"/>
+			<result column="HBT_TOUR_ITEM_CODE" 	property="hbtHotelCode"/>
+			<collection property="tourItemList" 	resultMap="adminMapper.tourItem"></collection>
+			<collection property="hotelList" 		resultMap="adminMapper.hotel"></collection>
+	</resultMap>
+	
 	
 	
 	<select id="getNextItemCode" resultType="string">

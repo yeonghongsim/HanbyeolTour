@@ -44,4 +44,6 @@ public interface ItemService {
 	List<HashMap<String, Object>> getHotelList();
 	// diy리스트 조회
 	List<DiyTourVO> getDiyTourList(String memCode);
+	//리뷰조회
+	List<HashMap<String, Object>> getItemReview(String itemCode);
 }

@@ -334,6 +334,7 @@ public class AdminController {
 		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
+		
 		return "content/admin/reservation_inquiry";
 	}
 	
@@ -374,11 +375,19 @@ public class AdminController {
 	}
 	
 	
-	//예약 상태 변경
-	@GetMapping("/updateReservation")
-	public String updateReservation() {
+	//DIY 예약 
+	@GetMapping("/diyReservation")
+	public String diyReservation(Model model) {
 		
-		return "content/admin/update_reservation";
+		System.out.println(adminService.getDiyBuyListForAdmin());
+		
+		//div 구매 리스트
+		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin());
+		
+		//구매 상태 리스트
+		model.addAttribute("buyStatusList", adminService.getBuyStatus());
+		
+		return "content/admin/diy_reservation_inquiry";
 	}
 	
 	
@@ -486,9 +495,27 @@ public class AdminController {
 	
 	//카테고리별 매출 현황 페이지
 	@GetMapping("/salesStatisticsByCategory")
-	public String salesStatisticsByCategory() {
+	public String salesStatisticsByCategory(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+		
+		//year 데이터 안 넘어오는 경우
+		if(year == 0) {
+			year = DateUtil.getYear();
+		}
+		
+		model.addAttribute("year", year);
+		model.addAttribute("thisYear", DateUtil.getYear());
 		
 		return "content/admin/sales_statistics_by_category";
+	}
+	
+	//카테고리별 차트 데이터 받아오는 ajax
+	@ResponseBody
+	@PostMapping("/getCateChartDataAJAX")
+	public List<Map<String, Object>> getCateChartDataAJAX(int year) {
+		
+		List<Map<String, Object>> mapList = adminService.getSalesStatisticsByCategory(year);
+		
+		return mapList;
 	}
 	
 	

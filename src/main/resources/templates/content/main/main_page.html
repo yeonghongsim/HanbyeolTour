@@ -10,21 +10,22 @@
 <!-- 본문 내용 -->   
 <th:block layout:fragment="content">
 
-<div class="row">
-	<div class="col">
-	
+<div class="row d-flex justify-content-center position-relative">
+
+
+	<div class="col-md-6">
+
 		<!-- 메인페이지 이미지자리  -->
-		<div class="row">
-			<div class="col mb-3 mx-0 px-0">
+		<div class="row d-flex justify-content-center ">
+			<div class="col mb-3 mx-0 px-0 rounded-5">
 			
 			
 				<div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
-					<div class="carousel-inner">
-
+					<div class="carousel-inner rounded-5 custom-border-2 border-2 shadow">
 						<th:block th:each="img, state : ${mainSlideImg}">
-							<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="2000">
-								<img th:src="@{/img/main/slide/} + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
-									 class="d-block w-100 rounded" alt="/img/item/xbox.jpg">
+							<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="5000">
+								<img  th:src="'/img/main/slide/' + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
+									 class="w-100" alt="/img/item/xbox.jpg">
 							</div>
 						</th:block>
 
@@ -43,9 +44,95 @@
 			
 			</div>
 		</div>
-		
-		
-		
+
+
+
+		<div class="row text-center d-flex justify-content-center">
+			<div class="col offset-2 mb-3 mx-0 px-0">
+				<h3>추천상품</h3>
+				<p>한별투어에서 추천하는 상품입니다.</p>
+			</div>
+		</div>
+
+		<div class="row mb-5 resultDiv custom-border-2 rounded-5 px-5 py-5 shadow">
+			<div class="col-6 custom-border-2 rounded-5">
+				<a th:href="@{/item/tourItemListDetail(itemCode = ${recomImgList[0]['ITEM_CODE']})}">
+					<img th:data-item="${recomImgList[0]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded"
+						 th:src="@{/img/item/itemImg/} + ${recomImgList[0]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" src="" alt="/img/item/xbox.jpg">
+				</a>
+			</div>
+			<div class="col-6">
+				<div class="row mb-3">
+					<a th:href="@{/item/tourItemListDetail(itemCode = ${recomImgList[1]['ITEM_CODE']})}">
+						<img th:data-item="${recomImgList[1]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded"
+							 th:src="@{/img/item/itemImg/} + ${recomImgList[1]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" src="" alt="/img/item/xbox.jpg">
+					</a>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<a th:href="@{/item/tourItemListDetail(itemCode = ${recomImgList[2]['ITEM_CODE']})}">
+							<img src="" th:data-item="${recomImgList[2]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded"
+								 th:src="@{/img/item/itemImg/} + ${recomImgList[2]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" alt="/img/item/xbox.jpg">
+						</a>
+					</div>
+					<div class="col-6">
+						<a th:href="@{/item/tourItemListDetail(itemCode = ${recomImgList[3]['ITEM_CODE']})}">
+							<img src="" th:data-item="${recomImgList[3]['ITEM_CODE']}" class="imgArea d-block w-100 h-100 rounded"
+								 th:src="@{/img/item/itemImg/} + ${recomImgList[3]['ITEM_IMG_ATTACHED_NAME']}" draggable="false" alt="/img/item/xbox.jpg">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row text-center d-flex justify-content-center">
+			<div class="col offset-2 mb-3 mx-0 px-0">
+
+				<!-- 지역별 인기여행지 -->
+				<div class="row my-5">
+					<div class="col">
+						<h3>가장 많이 가는 여행지</h3>
+					</div>
+				</div>
+				<th:block th:each="area : ${favoriteArea}">
+
+					<div class="row my-5">
+						<div class="col">
+							<h3>[[${area.key}]]</h3>
+						</div>
+					</div>
+
+					<div class="row mt-3">
+						<div class="col">
+							<div id="carouselExample" class="carousel slide">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="row py-4"  style="background-color: #E6E6E6">
+											<div class="col d-flex mx-5 justify-content-center"  style="background-color: #ffffff">
+												<th:block th:each="imgs : ${favoriteArea[area.key]}">
+													<div class="card mx-3" style="width: 18rem;">
+														<div class="card-body">
+															<a th:href="@{/item/tourItemListDetail(itemCode = ${imgs['ITEM_CODE']})}">
+																<img th:src="@{/img/item/itemImg/} + ${imgs['ITEM_IMG_ATTACHED_NAME']}" class="card-img-top">
+																<p class="card-text">[[${imgs['ITEM_TITLE']}]]</p>
+															</a>
+														</div>
+													</div>
+												</th:block>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</th:block>
+
+
+			</div>
+		</div>
 		
 		
 		
@@ -63,7 +150,7 @@
 				<div class="col col-2 recomImg">
 					<div class="row mb-3">
 						<a th:href="@{/item/tourItemListDetail(itemCode = ${item['ITEM_CODE']})}">
-							<img width="200px;" th:src="@{/img/item/itemImg/} + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" onerror="this.src='/img/item/xbox.jpg'">
+							<img width="200px;" th:src="'/img/item/itemImg/' + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" onerror="this.src='/img/item/xbox.jpg'">
 						</a>
 						<h4 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h4>
 					</div>
@@ -84,54 +171,7 @@
 				<img src="/img/main/timedeal.jpg" class="d-block w-100 rounded" onerror="this.src='/img/item/xbox.jpg'" alt="이미지">
 			</div>
 		</div>
-		<div class="row">
-			<div class="col mb-3 mx-0 px-0">
-				타임딜 해당 이미지 띄울자리
-			</div>
-		</div>
-		
-		
-		
-		<!-- 맞춤형 상품목록  -->
-		<div class="row">
-			<div class="col mb-3 mx-0 px-0">
-				<h3 style="font-weight: bold;">지금 가장 HOT한 여행지</h3>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col mb-3 mx-0 px-0">
-			
-				<div class="card" style="width: 18rem;">
-				  <img src="/img/item/recomImg/638022863183380383.jpg" onerror="this.src='/img/item/xbox.jpg'" class="card-img-top" alt="/img/item/xbox.jpg">
-				  <div class="card-body">
-				    <p class="card-text">이거반복문</p>
-				  </div>
-				</div>
-				
-				
-			</div>
-		</div>
-		
-		
-		<!-- 맞춤형 상품목록 2  -->
-		<div class="row mb-3">
-			<div class="col mx-0 px-0">
-				<h3 style="font-weight: bold;">여행고수의 예약타이밍</h3>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col mb-3 mx-0 px-0">
-				<div class="card" style="width: 18rem;">
-				  <img src="/img/item/recomImg/638041254584397388.jpg" onerror="this.src='/img/item/xbox.jpg'" class="card-img-top" alt="/img/item/xbox.jpg">
-				  <div class="card-body">
-				    <p class="card-text">이거반복문2</p>
-				  </div>
-				</div>
-			
-			</div>
-		</div>
+
 	
 	</div>
 </div>
