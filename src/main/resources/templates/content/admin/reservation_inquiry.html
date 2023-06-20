@@ -139,12 +139,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<th:block th:if="${#lists.size(buyList) == 0}">
+							<th:block th:if="${#lists.size(buyList) == 0 and #lists.size(diyBuyList) == 0}">
 								<tr>
 									<td colspan="6">조회할 예약 내역이 없습니다.</td>
 								</tr>
 							</th:block>
-							<th:block th:unless="${#lists.size(buyList) == 0}">
+							<th:block th:unless="${#lists.size(buyList) == 0 or #lists.size(diyBuyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
 									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyCode}"></td>
 									<td><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">[[${buy.buyCode}]]</a></td>
@@ -158,6 +158,19 @@
 									</td>
 									<td>
 										<span style="font-weight: bold;">[[${buy.buyStateVO.buyStatusName}]]</span>
+									</td>
+								</tr>
+								<tr th:each="diy : ${diyBuyList}">
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${diy.hbtDiyCode}"></td>
+									<td>[[${diy.hbtDiyCode}]]</td>
+									<td>[[${diy.diyTourBuyDate}]]</td>
+									<td>직접 만들어 가는 DIY 여행</td>
+									<td>
+										<div>[[${diy.memberVO.memName}]]</div>
+										<div>[[${diy.memberVO.memberDetailVO.memDTell}]]</div>
+									</td>
+									<td>
+										<span style="font-weight: bold;">[[${diy.buyStateVO.buyStatusName}]]</span>
 									</td>
 								</tr>
 							</th:block>
