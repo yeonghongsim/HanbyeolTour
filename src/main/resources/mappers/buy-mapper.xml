@@ -50,7 +50,9 @@
 		<result column="TOTAL_PRICE" 			property="totalPrice"/>
 		<result column="TRAVER_PERIOD" 			property="traverPeriod"/>
 		<result column="IS_PAID" 				property="isPaid"/>
+		<result column="AREA_CODE" 				property="areaCode"/>
 		<result column="DIY_TOUR_BUY_DATE" 		property="diyTourBuyDate"/>
+		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
 		<association property="memberVO" 		resultMap="memberMapper.member"> </association>
 		<association property="tourAreaVO" 		resultMap="itemMapper.tourArea"> </association>
 		<association property="airlineVO" 		resultMap="adminMapper.airline"> </association>

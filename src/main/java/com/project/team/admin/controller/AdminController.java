@@ -319,8 +319,6 @@ public class AdminController {
 		
 		//System.out.println(buyListSearchVO);
 		
-		System.out.println(adminService.getDiyBuyListForAdmin());
-		
 		//검색 조건에 맞는 예약 수 조회
 		int totalDataCnt = adminService.getBuyListCnt(buyListSearchVO);
 		buyListSearchVO.setTotalDataCnt(totalDataCnt);
@@ -335,9 +333,6 @@ public class AdminController {
 		
 		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
-		
-		//DIY 구매 내역 리스트
-		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin());
 		
 		
 		return "content/admin/reservation_inquiry";
@@ -380,9 +375,17 @@ public class AdminController {
 	}
 	
 	
-	//예약 상태 변경
+	//DIY 예약 
 	@GetMapping("/diyReservation")
-	public String diyReservation() {
+	public String diyReservation(Model model) {
+		
+		System.out.println(adminService.getDiyBuyListForAdmin());
+		
+		//div 구매 리스트
+		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin());
+		
+		//구매 상태 리스트
+		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
 		return "content/admin/diy_reservation_inquiry";
 	}

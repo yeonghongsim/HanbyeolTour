@@ -14,6 +14,62 @@
 	<div class="row">
 		<div class="col">
 			<h3 class="menuTitle">DIY 여행 예약 관리</h3>
+			<!-- 예약 내역 -->
+			<div class="row mt-5">
+				<div class="col">
+					<div class="row">
+						<div class="col-2">
+							
+					
+						</div>
+						<div class="col-1">
+							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeBuyStatus();">
+						</div>
+					</div>
+					<table class="table text-center">
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<thead>
+							<tr>
+								<td><input type="checkbox" class="form-check-input" id="allCheck" onclick="AllCheckboxControl();"></td>
+								<td>예약코드</td>
+								<td>예약일</td>
+								<td>예약상품명</td>
+								<td>예약자정보</td>
+								<td>예약상태</td>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${#lists.size(diyBuyList) == 0}">
+								<tr>
+									<td colspan="6">조회할 예약 내역이 없습니다.</td>
+								</tr>
+							</th:block>
+							<th:block th:unless="${#lists.size(diyBuyList) == 0}">
+								<tr th:each="diy : ${diyBuyList}">
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${diy.hbtDiyCode}"></td>
+									<td>[[${diy.hbtDiyCode}]]</td>
+									<td>[[${diy.diyTourBuyDate}]]</td>
+									<td>[[${diy.memberVO.memName}]]님의 DIY 여행</td>
+									<td>
+										<div>[[${diy.memberVO.memName}]]</div>
+										<div>[[${diy.memberVO.memberDetailVO.memDTell}]]</div>
+									</td>
+									<td>
+										<span style="font-weight: bold;">[[${diy.buyStateVO.buyStatusName}]]</span>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </th:block>

@@ -26,6 +26,7 @@ public class DiyTourVO {
     private String traverPeriod;
     private String isPaid;
     private String diyTourBuyDate;
+    private String buyStatusCode;
     private MemberVO memberVO;
     private AirlineVO airlineVO;
     private BuyStateVO buyStateVO;
