@@ -31,21 +31,10 @@ function drawInnerAccordion(nationalNames, e){
     nationalNames.forEach((name, index) => {
 
     str += `
-            <div class="accordion" id="inneraccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button onclick="getAirportInfo('${name}',this)" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#innerCollapse${index}" aria-expanded="true"
-                                aria-controls="collapseOne">
-                            ${name}
-                        </button>
-                    </h2>
-                    <div id="innerCollapse${index}" class="accordion-collapse collapse"
-                         data-bs-parent="#inneraccordion">
-                        <div class="accordion-body airportList">
-        
-                        </div>
-                    </div>
+            <div class="row" onclick="setAreaNAme('${name['KOR_AIRPORT_NAME']}', '${name['AIRPORT_CODE']}');">
+                <div class="col">
+                    <span>${name['KOR_AIRPORT_NAME']}</span>
+                    <span>${name['AIRPORT_CODE']}</span>
                 </div>
             </div>
     `;
@@ -56,48 +45,6 @@ function drawInnerAccordion(nationalNames, e){
 
 }
 
-
-
-//해당국가 공항정보조회
-function getAirportInfo(nationalName, e){
-
-    $.ajax({
-        url: '/airline/getAirportInfoAJAX', //요청경로
-        type: 'post',
-        //contentType : 'application/json; charset=UTF-8',
-        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-        async : true,
-        data: {'nationalName': nationalName},
-        success: function(result) {
-            console.log(result);
-            drawAirportInfo(result, e);
-        },
-        error: function() {
-            alert('실패');
-        }
-    });
-}
-
-//공항정보 그리기
-function drawAirportInfo(result, e){
-
-    const airportList = e.parentNode.parentNode.querySelector('.airportList');
-
-    console.log(airportList);
-
-    let airportStr = '';
-
-    result.forEach(i => {
-        const trimStr = i['KOR_AIRPORT_NAME'].replace(' 국제공항', '');
-
-        airportStr += `
-            <p onclick="setAreaNAme('${trimStr}', '${i['AIRPORT_CODE']}');">${i['KOR_AIRPORT_NAME']}(${i['AIRPORT_CODE']})</p><br>
-        `;
-    });
-
-    airportList.replaceChildren();
-    airportList.insertAdjacentHTML('afterbegin', airportStr);
-}
 
 function setAreaNAme(name, code){
 
@@ -117,13 +64,29 @@ function setAreaNAme(name, code){
 
 }
 
+function getFlightAJAX(){
+
+    const depAirport = document.querySelector('#depAirport').textContent;
+    const arrAirport = document.querySelector('#arrAirport').textContent;
+    const depDate = document.querySelector('#depDate').value;
+    const arrDate = document.querySelector('#arrDate').value;
 
 
-
-
-
-
-
+    $.ajax({
+        url: '/airline/getFlightAJAX', //요청경로
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {'depAirport': depAirport, 'arrAirport': arrAirport, 'depDate': depDate, 'arrDate': arrDate},
+        success: function(result) {
+            console.log(JSON.parse(result));
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
+}
 
 function openOutterModal(e) {
     const text = e.querySelector('h5').textContent;
@@ -137,6 +100,22 @@ function openOutterModal(e) {
 
 }
 
+function test(){
+    let url = 'https://www.google.com/search?q=' + '제주항공' + '&sxsrf=APwXEddZSwsC0ZR4ht4_H9_k9YdrcsMWeg%3A1687356592128&ei=sASTZMWsB4up2roPgIGbiA8&ved=0ahUKEwjFxKGSxdT_AhWLlFYBHYDABvEQ4dUDCA8&uact=5&oq=' + '제주항공' + '&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIHCCMQigUQJzIRCC4QgAQQsQMQgwEQxwEQ0QMyBAgAEAMyCwgAEIAEELEDEIMBMgQIABADMgsIABCABBCxAxCDATILCAAQgAQQsQMQgwEyBAgAEAMyBAgAEAMyBAgAEAMyHwguEIAEELEDEIMBEMcBENEDEJcFENwEEN4EEOAEGAE6CAgAEKIEELADOgUIABCABDoRCC4QgwEQxwEQsQMQ0QMQgAQ6CwguEIAEELEDEIMBOhAILhCABBAUEIcCELEDEIMBOh8ILhCDARDHARCxAxDRAxCABBCXBRDcBBDeBBDgBBgBOhAIABCABBAUEIcCELEDEIMBOggIABCABBCxAzoHCAAQigUQQ0oECEEYAVCeCFieEGClEWgEcAB4AYABkwGIAcMKkgEEMC4xMJgBAKABAcABAcgBAtoBBggBEAEYFA&sclient=gws-wiz-serp';
 
+    $.ajax({
+        url: url, //요청경로
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {},
+        success: function(result) {
+            console.log(result);
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
 
-
+}

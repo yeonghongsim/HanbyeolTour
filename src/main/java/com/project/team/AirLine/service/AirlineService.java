@@ -7,7 +7,6 @@ public interface AirlineService {
     //지역정보조회
     List<String> getArea();
     //국가조회
-    List<String> getNationalNames(String areaName);
+    List<Map<String, Object>> getNationalNames(String areaName);
     //공항정보 조회
-    List<Map<String, Object>> getAirportInfoAJAX(String nationalName);
 }
