@@ -4,9 +4,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,6 +30,8 @@ import com.project.team.buy.service.BuyService;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.item.service.ItemService;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
@@ -365,10 +371,64 @@ public class MyPageController {
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
 		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
+		List<DiyTourVO> diyTourList = itemService.testGetDiyTourList(memCode);
+		//List<DiyTourVO> tourList = itemService.testGetDiyTourList(memCode);
+		
+		for(DiyTourVO diyTourVO : diyTourList) {
+			List<Integer> diyDayList = new ArrayList<>();
+			for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
+				int day = Integer.parseInt(diyDetailVO.getHbtDiyDay());
+				diyDayList.add(day);
+			}
+			
+			//ex> 2,3 -> 1
+			//ex> 1 -> 2,3
+			List<Integer> emptyDayList =checkEmptyDay(diyDayList);
+			
+			for(int day : emptyDayList) {
+				DiyDetailVO diyDetailVO = new DiyDetailVO();
+				diyDetailVO.setHbtDiyCode(diyTourVO.getHbtDiyCode());
+				diyDetailVO.setHbtDiyDay(String.valueOf(day));
+				diyTourVO.getDiyDetailList().add(diyDetailVO);
+			}
+		}
+		
+		
+		model.addAttribute("diyTourList", diyTourList);
+		
+		List<DiyDetailVO> testDetailList = new ArrayList<>();
+		List<DiyTourVO> testTourList = new ArrayList<>();
+		for(DiyTourVO aaa : diyTourList) {
+			for(int i = 1; i <= diyTourList.size(); i++) {
+				for(DiyDetailVO asd : aaa.getDiyDetailList()) {
+					if(i == Integer.parseInt(asd.getHbtDiyDay())) {
+						testDetailList.add(asd);
+						break;
+					}
+				}
+			}
+			testTourList.add(aaa);
+		}
+		
+		System.out.println("!@#@!#!@#!@#!@#@" + testTourList);
+		model.addAttribute("testTourList", testTourList);
+		
+		
 		
 		
 		
 		return "content/member/myPage/check_my_cart";
+	}
+	
+	public List<Integer> checkEmptyDay(List<Integer> diyDayList) {
+		List<Integer> emptyDayList = new ArrayList<>();
+		for(int i = 1 ; i <= 3 ; i++ ) {
+			if(!diyDayList.contains(i)) {
+				emptyDayList.add(i);
+			}
+		}
+		
+		return emptyDayList;
 	}
 	
 	// 1:1 문의 내역 페이지로 이동 

@@ -18,5 +18,5 @@ public class HotelVO {
     private String areaCode;
     private String hbtHotelPrice;
     private List<ImgVO> imgVOList;
-
+    private List<HotelImgVO> hotelImgList;
 }

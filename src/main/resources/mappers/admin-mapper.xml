@@ -11,6 +11,8 @@
 		<result column="HBT_HOTEL_INTRO" 		property="hbtHotelIntro"/>
 		<result column="AREA_CODE" 				property="areaCode"/>
 		<result column="HBT_HOTEL_PRICE" 		property="hbtHotelPrice"/>
+		<collection property="imgVOList" 		resultMap="itemMapper.img"/>
+		<collection property="hotelImgList" 	resultMap="hotelImg"></collection>
 	</resultMap>
 
 	<resultMap type="com.project.team.admin.vo.TourItemVO" id="tourItem">
@@ -21,7 +23,26 @@
 		<result column="HBT_TOUR_ITEM_PRICE" 		property="hbtTourItemPrice"/>
 		<result column="HBT_TOUR_ITEM_INTRO" 		property="hbtTourItemIntro"/>
 		<result column="AREA_CODE" 					property="areaCode"/>
+		<collection property="imgVOList" 			resultMap="itemMapper.img"/>
+		<collection property="tourItemList" 		resultMap="tourItemImg"></collection>
 	</resultMap>
+	
+	<resultMap type="com.project.team.admin.vo.HotelImgVO" id="hotelImg">
+		<id column="HBT_HOTEL_IMG_CODE" 				property="hbtHotelImgCode"/>
+		<result column="HBT_HOTEL_ORIGIN_FILE_NAME" 	property="hbtHotelOriginFileName"/>
+		<result column="HBT_HOTEL_ATTECHED_FILE_NAME"	property="hbtHotelAttchedFileName"/>
+		<result column="HBT_HOTEL_CODE" 				property="hbtHotelCode"/>
+		<result column="IS_MAIN" 						property="isMain"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.admin.vo.TourItemImgVO" id="tourItemImg">
+		<id column="HBT_TOUR_ITEM_IMG_CODE" 				property="hbtTourItemImgCode"/>
+		<result column="HBT_TOUR_ITEM_ORIGIN_FILE_NAME" 	property="hbtTourItemOriginFileName"/>
+		<result column="HBT_TOUR_ITEM_ATTECHED_FILE_NAME"	property="hbtTourItemAttechedFileName"/>
+		<result column="HBT_TOUR_ITEM_CODE" 				property="hbtTourItemCode"/>
+		<result column="IS_MAIN" 							property="isMain"/>
+	</resultMap>
+
 	<resultMap type="com.project.team.admin.vo.AirlineVO" id="airline">
 		<id 	column="HBT_AIRLINE_CODE" 		property="hbtAirlineCode"/>
 		<result column="HBT_AIRLINE_NAME" 		property="hbtAirlineName"/>

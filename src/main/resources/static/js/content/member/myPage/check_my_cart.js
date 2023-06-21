@@ -1,9 +1,5 @@
 init()
 
-function chkDetail(){
-	alert(111);
-}
-
 function getImgList(imgList){
 	
 	const main_img_col = document.querySelector('.main_img_col');
@@ -36,5 +32,8 @@ function getImgList(imgList){
 }
 
 function init(){
-	
+	const test = document.querySelectorAll('#test');
+	test.forEach(function(asd){
+		console.log(asd.value);
+	});
 }

@@ -11,8 +11,72 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
+	[[${testTourList}]]
+	<div class="row mb-3">
+		<div class="col">
+		
+			<h3>DIY 패키지 / test.Ver</h3>
+			
+			<div class="accordion" id="accordionExample" th:each="tourInfo, state : ${diyTourList}">
+				<div class="accordion-item mb-1">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" th:data-bs-target="'#collapse__'+${state.index}"
+							aria-expanded="false" th:aria-controls="'collapse__'+${state.index}">
+							<div class="row" style="width: 100%;">
+								<div class="col-2">[[${tourInfo.traverPeriod}]]박[[${tourInfo.traverPeriod} + 1]]일</div>
+								<div class="col-5">[[${tourInfo.tourAreaVO.areaKorName}]]편 - [[${tourInfo.airlineCode}]]</div>
+								<div class="col-3">
+									<div class="row mb-1">
+										<div class="col">
+											<div class="row">
+												<div class="col">
+													출발 시간 : 
+												</div>
+											</div>
+											<div class="row">
+												<div class="col">
+													[[${tourInfo.departDate}]]
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<div class="row">
+												<div class="col">
+													도착 시간 : 
+												</div>
+											</div>
+											<div class="row">
+												<div class="col">
+													[[${tourInfo.arriveDate}]]
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-2">[[${#numbers.formatCurrency(tourInfo.totalPrice)}]]</div>
+							</div>
+						</button>
+					</h2>
+					<div th:id="'collapse__'+${state.index}" class="accordion-collapse collapse "
+						data-bs-parent="#accordionExample" onclick="chkDetail();">
+						<div class="accordion-body row" th:each="aaa, state : ${tourInfo.diyDetailList}">
+							<div class="col">[[${aaa.hbtDiyDay}]]</div>
+							<div class="col">2</div>
+							<div class="col">3</div>
+							<div class="col">4</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
 	
-
+	
 	<div class="row mb-3">
 		<div class="col">
 		

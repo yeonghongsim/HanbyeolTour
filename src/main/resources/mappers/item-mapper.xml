@@ -34,7 +34,7 @@
 		<id 	column="ITEM_IMG_CODE" 			property="itemImgCode"/>
 		<result column="ITEM_CODE" 				property="itemCode"/>
 		<result column="ITEM_IMG_ORIGIN_NAME" 	property="itemImgOriginName"/>
-		<result column="ITEM_IMG_ATTACHED_NAME" property="itemImgAttachedName"/>
+		<result column="ITEM_IMG_ATTECHED_NAME" property="itemImgAttachedName"/>
 		<result column="IS_MAIN" 				property="isMain"/>
 	</resultMap>
 
@@ -50,7 +50,8 @@
 		<result column="HBT_AIRLINE_CODE" 		property="airlineCode"/>
 		<result column="AREA_CODE" 				property="areaCode"/>
 		<result column="BUY_STATUS_CODE" 		property="buyStatusCode"/>
-		<association property="diyDetailList" 	resultMap="diyDetail"></association>
+		<association property="diyDetailList" 	resultMap="diyDetail"/>
+		<association property="tourAreaVO" 		resultMap="tourArea"/>
 	</resultMap>
 
 	<resultMap type="com.project.team.item.vo.DiyDetailVO" id="diyDetail">
@@ -59,7 +60,20 @@
 		<result column="HBT_DIY_CODE" 			property="hbtDiyCode"/>
 		<result column="HBT_TOUR_ITEM_CODE" 	property="hbtTourItemCode"/>
 		<result column="HBT_HOTEL_CODE" 		property="hbtHotelCode"/>
+		<association property="tourItemList" 	resultMap="adminMapper.tourItem"/>
+		<association property="hotelList"		resultMap="adminMapper.hotel"/>
 	</resultMap>
+	
+	
+	
+
+
+
+	
+
+
+
+
 	
 	
 	<select id="">
@@ -305,6 +319,45 @@
 		FROM HBT_DIY_TOUR
 		WHERE IS_PAID = 'N'
 		AND MEM_CODE = #{memCode}
+	</select>
+	
+	<select id="testGetDiyTourList" resultMap="diyTour">
+		SELECT TOUR.HBT_DIY_CODE
+		    , TOUR.HBT_AIRLINE_CODE
+		    , TOUR.DEPART_DATE
+		    , TOUR.ARRIVE_DATE
+		    , TOUR.TOTAL_PRICE
+		    , TOUR.TRAVER_PERIOD
+		    , TOUR.BUY_STATUS_CODE
+		    , TOUR.DIY_TOUR_BUY_DATE
+		    , DETAIL.HBT_DIY_DETAIL_CODE
+		    , DETAIL.HBT_DIY_DAY
+		    , ITEM.HBT_TOUR_ITEM_CODE
+		    , ITEM.HBT_TOUR_ITEM_NAME
+		    , ITEM.HBT_TOUR_ITEM_RUNTIME
+		    , ITEM.HBT_TOUR_ITEM_INTRO
+		    , T_IMG.HBT_TOUR_ITEM_IMG_CODE
+		    , T_IMG.HBT_TOUR_ITEM_ATTECHED_FILE_NAME
+		    , T_IMG.IS_MAIN
+		    , HOTEL.HBT_HOTEL_CODE
+		    , HOTEL.HBT_HOTEL_NAME
+		    , HOTEL.HBT_HOTEL_GRADE
+		    , HOTEL.HBT_HOTEL_PRICE
+		    , H_IMG.HBT_HOTEL_IMG_CODE
+		    , H_IMG.HBT_HOTEL_ATTECHED_FILE_NAME
+		    , H_IMG.IS_MAIN
+		    , TA.AREA_CODE
+		    , TA.AREA_ENG_NAME
+		    , TA.AREA_KOR_NAME
+		FROM HBT_DIY_TOUR TOUR, HBT_DIY_DETAIL DETAIL, HBT_TOUR_ITEM ITEM, HBT_TOUR_IMG T_IMG, HBT_HOTEL HOTEL, HBT_HOTEL_IMG H_IMG, HBT_TOUR_AREA TA
+		WHERE TOUR.HBT_DIY_CODE = DETAIL.HBT_DIY_CODE
+		AND DETAIL.HBT_TOUR_ITEM_CODE = ITEM.HBT_TOUR_ITEM_CODE(+)
+		AND ITEM.HBT_TOUR_ITEM_CODE = T_IMG.HBT_TOUR_ITEM_CODE(+)
+		AND DETAIL.HBT_HOTEL_CODE = HOTEL.HBT_HOTEL_CODE(+)
+		AND HOTEL.HBT_HOTEL_CODE = H_IMG.HBT_HOTEL_CODE
+		AND TOUR.AREA_CODE = TA.AREA_CODE
+		AND TOUR.IS_PAID = 'N'
+		AND TOUR.MEM_CODE = #{memCode}
 	</select>
 
 	<insert id="setDiyTourDetail">
