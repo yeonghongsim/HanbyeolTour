@@ -14,6 +14,8 @@ import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
@@ -192,7 +194,30 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectList("memberMapper.getBuyListInOneMonth", memCode);
 	}
 	
+	// 마이페이지 - Diy tour 리스트 조회 
+	@Override
+	public List<DiyTourVO> getDiyTourList(String memCode) {
+		return sqlSession.selectList("memberMapper.getDiyTourList", memCode);
+	}
 	
+	//Diy 예약 내역 상세 
+	@Override
+	public List<DiyTourVO> getDiyDetaiList(String hbtDiyCode) {
+		return sqlSession.selectList("memberMapper.getDiyDetailList", hbtDiyCode);
+	}
+	
+	// diy detail -v.2
+	@Override
+	public List<DiyDetailVO> getDiyDetaiListNew(String hbtDiyCode) {
+		return sqlSession.selectList("memberMapper.getDiyDetailListNew", hbtDiyCode);
+	}
+	
+	
+	//diy 예약 상세 상단 정보 조회 
+	@Override
+	public DiyTourVO getDiyTourByDiyCode(String hbtDiyCode) {
+		return sqlSession.selectOne("memberMapper.getDiyTourByDiyCode", hbtDiyCode);
+	}
 	
 	
 	
@@ -245,6 +270,14 @@ public class MemberServiceImpl implements MemberService{
 	public List<BuyVO> getNeedReviewList(String memCode) {
 		return sqlSession.selectList("memberMapper.getNeedReviewList", memCode);
 	}
+
+	
+
+	
+
+	
+
+	
 
 	
 

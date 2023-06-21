@@ -30,7 +30,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 							.addPathPatterns("/myPage/changeMyPwForm")
 							.addPathPatterns("/myPage/updateMyInfo")
 							.addPathPatterns("/myPage/checkMyReservation")
+							.addPathPatterns("/myPage/checkDiyReservation")
 							.addPathPatterns("/myPage/reservationDetail")
+							.addPathPatterns("/myPage/diyDetail")
 							.addPathPatterns("/myPage/checkMyCancelation")
 							.addPathPatterns("/myPage/checkMyRequest") //영홍씨 작업 부분
 							.addPathPatterns("/myPage/regRequestForm")
