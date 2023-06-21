@@ -17,5 +17,14 @@
         ORDER BY KOR_NATIONAL_NAME
     </select>
 
+    <select id="getAirportInfoAJAX" resultType="map">
+        SELECT KOR_AIRPORT_NAME
+                , AIRPORT_CODE
+        FROM AIRPORT_CODE
+        WHERE KOR_NATIONAL_NAME = #{nationalName}
+        ORDER BY KOR_AIRPORT_NAME
+
+    </select>
+
 
 </mapper>

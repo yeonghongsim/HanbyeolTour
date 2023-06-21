@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,11 +42,10 @@ public class AirLineController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/searchAirLineAJAX")
-	public void searchAirLineAJAX(SearchAirLineVO searchAirLineVO) throws IOException {
+	@PostMapping("/getAirportInfoAJAX")
+	public List<Map<String, Object>> searchAirLineAJAX(String nationalName) {
 
-        //네이버항공권주소 임시저장
-        String temp = "https://flight.naver.com/flights/international/ICN-SGN-20230627/SGN-ICN-20230630?adult=1&fareType=Y";
+		return airlineService.getAirportInfoAJAX(nationalName);
 	}
 
 
