@@ -101,14 +101,20 @@ public interface AdminService {
 	//DIY 예약 리스트 조회
 	List<DiyTourVO> getDiyBuyListForAdmin(BuyListSearchVO buyListSearchVO);
 	
-	//검색 조건에 맞는 DIV(예약) 내역 수
-	int getDivBuyListCnt(BuyListSearchVO buyListSearchVO);
+	//검색 조건에 맞는 DIY(예약) 내역 수
+	int getDiyBuyListCnt(BuyListSearchVO buyListSearchVO);
 	
-	//DIV 예약 상태 변경
-	void changeDivBuyStatus(Map<String, Object> map);
+	//DIY 예약 상태 변경
+	void changeDiyBuyStatus(Map<String, Object> map);
 	
-	//DIV 예약 상세 기본 정보
-	DiyTourVO getDivReservDetail(String hbtDiyCode);
+	//DIY 예약 상세 기본 정보
+	DiyTourVO getDiyReservDetail(String hbtDiyCode);
+	
+	//DIY 예약 상세 호텔 정보
+	List<DiyTourVO> getDiyReservHotelDetail(String hbtDiyCode);
+	
+	//DIY 예약 상세 투어 정보
+	List<DiyTourVO> getDiyReservTourDetail(String hbtDiyCode);
 	
 	//기간별 매출 조회
 	List<Map<String, Integer>> getSalesStatisticsByPeriod(int year);

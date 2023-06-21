@@ -480,7 +480,7 @@
 	</select>
 	
 	<!-- 검색 조건에 맞는 DIY 구매(예약) 내역 수 -->
-	<select id="getDivBuyListCnt" resultType="int">
+	<select id="getDiyBuyListCnt" resultType="int">
 		SELECT COUNT(DISTINCT DIY.HBT_DIY_CODE)
 		FROM HBT_DIY_TOUR DIY, HBT_DIY_DETAIL DIYD, HBT_BUY_STATE HBS,
 			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
@@ -509,8 +509,8 @@
 		 
 	</select>
 	
-	<!-- DIV 예약관리 페이지 예약 상태 변경 -->
-	<update id="changeDivBuyStatus">
+	<!-- Diy 예약관리 페이지 예약 상태 변경 -->
+	<update id="changeDiyBuyStatus">
 		UPDATE HBT_DIY_TOUR
 		SET
 			BUY_STATUS_CODE = #{buyStatusCode}
@@ -520,9 +520,10 @@
 		</foreach>
 	</update>
 	
-	<!-- div 예약 기본 정보 상세 -->
-	<select id="getDivReservDetail" resultMap="buyMapper.diyTour">
+	<!-- Diy 예약 기본 정보 상세 -->
+	<select id="getDiyReservDetail" resultMap="buyMapper.diyTour">
 		SELECT DIY.HBT_DIY_CODE
+			, TO_CHAR (DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
 			, DIY.HBT_AIRLINE_CODE
 			, HBT_AIRLINE_NAME
 			, HBT_AIRLINE_ICON
@@ -543,6 +544,46 @@
 		AND DIY.MEM_CODE = MEM.MEM_CODE
 		AND MEM.MEM_CODE = MEMD.MEM_CODE
 		AND DIY.HBT_DIY_CODE = #{hbtDiyCode}
+	</select>
+	
+	<!--  예약 호텔 상세 조회 -->
+	<select id="getDiyReservHotelDetail" resultMap="buyMapper.diyTour">
+		SELECT DETAIL.HBT_DIY_CODE
+		    , DETAIL.HBT_DIY_DETAIL_CODE
+		    , DIY.TRAVER_PERIOD
+		    , DETAIL.HBT_DIY_DAY
+		    , DETAIL.HBT_HOTEL_CODE
+		    , HOTEL.HBT_HOTEL_NAME
+		    , NVL(HOTEL.HBT_HOTEL_PRICE, 0) AS HBT_HOTEL_PRICE
+		    , HBT_HOTEL_IMG_CODE
+		    , HBT_HOTEL_ATTECHED_FILE_NAME
+		FROM HBT_DIY_DETAIL DETAIL
+		LEFT OUTER JOIN HBT_DIY_TOUR DIY ON DIY.HBT_DIY_CODE = DETAIL.HBT_DIY_CODE 
+		LEFT OUTER JOIN HBT_HOTEL HOTEL ON DETAIL.HBT_HOTEL_CODE = HOTEL.HBT_HOTEL_CODE
+		LEFT OUTER JOIN HBT_HOTEL_IMG IMG ON HOTEL.HBT_HOTEL_CODE = IMG.HBT_HOTEL_CODE
+		WHERE DETAIL.HBT_DIY_CODE = #{hbtDiyCode}
+		AND IMG.IS_MAIN = 'Y'
+		ORDER BY DETAIL.HBT_DIY_CODE
+	</select>
+	
+	<!-- Diy 예약 투어 상세 조회 -->
+	<select id="getDiyReservTourDetail" resultMap="buyMapper.diyTour">
+		SELECT DETAIL.HBT_DIY_CODE
+		    , DETAIL.HBT_DIY_DETAIL_CODE
+		    , DIY.TRAVER_PERIOD
+		    , DETAIL.HBT_DIY_DAY
+		    , DETAIL.HBT_TOUR_ITEM_CODE
+		    , TOUR.HBT_TOUR_ITEM_NAME
+		    , NVL(TOUR.HBT_TOUR_ITEM_PRICE, 0) AS HBT_TOUR_ITEM_PRICE
+		    , IMG.HBT_TOUR_ITEM_IMG_CODE
+		    , IMG.HBT_TOUR_ITEM_ATTECHED_FILE_NAME
+		FROM HBT_DIY_DETAIL DETAIL
+		LEFT OUTER JOIN HBT_DIY_TOUR DIY ON DIY.HBT_DIY_CODE = DETAIL.HBT_DIY_CODE 
+		LEFT OUTER JOIN HBT_TOUR_ITEM TOUR ON DETAIL.HBT_TOUR_ITEM_CODE = TOUR.HBT_TOUR_ITEM_CODE
+		LEFT OUTER JOIN HBT_TOUR_IMG IMG ON TOUR.HBT_TOUR_ITEM_CODE = IMG.HBT_TOUR_ITEM_CODE
+		WHERE DETAIL.HBT_DIY_CODE = #{hbtDiyCode}
+		AND IMG.IS_MAIN = 'Y'
+		ORDER BY DETAIL.HBT_DIY_CODE
 	</select>
 	
 	

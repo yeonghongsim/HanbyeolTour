@@ -380,7 +380,7 @@ public class AdminController {
 	public String diyReservation(Model model, BuyListSearchVO buyListSearchVO) {
 		
 		//검색 조건에 맞는 예약 수 조회
-		int totalDataCnt = adminService.getDivBuyListCnt(buyListSearchVO);
+		int totalDataCnt = adminService.getDiyBuyListCnt(buyListSearchVO);
 		buyListSearchVO.setTotalDataCnt(totalDataCnt);
 		
 		//페이지 정보 세팅
@@ -425,7 +425,7 @@ public class AdminController {
 		mapData.put("buyStatusCode", map.get("buyStatusCode"));
 		mapData.put("buyCodeList", map.get("buyCodeList"));
 		
-		adminService.changeDivBuyStatus(mapData);
+		adminService.changeDiyBuyStatus(mapData);
 		
 		return messageService.sendMessage(memNameList, memDTellList);
 	}
@@ -442,14 +442,26 @@ public class AdminController {
 	}
 	
 	//DIV 예약 상세 페이지
-	@GetMapping("/divReservDetail")
+	@GetMapping("/diyReservDetail")
 	public String divReservDetail(Model model, String hbtDiyCode) {
 		
-		model.addAttribute("reservDetail", adminService.getDivReservDetail(hbtDiyCode));
+		//기본 상세 정보
+		model.addAttribute("reservDetail", adminService.getDiyReservDetail(hbtDiyCode));
 		
-		System.out.println(adminService.getDivReservDetail(hbtDiyCode));
+		//호텔 정보
+		model.addAttribute("hotelList", adminService.getDiyReservHotelDetail(hbtDiyCode));
 		
-		return "content/admin/div_reservation_detail";
+		//투어 정보
+		model.addAttribute("tourList", adminService.getDiyReservTourDetail(hbtDiyCode));
+		
+		
+		//System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
+		System.out.println("-------------------------------");
+		System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
+		System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
+		
+		
+		return "content/admin/diy_reservation_detail";
 	}
 	
 	

@@ -210,23 +210,37 @@ public class AdminServiceImpl implements AdminService{
 	
 	//검색 조건에 맞는 DIY 예약 수
 	@Override
-	public int getDivBuyListCnt(BuyListSearchVO buyListSearchVO) {
+	public int getDiyBuyListCnt(BuyListSearchVO buyListSearchVO) {
 		
-		return sqlSession.selectOne("adminMapper.getDivBuyListCnt", buyListSearchVO);
+		return sqlSession.selectOne("adminMapper.getDiyBuyListCnt", buyListSearchVO);
 	}
 	
 	//DIY 예약 상태 변경
 	@Override
-	public void changeDivBuyStatus(Map<String, Object> map) {
-		sqlSession.selectOne("adminMapper.changeDivBuyStatus", map);
+	public void changeDiyBuyStatus(Map<String, Object> map) {
+		sqlSession.selectOne("adminMapper.changeDiyBuyStatus", map);
 		
 	}
 	
 	//DIY 예약 상세 기본 정보
 	@Override
-	public DiyTourVO getDivReservDetail(String hbtDiyCode) {
+	public DiyTourVO getDiyReservDetail(String hbtDiyCode) {
 		
-		return sqlSession.selectOne("adminMapper.getDivReservDetail", hbtDiyCode);
+		return sqlSession.selectOne("adminMapper.getDiyReservDetail", hbtDiyCode);
+	}
+	
+	//DIY 호텔 정보
+	@Override
+	public List<DiyTourVO> getDiyReservHotelDetail(String hbtDiyCode) {
+		
+		return sqlSession.selectList("adminMapper.getDiyReservHotelDetail", hbtDiyCode);
+	}
+	
+	//DIY 투어 정보
+	@Override
+	public List<DiyTourVO> getDiyReservTourDetail(String hbtDiyCode) {
+		
+		return sqlSession.selectList("adminMapper.getDiyReservTourDetail", hbtDiyCode);
 	}
 
 	
@@ -360,6 +374,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
 
 
 

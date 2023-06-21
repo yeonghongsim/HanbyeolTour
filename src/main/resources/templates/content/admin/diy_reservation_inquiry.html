@@ -158,7 +158,7 @@
 									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${diy.hbtDiyCode}"></td>
 									<td>
 										<div>[[${diy.hbtDiyCode}]]</div>
-										<span id="showDetailSpan"><a th:href="@{/admin/divReservDetail(hbtDiyCode=${diy.hbtDiyCode})}">상세보기</a></span>
+										<span id="showDetailSpan"><a th:href="@{/admin/diyReservDetail(hbtDiyCode=${diy.hbtDiyCode})}">상세보기</a></span>
 									</td>
 									<td>[[${diy.diyTourBuyDate}]]</td>
 									<td>[[${diy.memberVO.memName}]]님의 DIY 여행</td>
