@@ -24,8 +24,8 @@
 					<div class="carousel-inner rounded-5 custom-border-2 border-2 shadow">
 						<th:block th:each="img, state : ${mainSlideImg}">
 							<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="5000">
-								<img  th:src="'/img/main/slide/' + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
-									 class="w-100" alt="/img/item/xbox.jpg">
+								<img th:src="'/img/main/slide/' + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
+									 class="w-100" alt="메인이미지">
 							</div>
 						</th:block>
 

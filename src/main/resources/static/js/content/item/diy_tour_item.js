@@ -1,6 +1,6 @@
 let hotelInfo = {};
 let tourInfo = {};
-getNationalData();
+//getNationalData();
 
 //환율정보크롤링데이터 가져오기
 function getExchangeData(){
@@ -831,6 +831,9 @@ function getDate(){
     let timeDiff = Math.abs(date2.getTime() - date1.getTime());
 
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+
+    console.log(diffDays + 1)
 
     return diffDays;
 }
