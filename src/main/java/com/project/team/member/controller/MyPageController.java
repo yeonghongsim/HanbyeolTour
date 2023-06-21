@@ -478,6 +478,7 @@ public class MyPageController {
 		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_003");
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
+		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
 		
 		

@@ -17,6 +17,7 @@ import com.project.team.member.vo.MemberVO;
 @ToString
 public class DiyTourVO {
     private String hbtDiyCode;
+    private String diyTourBuyDate;
     private String memCode;
     private String airlineCode;
     private String areaCode;
@@ -25,7 +26,7 @@ public class DiyTourVO {
     private String totalPrice;
     private String traverPeriod;
     private String isPaid;
-    private String diyTourBuyDate;
+    private String buyStatusCode;
     private MemberVO memberVO;
     private AirlineVO airlineVO;
     private BuyStateVO buyStateVO;

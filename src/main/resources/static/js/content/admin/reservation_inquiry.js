@@ -82,8 +82,9 @@ function changeBuyStatus(){
 		alert('변경할 예약 상태를 선택하십시오.');
 		return;
 	}
-		const memNames = [];
-		const memDTells = [];
+	
+	const memNames = [];
+	const memDTells = [];
 	
 	//예약 상태 예약 완료 select한 경우
 	if (buyStatusCode == 2) {
@@ -111,11 +112,14 @@ function changeBuyStatus(){
 	
 	console.log(buyStatusCode);
 	
+	
 	const buyCodeList = [];
 	
 	for(let i = 0; i < checkboxes.length; i++){
 		buyCodeList[i] = checkboxes[i].value;
 	}
+	
+	console.log(buyCodeList)
 	
 	let paramData = {
 		'buyStatusCode' : buyStatusCode
