@@ -70,3 +70,14 @@ textarea {
 .custom-border-3 {
 	border: 3px solid #ffd000 !important;
 }
+.custom-border-4 {
+	border: 4px solid #ffd000 !important;
+}
+.custom-border-5 {
+	border: 5px solid #ffd000 !important;
+}
+
+.resultDiv img {
+	display: block; height: 100%; width: 100%;
+	border: 2px solid #ffd000 !important;
+}

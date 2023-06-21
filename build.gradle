@@ -17,6 +17,8 @@ dependencies {
 	implementation 'com.google.maps:google-maps-services:0.17.0'
 	// 문자 api
 	implementation 'net.nurigo:sdk:4.3.0'
+	//JSON
+	implementation 'org.json:json:20230227'
 
 	implementation 'org.jsoup:jsoup:1.16.1' //크롤링
 
