@@ -25,6 +25,7 @@ import com.project.team.buy.vo.BuyVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
+import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.MailService;
 import com.project.team.util.MailVO;
@@ -121,20 +122,7 @@ public class MemberController {
 		 return "fail";
 	}
 	
-	@PostMapping("/verifyAuthCode")
-	@ResponseBody
-	public boolean verifyAuthCode(String authCode) {
-	    // 서버에서 저장된 인증 코드와 입력된 인증 코드를 비교하여 일치 여부를 판단합니다.
-	    // 여기서는 간단히 문자열 비교를 사용하였습니다.
-	    String savedAuthCode = ""; // 서버에 저장된 인증 코드를 가져와야 합니다.
-
-	    return authCode.equals(savedAuthCode);
-	}
-
 	
-	
-	
-
 	//로그인 페이지로 이동 
 	@GetMapping("/login")
 	public String loginForm(){
@@ -245,7 +233,26 @@ public class MemberController {
 		   	   
 		   return false;
 	}
-		
+	
+	// 별점 
+	private List<String> getStarIcons(List<Integer> starList) {
+	    List<String> stars = new ArrayList<>();
+	    
+	    for (int rating : starList) {
+	        StringBuilder star = new StringBuilder();
+	        for (int i = 1; i <= 5; i++) {
+	            if (i <= rating) {
+	                star.append("<i class=\"bi bi-star-fill\"></i>"); // 별 아이콘
+	            } else {
+	                star.append("<i class=\"bi bi-star\"></i>"); // 빈 별 아이콘
+	            }
+	        }
+	        stars.add(star.toString());
+	    }
+	    return stars;
+	}
+
+	
 		
 	//마이 페이지로 이동 
 	@GetMapping("/infoManage")	
@@ -260,6 +267,12 @@ public class MemberController {
 		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
 		System.out.println(buyStatusInOneMonthList);
 		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
+		
+		//1개월 내 구매 관련 정보 리스트
+		List<BuyVO> buyListInOneMonth = memberService.getBuyListInOneMonth(memCode);
+		System.out.println("@@@ 1개월 이내 예약 리스트 : " + buyListInOneMonth);
+		model.addAttribute("buyListInOneMonth", buyListInOneMonth);
+		
 		
 		//문의 내역 조회 
 		List<BoardRequestVO> qnaList =  memberService.getQnaList(memCode);
@@ -284,18 +297,28 @@ public class MemberController {
 		// 답변 조회 
 		List<ReqReplyVO> qnaReplyList = memberService.getQnaReplyList(memCode);
 		
-		// 리뷰 리스트 
-		model.addAttribute("reviewList", memberService.getMyPageReviewList(memCode));
-		//System.out.println("@@ 리뷰리스트 : " + memberService.getMyPageReviewList(memCode));
-		
+		//1:1 문의 관련 데이터 
 		Map<String, Object> qnaMap = new HashMap<>();
 		qnaMap.put("qnaList", qnaList);
 		qnaMap.put("qnaReplyList", qnaReplyList);
 		qnaMap.put("itemDetailList", itemDetailList);
 		
-		
 		model.addAttribute("qnaMap", qnaMap);
 		System.out.println("*** MAP DATA : " + qnaMap);
+
+		// 리뷰 리스트 
+		model.addAttribute("reviewList", memberService.getMyPageReviewList(memCode));
+		List<MemberReviewVO> reviewList = memberService.getMyPageReviewList(memCode);
+		// 리뷰 - 별점 
+		List<Integer> starList = new ArrayList<>();
+		for(MemberReviewVO review : reviewList) {
+			starList.add(review.getStars());
+		}
+		
+		List<String> starIcons = getStarIcons(starList);
+		model.addAttribute("starList", starList);
+		model.addAttribute("starIcons", starIcons);
+		
 		
 		return "content/member/info_manage";
 	

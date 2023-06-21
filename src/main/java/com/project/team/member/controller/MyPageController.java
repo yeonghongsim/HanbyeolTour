@@ -191,7 +191,7 @@ public class MyPageController {
 	
 
 	
-	//예약확인 페이지로 이동 
+	// 일반 패키지 예약확인 페이지로 이동 
 	@RequestMapping("/checkMyReservation")
 	public String checkMyReservation(Model model, BuyVO buyVO, Authentication authentication) {
 		
@@ -235,7 +235,6 @@ public class MyPageController {
 		if (buyVO.getFromDate() == null) {
 			buyVO.setFromDate(firstDate);
 		}
-		
 		// sideMenu colorActivate를 위한 msMenuCode  
 		model.addAttribute("msMenuCode", "MS_MENU_001");
 		
@@ -351,15 +350,128 @@ public class MyPageController {
 
 	}
 	
-	
-	//예약취소 내역 확인 페이지로 이동 
-	@GetMapping("/checkMyCancelation")
-	public String checkMyCancelation(Model model) {
+	// DIY 패키지 예약 확인 페이지 
+	@RequestMapping("/checkDiyReservation")
+	public String checkDiyReservation(Model model, Authentication authentication) {
+		//memCode 
+		String memCode = memberService.getMemCode(authentication.getName());
+		System.out.println("memCode : " + memCode);
+		
+		//diy 패키지 구매 리스트 
+		model.addAttribute("diyTourList", memberService.getDiyTourList(memCode)); 
+		
 		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_002");
 		
-		return "content/member/myPage/check_my_cancelation";
+		return "content/member/myPage/check_diy_reservation";
 	}
+	
+	
+	// DIY 예약 상세 페이지로 이동 
+	@GetMapping("/diyDetail")
+	public String diyDetail(Model model, String hbtDiyCode, Authentication authentication) {
+		// sideMenu colorActivate를 위한 msMenuCode 
+		model.addAttribute("msMenuCode", "MS_MENU_002");
+		
+		String memCode = memberService.getMemCode(authentication.getName());
+		// 상단 예약 정보리스트 
+		model.addAttribute("tourDetail",  memberService.getDiyTourByDiyCode(hbtDiyCode));
+		
+		//예약자 정보 
+		model.addAttribute("memInfo", memberService.getMemInfo(authentication.getName()));
+				
+		// ditList ver.1
+		List<DiyTourVO> originDiyList =  memberService.getDiyDetaiList(hbtDiyCode);
+		System.out.println("HERE!!!! : " +originDiyList);
+		// 전체 여행 일자 
+		int travelPeriod = Integer.parseInt(originDiyList.get(0).getTraverPeriod());
+		
+		//diyList ver.2
+		List<DiyDetailVO> detailList = memberService.getDiyDetaiListNew(hbtDiyCode);
+		System.out.println(detailList);
+		
+				
+		
+		//없는 일자 추가한 리스트 생성 
+		
+		List<DiyDetailVO> resultList = new ArrayList<>();
+		
+		// 1부터 travelPeriod까지 반복
+		for (int i = 1; i <= travelPeriod; i++) {
+		    boolean found = false;
+		    
+		    // detailList에서 현재 i와 동일한 hbtDiyDay를 가진 DiyDetailVO를 찾음
+		    for (DiyDetailVO diyDetailVO : detailList) {
+		        int hbtDiyDay = Integer.parseInt(diyDetailVO.getHbtDiyDay());
+
+		        if (hbtDiyDay == i) {
+		            found = true;
+		            resultList.add(diyDetailVO);
+		            break; // 동일한 hbtDiyDay를 가진 DiyDetailVO를 찾았으므로 더 이상 반복할 필요가 없음
+		        }
+		    }
+		    // 현재 i와 동일한 hbtDiyDay를 가진 DiyDetailVO가 없는 경우
+		    if (!found) {
+		        DiyDetailVO nullVO = new DiyDetailVO();
+		        nullVO.setHbtDiyCode(hbtDiyCode);
+		        nullVO.setHbtDiyDay(String.valueOf(i));
+
+		        resultList.add(nullVO);
+		    }
+		}
+		
+		System.out.println("***** resultList : " + resultList);
+		model.addAttribute("resultList", resultList);
+		
+		System.out.println("!!!!!!!!!!!tour detail : " +  memberService.getDiyDetaiList(hbtDiyCode));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return"content/member/myPage/diy_detail";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//----------------------------------------------------------
+	
+	
+	//예약취소 내역 확인 페이지로 이동 -- 사용하지 않음 (추후 삭제 예정 
+//	@GetMapping("/checkMyCancelation")
+//	public String checkMyCancelation(Model model) {
+//		// sideMenu colorActivate를 위한 msMenuCode 
+//		model.addAttribute("msMenuCode", "MS_MENU_002");
+//		
+//		return "content/member/myPage/check_my_cancelation";
+//	}
 	
 	// 장바구니 페이지로 이동
 	@GetMapping("/checkMyCart")
@@ -367,7 +479,7 @@ public class MyPageController {
 		String memCode = memberService.getMemCode(memId);
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_002");
+		model.addAttribute("msMenuCode", "MS_MENU_003");
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
 		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
@@ -452,7 +564,7 @@ public class MyPageController {
 		model.addAttribute("requestListY", boardService.getBoardReqList(boardRequestVO));
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_003");
+		model.addAttribute("msMenuCode", "MS_MENU_004");
 		
 		return "content/member/myPage/check_my_request";
 	}
@@ -464,7 +576,7 @@ public class MyPageController {
 		model.addAttribute("itemImgList", itemService.getItemMainImg());
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_003");
+		model.addAttribute("msMenuCode", "MS_MENU_005");
 		
 		return "content/member/myPage/reg_request_form";
 	}
@@ -486,7 +598,7 @@ public class MyPageController {
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
 		
 		// sideMenu colorActivate를 위한 msMenuCode 
-		model.addAttribute("msMenuCode", "MS_MENU_003");
+		model.addAttribute("msMenuCode", "MS_MENU_005");
 		
 		return "content/member/myPage/req_detail";
 		

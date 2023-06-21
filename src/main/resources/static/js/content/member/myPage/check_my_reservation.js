@@ -57,20 +57,18 @@ function get_buy_list(month) {
 					 
 			let str = ``;
 			
-			str = `<colgroup>
-						<col width="10%">
-						<col width="10%">
+			str += `<colgroup>
+						<col width="15%">
 						<col width="*">
 						<col width="5%">
-						<col width="15%">
-						<col width="15%">
 						<col width="10%">
+						<col width="10%">
+						<col width="15%">
 						<col width="10%">
 					</colgroup>
 					<thead class="text-center">
 						<tr>
 							<td>결제일자</td>
-							<td>여행국가</td>
 							<td>상품</td>
 							<td>인원</td>
 							<td>출발일자</td>
@@ -82,22 +80,26 @@ function get_buy_list(month) {
 			
 		    if (buyList.length == 0) {
 		    str += `<tr class="text-center">
-		                <td colspan="8">
-		                    <br><br><br>
-		                    <div style="font-size: 4rem; color: #bbb;">
-		                        <i class="bi bi-exclamation-circle"></i>
-		                    </div>
-		                    <div>
-		                        기간내 예약내역이 없습니다.
-		                    </div>
-		                    <br><br><br>
+		                <td colspan="7">
+		                    <br>
+		                    <br>
+		                    <br>
+			                    <div style="font-size: 4rem; color: #bbb;">
+			                        <i class="bi bi-exclamation-circle"></i>
+			                    </div>
+			                    <div>
+			                        기간내 예약내역이 없습니다.
+			                    </div>
+		                    <br>
+		                    <br>
+		                    <br>
 		                </td>
 		            </tr>`;
 		    } 
 		    else {
 		        buyList.forEach(function (buy) {
 				const buyDetail = buy.buyDetailVO;
-	            str += `<tr>
+	            str += `<tr class="table-tr">
 	                       <td class="text-center">
 	                            <div style="color: #131518; font-weight:bolder;">${buy.buyDate}</div>
 					            <div style="color: #ffd000;">${buy.buyCode}</div>
@@ -105,18 +107,23 @@ function get_buy_list(month) {
 					            	<a href="/myPage/reservationDetail?buyCode=${buy.buyCode}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
 					            </div>
 	                        </td>
-	                        <td class="text-center" style="font-weight: 700; font-weight: bolder;">${buyDetail.itemVO.tourAreaVO.areaKorName}</td>
-	                        <td>
-	                        	<a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
-	                            	<img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
-	                            </a>
-								<a class="" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
-	                            	<span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
-	                            </a>
-	                        </td>
-	                        <td>${buyDetail.reservedPeopleNum}</td>
-	                        <td>${buyDetail.departDate}</td>
-	                        <td>${buyDetail.arriveDate}</td>
+	                        <td class="row">
+					        	<div class="col-5" style="padding: 0;">
+					        		<a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+					        			<img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}"style="width: 85px; height: 85px;">
+					        		</a>
+					        	</div>
+					        	<div class="col-7 item-td" style="padding: 0;">
+									<span class="text-center" style="color: #777; font-weight: bolder;">${buyDetail.itemVO.tourAreaVO.areaKorName}</span>
+									<br>
+					        		<a class="" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+					            		<span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+					        		</a>	        		
+					        	</div>
+					        </td>
+	                        <td class="text-center">${buyDetail.reservedPeopleNum}</td>
+	                        <td class="date-td">${buyDetail.departDate}</td>
+	                        <td  class="date-td">${buyDetail.arriveDate}</td>
 	                        <td style="color: #f27370;">
 	                            ${buy.buyTotalPrice.toLocaleString()} 원
 	                        </td>
@@ -247,19 +254,17 @@ function cancel_reservation(buyCode){
 			let str = ``;
 			
 			str = `<colgroup>
-						<col width="10%">
-						<col width="10%">
+						<col width="15%">
 						<col width="*">
 						<col width="5%">
-						<col width="15%">
-						<col width="15%">
 						<col width="10%">
+						<col width="10%">
+						<col width="15%">
 						<col width="10%">
 					</colgroup>
 					<thead class="text-center">
 						<tr>
 							<td>결제일자</td>
-							<td>여행국가</td>
 							<td>상품</td>
 							<td>인원</td>
 							<td>출발일자</td>
@@ -271,58 +276,67 @@ function cancel_reservation(buyCode){
 			
 		    if (buyList.length == 0) {
 		    str += `<tr class="text-center">
-		                <td colspan="8">
-		                    <br><br><br>
-		                    <div style="font-size: 4rem; color: #bbb;">
-		                        <i class="bi bi-exclamation-circle"></i>
-		                    </div>
-		                    <div>
-		                        기간내 예약내역이 없습니다.
-		                    </div>
-		                    <br><br><br>
+		                <td colspan="7">
+		                    <br>
+		                    <br>
+		                    <br>
+			                    <div style="font-size: 4rem; color: #bbb;">
+			                        <i class="bi bi-exclamation-circle"></i>
+			                    </div>
+			                    <div>
+			                        기간내 예약내역이 없습니다.
+			                    </div>
+		                    <br>
+		                    <br>
+		                    <br>
 		                </td>
 		            </tr>`;
 		    } 
 		    else {
 		        buyList.forEach(function (buy) {
 				const buyDetail = buy.buyDetailVO;
-		            str += `<tr>
-		                        <td class="text-center">
-		                            <div style="color: #131518; font-weight:bolder;">${buy.buyDate}</div>
-						            <div style="color: #ffd000;">${buy.buyCode}</div>
-						            <div>
-						            	<a href="/myPage/reservationDetail?buyCode=${buy.buyCode}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
-						            </div>
-		                        </td>
-		                        <td class="text-center" style="font-weight: 700; font-weight: bolder;">${buyDetail.itemVO.tourAreaVO.areaKorName}</td>
-		                        <td>
-		                        	<a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
-		                            	<img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}" style="width: 85px; height: 85px;">
-		                            </a>
-		                            <a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
-		                            	<span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
-		                            </a>
-		                        </td>
-		                        <td>${buyDetail.reservedPeopleNum}</td>
-		                        <td>${buyDetail.departDate}</td>
-		                        <td>${buyDetail.arriveDate}</td>
-		                        <td style="color: #f27370;">
-		                          ${buy.buyTotalPrice.toLocaleString()} 원
-		                        </td>
-		                        <td>
-		                            <div>
-		                                <span id="statusCode" style="font-weight: bolder;">${buy.buyStateVO.buyStatusName}</span>
-		                            </div>
-		                            <div id="cancelBtn">
-		                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
-		                            </div>
-		                            <div id="reviewBtn">
-		                            	<a href="/myPage/checkMyReview?memCode=[[${buy.memberVO.memCode}]]">
-		                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
-		                                </a>
-		                            </div>
-		                        </td>
-		                    </tr>`;
+	            str += `<tr class="table-tr">
+	                       <td class="text-center">
+	                            <div style="color: #131518; font-weight:bolder;">${buy.buyDate}</div>
+					            <div style="color: #ffd000;">${buy.buyCode}</div>
+					            <div>
+					            	<a href="/myPage/reservationDetail?buyCode=${buy.buyCode}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
+					            </div>
+	                        </td>
+	                        <td class="row">
+					        	<div class="col-5" style="padding: 0;">
+					        		<a class="thum" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+					        			<img src="/img/item/itemImg/${buyDetail.itemVO.imgList[0].itemImgAttachedName}"style="width: 85px; height: 85px;">
+					        		</a>
+					        	</div>
+					        	<div class="col-7 item-td" style="padding: 0;">
+									<span class="text-center" style="color: #777; font-weight: bolder;">${buyDetail.itemVO.tourAreaVO.areaKorName}</span>
+									<br>
+					        		<a class="" href="/item/tourItemListDetail?itemCode=${buyDetail.itemVO.itemCode}">
+					            		<span style="color: #333; word-spacing: -1px;">${buyDetail.itemVO.itemTitle}</span>
+					        		</a>	        		
+					        	</div>
+					        </td>
+	                        <td class="text-center">${buyDetail.reservedPeopleNum}</td>
+	                        <td class="date-td">${buyDetail.departDate}</td>
+	                        <td  class="date-td">${buyDetail.arriveDate}</td>
+	                        <td style="color: #f27370;">
+	                            ${buy.buyTotalPrice.toLocaleString()} 원
+	                        </td>
+	                        <td>
+	                            <div>
+	                                <span id="statusCode" style="font-weight: bolder;">${buy.buyStateVO.buyStatusName}</span>
+	                            </div>
+	                            <div id="cancelBtn">
+	                                <button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn" ${buy.buyStateVO.buyStatusCode == 1 ? '' : 'style="display:none;"'} onclick="cancel_reservation('${buy.buyCode}')">예약취소</button>
+	                            </div>
+	                            <div id="reviewBtn">
+	                            	<a href="/myPage/checkMyReview?memCode=[[${buy.memberVO.memCode}]]">
+	                                <button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" ${buy.buyStateVO.buyStatusCode == 2 ? '' : 'style="display:none;"'}>리뷰작성</button>
+	                                </a>
+	                            </div>
+	                        </td>
+	                    </tr>`;
 		            });
 		    }
 		

@@ -11,19 +11,121 @@
 
 
 <th:block layout:fragment="adminContent">
+<style type="text/css">
+
+	#searchTable > tbody > tr > td > div {
+		justify-content: center;
+		align-items: center;
+}
+	#showDetailSpan{
+		font-size: 13px;
+		margin-top: 8px;
+		border-bottom: 1px solid gray;
+		color: gray;
+		cursor: pointer;
+	}
+
+</style>
 	<div class="row">
 		<div class="col">
 			<h3 class="menuTitle">DIY 여행 예약 관리</h3>
+			<div class="row">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							<form th:action="@{/admin/diyReservation}" method="post" id="searchForm">
+							<!-- <input type="hidden" name="buyCode" th:value="${orderListSearchVO.buyCode}" id="orderBy"> -->
+							<input type="hidden" name="nowPage" th:value="${buyListSearchVO.nowPage}" id="nowPage">
+								<table class="table" id="searchTable">
+									<colgroup>
+										<col width="">
+									</colgroup>
+									<tr>
+										<td>
+										<div class="row">
+											<div class="col-1">
+												검색조건
+											</div>
+											<div class="col-2">
+												<select class="form-select" name="searchKeyword">
+													<option value="DIY.HBT_DIY_CODE" th:selected="${buyListSearchVO.searchKeyword == 'DIY.HBT_DIY_CODE'}">예약코드</option>
+													<option value="MEM_NAME" th:selected="${buyListSearchVO.searchKeyword == 'MEM_NAME'}">예약자명</option>
+													<option value="MEM_ID" th:selected="${buyListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
+													<option value="MEM_D_TELL" th:selected="${buyListSearchVO.searchKeyword == 'MEM_D_TELL'}">연락처</option>
+												</select>
+											</div>
+											<div class="col-9">
+												<input type="text" class="form-control" name="searchValue" th:value="${buyListSearchVO.searchValue}">
+											</div>
+										</div>
+										</td>
+									<tr>	
+									<tr>	
+										<td>
+											<div class="row">
+												<div class="col-1">
+													예약상태
+												</div>
+												
+												<div class="col-11">
+													<input type="checkbox" class="form-check-input" id="searchAllCheck">
+													<label class="form-check-label">전체</label>
+													<th:block th:each="buyStatus : ${buyStatusList}">
+														<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}" style="margin-left: 20px;"
+															name="statusCodeList" th:checked="${buyListSearchVO.statusCodeList == null ? 'false' : #lists.contains(buyListSearchVO.statusCodeList, buyStatus.buyStatusCode)}">
+														<label class="form-check-label">[[${buyStatus.buyStatusName}]]</label>
+													</th:block>
+												</div>
+												
+											</div>
+										</td>
+										
+									</tr>
+									<tr>	
+										<td>
+											<div class="row">
+												<div class="col-1">
+													예약일
+												</div>
+												<div class="col-4">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="7일" onclick="setDate(this);">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="1개월" onclick="setDate(this);">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="3개월" onclick="setDate(this);">
+												</div>
+												<div class="col-1" style="padding-left: 0px;">기간 설정</div>
+												<div class="col-2">
+													<input type="date" class="form-control" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
+												</div>
+												<div class="col-1" style="padding-left: 0px;">부터</div>
+												<div class="col-2">
+													<input type="date" class="form-control" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
+												</div>
+												<div class="col-1" style="padding-left: 0px;">까지</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<input type="submit" value="검색" class="btn btn-block" style="background-color: #ffd000;" onclick="searchBuyList();">
+							</form>
+						</div>
+					</div>				
+				</div>
+			</div>
 			<!-- 예약 내역 -->
 			<div class="row mt-5">
 				<div class="col">
 					<div class="row">
 						<div class="col-2">
-							
+							<select class="form-select" id="buyStatusSelect">
+								<option>예약상태변경</option>
+							<th:block th:each="buyStatus : ${buyStatusList}">
+								<option th:value="${buyStatus.buyStatusCode}">[[${buyStatus.buyStatusName}]]</option>
+							</th:block>
+							</select>
 					
 						</div>
 						<div class="col-1">
-							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeBuyStatus();">
+							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeDivBuyStatus();">
 						</div>
 					</div>
 					<table class="table text-center">
@@ -54,7 +156,10 @@
 							<th:block th:unless="${#lists.size(diyBuyList) == 0}">
 								<tr th:each="diy : ${diyBuyList}">
 									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${diy.hbtDiyCode}"></td>
-									<td>[[${diy.hbtDiyCode}]]</td>
+									<td>
+										<div>[[${diy.hbtDiyCode}]]</div>
+										<span id="showDetailSpan"><a th:href="@{/admin/diyReservDetail(hbtDiyCode=${diy.hbtDiyCode})}">상세보기</a></span>
+									</td>
 									<td>[[${diy.diyTourBuyDate}]]</td>
 									<td>[[${diy.memberVO.memName}]]님의 DIY 여행</td>
 									<td>
@@ -70,13 +175,15 @@
 					</table>
 				</div>
 			</div>
+			<!-- 페이징 처리 -->
+ 					
 		</div>
 	</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js 파일-->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/js/test.js(변경)"></script> --> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+	<script type="text/javascript" src="/js/content/admin/diy_reservation_inquiry.js"></script> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
 </th:block>
 
 

@@ -7,15 +7,15 @@
         SELECT DISTINCT
             AREA_NAME
         FROM AIRPORT_CODE
-        ORDER BY AREA_NAME
+        ORDER BY CASE WHEN AREA_NAME = '한국' THEN 0 ELSE 1 END, AREA_NAME
     </select>
     
-    <select id="getNationalNames" resultType="string">
-        SELECT DISTINCT KOR_NATIONAL_NAME
+    <select id="getNationalNames" resultType="map">
+        SELECT DISTINCT KOR_AIRPORT_NAME
+                    , AIRPORT_CODE
         FROM AIRPORT_CODE
         WHERE AREA_NAME = #{areaName}
-        ORDER BY KOR_NATIONAL_NAME
+        ORDER BY KOR_AIRPORT_NAME
     </select>
-
 
 </mapper>

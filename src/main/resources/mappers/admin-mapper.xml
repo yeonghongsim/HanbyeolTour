@@ -347,6 +347,7 @@
 		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD') BUY_DATE
 		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') BUY_DATE_ORDER
 		 	, ITEM_TITLE
+		 	, MEM_ID
 		 	, MEM_NAME
 		 	, MEM_D_TELL
 		 	, HB.MEM_CODE
@@ -381,25 +382,6 @@
        	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
 	
-	<!-- DIY 예약 구매 리스트 -->
-	<select id="getDiyBuyListForAdmin" resultMap="buyMapper.diyTour">
-		SELECT DISTINCT DIY.HBT_DIY_CODE
-			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
-			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') DIY_TOUR_BUY_DATE_ORDER
-			, HBS.BUY_STATUS_CODE
-			, HBS.BUY_STATUS_NAME
-			, MEM.MEM_CODE
-			, MEM.MEM_NAME
-			, MEMD.MEM_D_TELL
-		FROM HBT_DIY_TOUR DIY, HBT_DIY_DETAIL DIYD, HBT_BUY_STATE HBS,
-			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
-        WHERE IS_PAID = 'Y'
-		AND DIY.HBT_DIY_CODE = DIYD.HBT_DIY_CODE
-		AND DIY.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
-		AND DIY.MEM_CODE = MEM.MEM_CODE
-		AND MEM.MEM_CODE = MEMD.MEM_CODE
-		ORDER BY DIY_TOUR_BUY_DATE_ORDER DESC
-	</select>
 	
 	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
 	<select id="getBuyListCnt" resultType="int">
@@ -430,7 +412,6 @@
 		</if>
 		 
 	</select>
-	
 	
 	
 	<!-- 예약 관리 페이지 구매(예약)상태 -->
@@ -478,6 +459,152 @@
         AND HI.ITEM_CODE = IMG.ITEM_CODE
         AND HB.BUY_CODE = #{buyCode}
         AND IS_MAIN = 'Y'
+	</select>
+	
+	<!-- DIY 예약 구매 리스트 -->
+	<select id="getDiyBuyListForAdmin" resultMap="buyMapper.diyTour">
+		SELECT DISTINCT DIY.HBT_DIY_CODE
+			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
+			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') DIY_TOUR_BUY_DATE_ORDER
+			, HBS.BUY_STATUS_CODE
+			, HBS.BUY_STATUS_NAME
+			, MEM_ID
+			, MEM_NAME
+			, MEM_D_TELL
+		FROM HBT_DIY_TOUR DIY, HBT_DIY_DETAIL DIYD, HBT_BUY_STATE HBS,
+			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
+        WHERE IS_PAID = 'Y'
+		AND DIY.HBT_DIY_CODE = DIYD.HBT_DIY_CODE
+		AND DIY.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND DIY.MEM_CODE = MEM.MEM_CODE
+		AND MEM.MEM_CODE = MEMD.MEM_CODE
+        <!-- 검색 기능 주문상태 체크박스 -->
+        <if test="statusCodeList != null">
+		AND HBS.BUY_STATUS_CODE IN
+			<foreach collection="statusCodeList" item="statusCode" open="(" close=")" separator=",">
+				#{statusCode}
+			</foreach>
+		</if>
+		<!-- 검색 기능 날짜  -->
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR (DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR (DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<!-- 검색 기능 셀렉트박스 -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+       	ORDER BY DIY_TOUR_BUY_DATE_ORDER DESC
+       	<!-- OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY		 -->
+	</select>
+	
+	<!-- 검색 조건에 맞는 DIY 구매(예약) 내역 수 -->
+	<select id="getDiyBuyListCnt" resultType="int">
+		SELECT COUNT(DISTINCT DIY.HBT_DIY_CODE)
+		FROM HBT_DIY_TOUR DIY, HBT_DIY_DETAIL DIYD, HBT_BUY_STATE HBS,
+			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
+        WHERE IS_PAID = 'Y'
+		AND DIY.HBT_DIY_CODE = DIYD.HBT_DIY_CODE
+		AND DIY.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND DIY.MEM_CODE = MEM.MEM_CODE
+		AND MEM.MEM_CODE = MEMD.MEM_CODE
+        <if test="statusCodeList != null">
+		AND HBS.BUY_STATUS_CODE IN
+			<foreach collection="statusCodeList" item="statusCode" open="(" close=")" separator=",">
+				#{statusCode}
+			</foreach>
+		</if>
+		<!-- 검색 기능 날짜  -->
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR (DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR (DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<!-- 검색 기능 셀렉트박스 -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		 
+	</select>
+	
+	<!-- Diy 예약관리 페이지 예약 상태 변경 -->
+	<update id="changeDiyBuyStatus">
+		UPDATE HBT_DIY_TOUR
+		SET
+			BUY_STATUS_CODE = #{buyStatusCode}
+		WHERE HBT_DIY_CODE IN
+		<foreach collection="buyCodeList" item="hbtDiyCode" open="(" close=")" separator=",">
+			#{hbtDiyCode}
+		</foreach>
+	</update>
+	
+	<!-- Diy 예약 기본 정보 상세 -->
+	<select id="getDiyReservDetail" resultMap="buyMapper.diyTour">
+		SELECT DIY.HBT_DIY_CODE
+			, TO_CHAR (DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
+			, DIY.HBT_AIRLINE_CODE
+			, HBT_AIRLINE_NAME
+			, HBT_AIRLINE_ICON
+			, DIY.AREA_CODE
+			, AREA.AREA_KOR_NAME
+			, TO_CHAR (DEPART_DATE, 'YYYY-MM-DD') DEPART_DATE
+			, TO_CHAR (ARRIVE_DATE, 'YYYY-MM-DD') ARRIVE_DATE
+			, TOTAL_PRICE
+			, MEM.MEM_CODE
+			, MEM.MEM_ID
+			, MEM.MEM_NAME
+			, MEMD.MEM_D_TELL
+			, MEMD.MEM_EMAIL 
+		FROM HBT_DIY_TOUR DIY, HBT_TOUR_AREA AREA, HBT_AIRLINE AIR,
+			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
+		WHERE DIY.AREA_CODE = AREA.AREA_CODE
+		AND DIY.HBT_AIRLINE_CODE = AIR.HBT_AIRLINE_CODE
+		AND DIY.MEM_CODE = MEM.MEM_CODE
+		AND MEM.MEM_CODE = MEMD.MEM_CODE
+		AND DIY.HBT_DIY_CODE = #{hbtDiyCode}
+	</select>
+	
+	<!--  예약 호텔 상세 조회 -->
+	<select id="getDiyReservHotelDetail" resultMap="buyMapper.diyTour">
+		SELECT DETAIL.HBT_DIY_CODE
+		    , DETAIL.HBT_DIY_DETAIL_CODE
+		    , DIY.TRAVER_PERIOD
+		    , DETAIL.HBT_DIY_DAY
+		    , DETAIL.HBT_HOTEL_CODE
+		    , HOTEL.HBT_HOTEL_NAME
+		    , NVL(HOTEL.HBT_HOTEL_PRICE, 0) AS HBT_HOTEL_PRICE
+		    , HBT_HOTEL_IMG_CODE
+		    , HBT_HOTEL_ATTECHED_FILE_NAME
+		FROM HBT_DIY_DETAIL DETAIL
+		LEFT OUTER JOIN HBT_DIY_TOUR DIY ON DIY.HBT_DIY_CODE = DETAIL.HBT_DIY_CODE 
+		LEFT OUTER JOIN HBT_HOTEL HOTEL ON DETAIL.HBT_HOTEL_CODE = HOTEL.HBT_HOTEL_CODE
+		LEFT OUTER JOIN HBT_HOTEL_IMG IMG ON HOTEL.HBT_HOTEL_CODE = IMG.HBT_HOTEL_CODE
+		WHERE DETAIL.HBT_DIY_CODE = #{hbtDiyCode}
+		AND IMG.IS_MAIN = 'Y'
+		ORDER BY DETAIL.HBT_DIY_CODE
+	</select>
+	
+	<!-- Diy 예약 투어 상세 조회 -->
+	<select id="getDiyReservTourDetail" resultMap="buyMapper.diyTour">
+		SELECT DETAIL.HBT_DIY_CODE
+		    , DETAIL.HBT_DIY_DETAIL_CODE
+		    , DIY.TRAVER_PERIOD
+		    , DETAIL.HBT_DIY_DAY
+		    , DETAIL.HBT_TOUR_ITEM_CODE
+		    , TOUR.HBT_TOUR_ITEM_NAME
+		    , NVL(TOUR.HBT_TOUR_ITEM_PRICE, 0) AS HBT_TOUR_ITEM_PRICE
+		    , IMG.HBT_TOUR_ITEM_IMG_CODE
+		    , IMG.HBT_TOUR_ITEM_ATTECHED_FILE_NAME
+		FROM HBT_DIY_DETAIL DETAIL
+		LEFT OUTER JOIN HBT_DIY_TOUR DIY ON DIY.HBT_DIY_CODE = DETAIL.HBT_DIY_CODE 
+		LEFT OUTER JOIN HBT_TOUR_ITEM TOUR ON DETAIL.HBT_TOUR_ITEM_CODE = TOUR.HBT_TOUR_ITEM_CODE
+		LEFT OUTER JOIN HBT_TOUR_IMG IMG ON TOUR.HBT_TOUR_ITEM_CODE = IMG.HBT_TOUR_ITEM_CODE
+		WHERE DETAIL.HBT_DIY_CODE = #{hbtDiyCode}
+		AND IMG.IS_MAIN = 'Y'
+		ORDER BY DETAIL.HBT_DIY_CODE
 	</select>
 	
 	

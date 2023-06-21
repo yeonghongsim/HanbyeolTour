@@ -86,21 +86,35 @@ public interface AdminService {
 	//구매(예약) 리스트 조회
 	List<BuyVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO);
 	
-	//DIY 예약 리스트 조회
-	List<DiyTourVO> getDiyBuyListForAdmin();
-	
 	//검색 조건에 맞는 구매(예약) 내역 수
 	int getBuyListCnt(BuyListSearchVO buyListSearchVO);
 	
 	//예약(구매) 상태 리스트 조회
 	List<BuyStateVO> getBuyStatus();
 	
-	
 	//예약 상태 변경
 	void changeBuyStatus(Map<String, Object> map);
 	
 	//예약 상세 조회 페이지
 	BuyVO getReservDetail(String buyCode);
+	
+	//DIY 예약 리스트 조회
+	List<DiyTourVO> getDiyBuyListForAdmin(BuyListSearchVO buyListSearchVO);
+	
+	//검색 조건에 맞는 DIY(예약) 내역 수
+	int getDiyBuyListCnt(BuyListSearchVO buyListSearchVO);
+	
+	//DIY 예약 상태 변경
+	void changeDiyBuyStatus(Map<String, Object> map);
+	
+	//DIY 예약 상세 기본 정보
+	DiyTourVO getDiyReservDetail(String hbtDiyCode);
+	
+	//DIY 예약 상세 호텔 정보
+	List<DiyTourVO> getDiyReservHotelDetail(String hbtDiyCode);
+	
+	//DIY 예약 상세 투어 정보
+	List<DiyTourVO> getDiyReservTourDetail(String hbtDiyCode);
 	
 	//기간별 매출 조회
 	List<Map<String, Integer>> getSalesStatisticsByPeriod(int year);

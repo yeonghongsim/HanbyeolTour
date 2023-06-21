@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("airlineService")
 public class AirlineServiceImpl implements AirlineService{
@@ -17,7 +18,7 @@ public class AirlineServiceImpl implements AirlineService{
     }
 
     @Override
-    public List<String> getNationalNames(String areaName) {
+    public List<Map<String, Object>> getNationalNames(String areaName) {
         return sqlSession.selectList("airlineMapper.getNationalNames", areaName);
     }
 }

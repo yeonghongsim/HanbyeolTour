@@ -376,18 +376,58 @@ public class AdminController {
 	
 	
 	//DIY 예약 
-	@GetMapping("/diyReservation")
-	public String diyReservation(Model model) {
+	@RequestMapping("/diyReservation")
+	public String diyReservation(Model model, BuyListSearchVO buyListSearchVO) {
 		
-		System.out.println(adminService.getDiyBuyListForAdmin());
+		//검색 조건에 맞는 예약 수 조회
+		int totalDataCnt = adminService.getDiyBuyListCnt(buyListSearchVO);
+		buyListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이지 정보 세팅
+		buyListSearchVO.setPageInfo();
 		
 		//div 구매 리스트
-		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin());
+		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin(buyListSearchVO));
 		
 		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
 		return "content/admin/diy_reservation_inquiry";
+	}
+	
+	//DIV 예약 상태 변경 버튼 클릭 시
+	@ResponseBody
+	@PostMapping("/changeDivBuyStatusAJAX")
+	public List<String> changeDivBuyStatus(@RequestBody HashMap<String, Object> map) throws CoolsmsException{
+		
+		//System.out.println(map);
+		
+		List<Object> sendSmsInfo = new ArrayList();
+		sendSmsInfo.add(map.get("memDTells"));
+		sendSmsInfo.add(map.get("memNames"));
+		
+		List<String> memDTellList = new ArrayList<>();
+		List<String> memNameList = new ArrayList<>();
+		
+	    if (sendSmsInfo.get(0) instanceof List) {
+	        memDTellList = (List<String>) sendSmsInfo.get(0);
+	    }
+
+	    if (sendSmsInfo.get(1) instanceof List) {
+	        memNameList = (List<String>) sendSmsInfo.get(1);
+	    }
+		
+		//System.out.println(sendSmsInfo);
+		
+	
+		//쿼리 빈값 채우기
+		Map<String, Object> mapData = new HashMap<>();
+		mapData.put("buyStatusCode", map.get("buyStatusCode"));
+		mapData.put("buyCodeList", map.get("buyCodeList"));
+		
+		adminService.changeDiyBuyStatus(mapData);
+		
+		return messageService.sendMessage(memNameList, memDTellList);
 	}
 	
 	
@@ -399,6 +439,29 @@ public class AdminController {
 		model.addAttribute("reservDetail", adminService.getReservDetail(buyCode));
 		
 		return "content/admin/reservation_detail";
+	}
+	
+	//DIV 예약 상세 페이지
+	@GetMapping("/diyReservDetail")
+	public String divReservDetail(Model model, String hbtDiyCode) {
+		
+		//기본 상세 정보
+		model.addAttribute("reservDetail", adminService.getDiyReservDetail(hbtDiyCode));
+		
+		//호텔 정보
+		model.addAttribute("hotelList", adminService.getDiyReservHotelDetail(hbtDiyCode));
+		
+		//투어 정보
+		model.addAttribute("tourList", adminService.getDiyReservTourDetail(hbtDiyCode));
+		
+		
+		//System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
+		System.out.println("-------------------------------");
+		System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
+		System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
+		
+		
+		return "content/admin/diy_reservation_detail";
 	}
 	
 	

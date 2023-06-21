@@ -1,4 +1,4 @@
-init();
+/* init();
 
 function init() {
 
@@ -31,7 +31,7 @@ function init() {
 		const searchButton = document.querySelector("input[type='submit']");
 		searchButton.click();
 	}
-}
+} */
 	
 
 //예약 목록 전체 체크박스 클릭 컨트롤
@@ -70,7 +70,7 @@ function listCheckboxControl(){
 
 
 //예약 상태 변경 버튼 클릭 시
-function changeBuyStatus(){
+function changeDivBuyStatus(){
 	
 	const checkboxes = document.querySelectorAll('.chk:checked');
 	
@@ -131,7 +131,7 @@ function changeBuyStatus(){
 	
 	//ajax start
 	$.ajax({
-		url: '/admin/changeBuyStatusAJAX', //요청경로
+		url: '/admin/changeDivBuyStatusAJAX', //요청경로
 		type: 'post',
 		data: JSON.stringify(paramData), //필요한 데이터
 		async: true, //default 
@@ -173,7 +173,6 @@ function getBuyListPaging(pageNum){
 	
 	search_form.submit();	
 }
-
 
 
 

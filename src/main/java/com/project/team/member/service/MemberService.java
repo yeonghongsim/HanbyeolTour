@@ -7,6 +7,8 @@ import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
@@ -90,6 +92,23 @@ public interface MemberService {
 	
 	// 마이페이지 메인 - 리뷰 리스트 조회
 	List<MemberReviewVO> getMyPageReviewList(String memCode); 
+	
+	// 마이페이지 메인 - 예약 1개월내 내역 조회 
+	List<BuyVO> getBuyListInOneMonth(String memCode);
+	
+	// 예약 내역 조회 - DIY 
+	List<DiyTourVO> getDiyTourList(String memCode);
+	
+	// 예약 내역 상세 조회 - DIY 
+	List<DiyTourVO> getDiyDetaiList(String hbtDiyCode);
+	
+	// 예약 내역 상세 페이지 - 상단 정보 조회 
+	DiyTourVO getDiyTourByDiyCode(String hbtDiyCode);
+	
+	// 예약 내역 상세 페이지 - 상단 정보 조회 v.2 
+	List<DiyDetailVO> getDiyDetaiListNew(String hbtDiyCode);
+	
+	
 	
 	
 	
