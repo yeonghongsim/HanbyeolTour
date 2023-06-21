@@ -19,6 +19,5 @@ public class BuyListSearchVO extends PageVO{
 	private String searchToDate;
 	private String searchKeyword; //검색 기능 select 박스 선택 데이터
 	private String searchValue; //검색 기능 select 박스 옆 입력하는 데이터
-	//private String orderBy; //7일 1개월 3개월 버튼 
 
 }
