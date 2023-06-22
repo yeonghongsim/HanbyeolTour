@@ -1,0 +1,43 @@
+
+.searchByDateCal > tbody > tr > td:hover {
+    cursor: pointer;
+}
+.searchResultByDate img {
+    height: 100px;
+}
+
+.resultDiv img {
+    display: block; width: 100%;
+}
+.pagination {
+    --bs-pagination-color: #ffffff;
+    --bs-pagination-bg: #ffffff;
+    --bs-pagination-border-width: #ffffff;
+    --bs-pagination-border-color: #ffffff;
+    --bs-pagination-border-radius: #ffffff;
+    --bs-pagination-hover-color: #ffffff;
+    --bs-pagination-hover-bg: #ffffff;
+    --bs-pagination-hover-border-color: #ffffff;
+    --bs-pagination-focus-color: #ffffff;
+    --bs-pagination-focus-bg: #ffffff;
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #ffffff;
+    --bs-pagination-active-border-color: #ffffff;
+    --bs-pagination-disabled-color: #ffffff;
+    --bs-pagination-disabled-bg: #ffffff;
+    --bs-pagination-disabled-border-color: #ffffff;
+    display: flex;
+    padding-left: 0;
+    list-style: none;}
+.page-link:hover {
+    z-index: 2;
+    color: #ffffff;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.table{
+    --bs-table-border-color: #ffd000;
+}
+

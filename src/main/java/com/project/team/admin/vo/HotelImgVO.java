@@ -13,4 +13,5 @@ public class HotelImgVO {
 	private String hbtHotelAttchedFileName;
 	private String hbtHotelCode;
 	private String isMain;
+
 }

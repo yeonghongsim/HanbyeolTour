@@ -5,28 +5,13 @@
 <!-- 연결해야할 외부 CSS파  -->
 <th:block layout:fragment="content_css">
 <link rel="stylesheet" href="/css/item/item_header.css">
-
-<style>
-.searchByDateCal > tbody > tr > td:hover {
-	cursor: pointer;
-}
-.searchResultByDate img {
-	height: 100px;
-}
-
-.resultDiv img {
-	display: block; width: 100%;
-}
-
-</style>
+<link rel="stylesheet" href="/css/item/tour_item_list_date.css">
 
 </th:block>
 
 <th:block layout:fragment="content">
 <div class="row">
 	<div class="col">
-		
-		
 		
 		<!-- 달력/상세검색 -->
 		<div class="row">
@@ -36,7 +21,7 @@
 		</div>
 		<!-- 년/월 다음날 이번달 버튼 -->
 		<div class="row mt-0 mb-3 d-flex justify-content-center">
-			<div class="col-md-6 shadow custom-border-2 rounded-5">
+			<div class="col-md-6 shadow custom-border-4 rounded-5">
 				<nav aria-label="Page navigation example d-flex justify-content-center">
 					<ul class="pagination d-flex my-2 justify-content-center">
 						<li class="page-item">
@@ -63,7 +48,7 @@
 
 
 		<div class="row mt-0 mb-3 d-flex justify-content-center">
-			<div class="col px-2 py-2 col-md-6 shadow custom-border-2 rounded-5">
+			<div class="col px-2 py-2 col-md-6 shadow custom-border-4 rounded-5">
 				<table class="table text-center searchByDateCal px-1 py-1 my-1">
 					<colgroup>
 					</colgroup>
@@ -87,17 +72,21 @@
 
 		<!-- 검색결과표  -->		
 		<div class="row mt-0 mb-3 d-flex justify-content-center">
-			<div class="col-md-6 shadow custom-border-2 rounded-5 rusultDiv">
+			<div class="col-md-6 shadow custom-border-4 rounded-5 rusultDiv">
+
 				<th:block th:each="tourItem, state : ${tourItemList}">
+
 					<input type="hidden" name="endDate" id="endDate" th:value='${tourItem["END_DATE"]}'>
 					<input type="hidden" name="listIndex" th:value='${#lists.size(tourItemList)}'>
 					<h3 class="text-center mt-5">[[${tourItem["ITEM_TITLE"]}]]</h3>
-					<div class="row rounded-5 mx-5 mb-5 border custom-border-2 shadow" style="cursor: pointer;" th:onclick="|location.href='@{/item/tourItemListDetail(departDate = ${tourItem.DEP_DATE},arriveDate = ${tourItem.ARR_DATE},itemCode = ${tourItem.ITEM_CODE})}'|">
+
+
+					<div class="row rounded-5 mx-5 mb-5 border shadow custom-border-3" style="cursor: pointer;" th:onclick="|location.href='@{/item/tourItemListDetail(departDate = ${tourItem.DEP_DATE},arriveDate = ${tourItem.ARR_DATE},itemCode = ${tourItem.ITEM_CODE})}'|">
 						<div class="col-6 px-0 mx-0 rounded-5">
-							<img style="display: block; width: 100%;" class="rounded-5 object-fit-fill" th:src="'/img/item/itemImg/' + ${tourItem['ITEM_IMG_ATTACHED_NAME']}">
+							<img style="display: block; width: 100%;" class="rounded-start-5 object-fit-fill" th:src="'/img/item/itemImg/' + ${tourItem['ITEM_IMG_ATTACHED_NAME']}">
 						</div>
-						<div class="col-6">
-							<table class="table align-middle broder-0 mt-3 py-0 d-flex align-items-center justify-content-center text-center">
+						<div class="col-6 d-flex align-items-center">
+							<table class="table align-middle py-0 d-flex align-items-center justify-content-center text-center">
 								<tr>
 									<td>여행국가 :</td>
 									<td>[[${tourItem["AREA_KOR_NAME"]}]]</td>
@@ -112,10 +101,7 @@
 								</tr>
 								<tr>
 									<td>결제금액 :</td>
-									<td>[[${tourItem["ITEM_PRICE"]}]]</td>
-								</tr>
-								<tr>
-									<td colspan="2">리뷰 : 1개</td>
+									<td th:text="${#numbers.formatCurrency(tourItem['ITEM_PRICE']) + '원'}"></td>
 								</tr>
 							</table>
 						</div>
