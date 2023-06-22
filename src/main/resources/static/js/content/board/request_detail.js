@@ -1,6 +1,0 @@
-init()
-
-
-function init(){
-	
-}
