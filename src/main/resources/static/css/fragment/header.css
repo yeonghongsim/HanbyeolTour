@@ -312,3 +312,7 @@ a {
 .table{
 	--bs-table-border-color: #ffd000;
 }
+
+.hover {
+	cursor: pointer;
+}
