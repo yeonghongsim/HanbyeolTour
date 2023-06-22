@@ -17,19 +17,22 @@
 			<div class="row">
 				<div class="col">
 					<form th:action="@{/admin/itemManageForSale}" method="post" id="searchForm">
-						<!-- <input type="hidden" name="memCode" th:value="${memCode}" id="memCode">
-						<input type="hidden" name="nowPage" th:value="${memListSearchVO.nowPage}" id="nowPage"> -->
+						<input type="hidden" name="nowPage" th:value="${saleListSearchVO.nowPage}" id="nowPage">
 						<div class="row mb-3">
 							<!-- 검색 기능 -->
 							<div class="col-2">
-							
 								<select class="form-select" name="searchKeyword">
 									<option value="ITEM_TITLE" th:selected="${saleListSearchVO.searchKeyword == 'ITEM_TITLE'}">상품명</option>
 									<option value="AREA.AREA_KOR_NAME" th:selected="${saleListSearchVO.searchKeyword == 'AREA.AREA_KOR_NAME'}">여행지</option>
+									<option value="TRAVER_PERIOD" th:selected="${saleListSearchVO.searchKeyword == 'TRAVER_PERIOD'}">기간</option>
 								</select>
 							</div>
 							<div class="col-4">
 								<input type="text" class="form-control" name="searchValue" th:value="${saleListSearchVO.searchValue}">
+							</div>
+							<div class="col-5">
+									<input type="text" class="form-control" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}">
+									<input type="text" class="form-control" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}">
 							</div>
 							<div class="col-1">
 								<input type="submit" value="검색" class="btn btn-outline" style="border-color: #ffd000;">
@@ -38,7 +41,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보 확인 가능.</div>
+			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보를 확인할 수 있습니다.</div>
 			<div class="row">
 				<div class="col">
 					<table class="table table-hover text-center">
@@ -134,7 +137,7 @@
 	        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>	
 					<div class="modal-body">
-						<form class="row">
+						<form class="row detailModalForm">
 							<div class="col-3">
 								<label for="" class="form-label">여행 국가</label>
 								<select id="" name="areaCode" class="form-select">
@@ -174,15 +177,15 @@
 							</div>
 							<div class="col-4">
 								<label for="" class="form-label">패키지 기간</label>
-								<input type="text" class="form-control" id="" name="traverPeriod">
+								<input type="text" class="form-control" id="" name="traverPeriod" >
 							</div>
 							<div class="col-4">
 								<label for="" class="form-label">판매시작일</label>
-								<input type="date" class="form-control" id="" name="sellingStart">
+								<input type="date" class="form-control" id="" name="sellingStart" >
 							</div>
 							<div class="col-4">
 								<label for="" class="form-label">판매종료일</label>
-								<input type="date" class="form-control" id="" name="sellingEnd">
+								<input type="date" class="form-control" id="" name="sellingEnd" >
 							</div>
 							<div class="col-12">
 								<label for="" class="form-label">패키지 소개</label>
@@ -211,7 +214,7 @@
 								</div>
 							</div>
 							<div class="col-3">
-								<input id="" type="submit" class="btn"
+								<input id="updateButton" type="submit" class="btn"
 									style="background-color: #ffd000;" value="수정">
 							</div>
 						</form>

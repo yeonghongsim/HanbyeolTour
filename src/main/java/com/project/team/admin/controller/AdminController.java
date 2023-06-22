@@ -186,19 +186,19 @@ public class AdminController {
 	}
 	
 	//등록 판매 상품 목록 조회
-	@GetMapping("/itemManageForSale")
+	@RequestMapping("/itemManageForSale")
 	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg, SaleListSearchVO saleListSearchVO) {
 		
 		//검색 조건에 맞는 데이터 수 조회
 		int totalDataCnt = adminService.getsaleListCnt(saleListSearchVO);
 		saleListSearchVO.setTotalDataCnt(totalDataCnt);
 		
-		saleListSearchVO.setPageInfo();
-		
 		saleListSearchVO.setDisplayCnt(10);
 		
+		saleListSearchVO.setPageInfo();
 		
 		model.addAttribute("itemSaleList", adminService.saleListForAdmin(saleListSearchVO));
+		
 		//등록된 여행지 카테고리 조회
 		List<TourAreaVO> areaCateList = adminService.getAreaCateList();
 		model.addAttribute("areaCateList", areaCateList);
