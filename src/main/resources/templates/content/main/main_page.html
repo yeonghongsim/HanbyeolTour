@@ -23,7 +23,7 @@
 				<div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-inner rounded-5 custom-border-2 border-2 shadow">
 						<th:block th:each="img, state : ${mainSlideImg}">
-							<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="2000">
+							<div th:classappend="${state.index} == 0 ? 'active' : '' " class="carousel-item" data-bs-interval="5000">
 								<img  th:src="'/img/main/slide/' + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
 									 class="w-100" alt="/img/item/xbox.jpg">
 							</div>
@@ -150,7 +150,7 @@
 				<div class="col col-2 recomImg">
 					<div class="row mb-3">
 						<a th:href="@{/item/tourItemListDetail(itemCode = ${item['ITEM_CODE']})}">
-							<img width="200px;" th:src="@{/img/item/itemImg/} + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" onerror="this.src='/img/item/xbox.jpg'">
+							<img width="200px;" th:src="'/img/item/itemImg/' + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" onerror="this.src='/img/item/xbox.jpg'">
 						</a>
 						<h4 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h4>
 					</div>

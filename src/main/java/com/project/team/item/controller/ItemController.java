@@ -49,7 +49,7 @@ public class ItemController {
 
 		Map<String, String> searchKeyword = new HashMap<>();
 		searchKeyword.put("areaName", areaName);
-
+		model.addAttribute("locMenuList", adminService.getAreaCateList());
 		model.addAttribute("tourItemList", itemService.getItemListByAreaName(searchKeyword));
 		model.addAttribute("areaName", areaName);
 		
@@ -58,16 +58,16 @@ public class ItemController {
 	
 	//일자별 아이템 보기 페이지 이동
 	@GetMapping("/tourItemListDate")
-	public String tourItemListDate(String areaName, Model model) {
+	public String tourItemListDate(Model model) {
 		//초기페이지 진입시 검색일자 데이터가 오늘 날짜로 세팅
 		Date searchDate = new Date();
 
 		Map<String, String> searchKeyword = new HashMap<>();
-		searchKeyword.put("areaName", areaName);
+		//searchKeyword.put("areaName", areaName);
 		searchKeyword.put("date", DateUtil.getNowDateToString());
 		//일자별 상세조회
 
-		model.addAttribute("areaName", areaName);
+		//model.addAttribute("areaName", areaName);
 		model.addAttribute("tourItemList", addArrDate(itemService.getItemListByAreaName(searchKeyword), searchDate));
 		
 		return "content/item/tour_item_list_date";
@@ -133,6 +133,9 @@ public class ItemController {
 		//호텔이미지
 		model.addAttribute("day", list.get(0).get("HBT_PLAN_PERIOD"));
 		//투어 이미지
+		//리뷰데이터
+		model.addAttribute("reviews", itemService.getItemReview(itemCode));
+
 
 		return "content/item/tour_item_list_detail";
 	}
@@ -275,9 +278,6 @@ public class ItemController {
 
 			detailList.add(diyDetailVO);
 		}
-
-		System.out.println(diyTourVO);
-		System.out.println(detailList);
 
 		itemService.setDiyTour(diyTourVO, detailList);
 

@@ -11,6 +11,7 @@
 		<result column="HBT_HOTEL_INTRO" 		property="hbtHotelIntro"/>
 		<result column="AREA_CODE" 				property="areaCode"/>
 		<result column="HBT_HOTEL_PRICE" 		property="hbtHotelPrice"/>
+		<collection property="hotelImgList" resultMap="hotelImg"></collection>
 	</resultMap>
 
 	<resultMap type="com.project.team.admin.vo.TourItemVO" id="tourItem">
@@ -21,6 +22,7 @@
 		<result column="HBT_TOUR_ITEM_PRICE" 		property="hbtTourItemPrice"/>
 		<result column="HBT_TOUR_ITEM_INTRO" 		property="hbtTourItemIntro"/>
 		<result column="AREA_CODE" 					property="areaCode"/>
+		<collection property="tourImgList" resultMap="tourImg"></collection>
 	</resultMap>
 	<resultMap type="com.project.team.admin.vo.AirlineVO" id="airline">
 		<id 	column="HBT_AIRLINE_CODE" 		property="hbtAirlineCode"/>
@@ -28,6 +30,24 @@
 		<result column="HBT_AIRLINE_ICON" 		property="hbtAirlineIcon"/>
 		<result column="IS_USE" 				property="isUse"/>
 	</resultMap>
+	
+	<resultMap type="com.project.team.admin.vo.HotelImgVO" id="hotelImg">
+		<id 	column="HBT_HOTEL_IMG_CODE" 			property="hbtHotelImgCode"/>
+		<result column="HBT_HOTEL_ORIGIN_FILE_NAME" 	property="hbtHotelOriginFileName"/>
+		<result column="HBT_HOTEL_ATTECHED_FILE_NAME" 	property="hbtHotelAttechedFileName"/>
+		<result column="HBT_HOTEL_CODE" 				property="hbtHotelCode"/>
+		<result column="IS_MAIN" 						property="isMain"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.admin.vo.TourImgVO" id="tourImg">
+		<id 	column="HBT_TOUR_ITEM_IMG_CODE" 			property="hbtTourItemImgCode"/>
+		<result column="HBT_TOUR_ITEM_ORIGIN_FILE_NAME" 	property="hbtTourItemOriginFileName"/>
+		<result column="HBT_TOUR_ITEM_ATTECHED_FILE_NAME" 	property="hbtTourItemAttechedFileName"/>
+		<result column="HBT_TOUR_ITEM_CODE" 				property="hbtTourItemCode"/>
+		<result column="IS_MAIN" 							property="isMain"/>
+	</resultMap>
+	
+	
 	
 	<!-- 카테고리 관리 페이지 - 여행국가 카테고리 등록 -->
 	<insert id="regArea">
@@ -320,10 +340,11 @@
 		WHERE MEM_ID = #{memId}
 	</update>
 	
-	<!-- 예약 관리 페이지 구매(예약) 리스트 조회 -->
+	<!-- 일반 예약 관리 페이지 구매(예약) 리스트 조회 -->
 	<select id="getBuyListForAdmin" resultMap="buyMapper.buy">
 		 SELECT HB.BUY_CODE
 		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD') BUY_DATE
+		 	, TO_CHAR (HB.BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') BUY_DATE_ORDER
 		 	, ITEM_TITLE
 		 	, MEM_NAME
 		 	, MEM_D_TELL
@@ -355,8 +376,28 @@
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
-       	ORDER BY HB.BUY_CODE DESC
+       	ORDER BY BUY_DATE_ORDER DESC
        	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
+	</select>
+	
+	<!-- DIY 예약 구매 리스트 -->
+	<select id="getDiyBuyListForAdmin" resultMap="buyMapper.diyTour">
+		SELECT DISTINCT DIY.HBT_DIY_CODE
+			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
+			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD HH24:MI:SS') DIY_TOUR_BUY_DATE_ORDER
+			, HBS.BUY_STATUS_CODE
+			, HBS.BUY_STATUS_NAME
+			, MEM.MEM_CODE
+			, MEM.MEM_NAME
+			, MEMD.MEM_D_TELL
+		FROM HBT_DIY_TOUR DIY, HBT_DIY_DETAIL DIYD, HBT_BUY_STATE HBS,
+			HBT_MEM MEM, HBT_MEM_DETAIL MEMD
+        WHERE IS_PAID = 'Y'
+		AND DIY.HBT_DIY_CODE = DIYD.HBT_DIY_CODE
+		AND DIY.BUY_STATUS_CODE = HBS.BUY_STATUS_CODE
+		AND DIY.MEM_CODE = MEM.MEM_CODE
+		AND MEM.MEM_CODE = MEMD.MEM_CODE
+		ORDER BY DIY_TOUR_BUY_DATE_ORDER DESC
 	</select>
 	
 	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
@@ -410,7 +451,7 @@
 		</foreach>
 	</update>
 	
-	<!-- 예약 상세 내역 -->
+	<!-- 일반 예약 상세 내역 -->
 	<select id="getReservDetail" resultMap="buyMapper.buy">
         SELECT IMG.ITEM_IMG_CODE 
 			, IMG.ITEM_IMG_ATTACHED_NAME

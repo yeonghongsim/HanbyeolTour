@@ -334,6 +334,7 @@ public class AdminController {
 		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
+		
 		return "content/admin/reservation_inquiry";
 	}
 	
@@ -374,11 +375,19 @@ public class AdminController {
 	}
 	
 	
-	//예약 상태 변경
-	@GetMapping("/updateReservation")
-	public String updateReservation() {
+	//DIY 예약 
+	@GetMapping("/diyReservation")
+	public String diyReservation(Model model) {
 		
-		return "content/admin/update_reservation";
+		System.out.println(adminService.getDiyBuyListForAdmin());
+		
+		//div 구매 리스트
+		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin());
+		
+		//구매 상태 리스트
+		model.addAttribute("buyStatusList", adminService.getBuyStatus());
+		
+		return "content/admin/diy_reservation_inquiry";
 	}
 	
 	

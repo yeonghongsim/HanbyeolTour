@@ -12,6 +12,7 @@ import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
@@ -166,8 +167,15 @@ public class AdminServiceImpl implements AdminService{
 	
 	//구매(예약) 리스트 조회
 	@Override
-	public List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
+	public List<BuyVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
 		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
+	}
+	
+	//DIY 예약 리스트 조회
+	@Override
+	public List<DiyTourVO> getDiyBuyListForAdmin() {
+		
+		return sqlSession.selectList("adminMapper.getDiyBuyListForAdmin");
 	}
 	
 	//검색 조건에 맞는 구매(예약) 수
@@ -328,6 +336,8 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, String>> getRecomImgListForPKG() {
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
+
+
 
 
 
