@@ -3,6 +3,9 @@ package com.project.team.member.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.admin.vo.HotelImgVO;
+import com.project.team.admin.vo.TourImgVO;
+import com.project.team.admin.vo.TourItemImgVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
@@ -108,10 +111,18 @@ public interface MemberService {
 	// 예약 내역 상세 페이지 - 상단 정보 조회 v.2 
 	List<DiyDetailVO> getDiyDetaiListNew(String hbtDiyCode);
 	
+	// 예약 상세 - 투어 코드 리스트 
+	List<String> getInDiyReservedTourList(String hbtDiyCode);
+	// 예약 상세 - 호텔 코드 리스트 
+	List<String> getInDiyReservedHotelList(String hbtDiyCode);
 	
+	//예약 상세 - 호텔 정보 리스트 
+	List<DiyTourVO> getInDiyHotelInfoList(String hbtDiyCode);
+	List<HotelImgVO> getDiyHotelImgList(String hbtHotelCode);
 	
-	
-	
+	//예약 상세 - 투어 정보 리스트 
+	List<DiyTourVO> getInDiyTourInfoList(String hbyDiyCode);
+	List<TourItemImgVO> getDiyTourImgList(String hbtTourItemCode);
 	
 	
 	

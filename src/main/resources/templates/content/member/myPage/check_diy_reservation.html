@@ -15,7 +15,7 @@
 <!-- diy -table -->
 <div class="row mb-1 mt-2">
 	<div class="col title">
-		Diy Tour 예약 내역 조회  
+		DIY 패키지 예약 및 취소 조회 
 	</div>
 </div>
 
@@ -81,7 +81,7 @@
 					        <td th:text="${diy.tourAreaVO.areaKorName}" class="text-center"></td>
 					        <td class="date-td">
 					        	[[${diy.departDate}]] <br>~<br>[[${diy.arriveDate}]]<br>
-					        	( 총 [[${traver_period}]] 일 )
+					        	( 총 [[${diy.traverPeriod}]] 일 )
 					        </td>
 					        <td style="color: #f27370;">
 					        	 [[${#numbers.formatCurrency(diy.totalPrice).substring(1)}]] 원

@@ -24,6 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.team.admin.vo.HotelImgVO;
+import com.project.team.admin.vo.HotelVO;
+import com.project.team.admin.vo.ImgVO;
+import com.project.team.admin.vo.TourImgVO;
+import com.project.team.admin.vo.TourItemImgVO;
+import com.project.team.admin.vo.TourItemVO;
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.buy.service.BuyService;
@@ -374,9 +380,11 @@ public class MyPageController {
 		model.addAttribute("msMenuCode", "MS_MENU_002");
 		
 		String memCode = memberService.getMemCode(authentication.getName());
+		
 		// 상단 예약 정보리스트 
 		model.addAttribute("tourDetail",  memberService.getDiyTourByDiyCode(hbtDiyCode));
-		
+		System.out.println("예약 정보간단히 : " + memberService.getDiyTourByDiyCode(hbtDiyCode));
+		 
 		//예약자 정보 
 		model.addAttribute("memInfo", memberService.getMemInfo(authentication.getName()));
 				
@@ -386,14 +394,11 @@ public class MyPageController {
 		// 전체 여행 일자 
 		int travelPeriod = Integer.parseInt(originDiyList.get(0).getTraverPeriod());
 		
-		//diyList ver.2
+		//일자별 호텔과 투어 정보 가져오기 위한 List 
 		List<DiyDetailVO> detailList = memberService.getDiyDetaiListNew(hbtDiyCode);
 		System.out.println(detailList);
-		
 				
-		
 		//없는 일자 추가한 리스트 생성 
-		
 		List<DiyDetailVO> resultList = new ArrayList<>();
 		
 		// 1부터 travelPeriod까지 반복
@@ -423,17 +428,41 @@ public class MyPageController {
 		System.out.println("***** resultList : " + resultList);
 		model.addAttribute("resultList", resultList);
 		
-		System.out.println("!!!!!!!!!!!tour detail : " +  memberService.getDiyDetaiList(hbtDiyCode));
+		
+		//호텔 정보 리스트 
+		List<DiyTourVO> hotelInfoList = memberService.getInDiyHotelInfoList(hbtDiyCode);
+		System.out.println("HOTEL :" + hotelInfoList);
+		
+		for (DiyTourVO diyTour : hotelInfoList) {
+		    for (DiyDetailVO detail : diyTour.getDiyDetailList()) {
+		        List<HotelVO> hotelList = detail.getHotelList();
+		        String hbtHotelCode = hotelList.get(0).getHbtHotelCode();
+		        
+		        // 이미지 정보 조회 및 매핑
+		        List<HotelImgVO> hotelImgList = memberService.getDiyHotelImgList(hbtHotelCode);
+		        hotelList.get(0).setHotelImgList(hotelImgList);
+		    }
+		}
+		
+		model.addAttribute("hotelInfoList", hotelInfoList);
 		
 		
+//		//투어 정보 리스트 
+		List<DiyTourVO> tourInfoList = memberService.getInDiyTourInfoList(hbtDiyCode);
+		System.out.println("ver 1 @@@@"+ tourInfoList);
+		for (DiyTourVO diyTour : tourInfoList) {
+		    for (DiyDetailVO detail : diyTour.getDiyDetailList()) {
+		        List<TourItemVO> tourList = detail.getTourItemList();
+		        String hbtTourItemCode = tourList.get(0).getHbtTourItemCode();
+		        
+		        // 이미지 정보 조회 및 매핑
+		        List<TourItemImgVO> tourImgList = memberService.getDiyTourImgList(hbtTourItemCode);
+		        tourList.get(0).setTourItemImgList(tourImgList);
+		    }
+		}
 		
-		
-		
-		
-		
-		
-		
-		
+		model.addAttribute("tourInfoList", tourInfoList);
+		System.out.println("@@@@투어"+ tourInfoList);
 		
 		return"content/member/myPage/diy_detail";
 	}

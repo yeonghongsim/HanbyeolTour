@@ -5,11 +5,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.project.team.member.vo.MemberSideMenuVO;
+
+import org.apache.ibatis.annotations.Select;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.team.admin.vo.HotelImgVO;
+import com.project.team.admin.vo.TourImgVO;
+import com.project.team.admin.vo.TourItemImgVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.vo.BuyStateVO;
@@ -212,12 +217,50 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectList("memberMapper.getDiyDetailListNew", hbtDiyCode);
 	}
 	
-	
 	//diy 예약 상세 상단 정보 조회 
 	@Override
 	public DiyTourVO getDiyTourByDiyCode(String hbtDiyCode) {
 		return sqlSession.selectOne("memberMapper.getDiyTourByDiyCode", hbtDiyCode);
 	}
+	
+	// diy 상세 - 투어 코드 리스트 
+	@Override
+	public List<String> getInDiyReservedTourList(String hbtDiyCode) {
+		return sqlSession.selectList("memberMapper.getInDiyReservedTourList", hbtDiyCode);
+	}
+	// diy 상세 - 호텔 코드 리스트
+	@Override
+	public List<String> getInDiyReservedHotelList(String hbtDiyCode) {
+		return sqlSession.selectList("memberMapper.getInDiyReservedHotelList", hbtDiyCode);
+	}
+	
+	// diy 상세 -예약된 호텔 정보 
+	@Override
+	public List<DiyTourVO> getInDiyHotelInfoList(String hbtDiyCode) {
+		return sqlSession.selectList("memberMapper.getInDiyHotelInfoList", hbtDiyCode);
+	}
+	// 호텔 이미지 
+	@Override
+	public List<HotelImgVO> getDiyHotelImgList(String hbtHotelCode) {
+		return sqlSession.selectList("memberMapper.getDiyHotelImgList", hbtHotelCode);
+	}
+	
+	//diy 상세 - 예약된 투어 정보 
+	@Override
+	public List<DiyTourVO> getInDiyTourInfoList(String hbtDiyCode) {
+		return sqlSession.selectList("memberMapper.getInDiyTourInfoList", hbtDiyCode);
+	}
+	
+	//투어 이미지 
+	@Override
+	public List<TourItemImgVO> getDiyTourImgList(String hbtTourItemCode) {
+		return sqlSession.selectList("memberMapper.getDiyTourImgList", hbtTourItemCode);
+	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -270,6 +313,14 @@ public class MemberServiceImpl implements MemberService{
 	public List<BuyVO> getNeedReviewList(String memCode) {
 		return sqlSession.selectList("memberMapper.getNeedReviewList", memCode);
 	}
+
+	
+
+	
+
+	
+
+	
 
 	
 

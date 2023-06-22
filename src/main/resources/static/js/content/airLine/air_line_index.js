@@ -119,3 +119,22 @@ function test(){
     });
 
 }
+function test(){
+
+
+    $.ajax({
+        url: 'http://127.0.0.1:5001/test?sentence=123123', //요청경로
+        type: 'get',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {},
+        success: function(result) {
+            console.log(result);
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
+
+}
