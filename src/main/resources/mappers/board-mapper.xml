@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="boardMapper">
+	
+	<resultMap type="com.project.team.board.vo.TypeRequestVO" id="typeRequest">
+		<id 	column="TYPE_REQUEST_CODE" property="typeRequestCode"/>
+		<result column="TYPE_REQUEST_NAME" property="typeRequestName"/>
+	</resultMap>
+
+	<resultMap type="com.project.team.board.vo.BoardVO" id="board">
+		<id 	column="HBT_BOARD_NUM" 			property="hbtBoardNum"/>
+		<result column="HBT_BOARD_TITLE" 		property="hbtBoardTitle"/>
+		<result column="HBT_BOARD_CONTENT" 		property="hbtBoardContent"/>
+		<result column="IS_PRIVATE" 			property="isPrivate"/>
+		<result column="PRIVATE_PW" 			property="privatePw"/>
+		<result column="HBT_BOARD_REG_DATE" 	property="hbtBoardRegDate"/>
+		<result column="HBT_BOARD_CNT" 			property="hbtBoardCnt"/>
+		<result column="IS_NOTICE" 				property="isNotice"/>
+		<result column="REPLY_CNT" 				property="replyCnt"/>
+		<association property="memberVO" 		resultMap="memberMapper.member"></association>
+	</resultMap>
+	 
+	<resultMap type="com.project.team.board.vo.BoardReplyVO" id="boardReply">
+		<id 	column="HBT_BOARD_REPLY_NUM" 			property="hbtBoardReplyNum"/>
+		<result column="HBT_BOARD_NUM" 					property="hbtBoardNum"/>
+		<result column="HBT_BOARD_REPLY_CONTENT" 		property="hbtBoardReplyContent"/>
+		<result column="HBT_BOARD_REPLY_REG_DATE" 		property="hbtBoardReplyRegDate"/>
+		<result column="REPLY_DEPTH" 					property="replyDepth"/>
+		<result column="HBT_BOARD_REPLY_NUM_FK" 		property="hbtBoardReplyNumFk"/>
+		<association property="memberVO" 				resultMap="memberMapper.member"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.board.vo.BoardRequestVO" id="boardRequest">
+		<id 	column="HBT_BOARD_REQUEST_NUM" 			property="hbtBoardRequestNum"/>
+		<result column="HBT_BOARD_REQUEST_TITLE" 		property="hbtBoardRequestTitle"/>
+		<result column="HBT_BOARD_REQUEST_CONTENT" 		property="hbtBoardRequestContent"/>
+		<result column="HBT_BOARD_REQUEST_REG_DATE" 	property="hbtBoardRequestRegDate"/>
+		<result column="IS_ANSWER" 						property="isAnswer"/>
+		<result column="REQUEST_PW"						property="requestPw"/>
+		<association property="typeRequestVO" 			resultMap="typeRequest"/>
+		<association property="memberVO" 				resultMap="memberMapper.member"/>
+		<association property="itemVO" 					resultMap="itemMapper.item"/>
+	</resultMap>
+
+	<resultMap type="com.project.team.board.vo.ReqReplyVO" id="reqReply">
+		<id 	column="REQ_REPLY_NUM" 				property="reqReplyNum"/>
+		<result column="REQ_REPLY_CONTENT" 			property="reqReplyContent"/>
+		<result column="REQ_REPLY_ANSWER_DATE" 		property="reqReplyAnswerDate"/>
+		<result column="REPLY_DEPTH" 				property="replyDepth"/>
+		<result column="HBT_BOARD_REQUEST_NUM" 		property="hbtBoardRequestNum"/>
+		<association property="memberVO" 			resultMap="memberMapper.member"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.board.vo.BoardSideMenuVO" id="boardSideMenu">
+		<id 	column="BOARD_SIDE_MENU_CODE" property="boardSideMenuCode"/>
+		<result column="BOARD_SIDE_MENU_NAME" property="boardSideMenuName"/>
+		<result column="BOARD_SIDE_MENU_URL" property="boardSideMenuUrl"/>
+	</resultMap>
+
+	<resultMap type="com.project.team.board.vo.FreqRequestVO" id="freqRequest">
+		<id 	column="FREQ_REQUEST_CODE" property="freqRequestCode"/>
+		<result column="FREQ_REQUEST_TITLE" property="freqRequestTitle"/>
+		<result column="FREQ_REQUEST_CONTENT" property="freqRequestContent"/>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<association property="typeRequestVO" resultMap="typeRequest"></association>
+	</resultMap>
+	
+	
+	<select id="getTypeRequestList" resultMap="typeRequest">
+		SELECT TYPE_REQUEST_CODE
+			, TYPE_REQUEST_NAME
+		FROM TYPE_REQUEST
+	</select>
+	
+	<select id="getBoardSideMenuList" resultMap="boardSideMenu">
+		SELECT BOARD_SIDE_MENU_CODE
+			, BOARD_SIDE_MENU_NAME
+			, BOARD_SIDE_MENU_URL
+		FROM BOARD_SIDE_MENU
+	</select>
+	
+	<select id="getNextByFreqReqCode" resultType="String">
+		SELECT 'FREQ_REQ_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(FREQ_REQUEST_CODE, 10))), 0) + 1, 3, '0') 
+	    FROM HBT_FREQ_REQUEST
+	</select>
+	
+	<select id="getNextByBoardNum" resultType="String">
+		SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_NUM, 7))), 0) + 1, 3, '0')
+		FROM HBT_BOARD
+	</select>
+
+	<select id="getNextByBoardRequestNum" resultType="String">
+		SELECT 'B_REQ_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_REQUEST_NUM, 7))), 0) + 1, 3, '0')
+		FROM HBT_BOARD_REQUEST
+	</select>
+
+	<select id="getNextByReplyNum" resultType="String">
+		SELECT 'B_REPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HBT_BOARD_REPLY_NUM, 9))), 0) + 1, 3, '0')
+		FROM HBT_BOARD_REPLY
+	</select>
+
+	<select id="getNextByReqReplyNum" resultType="String">
+		SELECT 'REQ_REPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REQ_REPLY_NUM, 11))), 0) + 1, 3, '0')
+		FROM HBT_REQ_REPLY
+	</select>
+	
+	<insert id="regBoard">
+		INSERT INTO HBT_BOARD (
+		    HBT_BOARD_NUM
+		    , HBT_BOARD_TITLE
+		    , HBT_BOARD_CONTENT
+		    , MEM_CODE
+		    <if test='isPrivate.equals("Y")'>
+		    , IS_PRIVATE
+		    , PRIVATE_PW
+		    </if>
+		    <if test='isNotice.equals("Y")'>
+		    , IS_NOTICE
+		    </if>
+		) VALUES (
+		    #{hbtBoardNum}
+		    , #{hbtBoardTitle}
+		    , #{hbtBoardContent}
+		    , #{memberVO.memCode}
+		    <if test='isPrivate.equals("Y")'>
+		    , #{isPrivate}
+		    , #{privatePw}
+		    </if>
+		    <if test='isNotice.equals("Y")'>
+		    , #{isNotice}
+		    </if>
+		)
+	</insert>
+	
+	<select id="getFreqRequestList" resultMap="freqRequest">
+		SELECT FREQ_REQUEST_CODE
+			, FREQ_REQUEST_TITLE
+			, FREQ_REQUEST_CONTENT
+			, REQ.TYPE_REQUEST_CODE
+			, TYPE_REQUEST_NAME
+		FROM HBT_FREQ_REQUEST REQ, TYPE_REQUEST TYP
+		WHERE REQ.TYPE_REQUEST_CODE = TYP.TYPE_REQUEST_CODE
+		<if test="typeRequestCode != null">
+		AND REQ.TYPE_REQUEST_CODE = ${typeRequestCode}
+		</if>
+		ORDER BY TYPE_REQUEST_CODE, FREQ_REQUEST_CODE DESC
+	</select>
+	
+	<select id="getBoardList" resultMap="board">
+		SELECT HBT_BOARD_NUM
+		    , HBT_BOARD_TITLE
+		    , HBT_BOARD_CONTENT
+		    , HBT_BOARD_CNT       
+		    , REPLY_CNT
+		    , TO_CHAR(HBT_BOARD_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REG_DATE
+		    , MEM_CODE
+		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE) MEM_ID
+			, IS_PRIVATE
+			, PRIVATE_PW
+		FROM HBT_BOARD
+		<if test='isNotice != null'>
+		WHERE IS_NOTICE = #{isNotice}
+		</if>
+		<if test='groundSearchVO.searchVal != null and !groundSearchVO.searchVal.equals("")'>
+		AND UPPER(${groundSearchVO.searchKey}) LIKE '%'||UPPER(#{groundSearchVO.searchVal})||'%'
+		</if>
+		ORDER BY HBT_BOARD_NUM DESC
+		OFFSET #{groundSearchVO.offsetCnt} ROWS FETCH NEXT #{groundSearchVO.displayCnt} ROWS ONLY
+	</select>
+	
+	<select id="getBoardListCnt" resultType="int">
+		SELECT COUNT(HBT_BOARD_NUM)
+		FROM HBT_BOARD
+		<if test='searchVal != null and !searchVal.equals("")'>
+		WHERE UPPER(${searchKey}) LIKE '%'||UPPER(#{searchVal})||'%'
+		</if>
+	</select>
+	
+	<select id="getBoardDetail" resultMap="board">
+		SELECT HBT_BOARD_NUM
+		    , HBT_BOARD_TITLE
+		    , HBT_BOARD_CONTENT
+		    , TO_CHAR(HBT_BOARD_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REG_DATE
+		    , MEM_CODE
+		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD.MEM_CODE) MEM_ID
+		    , REPLY_CNT
+		    , HBT_BOARD_CNT
+		FROM HBT_BOARD
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</select>
+	
+	<select id="getBoardPrivatePw" resultType="String">
+		SELECT PRIVATE_PW
+		FROM HBT_BOARD
+		WHERE HBT_BOARD_NUM = #{#hbtBoardNum}
+	</select>
+	
+	<delete id="delNotice">
+		DELETE FROM HBT_BOARD 
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</delete>
+	
+	<update id="updateBoardNotice">
+		UPDATE HBT_BOARD
+		SET HBT_BOARD_TITLE = #{hbtBoardTitle}, HBT_BOARD_CONTENT = #{hbtBoardContent}
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</update>
+	
+	<update id="addBoardCnt">
+		UPDATE HBT_BOARD SET HBT_BOARD_CNT = HBT_BOARD_CNT +1
+		WHERE HBT_BOARD_NUM = #{hbtBoardCnt}
+	</update>
+	
+	<insert id="regBoardReply">
+		INSERT INTO HBT_BOARD_REPLY (
+		    HBT_BOARD_REPLY_NUM
+		    , HBT_BOARD_REPLY_CONTENT
+		    , MEM_CODE
+		    , HBT_BOARD_NUM
+			<if test="replyDepth == 2">
+			, REPLY_DEPTH
+			, HBT_BOARD_REPLY_NUM_FK
+			</if>
+		) VALUES(
+		    #{hbtBoardReplyNum}
+		    , #{hbtBoardReplyContent}
+		    , #{memberVO.memCode}
+		    , #{hbtBoardNum}
+		    <if test="replyDepth == 2">
+		    , #{replyDepth}
+		    , #{hbtBoardReplyNumFk}
+		    </if>
+		)
+	</insert>
+	
+	<select id="getReplyList" resultMap="boardReply">
+		SELECT HBT_BOARD_REPLY_NUM
+		    , HBT_BOARD_REPLY_CONTENT
+		    , HBT_BOARD_REPLY.MEM_CODE
+		    , TO_CHAR(HBT_BOARD_REPLY_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REPLY_REG_DATE
+		    , (SELECT MEM_ID FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD_REPLY.MEM_CODE) MEM_ID
+		    , HBT_BOARD_NUM
+		    , MEM_ROLE
+		    , HBT_BOARD_REPLY_NUM_FK
+		    , REPLY_DEPTH
+		FROM HBT_BOARD_REPLY, HBT_MEM
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+		AND HBT_BOARD_REPLY.MEM_CODE = HBT_MEM.MEM_CODE
+		ORDER BY HBT_BOARD_REPLY_NUM
+	</select>
+	
+	<update id="addReplyCnt">
+		UPDATE HBT_BOARD SET REPLY_CNT = REPLY_CNT +1
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</update>
+	
+	<delete id="delReply">
+		DELETE HBT_BOARD_REPLY
+		WHERE HBT_BOARD_REPLY_NUM = #{hbtBoardReplyNum}
+	</delete>
+	
+	<update id="reduceReplyCnt">
+		UPDATE HBT_BOARD SET REPLY_CNT = REPLY_CNT - 1
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum} 
+	</update>
+	
+	<update id="updateReplyContent">
+		UPDATE HBT_BOARD_REPLY SET HBT_BOARD_REPLY_CONTENT = #{hbtBoardReplyContent}
+		WHERE HBT_BOARD_REPLY_NUM = #{hbtBoardReplyNum}  
+	</update>
+	
+	
+	<insert id="regRequest">
+	MERGE INTO HBT_BOARD_REQUEST
+		USING DUAL
+		ON (HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum})
+		WHEN MATCHED THEN
+			UPDATE
+			SET HBT_BOARD_REQUEST_TITLE = #{hbtBoardRequestTitle},
+				HBT_BOARD_REQUEST_CONTENT = #{hbtBoardRequestContent}
+		WHEN NOT MATCHED THEN
+			INSERT (
+			    HBT_BOARD_REQUEST_NUM
+			    , HBT_BOARD_REQUEST_TITLE
+			    , HBT_BOARD_REQUEST_CONTENT
+			    , MEM_CODE
+			    , TYPE_REQUEST_CODE
+			    , REQUEST_PW
+			    <if test='itemVO != null or !itemVO.itemCode.equals("")'>
+			    , ITEM_CODE
+			    </if>
+			)
+			VALUES (
+			    #{hbtBoardRequestNum}
+			    , #{hbtBoardRequestTitle}
+			    , #{hbtBoardRequestContent}
+			    , #{memberVO.memCode}
+			    , ${typeRequestVO.typeRequestCode}
+			    , #{requestPw}
+			    <if test='itemVO != null or !itemVO.itemCode.equals("")'>
+			    , #{itemVO.itemCode}
+			    </if>
+			)
+	</insert>
+	
+	<select id="getBoardReqList" resultMap="boardRequest">
+		SELECT HBT_BOARD_REQUEST_NUM
+		    , HBT_BOARD_REQUEST_TITLE
+		    , HBT_BOARD_REQUEST_CONTENT
+		    , MEM_CODE
+		    , TO_CHAR(HBT_BOARD_REQUEST_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REQUEST_REG_DATE
+		    , REQUEST_PW
+		    , ITEM_CODE
+		    , IS_ANSWER
+		    , BOARD.TYPE_REQUEST_CODE
+		    , TYPE_REQUEST_NAME
+		    , (SELECT MEM_ID 
+		    	FROM HBT_MEM WHERE MEM_CODE = BOARD.MEM_CODE) MEM_ID
+		FROM HBT_BOARD_REQUEST BOARD, TYPE_REQUEST REQ
+		WHERE BOARD.TYPE_REQUEST_CODE = REQ.TYPE_REQUEST_CODE
+		<if test='isAnswer.equals("N") or isAnswer.equals("Y")'>
+		AND IS_ANSWER = #{isAnswer}
+		</if>
+		<if test='memberVO != null and !memberVO.memRole.equals("AD")'>
+		AND MEM_CODE = #{memberVO.memCode}
+		</if>
+		ORDER BY HBT_BOARD_REQUEST_NUM
+	</select>
+	
+	<select id="getBoardReqListBySearch" resultMap="boardRequest">
+		SELECT HBT_BOARD_REQUEST_NUM
+		    , HBT_BOARD_REQUEST_TITLE
+		    , HBT_BOARD_REQUEST_CONTENT
+		    , MEM_CODE
+		    , TO_CHAR(HBT_BOARD_REQUEST_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REQUEST_REG_DATE
+		    , REQUEST_PW
+		    , ITEM_CODE
+		    , IS_ANSWER
+		    , BOARD.TYPE_REQUEST_CODE
+		    , TYPE_REQUEST_NAME
+		    , (SELECT MEM_ID 
+		    	FROM HBT_MEM WHERE MEM_CODE = BOARD.MEM_CODE) MEM_ID
+		FROM HBT_BOARD_REQUEST BOARD, TYPE_REQUEST REQ
+		WHERE BOARD.TYPE_REQUEST_CODE = REQ.TYPE_REQUEST_CODE
+		<if test='!hbtBoardRequestTitle.equals("")'>
+			AND UPPER(HBT_BOARD_REQUEST_TITLE) LIKE '%'||UPPER(#{hbtBoardRequestTitle})||'%'
+		</if>
+	</select>
+	
+	
+	<select id="chkReqPw" resultType="String">
+		SELECT REQUEST_PW
+		FROM HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</select>
+	
+	<select id="getRequestDetail" resultMap="boardRequest">
+		SELECT HBT_BOARD_REQUEST_NUM
+			, HBT_BOARD_REQUEST_TITLE
+			, HBT_BOARD_REQUEST_CONTENT
+			, TO_CHAR(HBT_BOARD_REQUEST_REG_DATE, 'YYYY-MM-DD') HBT_BOARD_REQUEST_REG_DATE
+			, MEM_CODE
+			, TYPE_REQUEST_CODE
+			, (SELECT TYPE_REQUEST_NAME
+				FROM TYPE_REQUEST WHERE TYPE_REQUEST_CODE = HBT_BOARD_REQUEST.TYPE_REQUEST_CODE) TYPE_REQUEST_NAME
+			, IS_ANSWER
+			, ITEM_CODE
+			, (SELECT MEM_ID 
+		    	FROM HBT_MEM WHERE MEM_CODE = HBT_BOARD_REQUEST.MEM_CODE) MEM_ID
+		FROM HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</select>
+	
+	<insert id="insertReqReply">
+		MERGE INTO HBT_REQ_REPLY
+			USING DUAL
+			ON (REQ_REPLY_NUM = #{reqReplyNum})
+			WHEN MATCHED THEN
+				UPDATE SET
+					REQ_REPLY_CONTENT = #{reqReplyContent}, 
+					REQ_REPLY_ANSWER_DATE = SYSDATE
+			WHEN NOT MATCHED THEN
+				INSERT (
+				    REQ_REPLY_NUM
+				    , REQ_REPLY_CONTENT
+				    , REPLY_DEPTH
+				    , MEM_CODE
+				    , HBT_BOARD_REQUEST_NUM
+				) VALUES(
+				    #{reqReplyNum}
+				    , #{reqReplyContent}
+				    , ${replyDepth}
+				    , #{memberVO.memCode}
+				    , #{hbtBoardRequestNum}
+				)
+	</insert>
+	
+	<update id="updateBoardRequestIsAnswer">
+		UPDATE HBT_BOARD_REQUEST SET IS_ANSWER = 'Y'
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</update>
+	
+	<select id="getReqReply" resultMap="reqReply">
+		SELECT REQ_REPLY_NUM
+			, REQ_REPLY_CONTENT
+			, TO_CHAR(REQ_REPLY_ANSWER_DATE, 'YYYY-MM-DD') REQ_REPLY_ANSWER_DATE
+			, REPLY_DEPTH
+			, MEM_CODE
+			, HBT_BOARD_REQUEST_NUM
+		FROM HBT_REQ_REPLY
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</select>
+	
+	<delete id="delMyRequest">
+		DELETE HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</delete>
+	
+	<delete id="delMyRequestReply">
+		DELETE HBT_REQ_REPLY
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</delete>
+	
+	<select id="chkMyRequest" resultType="String">
+		SELECT IS_ANSWER
+		FROM HBT_BOARD_REQUEST
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</select>
+	
+	<delete id="delPrivateReqReply">
+		DELETE HBT_REQ_REPLY
+		WHERE REQ_REPLY_NUM = #{reqReplyNum}
+	</delete>
+	
+	<update id="chageIsAnswerAfterDelReqRpl">
+		UPDATE HBT_BOARD_REQUEST 
+		SET IS_ANSWER = 'N' 
+		WHERE HBT_BOARD_REQUEST_NUM = #{hbtBoardRequestNum}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

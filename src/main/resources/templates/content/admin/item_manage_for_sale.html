@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+<th:block layout:fragment="adminContent">
+	<div class="row">
+		<div class="col">
+			<h3 class="menuTitle">판매 상품 관리</h3>
+			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보 확인 가능.</div>
+			<div class="row">
+				<div class="col">
+					<table class="table table-hover text-center">
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<thead style="background-color: #ffd000;">
+							<tr>
+								<td><input type="checkbox" id="allCheck" onclick="AllCheckboxControl();"></td>
+								<td>상품이미지</td>
+								<td>패키지명</td>
+								<td>여행지</td>
+								<td>기간</td>
+								<td>가격</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${#lists.size(itemSaleList) == 0}">
+								<tr>
+									<td colspan="7">등록된 상품이 없습니다.</td>
+								</tr>
+							</th:block>
+							<th:block th:unless="${#lists.size(itemSaleList) == 0}">
+								<tr th:each="item : ${itemSaleList}">
+									<td><input type="checkbox" class="chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
+									<td>
+										<img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px">
+									</td>
+									<td><span th:onclick="openModal([[${item.itemCode}]], [[${areaCateList}]]);"
+										style="cursor: pointer;">[[${item.itemTitle}]]</span></td>
+									<td>[[${item.tourAreaVO.areaKorName}]]</td>
+									<td>[[${item.traverPeriod}]]</td>
+									<td>[[${#numbers.formatCurrency(item.itemPrice)}]]</td>
+									<td>
+										<input type="button" value="삭제" class="btn btn-outline" style="border-color: #ffd000;"
+											th:onclick="deleteItem([[${item.itemCode}]])"> 
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-2 d-grid">
+					<input type="button" value="선택 삭제" class="btn" style="background-color:  #ffd000;"
+						th:onclick="deleteCheckItems();">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 상품 상세 페이지 모달 -->
+	<div class="row">
+		<div class="col">
+			<div class="modal" id="itemDetailModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			  		<div class="modal-header">
+	        			<h5 class="modal-title">상품 상세 정보</h5>
+	        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>	
+					<div class="modal-body">
+						<form class="row">
+							<div class="col-3">
+								<label for="" class="form-label">여행 국가</label>
+								<select id="" name="areaCode" class="form-select">
+		              		 	<th:block>
+		               				<option></option>
+		              			 </th:block>
+		            			</select>
+							</div>
+							<div class="col-9">
+								<label for="" class="form-label">패키지 이름</label> 
+								<input type="text" class="form-control" id="" name="itemTitle">
+							</div>
+							<div class="col-3">
+								<label for="" class="form-label">기본 가격</label>
+								<input type="text" class="form-control" id="" name="itemPrice">
+							</div>
+							<div class="col-3">
+								<label for="" class="form-label">땡처리할인</label>
+								<select id="" name="isBombSale" class="form-select">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<label for="" class="form-label">성수기요금</label>
+								<select id="" name="isPeak" class="form-select">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<label for="" class="form-label">출발요일할증</label> 
+								<select id="" name="isExtraCharge" class="form-select">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</div>
+							<div class="col-4">
+								<label for="" class="form-label">패키지 기간</label>
+								<input type="text" class="form-control" id="" name="traverPeriod">
+							</div>
+							<div class="col-4">
+								<label for="" class="form-label">판매시작일</label>
+								<input type="date" class="form-control" id="" name="sellingStart">
+							</div>
+							<div class="col-4">
+								<label for="" class="form-label">판매종료일</label>
+								<input type="date" class="form-control" id="" name="sellingEnd">
+							</div>
+							<div class="col-12">
+								<label for="" class="form-label">패키지 소개</label>
+								<textarea rows="5" class="form-control" name="itemIntro"></textarea>
+							</div>
+							<div class="col-6">
+								<label for="" class="form-label">메인 이미지</label>
+								<input type="file" class="form-control" id="" name="mainImg">
+							</div>
+							<div class="col-6">
+								<label for="" class="form-label">상세 이미지</label>
+								<input type="file" class="form-control" id="" name="subImg" multiple>
+							</div>
+							<div class="col-12">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" value="1" type="radio" id="" name="statusCode" checked>
+									<label class="form-check-label" for="">판매중</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" value="2" type="radio" id="" name="statusCode">
+									<label class="form-check-label" for="">준비중</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" value="3" type="radio" id="" name="statusCode">
+									<label class="form-check-label" for="">품절</label>
+								</div>
+							</div>
+							<div class="col-3">
+								<input id="" type="submit" class="btn"
+									style="background-color: #ffd000;" value="수정">
+							</div>
+						</form>
+					</div>
+			  		</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- img모달 -->
+	<div class="modal fade" id="imgModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">Modal Title</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<img src="" width="100%"><!-- 이미지 파일 경로 매번 바뀜. > js에서 태그 선택하여 경로 작업.   -->
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/item_manage_for_sale.js"></script> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+</html>

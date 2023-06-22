@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+#map {
+    height: 600px; /* The height is 400 pixels */
+    width: 100%; /* The width is the width of the web page */
+}
+.form-control:focus {
+    border-color: #ffd000;
+    box-shadow: none; /* 선택 사항: 클릭 시 생기는 그림자 제거 */
+}
+.form-control {
+    border-color: #fff9d4;
+    box-shadow: none; /* 선택 사항: 클릭 시 생기는 그림자 제거 */
+}
+select:focus option {
+    background-color: #fff9d4;
+    color: #000000;
+}
+select option:hover {
+    background-color: #ffd000;
+    color: #ffffff;
+}
+.custom-border {
+    border: 1px solid #ffd000 !important;
+}
+img {
+    width: 359px; height: 268px;
+}

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.public_container {
+	min-height: 56vh;
+}
+
+.public-table > tbody > tr > td:nth-child(2) {
+	text-align: left;
+}
+
+
+
+

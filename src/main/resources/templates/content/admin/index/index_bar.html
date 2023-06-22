@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/admin/index/index_bar.css">
+</th:block>
+
+
+<th:block layout:fragment="adminContent">
+	<div class="row">
+		<div class="col">
+			<div class="row mt-5">
+				<div class="col-4">
+					<table onclick="goReserv();">
+					  <tbody>
+					    <tr>
+					      <td>
+					      	<span class="tdTitle">신규 예약</span>
+					      	<div class="tdCnt" th:text="${toDo['COMPLTE_PAYMENT']}"></div>
+					      </td>
+					      <td>
+					     	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
+							  <path d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"/>
+							</svg>
+					      </td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+				<div class="col-4">
+					<table onclick="goCancle();">
+					  <tbody>
+					    <tr>
+					      <td>
+					      	<span class="tdTitle">취소 요청</span>
+					      	<div class="tdCnt" th:text="${toDo['CANCLE_REQUSET']}"></div>
+					      </td>
+					      <td>
+					      	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-calendar-x-fill" viewBox="0 0 16 16">
+							  <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM6.854 8.146 8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 1 1 .708-.708z"/>
+							</svg>
+					      </td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+				<div class="col-4">
+					<table onclick="location.href='/admin/requestManage'">
+					  <tbody>
+					    <tr>
+					      <td>
+					      	<span class="tdTitle">1:1 문의</span>
+					      	<div class="tdCnt" th:text="${toDo['NO_ANSWER']}"></div>
+					      </td>
+					      <td>
+					      	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+							  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+							</svg>
+					      </td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row mt-5">
+				<div class="col">
+					영홍씨 테마별 통계 그래프
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div style="margin-top: 200px;"></div>
+	<div class="row mb-2">
+		<div class="col-4">
+			<h3>한눈에 확인하기</h3>
+		</div>
+		<div class="offset-6 col-2">
+			<input type="button" onclick="location.href='/adminIndex/indexStatictics'" class="btn btn-secondary w-100" value="통계">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="row mb-3">
+				<div class="col-2">
+					원하는 기능별 버튼
+				</div>
+				<div class="col"></div>
+				<div class="col-2">
+					<input type="button" class="btn btn-primary w-100" value="보기">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col bar-area">
+					bar chart area<br>
+					연도별, 월별, 카테고리별 판매 금액을 띄울듯?
+				</div>
+			</div>
+		</div>
+	</div>
+
+</th:block>
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/index/index_bar.js"></script>
+</th:block>
+
+
+</html>

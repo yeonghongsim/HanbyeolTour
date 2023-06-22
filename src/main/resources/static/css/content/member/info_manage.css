@@ -1,0 +1,349 @@
+@charset "UTF-8";
+
+
+/* 상단 프로빌 바 */
+.header-area{
+	height: 7vh; 
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 35px;
+}
+
+
+.profile-bar{
+	background-color: white;
+	color: black;;
+	font-size: 1.6rem;
+	font-weight: bolder;
+	letter-spacing: -1px;
+	padding: 0.8rem;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	vertical-align: middle;
+	margin-bottom: 2rem;
+	margin-top: 60px;
+}
+
+.profile-name{
+	color: #ffd000;
+	font-size: 1.8rem;
+	font-weight: bolder;
+	letter-spacing: -1px;
+}
+
+
+.profile-bar-second{
+	height: 60px;
+	border-bottom: 1px solid #666;
+	border-left: 1px solid #666;
+	border-right: 1px solid #666;
+	font-size: 1.3rem;
+	letter-spacing: -1px;
+	padding: 3px;
+}
+
+
+.more{
+	font-size: 0.9rem;
+	color: #666;
+	letter-spacing: -2px;
+	font-weight: bolder;
+	vertical-align: middle;
+}
+
+/* 예약 조회 */
+
+.title{
+	font-size: 1.6rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+}
+
+.title-sm{
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.content-box{
+	background-color: #fff9d4;
+	border-radius: 10px;
+	height: 130px;
+	margin-top: 1rem;
+}
+
+
+.content-box a > ul{
+	list-style: none;
+	display: flex;
+	justify-content: space-between; 
+	width: 100%;
+	margin-top: 10px;
+}
+
+.content-box a > ul > li{
+	display: inline-block;
+	margin-right: 2rem;
+	text-align: center;
+}
+
+.content-box a > ul > li > span{
+	display: block;
+	font-size: 1.2rem;
+	text-align: center;
+	color: black;
+	
+}
+.content-box a > ul > li > em {
+	margin-top: 1rem;
+	display: block;
+	font-size: 1.9rem;
+	font-weight: bolder;
+	font-style: normal;
+}
+
+.bi-chevron-right{
+	font-weight: bolder;
+	font-size: 1.6rem;
+}
+
+/* 예약 내역 조회 테이블 */
+
+.one-month-mention{
+	font-size: 0.9rem;
+	color: #bbb;	
+}
+
+.table-container {
+  max-height: 300px;  /* 원하는 최대 높이 */
+  overflow-y: auto;
+}
+
+.one-month-table {
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+.one-month-table thead tr td {
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  padding: 0.7rem;
+  padding-top: 0.8rem;
+  font-size: 0.9rem;
+  
+}
+
+.scrollable-tbody {
+  max-height: 300px; 
+  overflow-y: auto;
+}
+
+
+.scrollable-tbody tr td {
+	padding: 1rem;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+.item-td{
+	text-align: left;
+	vertical-align: middle;
+	padding-top: 0.5rem;
+}
+
+.date-td{
+	font-size: 0.7rem;
+}
+
+
+
+/* 문의 내역, 후기 내역 */
+
+.area-over{
+	display: flex; 
+	height: 40vh; 
+	width: 100%;
+	margin-top: 15px;
+}
+
+.qna-list-area{
+	width: 99.9%;
+	margin-top: 15px;
+	margin-right: 1rem;
+}
+.review-list-area{
+	width: 99.9%;
+	margin-top: 15px;
+	margin-left: 0.3rem;
+}
+
+.for-line{
+	margin-top: 1rem;
+		
+}
+
+.title-row{
+	border-bottom: 2px solid #bbb;
+	width: 96%;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.title-col{
+	margin-bottom: 0.5rem;
+	
+}
+.q-tit{
+	margin-right: 1rem;
+}
+.r-tit{
+	margin-left: 1rem;
+}
+
+
+.qna-header-status-y{
+	background-color: #ffd000;
+	border-radius: 12px;
+	font-size: 0.8rem;
+	padding:3px;
+	color: white;
+	font-weight: bolder;
+	margin-right: 1rem;
+}
+
+.qna-header-status-n{
+	background-color: #666;
+	border-radius: 12px;
+	font-size: 0.8rem;
+	color: white;
+	padding:3px;
+	font-weight: bolder;
+	margin-right: 1rem;
+}
+
+.qna-header-date{
+	font-size: 0.8rem;
+	color:#888;
+	margin-right: 4px;
+}
+
+.qna-tit{
+	font-weight:bolder; 
+	color: #666;
+	font-size: 1.2rem;
+}
+.qna-topic{
+	border: 1px solid #666;
+	border-radius: 13px;
+	font-size: 0.95rem;
+	vertical-align: middle;
+	text-align:center;
+	padding:0;
+	letter-spacing: 4px;
+	background-color: white;
+}
+
+/* 특정 길이 이후 ... 처리 */
+.qna-header-title{
+	display: inline-block; 
+	width: 250px; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}
+
+
+.accordion-body{
+	padding: 1.2rem;
+	background-color: #fafafa;
+}
+
+.item-name{
+	color: #888;
+	font-size: 0.95rem;
+}
+
+.answer-title{
+	font-weight:bolder; 
+	color: #ffd000;
+	font-size: 1.2rem;
+}
+
+.answer-date{
+	font-weight:bolder; 
+	color: #888;
+	font-size: 0.8rem;
+}
+
+.final-mention{
+	font-size: 0.7rem;
+	color: #888;
+}
+
+/* 스크롤 */
+.accordion-scroll {
+    max-height: 200px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+}
+
+/* 리뷰 내역 */
+.review-item-tit{
+	font-weight:bolder; 
+	color: #666;
+	font-size: 1.1rem;
+	margin-bottom: 10px;
+	
+}
+/* 특정 길이 이후 ... 처리 */
+.review-header-item-tit{
+	display: inline-block; 
+	width: 250px; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}
+
+.review-item-info{
+	padding: 0.7rem;
+}
+
+.review-content{
+	padding: 0.5rem;
+}
+
+.review-content-tit{
+	color: black;
+	font-weight:bolder;
+}
+
+/* 문의, 후기 내용없는 경우 */
+
+.no-qna-message{
+	font-size: 1.5rem;
+	font-weight: bolder;
+	color: #bbb;
+	height: 250px;
+	text-align: center;
+	padding: 6rem;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+
+.no-review-message{
+	font-size: 1.5rem;
+	font-weight: bolder;
+	color: #bbb;
+	height: 250px;
+	text-align: center;
+	padding: 6rem;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+
+
+
+
+

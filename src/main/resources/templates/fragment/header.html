@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<th:block th:fragment="headerFragment">
+	<!-- 상단바 1 -->
+	<div class="row contain position-relative">
+
+		<img src="/img/backg6.jpg" class="px-0 active" style="bottom: 10%;">
+		<img src="/img/backg5.jpg" class="px-0">
+		<img src="/img/backg4.jpg" class="px-0">
+		<div class="row header-bar mt-1 pb-1 my-0 position-absolute">
+			<div class="col logo">
+				<span onclick="location.href='/'" style="cursor: pointer;" class="header-title">✈️한별투어</span>
+			</div>
+
+
+			<div class="col text-end">
+				<!-- 비로그인 시 -->
+				<div sec:authorize="isAnonymous()">
+					<ul class="header-title head-top">
+						<li class="h-btn"><a th:href="@{/member/login}">로그인</a></li>
+						<li class="h-btn"><a href="/member/join">회원가입</a></li>
+						<li class="h-btn">장바구니</li>
+						<li class="h-btn">마이페이지</li>
+						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
+						<li class="h-btn">
+							<a th:href="@{/admin/itemManage}">관리자메뉴</a>
+						</li>
+					</ul>
+				</div>
+				<!-- 로그인 시 -->
+				<div sec:authorize="isAuthenticated()">
+					<ul class="header-title head-top">
+						<li>[[${#authentication.name}]]님 즐거운 여행되세요! 😉</li>
+						<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
+						<li class="h-btn"><a th:href="@{/myPage/checkMyCart(memId=${#authentication.name})}">장바구니</a></li>
+						<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>
+						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
+						<th:block sec:authorize="hasAnyRole('ROLE_AD', 'ROLE_MNG')">
+							<li class="h-btn">
+								<a th:href="@{/admin/itemManage}">관리자메뉴</a>
+							</li>
+						</th:block>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- 카테고리 목록 메뉴 바( 우선 사이트 명만 로고 대신 놔둠) -->
+		<div class="row my-0 py-0 header-bar-2 bg-transparent">
+
+		</div>
+	</div>
+
+	<div class="row mb-5 py-1 text-center d-flex justify-content-center overlap-row">
+		<div class="col-md-6 rounded-5 shadow pb-2" style="background-color: white;">
+			<div class="row d-flex justify-content-center">
+				<div class="row d-flex justify-content-center">
+					<div class="col-md-3 shadow rounded-5 py-2 mx-4 my-3 custom-border-2">
+						<a href="/item/tourItemListDate">
+								일자별 상품
+						</a>
+					</div>
+					<div class="col-md-3 shadow rounded-5 py-2 mx-5 my-3 custom-border-2">
+						<a href="/item/tourItemListGroup">
+								국가별 상품
+						</a>
+					</div>
+					<div class="col-md-3 shadow rounded-5 py-2 mx-4 my-3 custom-border-2">
+						<a href="/item/diyTourItem">
+								패키지DIY
+						</a>
+					</div>
+				</div>
+				<div class="row d-flex justify-content-center">
+
+					<div class="col-md-3 shadow rounded-5 py-2 mx-4 my-2 custom-border-2">
+						<a href="/airline/airline">
+								항공권
+						</a>
+					</div>
+
+					<div class="col-md-3 shadow rounded-5 py-2 mx-5 my-2 custom-border-2">
+						<a href="/member/login">
+								로그인/회원가입
+						</a>
+					</div>
+
+					<div class="col-md-3 shadow rounded-5 py-2 mx-4 my-2 custom-border-2">
+						<a href="/item/hotelPage">
+						호텔
+						</a>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+	<div class="row"></div>
+
+
+
+	<script>
+		const images = document.querySelectorAll('.contain img');
+		let currentImageIndex = 0;
+
+		function rotateImages() {
+			// 현재 이미지의 클래스를 변경하여 페이드 아웃 효과 적용
+			images[currentImageIndex].classList.remove('active');
+
+			// 다음 이미지의 클래스를 변경하여 페이드 인 효과 적용
+			currentImageIndex = (currentImageIndex + 1) % images.length;
+			images[currentImageIndex].classList.add('active');
+		}
+
+		setInterval(rotateImages, 5000); // 3초마다 이미지 변경
+	</script>
+	
+</th:block>
+
+
+</html>

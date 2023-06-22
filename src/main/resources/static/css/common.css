@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+	margin:0;
+	font-family: 'Pretendard-Regular';
+	font-size: 16px;
+}
+
+.test {
+	color: red;
+}
+
+/* 찐노랑색*/
+.ye-S-fc {
+	color: #ffd000;
+}
+
+.ye-S-bc {
+	background-color: #ffd000;
+}
+
+/* 연노랑색*/
+.yel-fc {
+	color: #fff9d4;
+}
+
+.ye-bc {
+	background-color: #fff9d4;
+}
+/* 라임색*/
+.lime-fc {
+	color: #c6df5f;
+}
+
+.lime-bc {
+	background-color: #c6df5f;
+}
+
+textarea {
+	resize: none;
+}
+.pointer {
+	cursor: pointer;
+}
+
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
+.only-tbody > tbody > tr > td{
+	border: 1px solid #eee;
+}
+
+.custom-border {
+	border: 1px solid #ffd000 !important;
+}
+.custom-border-2 {
+	border: 2px solid #ffd000 !important;
+}
+.custom-border-3 {
+	border: 3px solid #ffd000 !important;
+}
+.custom-border-4 {
+	border: 4px solid #ffd000 !important;
+}
+.custom-border-5 {
+	border: 5px solid #ffd000 !important;
+}
+
+.resultDiv img {
+	display: block; height: 100%; width: 100%;
+	border: 2px solid #ffd000 !important;
+}

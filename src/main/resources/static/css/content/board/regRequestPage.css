@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+
+.request-table > tbody > tr > td:nth-child(3) {
+	text-align: left;
+}
+
+.request-table > tbody > tr {
+	vertical-align: middle;
+}

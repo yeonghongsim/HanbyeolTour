@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<th:block th:fragment="adminHeaderFragment">
+	
+	
+	<div class="row">
+		<div class="col text-end">
+			<ul class="header-title head-top">
+				<li class="header-title">[[${#authentication.name}]]님 반갑습니다.</li>       
+				<li class="header-title"><a th:href="@{/main}">HOME</a></li>
+				<li class="header-title"><a th:href="@{/member/logout}">LOGOUT</a></li>       
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="adminHeader">HANBYEOL TOUR Administrator Mode</div>
+		</div>
+	</div>
+	
+</th:block>
+
+
+</html>

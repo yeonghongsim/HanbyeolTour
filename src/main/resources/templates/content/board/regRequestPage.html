@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/board/board_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/board/regRequestPage.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="board_content">
+	<div class="row mb-3 under-line-ylS">
+		<div class="col">
+			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover text-center request-table">
+				<colgroup>
+					<col width="8%">
+					<col width="10%">
+					<col width="*">
+					<col width="12%">
+					<col width="18%">
+					<col width="10%">
+				</colgroup>
+				<thead class="board-thead">
+					<tr>
+						<td>번호</td>
+						<td>구분</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>작성일</td>
+						<td>답변유무</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="request, state : ${requestList}">
+						<td>[[${requestList.size() - state.index}]]</td>
+						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
+						<td>
+							<div class="row mb-2">
+								<div class="col">
+									<img th:onclick="showBtn(this, [[${#authentication.name}]]);" src="/imageForUse/lock.jpeg" style="width: 30px;">
+									/ [[${request.requestPw}]]
+								</div>
+							</div>
+							<div class="row hide">
+								<div class="col-7">
+									<input type="password" class="form-control">
+								</div>
+								<div class="col-3">
+									<input type="button" th:onclick="chkReqPw([[${request.hbtBoardRequestNum}]], this);" class="btn btn-primary" value="문의 보기">
+								</div>
+								<div class="col-1">
+									<input type="button" onclick="cancelChkPw(this);" class="btn btn-danger" value="취소">
+								</div>
+							</div>
+						</td>
+						<td>[[${request.memberVO.memId}]]</td>
+						<td>[[${request.hbtBoardRequestRegDate}]]</td>
+						<td>[[${request.isAnswer}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/board/regRequestPage.js"></script>
+</th:block>
+
+
+
+</html>

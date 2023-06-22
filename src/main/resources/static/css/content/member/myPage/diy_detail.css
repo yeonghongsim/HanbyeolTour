@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+/* 상단 타이틀 */
+.title{
+	font-size: 1.6rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+}
+
+.title-md{
+	font-size: 1.4rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+	margin-top: 1.5rem;
+	color: black;
+}
+
+/* 상단바 */
+.upper-box{
+	border: 1px solid #ffd000;
+	border-radius: 6px;
+	padding: 15px;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+
+
+
+/* 결제 금액 */
+.total-price-tit{
+	font-size: 1.1rem;
+	font-weight: bolder;
+	vertical-align: middle;
+	word-spacing: -2px;
+	padding-top: 5px;
+	margin-right: 1rem;
+}
+
+.total-price{
+	font-size: 1.4rem;
+	font-weight: bolder;
+	color: #f27370;
+	vertical-align: middle;
+	word-spacing: 2px;
+	padding-right: 2rem;
+}
+
+
+
+/* 예약자 정보 */
+.personal-info tbody th{
+	border-top: 1px solid #d6d6d6;
+	border-bottom: 1px solid #e6e6e6;
+	background-color: #e6e6e6;
+}
+
+.personal-info tbody td{
+	border-top: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.table.personal-info tbody tr:first-child th,
+.table.personal-info tbody tr:first-child td {
+   border-top: 2px solid #d6d6d6;
+}
+
+
+
+
+
+
+
+
+
+
+/* 유의사항 */
+.info {
+	font-size: 0.8rem;
+	color: #888;
+	margin-bottom: 3rem;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+.detail_table > tbody > tr > td{
+	border: 1px solid #eee;
+}
+

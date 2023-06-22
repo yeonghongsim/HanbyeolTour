@@ -1,0 +1,48 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.6'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.project'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//구글api사용
+	implementation 'com.google.maps:google-maps-services:0.17.0'
+	// 문자 api
+	implementation 'net.nurigo:sdk:4.3.0'
+	//JSON
+	implementation 'org.json:json:20230227'
+
+	implementation 'org.jsoup:jsoup:1.16.1' //크롤링
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7.1' //jackson 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 발송
+
+    implementation 'com.oracle.database.security:osdt_cert:21.3.0.0'
+    implementation 'com.oracle.database.security:oraclepki:21.3.0.0'
+    implementation 'com.oracle.database.security:osdt_core:21.3.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 시큐리티1
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 시큐리티2
+	testImplementation 'org.springframework.security:spring-security-test' // 시큐리티3
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // fragment 사용을 위해 추가
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16' //쿼리 로그 라이브러리 추가
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

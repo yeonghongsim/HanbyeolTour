@@ -1,0 +1,196 @@
+/*노멀라이즈*/
+body,ul,li{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+a{
+    text-decoration:none;
+    color:inherit;
+}
+/*노말라이즈 끝*/
+
+/*좌측사이드바*/
+.left-side-bar{
+    background-color:white;
+    width:200px;
+    height:100%;
+    top:0;
+
+    transition:left;
+}
+.left-side-bar:hover{
+
+}
+
+/*좌측사이드바-아이콘*/
+.left-side-bar > .icon-status > span{
+    text-align:right;
+    display:block;
+    color: #ffd000;
+}
+.left-side-bar > .icon-status > span:last-child{
+    display:none;
+}
+.left-side-bar:hover > .icon-status > span:last-child{
+    display:block;
+}
+.left-side-bar:hover > .icon-status > span:first-child{
+    display:none;
+}
+/*좌측사이드바-아이콘 끝*/
+
+/*좌측사이드바-메뉴박스*/
+.left-side-bar > .menu-box-1 > ul ul{
+    display:none;
+    position:absolute;
+    left:100%;
+    top:0;
+}
+.left-side-bar > .menu-box-1 ul{
+    background-color:white;
+}
+.left-side-bar > .menu-box-1 ul > li{
+    position:relative;
+}
+
+.left-side-bar > .menu-box-1 ul > li > a{
+    display:block;
+    padding:20px;
+    white-space:nowrap;
+}
+.left-side-bar .menu-box-1 ul > li:hover > .sideAHover{
+    background-color: #ffd000;
+    color : white;
+}
+.left-side-bar > .menu-box-1 > ul > li:hover > ul{
+    display:block;
+}
+
+.menuTitle{
+	font-style: italic;
+	content: "";
+	display: block;
+	width: 40%;
+	border-bottom: 3px solid #ffd000;
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+.adminHeader{
+	background:#fff9d4;
+	height: 50px;
+	font-size: 20px;
+	padding-top: 10px;
+	margin-top: 50px;
+	padding-left: 10px
+}
+
+
+.header-title{
+	margin-top: 0.5rem;
+}
+
+.header-title li {
+  display: inline-block;
+  margin-right: 20px;
+  cursor: pointer;
+  position: relative;
+  color: #666;
+}
+
+/* 마우스 올리면 밑줄 생성 */
+.header-title li:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: 100%;
+  height: 1px;
+  background-color: #666;
+}
+
+
+
+
+
+
+
+/* 인풋 태그 스타일 */
+.form-check-input:checked {
+	background-color: #ffd000;
+	border-color: #ffd000;
+}
+
+.form-control:focus {
+    color: black;
+    background-color: #fff9d4;
+    border-color: #ffd000;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);
+}
+/* 셀렉트박스 스타일 */
+.form-select:focus {
+    border-color: #ffd000;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);
+}
+
+/* 영어 대문자만 가능  */
+.EnglargeDiv{
+	text-transform: uppercase;
+}
+
+/* 페이징 숫자 css  */
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: white;
+    background-color: #ffd000;
+    border-color: #ffd000;
+}
+
+.page-link {
+	color: black;	
+	border-color: white;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #fff9d4;
+    background-color: var(--bs-pagination-hover-bg);
+
+}
+
+.page-link:focus {
+    z-index: 3;
+    color: #fff9d4;
+    background-color: #fff9d4;
+    outline: 0;
+    box-shadow: var(--bs-pagination-focus-box-shadow);
+}
+
+.pagination {
+	--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(253,161,13,0.25);	
+}
+
+.table {
+    --bs-table-hover-bg: rgba(0, 0, 0, 0); 
+
+}
+
+.table-hover tbody tr:hover > td {
+  background-color: #fff9d4;
+}
+
+.smallRed {
+	color: red;
+	font-size: 0.8rem;
+}
+
+  
+.tableColums tr td:nth-child(1),
+.tableColums tr td:nth-child(3),
+.tableColums tr td:nth-child(5){
+    background-color: #eeeeee;
+    text-align: center;
+  }

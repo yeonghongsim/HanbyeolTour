@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/admin_layout}">
+<!-- 연결해야 할 외부 CSS파일 -->
+<th:block layout:fragment="content_css">
+<style>
+    .recomImg {
+        position: relative;
+    }
+
+    .recom_img_comment {
+        justify-content: center;
+        position: absolute;
+        top: 60%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        padding: 5px;
+    }
+</style>
+</th:block>
+<!-- 본문 내용 -->
+<th:block layout:fragment="adminContent">
+<div class="row">
+
+    <!-- 메인페이지 슬라이드 이미지 관리   -->
+    <form class="mx-0 px-0" action="/admin/uploadMainSlideImg" method="post" enctype="multipart/form-data">
+        <div class="row text-center">
+        <h3>메인 페이지 슬라이드 사진 설정</h3>
+        <!--  사진 업로드 및 설정  -->
+            <div class="col-6">
+                <div class="row mb-1">
+                    <div class="col">
+                        <table class="table ye-bc">
+                            <colgroup></colgroup>
+                            <thead>
+                            <tr>
+                                <td>No</td>
+                                <td>파일명</td>
+                                <td>삭제</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="img, state : ${mainSlideImg}">
+                                <tr>
+                                    <td>[[${state.count}]]</td>
+                                    <td>[[${img['HBT_MAINPAGE_ORIGIN_FILE_NAME']}]]</td>
+                                    <td>
+                                        <input type="button" class="btn ye-S-bc" value="삭제" th:onclick="|location.href='@{/admin/deleteMainSlideImg(imgCode=(${img.HBT_MAINPAGE_IMG_CODE}))}'|">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mb-3 text-center">
+                    <div class="col-6">
+                        <input class="form-control ye-bc" type="file" name="slideImg">
+                    </div>
+                    <div class="col">
+                        <input class="btn btn ye-bc" type="submit" value="추가">
+                    </div>
+
+                </div>
+            </div>
+        <!--    미리보기 -->
+            <div class="col-6">
+                <div id="mainImgSlide" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+
+
+                        <th:block th:each="img, state : ${mainSlideImg}">
+                            <div class="carousel-item" th:classappend="${state.index} == 0 ? 'active' : '' " data-bs-interval="2000">
+                                <img th:src="@{/img/main/slide/} + ${img['HBT_MAINPAGE_ATTECHED_FILE_NAME']}"
+                                     class="d-block w-100 rounded" alt="/img/item/xbox.jpg">
+                            </div>
+                        </th:block>
+
+
+                    </div>
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#mainImgSlide" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#mainImgSlide" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="row text-center">
+        <h3>추천 아이템 관리</h3>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <span>전체 상품 목록</span>
+        </div>
+        <div class="col-4 offset-4">
+            <span>추천 상품 목록</span>
+        </div>
+    </div>
+
+
+    <div class="row mb-3 text-center">
+        <div class="col-5">
+            <select class="form-select ye-bc allItemList" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <th:block th:each="item : ${itemList}">
+                    <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}">[[${item['ITEM_TITLE']}]]</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="col-2">
+            <div class="row mb-3">
+                <input type="button" class="btn ye-bc" value="▷" onclick="addRecomItem();">
+            </div>
+            <div class="row mt-3">
+                <input type="button" class="btn ye-bc" value="◁" onclick="removeRecomItem();">
+            </div>
+        </div>
+        <div class="col-5">
+
+            <select class="form-select ye-bc recomItemList" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                <th:block th:each="item : ${recomItem}">
+                    <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}">[[${item['ITEM_TITLE']}]]</option>
+                </th:block>
+            </select>
+        </div>
+    </div>
+
+    <!-- 추천 아이템 등록 이미지 미리보기     -->
+    <div class="row mb-3 recomImgDiv">
+        <div class="row">
+            <th:block th:each="item : ${recomItem}">
+                <div class="col col-2 offset-1 recomImg">
+                    <div class="row mb-3">
+                        <img th:src="@{/img/item/itemImg/} + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded recommend-img" alt="추천상품이미지">
+                        <h4 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h4>
+                    </div>
+                    <div class="row">
+                        <input class="form-control comment_input" type="text" placeholder="코멘트 입력" onchange="changeComment();">
+                    </div>
+                </div>
+            </th:block>
+        </div>
+
+</div>
+
+    <div class="row">
+
+    </div>
+
+    <div class="row my-1">
+        <input class="btn ye-bc" type="button" value="변경 사항 저장" onclick="setRecomItem();">
+    </div>
+
+
+
+
+</div>
+</th:block>
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+    <script src="/js/content/admin/page/set_main_page.js"></script>
+</th:block>
+</html>

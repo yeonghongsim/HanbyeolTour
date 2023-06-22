@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/admin_layout}">
+<!-- 연결해야 할 외부 CSS파일 -->
+<th:block layout:fragment="content_css">
+</th:block>
+<!-- 본문 내용 -->
+<th:block layout:fragment="adminContent">
+  <div class="row">
+
+    <div class="row">
+      <form action="/admin/itemDetail/addHotel" method="post" enctype="multipart/form-data">
+        <div class="row mb-3">
+          <div class="col">
+            <select class="form-select" name="areaCode">
+              <th:block>
+                <th:block th:each="area : ${areaList}">
+                  <option th:value="${area.areaCode}">[[${area.areaKorName}]]</option>
+                </th:block>
+              </th:block>
+            </select>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" name="hbtHotelName" placeholder="호텔이름">
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <div class="col">
+            <input type="text" class="form-control" name="hbtHotelGrade" placeholder="호텔등급">
+          </div>
+          <div class="col">
+            <input class="form-check-input" checked type="radio" name="isUse" value="Y">사용
+            <input class="form-check-input" type="radio" name="isUse" value="N">미사용
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" name="hbtHotelPrice" placeholder="가격">
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <div class="col">
+            <input type="file" name="mainImg" class="form-control" accept="image/*">메인파일
+          </div>
+          <div class="col">
+            <input type="file" name="subImg" class="form-control" multiple accept="image/*">서브파일
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <div class="col">
+            <textarea name="hbtHotelIntro" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-4 offset-4 d-gird">
+            <input type="submit" class="form-control ye-S-bc" value="등 록">
+          </div>
+        </div>
+      </form>
+
+
+      <!-- 사진미리보기자리  -->
+      <div class="row"></div>
+
+
+
+
+
+    </div>
+
+
+
+
+    <!--투어상품관리-->
+    <div class="row">
+      <div class="row">
+        <div class="col">
+          <table class="table table-striped">
+            <colgroup>
+            </colgroup>
+            <thead>
+            <tr>
+              <td>No</td>
+              <td>지역</td>
+              <td>호텔명</td>
+              <td>등급</td>
+              <td>가격</td>
+              <td>사용여부</td>
+              <td>상세정보</td>
+              <td>삭제버튼</td>
+            </tr>
+            </thead>
+            <tbody>
+              <th:block th:each="item,state : ${hotelList}">
+                <form action="/admin/itemDetail/deleteHotel" method="post">
+                  <input type="hidden" class="hbtHotelCode" name="hbtHotelCode" th:value="${item['HBT_HOTEL_CODE']}">
+                  <input type="hidden" class="hbtHotelImgCode" name="hbtHotelImgCode" th:value="${item['HBT_HOTEL_IMG_CODE']}">
+                  <tr>
+                    <td>[[${state.count}]]</td>
+                    <td>[[${item["AREA_KOR_NAME"]}]]</td>
+                    <td>[[${item["HBT_HOTEL_NAME"]}]]</td>
+                    <td>[[${item["HBT_HOTEL_GRADE"]}]]</td>
+                    <td>[[${item["HBT_HOTEL_PRICE"]}]]</td>
+                    <td>
+                      <input type="radio" class="form-check-input" name="isUse" value="Y" th:checked='${item["IS_USE"] == "Y"}' onchange="updateHotelIsUseAJAX(this);">사용
+                      <input type="radio" class="form-check-input" name="isUse" value="N" th:checked='${item["IS_USE"] == "N"}' onchange="updateHotelIsUseAJAX(this);">미사용
+                    </td>
+                    <td>[[${item["HBT_HOTEL_INTRO"]}]]</td>
+                    <td>
+                      <input type="submit" value="삭제">
+                    </td>
+                  </tr>
+                </form>
+              </th:block>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</th:block>
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+  <script src="/js/content/admin/item_detail/hotel_manage.js"></script>
+</th:block>
+</html>

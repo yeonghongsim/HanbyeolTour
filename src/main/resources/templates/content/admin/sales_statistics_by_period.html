@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href="/css/content/admin/.css" --> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+<th:block layout:fragment="adminContent">
+	<div class="row">
+		<div class="col">
+			<h3 class="menuTitle">기간별 매출 현황</h3>
+		</div>
+		<div class="row">
+			<div class="col">
+				<select class="form-select" id="yearSelect" onchange="getChart();">
+										 
+					<th:block th:each="num : ${#numbers.sequence(thisYear - 2, thisYear)}">
+						<option th:selected="${year == num}" th:value="${num}">[[${num}]]년</option>
+					</th:block>
+				</select>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col-10">
+				<canvas id="myChart"></canvas>
+			</div>
+			<div class="col-2">
+				매출 합계, 총 판매량? 데이터 뿌리기
+			</div>            
+		</div>
+		<div class="row mt-5">
+			<div class="col-6">
+				<canvas id="myChart1"></canvas>
+			</div>  
+			<div class="col-6">
+				<canvas id="myChart2"></canvas>
+			</div>  
+		</div>
+		<div class="row mt-5">
+			<div class="col">
+				<table class="table text-center">
+					<colgroup>
+						<col width="">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="13">매출 표(보류)</td>
+						</tr>
+						<tr>
+							<td></td>
+			               <th:block th:each="month : ${#numbers.sequence(1,12)}">
+			                	<!-- 자릿수 맞춰주기 -->
+			               <td>[[${#numbers.formatInteger(month, 2)}]]월</td>
+	               			</th:block>
+	            		</tr>
+					</thead>
+					<tbody>
+						<tr th:each = "mapData, state :${dataList}" >
+							<td th:if="${state.index == 0}">올해 판매량</td>
+							<td th:if="${state.index == 1}">올해 매출액</td>
+							<td th:if="${state.index == 2}">작년 매출액</td>
+							<!-- <td>[[${state.index == 0 ? '판매 건수' : '판매 금액'}]]</td> -->
+			               <!-- 여러개의 mapData를 또 반복 돌리면서 해당 각각의 mapData의 value 값을 뽑음 -->
+			               <th:block th:each="data : ${mapData}">
+			                  <td>[[${data.value}]]</td>
+			               </th:block>
+			            </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script type="text/javascript" src="/js/content/admin/sales_statistics_by_period.js"></script> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/admin/board/request_manage.css">
+</th:block>
+
+<th:block layout:fragment="adminContent">
+	<div class="row mb-3">
+		<div class="col">
+		<h3>문의 사항 관리</h3>
+			<table class="table align-middle search-request text-center">
+				<colgroup>
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+				</colgroup>
+				<thead class="">
+					<tr>
+						<td class="align-middle">문의일자</td>
+						<td colspan="3">
+							<div class="row">
+								<div class="col-6">
+									<div class="input-group">
+										<span class="input-group-text">From</span>
+										<input type="date" class="form-control" name="searchFromDate" id="searchFromDate">
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="input-group">
+										<span class="input-group-text">To</span>
+										<input type="date" class="form-control" name="searchToDate" id="searchToDate">
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="row">
+								<div class="col">
+									<input onclick="location.href='/admin/requestManage'" class="btn btn-secondary w-100" type="button" value="초기화">
+								</div>
+							</div>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>문의유형</td>
+						<td>
+							<select class="form-select text-center" name="typeRequestVO.typeRequestCode" id="typeRequestCode">
+								<th:block th:each="typeRequest : ${typeRequestList}">
+									<option th:value="${typeRequest.typeRequestCode}">[[${typeRequest.typeRequestName}]]</option>
+								</th:block>
+							</select>
+						</td>
+						<td>문의자</td>
+						<td>
+							<input class="form-control text-center" type="text" name="memberVO.memId" id="memId" value="" placeholder="회원 ID 입력">
+						</td>
+						<td rowspan="2">
+							<input onclick="searchRequest()" type="button" class="btn btn-primary w-100" value="검색">
+						</td>
+					</tr>
+					<tr>
+						<td>문의제목</td>
+						<td>
+							<input class="form-control text-center" type="text" name="hbtBoardRequestTitle" id="hbtBoardRequestTitle" value="" placeholder="문의글 제목 입력">
+						</td>
+						<td>구매코드</td>
+						<td>
+							<input class="form-control text-center" type="text" name="itemVO.itemCode" id="itemCode" value="" placeholder="구매코드 입력">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<h4>검색된 문의사항</h4>
+			<table class="table table-striped table-hover text-center req-table">
+				<colgroup>
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>문의번호</td>
+						<td>문의제목</td>
+						<td>문의자</td>
+						<td>상품코드</td>
+						<td>문의일자</td>
+						<td>답변유무</td>
+					</tr>
+				</thead>
+				<tbody id="searched-tbody">
+					<th:block th:if="${reqListN.size() != 0}" th:each="req, state : ${reqListN}">
+						<tr>
+							<td>[[${reqListN.size - state.index}]]</td>
+							<td>[[${req.hbtBoardRequestTitle}]]</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td th:if="${req.itemVO == null}">
+								
+							</td>
+							<td th:unless="${req.itemVO == null}">
+								[[${req.itemVO.itemCode}]]
+							</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
+							<td>[[${req.isAnswer}]]</td>
+						</tr>
+					</th:block>
+					<th:block th:unless="${reqListN.size() != 0}">
+						<tr>
+							<td colspan="6"><span>검색결과에 맞는 데이터가 존재하지 않습니다.</span></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="row mb-3">
+		<div class="col">
+			<h4>답변 요청</h4>
+			<table class="table table-hover text-center req-table">
+				<colgroup>
+					<col width="10%">
+					<col width="18%">
+					<col width="*">
+					<col width="12%">
+					<col width="18%">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>문의번호</td>
+						<td>문의유형</td>
+						<td>문의제목</td>
+						<td>문의자</td>
+						<td>문의일자</td>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="req, state : ${reqListN}">
+						<tr>
+							<td>[[${reqListN.size() - state.index}]]</td>
+							<td th:if="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+								<div>( [[${req.itemVO.itemCode}]] )</div>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+							</td>
+							<td th:if="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum}, itemCode=${req.itemVO.itemCode})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
+						</tr>
+					</th:block>
+					<th:block th:if="${reqListN.size() == 0}">
+						<tr>
+							<td colspan="5">작성된 문의글이 없습니다.</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<h4>답변 응답</h4>
+			<table class="table table-hover text-center req-table">
+				<colgroup>
+					<col width="10%">
+					<col width="18%">
+					<col width="*">
+					<col width="12%">
+					<col width="18%">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>문의번호</td>
+						<td>문의유형</td>
+						<td>문의제목</td>
+						<td>문의자</td>
+						<td>문의일자</td>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="req, state : ${reqListY}">
+						<tr>
+							<td>[[${reqListY.size() - state.index}]]</td>
+							<td th:if="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+								<div>( [[${req.itemVO.itemCode}]] )</div>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								[[${req.typeRequestVO.typeRequestName}]]
+							</td>
+							<td th:if="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum}, itemCode=${req.itemVO.itemCode})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td th:unless="${req.itemVO != null}">
+								<a th:href="@{/admin/regReqReplyForm(hbtBoardRequestNum=${req.hbtBoardRequestNum})}">[[${req.hbtBoardRequestTitle}]]</a>
+							</td>
+							<td>[[${req.memberVO.memId}]]</td>
+							<td>[[${req.hbtBoardRequestRegDate}]]</td>
+						</tr>
+					</th:block>
+					<th:block th:if="${reqListY.size() == 0}">
+						<tr>
+							<td colspan="5">답변이 필요한 문의글이 없습니다.</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/admin/board/request_manage.js"></script>
+</th:block>
+
+
+</html>

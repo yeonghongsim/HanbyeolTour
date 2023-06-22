@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/admin_layout}">
+
+<!-- 연결해야 할 외부 css 파일 -->
+<th:block layout:fragment="content_css">
+	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+<th:block layout:fragment="adminContent">
+	<div class="row">
+		<div class="col">
+			<h3 class="menuTitle">DIY 여행 예약 관리</h3>
+			<!-- 예약 내역 -->
+			<div class="row mt-5">
+				<div class="col">
+					<div class="row">
+						<div class="col-2">
+							
+					
+						</div>
+						<div class="col-1">
+							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeBuyStatus();">
+						</div>
+					</div>
+					<table class="table text-center">
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<thead>
+							<tr>
+								<td><input type="checkbox" class="form-check-input" id="allCheck" onclick="AllCheckboxControl();"></td>
+								<td>예약코드</td>
+								<td>예약일</td>
+								<td>예약상품명</td>
+								<td>예약자정보</td>
+								<td>예약상태</td>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${#lists.size(diyBuyList) == 0}">
+								<tr>
+									<td colspan="6">조회할 예약 내역이 없습니다.</td>
+								</tr>
+							</th:block>
+							<th:block th:unless="${#lists.size(diyBuyList) == 0}">
+								<tr th:each="diy : ${diyBuyList}">
+									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${diy.hbtDiyCode}"></td>
+									<td>[[${diy.hbtDiyCode}]]</td>
+									<td>[[${diy.diyTourBuyDate}]]</td>
+									<td>[[${diy.memberVO.memName}]]님의 DIY 여행</td>
+									<td>
+										<div>[[${diy.memberVO.memName}]]</div>
+										<div>[[${diy.memberVO.memberDetailVO.memDTell}]]</div>
+									</td>
+									<td>
+										<span style="font-weight: bold;">[[${diy.buyStateVO.buyStatusName}]]</span>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일-->
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src="/js/test.js(변경)"></script> --> <!-- 외부 js 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+</th:block>
+
+
+</html>

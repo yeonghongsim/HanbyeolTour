@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/user_layout}">
+<!-- 연결해야할 외부 CSS파  -->
+<th:block layout:fragment="content_css">
+<link rel="stylesheet" href="/css/item/item_header.css">
+
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="row d-flex justify-content-center my-3">
+		<div class="col-md-6">
+		
+			<!-- 그룹별 상품보기 -->
+			<div class="row mt-0 mb-3 d-flex justify-content-center">
+				<div class="col shadow custom-border-2 rounded-5 d-flex justify-content-center">
+					<div class="row my-2 d-flex justify-content-center">
+
+						<th:block th:each="loc, state : ${locMenuList}">
+							<div class="my-2 col-md-3 mx-2 text-center shadow custom-border-2 rounded-5">
+								[[${loc.areaKorName}]]
+							</div>
+						</th:block>
+
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="col text-end">
+					<span>[['총 ' + ${#lists.size(tourItemList)} + '건의 상품이 검색되었습니다.']]</span>
+				</div>
+			</div>
+
+			<div class="row mt-0 mb-3 d-flex justify-content-center">
+				<div class="col shadow custom-border-2 rounded-5">
+
+					<!-- 상품목록  -->
+					<th:block th:each="tourItem, state : ${tourItemList}">
+
+						<div class="row mx-3 my-3 itemRow shadow d-flex justify-content-center custom-border-2 rounded-5">
+							<div class="col-md-6 mx-0 px-0 itemImg">
+								<img style="display: block; width: 100%; height: 250px;" class="rounded-5" th:src="'/img/item/itemImg/' + ${tourItem['ITEM_IMG_ATTACHED_NAME']}">
+							</div>
+							<div class="col-6 text-center">
+								<h4 class="my-3">[[${tourItem["ITEM_TITLE"]}]]</h4>
+								<div class="row">
+									<div class="col">
+										<span>[[${tourItem["ITEM_PRICE"]}]]</span>
+									</div>
+									<div class="col">
+										<span>[[${tourItem["TRAVER_PERIOD"]}]]</span>
+									</div>
+									<div class="col">
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+												th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false"
+												th:aria-controls="flush-collapseOne + ${state.index}"
+												th:onclick="getSearchByGroupTable([[${state.index}]]);">
+											출발일 보기
+										 </button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row mb-2 d-flex justify-content-center">
+							<div class="col-md-10">
+								<div th:id="flush-collapseOne + ${state.index}" class="accordion-collapse collapse"
+									data-bs-parent="#accordionFlushExample">
+
+									<div class="accordion-body">
+										<div class="row dateDiv text-center d-flex justify-content-center">
+											<div style="cursor: pointer;" class="col-md-2 shadow text-center rounded-5 custom-border-2 mx-0 mb-2" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
+												<span class="yearSpan"></span>
+												<span class="monthSpan"></span>
+											</div>
+											<div style="cursor: pointer;" class="col-md-2 shadow rounded-5 custom-border-2 mx-1 mb-2" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
+												<span class="yearSpan"></span>
+												<span class="monthSpan"></span>
+											</div>
+											<div style="cursor: pointer;" class="col-md-2 shadow rounded-5 custom-border-2 mx-1 mb-2" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
+												<span class="yearSpan"></span>
+												<span class="monthSpan"></span>
+											</div>
+											<div style="cursor: pointer;" class="col-md-2 shadow rounded-5 custom-border-2 mx-1 mb-2" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
+												<span class="yearSpan"></span>
+												<span class="monthSpan"></span>
+											</div>
+										</div>
+
+										<!--달력테이블 그려지는 자리-->
+										<div class="row d-flex justify-content-center mb-3">
+											<div class="col shadow rounded-5 custom-border-2 d-flex d-flex justify-content-center align-items-center">
+												<input type="hidden" th:value="${tourItem['ITEM_CODE']}">
+												<table class="calTableTag my-3 text-center table d-flex align-items-center">
+													<colgroup></colgroup>
+												</table>
+											</div>
+										</div>
+
+
+										<div class="row d-flex justify-content-center">
+											<div class="col mb-3 d-flex shadow justify-content-center rounded-5 custom-border-2">
+												<table class="table d-flex justify-content-center">
+													<colgroup>
+													</colgroup>
+													<thead>
+														<tr>
+															<td>출발일자</td>
+															<td>도착일자</td>
+															<td>항공사</td>
+														</tr>
+													</thead>
+													<tbody class="resultTbodyTag">
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col text-center mx-auto">
+												<input class="collapsed btn ye-S-bc" type="button"
+												data-bs-toggle="collapse"
+												th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false"
+												th:aria-controls="flush-collapseOne + ${state.index}" value="닫기">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col text-end">
+												<span class="" style="font-size: 10px;">- 출발날짜를 선택 하시면 해당 날짜에 출발 가능한 상품을 리스트에서 확인 하실 수 있습니다.</span><br>
+												<span style="font-size: 10px;">- 성인 1인기준 기본 상품판매가 + 유류할증료, 제세공과금을 더한 총 여행요금입니다.</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</th:block>
+			</div>
+		</div>
+			
+			
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row"></div>
+			
+		</div>
+	</div>
+
+</th:block>
+
+<!--  연결해야할 외부 js 파일 -->
+<th:block layout:fragment="content_js">
+<script type="text/javascript" src="/js/content/item/tour_item_list_group.js"></script>
+</th:block>
+</html>
