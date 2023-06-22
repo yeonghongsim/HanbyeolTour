@@ -51,6 +51,7 @@
 	</resultMap>
 	
 
+
 	
 	
 	<!-- 카테고리 관리 페이지 - 여행국가 카테고리 등록 -->
@@ -385,6 +386,7 @@
        	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
 	
+
 	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
 	<select id="getBuyListCnt" resultType="int">
 		SELECT COUNT(HB.BUY_CODE)
@@ -463,7 +465,7 @@
         AND IS_MAIN = 'Y'
 	</select>
 	
-	<!-- DIY 예약 구매 리스트 -->
+	<!-- DIY 예약 구매 리스트 !!!!!!!!!!!!!!!!!!-->
 	<select id="getDiyBuyListForAdmin" resultMap="buyMapper.diyTour">
 		SELECT DISTINCT DIY.HBT_DIY_CODE
 			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE

@@ -139,3 +139,6 @@ function requestAndRenderPage() {
     xhr.open('GET', 'http://openapi.airport.co.kr/service/rest/FlightScheduleList/getIflightScheduleList?serviceKey=CjAiz1amkVJUNEWgPQo963nHN3%2FmHY1CtYIrTr%2FbyYft8%2FW%2BxX%2Fa%2FMIaAmkR1WBGkxFz1LmAm0Z%2FXKzPCQaylw%3D%3D&schDate=20151005&schDeptCityCode=GMP&schArrvCityCode=HND', true);
     xhr.send();
 }
+
+
+document.querySelector('.hotelCate').classList.add("ye-S-bc");

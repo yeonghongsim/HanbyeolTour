@@ -294,44 +294,10 @@ a {
 
 
 
-
-
-
-
-
-
-
-
-.loader {
-	/* color of choise */
-	--clr: #05A8AA;
-	/* loading time of choice */
-	--load-time: 2s;
-	outline: 5px solid var(--clr);
-	outline-offset: 5px;
-	position: relative;
-	overflow: hidden;
-	border-radius: 5rem;
-	/* width: 10rem; */
-	/* height: 2rem; */
-	padding: 1rem 5rem;
-	/* use either padding or width + height*/
-	/* I prefer the padding one */
-	/* rotate: -90deg; */
-	/* rotate if you want/need vertical loader */
+.center-align {
+	text-align: center;
 }
 
-.loader::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: var(--clr);
-	z-index: 2;
-	animation: loading var(--load-time) ease-in-out infinite;
-}
 
 @keyframes loading {
 	0% {
@@ -341,4 +307,12 @@ a {
 	100% {
 		width: 100%;
 	}
+}
+
+.table{
+	--bs-table-border-color: #ffd000;
+}
+
+.hover {
+	cursor: pointer;
 }

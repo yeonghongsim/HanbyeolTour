@@ -3,7 +3,6 @@ function getNationNames(e){
     //
     const areaName = e.value;
 
-
     $.ajax({
         url: '/airline/getNationalNamesAJAX', //요청경로
         type: 'post',
@@ -19,8 +18,6 @@ function getNationNames(e){
         }
     });
 }
-
-
 
 function drawInnerAccordion(nationalNames, e){
 
@@ -42,9 +39,7 @@ function drawInnerAccordion(nationalNames, e){
 
     drawTarget.replaceChildren();
     drawTarget.insertAdjacentHTML('afterbegin', str);
-
 }
-
 
 function setAreaNAme(name, code){
 
@@ -60,17 +55,14 @@ function setAreaNAme(name, code){
         textTarget[1].nextElementSibling.textContent = code;
 
     }
-
-
 }
-
+//항공정보조회
 function getFlightAJAX(){
 
     const depAirport = document.querySelector('#depAirport').textContent;
     const arrAirport = document.querySelector('#arrAirport').textContent;
     const depDate = document.querySelector('#depDate').value;
     const arrDate = document.querySelector('#arrDate').value;
-
 
     $.ajax({
         url: '/airline/getFlightAJAX', //요청경로
@@ -80,13 +72,62 @@ function getFlightAJAX(){
         async : true,
         data: {'depAirport': depAirport, 'arrAirport': arrAirport, 'depDate': depDate, 'arrDate': arrDate},
         success: function(result) {
-            console.log(JSON.parse(result));
+            const flightInfo = JSON.parse(result);
+            console.log(flightInfo);
+
+            drawFlightInfo(flightInfo);
         },
         error: function() {
             alert('실패');
         }
     });
 }
+
+function drawFlightInfo(flightInfo){
+
+
+    console.log(Object.keys(flightInfo).length);
+    //데이터삽입위치태그
+    const depInfoTable = document.querySelector('.depInfoTable');
+    const arrInfoTable = document.querySelector('.arrInfoTable');
+
+    let depInfoStr = '';
+    let arrInfoStr = '';
+
+    flightInfo['dep'].forEach(flight => {
+        depInfoStr += `
+                <tr>
+                    <td>${flight['internationalNum']}</td>                
+                    <td>${flight['airlineKorean']}</td>                
+                    <td>${flight['internationalTime']}</td>                
+                </tr>
+        `;
+    });
+
+
+
+    if(Object.keys(flightInfo).length != 1){
+
+        flightInfo['arr'].forEach(flight => {
+            arrInfoStr += `
+                    <tr>
+                        <td>${flight['internationalNum']}</td>                
+                        <td>${flight['airlineKorean']}</td>                
+                        <td>${flight['internationalTime']}</td>                
+                    </tr>
+            `;
+        });
+        arrInfoTable.replaceChildren();
+        arrInfoTable.insertAdjacentHTML('afterbegin', arrInfoStr);
+
+    }
+
+    depInfoTable.replaceChildren();
+    depInfoTable.insertAdjacentHTML('afterbegin', depInfoStr);
+}
+
+
+
 
 function openOutterModal(e) {
     const text = e.querySelector('h5').textContent;
@@ -119,6 +160,8 @@ function test(){
     });
 
 }
+
+document.querySelector('.airlineCate').classList.add("ye-S-bc");
 function test(){
 
 
