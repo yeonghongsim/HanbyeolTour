@@ -1,4 +1,6 @@
 
+init();
+
 
 //일자별상품조회 달력
 function getSearchByGroupTable(idx, e){
@@ -157,4 +159,25 @@ function getDate123(dateString){
 	const date = new Date(year, month, day);
 	const formattedDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\./g, '-');
 	return formattedDate;
+}
+
+
+
+
+//국가선택시 색상강조
+function init(){
+
+	document.querySelector('.areaCate').classList.add("ye-S-bc");
+
+	const areaNameDivs  = document.querySelectorAll('.areaNameDiv');
+	const areaName = document.querySelector('#areaName').value;
+
+	areaNameDivs.forEach(div => {
+		console.log(div.innerText);
+		console.log(areaName);
+
+		if(div.innerText == areaName){
+			div.classList.add('ye-S-bc');
+		}
+	});
 }

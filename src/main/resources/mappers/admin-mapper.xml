@@ -24,13 +24,13 @@
 		<result column="HBT_TOUR_ITEM_INTRO" 		property="hbtTourItemIntro"/>
 		<result column="AREA_CODE" 					property="areaCode"/>
 		<collection property="imgVOList" 			resultMap="itemMapper.img"/>
-		<collection property="tourItemList" 		resultMap="tourItemImg"></collection>
+		<collection property="tourItemImgList" 		resultMap="tourItemImg"></collection>
 	</resultMap>
 	
 	<resultMap type="com.project.team.admin.vo.HotelImgVO" id="hotelImg">
 		<id column="HBT_HOTEL_IMG_CODE" 				property="hbtHotelImgCode"/>
 		<result column="HBT_HOTEL_ORIGIN_FILE_NAME" 	property="hbtHotelOriginFileName"/>
-		<result column="HBT_HOTEL_ATTECHED_FILE_NAME"	property="hbtHotelAttchedFileName"/>
+		<result column="HBT_HOTEL_ATTECHED_FILE_NAME"	property="hbtHotelAttechedFileName"/>
 		<result column="HBT_HOTEL_CODE" 				property="hbtHotelCode"/>
 		<result column="IS_MAIN" 						property="isMain"/>
 	</resultMap>
@@ -49,6 +49,10 @@
 		<result column="HBT_AIRLINE_ICON" 		property="hbtAirlineIcon"/>
 		<result column="IS_USE" 				property="isUse"/>
 	</resultMap>
+	
+
+
+	
 	
 	<!-- 카테고리 관리 페이지 - 여행국가 카테고리 등록 -->
 	<insert id="regArea">
@@ -397,7 +401,7 @@
        	OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
 	
-	
+
 	<!-- 검색 조건에 맞는 구매(예약) 내역 수 -->
 	<select id="getBuyListCnt" resultType="int">
 		SELECT COUNT(HB.BUY_CODE)
@@ -477,7 +481,7 @@
         AND IS_MAIN = 'Y'
 	</select>
 	
-	<!-- DIY 예약 구매 리스트 -->
+	<!-- DIY 예약 구매 리스트 !!!!!!!!!!!!!!!!!!-->
 	<select id="getDiyBuyListForAdmin" resultMap="buyMapper.diyTour">
 		SELECT DISTINCT DIY.HBT_DIY_CODE
 			, TO_CHAR (DIY.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE

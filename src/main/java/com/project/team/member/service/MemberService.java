@@ -3,8 +3,12 @@ package com.project.team.member.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.admin.vo.HotelImgVO;
+import com.project.team.admin.vo.TourImgVO;
+import com.project.team.admin.vo.TourItemImgVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
+import com.project.team.buy.vo.BuySearchVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.item.vo.DiyDetailVO;
@@ -96,8 +100,8 @@ public interface MemberService {
 	// 마이페이지 메인 - 예약 1개월내 내역 조회 
 	List<BuyVO> getBuyListInOneMonth(String memCode);
 	
-	// 예약 내역 조회 - DIY 
-	List<DiyTourVO> getDiyTourList(String memCode);
+	// 예약 내역 조회 - DIY (검색 조건 포함)
+	List<DiyTourVO> getDiyTourList(BuySearchVO buySearchVO);
 	
 	// 예약 내역 상세 조회 - DIY 
 	List<DiyTourVO> getDiyDetaiList(String hbtDiyCode);
@@ -108,13 +112,32 @@ public interface MemberService {
 	// 예약 내역 상세 페이지 - 상단 정보 조회 v.2 
 	List<DiyDetailVO> getDiyDetaiListNew(String hbtDiyCode);
 	
+	// 예약 상세 - 투어 코드 리스트 
+	List<String> getInDiyReservedTourList(String hbtDiyCode);
+	// 예약 상세 - 호텔 코드 리스트 
+	List<String> getInDiyReservedHotelList(String hbtDiyCode);
 	
+	//예약 상세 - 호텔 정보 리스트 
+	List<DiyTourVO> getInDiyHotelInfoList(String hbtDiyCode);
+	List<HotelImgVO> getDiyHotelImgList(String hbtHotelCode);
 	
+	//예약 상세 - 투어 정보 리스트 
+	List<DiyTourVO> getInDiyTourInfoList(String hbyDiyCode);
+	List<TourItemImgVO> getDiyTourImgList(String hbtTourItemCode);
 	
+	//마이페이지 - 메인 DIY 투어 1개월 이내 상태 코드 갯수 조회 
+	List<BuyStateVO> getDiyStatusInOneMonth(String memCode);
+	//마이페이지 - 메인 DIY 투어 1개월 이내 내역 조회 
+	List<DiyTourVO> getDiyTourListInOneMonth(String memCode);
 	
+	// 페이징 - 갯수 카운팅 
+	int getDiyListCnt(BuySearchVO buySearchVO);
 	
+	//diy - 상태 코드 상단바 
+	List<BuyStateVO> getDiyStatusCountList(BuySearchVO buySearchVO);
 	
-	
+	//diy - 예약 취소 
+	void cancelDiyReservation(String hbyDiyCode);
 	
 	
 	

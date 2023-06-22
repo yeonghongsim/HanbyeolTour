@@ -179,6 +179,12 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
 	}
 	
+	//DIY 예약 리스트 조회
+	@Override
+	public List<DiyTourVO> getDiyBuyListForAdmin() {
+		
+		return sqlSession.selectList("adminMapper.getDiyBuyListForAdmin");
+	}
 	
 	//검색 조건에 맞는 구매(예약) 수
 	@Override

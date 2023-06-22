@@ -18,5 +18,5 @@ public class TourItemVO {
     private String hbtTourItemIntro;
     private String areaCode;
     private List<ImgVO> imgVOList;
-    private List<TourItemImgVO> tourItemList;
+    private List<TourItemImgVO> tourItemImgList;
 }

@@ -1,0 +1,168 @@
+@charset "UTF-8";
+
+.container{
+	width: 90%;
+	margin: 0 auto;
+}
+
+
+/* 상단 타이틀 */
+.title{
+	font-size: 1.6rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+}
+
+.title-md{
+	font-size: 1.4rem;
+	font-weight: bold;
+	letter-spacing: -2px;
+	vertical-align: middle;
+	margin-top: 1.5rem;
+	color: black;
+}
+
+/* 상단바 */
+.upper-box{
+	border: 1px solid #ffd000;
+	border-radius: 6px;
+	padding: 15px;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+
+/* 예약 간단 정보 테이블 */
+  .table-tr {
+    text-align: center;
+  }
+ 
+ .table-tr img {
+    width: auto;
+    height: auto;
+    max-width: 40px;
+    max-height: 40px;
+  }
+
+.table-reservation thead{
+	border-top: 2px solid #d6d6d6;
+	border-bottom: 1px solid #e6e6e6;
+	background-color: #e6e6e6;
+	text-align: center;
+}
+.table-reservation thead tr td{
+	height: 40px;
+}
+.table-reservation tbody tr td{
+	padding-top: 3rem; 
+	padding-bottom: 2rem; 
+}
+
+
+
+
+
+/* 결제 금액 */
+.total-price-tit{
+	font-size: 1.1rem;
+	font-weight: bolder;
+	vertical-align: middle;
+	word-spacing: -2px;
+	padding-top: 5px;
+	margin-right: 1rem;
+}
+
+.total-price{
+	font-size: 1.4rem;
+	font-weight: bolder;
+	color: #f27370;
+	vertical-align: middle;
+	word-spacing: 2px;
+	padding-right: 2rem;
+}
+
+
+
+/* 예약자 정보 */
+.personal-info tbody th{
+	border-top: 1px solid #d6d6d6;
+	border-bottom: 1px solid #e6e6e6;
+	background-color: #e6e6e6;
+}
+
+.personal-info tbody td{
+	border-top: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.table.personal-info tbody tr:first-child th,
+.table.personal-info tbody tr:first-child td {
+   border-top: 2px solid #d6d6d6;
+}
+
+
+/* 호텔 정보 구역  */
+
+.info-row {
+  display: flex;
+  align-items: center; /* Vertically align text data and image slider */
+}
+
+.carousel-item {
+  height: 300px; /* Adjust image height */
+  overflow: hidden; /* Hide overflowing images */
+}
+
+.carousel-item img {
+  height: 100%;
+  object-fit: cover; /* Scale image to fill container */
+  border-radius: 2rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 30px; /* Adjust arrow width */
+  height: 30px; /* Adjust arrow height */
+}
+
+.info{
+	border: 1px solid #e6e6e6;
+	border-radius: 3rem;
+	padding: 1.6rem;
+	
+}
+
+.info-table tr td{
+	padding: 1rem;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 0.8rem;
+}
+
+.info-table tr{
+	font-weight: bolder;
+}
+
+.scrollable-text {
+   max-height: 20px; /* 최대 높이를 원하는 값으로 조정하세요 */
+   overflow-y: auto;
+ }
+
+
+
+
+/* 유의사항 */
+.info-under {
+	font-size: 0.8rem;
+	color: #888;
+	margin-bottom: 3rem;
+}
+
+
+
+
+
+
+
+

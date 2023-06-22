@@ -115,6 +115,7 @@ public class ItemServiceImpl implements ItemService{
 	public List<DiyTourVO> testGetDiyTourList(String memCode) {
 		return sqlSession.selectList("itemMapper.testGetDiyTourList", memCode);
 	}
+	@Override
 	public List<HashMap<String, Object>> getItemReview(String itemCode) {
 		return sqlSession.selectList("itemMapper.getItemReview", itemCode);
 	}

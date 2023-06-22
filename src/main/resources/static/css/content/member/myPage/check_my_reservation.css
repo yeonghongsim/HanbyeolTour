@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+
+.container{
+	width: 95%;
+	margin: 0 auto;
+}
+
+
 /* 상태 조회 상단바 */
 
 .content-box{
