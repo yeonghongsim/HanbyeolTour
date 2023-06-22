@@ -13,6 +13,8 @@
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
 
+
+<div class="container">
 	<div class="row mb-1 mt-2">
 		<div class="col title">
 			예약 및 취소 조회 
@@ -98,15 +100,14 @@
 	
 	
 	
-	<div class="row">
-		<div class="col mb-5 mt-4">
+	<div class="row mb-5 mt-4">
+		<div class="col">
 			<table class="table table-reservation">
 				<colgroup>
 					<col width="15%">
 					<col width="*">
-					<col width="5%">
 					<col width="10%">
-					<col width="10%">
+					<col width="15%">
 					<col width="15%">
 					<col width="10%">
 				</colgroup>
@@ -115,8 +116,7 @@
 						<td>결제일자</td>
 						<td>상품</td>
 						<td>인원</td>
-						<td>출발일자</td>
-						<td>도착일자</td>
+						<td>여행기간</td>
 						<td>결제금액</td>
 						<td>상태</td>
 					</tr>
@@ -166,8 +166,9 @@
 						        	</div>
 						        </td>
 						        <td th:text="${buyDetail.reservedPeopleNum}" class="text-center"></td>
-						        <td th:text="${buyDetail.departDate}" class="date-td"></td>
-						        <td th:text="${buyDetail.arriveDate}" class="date-td"></td>
+						        <td th:text="${buyDetail.departDate}" class="date-td">
+						        	[[${buyDetail.departDate}]]<br>~<br>[[${buyDetail.arriveDate}]]
+						        </td>
 						        <td style="color: #f27370;">
 						        	 [[${#numbers.formatCurrency(buy.buyTotalPrice).substring(1)}]] 원
 					        	</td>
@@ -196,12 +197,14 @@
 		
 		</div>
 	</div>
-	
-	
+	[[${buyVO.prev}]]
+	[[${buyVO.beginPage}]]
+	[[${buyVO.endPage}]]
+	[[${buyVO.nowPage}]]
 	<!-- 페이징 처리 -->					
-	<div class="row justify-content-center">
+	<div class="row justify-content-center mb-5">
 		<div class="col-3">
-		
+			
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
 			  
@@ -233,7 +236,7 @@
 		</div>
 	</div>
 	
-
+</div>
 
 </th:block>
 

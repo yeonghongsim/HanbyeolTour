@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/member/member_layout}">
+   
+<!-- 연결해야 할 외부 CSS파일 -->   
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/member/myPage/check_diy_reservation.css">
+</th:block>
+
+<!-- 본문 내용 -->   
+<th:block layout:fragment="member_content">
+
+
+<div class="container">
+
+<div class="row mb-4 mt-2">
+	<div class="col title">
+		DIY 패키지 예약 조회 
+	</div>
+</div>
+
+<div class="row mb-3">
+    <div class="col content-box">
+           <ul class="my-page-step">
+               <li th:each="buyStatus : ${diyStatusCountList}">
+                   <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
+                   <span  th:text="${buyStatus.buyStatusName}"></span>
+               </li>
+           </ul>
+    </div>
+</div>
+
+
+<div class="row">
+		<div class="col search-period">
+			<form id="search-form" th:action="@{/myPage/checkDiyReservation}" method="post">
+				<input type="hidden" value="0" name="month" id="month">
+				<input type="hidden" th:value="${buySearchVO.fromDate}"id="fromDate" name="fromDate">
+				<input type="hidden" th:value="${buySearchVO.toDate}" id="toDate" name="toDate">
+				<input type="hidden" th:value="${buySearchVO.searchStatusCode}" id="searchStatusCode" name="searchStatusCode">
+				<input type="hidden" name="nowPage" value="1" id="nowPage">
+			</form>
+				<div class="row">
+					<div class="col-7 select-range">
+						<p>구매기간</p>
+						<ul class="select-month">
+							<li>
+								<input type="button" class="btn btn-dark" value="전체" onclick="click_month_btn(1);">
+							</li>
+							<li>
+								<input type="button" class="btn btn-dark" value="1개월" onclick="click_month_btn(-1);">
+							</li>
+							<li>
+								<input type="button" class="btn btn-dark" value="3개월" onclick="click_month_btn(-3);">
+							</li>
+							<li>
+								<input type="button" class="btn btn-dark" value="6개월" onclick="click_month_btn(-6);">
+							</li>
+							<li>
+								<input type="button" class="btn btn-dark" value="12개월" onclick="click_month_btn(-12);">
+							</li>
+						</ul>
+					</div>
+					<div class="col-1 select-range mt-4">
+						<span id="first">구매상태</span>
+					</div>
+					<div class="col-3 select-range mt-4">
+						<select class="form-select" id="searchStatusCodeShow">
+							<option value="0" th:selected="${buySearchVO.searchStatusCode == 0}">전체</option>
+							<option value="1" th:selected="${buySearchVO.searchStatusCode == 1}">결제완료</option>
+							<option value="2" th:selected="${buySearchVO.searchStatusCode == 2}">예약완료</option>
+							<option value="3" th:selected="${buySearchVO.searchStatusCode == 3}">취소요청</option>
+							<option value="4" th:selected="${buySearchVO.searchStatusCode == 4}">취소완료</option>
+						</select>
+					</div>
+				</div>
+					
+				<div class="row">
+				    <div class="col select-range" style="display: flex;">
+				        <p style="margin-right: 14px;">직접 입력</p>
+				        <div class="col-4 d-grid" style="margin-right: 10px;">
+				            <input id="fromDateShow" type="date" class="form-control" th:value="${buySearchVO.fromDate}">
+				        </div>
+				        <div class="col-1 text-center" style="margin-right: 10px;">
+				            <span class="">~</span>
+				        </div>
+				        <div class="col-4 d-grid" style="margin-right: 10px;">
+				            <input id="toDateShow" type="date" class="form-control" th:value="${buySearchVO.toDate}">
+				        </div>
+				        <div class="col-1 d-grid">
+				            <input type="button" class="btn btn-secondary" value="검색" onclick="click_search_btn();">
+				        </div>
+				    </div>
+				</div>
+				
+			
+		</div>
+	</div>
+	
+
+
+
+
+<!-- diy -table -->
+<div class="row mt-4">
+	<div class="col">
+		<table class="table table-reservation">
+			<colgroup>
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+				<col width="10%">
+				<col width="15%">
+				<col width="15%">
+				<col width="15%">
+			</colgroup>
+			<thead>
+				<tr>
+					<td>결제일자</td>
+					<td>예약코드</td>
+					<td>항공사</td>
+					<td>여행국가</td>
+					<td>여행기간</td>
+					<td>결제금액</td>
+					<td>구매상태</td>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${#lists.size(diyTourList) == 0}">
+						<tr class="text-center">
+							<td colspan="8">
+							<br>
+							<br>
+							<br>
+								<div style="font-size: 4rem; color: #bbb;">
+									<i class="bi bi-exclamation-circle"></i>
+								</div>
+								<div>
+									기간내 예약내역이 없습니다.
+								</div>
+							<br>	
+							<br>	
+							<br>	
+							</td>
+						</tr>
+				</th:block>
+				<th:block th:if="${#lists.size(diyTourList) != 0}">
+					<th:block th:each="diy : ${diyTourList}">
+						<tr class="table-tr">
+				            <td class="text-center">
+					            <div style="color: #131518; font-weight:bolder;">[[${diy.diyTourBuyDate}]]</div>
+					            <div>
+					            	<a th:href="@{/myPage/diyDetail(hbtDiyCode=${diy.hbtDiyCode})}"><span style="font-size: 0.9rem; text-decoration:underline;">상세보기</span></a>
+					            </div>
+				            </td>
+				            <td  style="color: #ffd000;">[[${diy.hbtDiyCode}]]</td>
+					        <td>
+					        	<div class="col">
+									<img th:src="${'/img/item/airlineIcon/' + diy.airlineVO.hbtAirlineIcon}">
+					        		<span>[[${diy.airlineVO.hbtAirlineName}]]</span>
+					        	</div>
+					        </td>
+					        <td th:text="${diy.tourAreaVO.areaKorName}" class="text-center"></td>
+					        <td class="date-td">
+					        	[[${diy.departDate}]] <br>~<br>[[${diy.arriveDate}]]<br>
+					        	( 총 [[${diy.traverPeriod}]] 일 )
+					        </td>
+					        <td style="color: #f27370;">
+					        	 [[${#numbers.formatCurrency(diy.totalPrice).substring(1)}]] 원
+				        	</td>
+					        <td id="cancel-td">
+						        <div>
+						        	<span id="statusCode" style="font-weight: bolder;" th:value="${diy.buyStatusCode}">[[${diy.buyStateVO.buyStatusName}]]</span>
+						        </div>
+						        <div id="cancelBtn">
+						        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn"
+						        	th:if="${diy.buyStatusCode == '1'}"
+						        	th:onclick="cancel_reservation([[${diy.hbtDiyCode}]])"> 예약취소</button>
+						        </div>
+					        </td>
+						</tr>
+					</th:block>
+				</th:block>
+			</tbody>
+		
+		</table>
+		
+		
+	</div>
+</div>
+
+
+
+<!-- 페이징 처리 -->					
+	<div class="row justify-content-center mb-5">
+		<div class="col-3">
+			
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			  
+			    <li class="page-item" th:classappend="${buySearchVO.prev ? '' : 'disabled'}">
+			      <a class="page-link" href="javascript:void(0);" aria-label="Previous"
+			       th:onclick="click_page_btn('[[${buySearchVO.beginPage - 1}]]');">
+			        <span aria-hidden="true">&lt;</span>
+			      </a>
+			    </li>
+			    
+			    
+			    <li class="page-item" 
+			    th:each=" pageNum : ${#numbers.sequence(buySearchVO.beginPage, buySearchVO.endPage)}">
+			    	<a th:classappend="${buySearchVO.nowPage == pageNum ? 'active' : ''}" class="page-link"
+			    	href="javascript:void(0);" th:onclick="click_page_btn('[[${pageNum}]]');">[[${pageNum}]]</a>
+			    </li>
+			    
+			    
+			    <li class="page-item" th:classappend="${buySearchVO.next ? '' : 'disabled'}">
+			      <a class="page-link" href="javascript:void(0);" aria-label="Next"
+			       th:onclick="click_page_btn('[[${buySearchVO.endPage + 1}]]');">
+			        <span aria-hidden="true">&gt;</span>
+			      </a>
+			    </li>
+			    
+			  </ul>
+			</nav>
+			
+		</div>
+	</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->   
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/member/myPage/check_diy_reservation.js"></script>
+</th:block>
+
+
+
+</html>

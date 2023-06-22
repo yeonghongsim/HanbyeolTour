@@ -495,10 +495,9 @@
 	
 	<!-- diyTour List  -->
 	<select id="getDiyTourList" resultMap="buyMapper.diyTour">
-		SELECT HBT_DIY_CODE
+		SELECT DT.HBT_DIY_CODE
 			, TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
 			, DT.MEM_CODE
-			<!-- , DT.AREA_CODE -->
 			, AREA.AREA_KOR_NAME
 		    , DT.HBT_AIRLINE_CODE
 		    , AIR.HBT_AIRLINE_NAME
@@ -515,7 +514,17 @@
         AND DT.AREA_CODE = AREA.AREA_CODE
         AND DT.BUY_STATUS_CODE = ST.BUY_STATUS_CODE
 		AND IS_PAID = 'Y'
-		ORDER BY DIY_TOUR_BUY_DATE DESC
+		<if test="fromDate != null and !fromDate.equals('')">
+		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		</if>	
+		<if test="toDate != null and !toDate.equals('')">
+		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>
+		<if test="searchStatusCode != 0">
+		AND DT.BUY_STATUS_CODE = #{searchStatusCode}
+		</if>
+		ORDER BY DT.DIY_TOUR_BUY_DATE DESC
+		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
 	
 	
@@ -631,6 +640,109 @@
 		FROM HBT_TOUR_IMG
 		WHERE HBT_TOUR_ITEM_CODE = #{hbtTourItemCode}
 	</select>
+	
+	<!-- 마이페이지 mainPage - DIY 1개월 이내 내역 조회 -->
+	<select id="getDiyStatusInOneMonth" resultMap="buyMapper.buyState">
+		SELECT
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME,
+		  NVL(COUNT(HDT.BUY_STATUS_CODE), 0) AS BUY_STATUS_COUNT
+		FROM
+		  HBT_BUY_STATE HBS
+		LEFT JOIN
+		  HBT_DIY_TOUR HDT ON HBS.BUY_STATUS_CODE = HDT.BUY_STATUS_CODE 
+		  AND HDT.MEM_CODE = #{memCode} 
+		  AND TO_CHAR(HDT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD') 
+		  AND TO_CHAR(HDT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		WHERE 
+		  HBS.BUY_STATUS_CODE &lt;= 4
+		GROUP BY
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME
+		ORDER BY
+		  HBS.BUY_STATUS_CODE ASC
+	</select>
+	
+	<select id="getDiyTourListInOneMonth" resultMap="buyMapper.diyTour">
+		 SELECT HBT_DIY_CODE
+		    , TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
+		    , DT.MEM_CODE
+		    , AREA.AREA_KOR_NAME
+		    , DT.HBT_AIRLINE_CODE
+		    , AIR.HBT_AIRLINE_NAME
+		    , AIR.HBT_AIRLINE_ICON
+		    , TO_CHAR(DT.DEPART_DATE, 'YYYY-MM-DD') DEPART_DATE 
+		    , TO_CHAR(DT.ARRIVE_DATE, 'YYYY-MM-DD') ARRIVE_DATE
+		    , DT.TOTAL_PRICE
+		    , DT.TRAVER_PERIOD
+		    , DT.BUY_STATUS_CODE
+		    , ST.BUY_STATUS_NAME
+		FROM HBT_DIY_TOUR DT, HBT_AIRLINE AIR, HBT_TOUR_AREA AREA, HBT_BUY_STATE ST
+		WHERE MEM_CODE = #{memCode}
+		AND DT.HBT_AIRLINE_CODE = AIR.HBT_AIRLINE_CODE
+		AND DT.AREA_CODE = AREA.AREA_CODE
+		AND DT.BUY_STATUS_CODE = ST.BUY_STATUS_CODE
+		AND IS_PAID = 'Y'
+		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD')
+		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		AND ST.BUY_STATUS_CODE  &lt;= 2
+		ORDER BY DIY_TOUR_BUY_DATE DESC	
+	</select>
+	
+	<!-- DIY 페이징 갯수 (검색 조건에 맞는) -->
+	<select id="getDiyListCnt" resultType="int">
+		SELECT COUNT(HBT_DIY_CODE)
+		FROM HBT_DIY_TOUR
+		WHERE MEM_CODE = #{memCode}
+		<if test="fromDate != null and !fromDate.equals('')">
+		AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		</if>	
+		<if test="toDate != null and !toDate.equals('')">
+		AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>
+		<if test="searchStatusCode != 0">
+		AND BUY_STATUS_CODE = #{searchStatusCode}
+		</if>	
+	</select>
+	
+	<!--DIY 상단바 갯수 조회 -->
+	<select id="getDiyStatusCountList" resultMap="buyMapper.buyState">
+		SELECT
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME,
+		  NVL(COUNT(HDT.BUY_STATUS_CODE), 0) AS BUY_STATUS_COUNT
+		FROM
+		  HBT_BUY_STATE HBS
+		LEFT JOIN
+		  HBT_DIY_TOUR HDT ON HBS.BUY_STATUS_CODE = HDT.BUY_STATUS_CODE 
+		  AND HDT.MEM_CODE = #{memCode}
+		  <if test="fromDate != null and !fromDate.equals('')">
+			AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		  </if>	
+		  <if test="toDate != null and !toDate.equals('')">
+		   AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		   </if>
+		   <if test="searchStatusCode != 0">
+			AND HDT.BUY_STATUS_CODE = #{searchStatusCode}
+			</if>	
+		WHERE 
+		  HBS.BUY_STATUS_CODE &lt;= 4
+		GROUP BY
+		  HBS.BUY_STATUS_CODE,
+		  HBS.BUY_STATUS_NAME
+		ORDER BY
+		  HBS.BUY_STATUS_CODE ASC
+	</select>
+	
+	<!-- DIY 취소 기능 -->
+	<update id="cancelDiyReservation">
+		UPDATE HBT_DIY_TOUR 
+		SET BUY_STATUS_CODE = 3
+		WHERE HBT_DIY_CODE = #{hbtDiyCode}
+	</update>
+
+	
+	
 	
 	
 	

@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+.container{
+	width: 95%;
+	margin: 0 auto;
+}
+
+
+
 .title{
 	font-size: 1.6rem;
 	font-weight: bold;
@@ -7,7 +14,155 @@
 	vertical-align: middle;
 }
 
+/* 상태 조회 상단바 */
+
+.content-box{
+	background-color: #fff9d4;
+	border-radius: 10px;
+	height: 130px;
+	margin-top: 0.5rem;
+}
+
+
+.content-box > ul{
+	list-style: none;
+	display: flex;
+	justify-content: space-between; 
+	width: 100%;
+	margin-top: 10px;
+}
+
+.content-box > ul > li{
+	display: inline-block;
+	margin-right: 2rem;
+	text-align: center;
+}
+
+.content-box > ul > li > span{
+	display: block;
+	font-size: 1.2rem;
+	text-align: center;
+	color: black;
+	
+}
+.content-box > ul > li > em {
+	margin-top: 1rem;
+	display: block;
+	font-size: 1.9rem;
+	font-weight: bolder;
+	font-style: normal;
+}
+
+ul{
+	list-style: none;
+}
+
+li{
+	display: inline-block;
+	text-align: -webkit-match-parent;
+}
+
+.search-period .select_con li:first-child {
+    margin-left: 0;
+}
+.select_con li{
+	float: left;
+    width: auto;
+    height: 28px;
+    margin-left: 4px;
+    font-size: 0;
+    line-height: 0;
+}
+    
+.search-period .select-range p {
+    float: left;
+    margin-right: 15px;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -.48px;
+    padding-left: 1rem;
+}
+.search-period .select-range > #first{
+	margin-top: 1.6rem;
+	letter-spacing: -1px;
+}
+
+
+.select-month li{
+	margin-right: 0.7rem;
+	margin-top: 1.7rem;
+}
+
+option{
+	font-size: 0.7rem;
+}
+
+.form-select{
+	font-size: 0.9rem;
+}
+
+.form-control {
+    border-width: 1px;
+  }
+
+
+/*  검색 조건 선택하는 공간 */
+.search-period {
+	background-color: #fafafa;
+	border-radius: 10px;
+	height: 170px;
+	margin-top: 0.5rem;
+}
 
 
 
+/* 테이 */
 
+.table-tr img {
+    width: auto;
+    height: auto;
+    max-width: 40px;
+    max-height: 40px;
+  }
+
+.table-reservation thead{
+	border-top: 2px solid grey;
+	border-bottom: 1px solid grey;
+	background-color: #fafafa;
+}
+
+.table-reservation thead tr td{
+	padding-top: 0.7rem;
+	padding-bottom: 0.7rem;
+	text-align: center;
+}
+
+.table-reservation  tbody tr td {
+	vertical-align: middle;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	padding-left: 5px;
+	padding-right:5px;
+	text-align: center;
+	border-left: 1px solid #e6e6e6; /* Add vertical border on the left side */
+  	border-right: 1px solid #e6e6e6; 
+  	border-collapse: collapse;
+}
+
+.table-reservation tbody tr td:first-child {
+  border-left: none; /* Remove left border from the first cell in each row */
+}
+
+.table-reservation tbody tr td:last-child {
+  border-right: none; /* Remove right border from the last cell in each row */
+}
+
+.table-reservation tbody tr td + td {
+  border-left: none; /* Remove left border from cells adjacent to the right border */
+}
+
+.date-td{
+	font-size: 0.9rem;
+}
