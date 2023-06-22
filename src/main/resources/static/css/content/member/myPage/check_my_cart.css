@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
-.test {
-	color: red;
+.modal_img {
+	width: 200px;
+	margin: 0.8rem;
+	
 }

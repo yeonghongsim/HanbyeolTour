@@ -47,16 +47,14 @@ function isReviewed(buyCode, memCode){
 				str += `			<div class="col">`;
 				str += `				<span style="font-size: 20px;">내 후기</span>`;
 				str += `			</div>`;
-				str += `			<div class="col-1">`;
-				str += `				<input onclick="delMyReview('${result.hbtMemReviewNum}', '${result.buyVO.buyCode}');" type="button" class="btn btn-danger" value="삭제">`;
-				str += `			</div>`;
 				str += `		</div>`;
 				str += `		<div class="row">`;
 				str += `			<div class="col">`;
 				str += `				<table class="review_table">`;
 				str += `				<colgroup>`;
-				str += `					<col width="70%">`;
+				str += `					<col width="58%">`;
 				str += `					<col width="18%">`;
+				str += `					<col width="12%">`;
 				str += `					<col width="12%">`;
 				str += `				</colgroup>`;
 				str += `				<tbody class="review_tbody">`;
@@ -65,6 +63,9 @@ function isReviewed(buyCode, memCode){
 				str += `						<td>${result.stars}</td>`;
 				str += `					<td>`;
 				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}', '${result.hbtMemReviewNum}');" type="button" class="btn btn-primary w-100" value="수정하기">`;
+				str += `					</td>`;
+				str += `					<td>`;
+				str += `						<input onclick="delMyReview('${result.hbtMemReviewNum}', '${result.buyVO.buyCode}');" type="button" class="btn btn-danger w-100" value="삭제">`;
 				str += `					</td>`;
 				str += `					</tr>`;
 				str += `				</tbody>`;

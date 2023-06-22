@@ -34,7 +34,7 @@
 		<id 	column="ITEM_IMG_CODE" 			property="itemImgCode"/>
 		<result column="ITEM_CODE" 				property="itemCode"/>
 		<result column="ITEM_IMG_ORIGIN_NAME" 	property="itemImgOriginName"/>
-		<result column="ITEM_IMG_ATTECHED_NAME" property="itemImgAttachedName"/>
+		<result column="ITEM_IMG_ATTACHED_NAME" property="itemImgAttachedName"/>
 		<result column="IS_MAIN" 				property="isMain"/>
 	</resultMap>
 
@@ -336,6 +336,7 @@
 		    , ITEM.HBT_TOUR_ITEM_NAME
 		    , ITEM.HBT_TOUR_ITEM_RUNTIME
 		    , ITEM.HBT_TOUR_ITEM_INTRO
+		    , ITEM.HBT_TOUR_ITEM_PRICE
 		    , T_IMG.HBT_TOUR_ITEM_IMG_CODE
 		    , T_IMG.HBT_TOUR_ITEM_ATTECHED_FILE_NAME
 		    , T_IMG.IS_MAIN
@@ -354,10 +355,11 @@
 		AND DETAIL.HBT_TOUR_ITEM_CODE = ITEM.HBT_TOUR_ITEM_CODE(+)
 		AND ITEM.HBT_TOUR_ITEM_CODE = T_IMG.HBT_TOUR_ITEM_CODE(+)
 		AND DETAIL.HBT_HOTEL_CODE = HOTEL.HBT_HOTEL_CODE(+)
-		AND HOTEL.HBT_HOTEL_CODE = H_IMG.HBT_HOTEL_CODE
+		AND HOTEL.HBT_HOTEL_CODE = H_IMG.HBT_HOTEL_CODE(+)
 		AND TOUR.AREA_CODE = TA.AREA_CODE
 		AND TOUR.IS_PAID = 'N'
 		AND TOUR.MEM_CODE = #{memCode}
+		ORDER BY HBT_DIY_DAY
 	</select>
 
 	<insert id="setDiyTourDetail">

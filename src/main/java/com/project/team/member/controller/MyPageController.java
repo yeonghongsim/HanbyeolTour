@@ -5,6 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,7 +42,9 @@ import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.DateUtil;
 
+import io.grpc.Context.Key;
 import jakarta.annotation.Resource;
+import kotlin.jvm.internal.Lambda;
 
 @Controller
 @RequestMapping("/myPage")
@@ -483,10 +487,9 @@ public class MyPageController {
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
 		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
-		List<DiyTourVO> diyTourList = itemService.testGetDiyTourList(memCode);
-		//List<DiyTourVO> tourList = itemService.testGetDiyTourList(memCode);
+		List<DiyTourVO> diyTourListBofore = itemService.testGetDiyTourList(memCode);
 		
-		for(DiyTourVO diyTourVO : diyTourList) {
+		for(DiyTourVO diyTourVO : diyTourListBofore) {
 			List<Integer> diyDayList = new ArrayList<>();
 			for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
 				int day = Integer.parseInt(diyDetailVO.getHbtDiyDay());
@@ -504,30 +507,26 @@ public class MyPageController {
 				diyTourVO.getDiyDetailList().add(diyDetailVO);
 			}
 		}
+		//model.addAttribute("diyTourList", diyTourListBofore);
 		
-		
-		model.addAttribute("diyTourList", diyTourList);
-		
-		List<DiyDetailVO> testDetailList = new ArrayList<>();
-		List<DiyTourVO> testTourList = new ArrayList<>();
-		for(DiyTourVO aaa : diyTourList) {
-			for(int i = 1; i <= diyTourList.size(); i++) {
-				for(DiyDetailVO asd : aaa.getDiyDetailList()) {
-					if(i == Integer.parseInt(asd.getHbtDiyDay())) {
-						testDetailList.add(asd);
-						break;
+		List<DiyTourVO> diyTourList = diyTourListBofore;
+		List<DiyDetailVO> sortedDetailList = new ArrayList<>();
+		for(DiyTourVO diyTourVO : diyTourList) {
+			
+			for(int i = 1 ; i <= Integer.valueOf(diyTourVO.getTraverPeriod()) ; i++) {
+			
+				for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
+					if(i == Integer.valueOf(diyDetailVO.getHbtDiyDay())) {
+						sortedDetailList.add(diyDetailVO);
+						
+						break ;
 					}
 				}
 			}
-			testTourList.add(aaa);
+			diyTourVO.setDiyDetailList(sortedDetailList);
+			
 		}
-		
-		System.out.println("!@#@!#!@#!@#!@#@" + testTourList);
-		model.addAttribute("testTourList", testTourList);
-		
-		
-		
-		
+		model.addAttribute("diyList", diyTourList);
 		
 		return "content/member/myPage/check_my_cart";
 	}
@@ -542,6 +541,7 @@ public class MyPageController {
 		
 		return emptyDayList;
 	}
+	
 	
 	// 1:1 문의 내역 페이지로 이동 
 	@GetMapping("/checkMyRequest")
