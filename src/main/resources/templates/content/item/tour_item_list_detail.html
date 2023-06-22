@@ -20,13 +20,14 @@
 		--bs-accordion-btn-focus-border-color: #ffd000;
 		--bs-accordion-btn-focus-box-shadow: #ffd000;
 	}
+
 </style>
 
 </th:block>
 
 <th:block layout:fragment="content">
 	<div class="row mt-0 mb-3 d-flex justify-content-center">
-		<div class="col-md-6 shadow custom-border-2 rounded-5">
+		<div class="col-md-6 shadow custom-border-4 rounded-5">
 			<!--	임시		-->
 
 		<!-- 상품 제목  -->
@@ -38,7 +39,7 @@
 	<!-- 상품이미지 + 상품 제목 간단설명  -->
 
 			<h3 class="text-center mt-3">[[${itemDetail[0][0]['ITEM_TITLE']}]]</h3>
-			<div class="row rounded-5 custom-border-2 mx-2 my-2">
+			<div class="row rounded-5 shadow custom-border-3 mx-2 my-2">
 				<div class="col-6 px-0 mx-0">
 
 					<div id="itemLIstMainImg" class="carousel slide" data-bs-ride="carousel">
@@ -74,14 +75,6 @@
 								<tr>
 									<td>
 										<span>
-											상품명
-										</span>
-									</td>
-									<td><span>[[${itemDetail[0][0]['ITEM_TITLE']}]]</span></td>
-								</tr>
-								<tr>
-									<td>
-										<span>
 											여행지역
 										</span>
 									</td>
@@ -103,7 +96,7 @@
 								<tr>
 									<td>가격</td>
 									<td>
-										<span>[[${itemDetail[0][0]['ITEM_PRICE']} + 원]]</span>
+										<span th:text="${#numbers.formatCurrency(itemDetail[0][0]['ITEM_PRICE']) + '원'}"></span>
 									</td>
 								</tr>
 								<tr>
@@ -113,7 +106,7 @@
 										</span>
 									</td>
 									<td>
-										<input class="form-control" type="date" th:value="${buyDetailVO.departDate}" name="departDate">
+										<input class="form-control rounded-5 custom-border-3 center-align" type="date" th:value="${buyDetailVO.departDate}" name="departDate">
 									</td>
 								</tr>
 								<tr>
@@ -123,23 +116,23 @@
 										</span>
 									</td>
 									<td>
-										<input class="form-control" type="date" th:value="${buyDetailVO.arriveDate}" name="arriveDate">
+										<input class="form-control rounded-5 custom-border-3 center-align" type="date" th:value="${buyDetailVO.arriveDate}" name="arriveDate">
 									</td>
 								</tr>
 								<tr>
 									<td>예약인원</td>
 									<td>
-										<input class="form-control" type="number" id="numOfPeople" name="reservedPeopleNum" value="1">
+										<input class="form-control rounded-5 custom-border-3 center-align" type="number" id="numOfPeople" name="reservedPeopleNum" value="1">
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<input class="btn ye-bc" type="submit" value="예약하기">
+										<input class="btn ye-S-bc rounded-5 custom-border-3" type="submit" value="예약하기">
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<input class="btn ye-bc" type="button" value="장바구니" onclick="addCartAJAX();">
+										<input class="btn ye-S-bc rounded-5 custom-border-3" type="button" value="장바구니" onclick="addCartAJAX();">
 									</td>
 								</tr>
 							</tbody>
@@ -160,9 +153,9 @@
 					<div class="accordion" id="accordionPanelsStayOpenExample">
 						<th:block th:each="number, state : ${#numbers.sequence(0 , day - 1)}">
 
-							<div class="accordion-item rounded-5 mb-2">
+							<div class="accordion-item rounded-5 my-3 rounded-5 custom-border-3">
 								<h2 class="accordion-header">
-									<button class="accordion-button rounded-5 custom-border-2 collapsed" type="button" data-bs-toggle="collapse"
+									<button class="accordion-button rounded-5 shadow collapsed" type="button" data-bs-toggle="collapse"
 											th:data-bs-target="${'#panelsStayOpen-collapseOne'} + ${state.count}"
 											aria-expanded="false" th:onclick="getImgs([[${state.index}]])"
 											aria-controls="panelsStayOpen-collapseOne +  + ${state.count}">
@@ -237,10 +230,10 @@
 	</div>
 
 	<div class="row mt-0 mb-3 d-flex justify-content-center">
-		<div class="col-md-6 shadow custom-border-2 rounded-5">
+		<div class="col-md-6 shadow custom-border-4 rounded-5">
 
 				<div class="row d-flex justify-content-center my-3 mb-3">
-					<div class="col-md-10 shadow align-content-middle custom-border-2 rounded-5">
+					<div class="col-md-10 shadow align-content-middle custom-border-3 rounded-5">
 						<h3 class="text-center my-2">리뷰</h3>
 					</div>
 				</div>
@@ -248,7 +241,7 @@
 
 
 				<div class="row d-flex justify-content-center mb-3">
-					<div class="col-md-10 shadow align-content-middle custom-border-2 rounded-5">
+					<div class="col-md-10 shadow align-content-middle custom-border-3 rounded-5">
 						<table class="table text-center">
 							<colgroup>
 								<col>

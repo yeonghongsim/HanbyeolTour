@@ -1,5 +1,7 @@
 package com.project.team.AirLine;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.project.team.AirLine.service.AirlineService;
@@ -8,10 +10,15 @@ import kotlinx.serialization.json.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 
+import java.beans.Encoder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,10 +26,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,11 +64,43 @@ public class AirLineController {
 	@ResponseBody
 	public String getFlightAJAX(String depAirport, String arrAirport, String depDate, String arrDate) throws IOException {
 
-		System.out.println(depDate);
-		System.out.println(arrDate);
-		String result = getFlightAPI(depAirport, arrAirport, depDate);
-		System.out.println(result);
-		return result;
+		//최종 결과map
+		Map<String, List<Map<String,Object>>> resultMap = new HashMap<>();
+
+		//출발항공편
+		String depResponse = getFlightAPI(depAirport, arrAirport, depDate);
+		resultMap.put("dep", getFinalData(depResponse));
+
+		//귀국항공편
+		if(arrDate != null && !arrDate.equals("")){
+			String arrResponse = getFlightAPI(arrAirport, depAirport, arrDate);
+			resultMap.put("arr", getFinalData(arrResponse));
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		mapper.writeValueAsString(resultMap);
+
+		return mapper.writeValueAsString(resultMap);
+	}
+
+	//결과데이터추출 메소드
+	public List<Map<String,Object>> getFinalData(String data) throws JsonProcessingException {
+
+		Object responseObj = jsonToMap(data).get("response");
+		LinkedHashMap<String, Object> reponseMap = new LinkedHashMap<>((Map) responseObj);
+
+		Object bodyObj = reponseMap.get("body");
+		LinkedHashMap<String, Object> bodyMap = new LinkedHashMap<>((Map) bodyObj);
+
+		Object itemsObject = bodyMap.get("items");
+		LinkedHashMap<String, Object> itemsMap = new LinkedHashMap<>((Map) itemsObject);
+		//최종 결과 리스트
+		Object list = itemsMap.get("item");
+
+		List<Map<String,Object>> resultList = new ArrayList<>((Collection) list);
+
+		return resultList;
 	}
 
 
@@ -95,13 +135,21 @@ public class AirLineController {
 		rd.close();
 		conn.disconnect();
 
-
 		JSONObject json = XML.toJSONObject(sb.toString());
-
-		System.out.println(json.toString());
 
 		return json.toString();
 	}
 
+
+	//json 객체 map으로 변환
+	public Map<String,Object> jsonToMap(String json) throws JsonProcessingException {
+
+		ObjectMapper mapper = new ObjectMapper();
+		TypeReference<Map<String,Object>> typeReference = new TypeReference<Map<String, Object>>() {};
+
+		return mapper.readValue(json, typeReference);
+		//return mapper.readValue(json, new HashMap<String,Object>());
+
+	}
 
 }

@@ -99,6 +99,9 @@
 	AND IS_MAIN = 'Y'
 	AND ITEMS.STATUS_CODE = '1'
 	AND ITEM.STATUS_CODE = 1
+	<if test="areaName != null and !areaName.isEmpty()">
+	AND AREA_KOR_NAME = #{areaName}
+	</if>
 	<if test="date != null and !date.isEmpty()">
 	AND #{date} BETWEEN ITEM.SELLING_START AND ITEM.SELLING_END
 	</if>

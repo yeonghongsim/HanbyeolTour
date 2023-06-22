@@ -870,7 +870,7 @@ function mergedObj(obj1, obj2){
 }
 
 
-
+document.querySelector('.diyCate').classList.add("ye-S-bc");
 
 
 
