@@ -140,7 +140,6 @@ public class AirLineController {
 		return json.toString();
 	}
 
-
 	//json 객체 map으로 변환
 	public Map<String,Object> jsonToMap(String json) throws JsonProcessingException {
 
