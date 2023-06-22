@@ -1,4 +1,4 @@
-/* init();
+init();
 
 function init() {
 
@@ -31,7 +31,7 @@ function init() {
 		const searchButton = document.querySelector("input[type='submit']");
 		searchButton.click();
 	}
-} */
+}
 	
 
 //예약 목록 전체 체크박스 클릭 컨트롤

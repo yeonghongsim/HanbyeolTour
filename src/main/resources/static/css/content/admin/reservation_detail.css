@@ -14,11 +14,14 @@ tbody, td, tfoot, th, thead, tr {
 .detailItemTitle {
 	font-weight: bold;
 	font-size: 20px;
+	vertical-align: bottom;
+	
 }
 
 .detailDate{
 	color: gray;
 	font-size: 13px;
+	
 }
 
 .table{

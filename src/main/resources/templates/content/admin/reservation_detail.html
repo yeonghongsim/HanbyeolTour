@@ -81,10 +81,6 @@
 							</colgroup>
 							<tr>
 								<td>
-									항공사<br>
-									도착지<br>
-									출국일자<br>
-									입국일자<br>
 								</td>
 							</tr>
 						</table>
@@ -97,9 +93,6 @@
 							</colgroup>
 							<tr>
 								<td>
-									호텔명<br>
-									예약자 이름<br>
-									숙박 기간<br>
 								</td>
 							</tr>
 						</table>
@@ -112,11 +105,20 @@
 							</colgroup>
 							<tr>
 								<td>
-									결제일 <br>
-									결제 금액 : [[${#numbers.formatCurrency(reservDetail.buyTotalPrice)}]]원<br>
-									결제 수단<br>
+									<span class="reservInfoSpan">결제일 &nbsp;</span> [[${reservDetail.BuyDate}]]
 								</td>
 							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">결제 금액 &nbsp;</span> [[${#numbers.formatCurrency(reservDetail.buyTotalPrice)}]]원
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">결제 수단 &nbsp;</span>
+								</td>
+							</tr>
+								
 						</table>
 					</div>
 				</div>

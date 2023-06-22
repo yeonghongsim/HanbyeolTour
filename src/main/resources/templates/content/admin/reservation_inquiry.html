@@ -17,6 +17,14 @@
 		justify-content: center;
 		align-items: center;
 }
+
+	#showDetailSpan{
+		font-size: 13px;
+		margin-top: 8px;
+		border-bottom: 1px solid gray;
+		color: gray;
+		cursor: pointer;
+	}
 </style>
 	<div class="row">
 		<div class="col">
@@ -147,7 +155,10 @@
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
 									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyCode}"></td>
-									<td><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">[[${buy.buyCode}]]</a></td>
+									<td>
+										<div>[[${buy.buyCode}]]</div>
+										<span id="showDetailSpan"><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">상세보기</a></span>
+									</td>
 									<td>[[${buy.buyDate}]]</td>
 									<td>
 										[[${buy.buyDetailVO.itemVO.itemTitle}]]
