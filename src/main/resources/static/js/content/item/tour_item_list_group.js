@@ -11,8 +11,11 @@ function getSearchByGroupTable(idx, e){
 	const calTableTag = document.querySelectorAll('.calTableTag');
 	//
 	const dateDivTag = document.querySelectorAll('.dateDiv');
+
+	const dateDivTags = document.querySelectorAll('.dateDiv > div');
 	//
 	const selectYear = document.querySelectorAll('.dateDiv');
+
 
 	//테이블 지우기
 	calTableTag[idx].replaceChildren();
@@ -78,12 +81,19 @@ function getSearchByGroupTable(idx, e){
 	drawCalTable += `<tr>`
 	
 	for(let i = 0; i < lastDate; i++){
-		drawCalTable += `<td style="cursor: pointer; width: 21px;" class="px-0 py-0" onclick="getSearchByGroupAJAX(${nowYear}, ${nowMonth} , ${i+1}, this);">${i+1}</td>`
+		drawCalTable += `<td style="cursor: pointer; width: 21px;" class="px-0 py-0 dateTd rounded-5" onclick="getSearchByGroupAJAX(${nowYear}, ${nowMonth} , ${i+1}, this);">${i+1}</td>`
 	}
 	drawCalTable += `</tr>`
 	
 	//테이블 html에 넣기
 	calTableTag[idx].insertAdjacentHTML('afterbegin', drawCalTable);
+
+
+	//선택한 div 색칠하기
+	dateDivTags.forEach(date => {
+		date.classList.remove('ye-S-bc');
+	});
+	e.classList.add('ye-S-bc');
 }
 
 //달력의 날짜 클릭시 검색결과
@@ -95,11 +105,18 @@ function getSearchByGroupAJAX(year, month, date, e){
 	const item_code = e.parentNode.parentNode.parentNode.parentNode.querySelector('input').value;
 	//결과표가 그려질 자리
 	const resultTbodyTag = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.resultTbodyTag');
-	console.log(resultTbodyTag);
 	//검색할 년 월 정보 가져오기
 	const search_date = new Date(year + '-' +  month + '-' + date);
+	const dateTds = document.querySelectorAll('.dateTd');
 
-	console.log(item_code)
+	dateTds.forEach((td, index) => {
+		td.style.backgroundColor = '#ffffff';
+
+		if(date == index+1){
+
+			td.style.backgroundColor = '#ffd000';
+		}
+	});
 
 	$.ajax({
 		url: '/item/tourItemListGroupAJAX', //요청경로
@@ -123,22 +140,19 @@ function getSearchByGroupAJAX(year, month, date, e){
 			let str = '';
 			for(const i of resultArray){
 				str += `<tr>`;
-				str += `<td>
-							<a href="/item/tourItemListDetail?departDate=${i["DEP_DATE"]}&arriveDate=${i["ARR_DATE"]}&itemCode=${i["ITEM_CODE"]}">
-								<img width="150px;" src="/img/item/itemImg/${i['ITEM_IMG_ATTACHED_NAME']}">
-							</a>
-						</td>`
-				str += `<td>`;
-				str += `<div>${i['DEP_DATE']}</div>`;
-				str += `<div>${i['ARR_DATE']}</div>`;
-				str += `</td>`;
+				str += `<td>${i['DEP_DATE']}</td>`;
+				str += `<td>${i['ARR_DATE']}</td>`;
 				str += `<td>${i['TRAVER_PERIOD']}</td>`;
-				str += `<td>${i['ITEM_TITLE']}</td>`;
-				str += `<td>${i['ITEM_PRICE']}</td>`;
-				str += `<td>${i["STATUS_NAME"]}</td>`;
+				str += `<td style="cursor: pointer;" onclick="location.href='/item/tourItemListDetail?departDate=${i.DEP_DATE}&arriveDate=${i.ARR_DATE}&itemCode=${i.ITEM_CODE}'">상세정보보기</td>`;
 				str += `</tr>`;
 			}
-			resultTbodyTag.insertAdjacentHTML('afterbegin',str);
+
+			// <a href="/item/tourItemListDetail?departDate=${i["DEP_DATE"]}&arriveDate=${i["ARR_DATE"]}&itemCode=${i["ITEM_CODE"]}">
+
+
+
+
+			resultTbodyTag.insertAdjacentHTML('beforeend',str);
 
 		},
 		error: function() {
