@@ -72,14 +72,14 @@ public interface MemberService {
 	// 1개월 내 구매 - 상태 코드별 갯수 조회 (마이페이지 첫 화면 조회)
 	List<BuyStateVO> getBuyStatusInOneMonth(String memCode);
 	
-	//구매내역 조회
-	List<BuyVO> getBuyList(BuyVO buyVO);
+	//구매내역 조회 * 
+	List<BuyVO> getBuyList(BuySearchVO buySearchVO);
 
-	// 구매 기간에 따른 상태 코드별 갯수 조회 (예약 내역 조회 페이지)
-	List<BuyStateVO> getBuyStatusCount(BuyVO buyVO);
+	// 구매 기간에 따른 상태 코드별 갯수 조회 (예약 내역 조회 페이지) * 
+	List<BuySearchVO> getBuyStatusCount(BuySearchVO buySearchVO);
 	
-	// 구매내역 갯수 조회 
-	int getBuyListCount(BuyVO buyVO);
+	// 구매내역 갯수 조회 *
+	int getBuyListCount(BuySearchVO buySearchVO);
 	
 	// 예약 취소 
 	void cancelReservation(String buyCode);
@@ -133,7 +133,7 @@ public interface MemberService {
 	// 페이징 - 갯수 카운팅 
 	int getDiyListCnt(BuySearchVO buySearchVO);
 	
-	//diy - 상태 코드 상단바 
+	//diy - 예약 조회 페이지 상태 코드 상단바 
 	List<BuyStateVO> getDiyStatusCountList(BuySearchVO buySearchVO);
 	
 	//diy - 예약 취소 

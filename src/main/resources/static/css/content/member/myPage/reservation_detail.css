@@ -54,6 +54,7 @@
 .table-detail tbody tr td{
 	padding-top: 3rem; 
 	padding-bottom: 3rem; 
+	border: 1px solid #e6e6e6;
 }
 
 .table-detail tbody tr:nth-child(1) td:nth-child(1) {

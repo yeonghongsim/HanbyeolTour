@@ -298,7 +298,7 @@
 		ORDER BY BUY_CODE DESC	
 	</select>
 	
-	<!-- 예약 조회 페이지 - 예약 상태별 갯수 조회 -->
+	<!-- 예약 조회 페이지 - 예약 상태별 갯수 조회 * -->
 	<select id="getBuyStatusCount" resultMap="buyMapper.buyState">
 		SELECT
 		  HBS.BUY_STATUS_CODE,
@@ -308,15 +308,16 @@
 	      HBT_BUY_STATE HBS 
 	      LEFT JOIN 
 	      HBT_BUY HB ON HBS.BUY_STATUS_CODE = HB.BUY_STATUS_CODE
-                 AND HB.MEM_CODE = #{memCode}
-                <if test="month != null and month != 0">
-	 			 AND TO_CHAR(HB.BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
-	  			</if>
-	  			<if test="fromDate != null">
-				AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
-				AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-				</if>
-                 AND HB.BUY_DATE &lt;= SYSDATE
+          AND HB.MEM_CODE = #{memCode}
+        <if test="fromDate != null and !fromDate.equals('')">
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		</if>	
+		<if test="toDate != null and !toDate.equals('')">
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>
+		<if test="searchStatusCode != 0">
+		AND HB.BUY_STATUS_CODE = #{searchStatusCode}
+		</if>
 	    WHERE HBS.BUY_STATUS_CODE &lt;= 5
 	    GROUP BY
 	      HBS.BUY_STATUS_CODE,
@@ -324,7 +325,7 @@
 	    ORDER BY HBS.BUY_STATUS_CODE ASC
 	</select>
 	
-	<!-- 조건에 따른 예약 내역 조회 -->
+	<!-- 조건에 따른 예약 내역 조회 * -->
 	<select id="getBuyList" resultMap="buyMapper.buy">
 		SELECT BUY.BUY_CODE
 			, BUY.MEM_CODE
@@ -351,32 +352,34 @@
         AND STATE.BUY_STATUS_CODE = BUY.BUY_STATUS_CODE
         AND IS_MAIN = 'Y'
 		AND BUY.MEM_CODE = #{memCode}
-		<if test="month != null and month != 0">
-		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
-		</if>
-		<if test="fromDate != null">
+		<if test="fromDate != null and !fromDate.equals('')">
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		</if>	
+		<if test="toDate != null and !toDate.equals('')">
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
 		</if>
 		<if test="searchStatusCode != 0">
 		AND BUY.BUY_STATUS_CODE = #{searchStatusCode}
-		</if>	
+		</if>
 		ORDER BY BUY_CODE DESC
+		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
 	
 	
-	<!-- 예약 조회될 데이터 갯수 (페이징 관련) -->
-	<select id="getBuyListCnt" resultType="int">
+	<!-- 예약 조회될 데이터 갯수 (페이징 관련) * -->
+	<select id="getBuyListCount" resultType="int">
 		SELECT COUNT(BUY_CODE)
 		FROM HBT_BUY
 		WHERE MEM_CODE = #{memCode}
-		<if test="month != null and month != 0">
-		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
-		</if>
-		<if test="fromDate != null">
+		<if test="fromDate != null and !fromDate.equals('')">
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
-		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
 		</if>	
+		<if test="toDate != null and !toDate.equals('')">
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>
+		<if test="searchStatusCode != 0">
+		AND BUY_STATUS_CODE = #{searchStatusCode}
+		</if>
 	</select>
 	
 	<!-- 예약 취소 버튼 -> 예약 상태 코드 변경 -->
