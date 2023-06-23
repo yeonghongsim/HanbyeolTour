@@ -189,10 +189,10 @@
 			AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
 		<if test='searchFromPrice != null and !searchFromPrice.equals("")'>
-			AND ITEM_PRICE &gt;= TO_NUMBER(#{searchFromPrice}) <!-- &gt; : '>'를 의미 -->
+			AND ITEM_PRICE &gt;= TO_NUMBER(#{searchFromPrice}) 
 		</if>
 		<if test='searchToPrice != null and !searchToPrice.equals("")'>
-			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) <!--  &lt; : '<'를 의미 -->
+			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) 
 		</if>
 		ORDER BY ITEM_TITLE
 		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
@@ -202,14 +202,15 @@
 	<select id="getsaleListCnt" resultType="int">
 		SELECT COUNT(ITEM_CODE)
 		FROM HBT_ITEM
+		WHERE 1 = 1 <!-- IF문으로 조건문 쓸 때 경우에 따라 실행 조건문이 다르기 때문에 IF문 처음에 WHERE 쓰는 것 X -->
 		<if test='searchValue != null and !searchValue.equals("")'>
-			WHERE UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+			AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
 		<if test='searchFromPrice != null and !searchFromPrice.equals("")'>
-			AND ITEM_PRICE &gt;= TO_NUMBER(#{searchFromPrice}) <!-- &gt; : '>'를 의미 -->
+			AND ITEM_PRICE &gt;= TO_NUMBER(#{searchFromPrice}) 
 		</if>
 		<if test='searchToPrice != null and !searchToPrice.equals("")'>
-			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) <!--  &lt; : '<'를 의미 -->
+			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) 
 		</if>
 	</select>
 	

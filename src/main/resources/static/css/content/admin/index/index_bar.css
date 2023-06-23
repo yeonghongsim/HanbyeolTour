@@ -20,6 +20,7 @@ table {
   padding-left: 20px;
   padding-right: 20px;
   text-align: left;
+  border-radius: 8px 0 0 8px;
 }
 
 #toDo1 td:nth-child(2) {
@@ -32,6 +33,7 @@ table {
   padding-left: 20px;
   padding-right: 20px;
   text-align: left;
+  border-radius: 8px 0 0 8px;
 }
 
 #toDo2 td:nth-child(2) {
@@ -44,6 +46,7 @@ table {
   padding-left: 20px;
   padding-right: 20px;
   text-align: left;
+  border-radius: 8px 0 0 8px;
 }
 
 #toDo3 td:nth-child(2) {
@@ -75,3 +78,4 @@ table {
 .bi-chat-left-text-fill{
 	color: #9cdead;
 }
+

@@ -1,0 +1,68 @@
+.searchRow{
+	justify-content: center;
+}
+
+.searchSelect {
+	--bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e);
+    width: 150px;
+    height: 48px;
+    background: 12px center #fff;
+    border-radius: 16px;
+    background-image: var(--bs-form-select-bg-img),var(--bs-form-select-bg-icon,none);
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    background-repeat: no-repeat;
+}
+
+.searchInput {
+	
+	height: 48px;
+    border-radius: 16px;
+}
+
+.valueInput{
+	margin-left: 20px;
+}
+.searchButton{
+	
+	height: 55px;
+    border-radius: 30px;
+    background-color:  #ffd000;
+    padding-right: 0px;
+    float: right;
+    text-align: center;
+}
+
+.priceDiv{
+	height: 48px;
+    border-radius: 16px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    text-align: center;
+    margin-left: 12px;
+}
+
+.searchInput2{
+	border: none;
+	width: 120px;
+	height:46px;
+	text-align: center;
+}
+
+.searchInput2:focus {
+	outline: none;
+	background-color: none;
+}
+
+.btn-primary {
+	--bs-btn-color: black;
+	--bs-btn-bg: #ffd000;
+	--bs-btn-border-color: none;
+	--bs-btn-hover-border-color: none;
+	--bs-btn-hover-bg: #ffae26;
+}
+
+
+
+
+
+

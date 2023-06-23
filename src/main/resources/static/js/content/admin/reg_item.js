@@ -1,18 +1,20 @@
-//상품 정보 모두 입력되었는지 확인
-document.getElementById("regButton").addEventListener("click", function(event) {
-    const form = document.querySelector("#regForm");
-    const inputs = form.querySelectorAll("input, textarea");
-    const isEmpty = false;
+  function validateForm(event) {
+    
+    const formElements = document.querySelectorAll('form input, form textarea');
 
-    for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].value.trim() === "") {
-            isEmpty = true;
-            break;
-        }
-    }
 
-    if (isEmpty) {
-        event.preventDefault(); // 제출을 막음
-        alert("입력되지 않은 상품 정보가 있습니다.");
+    for (let i = 0; i < formElements.length; i++) {
+      let element = formElements[i];
+      
+      if (element.value.trim() === '') {
+        // 입력 제출 막기
+        event.preventDefault();
+        alert('입력되지 않은 항목이 있습니다.');
+        return;
+      }
     }
-});
+  }
+
+  // 폼 제출(submit) 이벤트 리스너 등록
+  const form = document.getElementById('regForm');
+  form.addEventListener('submit', validateForm);

@@ -6,7 +6,7 @@
 
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+	<link rel="stylesheet" href="/css/content/admin/item_manage_for_sale.css"> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
 </th:block>
 
 
@@ -18,27 +18,93 @@
 				<div class="col">
 					<form th:action="@{/admin/itemManageForSale}" method="post" id="searchForm">
 						<input type="hidden" name="nowPage" th:value="${saleListSearchVO.nowPage}" id="nowPage">
-						<div class="row mb-3">
-							<!-- 검색 기능 -->
+						
+						<!-- <div class="row mb-3 searchRow">
+							검색 기능
 							<div class="col-2">
-								<select class="form-select" name="searchKeyword">
+								<select class="form-select searchSelect" name="searchKeyword">
 									<option value="ITEM_TITLE" th:selected="${saleListSearchVO.searchKeyword == 'ITEM_TITLE'}">상품명</option>
 									<option value="AREA.AREA_KOR_NAME" th:selected="${saleListSearchVO.searchKeyword == 'AREA.AREA_KOR_NAME'}">여행지</option>
 									<option value="TRAVER_PERIOD" th:selected="${saleListSearchVO.searchKeyword == 'TRAVER_PERIOD'}">기간</option>
 								</select>
 							</div>
-							<div class="col-4">
-								<input type="text" class="form-control" name="searchValue" th:value="${saleListSearchVO.searchValue}">
-							</div>
 							<div class="col-5">
-									<input type="text" class="form-control" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}">
-									<input type="text" class="form-control" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}">
+								<input type="text" class="form-control searchInput valueInput" name="searchValue" th:value="${saleListSearchVO.searchValue}">
 							</div>
-							<div class="col-1">
-								<input type="submit" value="검색" class="btn btn-outline" style="border-color: #ffd000;">
+							
+							<div class="col-5 testdiv form-control">
+								<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
+								<span>~</span>
+								<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
 							</div>
 						</div>
+						<div class="row mt-2 searchRow">
+							<div class="col">
+								<input type="submit" value="상품 검색" class="btn searchButton">
+							</div>
+						</div> -->
+						
+						<table class="table table-borderless">
+							<colgroup>
+								<col width="15%">
+								<col width="*">
+								<col width="15%">
+								<col width="20%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td>
+										<div class="row">
+											<div class="col">
+												<select class="form-select searchSelect" name="searchKeyword">
+													<option value="ITEM_TITLE" th:selected="${saleListSearchVO.searchKeyword == 'ITEM_TITLE'}">상품명</option>
+													<option value="AREA.AREA_KOR_NAME" th:selected="${saleListSearchVO.searchKeyword == 'AREA.AREA_KOR_NAME'}">여행지</option>
+													<option value="TRAVER_PERIOD" th:selected="${saleListSearchVO.searchKeyword == 'TRAVER_PERIOD'}">기간</option>
+												</select>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col">
+												<input type="text" class="form-control searchInput" name="searchValue" th:value="${saleListSearchVO.searchValue}">
+											</div>
+										</div>
+									</td>
+									<td colspan="2">
+									 <div class="row">
+									 	<div class="col priceDiv">
+										 	<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
+											<span>~</span>
+											<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
+									 	</div>
+				                     </div>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<div class="row">
+											<div class="col d-grid">
+												<input type="submit" value="상품 검색" class="btn btn-primary searchInput">
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+					
+					
+					
+					
+					
+					
+					
 					</form>
+					
 				</div>
 			</div>
 			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보를 확인할 수 있습니다.</div>
@@ -54,7 +120,7 @@
 							<col width="">
 							<col width="">
 						</colgroup>
-						<thead style="background-color: #eeeeee;">
+						<thead style="background-color: #f2f2f2;">
 							<tr>
 								<td><input type="checkbox" id="allCheck" onclick="AllCheckboxControl();"></td>
 								<td>상품이미지</td>
@@ -94,7 +160,7 @@
 			</div>
 			<div class="row">
 				<div class="col-2 d-grid">
-					<input type="button" value="선택 삭제" class="btn" style="background-color:  #ffd000;"
+					<input type="button" value="선택 삭제" class="btn btn-primary"
 						th:onclick="deleteCheckItems();">
 				</div>
 			</div>
