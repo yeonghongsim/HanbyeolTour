@@ -188,6 +188,14 @@
 			<!-- searchValue 문자열, 대소문자 구분없이 포함하는 데이터 나와야 하기 때문에 아래처럼. -->
 			AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
+		<if test='searchFromPrice != null and !searchFromPrice.equals("")'>
+			AND ITEM_PRICE &gt;= TO_NUMBER(#{searchFromPrice}) <!-- &gt; : '>'를 의미 -->
+		</if>
+		<if test='searchToPrice != null and !searchToPrice.equals("")'>
+			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) <!--  &lt; : '<'를 의미 -->
+		</if>
+		ORDER BY ITEM_TITLE
+		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
 	
 	<!-- 검색 조건에 맞는 판매 상품 수 조회 -->
@@ -195,7 +203,13 @@
 		SELECT COUNT(ITEM_CODE)
 		FROM HBT_ITEM
 		<if test='searchValue != null and !searchValue.equals("")'>
-		WHERE UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+			WHERE UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		<if test='searchFromPrice != null and !searchFromPrice.equals("")'>
+			AND ITEM_PRICE &gt;= TO_NUMBER(#{searchFromPrice}) <!-- &gt; : '>'를 의미 -->
+		</if>
+		<if test='searchToPrice != null and !searchToPrice.equals("")'>
+			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) <!--  &lt; : '<'를 의미 -->
 		</if>
 	</select>
 	

@@ -64,7 +64,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">기본 가격</label>                                          `;
-			str += `					<input type="text" class="form-control" id="" name="itemPrice" value="${result.itemPrice}">                             `;
+			str += `					<input type="text" class="form-control" id="" name="itemPrice" value="${result.itemPrice}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">                             `;
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">땡처리할인</label>                                         `;
@@ -188,7 +188,7 @@ function openModal(itemCode, areaCateList){
 										}
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
-			str += `					<input id="" type="button" class="btn" value="수정" onclick="updateItem();"                                                     `;
+			str += `					<input id="updateButton" type="button" class="btn" value="수정" onclick="updateItem();"                                                     `;
 			str += `						style="background-color: #ffd000;">                                     `;
 			str += `				</div>                                                                                          `;
 			str += `			</form> `;
@@ -202,12 +202,30 @@ function openModal(itemCode, areaCateList){
 	});
 	//ajax end
 	
+	
 	itemDetailModal.show();
 	
-	
 }
-	
-	
+
+
+//상품 정보 모두 입력되었는지 확인
+document.getElementById("updateButton").addEventListener("click", function(event) {
+    const form = document.querySelector("#itemDetailForm");
+    const inputs = form.querySelectorAll("input, textarea");
+    const isEmpty = false;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() === "") {
+            isEmpty = true;
+            break;
+        }
+    }
+
+    if (isEmpty) {
+        event.preventDefault(); // 제출을 막음
+        alert("입력되지 않은 상품 정보가 있습니다.");
+    }
+});
 
 
 
@@ -336,13 +354,39 @@ function updateItem(){
 }
 
 
-//회원 조회 페이징 처리
+//상품 조회 페이징 처리
 function getSaleListPaging(pageNum){
 	document.querySelector('#nowPage').value = pageNum;
 	const searchForm = document.querySelector('#searchForm');
 	
 	searchForm.submit();
 
+}
+
+
+function validateForm() {
+    // Get the form element
+    var form = document.querySelector('.detailModalForm');
+
+    // Get all input and textarea elements within the form
+    var inputs = form.querySelectorAll('input, textarea');
+
+    // Flag to check if any value is empty
+    var isEmpty = false;
+
+    // Check if any input or textarea value is empty
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() === '') {
+            isEmpty = true;
+            break;
+        }
+    }
+
+    // Show alert and prevent form submission if any value is empty
+    if (isEmpty) {
+        alert('모든 필드를 입력해주세요.');
+        event.preventDefault(); // Prevent form submission
+    }
 }
 
 
