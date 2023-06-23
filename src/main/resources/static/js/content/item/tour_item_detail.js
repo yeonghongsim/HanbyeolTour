@@ -84,11 +84,20 @@ function drawImg(result, index){
 
     let hotelImgStr = '';
     //호텔이미지 세팅
-    hotelImg.forEach((hotelImg) => {
-        hotelImgStr += `
-            <img width="100px;" class="rounded" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}">
+    hotelImg.forEach((hotelImg, index) => {
+        if(index == 0 ){
+            hotelImgStr += `<div class="carousel-item rounded-5 active" data-bs-interval="3000">`;
+        }
+        else {
+            hotelImgStr += `<div class="carousel-item rounded-5" data-bs-interval="3000">`;
+        }
+        hotelImgStr += `               
+                        <img style="width: 100%;" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}"
+                         class="d-block rounded" alt="슬라이드이미지">
+                    </div>
         `;
     });
+            // <img width="100px;" class="rounded" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}">
     drawHotelImg.replaceChildren();
     drawHotelImg.insertAdjacentHTML('afterbegin', hotelImgStr);
 

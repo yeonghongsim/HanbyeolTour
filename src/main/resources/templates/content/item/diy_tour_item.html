@@ -17,12 +17,12 @@
         <th:block th:each="loc : ${location}">
           <div class="col mx-1 px-0 py-3 justify-content-center d-flex areaColDiv">
             <a href="javascript:void(0)" onclick="selectArea(this);" class="">
-              <input type="hidden" th:value="${loc['AREA_CODE']}" class="areaCode">
 
               <div class="card1 areaDiv">
                 <img width="190px;" height="140px;" th:src="'/img/item/itemImg/' + ${loc['ITEM_IMG_ATTACHED_NAME']}" class="rounded-3" alt="...">
                 <div class="card1-front">
-                  <p class="title1">[[${loc['AREA_KOR_NAME']}]]</p>
+                  <p class="title1" th:value="${loc['AREA_CODE']}">[[${loc['AREA_KOR_NAME']}]]</p>
+                  <input type="hidden" th:value="${loc['AREA_CODE']}" class="areaCode">
                   <p class="subtitle"></p>
                 </div>
               </div>
