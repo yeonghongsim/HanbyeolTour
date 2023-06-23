@@ -32,17 +32,33 @@ function join(){
 
 //우편번호 검색 api 사용
 function searchAddr(){
-	    new daum.Postcode({
-        oncomplete: function(data) {
-			// 도로명 주소 변수
-			const roadAddr = data.roadAddress; 
-			//도로명 주소 세팅 
-			document.querySelector('#memDAddr').value = roadAddr;
-			//기존 오류 메시지 제거 
-			const memDAddrError = document.querySelector('#memDAddrError');
-			if (memDAddrError) {
-				memDAddrError.remove();
-			}
+	// themeObj 객체
+    const themeObj = {
+        bgColor: "#FFF9D4",
+        postcodeTextColor: "#FFD000",
+        emphTextColor: "#FFD000"
+    };
+
+    new daum.Postcode({
+	   theme: themeObj
+	}).open();
+	
+	new daum.Postcode({
+	   theme: themeObj
+	}).embed(target);
+
+	
+    new daum.Postcode({
+    oncomplete: function(data) {
+		// 도로명 주소 변수
+		const roadAddr = data.roadAddress; 
+		//도로명 주소 세팅 
+		document.querySelector('#memDAddr').value = roadAddr;
+		//기존 오류 메시지 제거 
+		const memDAddrError = document.querySelector('#memDAddrError');
+		if (memDAddrError) {
+			memDAddrError.remove();
+		}
 			
 			$('#memDAddr').css('border-color', 'green'); 
         	$('#memDAddr').css('border-width', '2px');
@@ -333,7 +349,6 @@ function emailValidate(){
 	else {
         $('#memEmail').css('border-color', 'green'); 
         $('#memEmail').css('border-width', '2px');
-        document.querySelector('#checkEmail').disabled = false;
     }
 	
 	

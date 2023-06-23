@@ -31,7 +31,7 @@
  
 <div class="row mb-1">
 	<div class="col title-md">
-		예약 상품 
+		✈️&nbsp;&nbsp;예약 상품 
 	</div>
 </div> 
  
@@ -112,7 +112,7 @@
 <!-- 예약자 정보 -->
 <div class="row mb-3">
 	<div class="col title-md">
-		예약자 정보
+		👤&nbsp;&nbsp;예약자 정보
 	</div>
 </div>
 	
@@ -158,13 +158,13 @@
 <!-- 일자별 일정  -->
 <div class="row mb-3">
 	<div class="col title-md">
-	여행 일자별 예약 정보 
+	🗓&nbsp;&nbsp;여행 일자별 예약 정보 
 	</div>
 </div>
 
 
 <th:block>
-	<table class="table mt-3 mb-3">
+	<table class="table day-info-table mt-3 mb-3">
 	    <thead>
 	        <tr>
 	            <td>Day</td>
@@ -177,10 +177,10 @@
 				<th:block th:each="detail : ${resultList}">
 					<tr>
 				   		<td>[[${detail.hbtDiyDay}]] 일차 </td>
-				    	<td th:if="${detail.hotelList == null or #lists.size(detail.hotelList) == 0}">예약된 호텔이 없습니다.</td>
-				    	<td th:if="${detail.hotelList != null and #lists.size(detail.hotelList) != 0}">[[${detail.hotelList[0].hbtHotelName}]]</td>
-				    	<td th:if="${detail.tourItemList == null or #lists.size(detail.tourItemList) == 0}">예약된 투어 상품이 없습니다.</td>
-				    	<td th:if="${detail.tourItemList != null and #lists.size(detail.tourItemList) != 0}">[[${detail.tourItemList[0].hbtTourItemName}]]</td>
+				    	<td th:if="${detail.hotelList == null or #lists.size(detail.hotelList) == 0}"><i class="bi bi-dash-lg" style="color:#d6d6d6;"></i></td>
+				    	<td th:if="${detail.hotelList != null and #lists.size(detail.hotelList) != 0}" style="font-weight: bolder;">[[${detail.hotelList[0].hbtHotelName}]]</td>
+				    	<td th:if="${detail.tourItemList == null or #lists.size(detail.tourItemList) == 0}"><i class="bi bi-dash-lg" style="color:#d6d6d6;"></i></td>
+				    	<td th:if="${detail.tourItemList != null and #lists.size(detail.tourItemList) != 0}" style="font-weight: bolder;">[[${detail.tourItemList[0].hbtTourItemName}]]</td>
 					</tr>
 				</th:block>
 		</tbody>
@@ -190,7 +190,7 @@
 <!-- 예약 별 투어, 호텔 정보 -->
 <div class="row mb-3">
 	<div class="col title-md">
-	예약 호텔 정보 
+	🏨&nbsp;&nbsp;예약 호텔 정보 
 	</div>
 </div>
 
@@ -266,7 +266,7 @@
 
 <div class="row mb-3">
 	<div class="col title-md">
-	예약 투어 정보 
+	😎&nbsp;&nbsp;예약 투어 정보 
 	</div>
 </div>
 

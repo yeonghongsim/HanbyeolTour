@@ -92,6 +92,7 @@ public class MemberController {
 		
 		return "content/member/join_notice";
 	}
+		
 	
 	//회원가입시 인증 기능 
 	@PostMapping("/emailCheckAJAX")

@@ -11,8 +11,8 @@
 
 <th:block layout:fragment="member_content">
 	
-	
-	
+<div class="container">
+
 	<div class="content-container">
 	
 		<div class="row">
@@ -43,32 +43,37 @@
 		<hr>
 		
 		
+		<div class="row">
+			<div class="col page-title">
+				<span id="check"><i class="bi bi-person-dash"></i></span> 한별투어 회원 탈퇴하기 
+			</div>
+		</div>
+	
+		<div class="del-container">
 			<div class="row">
-				<div class="col page-title">
-					<span id="check"><i class="bi bi-person-dash"></i></span> 한별투어 회원 탈퇴하기 
+				<div class="col mention">
+					<ul>
+						<li>
+							회원 탈퇴는 비밀번호 확인 후에 가능합니다.
+						</li>
+						<li>
+							탈퇴 이후에는 자동으로 로그아웃처리 됩니다.
+						</li>
+					</ul>
 				</div>
 			</div>
-		
-			<div class="del-container">
-				<div class="row">
-					<div class="col mention">
-						<ul>
-							<li>
-								회원 탈퇴는 비밀번호 확인 후에 가능합니다.
-							</li>
-							<li>
-								탈퇴 이후에는 자동으로 로그아웃처리 됩니다.
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col mt-3">
-						<button type="button" class="btn btn-lg btn-warning del-btn" th:onclick="account_deletion([[${#authentication.name}]]);" disabled>탈퇴하기</button>
-					</div>
+			<div class="row">
+				<div class="col mt-3">
+					<button type="button" class="btn btn-lg btn-warning del-btn" th:onclick="account_deletion([[${#authentication.name}]]);" disabled>탈퇴하기</button>
 				</div>
 			</div>
+		</div>
 	</div>
+
+
+</div>
+
+	
 	
 	
 </th:block>

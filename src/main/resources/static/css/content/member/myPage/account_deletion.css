@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+
+.container{
+	width: 95%;
+	margin: 0 auto;
+	margin-bottom: 10rem;
+	margin-top: 3rem;
+}
+
 .content-container{
 	width: 60%;
 	height:55vh;
@@ -48,7 +56,13 @@
 
 
 
-
+/* 인풋 태그 스타일 */
+.form-control:focus{ 
+	background-color: #fff;
+    border-color: #DEE2E5;
+    outline: 0;
+	box-shadow: 0 0 4px 4px #fff9d4;
+}
 
 
 

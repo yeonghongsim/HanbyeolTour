@@ -11,6 +11,9 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
+
+<div class="container">
+
 	<div class="row mb-3 mt-2">
 		<div class="col title">
 			상세 정보
@@ -26,7 +29,7 @@
 	<!-- 예약 상품 정보 -->
 	<div class="row mb-3">
 		<div class="col title-md">
-			예약 상품 
+			✈️&nbsp;&nbsp;예약 상품
 		</div>
 	</div>
 	
@@ -35,7 +38,7 @@
 			<table class="table table-detail">
 				<colgroup>
 					<col width="*">
-					<col width="10%">
+					<col width="15%">
 					<col width="5%">
 					<col width="15%">
 					<col width="15%">
@@ -62,9 +65,8 @@
 								</a>
 								<div class="textus">
 									<a class="" th:href="@{/item/tourItemListDetail(itemCode=${buyDetail.buyDetailVO.itemVO.itemCode})}">
-										<span class="tit" style="font-weight: bolder; font-size: 1.2rem;">[[${buyDetail.buyDetailVO.itemVO.tourAreaVO.areaKorName}]]</span><br>
+										<span class="tit">[[${buyDetail.buyDetailVO.itemVO.tourAreaVO.areaKorName}]]</span><br>
 							            <span  class="txt" th:text="${buyDetail.buyDetailVO.itemVO.itemTitle}" style="word-spacing: -1px;"></span><br>
-							            <span  class="txt" th:text="${buyDetail.buyDetailVO.itemVO.itemIntro}" style="font-weight:lighter; font-size: 0.9rem;"></span>
 									</a>
 								</div>
 				        	</div>
@@ -107,7 +109,7 @@
 	<!-- 예약자 정보 -->
 	<div class="row mb-3">
 		<div class="col title-md">
-			예약자 정보
+			👤&nbsp;&nbsp;예약자 정보
 		</div>
 	</div>
 	
@@ -151,7 +153,7 @@
 	<!-- 결제 정보  -->
 	<div class="row mb-3">
 		<div class="col title-md">
-			결제 정보
+			💳&nbsp;&nbsp;결제 정보
 		</div>
 	</div>
 	
@@ -196,6 +198,7 @@
    		</a>
 	</div>
 	
+</div>	
 	
 	
 	

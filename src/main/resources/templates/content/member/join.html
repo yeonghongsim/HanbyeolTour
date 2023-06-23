@@ -25,32 +25,6 @@
 		</div>
 	</div>
 	
-	<!-- 회원가입 상태  -->
-	<!-- <div class="row s-row">
-			
-			<div class="col-2 join-status">
-				회원선택		
-			</div>
-			<div class="col-1 join-status">
-				-		
-			</div>
-			<div class="col-2 join-status">
-				본인확인	
-			</div>
-			<div class="col-1 join-status">
-				-		
-			</div>
-			<div class="col-2 join-status">
-				정보입력	
-			</div>
-			<div class="col-1 join-status">
-				-		
-			</div>
-			<div class="col-3 join-status">
-				가입완료		
-			</div>
-		
-	</div> -->
 
 	<!-- 회원가입 정보 입력칸 -->
 	<div class="join-container">
@@ -113,11 +87,11 @@
 						<input type="email" class="form-control form-control-lg" placeholder="이메일  예시) ID@example.com" 
 						id="memEmail" name="memEmail" onclick="emailValidate();" oninput="emailValidate()">
 					</div>
-					<div class="col-3 d-grid">	
-						<input type="button" class="btn btn-lg btn-outline-light" id="checkEmail" value="중복확인" onclick="isDuplicateMemEmail();" disabled>
+					<div class="col-3 d-grid btn-problem">	
+						<input type="button" class="btn btn-lg btn-outline-light" id="checkEmail" value="중복확인" onclick="isDuplicateMemEmail();">
 					</div>
 					<div class="col-3 d-grid">	
-						<input type="button" class="btn btn-lg btn-outline-light" id="sendAuthCode" value="인증하기" onclick="emailCheck();" disabled>
+						<input type="button" class="btn btn-outline-light" id="sendAuthCode" value="인증하기" onclick="emailCheck();" disabled>
 					</div>
 				</div>
 			</div>
