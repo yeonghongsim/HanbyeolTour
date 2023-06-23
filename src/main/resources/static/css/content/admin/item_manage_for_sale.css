@@ -23,15 +23,7 @@
 .valueInput{
 	margin-left: 20px;
 }
-.searchButton{
-	
-	height: 55px;
-    border-radius: 30px;
-    background-color:  #ffd000;
-    padding-right: 0px;
-    float: right;
-    text-align: center;
-}
+
 
 .priceDiv{
 	height: 48px;
@@ -59,6 +51,9 @@
 	--bs-btn-border-color: none;
 	--bs-btn-hover-border-color: none;
 	--bs-btn-hover-bg: #ffae26;
+	height: 48px;
+	border-radius: 16px;
+    
 }
 
 

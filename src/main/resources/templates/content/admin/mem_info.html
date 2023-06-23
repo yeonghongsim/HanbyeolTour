@@ -39,7 +39,7 @@
 									</div>
 								</td>
 								<td>
-									<div class="row">
+									<div class="row" style="margin-left: 20px; margin-right: 20px;">
 										<div class="col">
 											<input type="text" class="form-control searchInput" name="searchValue" th:value="${memListSearchVO.searchValue}">
 											
@@ -49,15 +49,16 @@
 								<td>
 									<div class="row">
 										<div class="col d-grid">
-											<input type="submit" value="검색" class="btn btn-primary searchInput">
-									
+											<input type="submit" value="회원 검색" class="btn btn-primary searchInput">
 										</div>
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					
+					</div>
+					</form>
+			
 					<!-- <div class="col-2">
 					
 						<select class="form-select searchSelect" name="searchKeyword">
@@ -71,40 +72,41 @@
 					<div class="col-1">
 						<input type="submit" value="검색" class="btn btn-outline" style="border-color: #ffd000;">
 					</div> -->
-				</div>
-				</form>
-				<div class="col">
-					<div class="smallRed">* 회원 아이디 클릭 시 해당 회원 상세 정보를 확인할 수 있습니다.</div>
-					<table class="table text-center table-hover">
-						<colgroup>
-							<col width="">
-						</colgroup>
-						<thead>
-							<tr>
-								<td>NO</td>
-								<td>아이디</td>
-								<td>이름</td>
-								<td>활동상태</td>
-							</tr>
-						</thead>
-						<tbody>
-						<th:block th:if="${#lists.size(memList) == 0}">
-							<tr>
-								<td colspan="4">
-									등록된 회원이 없습니다.
-								</td>
-							</tr>
-						</th:block>
-						<th:block th:unless="${#lists.size(memList) == 0}">
-							<tr th:each="mem, state : ${memList}">
-								<td>[[${state.count}]]</td>
-								<td><a href="javascript:void(0);" th:onclick="getMemDetail([[${mem.memId}]]);">[[${mem.memId}]]</a></td>
-								<td>[[${mem.memName}]]</td>
-								<td>[[${mem.memStatusVO.memStatusName}]]</td>
-							</tr>
-						</th:block>
-						</tbody>
-					</table>
+				
+				<div class="row mt-3">
+					<div class="col">
+						<div class="smallRed">* 회원 아이디 클릭 시 해당 회원 상세 정보를 확인할 수 있습니다.</div>
+						<table class="table text-center table-hover">
+							<colgroup>
+								<col width="">
+							</colgroup>
+							<thead>
+								<tr>
+									<td>NO</td>
+									<td>아이디</td>
+									<td>이름</td>
+									<td>활동상태</td>
+								</tr>
+							</thead>
+							<tbody>
+							<th:block th:if="${#lists.size(memList) == 0}">
+								<tr>
+									<td colspan="4">
+										등록된 회원이 없습니다.
+									</td>
+								</tr>
+							</th:block>
+							<th:block th:unless="${#lists.size(memList) == 0}">
+								<tr th:each="mem, state : ${memList}">
+									<td>[[${state.count}]]</td>
+									<td><a href="javascript:void(0);" th:onclick="getMemDetail([[${mem.memId}]]);">[[${mem.memId}]]</a></td>
+									<td>[[${mem.memName}]]</td>
+									<td>[[${mem.memStatusVO.memStatusName}]]</td>
+								</tr>
+							</th:block>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<!-- 페이징 처리 -->
 				<div class="row justify-content-center">

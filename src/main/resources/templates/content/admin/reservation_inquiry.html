@@ -25,6 +25,53 @@
 		color: gray;
 		cursor: pointer;
 	}
+	
+	.listTable{
+		vertical-align: middle;
+		border-top: 2px solid #d6d6d6;
+		font-size: 14px;
+	}
+	
+	.listTable thead tr{
+		
+		background: #fafafa;
+	}
+	
+	.listTable thead td{
+		
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	
+	.listTable tbody td{
+		padding-top: 30px;
+		padding-bottom: 30px;
+		
+	}
+	
+	.buySatateSpan{
+		
+    min-width: 75px;
+    width: auto;
+    height: 32px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    background: #fff;
+    font-size: 14px;
+    font-weight: bold;
+
+	}
+	
+	.priceSpan{
+		color: red;
+		font-size: 14px;
+	}
+	
+	.searchTable{
+		vertical-align: middle;
+	}
+	
 </style>
 	<div class="row">
 		<div class="col">
@@ -36,7 +83,7 @@
 							<form th:action="@{/admin/reservationInquiry}" method="post" id="searchForm">
 							<!-- <input type="hidden" name="buyCode" th:value="${orderListSearchVO.buyCode}" id="orderBy"> -->
 							<input type="hidden" name="nowPage" th:value="${buyListSearchVO.nowPage}" id="nowPage">
-								<table class="table" id="searchTable">
+								<table class="table searchTable" id="searchTable">
 									<colgroup>
 										<col width="">
 									</colgroup>
@@ -59,7 +106,7 @@
 											</div>
 										</div>
 										</td>
-									<tr>	
+									</tr>	
 									<tr>	
 										<td>
 											<div class="row">
@@ -113,7 +160,7 @@
 			</div>
 			<div class="row mt-5">
 				<div class="col">
-					<div class="row">
+					<div class="row mb-3">
 						<div class="col-2">
 							<select class="form-select" id="buyStatusSelect">
 								<option>예약상태변경</option>
@@ -127,8 +174,9 @@
 							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeBuyStatus();">
 						</div>
 					</div>
-					<table class="table text-center">
+					<table class="table text-center listTable">
 						<colgroup>
+							<col width="">
 							<col width="">
 							<col width="">
 							<col width="">
@@ -143,13 +191,14 @@
 								<td>예약일</td>
 								<td>예약상품명</td>
 								<td>예약자정보</td>
+								<td>결제금액</td>
 								<td>예약상태</td>
 							</tr>
 						</thead>
 						<tbody>
 							<th:block th:if="${#lists.size(buyList) == 0}">
 								<tr>
-									<td colspan="6">조회할 예약 내역이 없습니다.</td>
+									<td colspan="7">조회할 예약 내역이 없습니다.</td>
 								</tr>
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
@@ -168,7 +217,10 @@
 										<div>[[${buy.memberVO.memberDetailVO.memDTell}]]</div>
 									</td>
 									<td>
-										<span style="font-weight: bold;">[[${buy.buyStateVO.buyStatusName}]]</span>
+										<span class="priceSpan">[[${#numbers.formatCurrency(buy.buyTotalPrice)}]]원</span>
+									</td>
+									<td>
+										<span class="buySatateSpan">[[${buy.buyStateVO.buyStatusName}]]</span>
 									</td>
 								</tr>
 						

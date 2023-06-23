@@ -187,9 +187,8 @@ function openModal(itemCode, areaCateList){
 			str += `					</div>                                                                                      `;
 										}
 			str += `				</div>                                                                                          `;
-			str += `				<div class="col-3">                                                                             `;
-			str += `					<input id="updateButton" type="button" class="btn" value="수정" onclick="updateItem();"                                                     `;
-			str += `						style="background-color: #ffd000;">                                     `;
+			str += `				<div class="col-12 d-grid">                                                                             `;
+			str += `					<input id="updateButton" type="button" class="btn btn-primary" value="상품 수정" onclick="updateItem();">                                                     `;
 			str += `				</div>                                                                                          `;
 			str += `			</form> `;
 			

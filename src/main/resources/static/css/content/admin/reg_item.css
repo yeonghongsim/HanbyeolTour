@@ -1,0 +1,9 @@
+.btn-primary {
+	--bs-btn-color: black;
+	--bs-btn-bg: #ffd000;
+	--bs-btn-border-color: none;
+	--bs-btn-hover-border-color: none;
+	--bs-btn-hover-bg: #ffae26;
+	height: 48px;
+	border-radius: 16px;
+}
