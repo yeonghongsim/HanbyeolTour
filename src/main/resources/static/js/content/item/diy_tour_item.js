@@ -780,23 +780,21 @@ function buyNCart(isPaid){
 
     let diyDetail = mergedObj(hbtHotelCodeMap,tourCodeMap);
 
-    console.log(diyTourVO);
-    console.log(diyDetail);
-
     //ajax요청
-    // $.ajax({
-    //     url: '/item/buyNcartAJAX', //요청경로
-    //     type: 'post',
-    //     //contentType : 'application/json; charset=UTF-8',
-    //     contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-    //     async : true,
-    //     data: {'diyTour': JSON.stringify(diyTourVO),'diyTourDetail': JSON.stringify(diyDetail)},
-    //     success: function(result) {
-    //     },
-    //     error: function() {
-    //         alert('실패');
-    //     }
-    // });
+    $.ajax({
+        url: '/item/buyNcartAJAX', //요청경로
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {'diyTour': JSON.stringify(diyTourVO),'diyTourDetail': JSON.stringify(diyDetail)},
+        success: function(result) {
+            $('#resultModal').modal('hide');
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
 
 }
 
