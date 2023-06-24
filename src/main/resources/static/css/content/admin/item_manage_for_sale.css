@@ -57,6 +57,29 @@
 }
 
 
+.listTable{
+	vertical-align: middle;
+	border-top: 2px solid #d6d6d6;
+	font-size: 14px;
+}
+
+.listTable thead tr{
+	
+	background: #fafafa;
+}
+
+.listTable thead td{
+	
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.listTable tbody td{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	
+}
+
 
 
 

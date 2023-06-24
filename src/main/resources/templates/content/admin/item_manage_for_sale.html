@@ -102,10 +102,9 @@
 			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보를 확인할 수 있습니다.</div>
 			<div class="row">
 				<div class="col">
-					<table class="table table-hover text-center">
+					<table class="table text-center listTable">
 						<colgroup>
-							<col width="">
-							<col width="">
+							<col width="5%">
 							<col width="">
 							<col width="">
 							<col width="">
@@ -115,10 +114,9 @@
 						<thead style="background-color: #f2f2f2;">
 							<tr>
 								<td><input type="checkbox" id="allCheck" onclick="AllCheckboxControl();"></td>
-								<td>상품이미지</td>
-								<td>패키지명</td>
-								<td>여행지</td>
-								<td>기간</td>
+								<td>상품</td>
+								<td>판매기간</td>
+								<td>여행기간</td>
 								<td>가격</td>
 								<td></td>
 							</tr>
@@ -133,11 +131,25 @@
 								<tr th:each="item : ${itemSaleList}">
 									<td><input type="checkbox" class="chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
 									<td>
-										<img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px">
+										<table>
+											<tr>
+												<td>
+													<img src="/img/diyDetailImg/de740e6f-f57b-49a2-be94-b9801958d1ad.jpg" width="100px" style="border-radius: 10px;">
+												<!-- <img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px"> --></td>
+												<td>
+													<div>[[${item.tourAreaVO.areaKorName}]]</div>
+													<div th:onclick="openModal([[${item.itemCode}]], [[${areaCateList}]]);"
+														style="cursor: pointer;">[[${item.itemTitle}]]</div>
+												</td>
+											</tr>
+										</table>
 									</td>
-									<td><span th:onclick="openModal([[${item.itemCode}]], [[${areaCateList}]]);"
-										style="cursor: pointer;">[[${item.itemTitle}]]</span></td>
-									<td>[[${item.tourAreaVO.areaKorName}]]</td>
+									<td>
+										<div>[[${item.sellingStart}]]</div>
+										<div>~</div>
+										<div>[[${item.sellingEnd}]]</div>
+									
+									</td>
 									<td>[[${item.traverPeriod}]]</td>
 									<td>[[${#numbers.formatCurrency(item.itemPrice)}]]</td>
 									<td>
