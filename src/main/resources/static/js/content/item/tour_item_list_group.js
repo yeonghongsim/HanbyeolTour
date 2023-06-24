@@ -1,6 +1,19 @@
 
 init();
 
+function clicktoday(index){
+	const calTableTags = document.querySelectorAll('.calTableTag');
+	const dateTds = calTableTags[index].querySelectorAll('.dateTd');
+	date = new Date();
+	const nowDate = date.getDate();
+
+	dateTds.forEach(td => {
+
+		td.textContent == nowDate ? td.click() : null
+	});
+}
+
+
 
 //일자별상품조회 달력
 function getSearchByGroupTable(idx, e){
@@ -9,13 +22,9 @@ function getSearchByGroupTable(idx, e){
 	const monthSpanTag = document.querySelectorAll('.monthSpan');
 	//테이블 그릴 위치
 	const calTableTag = document.querySelectorAll('.calTableTag');
-	//
 	const dateDivTag = document.querySelectorAll('.dateDiv');
-
 	const dateDivTags = document.querySelectorAll('.dateDiv > div');
-	//
 	const selectYear = document.querySelectorAll('.dateDiv');
-
 
 	//테이블 지우기
 	calTableTag[idx].replaceChildren();
@@ -88,12 +97,13 @@ function getSearchByGroupTable(idx, e){
 	//테이블 html에 넣기
 	calTableTag[idx].insertAdjacentHTML('afterbegin', drawCalTable);
 
-
-	//선택한 div 색칠하기
-	dateDivTags.forEach(date => {
-		date.classList.remove('ye-S-bc');
-	});
-	e.classList.add('ye-S-bc');
+	if(e != undefined){
+		//선택한 div 색칠하기
+		dateDivTags.forEach(date => {
+			date.classList.remove('ye-S-bc');
+		});
+		e.classList.add('ye-S-bc');
+	}
 }
 
 //달력의 날짜 클릭시 검색결과
@@ -107,16 +117,12 @@ function getSearchByGroupAJAX(year, month, date, e){
 	const resultTbodyTag = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.resultTbodyTag');
 	//검색할 년 월 정보 가져오기
 	const search_date = new Date(year + '-' +  month + '-' + date);
-	const dateTds = document.querySelectorAll('.dateTd');
 
+	let dateTds = document.querySelectorAll('.dateTd');
 	dateTds.forEach((td, index) => {
 		td.style.backgroundColor = '#ffffff';
-
-		if(date == index+1){
-
-			td.style.backgroundColor = '#ffd000';
-		}
 	});
+	e.style.backgroundColor = '#ffd000';
 
 	$.ajax({
 		url: '/item/tourItemListGroupAJAX', //요청경로
@@ -126,16 +132,10 @@ function getSearchByGroupAJAX(year, month, date, e){
 		//async : true,
 		data: {'searchDate': search_date ,'itemCode': item_code},
 		success: function(result) {
-
-			console.log(result);
-
-
 			//json 타입에서 array로 변환
 			let resultArray = JSON.parse(result);
-
 			//결과테이블 수정
 			resultTbodyTag.replaceChildren();
-
 			//테이블 그리기 시작
 			let str = '';
 			for(const i of resultArray){
@@ -149,19 +149,13 @@ function getSearchByGroupAJAX(year, month, date, e){
 
 			// <a href="/item/tourItemListDetail?departDate=${i["DEP_DATE"]}&arriveDate=${i["ARR_DATE"]}&itemCode=${i["ITEM_CODE"]}">
 
-
-
-
 			resultTbodyTag.insertAdjacentHTML('beforeend',str);
-
 		},
 		error: function() {
 			alert('실패');
 		}
 	});
 }
-
-
 
 
 //날짜형식변환 함수
@@ -176,8 +170,6 @@ function getDate123(dateString){
 }
 
 
-
-
 //국가선택시 색상강조
 function init(){
 
@@ -187,8 +179,6 @@ function init(){
 	const areaName = document.querySelector('#areaName').value;
 
 	areaNameDivs.forEach(div => {
-		console.log(div.innerText);
-		console.log(areaName);
 
 		if(div.innerText == areaName){
 			div.classList.add('ye-S-bc');

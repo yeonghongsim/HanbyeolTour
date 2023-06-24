@@ -70,7 +70,7 @@
 											<input  value="출발일 보기" class="rounded-5 collapsed ye-S-bc custom-border-2 text-center" type="button" data-bs-toggle="collapse"
 												   th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false"
 												   th:aria-controls="flush-collapseOne + ${state.index}"
-												   th:onclick="getSearchByGroupTable([[${state.index}]]);">
+												   th:onclick="getSearchByGroupTable([[${state.index}]]); clicktoday([[${state.index}]]);">
 										</td>
 									</tr>
 								</table>
@@ -102,7 +102,7 @@
 
 									<div class="accordion-body">
 										<div class="row dateDiv text-center d-flex justify-content-center">
-											<div style="cursor: pointer;" class="col-md-2 shadow text-center rounded-5 custom-border-2 mx-0 mb-2" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
+											<div style="cursor: pointer;" class="col-md-2 shadow ye-S-bc text-center rounded-5 custom-border-2 mx-0 mb-2" th:onclick="getSearchByGroupTable([[${state.index}]], this);">
 												<span class="yearSpan"></span>
 												<span class="monthSpan"></span>
 											</div>
