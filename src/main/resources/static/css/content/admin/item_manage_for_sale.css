@@ -80,7 +80,15 @@
 	
 }
 
+.itemStatusSpan{
+	background-color:  #ffd000;
+	color: black;
+	font-size: 12px;
+	padding: 2px;
+}
 
-
+.itemTd{
+	margin: 0 auto;
+}
 
 

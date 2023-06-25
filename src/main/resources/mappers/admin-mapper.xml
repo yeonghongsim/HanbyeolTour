@@ -61,7 +61,7 @@
 			, AREA_ENG_NAME
 			, AREA_KOR_NAME
 			, IS_USE
-			, IS_EXPOSE_MAIM
+			, IS_EXPOSE_MAIN
 		) VALUES (
 			#{areaCode}
 			, #{areaEngName}
@@ -180,9 +180,12 @@
 			, TO_CHAR(SELLING_END, 'YYYY-MM-DD') SELLING_END
 			, AREA.AREA_KOR_NAME
 			, IMG.ITEM_IMG_ATTACHED_NAME
-		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA
+			, ITEM.STATUS_CODE 
+			, STATE.STATUS_NAME
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA, HBT_ITEM_STATE STATE
 		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
 		AND ITEM.AREA_CODE = AREA.AREA_CODE
+		AND ITEM.STATUS_CODE = STATE.STATUS_CODE
 		AND IS_MAIN = 'Y'
 		<if test='searchValue != null and !searchValue.equals("")'>
 			<!-- 셀렉트 박스 선택 데이터 매번 바뀜 , 빈 값에 해당하는 입력 값(searchValue) 종류도 매번 바뀜 -->

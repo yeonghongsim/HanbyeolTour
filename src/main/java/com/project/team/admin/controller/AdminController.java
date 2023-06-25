@@ -473,7 +473,7 @@ public class AdminController {
 		System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
 		//System.out.println("-------------------------------");
 		//System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
-		//System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
+		System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
 		
 		//호텔 총 결제 금액
 		List<DiyTourVO> diyDetail = adminService.getDiyReservHotelDetail(hbtDiyCode);
@@ -575,7 +575,7 @@ public class AdminController {
 		List<Object> thisYearCntList = resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		List<Object> thisYearSaleList = resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		List<Object> lastYearSaleList = resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		
+
 		
 		//분기별 매출
 		List<Map<String, Integer>> mapList2 = adminService.getQuarterlySales(year);
@@ -597,7 +597,10 @@ public class AdminController {
 		map.put("quarterSaleList", quarterSaleList);
 		
 		System.out.println(adminService.getQuarterlySales(year));
+		System.out.println("******************" + thisYearSaleList);
 		
+		//당해년도 매출 합
+
 		return map;
 	}
 	

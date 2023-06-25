@@ -194,3 +194,16 @@ a{
     background-color: #eeeeee;
     text-align: center;
   }
+  
+  
+ .deleteBtn{
+	color: red;
+	text-decoration: underline;
+	font-size: 14px;
+}
+
+.deleteBtn:hover {
+    color: red;
+ 
+}
+  

@@ -39,11 +39,16 @@ tbody, td, tfoot, th, thead, tr {
 	font-weight: bold;
 }
 
-.reservInfoTd{
+.reservInfoTable{
 	font-size: 14px;
 }
 
 .reservInfoSpan {
 	color: gray;
 	font-size:14px;
+}
+
+.reservItemTable tbody tr:nth-child(4), tr:nth-child(5){
+	
+	 background-color: #f2f2f2;
 }
