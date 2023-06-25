@@ -141,7 +141,7 @@ function openOutterModal(e) {
 
 }
 
-function test(){
+function test11(){
     let url = 'https://www.google.com/search?q=' + '제주항공' + '&sxsrf=APwXEddZSwsC0ZR4ht4_H9_k9YdrcsMWeg%3A1687356592128&ei=sASTZMWsB4up2roPgIGbiA8&ved=0ahUKEwjFxKGSxdT_AhWLlFYBHYDABvEQ4dUDCA8&uact=5&oq=' + '제주항공' + '&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIHCCMQigUQJzIRCC4QgAQQsQMQgwEQxwEQ0QMyBAgAEAMyCwgAEIAEELEDEIMBMgQIABADMgsIABCABBCxAxCDATILCAAQgAQQsQMQgwEyBAgAEAMyBAgAEAMyBAgAEAMyHwguEIAEELEDEIMBEMcBENEDEJcFENwEEN4EEOAEGAE6CAgAEKIEELADOgUIABCABDoRCC4QgwEQxwEQsQMQ0QMQgAQ6CwguEIAEELEDEIMBOhAILhCABBAUEIcCELEDEIMBOh8ILhCDARDHARCxAxDRAxCABBCXBRDcBBDeBBDgBBgBOhAIABCABBAUEIcCELEDEIMBOggIABCABBCxAzoHCAAQigUQQ0oECEEYAVCeCFieEGClEWgEcAB4AYABkwGIAcMKkgEEMC4xMJgBAKABAcABAcgBAtoBBggBEAEYFA&sclient=gws-wiz-serp';
 
     $.ajax({
@@ -164,10 +164,14 @@ function test(){
 document.querySelector('.airlineCate').classList.add("ye-S-bc");
 function test(){
 
+    if(!confirm('파이썬 서버가 실행되고 있는지 확인하세요')){
+        return;
+    }
+
 
     $.ajax({
-        url: 'http://127.0.0.1:5001/test?sentence=123123', //요청경로
-        type: 'get',
+        url: '/review/reviewAJAX', //요청경로
+        type: 'post',
         //contentType : 'application/json; charset=UTF-8',
         contentType : "application/x-www-form-urlencoded; charset=UTF-8",
         async : true,
@@ -181,3 +185,5 @@ function test(){
     });
 
 }
+
+

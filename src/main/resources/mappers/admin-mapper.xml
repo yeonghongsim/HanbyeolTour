@@ -49,7 +49,18 @@
 		<result column="HBT_AIRLINE_ICON" 		property="hbtAirlineIcon"/>
 		<result column="IS_USE" 				property="isUse"/>
 	</resultMap>
-	
+
+	<resultMap type="com.project.team.review.vo.ReveiwVO" id="review">
+		<id column="REVIEW_CODE" 		property="reviewCode"/>
+		<result column="POS_PERCENT" 	property="posPercent"/>
+		<result column="NAG_PERCENT" 	property="nagPercent"/>
+		<result column="POS_WORD" 		property="posWord"/>
+		<result column="NAG_WORD" 		property="nagWord"/>
+		<result column="MAX_LENGHT" 	property="maxLenght"/>
+		<result column="AVG_LENGHT" 	property="avgLenght"/>
+		<result column="REG_DATE" 	property="regDate"/>
+	</resultMap>
+
 
 
 	
@@ -1124,7 +1135,33 @@
 		SET STATUS_CODE = 1
 		WHERE ITEM_CODE = #{itemCode}
 	</update>
-
+	<!--리뷰전체조회 -->
+	<select id="getReviewList" resultType="string">
+		SELECT HBT_MEM_REVIEW_CONTENT
+		FROM HBT_MEM_REVIEW
+	</select>
+<!--	리뷰분석데이터 업데이트-->
+	<insert id="setReviewData">
+		INSERT INTO REVIEW_RESULT (
+				REVIEW_CODE
+				, POS_PERCENT
+				, NAG_PERCENT
+				, POS_WORD
+				, NAG_WORD
+				, MAX_LENGHT
+				, AVG_LENGHT
+		)
+		VALUES (
+			  	(SELECT 'REVIEW_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REVIEW_CODE, 8))), 0) + 1, 3, '0')
+				FROM REVIEW_RESULT)
+		        , #{posPercent}
+		        , #{nagPercent}
+		        , #{posWord}
+		        , #{nagWord}
+		        , #{maxLenght}
+		        , #{avgLenght}
+				 )
+	</insert>
 
 
 
