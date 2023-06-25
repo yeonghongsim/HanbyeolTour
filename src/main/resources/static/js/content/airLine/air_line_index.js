@@ -47,14 +47,16 @@ function setAreaNAme(name, code){
     const textTarget = document.querySelectorAll('.korName');
 
     if(modalTitle == '출발지선택'){
-        textTarget[0].textContent = name;
+        textTarget[0].textContent = name.split('(')[0];
         textTarget[0].nextElementSibling.textContent = code;
     }
     else {
-        textTarget[1].textContent = name;
+        textTarget[1].textContent = name.split('(')[0];
         textTarget[1].nextElementSibling.textContent = code;
 
     }
+
+    $('#areaModal').modal('hide');
 }
 //항공정보조회
 function getFlightAJAX(){
@@ -85,21 +87,21 @@ function getFlightAJAX(){
 
 function drawFlightInfo(flightInfo){
 
-
-    console.log(Object.keys(flightInfo).length);
     //데이터삽입위치태그
-    const depInfoTable = document.querySelector('.depInfoTable');
-    const arrInfoTable = document.querySelector('.arrInfoTable');
+    const depInfoTable = document.querySelector('.depInfoTable > tbody');
+    const arrInfoTable = document.querySelector('.arrInfoTable > tbody');
 
     let depInfoStr = '';
     let arrInfoStr = '';
 
     flightInfo['dep'].forEach(flight => {
+        let time = flight['internationalTime'].toString();
+
         depInfoStr += `
                 <tr>
                     <td>${flight['internationalNum']}</td>                
                     <td>${flight['airlineKorean']}</td>                
-                    <td>${flight['internationalTime']}</td>                
+                    <td>${time.substring(0, 2)}시  ${time.substring(2)}분</td>                
                 </tr>
         `;
     });
@@ -109,11 +111,13 @@ function drawFlightInfo(flightInfo){
     if(Object.keys(flightInfo).length != 1){
 
         flightInfo['arr'].forEach(flight => {
+            let time = flight['internationalTime'].toString();
+
             arrInfoStr += `
                     <tr>
                         <td>${flight['internationalNum']}</td>                
                         <td>${flight['airlineKorean']}</td>                
-                        <td>${flight['internationalTime']}</td>                
+                        <td>${time.substring(0, 2)}시  ${time.substring(2)}분</td>                
                     </tr>
             `;
         });
@@ -141,43 +145,9 @@ function openOutterModal(e) {
 
 }
 
-function test(){
-    let url = 'https://www.google.com/search?q=' + '제주항공' + '&sxsrf=APwXEddZSwsC0ZR4ht4_H9_k9YdrcsMWeg%3A1687356592128&ei=sASTZMWsB4up2roPgIGbiA8&ved=0ahUKEwjFxKGSxdT_AhWLlFYBHYDABvEQ4dUDCA8&uact=5&oq=' + '제주항공' + '&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIHCCMQigUQJzIRCC4QgAQQsQMQgwEQxwEQ0QMyBAgAEAMyCwgAEIAEELEDEIMBMgQIABADMgsIABCABBCxAxCDATILCAAQgAQQsQMQgwEyBAgAEAMyBAgAEAMyBAgAEAMyHwguEIAEELEDEIMBEMcBENEDEJcFENwEEN4EEOAEGAE6CAgAEKIEELADOgUIABCABDoRCC4QgwEQxwEQsQMQ0QMQgAQ6CwguEIAEELEDEIMBOhAILhCABBAUEIcCELEDEIMBOh8ILhCDARDHARCxAxDRAxCABBCXBRDcBBDeBBDgBBgBOhAIABCABBAUEIcCELEDEIMBOggIABCABBCxAzoHCAAQigUQQ0oECEEYAVCeCFieEGClEWgEcAB4AYABkwGIAcMKkgEEMC4xMJgBAKABAcABAcgBAtoBBggBEAEYFA&sclient=gws-wiz-serp';
 
-    $.ajax({
-        url: url, //요청경로
-        type: 'post',
-        //contentType : 'application/json; charset=UTF-8',
-        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-        async : true,
-        data: {},
-        success: function(result) {
-            console.log(result);
-        },
-        error: function() {
-            alert('실패');
-        }
-    });
 
-}
+
 
 document.querySelector('.airlineCate').classList.add("ye-S-bc");
-function test(){
 
-
-    $.ajax({
-        url: 'http://127.0.0.1:5001/test?sentence=123123', //요청경로
-        type: 'get',
-        //contentType : 'application/json; charset=UTF-8',
-        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-        async : true,
-        data: {},
-        success: function(result) {
-            console.log(result);
-        },
-        error: function() {
-            alert('실패');
-        }
-    });
-
-}

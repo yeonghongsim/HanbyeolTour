@@ -6,167 +6,158 @@
    
 <!-- 연결해야 할 외부 CSS파일 -->   
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/">-->
+	<link rel="stylesheet" href="/css/content/member/myPage/update_my_info.css">
 </th:block>
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
  
+<div class="container">
 
-<div class="row">
+
+<div class="row title">
 	<div class="col">
-		내 정보 수정 페이지 
+		내 정보 수정
 	</div>
 </div>
-
-<div class="content-container">
-	<th:block th:each=" info : ${memInfo}">
-		<div class="row">
-			<div class="col">
-				<form id="infoUpdateForm" th:action="@{/myPage/updateMyInfoPage}" method="post">
-					<input type="hidden" th:value="${info.memCode}" name="memCode" id="memCode">
-					<table class="table" style="border: 1px solid black;">
-						<colgroup>
-							<col width="20%">
-							<col width="*">
-						</colgroup>
-						<tr>
-							<th>아이디</th>
-							<td>
-								<input type="text" id="memId" name="memId" class="form-control" th:value="${info.memId}" readonly>
-							</td>
-						</tr>
-						<tr>
-							<th>이름</th>
-							<td>
-								<input type="text" id="memName" name="memName" class="form-control" th:value="${info.memName}">
-							</td>
-						</tr>
-						<tr><!-- 중복확인 필요  -->
-							<th>연락처</th>
-							<td>
-								<div class="row" id="memDTellDiv">
-									<div class="col-9">
-										<input type="text" class="form-control" id="memDTell" name="memDTell" th:value="${info.memberDetailVO.memDTell}">
-									</div>
-									<div class="col-3 d-grid">	
-										<input type="button" class="btn btn-warning" id="checkMemDTellBtn" value="중복확인" onclick="isDuplicateMemDTell();">
-									</div>
-								</div>		
-							</td>
-						</tr>
-						<tr><!-- 중복확인 필요  -->
-							<th>이메일</th>
-							<td>
-								<div class="row" id="memEmailDiv">
-									<div class="col-9">
-										<input type="email" class="form-control" id="memEmail" name="memEmail"
-										th:value="${info.memberDetailVO.memEmail}">
-									</div>
-									<div class="col-3 d-grid">	
-										<input type="button" class="btn btn-warning" id="check_email" value="중복확인" onclick="isDuplicateMemEmail();">
-									</div>
-								</div>							
-							</td>
-						</tr>
-						<tr>
-							<th>성별</th>
-							<td>
-								<!-- 상황에 따른라디오 표시  -->
-								<th:block th:if="${info.memberDetailVO.memDGen} == '남'">
+	<div class="text-end ment">* 아이디, 이메일 정보 수정을 원하시는 경우에는 고객센터로 문의부탁드립니다.</div>
+	<div class="content-container">
+		<th:block th:each=" info : ${memInfo}">
+			<div class="row">
+				<div class="col">
+					<form id="infoUpdateForm" th:action="@{/myPage/updateMyInfoPage}" method="post">
+						<input type="hidden" th:value="${info.memCode}" name="memCode" id="memCode">
+						<table class="table update-table" style="border:1px hidden #fff;">
+							<colgroup>
+								<col width="20%">
+								<col width="*">
+							</colgroup>
+							<tr>
+								<th>아이디</th>
+								<td>
+									<input type="text" id="memId" name="memId" class="form-control" th:value="${info.memId}" readonly
+									style="border: 1px solid #ffd000;">
+								</td>
+							</tr>
+							<tr>
+								<th>이름</th>
+								<td>
+									<input type="text" id="memName" name="memName" class="form-control" th:value="${info.memName}" 
+									onclick="nameValidate();" oninput="nameValidate()">
+								</td>
+							</tr>
+							<tr><!-- 중복확인 필요  -->
+								<th>연락처</th>
+								<td>
+									<div class="row" id="memDTellDiv">
+										<div class="col-9">
+											<input type="text" class="form-control" id="memDTell" name="memDTell" th:value="${info.memberDetailVO.memDTell}"
+											onclick="memDTellValidate();" oninput="memDTellValidate()">
+										</div>
+										<div class="col-3 d-grid">	
+											<input type="button" class="btn btn-yellow" id="checkMemDTellBtn" value="중복확인" onclick="isDuplicateMemDTell();" disabled>
+										</div>
+									</div>		
+								</td>
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td>
+									<input type="email" class="form-control" id="memEmail" name="memEmail" th:value="${info.memberDetailVO.memEmail}" readonly
+									style="border: 1px solid #ffd000;">				
+								</td>
+							</tr>
+							<tr>
+								<th>성별</th>
+								<td>
+									<!-- 상황에 따른라디오 표시  -->
+									<th:block th:if="${info.memberDetailVO.memDGen} == '남'">
+										<div class="row">
+											<div class="col">
+												<div class="form-check form-check-inline">
+											        <input class="form-check-input" type="radio" value="남" name="memDGen" id="memDGen_male" checked>
+											        <label class="form-check-label" for="memDGen_male">
+											            남
+											        </label>
+											    </div>
+											    <div class="form-check form-check-inline">    
+											        <input class="form-check-input" type="radio" value="여" name="memDGen" id="memDGen_female">
+											        <label class="form-check-label" for="memDGen_female">
+											            여
+											        </label>
+											    </div>
+										    </div>
+										</div>
+									</th:block>
+									<th:block th:if="${info.memberDetailVO.memDGen} != '남'">
+									    <div class="row">
+											<div class="col">
+												<div class="form-check form-check-inline">
+											        <input class="form-check-input" type="radio" name="memDGen" value="남"  id="memDGen_male">
+											        <label class="form-check-label" for="memDGen_male">
+											            남
+											        </label>
+											    </div>
+											    <div class="form-check form-check-inline">    
+											        <input class="form-check-input" type="radio" name="memDGen" value="여" id="memDGen_female" checked>
+											        <label class="form-check-label" for="memDGen_female">
+											            여
+											        </label>
+											    </div>
+										    </div>
+										</div>
+									</th:block>
+								</td>
+							</tr>
+							<tr>
+								<th>주소</th>
+								<td>
 									<div class="row">
-										<div class="col">
-											<div class="form-check form-check-inline">
-										        <input class="form-check-input" type="radio" value="남" name="memDGen" id="memDGen_male" checked>
-										        <label class="form-check-label" for="memDGen_male">
-										            남
-										        </label>
-										    </div>
-										    <div class="form-check form-check-inline">    
-										        <input class="form-check-input" type="radio" value="여" name="memDGen" id="memDGen_female">
-										        <label class="form-check-label" for="memDGen_female">
-										            여
-										        </label>
-										    </div>
-									    </div>
+										<div class="col-9">
+										<input type="text" id="memDAddr" name="memDAddr" class="form-control" th:value="${info.memberDetailVO.memDAddr}"
+										onclick="searchAddr();" readonly>
+										</div>
+										<div class="col-3 d-grid">	
+											<input type="button" class="btn btn-yellow" id="search_btn" value="주소 검색" onclick="searchAddr();">
+										</div>
 									</div>
-								</th:block>
-								<th:block th:if="${info.memberDetailVO.memDGen} != '남'">
-								    <div class="row">
-										<div class="col">
-											<div class="form-check form-check-inline">
-										        <input class="form-check-input" type="radio" name="memDGen" value="남"  id="memDGen_male">
-										        <label class="form-check-label" for="memDGen_male">
-										            남
-										        </label>
-										    </div>
-										    <div class="form-check form-check-inline">    
-										        <input class="form-check-input" type="radio" name="memDGen" value="여" id="memDGen_female" checked>
-										        <label class="form-check-label" for="memDGen_female">
-										            여
-										        </label>
-										    </div>
-									    </div>
+								</td>
+							</tr>
+							<tr>
+								<th>상세주소</th>
+								<td>
+									<div class="row" id="memDAddrDiv2">
+										<div class="col" id="memDAddr2Div">
+											<input type="text" class="form-control" id="memDAddr2" name="memDAddr2" th:value="${info.memberDetailVO.memDAddr2}"
+											onclick="memDAddr2Validate();" oninput="memDAddr2Validate()">
+										</div>
 									</div>
-								</th:block>
-							</td>
-						</tr>
-						<tr>
-							<th>주소</th>
-							<td>
-								<div class="row">
-									<div class="col-9">
-									<input type="text" id="memDAddr" name="memDAddr" class="form-control" th:value="${info.memberDetailVO.memDAddr}"
-									onclick="searchAddr();" readonly>
-									</div>
-									<div class="col-3 d-grid">	
-										<input type="button" class="btn btn-warning" id="search_btn" value="주소 검색" onclick="searchAddr();">
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th>상세주소</th>
-							<td>
-								<div class="row" id="memDAddrDiv2">
-									<div class="col" id="memDAddr2Div">
-										<input type="text" class="form-control" id="memDAddr2" name="memDAddr2" th:value="${info.memberDetailVO.memDAddr2}">
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th>생일</th>
-							<td>
-								<input type="date" id="memDBir" name="memDBir" class="form-control" th:value="${info.memberDetailVO.memDBir}">
-							</td>
-						</tr>
-					</table>
-
-
-					<div class="row">
-						<div class="col mt-2 mb-3">
-							<div class="text-center">
-								<button onclick="update_my_info();" type="button" class="btn btn-warning btn-lg" id="memInfoUpdateBtn">정보수정 하기</button>
+								</td>
+							</tr>
+							<tr>
+								<th>생일</th>
+								<td>
+									<input type="date" id="memDBir" name="memDBir" class="form-control" th:value="${info.memberDetailVO.memDBir}">
+								</td>
+							</tr>
+						</table>
+	
+	
+						<div class="row">
+							<div class="col mt-2 mb-3 text-center">
+									<button onclick="update_my_info();" type="button" class="btn btn-lg btn-yellow" id="memInfoUpdateBtn"
+									style="padding-top: 0.7rem; padding-bottom: 0.7rem; padding-left: 1rem; padding-right: 1rem;">정보수정 하기</button>
 							</div>
 						</div>
-					</div>
-
-				</form>
+	
+					</form>
+				</div>
 			</div>
-		</div>
-	</th:block>
+		</th:block>
+	</div>
+
+
 </div>
-
-
-
-
-
-
-
-
-
-
 
 
 

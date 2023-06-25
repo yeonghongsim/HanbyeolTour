@@ -10,8 +10,7 @@ import lombok.ToString;
 public class HotelImgVO {
 	private String hbtHotelImgCode;
 	private String hbtHotelOriginFileName;
-	private String hbtHotelAttchedFileName;
+	private String hbtHotelAttechedFileName;
 	private String hbtHotelCode;
 	private String isMain;
-
 }

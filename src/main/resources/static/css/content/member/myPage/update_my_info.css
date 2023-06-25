@@ -1,67 +1,52 @@
 @charset "UTF-8";
 
-
 .container{
 	width: 95%;
 	margin: 0 auto;
 	margin-bottom: 10rem;
 	margin-top: 3rem;
-	font-size: 1.25rem;
-	align-items: center;
 }
 
-/* .content-container{
-	width: 60%;
-	height:55vh;
-	margin: 0 auto;
-	text-align: center;
-	margin-top: 3rem;
-	margin-bottom: 7rem;
-	font-size: 1.1rem;
-	align-items: center;	
-	
-} */
-
-
-.page-title{
-	font-size: 1.6rem;
+.title{
+	font-size: 1.8rem;
 	font-weight: bold;
 	letter-spacing: -2px;
 	vertical-align: middle;
-	text-align: left;
-	margin-left: 4rem;
+	margin-bottom: 3rem;
 	margin-top: 2rem;
-	color: black;
+	margin-left: 3rem;
 }
 
-
-
-.page-title #check{
-	margin-right: 0.7rem;
-	color: #ffd000;
-	font-weight: bolder;
-}
-
-.del-container{
-	background-color: #fafafa;
-    border-radius: 6px;
-    margin: 0 auto;
-    margin-top:2rem;
-    padding: 3rem;
-    vertical-align: middle;
-    align-items: center;	
-    width: 500px;
-}
-
-.mention{
-	margin-top: 10px;
+.ment{
+	font-size: 0.8rem;
+	color: #bbb;
 	letter-spacing: -1px;
-	text-align: left;
-	margin-left: 1rem;
+	margin-bottom: 0.5rem;
 }
 
+.update-table{
+	font: 1.1rem;
+}
 
+.update-table tr th{
+	font-size: 1.3rem;
+	text-align: center;
+	vertical-align: middle;
+	color: #ffd000;
+	
+}
 
+.update-table tr td{
+	font-size: 1.2rem;
+	vertical-align: middle;
+	
+}
+
+.form-control{ 
+	padding: 0.7rem;
+	border-radius: 0.6rem;
+}
+	
 /* 인풋 태그 스타일 */
 .form-control:focus{ 
 	background-color: #fff;
@@ -90,14 +75,8 @@
     border-radius: 0.6rem;
 }
 
-
-/* check-pw inner */
-.inner{
-	width: 70%;
-	height:500px;
-	margin: 0 auto;
-	
+.form-check-input:checked {
+    background-color: #ffd000;
+    border-color: #ffd000;
+	box-shadow: 0 0 4px 4px #fff9d4;
 }
-
-
-

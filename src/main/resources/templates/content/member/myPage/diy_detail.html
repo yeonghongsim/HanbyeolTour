@@ -12,6 +12,8 @@
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
 
+<div class="container">
+
 <div class="row mb-4 mt-2">
 	<div class="col title">
 		상세정보
@@ -29,7 +31,7 @@
  
 <div class="row mb-1">
 	<div class="col title-md">
-		예약 상품 
+		✈️&nbsp;&nbsp;예약 상품 
 	</div>
 </div> 
  
@@ -37,11 +39,11 @@
 	<div class="col mb-2 mt-4">
 		<table class="table table-reservation">
 			<colgroup>
-				<col width="10%">
+				<col width="15%">
 				<col width="15">
 				<col width="15%">
-				<col width="15%">
-				<col width="15%">
+				<col width="20%">
+				<col width="20%">
 				<col width="15%">
 			</colgroup>
 			<thead class="text-center">
@@ -60,10 +62,9 @@
 		            <td class="text-center">
 			            <div style="color: #131518; font-weight:bolder;">[[${tourDetail.tourAreaVO.areaKorName}]]</div>
 		            </td>
-		            <td class="row">
+		            <td>
 			        	<div class="col">
-							<img th:src="${'/img/item/airlineIcon/' + tourDetail.airlineVO.hbtAirlineIcon}" 
-			        		style="width: 40px; height: 40px;">
+							<img th:src="${'/img/item/airlineIcon/' + tourDetail.airlineVO.hbtAirlineIcon}" alt="Airline Icon">
 			        		<span>[[${tourDetail.airlineVO.hbtAirlineName}]]</span>
 			        	</div>
 			        </td>
@@ -111,7 +112,7 @@
 <!-- 예약자 정보 -->
 <div class="row mb-3">
 	<div class="col title-md">
-		예약자 정보
+		👤&nbsp;&nbsp;예약자 정보
 	</div>
 </div>
 	
@@ -157,13 +158,13 @@
 <!-- 일자별 일정  -->
 <div class="row mb-3">
 	<div class="col title-md">
-	여행 일자별 예약 정보 
+	🗓&nbsp;&nbsp;여행 일자별 예약 정보 
 	</div>
 </div>
 
 
 <th:block>
-	<table class="table mt-3 mb-3">
+	<table class="table day-info-table mt-3 mb-3">
 	    <thead>
 	        <tr>
 	            <td>Day</td>
@@ -176,10 +177,10 @@
 				<th:block th:each="detail : ${resultList}">
 					<tr>
 				   		<td>[[${detail.hbtDiyDay}]] 일차 </td>
-				    	<td th:if="${detail.hotelList == null or #lists.size(detail.hotelList) == 0}">예약된 호텔이 없습니다.</td>
-				    	<td th:if="${detail.hotelList != null and #lists.size(detail.hotelList) != 0}">[[${detail.hotelList[0].hbtHotelName}]]</td>
-				    	<td th:if="${detail.tourItemList == null or #lists.size(detail.tourItemList) == 0}">예약된 투어 상품이 없습니다.</td>
-				    	<td th:if="${detail.tourItemList != null and #lists.size(detail.tourItemList) != 0}">[[${detail.tourItemList[0].hbtTourItemName}]]</td>
+				    	<td th:if="${detail.hotelList == null or #lists.size(detail.hotelList) == 0}"><i class="bi bi-dash-lg" style="color:#d6d6d6;"></i></td>
+				    	<td th:if="${detail.hotelList != null and #lists.size(detail.hotelList) != 0}" style="font-weight: bolder;">[[${detail.hotelList[0].hbtHotelName}]]</td>
+				    	<td th:if="${detail.tourItemList == null or #lists.size(detail.tourItemList) == 0}"><i class="bi bi-dash-lg" style="color:#d6d6d6;"></i></td>
+				    	<td th:if="${detail.tourItemList != null and #lists.size(detail.tourItemList) != 0}" style="font-weight: bolder;">[[${detail.tourItemList[0].hbtTourItemName}]]</td>
 					</tr>
 				</th:block>
 		</tbody>
@@ -189,101 +190,148 @@
 <!-- 예약 별 투어, 호텔 정보 -->
 <div class="row mb-3">
 	<div class="col title-md">
-	예약 호텔 정보 
+	🏨&nbsp;&nbsp;예약 호텔 정보 
 	</div>
 </div>
 
-<div class="row">
-	<div class="col mb-3">
-		<table class="table">
-	        <thead>
+<div class="row info-row">
+ <th:block th:each="diy : ${hotelInfoList}">
+    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
+      <!-- Text data part -->
+      <div class="col-md-6 mb-3 info">
+        <table class="table info-table">
+        	<tbody>
 	            <tr>
-	                <th>Hotel Name</th>
-	                <th>Hotel Grade</th>
-	                <th>Hotel Intro</th>
-	                <th>Area Name</th>
-	                <th>Hotel Price</th>
-	                <th>Attached Files</th>
+	            	<th>이름 : </th>
+	            	<td th:text="${diyDetail.hotelList[0].hbtHotelName}"></td>
 	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr th:each="diy : ${hotelInfoList}">
-	            <th:block th:each="diyDetail : ${diy.diyDetailList}">
-	                <td th:text="${diyDetail.hotelList[0].hbtHotelName}"></td>
-	                <td th:text="${diyDetail.hotelList[0].hbtHotelGrade}"></td>
-	                <td th:text="${diyDetail.hotelList[0].hbtHotelIntro}"></td>
-	                <td th:text="${diy.tourAreaVO.areaKorName}"></td>
-	                <td>
+	            <tr>
+	            	<th>평점 : </th>
+	            	<td>[[${diyDetail.hotelList[0].hbtHotelGrade}]] / 5 </td>
+	            </tr>
+	            <tr>
+	            	<th>해당 국가 : </th>
+	            	 <td th:text="${diy.tourAreaVO.areaKorName}"></td>
+	            </tr>
+	            <tr>
+	            	<th>1박당 가격 : </th>
+	            	<td>
 	               	[[${#numbers.formatCurrency(diyDetail.hotelList[0].hbtHotelPrice).substring(1)}]] 원
 	                </td>
-	                <td>
-	                    <ul>
-	                        <li th:each="hotelImg : ${diyDetail.hotelList[0].hotelImgList}" th:remove="tag">
-	                        	<span>
-	                        		<img th:src="${'/img/item/hotel/' + hotelImg.hbtHotelAttechedFileName}" 
-			        				style="width: 80px; height: 80px;">
-	                        	</span>
-	                        </li>
-	                    </ul>
-	                </td>
-	            </th:block>
-	                
 	            </tr>
-	        </tbody>
+	            <tr>
+	            	<th>추가 정보 : </th>
+	            	 <td>
+						<div class="scrollable-text">[[${diyDetail.hotelList[0].hbtHotelIntro}]]</div>
+	            	 </td>
+	            </tr>
+	        <tbody>
     	</table>
-	</div>
+      </div>
+      
+      <!-- Image slider part -->
+  
+      <div class="col-md-6 mb-3">
+        <div th:id="'carouselControls' + ${detailStat.index}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <th:block th:each="hotelImg, iterStat : ${diyDetail.hotelList[0].hotelImgList}">
+              <div class="carousel-item" th:classappend="${iterStat.first} ? active : ''">
+                <img th:src="${'/img/item/hotel/' + hotelImg.hbtHotelAttechedFileName}" class="d-block w-100" alt="예약 호텔 이미지">
+              </div>
+            </th:block>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="'#carouselControls' + ${detailStat.index}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Prev</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="'#carouselControls' + ${detailStat.index}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      
+    </th:block>
+  </th:block>
 </div>
+
+
+
+<!-- 선 -->
+<div class="mt-5 mb-4">
+	<hr class="line">
+</div>
+
+
 
 <div class="row mb-3">
 	<div class="col title-md">
-	예약 투어 정보 
+	😎&nbsp;&nbsp;예약 투어 정보 
 	</div>
 </div>
 
-<div class="row">
-	<div class="col mb-3">
-		<table class="table">
-	        <thead>
+
+
+<div class="row info-row">
+ <th:block th:each="diy : ${tourInfoList}">
+    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
+      <!-- Text data part -->
+      <div class="col-md-6 mb-3 info">
+        <table class="table info-table">
+        	<tbody>
 	            <tr>
-	                <td>투어 상품 이름</td>
-	                <td>투어 소요시간</td>
-	                <td>투어 가격</td>
-	                <td>투어 국가</td>
-	                <td>투어 상세 설명 </td>
-	                <td>이미지</td>
+	            	<th>이름 : </th>
+	            	<td th:text="${diyDetail.tourItemList[0].hbtTourItemName}"></td>
 	            </tr>
-	        </thead>
+	            <tr>
+	            	<th>투어 국가 : </th>
+	            	 <td th:text="${diy.tourAreaVO.areaKorName}"></td>
+	            </tr>
+	            <tr>
+	            	<th>투어 소요 시간 : </th>
+	            	<td th:text="${diyDetail.tourItemList[0].hbtTourItemRunTime}"></td>
+	            </tr>
+	            <tr>
+	            	<th>1인 참여 가격 : </th>
+	            	<td>
+	                [[${#numbers.formatCurrency(diyDetail.tourItemList[0].hbtTourItemPrice).substring(1)}]] 원
+	                </td>
+	            </tr>
+	            <tr>
+	            	<th>추가 정보 : </th>
+	            	<td>
+						<div class="scrollable-text">[[${diyDetail.tourItemList[0].hbtTourItemIntro}]]</div>
+	            	</td>
+	            </tr>
 	        <tbody>
-	            <tr th:each="diy : ${tourInfoList}">
-	            <th:block th:each="diyDetail : ${diy.diyDetailList}">
-	                <td th:text="${diyDetail.tourItemList[0].hbtTourItemName}"></td>
-	                <td th:text="${diyDetail.tourItemList[0].hbtTourItemRunTime}"></td>
-	                <td th:text="${diyDetail.tourItemList[0].hbtTourItemIntro}"></td>
-	                <td th:text="${diy.tourAreaVO.areaKorName}"></td>
-	                <td>
-	               	[[${#numbers.formatCurrency(diyDetail.tourItemList[0].hbtTourItemPrice).substring(1)}]] 원
-	                </td>
-	                <td>
-	                    <ul>
-	                        <li th:each="tourImg : ${diyDetail.tourItemList[0].tourImgList}" th:remove="tag">
-	                        	<span>
-	                        		<img th:src="${'/img/item/tourItem/' + tourImg.hbtTourItemAttechedFileName}" 
-			        				style="width: 80px; height: 80px;">
-	                        	</span>
-	                        </li>
-	                    </ul>
-	                </td>
-	            </th:block>
-	                
-	            </tr>
-	        </tbody>
     	</table>
-	</div>
+      </div>
+      
+      <!-- Image slider part -->
+      <div class="col-md-6 mb-3">
+        <div th:id="'carouselControl' + ${detailStat.index}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <th:block th:each="tourImg, iterStat : ${diyDetail.tourItemList[0].tourItemImgList}">
+              <div class="carousel-item" th:classappend="${iterStat.first} ? active : ''">
+                <img th:src="${'/img/item/tourItem/' + tourImg.hbtTourItemAttechedFileName}" class="d-block w-100" alt="예약 투어 이미지">
+              </div>
+            </th:block>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="'#carouselControl' + ${detailStat.index}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Prev</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="'#carouselControl' + ${detailStat.index}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      
+      
+    </th:block>
+  </th:block>
 </div>
-
-
-
-
 
 
 
@@ -293,7 +341,7 @@
 </div>
 
 <!-- 유의 사항 -->
-<div class="info">
+<div class="info-under">
 	<ul>
 		<li>
 			예약취소는 [결제완료] 상태까지 가능합니다. [예약완료]상태는 고객센터로 문의 부탁드립니다.
@@ -301,12 +349,14 @@
 	</ul>
 </div>
 
+</div>
+
 
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src="/"></script>-->
+	<script type="text/javascript" src="/js/content/member/myPage/diy_detail.js"></script>
 </th:block>
 
 
