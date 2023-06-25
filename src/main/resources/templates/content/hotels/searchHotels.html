@@ -13,54 +13,62 @@
 
 <!--        아이템 카드-->
 
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 mx-0 px-0 rounded-5 custom-border-4 shadow d-flex justify-content-center">
+            <h4 class="text-center my-3 fw-bold resultTitle">전 세계 호텔 검색</h4>
+        </div>
+    </div>
 
-    <div class="row text-center mb-3 py-2 d-flex justify-content-center">
-        <div class="col-md-6 py-2 d-flex custom-border-2 shadow border rounded-5 justify-content-center">
-            <div class="row d-flex justify-content-center">
+
+    <div class="row text-center mb-3 py-3 d-flex justify-content-center">
+        <div class="col-md-6 py-2 d-flex custom-border-4 shadow border rounded-5 justify-content-center">
+            <div class="row d-flex my-3 justify-content-center">
                 <div class="col-md-4">
-                    <select class="areaName ye-bc form-control form-select">
+                    <select class="areaName rounded-5 custom-border-3 ye-S-bc form-control form-select">
                         <th:block th:each="loc : ${locMenuList}">
                             <option>[[${loc.areaKorName}]]</option>
                         </th:block>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control ye-bc" type="text" placeholder="도시명" id="cityName">
+                    <input class="form-control rounded-5 custom-border-3 ye-S-bc" type="text" placeholder="도시명" id="cityName">
                 </div>
                 <div class="col-md-4">
-                    <input class="btn ye-S-bc" type="button" value="검색" onclick="searchHotelsAJAX();">
+                    <input class="btn ye-S-bc custom-border-3 rounded-5" type="button" value="검색" onclick="searchHotelsAJAX();">
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center">
-        <div class="col-md-10 mx-0 px-0 d-flex justify-content-center">
-            <h4 class="text-center my-5 fw-bold resultTitle">한별투어 추천 호텔</h4>
+        <div class="col-md-6 mx-0 px-0 rounded-5 my-3 custom-border-4 shadow d-flex justify-content-center">
+            <h4 class="text-center my-3 fw-bold resultTitle">한별투어 추천 호텔</h4>
         </div>
     </div>
 
 
-    <div class="row d-flex justify-content-center resultDiv" th:each="hotel : ${hotelList}">
-        <div class="col-md-10 mx-0 px-0 d-flex justify-content-center">
-            <div class="card mb-3 rounded-3" style="width: 720px; height: 271px; border-color: #ffd000">
-                <div class="row g-0 shadow">
-                    <div class="col-md-6">
-                        <div class="card-body d-flex flex-column h-100 ">
-                            <h5 class="card-title text-center mb-5 fw-bold">[[${hotel['HBT_HOTEL_NAME']}]]</h5>
-                            <div class="mt-auto">
-                                <p class="card-text">[[${hotel['HBT_HOTEL_INTRO']}]]</p>
-                                <p class="card-text hotelGrade" th:data-grade="${hotel['HBT_HOTEL_GRADE']}"></p>
-                            </div>
+
+
+    <div class="row mt-3 mb-3 d-flex justify-content-center" >
+        <div class="col-md-6 shadow custom-border-4 rounded-5 resultDiv">
+            <th:block th:each="hotel : ${hotelList}">
+
+                <div class="row rounded-5 mx-5 my-3 shadow custom-border-3" style="cursor: pointer;">
+                    <div class="col-6 px-0 mx-0 rounded-5">
+                        <h5 class="card-title text-center mb-5 fw-bold">[[${hotel['HBT_HOTEL_NAME']}]]</h5>
+                        <div class="mt-auto">
+                            <p class="card-text">[[${hotel['HBT_HOTEL_INTRO']}]]</p>
+                            <p class="card-text hotelGrade" th:data-grade="${hotel['HBT_HOTEL_GRADE']}"></p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <img th:src="'/img/item/hotel/' + ${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="img-fluid rounded-3" alt="...">
+                    <div class="col-6 px-0 mx-0 rounded-5">
+                        <img style="display: block; width: 100%; height: 250px;" th:src="'/img/item/hotel/' + ${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="object-fit-fill rounded-5" alt="...">
                     </div>
                 </div>
+
+            </th:block>
             </div>
         </div>
-    </div>
 
 
 

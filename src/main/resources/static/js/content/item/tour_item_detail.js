@@ -1,4 +1,27 @@
 
+//예약하기 경고창
+function buyConfirm(){
+    const buyForm = document.querySelector('.buyForm');
+
+    if(!confirm('예약시겠습니까?')){
+        return;
+    }
+    buyForm.submit();
+}
+
+
+//호텔등급 별로 바꾸기
+function setGrade(){
+    const gradeDiv = document.querySelectorAll('.gradeDiv');
+    gradeDiv.forEach(grade => {
+        let gradeStar = '';
+
+        for(let i = 0; i < grade.getAttribute('data-grade'); i++){
+            gradeStar += '★';
+        }
+        grade.textContent = gradeStar;
+    });
+}
 
 //장바구니등로ㅑㄱ
 
@@ -85,16 +108,17 @@ function drawImg(result, index){
     let hotelImgStr = '';
     //호텔이미지 세팅
     hotelImg.forEach((hotelImg, index) => {
+
         if(index == 0 ){
-            hotelImgStr += `<div class="carousel-item rounded-5 active" data-bs-interval="3000">`;
+            hotelImgStr += `<div class="carousel-item active" data-bs-interval="3000">`;
         }
         else {
-            hotelImgStr += `<div class="carousel-item rounded-5" data-bs-interval="3000">`;
+            hotelImgStr += `<div class="carousel-item" data-bs-interval="3000">`;
         }
         hotelImgStr += `               
-                        <img style="width: 100%;" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}"
-                         class="d-block rounded" alt="슬라이드이미지">
-                    </div>
+                            <img style="width: 100%;" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}"
+                             class="" alt="슬라이드이미지">
+                        </div>
         `;
     });
             // <img width="100px;" class="rounded" src="/img/item/hotel/${hotelImg['HBT_HOTEL_ATTECHED_FILE_NAME']}">
@@ -104,11 +128,18 @@ function drawImg(result, index){
 
     tourImg.forEach((imgs,index)=>{
         let tourImgStr = '';
-        console.log(imgs);
+            imgs.forEach((img, index) => {
 
-        imgs.forEach(img => {
-            tourImgStr += `
-                <img width="100px;" class="rounded" src="/img/item/tourItem/${img['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}">
+                if(index == 0 ){
+                    tourImgStr += `<div class="carousel-item active" data-bs-interval="3000">`;
+                }
+                else {
+                    tourImgStr += `<div class="carousel-item" data-bs-interval="3000">`;
+                }
+                    tourImgStr += `               
+                                   <img class="d-block object-fit-none" src="/img/item/tourItem/${img['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}"
+                                       style="display: block; width: 100%;" alt="슬라이드이미지">
+                                   </div>
             `;
         });
         drawTourImg[index].replaceChildren();
@@ -116,6 +147,6 @@ function drawImg(result, index){
 
     });
 
-
+    setGrade();
 
 }
