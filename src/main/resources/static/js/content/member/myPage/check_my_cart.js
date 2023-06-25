@@ -20,7 +20,7 @@ function checkDetail(myCart, diyTour){
 		diy_tour_div_col.replaceChildren();
 		modal_btn_div.replaceChildren();
 		
-		diy_tour_container += `	<div class="row">`;
+		diy_tour_container += `	<div class="row modal_day_plan">`;
 		diy_tour_container += `		<div class="col">`;
 		diy_tour_container += `			<div class="row mb-2">`;
 		diy_tour_container += `				<div class="col-1">${parseInt(diyTour.traverPeriod)-1}박 ${diyTour.traverPeriod}일</div>`;
@@ -44,35 +44,87 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `	</div>`;
 		diy_tour_container += `<div class="row">`;
 		diy_tour_container += `	<div class="col">`;
-		for(let i = 0 ; i < diyTour.traverPeriod ; i++){
-		diy_tour_container += `		<div class="row">`;
-		diy_tour_container += `			<div class="col">`;
+		
+			diyTour.diyDetailList.forEach(function(diyDetail){
+		diy_tour_container += `<div class="row modal_day_plan">`;
+		diy_tour_container += `	<div class="col">`;
 		diy_tour_container += `				<div class="row mb-3">`;
 		diy_tour_container += `					<div class="col-1">`;
-		diy_tour_container += `						${i+1}일`;
+		diy_tour_container += `						${diyDetail.hbtDiyDay}일`;
 		diy_tour_container += `					</div>`;
 		diy_tour_container += `					<div class="col-11">`;
 		diy_tour_container += `						<div class="row mb-2">`;
 		diy_tour_container += `							<div class="col-1">`;
 		diy_tour_container += `								<span>패키지</span>`;
 		diy_tour_container += `							</div>`;
+				if(diyDetail.hbtTourItemCode != null){
 		diy_tour_container += `							<div class="col">`;
-		diy_tour_container += `								${diyTour.diyDetailList[i]}`;
+		diy_tour_container += `								<div class="row">`;
+		diy_tour_container += `									<div class="col">`;
+		diy_tour_container += `										<span>${diyDetail.tourItemList[0].hbtTourItemName}</span>`;
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `									<div class="col">`;
+		diy_tour_container += `										<span>일정 : ${diyDetail.tourItemList[0].hbtTourItemRunTime}</span>`;
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `									<div class="col">`;
+		diy_tour_container += `										<span>가격 : ${parseInt(diyDetail.tourItemList[0].hbtTourItemPrice).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</span>`;
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `								</div>`;
+		diy_tour_container += `								<div class="row">`;
+		diy_tour_container += `									<div class="col">`;
+				diyDetail.tourItemList[0].tourItemImgList.forEach(function(tourItem){
+					
+		diy_tour_container += `										<img src="/img/item/tourItem/${tourItem.hbtTourItemAttechedFileName}" class="modal_img">`;
+				});
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `								</div>`;
 		diy_tour_container += `							</div>`;
+				} else {
+		diy_tour_container += `							<div class="col">`;
+		diy_tour_container += `								<span>선택하신 패키지가 없습니다.</span>`;
+		diy_tour_container += `							</div>`;
+			
+				}
 		diy_tour_container += `						</div>`;
 		diy_tour_container += `						<div class="row">`;
 		diy_tour_container += `							<div class="col-1">`;
 		diy_tour_container += `								<span>호텔</span>`;
 		diy_tour_container += `							</div>`;
+				if(diyDetail.hbtHotelCode != null){
 		diy_tour_container += `							<div class="col">`;
-		diy_tour_container += `								12`;
+		diy_tour_container += `								<div class="row">`;
+		diy_tour_container += `									<div class="col">`;
+		diy_tour_container += `										<span>${diyDetail.hotelList[0].hbtHotelName}</span>`;
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `									<div class="col">`;
+		diy_tour_container += `										<span>평점 : ${diyDetail.hotelList[0].hbtHotelGrade}</span>`;
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `									<div class="col">`;
+		diy_tour_container += `										<span>가격 : ${parseInt(diyDetail.hotelList[0].hbtHotelPrice).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</span>`;
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `								</div>`;
+		diy_tour_container += `								<div class="row">`;
+		diy_tour_container += `									<div class="col">`;
+				diyDetail.hotelList[0].hotelImgList.forEach(function(img){
+		diy_tour_container += `										<img src="/img/item/hotel/${img.hbtHotelAttchedFileName}" class="modal_img">`;
+					
+				});
+		diy_tour_container += `									</div>`;
+		diy_tour_container += `								</div>`;
 		diy_tour_container += `							</div>`;
+				} else {
+		diy_tour_container += `							<div class="col">`;
+		diy_tour_container += `								<span>선택하신 호텔이 없습니다.</span>`;
+		diy_tour_container += `							</div>`;
+				}
 		diy_tour_container += `						</div>`;
 		diy_tour_container += `					</div>`;
 		diy_tour_container += `				</div>`;
-		diy_tour_container += `			</div>`;
-		diy_tour_container += `		</div>`;
-		}
+		diy_tour_container += `	</div>`;
+		diy_tour_container += `</div>`;
+			
+			});
+		
 		diy_tour_container += `	</div>`;
 		diy_tour_container += `</div>`;
 		
@@ -101,7 +153,7 @@ function checkDetail(myCart, diyTour){
 		modal_btn_div.replaceChildren();
 		
 		my_cart_container += `<div class="row mb-3">`;
-		my_cart_container += `	<div class="col-5" style="padding-left:3rem;">`;
+		my_cart_container += `	<div class="col-5" style="padding-left:3rem; padding-top: 5rem;">`;
 		
 		my_cart_container += `		<p>국가명 : ${myCart.itemVO.tourAreaVO.areaKorName}</p>`;
 		my_cart_container += `		<p>총기간 : ${myCart.itemVO.traverPeriod}</p>`;

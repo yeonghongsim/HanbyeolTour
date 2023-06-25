@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.req_det{
+	min-height: 53vh;
+}
+
 .req-detail-table > tbody > tr > td {
 	border: 1px solid #eee;
 }

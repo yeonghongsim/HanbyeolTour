@@ -64,16 +64,16 @@
 				</thead>
 				<tbody id="freq-request-tbody">
 					<th:block th:each="freqReq : ${freqReqList}">
-						<tr>
+						<tr class="pointer" onclick="toggleAnswer(this);">
 							<td>[[${freqReq.typeRequestVO.typeRequestName}]]</td>
 							<td>
-								<span class="pointer" onclick="toggleAnswer(this);">[[${freqReq.freqRequestTitle}]]</span>
+								<span>[[${freqReq.freqRequestTitle}]]</span>
 							</td>
 							<td class="bi bi-chevron-up"></td>
 						</tr>
 						<tr class="answerTr hide">
-							<td>A.</td>
-							<td colspan="2">[[${freqReq.freqRequestContent}]]</td>
+							<td style="padding-left: 3rem;">A.</td>
+							<td style="padding-left: 3rem;" colspan="2">[[${freqReq.freqRequestContent}]]</td>
 						</tr>
 					</th:block>
 				</tbody>

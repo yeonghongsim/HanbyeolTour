@@ -11,49 +11,50 @@
 <!-- 본문 내용 -->   
 <th:block layout:fragment="board_content">
 	
-	<div class="row mb-3 under-line-ylS">
-		<div class="col">
-			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_001'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+	<div class="board_pub_det_container">
+		<div class="row mb-3 under-line-ylS">
+			<div class="col">
+				<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_001'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
+			</div>
+		</div>
+		
+		<div class="row mb-2">
+			<div class="col">
+				<table class="table text-center detail_table">
+					<colgroup>
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>작성자</td>
+							<td>[[${publicDetail.memberVO.memId}]]</td>
+							<td>작성일</td>
+							<td>[[${publicDetail.hbtBoardRegDate}]]</td>
+						</tr>
+						<tr>
+							<td>제목</td>
+							<td>[[${publicDetail.hbtBoardTitle}]]</td>
+							<td>조회수</td>
+							<td>[[${publicDetail.hbtBoardCnt}]]</td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td colspan="3">[[${publicDetail.hbtBoardContent}]]</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<div class="col text-center">
+				<input onclick="location.href='/board/getPublicBoardPage'" class="btn btn-secondary" type="button" value="뒤로 가기">
+			</div>
 		</div>
 	</div>
-	
-	<div class="row mb-2">
-		<div class="col">
-			<table class="table text-center detail_table">
-				<colgroup>
-					<col width="25%">
-					<col width="25%">
-					<col width="25%">
-					<col width="25%">
-				</colgroup>
-				<tbody>
-					<tr>
-						<td>작성자</td>
-						<td>[[${publicDetail.memberVO.memId}]]</td>
-						<td>작성일</td>
-						<td>[[${publicDetail.hbtBoardRegDate}]]</td>
-					</tr>
-					<tr>
-						<td>제목</td>
-						<td>[[${publicDetail.hbtBoardTitle}]]</td>
-						<td>조회수</td>
-						<td>[[${publicDetail.hbtBoardCnt}]]</td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td colspan="3">[[${publicDetail.hbtBoardContent}]]</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col text-center">
-			<input onclick="location.href='/board/getPublicBoardPage'" class="btn btn-secondary" type="button" value="뒤로 가기">
-		</div>
-	</div>
-	
 	
 </th:block>
 

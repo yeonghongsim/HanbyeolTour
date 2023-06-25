@@ -4,6 +4,7 @@
 
 
 <th:block th:fragment="headerFragment">
+<div class="test">
 	<!-- 상단바 1 -->
 	<div class="row header-bar">
 		<div class="col text-end">
@@ -22,7 +23,7 @@
 				<ul class="header-title head-top">
 					<li>[[${#authentication.name}]]님 즐거운 여행되세요!</li>
 					<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
-					<li class="h-btn">장바구니</li>
+					<li class="h-btn"><a th:href="@{/myPage/checkMyCart(memId=${#authentication.name})}">장바구니</a></li>
 					<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>
 					<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
 					<th:block sec:authorize="hasRole('ROLE_AD')">
@@ -39,7 +40,7 @@
 			<span onclick="location.href='/'" style="cursor: pointer;" class="header-title">✈️한별투어</span>
 		</div>
 	</div>
-	
+</div>	
 	
 	
 </th:block>
