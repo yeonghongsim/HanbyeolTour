@@ -14,6 +14,7 @@ toDateInput.addEventListener('change', function() {
 
 
 
+
 //value 값 바꾸기 -> 
 // 검색 버튼 -> from Date, to Date, StatusCode 변경 필요 
 // 변경 form 태그 안의 value값을 내가 원하는 값으로 변경 
@@ -45,7 +46,7 @@ function click_month_btn(month){
 	
 }
 
-// 페이징 
+//페이징 
 function click_page_btn(nowPage){
 	document.querySelector('#nowPage').value = nowPage;
 	
@@ -55,26 +56,25 @@ function click_page_btn(nowPage){
 
 
 
-// 일반 패키지 취소 기능 
-function cancel_reservation(buyCode, btn){
-	
+// DIY 여행 취소 기능 
+function cancel_reservation(hbtDiyCode, btn){
 	// Confirmation
 	const result = confirm(`정말 예약을 취소하시겠어요?`);
 	if(result){
 		//ajax start
 		$.ajax({
-		   url: '/myPage/cancelReservationAJAX', //요청경로
+		   url: '/myPage/cancelDiyReservationAJAX', //요청경로
 		   type: 'post',
 		   async: true, // 비동기 , 동기 설정
 		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // default
-		   data: {'buyCode':buyCode}, //필요한 데이터
+		   data: {'hbtDiyCode':hbtDiyCode}, //필요한 데이터
 		   success: function(result) {
 		     	// 성공시 취소요청으로 변환 
 		    	if(result == 'success'){
 					const cancelBtn = btn;
 					
 					const tdElement = cancelBtn.closest("td");
-   					tdElement.replaceChildren();; // td 내용 지우기
+   					 tdElement.replaceChildren();; // td 내용 지우기
 					
 					let str = ``;
 					
@@ -100,9 +100,4 @@ function cancel_reservation(buyCode, btn){
 	}
 	
 }
-
-
-
-
-
 

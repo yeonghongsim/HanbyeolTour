@@ -13,23 +13,31 @@
 	
 	<!-- 프로필 상단바 -->
 	<div class="header-area">
-		<div class="row mt-3 mb-5 profile-bar">
-			<div class="col-8 inner-bar"><span class="profile-name">[[${memInfo.memName}]]</span>님 반갑습니다!
+		<div class="row mt-3  profile-bar">
+			<div class="col-5 inner-bar"><span class="profile-name">[[${memInfo.memName}]]</span>님 반갑습니다!
 			&nbsp;<i class="bi bi-emoji-wink" style="color: #ffd000; font-weight: bolder;"></i>
 			</div>
-			<div class="col-4 inner-bar text-end">
-				<a th:href="@{/myPage/updateMyInfo}"  class="btn btn-outline-warning"><span class="">내정보 수정</span></a>
+			<div class="col-7 weather-bar">
+				<span class="weather-ment" style="margin-right: 1rem; letter-spacing: 0px;"></span>
+				<span class="weather-city" style="margin-right: 1rem; margin-left: 0.5rem;"></span>
+				<span class="weather-icon" style="margin-right: 1rem;"></span> 
+				<span class="weather-text" style="margin-right: 1rem;"></span>
+				<span class="weather-temp" ></span> 
 			</div>
 		</div>
 	</div>	
+	
 
-
+	<!-- 1개월 이내의 예약 조회 데이터 (취소관련 데이터는 제외) -->
+	<div class="one-month-mention mb-3 text-end">
+		<i class="bi bi-dash"></i> 취소관련 내역은 아래에 조회되지 않습니다. 취소 내역 조회를 원하시면 예약 내역 페이지를 이용해주세요!
+	</div>
 	
 	
 	<!-- 예약 조회 현황 (1개월 내 기록) -->
 	<div class="row mb-1">
 		<div class="col-8 title">
-			여행 예약 조회 <span class="title-sm">(최근 1개월)</span>
+			일반 패키지 예약 조회 <span class="title-sm">(최근 1개월)</span>
 		</div>
 		<div class="offset-1 col-3 text-end ">
 			<a class="more" th:href="@{/myPage/checkMyReservation}">더보기 <i class="bi bi-chevron-right" style="font-size: 0.8rem;"></i></a>
@@ -49,10 +57,6 @@
 	    </div>
 	</div>
 
-	<!-- 1개월 이내의 예약 조회 데이터 (취소관련 데이터는 제외) -->
-	<div class="one-month-mention mb-3 text-end">
-		<i class="bi bi-dash"></i> 취소관련 내역은 아래에 조회되지 않습니다. 취소 내역 조회를 원하시면 예약 내역 페이지를 이용해주세요!
-	</div>
 	
 	<div class="row">
 		<div class="col">
@@ -134,9 +138,112 @@
 	<!-- 선 -->
 	<div class="row">
 		<div class="col	mb-1">
-			<hr width="100%;" color="#fff" noshade/>
+			<hr width="100%;" color="e6e6e6" noshade/>
 		</div>
 	</div>
+	
+	
+	<!-- 예약 조회 갯수 현황 (1개월 내 기록) -->
+	<div class="row mb-1">
+		<div class="col-8 title">
+			DIY 패키지 예약 조회 <span class="title-sm">(최근 1개월)</span>
+		</div>
+		<div class="offset-1 col-3 text-end ">
+			<a class="more" th:href="@{/myPage/checkDiyReservation}">더보기 <i class="bi bi-chevron-right" style="font-size: 0.8rem;"></i></a>
+		</div>
+	</div>
+	
+	<div class="row mb-4">
+	    <div class="col content-box">
+	        <a th:href="@{/myPage/checkDiyReservation}">
+	            <ul class="my-page-step">
+	                <li th:each="buyStatus, status : ${diyStatusInOneMonthList}">
+	                    <em th:text="${buyStatus.buyStatusCount}" class="num"></em>
+	                    <span th:text="${buyStatus.buyStatusName}"></span>
+	                </li>
+	            </ul>
+	        </a>
+	    </div>
+	</div>
+	
+	<!-- 예약 조회 현황 (1개월 내 기록) -->
+	<div class="row">
+		<div class="col">
+		<div class="table-container">
+			<table class="table one-month-table">
+				<colgroup>
+					<col width="15%">
+					<col width="20%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+				</colgroup>
+				<thead class="text-center">
+					<tr>
+						<td>결제일자</td>
+						<td>항공사</td>
+						<td>여행국가</td>
+						<td>여행기간</td>
+						<td>결제금액</td>
+						<td>상태</td>
+					</tr>
+				</thead>
+				
+				<tbody class="scrollable-tbody">
+					<th:block th:if="${#lists.size(diyListInOneMonth) == 0}">
+							<tr class="text-center">
+								<td colspan="7" style="border-bottom: 0px;">
+									<div style="font-size: 4rem; color: #bbb;">
+										<i class="bi bi-exclamation-circle"></i>
+									</div>
+									<div style="color: #bbb; font-size: 1.1rem;">1개월 이내에 예약한 내역이 없습니다!</div>
+								</td>
+							</tr>
+					</th:block>
+					<th:block th:if="${#lists.size(diyListInOneMonth) != 0}">
+						<th:block th:each="diy : ${diyListInOneMonth}">
+							<tr th:each="diyDetail : ${diy.diyDetailList}" class="table-tr">
+					            <td class="text-center">
+						            <div style="color: #131518; font-weight:bolder;">[[${diy.diyTourBuyDate}]]</div>
+					            </td>
+					            <td>
+						        	<div class="col">
+										<img th:src="${'/img/item/airlineIcon/' + diy.airlineVO.hbtAirlineIcon}">
+						        		<span>[[${diy.airlineVO.hbtAirlineName}]]</span>
+						        	</div>
+						        </td>
+						        <td th:text="${diy.tourAreaVO.areaKorName}"></td>
+						        <td class="date-td">
+						        	[[${diy.departDate}]] <br>~<br>[[${diy.arriveDate}]]<br>
+						        </td>
+						        <td style="color: #f27370;">
+						        	 [[${#numbers.formatCurrency(diy.totalPrice).substring(1)}]] 원
+					        	</td>
+						        <td>
+							        <div>
+							        	<span id="statusCode" style="font-weight: bolder;">[[${diy.buyStateVO.buyStatusName}]]</span>
+							        </div>
+						        </td>
+							</tr>
+						</th:block>
+					</th:block>
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<!-- 선 -->
+	<div class="row">
+		<div class="col	mb-1">
+			<hr width="100%;" color="e6e6e6" noshade/>
+		</div>
+	</div>
+	
+	
 	
 	
     <div class="area-over">
@@ -348,7 +455,7 @@
 
 <!-- 연결해야 할 외부 js 파일-->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/member/info_manage.js"></script> -->
+	<script type="text/javascript" src="/js/content/member/info_manage.js"></script>
 </th:block>
 
 

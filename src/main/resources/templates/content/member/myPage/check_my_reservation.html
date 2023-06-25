@@ -12,13 +12,14 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
-
-	<div class="row mb-1 mt-2">
+	
+<div class="container">
+	
+	<div class="row mb-4 mt-2">
 		<div class="col title">
-			예약 및 취소 조회 
+			일반 패키지 예약 조회 
 		</div>
 	</div>
-		
 	
 	<div class="row mb-3">
 	    <div class="col content-box">
@@ -34,79 +35,77 @@
 	
 	<div class="row">
 		<div class="col search-period">
-			<form id="month-form" th:action="@{/myPage/checkMyReservation}" method="post">
-				<input type="hidden" value="" name="month">
+			<form id="search-form" th:action="@{/myPage/checkMyReservation}" method="post">
+				<input type="hidden" value="0" name="month" id="month">
+				<input type="hidden" th:value="${buySearchVO.fromDate}"id="fromDate" name="fromDate">
+				<input type="hidden" th:value="${buySearchVO.toDate}" id="toDate" name="toDate">
+				<input type="hidden" th:value="${buySearchVO.searchStatusCode}" id="searchStatusCode" name="searchStatusCode">
+				<input type="hidden" name="nowPage" value="1" id="nowPage">
 			</form>
-			<form th:action="@{/myPage/checkMyReservation}" method="post">
-				<input type="hidden" name="nowPage" th:value="${buyVO.nowPage}" id="nowPage">
 				<div class="row">
-					<div class="col-7 select-range">
-						<p id="first">구매기간</p>
-						<ul class="select-month">
-							<li>
-								<input type="button" class="btn btn-dark" value="전체" onclick="get_buy_list(0);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="1개월" onclick="get_buy_list(-1);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="3개월" onclick="get_buy_list(-3);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="6개월" onclick="get_buy_list(-6);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="12개월" onclick="get_buy_list(-12);">
-							</li>
-						</ul>
-					</div>
-					<div class="col-1 select-range mt-4">
-						<span id="first">구매상태</span>
-					</div>
-					<div class="col-3 select-range mt-4">
-						<select class="form-select" name="searchStatusCode" id="searchStatusCode">
-							<option value="0" th:selected="${buyVO == null or buyVO.searchStatusCode == 0}">전체</option>
-							<option value="1" th:selected="${buyVO != null and buyVO.searchStatusCode == 1}">결제완료</option>
-							<option value="2" th:selected="${buyVO != null and buyVO.searchStatusCode == 2}">예약완료</option>
-							<option value="3" th:selected="${buyVO != null and buyVO.searchStatusCode == 3}">취소요청</option>
-							<option value="4" th:selected="${buyVO != null and buyVO.searchStatusCode == 4}">취소완료</option>
-						</select>
+					<div class="col select-range-up" style="display: flex;">
+						<p style="margin-right: 14px;">구매기간</p>
+						<div class="col-6">
+							<ul class="select-month">
+								<li>
+									<input type="button" class="btn btn-gray" value="전체" onclick="click_month_btn(1);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="1개월" onclick="click_month_btn(-1);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="3개월" onclick="click_month_btn(-3);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="6개월" onclick="click_month_btn(-6);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="12개월" onclick="click_month_btn(-12);">
+								</li>
+							</ul>
+						</div>
+						 <p style="margin-right: 14px;">구매 상태</p>
+						<div class="col-3 select-range mt-4">
+							<select class="form-select" id="searchStatusCodeShow">
+								<option value="0" th:selected="${buySearchVO.searchStatusCode == 0}">전체</option>
+								<option value="1" th:selected="${buySearchVO.searchStatusCode == 1}">결제완료</option>
+								<option value="2" th:selected="${buySearchVO.searchStatusCode == 2}">예약완료</option>
+								<option value="3" th:selected="${buySearchVO.searchStatusCode == 3}">취소요청</option>
+								<option value="4" th:selected="${buySearchVO.searchStatusCode == 4}">취소완료</option>
+							</select>
+						</div>
 					</div>
 				</div>
 					
 				<div class="row">
-				    <div class="col select-range" style="display: flex;">
-				        <p style="margin-right: 14px;">직접 입력</p>
+				    <div class="col select-range-down" style="display: flex;">
+				       <p class="down-p" style="margin-right: 14px;">직접 입력</p>
 				        <div class="col-4 d-grid" style="margin-right: 10px;">
-				            <input name="fromDate"id="fromDate" type="date" class="form-control" th:value="${buyVO.fromDate}">
+				            <input id="fromDateShow" type="date" class="form-control" th:value="${buySearchVO.fromDate}">
 				        </div>
 				        <div class="col-1 text-center" style="margin-right: 10px;">
 				            <span class="">~</span>
 				        </div>
 				        <div class="col-4 d-grid" style="margin-right: 10px;">
-				            <input name="toDate" id="toDate" type="date" class="form-control" th:value="${buyVO.toDate}">
+				            <input id="toDateShow" type="date" class="form-control" th:value="${buySearchVO.toDate}">
 				        </div>
 				        <div class="col-1 d-grid">
-				            <input type="submit" class="btn btn-secondary" value="검색">
+				            <input type="button" class="btn btn-yellow-reverse" value="검색" onclick="click_search_btn();">
 				        </div>
 				    </div>
 				</div>
-				
-			</form>
 		</div>
 	</div>
 	
 	
-	
-	<div class="row">
-		<div class="col mb-5 mt-4">
+	<div class="row mb-5 mt-4">
+		<div class="col">
 			<table class="table table-reservation">
 				<colgroup>
 					<col width="15%">
 					<col width="*">
-					<col width="5%">
 					<col width="10%">
-					<col width="10%">
+					<col width="15%">
 					<col width="15%">
 					<col width="10%">
 				</colgroup>
@@ -115,8 +114,7 @@
 						<td>결제일자</td>
 						<td>상품</td>
 						<td>인원</td>
-						<td>출발일자</td>
-						<td>도착일자</td>
+						<td>여행기간</td>
 						<td>결제금액</td>
 						<td>상태</td>
 					</tr>
@@ -166,22 +164,23 @@
 						        	</div>
 						        </td>
 						        <td th:text="${buyDetail.reservedPeopleNum}" class="text-center"></td>
-						        <td th:text="${buyDetail.departDate}" class="date-td"></td>
-						        <td th:text="${buyDetail.arriveDate}" class="date-td"></td>
+						        <td class="date-td">
+						        	[[${buyDetail.departDate}]]<br>~<br>[[${buyDetail.arriveDate}]]
+						        </td>
 						        <td style="color: #f27370;">
 						        	 [[${#numbers.formatCurrency(buy.buyTotalPrice).substring(1)}]] 원
 					        	</td>
-						        <td>
+						        <td id="cancel-td">
 							        <div>
 							        	<span id="statusCode" style="font-weight: bolder;" th:value="${buy.buyStateVO.buyStatusCode}">[[${buy.buyStateVO.buyStatusName}]]</span>
 							        </div>
 							        <div id="cancelBtn">
 							        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn"
 							        	th:if="${buy.buyStateVO.buyStatusCode == 1}"
-							        	th:onclick="cancel_reservation([[${buy.buyCode}]])">예약취소</button>
+							        	th:onclick="cancel_reservation([[${buy.buyCode}]], this)">예약취소</button>
 							        </div>
 							        <div id="reviewBtn">
-							        	<a th:href="@{/myPage/checkMyReview(memCode=${buy.memberVO.memCode})}">
+							        	<a th:href="@{/myPage/getMyReview(buyCode=${buy.buyCode})}">
 							        		<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn" 
 							        		th:if="${buy.buyStateVO.buyStatusCode == 2}">리뷰작성</button>
 							        	</a>
@@ -191,48 +190,41 @@
 						</th:block>
 					</th:block>
 				</tbody>
-				 
 			</table>
-		
 		</div>
 	</div>
 	
-	
-	<!-- 페이징 처리 -->					
-	<div class="row justify-content-center">
+	<!-- 페이징 -->
+	<div class="row justify-content-center mb-5">
 		<div class="col-3">
-		
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
 			  
-			    <li class="page-item" th:classappend="${buyVO.prev ? '' : 'disabled'}">
+			    <li class="page-item" th:classappend="${buySearchVO.prev ? '' : 'disabled'}">
 			      <a class="page-link" href="javascript:void(0);" aria-label="Previous"
-			       th:onclick="get_buy_list_paging('[[${buyVO.beginPage - 1}]]');">
+			       th:onclick="click_page_btn('[[${buySearchVO.beginPage - 1}]]');">
 			        <span aria-hidden="true">&lt;</span>
 			      </a>
 			    </li>
-			    
-			    
 			    <li class="page-item" 
-			    th:each=" pageNum : ${#numbers.sequence(buyVO.beginPage, buyVO.endPage)}">
-			    	<a th:classappend="${buyVO.nowPage == pageNum ? 'active' : ''}" class="page-link"
-			    	href="javascript:void(0);" th:onclick="get_buy_list_paging('[[${pageNum}]]');">[[${pageNum}]]</a>
+			    th:each=" pageNum : ${#numbers.sequence(buySearchVO.beginPage, buySearchVO.endPage)}">
+			    	<a th:classappend="${buySearchVO.nowPage == pageNum ? 'active' : ''}" class="page-link"
+			    	href="javascript:void(0);" th:onclick="click_page_btn('[[${pageNum}]]');">[[${pageNum}]]</a>
 			    </li>
-			    
-			    
-			    <li class="page-item" th:classappend="${buyVO.next ? '' : 'disabled'}">
+			    <li class="page-item" th:classappend="${buySearchVO.next ? '' : 'disabled'}">
 			      <a class="page-link" href="javascript:void(0);" aria-label="Next"
-			       th:onclick="get_buy_list_paging('[[${buyVO.endPage + 1}]]');">
+			       th:onclick="click_page_btn('[[${buySearchVO.endPage + 1}]]');">
 			        <span aria-hidden="true">&gt;</span>
 			      </a>
 			    </li>
 			    
 			  </ul>
 			</nav>
-			
 		</div>
 	</div>
-	
+
+
+</div>
 
 
 </th:block>

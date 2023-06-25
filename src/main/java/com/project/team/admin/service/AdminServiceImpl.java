@@ -3,6 +3,7 @@ package com.project.team.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.review.vo.ReveiwVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -381,30 +382,15 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
 
+	@Override
+	public List<String> getReviewList() {
+		return sqlSession.selectList("adminMapper.getReviewList");
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	@Override
+	public void setReviewData(ReveiwVO reveiwVO) {
+		sqlSession.insert("adminMapper.setReviewData", reveiwVO);
+	}
 
 
 }

@@ -22,6 +22,7 @@ import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.buy.service.BuyService;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberDetailVO;
@@ -60,7 +61,6 @@ public class MemberController {
 		return "content/member/join";
 	}
 	
-	
 	//아이디 중복 확인 
 	@PostMapping("/isDuplicateMemIdAJAX")
 	@ResponseBody
@@ -91,6 +91,7 @@ public class MemberController {
 		
 		return "content/member/join_notice";
 	}
+		
 	
 	//회원가입시 인증 기능 
 	@PostMapping("/emailCheckAJAX")
@@ -263,16 +264,25 @@ public class MemberController {
 		model.addAttribute("memInfo", memInfo);
 		String memCode = memberService.getMemCode(memInfo.getMemId());
 		
-		// 1개월 내 구매상태 정보 조회 
+		// 1개월 내 구매상태 정보 조회 - 일반 
 		List<BuyStateVO> buyStatusInOneMonthList = memberService.getBuyStatusInOneMonth(memCode);
 		System.out.println(buyStatusInOneMonthList);
 		model.addAttribute("buyStatusInOneMonthList", buyStatusInOneMonthList);
 		
-		//1개월 내 구매 관련 정보 리스트
+		//1개월 내 구매 관련 정보 리스트 - 일반 
 		List<BuyVO> buyListInOneMonth = memberService.getBuyListInOneMonth(memCode);
 		System.out.println("@@@ 1개월 이내 예약 리스트 : " + buyListInOneMonth);
 		model.addAttribute("buyListInOneMonth", buyListInOneMonth);
 		
+		// 1개월 내 DIY 구매상태 정보 조회 
+		List<BuyStateVO> diyStatusInOneMonthList = memberService.getDiyStatusInOneMonth(memCode);
+		System.out.println(diyStatusInOneMonthList);
+		model.addAttribute("diyStatusInOneMonthList", diyStatusInOneMonthList);
+		
+		//1개월 내 구매 관련 정보 리스트 - DIY 
+		List<DiyTourVO> diyListInOneMonth = memberService.getDiyTourListInOneMonth(memCode);
+		System.out.println(diyListInOneMonth);
+		model.addAttribute("diyListInOneMonth", diyListInOneMonth);
 		
 		//문의 내역 조회 
 		List<BoardRequestVO> qnaList =  memberService.getQnaList(memCode);

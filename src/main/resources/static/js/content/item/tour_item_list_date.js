@@ -160,17 +160,21 @@ function getSearchByDateAJAX(getDate){
 
 			str += `
 				<h3 class="text-center mt-5">${i["ITEM_TITLE"]}</h3>
-				<div class="row rounded-5 mx-5 mb-5 border custom-border-2 shadow" style="cursor: pointer;"
+				<div class="row rounded-5 mx-5 mb-5 border custom-border-3 shadow" style="cursor: pointer;"
 					 onclick="location.href='/item/tourItemListDetail?departDate=${i['DEP_DATE']}&arriveDate=${i['ARR_DATE']}&itemCode=${i['ITEM_CODE']}'">
 					<div class="col-6 px-0 mx-0 rounded-5">
-						<img style="display: block; width: 100%;" class="rounded-5" src="/img/item/itemImg/${i['ITEM_IMG_ATTACHED_NAME']}">
+						<img style="display: block; width: 100%;" class="rounded-start-5" src="/img/item/itemImg/${i['ITEM_IMG_ATTACHED_NAME']}">
 					</div>
-					<div class="col-6">
+					<div class="col-6 d-flex align-items-center">
 						<table
-							class="table align-middle broder-0 mt-3 py-0 d-flex align-items-center justify-content-center text-center">
+							class="table align-middle py-0 d-flex align-items-center justify-content-center text-center">
 							<tr>
 								<td>여행국가 :</td>
 								<td>${i["AREA_KOR_NAME"]}</td>
+							</tr>
+							<tr>
+								<td>여행기간 :</td>
+								<td>${i["TRAVER_PERIOD"]}</td>
 							</tr>
 							<tr>
 								<td>출발예정 :</td>

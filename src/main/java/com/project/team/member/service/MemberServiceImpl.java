@@ -17,6 +17,7 @@ import com.project.team.admin.vo.TourImgVO;
 import com.project.team.admin.vo.TourItemImgVO;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.board.vo.ReqReplyVO;
+import com.project.team.buy.vo.BuySearchVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
 import com.project.team.item.vo.DiyDetailVO;
@@ -127,7 +128,7 @@ public class MemberServiceImpl implements MemberService{
 		return result != 0 ? true : false;
 	}
 	
-	// 회원 정보 수정  
+	// 회원 정보 수정
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateMyInfo(MemberVO memberVO, MemberDetailVO memberDetailVO) {
@@ -135,28 +136,28 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.update("memberMapper.updateMyInfoName", memberVO);
 	}
 	
-	// 주문 상태 코드 갯수 조회
+	// 주문 상태 코드 갯수 조회 *
 	@Override
 	public List<BuyStateVO> getBuyStatusInOneMonth(String memCode) {
 		return sqlSession.selectList("memberMapper.getBuyStatusInOneMonth", memCode);
 	}
 
-	// 구매 내역 조회 
+	// 구매 내역 조회 *
 	@Override
-	public List<BuyVO> getBuyList(BuyVO buyVO) {
-		return sqlSession.selectList("memberMapper.getBuyList", buyVO);
+	public List<BuyVO> getBuyList(BuySearchVO buySearchVO) {
+		return sqlSession.selectList("memberMapper.getBuyList", buySearchVO);
 	}
 	
-	// 특정 기간 별 주문 상태 코드 갯수 조회 
+	// 특정 기간 별 주문 상태 코드 갯수 조회 * 
 	@Override
-	public List<BuyStateVO> getBuyStatusCount(BuyVO buyVO) {
-		return sqlSession.selectList("memberMapper.getBuyStatusCount", buyVO);
+	public List<BuySearchVO> getBuyStatusCount(BuySearchVO buySearchVO) {
+		return sqlSession.selectList("memberMapper.getBuyStatusCount", buySearchVO);
 	}
 	
 	// 구매내역 갯수 조회 
 	@Override
-	public int getBuyListCount(BuyVO buyVO) {
-		return sqlSession.selectOne("memberMapper.getBuyListCnt", buyVO);
+	public int getBuyListCount(BuySearchVO buySearchVO) {
+		return sqlSession.selectOne("memberMapper.getBuyListCount", buySearchVO);
 	}
 	
 	// 예약 취소 
@@ -201,8 +202,8 @@ public class MemberServiceImpl implements MemberService{
 	
 	// 마이페이지 - Diy tour 리스트 조회 
 	@Override
-	public List<DiyTourVO> getDiyTourList(String memCode) {
-		return sqlSession.selectList("memberMapper.getDiyTourList", memCode);
+	public List<DiyTourVO> getDiyTourList(BuySearchVO buySearchVO) {
+		return sqlSession.selectList("memberMapper.getDiyTourList", buySearchVO);
 	}
 	
 	//Diy 예약 내역 상세 
@@ -256,6 +257,39 @@ public class MemberServiceImpl implements MemberService{
 	public List<TourItemImgVO> getDiyTourImgList(String hbtTourItemCode) {
 		return sqlSession.selectList("memberMapper.getDiyTourImgList", hbtTourItemCode);
 	}
+	
+	//diy - 메인 1개월 갯수 조회
+	@Override
+	public List<BuyStateVO> getDiyStatusInOneMonth(String memCode) {
+		return sqlSession.selectList("memberMapper.getDiyStatusInOneMonth", memCode);
+	}
+	
+	//diy -메인 1개월 내역 조회 
+	@Override
+	public List<DiyTourVO> getDiyTourListInOneMonth(String memCode) {
+		return sqlSession.selectList("memberMapper.getDiyTourListInOneMonth", memCode);
+	}
+	
+	//diy - 갯수 페이징
+	@Override
+	public int getDiyListCnt(BuySearchVO buySearchVO) {
+		return sqlSession.selectOne("memberMapper.getDiyListCnt", buySearchVO);
+	}
+	
+	//diy - 상단바 리스트 
+	@Override
+	public List<BuyStateVO> getDiyStatusCountList(BuySearchVO buySearchVO) {
+		return sqlSession.selectList("memberMapper.getDiyStatusCountList", buySearchVO);
+	}
+	
+	//diy - 취소 기능 
+	@Override
+	public void cancelDiyReservation(String hbyDiyCode) {
+		sqlSession.update("memberMapper.cancelDiyReservation", hbyDiyCode);
+	}
+
+	
+	
 	
 	
 	
@@ -313,6 +347,15 @@ public class MemberServiceImpl implements MemberService{
 	public List<BuyVO> getNeedReviewList(String memCode) {
 		return sqlSession.selectList("memberMapper.getNeedReviewList", memCode);
 	}
+
+	
+	
+
+	
+
+	
+
+	
 
 	
 

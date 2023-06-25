@@ -68,7 +68,53 @@
 			</div>
 			<div class="row mt-5">
 				<div class="col">
-					영홍씨 테마별 통계 그래프
+					<div class="row custom-border-2">
+						<div class="col">
+							<canvas id="reviewChart"></canvas>
+						</div>
+						<div class="col">
+							<H5>긍정 단어</H5>
+							<table class="table posTable">
+								<thead>
+									<tr>
+										<td>순위</td>
+										<td>단어</td>
+										<td>횟수</td>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+
+						</div>
+						<div class="col">
+							<H5>부정 단어</H5>
+							<table class="table nagTable">
+								<thead>
+								<tr>
+									<td>순위</td>
+									<td>단어</td>
+									<td>횟수</td>
+								</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+						<div class="col">
+							<table class="table dataTable">
+								<tbody>
+									<tr>
+										<td rowspan="2">
+											<input type="button" onclick="updateReviewData();" value="UPDATE">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				
 			</div>
@@ -107,6 +153,8 @@
 </th:block>
 <!-- 연결해야 할 외부 js 파일-->
 <th:block layout:fragment="content_js">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 	<script type="text/javascript" src="/js/content/admin/index/index_bar.js"></script>
 </th:block>
 
