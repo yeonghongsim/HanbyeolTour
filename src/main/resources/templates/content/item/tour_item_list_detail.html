@@ -152,7 +152,7 @@
 					<div class="accordion" id="accordionPanelsStayOpenExample">
 						<th:block th:each="number, state : ${#numbers.sequence(0 , day - 1)}">
 
-							<div class="accordion-item rounded-5 my-3 rounded-5 custom-border-3">
+							<div class="accordion-item my-3 rounded-5 custom-border-3">
 								<h2 class="accordion-header">
 									<button class="accordion-button rounded-5 shadow collapsed" type="button" data-bs-toggle="collapse"
 											th:data-bs-target="${'#panelsStayOpen-collapseOne'} + ${state.count}"
@@ -222,7 +222,7 @@
 													</div>
 
 													<div class="row rounded-5 mx-2 my-2 d-flex justify-content-center">
-														<div class="col-5 px-0 mx-3 d-flex justify-content-center">
+														<div class="col-5 px-0 mx-3">
 															<div id="tourImgSlide" class="carousel slide" data-bs-ride="carousel">
 																<div class="carousel-inner custom-border-4 shadow rounded-5 tourImg" style="height: 200px;">
 

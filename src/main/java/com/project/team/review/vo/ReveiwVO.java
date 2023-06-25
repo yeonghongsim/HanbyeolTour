@@ -11,9 +11,9 @@ public class ReveiwVO {
 
     private String reviewCode;
     private String posPercent;
-    private String nagPercent;
+    private String negPercent;
     private String posWord;
-    private String nagWord;
+    private String negWord;
     private int maxLenght;
     private String avgLenght;
     private String regDate;

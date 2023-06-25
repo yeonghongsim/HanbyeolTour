@@ -49,13 +49,14 @@
 							<div class="col-6 text-center align-self-center">
 								<table class="table align-middle py-0 d-flex align-items-center justify-content-center text-center">
 									<tr>
+										<td>여행기간 :</td>
 										<td>
-											<span>여행기간 : [[${tourItem["TRAVER_PERIOD"]}]]</span>
+											<span>[[${tourItem["TRAVER_PERIOD"]}]]</span>
 										</td>
 									</tr>
 									<tr>
-										<td>
-											<span>결제금액 : [[${tourItem["ITEM_PRICE"]}]]</span>
+										<td>결제금액 :</td>
+										<td th:text="${#numbers.formatCurrency(tourItem['ITEM_PRICE']) + '원'}">
 										</td>
 									</tr>
 									<tr>
@@ -66,7 +67,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td>
+										<td colspan="2" class="px-0">
 											<input  value="출발일 보기" class="rounded-5 collapsed ye-S-bc custom-border-2 text-center" type="button" data-bs-toggle="collapse"
 												   th:data-bs-target="'#' + flush-collapseOne + ${state.index}" aria-expanded="false"
 												   th:aria-controls="flush-collapseOne + ${state.index}"

@@ -50,47 +50,38 @@ function drawHotel(results, cityName){
     //태그가 그려질 위치
     const resultDiv =  document.querySelector('.resultDiv');
     const resultTitle = document.querySelector('.resultTitle');
-    //모달창 초기화
+
     resultDiv.replaceChildren();
     resultTitle.innerText = cityName + ' 호텔 검색 결과';
     let str = '';
 
     for(const result of results){
         str +=`
-                <div class="row d-flex justify-content-center resultDiv">
-                    <div class="col-md-10 mx-0 px-0 d-flex justify-content-center">
-                        <div class="card mb-3 rounded-3" style="width: 720px; height: 271px; border-color: #ffd000">
-                            <div class="row g-0 shadow">
-                                <div class="col-md-6">
-                                    <div class="card-body d-flex flex-column h-100">
-                                        <h5 class="card-title text-center mb-5 fw-bold">${result['name']}</h5>
-                                        <div class="mt-auto">
-                                            <p class="card-text">평점 : ${result['rating']}</p>
-                                            <p class="card-text hotelGrade">
-                                                <a href="javascript:void(0)" onclick="showLocationOnMap(${result['geometry']['location']['lat']},${result['geometry']['location']['lng']}, '${result['name']}');" class="btn">구글맵에서 보기</a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
+               <div class="row rounded-5 mx-5 my-3 shadow custom-border-3" style="cursor: pointer;">
+                    <div class="col-6 px-0 mx-0 rounded-5">
+                        <h5 class="card-title text-center mb-5 fw-bold">${result['name']}</h5>
+                        <div class="mt-auto">
+                            <p class="card-text">평점 : ${result['rating']}</p>
+                            <p class="card-text hotelGrade">
+                                <a href="javascript:void(0)" onclick="showLocationOnMap(${result['geometry']['location']['lat']},${result['geometry']['location']['lng']}, '${result['name']}');" class="btn">구글맵에서 보기</a>
+                            </p>
+                        </div>
+                    </div>
+                     <div class="col-6 px-0 mx-0 rounded-5">
         `;
         if (Array.isArray(result['photos'])) {
             str += `
-                 <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=360&maxheight=270&photoreference=${result['photos'][0]['photo_reference']}&key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4" class="object-fit-fill rounded-3" alt="...">
+                   <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=360&maxheight=270&photoreference=${result['photos'][0]['photo_reference']}&key=AIzaSyCHSSBm8zJnVf4ibkR7pcRog2vGLE-TXZ4" class="object-fit-fill rounded-5" style="display: block; width: 100%; height: 250px;" alt="...">
                  `;
         }
         else {
             str += `
-                 <img src="/img/item/xbox.jpg" class="object-fit-fill rounded-3" alt="...">
+                    <img src="/img/item/xbox.jpg" class="object-fit-fill rounded-5" style="display: block; width: 100%; height: 250px;" alt="...">
                 `;
         }
         str += `
-                                </div>
-                            </div>
                         </div>
                     </div>
-                </div>
         `;
 
 

@@ -90,9 +90,9 @@ public class ReviewController {
         double nagResult = ((double) nagCnt / (posCnt + nagCnt)) * 100;
         //데이터세팅
         reveiwVO.setPosPercent(String.valueOf(posResult));
-        reveiwVO.setNagPercent(String.valueOf(nagResult));
+        reveiwVO.setNegPercent(String.valueOf(nagResult));
         reveiwVO.setPosWord(dataObject.getWord().getPos_words().toString().replace("{", "").replace("}",""));
-        reveiwVO.setNagWord(dataObject.getWord().getNeg_words().toString().replace("{", "").replace("}",""));
+        reveiwVO.setNegWord(dataObject.getWord().getNeg_words().toString().replace("{", "").replace("}",""));
         reveiwVO.setMaxLenght(dataObject.getWord().getReview_length_max());
         reveiwVO.setAvgLenght(String.valueOf(dataObject.getWord().getReview_length_avg()));
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +45,16 @@ public class AdminIndexController {
 		System.out.println(map.get("COMPLTE_PAYMENT"));
 		
 		model.addAttribute("toDo", adminService.getToDoList());
-		
+
 		return "content/admin/index/index_bar";
+	}
+
+	@PostMapping("/getReviewData")
+	@ResponseBody
+	public String reviewData() throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		return mapper.writeValueAsString(adminIndexService.getReveiwResult());
 	}
 	
 	
