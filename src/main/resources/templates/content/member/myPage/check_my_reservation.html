@@ -15,7 +15,7 @@
 	
 <div class="container">
 	
-	<div class="row mb-1 mt-2">
+	<div class="row mb-4 mt-2">
 		<div class="col title">
 			일반 패키지 예약 조회 
 		</div>
@@ -43,43 +43,43 @@
 				<input type="hidden" name="nowPage" value="1" id="nowPage">
 			</form>
 				<div class="row">
-					<div class="col-7 select-range">
-						<p>구매기간</p>
-						<ul class="select-month">
-							<li>
-								<input type="button" class="btn btn-dark" value="전체" onclick="click_month_btn(1);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="1개월" onclick="click_month_btn(-1);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="3개월" onclick="click_month_btn(-3);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="6개월" onclick="click_month_btn(-6);">
-							</li>
-							<li>
-								<input type="button" class="btn btn-dark" value="12개월" onclick="click_month_btn(-12);">
-							</li>
-						</ul>
-					</div>
-					<div class="col-1 select-range mt-4">
-						<span id="first">구매상태</span>
-					</div>
-					<div class="col-3 select-range mt-4">
-						<select class="form-select" id="searchStatusCodeShow">
-							<option value="0" th:selected="${buySearchVO.searchStatusCode == 0}">전체</option>
-							<option value="1" th:selected="${buySearchVO.searchStatusCode == 1}">결제완료</option>
-							<option value="2" th:selected="${buySearchVO.searchStatusCode == 2}">예약완료</option>
-							<option value="3" th:selected="${buySearchVO.searchStatusCode == 3}">취소요청</option>
-							<option value="4" th:selected="${buySearchVO.searchStatusCode == 4}">취소완료</option>
-						</select>
+					<div class="col select-range-up" style="display: flex;">
+						<p style="margin-right: 14px;">구매기간</p>
+						<div class="col-6">
+							<ul class="select-month">
+								<li>
+									<input type="button" class="btn btn-gray" value="전체" onclick="click_month_btn(1);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="1개월" onclick="click_month_btn(-1);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="3개월" onclick="click_month_btn(-3);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="6개월" onclick="click_month_btn(-6);">
+								</li>
+								<li>
+									<input type="button" class="btn btn-gray" value="12개월" onclick="click_month_btn(-12);">
+								</li>
+							</ul>
+						</div>
+						 <p style="margin-right: 14px;">구매 상태</p>
+						<div class="col-3 select-range mt-4">
+							<select class="form-select" id="searchStatusCodeShow">
+								<option value="0" th:selected="${buySearchVO.searchStatusCode == 0}">전체</option>
+								<option value="1" th:selected="${buySearchVO.searchStatusCode == 1}">결제완료</option>
+								<option value="2" th:selected="${buySearchVO.searchStatusCode == 2}">예약완료</option>
+								<option value="3" th:selected="${buySearchVO.searchStatusCode == 3}">취소요청</option>
+								<option value="4" th:selected="${buySearchVO.searchStatusCode == 4}">취소완료</option>
+							</select>
+						</div>
 					</div>
 				</div>
 					
 				<div class="row">
-				    <div class="col select-range" style="display: flex;">
-				        <p style="margin-right: 14px;">직접 입력</p>
+				    <div class="col select-range-down" style="display: flex;">
+				       <p class="down-p" style="margin-right: 14px;">직접 입력</p>
 				        <div class="col-4 d-grid" style="margin-right: 10px;">
 				            <input id="fromDateShow" type="date" class="form-control" th:value="${buySearchVO.fromDate}">
 				        </div>
@@ -90,7 +90,7 @@
 				            <input id="toDateShow" type="date" class="form-control" th:value="${buySearchVO.toDate}">
 				        </div>
 				        <div class="col-1 d-grid">
-				            <input type="button" class="btn btn-secondary" value="검색" onclick="click_search_btn();">
+				            <input type="button" class="btn btn-yellow-reverse" value="검색" onclick="click_search_btn();">
 				        </div>
 				    </div>
 				</div>

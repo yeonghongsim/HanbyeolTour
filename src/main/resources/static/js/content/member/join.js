@@ -60,8 +60,8 @@ function searchAddr(){
 			memDAddrError.remove();
 		}
 			
-			$('#memDAddr').css('border-color', 'green'); 
-        	$('#memDAddr').css('border-width', '2px');
+			$('#memDAddr').css('border-color', '#c6df5f'); 
+        	$('#memDAddr').css('border-width', '1.5px');
         }
     }).open();
     
@@ -91,8 +91,8 @@ function isDuplicateMemId(){
 	   success: function(result) {
 			if(result == 1){ //id가 중복일 경우 
 				alert('사용할 수 없는 아이디입니다.\n아이디를 다시 입력해주세요.');
-				$('#memId').css('border-color', '#dc3545'); // 테두리 색상 변경
-        		$('#memId').css('border-width', '2px'); // 테두리 두께 변경
+				$('#memId').css('border-color', '#f27370'); // 테두리 색상 변경
+        		$('#memId').css('border-width', '1.5px'); // 테두리 두께 변경
 				return false;
 			}
 			else{
@@ -107,12 +107,6 @@ function isDuplicateMemId(){
 	//ajax end
 		
 }
-
-
-//회원가입 버튼 비활성화 (아이디 태그에 중복확인 후 키보드 입력하면 다시 회원가입 버튼 비활성화되도록 설정)
-//function setDisabled(){
-//	document.querySelector('.joinBtn').disabled = true;
-//}
 
 
 
@@ -142,20 +136,20 @@ function idValidate(){
 		result_memId = false;
 	}
 	else if(memId.match(idRegex) == null){
-		str_memId = '아이디는 영문과 숫자를 포함한 6~14자리의 글자로 입력해주세요.<br>공백은 불가합니다.';
+		str_memId = '아이디는 영문과 숫자를 포함한 6~14자리의 글자로 입력해주세요.';
 		result_memId = false;
 	}
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memId){
-		const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memId}</div>`;
+		const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memId}</div>`;
 		memIdTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#memId').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memId').css('border-width', '2px'); // 테두리 두께 변경
+	   	$('#memId').css('border-color', '#f27370'); // 테두리 색상 변경
+		$('#memId').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memId').css('border-color', 'green'); 
-        $('#memId').css('border-width', '2px');
+        $('#memId').css('border-color', '#c6df5f'); 
+        $('#memId').css('border-width', '1.5px');
         document.querySelector('#checkId').disabled = false;
     }
 	
@@ -178,7 +172,7 @@ function pwValidate(){
 	//오류 메세지 저장 
 	let str_memPw =``;
 	
-	const memPwTag = document.querySelector('#memPwDiv');
+	const memPwTag = document.querySelector('#memPw');
 	
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
@@ -190,20 +184,20 @@ function pwValidate(){
 		result_memPw = false;
 	}
 	else if(memPw.match(pwRegex) == null){
-		str_memPw = '비밀번호는 영문 대소문자, 숫자, 특수문자를 1개 이상 포함한 8~20자리의 글자로 입력해주세요.<br>공백은 불가합니다.';
+		str_memPw = '비밀번호는 영문 대소문자, 숫자, 특수문자를 1개 이상 포함한 8~20자리의 글자로 입력해주세요.';
 		result_memPw = false;
 	}
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memPw){
-		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memPw}</div>`;
+		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memPw}</div>`;
 		memPwTag.insertAdjacentHTML('afterend', errorHTML);
-		$('#memPw').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memPw').css('border-width', '2px'); // 테두리 두께 변경
+		$('#memPw').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memPw').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memPw').css('border-color', 'green'); 
-        $('#memPw').css('border-width', '2px');
+        $('#memPw').css('border-color', '#c6df5f'); 
+        $('#memPw').css('border-width', '1.5px');
     }
 	
 	return result_memPw;
@@ -248,14 +242,14 @@ function pwCheckValidate(){
 	
 	//if(originPw != null){
 	if(!result_pwCheck){
-	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_pwCheck}</div>`;
+	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_pwCheck}</div>`;
 	checkPwTag.insertAdjacentHTML('afterend', errorHTML);
-	$('#checkPw').css('border-color', '#dc3545'); // 테두리 색상 변경
-    $('#checkPw').css('border-width', '2px'); // 테두리 두께 변경
+	$('#checkPw').css('border-color', '#f27370'); // 테두리 색상 변경
+    $('#checkPw').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#checkPw').css('border-color', 'green'); 
-        $('#checkPw').css('border-width', '2px');
+        $('#checkPw').css('border-color', '#c6df5f'); 
+        $('#checkPw').css('border-width', '1.5px');
     }
 	//}
 	
@@ -287,20 +281,20 @@ function nameValidate(){
 		result_memName = false;
 	}
 	else if(memName.match(nameRegex) == null){
-		str_memName = '이름은 한글 6글자 이하로만 입력해주세요.<br>공백은 불가합니다.';
+		str_memName = '이름은 한글 6글자 이하로만 입력해주세요.';
 		result_memName = false;
 	}
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memName){
-		const errorHTML = `<div id="memNameError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem; margin-left:0.5rem;">${str_memName}</div>`;
+		const errorHTML = `<div id="memNameError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem; margin-left:0.5rem;">${str_memName}</div>`;
 		memNameTag.insertAdjacentHTML('afterend', errorHTML);
-		$('#memName').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memName').css('border-width', '2px'); // 테두리 두께 변경
+		$('#memName').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memName').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memName').css('border-color', 'green'); 
-        $('#memName').css('border-width', '2px');
+        $('#memName').css('border-color', '#c6df5f'); 
+        $('#memName').css('border-width', '1.5px');
     }
 	
 	return result_memName;
@@ -327,7 +321,6 @@ function emailValidate(){
 	
 	// validation 처리
 	const memEmail = document.querySelector('#memEmail').value;
-	//const getIdCheck = RegExp(/^[a-zA-Z0-9]{4,14}$/);
 	const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	
 	if(memEmail == ''){
@@ -335,20 +328,21 @@ function emailValidate(){
 		result_memEmail = false;
 	}
 	else if(memEmail.match(emailRegex) == null){
-		str_memEmail = '올바르지 않은 이메일 주소 형식입니다.<br>공백은 불가합니다.';
+		str_memEmail = '올바르지 않은 이메일 주소 형식입니다.';
 		result_memEmail = false;
 	}
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memEmail){
-		const errorHTML = `<div id="memEmailError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memEmail}</div>`;
+		const errorHTML = `<div id="memEmailError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memEmail}</div>`;
 		memEmailTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#memEmail').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memEmail').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#memEmail').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memEmail').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memEmail').css('border-color', 'green'); 
-        $('#memEmail').css('border-width', '2px');
+        $('#memEmail').css('border-color', '#c6df5f'); 
+        $('#memEmail').css('border-width', '1.5px');
+        document.querySelector('#checkEmail').disabled = false;
     }
 	
 	
@@ -378,8 +372,8 @@ function isDuplicateMemEmail(){
 	   success: function(result) {
 			if(result == 1){ //id가 중복일 경우 
 				alert('사용할 수 없는 이메일 주소입니다.\n다시 입력해주세요.');
-				$('#memEmail').css('border-color', '#dc3545'); // 테두리 색상 변경
-        		$('#memEmail').css('border-width', '2px'); // 테두리 두께 변경
+				$('#memEmail').css('border-color', '#f27370'); // 테두리 색상 변경
+        		$('#memEmail').css('border-width', '1.5px'); // 테두리 두께 변경
 				return false;
 			}
 			else{
@@ -430,14 +424,14 @@ function memDTellValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memDTell){
-		const errorHTML = `<div class="my-invalid" id="memDTellError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memDTell}</div>`;
+		const errorHTML = `<div class="my-invalid" id="memDTellError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memDTell}</div>`;
 		memDTellTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#memDTell').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memDTell').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#memDTell').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memDTell').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memDTell').css('border-color', 'green'); 
-        $('#memDTell').css('border-width', '2px');
+        $('#memDTell').css('border-color', '#c6df5f'); 
+        $('#memDTell').css('border-width', '1.5px');
          document.querySelector('#checkMemDTell').disabled = false;
     }
 	
@@ -473,14 +467,14 @@ function memDAddrValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memDAddr){
-		const errorHTML = `<div class="my-invalid" id="memDAddrError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memDAddr}</div>`;
+		const errorHTML = `<div class="my-invalid" id="memDAddrError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memDAddr}</div>`;
 		memDAddrTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#memDAddr').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memDAddr').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#memDAddr').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memDAddr').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-       $('#memDAddr').css('border-color', 'green'); 
-        $('#memDAddr').css('border-width', '2px');
+       $('#memDAddr').css('border-color', '#c6df5f'); 
+        $('#memDAddr').css('border-width', '1.5px');
     }
 	
 	
@@ -503,7 +497,7 @@ function memDAddr2Validate(){
 	//오류 메세지 저장 
 	let str_memDAddr2 =``;
 	
-	const memDAddr2Tag = document.querySelector('#memDAddr2Div');
+	const memDAddr2Tag = document.querySelector('#memDAddr2');
 	
 	// validation 처리
 	const memDAddr2 = document.querySelector('#memDAddr2').value;
@@ -515,14 +509,14 @@ function memDAddr2Validate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memDAddr2){
-		const errorHTML = `<div class="my-invalid" id="memDAddr2Error" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memDAddr2}</div>`;
+		const errorHTML = `<div class="my-invalid" id="memDAddr2Error" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memDAddr2}</div>`;
 		memDAddr2Tag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#memDAddr2').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memDAddr2').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#memDAddr2').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memDAddr2').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-       $('#memDAddr2').css('border-color', 'green'); 
-        $('#memDAddr2').css('border-width', '2px');
+       $('#memDAddr2').css('border-color', '#c6df5f'); 
+        $('#memDAddr2').css('border-width', '1.5px');
     }
 	
 	
@@ -571,14 +565,14 @@ function isDuplicateMemDTell(){
 	   success: function(result) {
 			if(result == 1){ //id가 중복일 경우 
 				alert('사용 불가한 휴대폰 번호입니다.\n다시 입력해주세요.');
-				$('#memDTell').css('border-color', '#dc3545'); 
-        		$('#memDTell').css('border-width', '2px'); 
+				$('#memDTell').css('border-color', '#f27370'); 
+        		$('#memDTell').css('border-width', '1.5px'); 
 				return false;
 			}
 			else{
 				alert('사용 가능한 휴대폰 번호 입니다.');
-				$('#memDTell').css('border-color', 'green'); 
-        		$('#memDTell').css('border-width', '2px');
+				$('#memDTell').css('border-color', '#c6df5f'); 
+        		$('#memDTell').css('border-width', '1.5px');
 			}
 	   },
 	   error: function() {
@@ -656,23 +650,23 @@ function verifyAuthCode(authCode) {
 			
 			strResultAuthCode = `인증번호 확인에 성공하였습니다.`;
 			
-			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: green; margin-top: 0.3rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
+			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: c6df5f; margin-top: 0.1rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
 			authCodeInputTag.insertAdjacentHTML('afterend', resultHTML);
 			
-			authCodeInputTag.style.borderColor = "green";
-        	authCodeInputTag.style.borderWidth = "2px";
+			authCodeInputTag.style.borderColor = "#c6df5f";
+        	authCodeInputTag.style.borderWidth = "1.5px";
         	
         	document.querySelector('.joinBtn').disabled = false;
 			
 		} 
 		else { // 인증 실패 
 			resultAuthCode = false;
-			strResultAuthCode = `인증번호가 잘못되었습니다`;
+			strResultAuthCode = `잘못된 인증번호입니다.`;
 			
-			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
+			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
 			authCodeInputDiv.insertAdjacentHTML('afterend', resultHTML);
-			authCodeInputTag.style.borderColor = "#dc3545";
-        	authCodeInputTag.style.borderWidth = "2px";
+			authCodeInputTag.style.borderColor = "#f27370";
+        	authCodeInputTag.style.borderWidth = "1.5px";
 		}
 		
 		if(resultAuthCode == true){

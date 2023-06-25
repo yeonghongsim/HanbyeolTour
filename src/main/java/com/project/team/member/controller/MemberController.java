@@ -61,7 +61,6 @@ public class MemberController {
 		return "content/member/join";
 	}
 	
-	
 	//아이디 중복 확인 
 	@PostMapping("/isDuplicateMemIdAJAX")
 	@ResponseBody

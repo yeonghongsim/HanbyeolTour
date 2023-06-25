@@ -3,7 +3,7 @@
 .container{
 	width: 95%;
 	margin: 0 auto;
-	margin-bottom: 5rem;
+	margin-bottom: 10rem;
 	margin-top: 3rem;
 }
 
@@ -15,6 +15,13 @@
 	margin-bottom: 3rem;
 	margin-top: 2rem;
 	margin-left: 3rem;
+}
+
+.ment{
+	font-size: 0.8rem;
+	color: #bbb;
+	letter-spacing: -1px;
+	margin-bottom: 0.5rem;
 }
 
 .update-table{
@@ -52,17 +59,17 @@
 /* 버튼 */
 .btn-yellow {
     --bs-btn-color: #000;
-    --bs-btn-bg: #ffd000;
-    --bs-btn-border-color: #ffd000;
-    --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #fff9d4;
-    --bs-btn-hover-border-color: #fff9d4;
+    --bs-btn-bg: #fff9d4;
+    --bs-btn-border-color: #DEE2E5;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #ffd000;
+    --bs-btn-hover-border-color: #ffd000;
     --bs-btn-focus-shadow-rgb: #fff9d4;
     --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #fff9d4;
-    --bs-btn-active-border-color: #e6e6e6;
+    --bs-btn-active-bg: #ffd000;
+    --bs-btn-active-border-color: #ffd000;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #ffc107;
     --bs-btn-disabled-border-color: #ffc107;
     border-radius: 0.6rem;

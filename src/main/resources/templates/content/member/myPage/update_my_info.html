@@ -20,7 +20,7 @@
 		내 정보 수정
 	</div>
 </div>
-	
+	<div class="text-end ment">* 아이디, 이메일 정보 수정을 원하시는 경우에는 고객센터로 문의부탁드립니다.</div>
 	<div class="content-container">
 		<th:block th:each=" info : ${memInfo}">
 			<div class="row">
@@ -144,10 +144,9 @@
 	
 	
 						<div class="row">
-							<div class="col mt-2 mb-3">
-								<div class="text-center">
-									<button onclick="update_my_info();" type="button" class="btn btn-yellow btn-lg" id="memInfoUpdateBtn">정보수정 하기</button>
-								</div>
+							<div class="col mt-2 mb-3 text-center">
+									<button onclick="update_my_info();" type="button" class="btn btn-lg btn-yellow" id="memInfoUpdateBtn"
+									style="padding-top: 0.7rem; padding-bottom: 0.7rem; padding-left: 1rem; padding-right: 1rem;">정보수정 하기</button>
 							</div>
 						</div>
 	

@@ -24,17 +24,17 @@
 		<div class="row justify-content-center">
 			<div class="col-8 mt-4">
 				<div class="row mb-3">
-					<div class="col-4 d-flex align-items-center">
-						<label class="form-label">비밀번호 확인</label>
+					<div class="col-3 d-flex align-items-center">
+						<label class="form-label" style="font-weight: bolder; letter-spacing: -1px;">비밀번호 확인</label>
 					</div>
-					<div class="col-8">
+					<div class="col-9">
 						<input type="password" id="checkPw" name="memPw" class="form-control form-control-lg">
 					</div>
 				</div>
 				
 				<div class="row">
-					<div class="col-12 mb-5">
-						<button id="checkPwBtn" class="btn btn-lg btn-warning" onclick="check_pw();">비밀번호 확인</button>
+					<div class="col-12 mb-5 text-center">
+						<button id="checkPwBtn" class="btn btn-lg btn-yellow" onclick="check_pw();">비밀번호 확인</button>
 					</div>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 		
 		
 		<div class="row">
-			<div class="col page-title">
+			<div class="col page-title" style="margin-bottom: 3rem;">
 				<span id="check"><i class="bi bi-person-dash"></i></span> 한별투어 회원 탈퇴하기 
 			</div>
 		</div>
@@ -63,8 +63,8 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col mt-3">
-					<button type="button" class="btn btn-lg btn-warning del-btn" th:onclick="account_deletion([[${#authentication.name}]]);" disabled>탈퇴하기</button>
+				<div class="col mt-3 text-center">
+					<button type="button" class="btn btn-lg btn-yellow del-btn" th:onclick="account_deletion([[${#authentication.name}]]);" disabled>탈퇴하기</button>
 				</div>
 			</div>
 		</div>

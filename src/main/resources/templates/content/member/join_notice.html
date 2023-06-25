@@ -12,7 +12,7 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="content">
-
+<div class="container">
 	<!-- 회원가입 후 안내 페이지 제목 부분 -->
 	<div class="row n-container">
 		<div class="col">
@@ -23,28 +23,31 @@
 			</div>
 			<div class="row">
 				<div class="col join-n-title">
-					한별투어의 회원이 되신 것을 환영합니다! 		
+					한별투어의 회원이 되신 것을 환영합니다!
 				</div>
-			</div>다양한 여행 추천, 손쉽게 골라서 떠나는 나만의 패키지 기능, 전세계 항공권과 호텔을 한번에 
+			</div>
 			
 			<div class="row">
 				<div class="col join-n-content">
-					1. 한별투어가 선정한 다양한 패키지 여행을 만나볼 수 있어요<br>
-					2. 내가 원하는 것만 골라서, 나만의 패키지를 만들 수 있어요<br>
-					3. 전세계의 항공권과 호텔을 한별투어에서 쉽게 찾을 수 있어요<br>
+				<ul style="list-style-type: none;">
+					<li>한별투어가 선정한 다양한 패키지 여행들이 준비되어 있어요</li>
+					<li>내가 원하는 것만 골라서, 나만의 패키지를 만들어 보세요~</li>
+					<li>전세계의 항공권과 호텔 검색도 한번에, 한별투어에서!</li>
+				</ul>
+				<div style="color: black;">이 외에 준비된 다양한 한별투어 회원 혜택들을 누려보세요~</div>
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="col text-center mb-3 mt-5 d-grid">
-					 <button onclick="location.href='/';" class="btn btn-outline-warning btn-lg" type="button">
+					 <button onclick="location.href='/';" class="btn btn-yellow-big btn-lg" type="button">
 					  <span>메인 페이지로 가기</span> 
 					</button>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col text-center last-btn d-grid">
-					 <button onclick="location.href='/member/login';" class="btn btn-outline-secondary btn-lg" type="button">
+					 <button onclick="location.href='/member/login';" class="btn btn-yellow-bold btn-lg" type="button">
 					  <span>로그인 하러가기</span> 
 					</button>
 				</div>
@@ -52,7 +55,7 @@
 		
 		</div>
 	</div>
-	
+</div>	
 
 
 
