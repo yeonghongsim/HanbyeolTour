@@ -7,7 +7,7 @@
 }
 
 
-table {
+#toDo1, #toDo2, #toDo3 {
   border-collapse: collapse;
   width: 300px;
   height: 70px;
@@ -15,13 +15,9 @@ table {
   border-radius: 8px;
 }
 
-<<<<<<< HEAD
+
 #toDo1 tr, #toDo1 td {
   border-left: 2px solid #a6d5f7;
-=======
-th, td {
-  border-left: 2px solid orange;
->>>>>>> dev
   padding-left: 20px;
   padding-right: 20px;
   text-align: left;
@@ -85,3 +81,32 @@ th, td {
 	color: #9cdead;
 }
 
+.nagTable, .posTable{
+	font-size: 15px;
+	text-align: center;
+}
+
+.dataTable{
+	padding-right: 0px;
+	font-size: 15px;
+}
+
+.dataTable tr td{
+	padding-right: 0px;
+}
+
+.reviewH5 {
+	font-style: italic;
+}
+
+.updateBtn {
+	color: grey;
+	text-decoration: underline;
+	font-size: 14px;
+	padding: 0px;
+}
+
+.updateBtn:hover {
+    color: red;
+ 
+}
