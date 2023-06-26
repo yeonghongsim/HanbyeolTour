@@ -10,7 +10,7 @@ function showItemImg(itemInfo){
 
     let imgTag = `
                   <div class="col-4 offset-4 imgArea mb-3">
-                    <img class="imgArea d-block w-100 h-100 rounded" data-item="${itemCode}" src="/img/item/itemImg/${imgName}" draggable="true" alt="/img/item/xbox.jpg">
+                    <img class="imgArea d-block w-100 h-100 rounded-5 custom-border-3 px-0" data-item="${itemCode}" src="/img/item/itemImg/${imgName}" draggable="true" alt="/img/item/xbox.jpg">
                   </div>
     `;
     previeDiv.replaceChildren();

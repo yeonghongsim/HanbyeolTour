@@ -136,6 +136,8 @@ function getSearchByDateAJAX(getDate){
 	//검색할 년 월 정보 가져오기
 	const getYear = document.querySelector('#yearSpan').textContent;
 	const getMonth = document.querySelector('#monthSpan').textContent;
+
+	const formattedNumber = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' })
 	
 	let a = new Date(getYear + '-' +  getMonth + '-' + getDate);
 	
@@ -186,7 +188,7 @@ function getSearchByDateAJAX(getDate){
 							</tr>
 							<tr>
 								<td>결제금액 :</td>
-								<td>${i["ITEM_PRICE"]}</td>
+								<td>${formattedNumber.format(i["ITEM_PRICE"])}원</td>
 							</tr>
 						</table>
 					</div>
@@ -201,7 +203,7 @@ function getSearchByDateAJAX(getDate){
 		}
 	});
 }
-
+//const formattedNumber = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(number);
 
 function setArrDepDate(){
 	
