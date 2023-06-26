@@ -182,11 +182,11 @@
 			, AREA.AREA_KOR_NAME
 			, IMG.ITEM_IMG_ATTACHED_NAME
 			, ITEM.STATUS_CODE 
-			, STATE.STATUS_NAME
-		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA, HBT_ITEM_STATE STATE
+			, HIS.STATUS_NAME
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA, HBT_ITEM_STATE HIS
 		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
 		AND ITEM.AREA_CODE = AREA.AREA_CODE
-		AND ITEM.STATUS_CODE = STATE.STATUS_CODE
+		AND ITEM.STATUS_CODE = HIS.STATUS_CODE
 		AND IS_MAIN = 'Y'
 		<if test='searchValue != null and !searchValue.equals("")'>
 			<!-- 셀렉트 박스 선택 데이터 매번 바뀜 , 빈 값에 해당하는 입력 값(searchValue) 종류도 매번 바뀜 -->
@@ -206,9 +206,11 @@
 	
 	<!-- 검색 조건에 맞는 판매 상품 수 조회 -->
 	<select id="getsaleListCnt" resultType="int">
-		SELECT COUNT(ITEM_CODE)
-		FROM HBT_ITEM
-		WHERE 1 = 1 <!-- IF문으로 조건문 쓸 때 경우에 따라 실행 조건문이 다르기 때문에 IF문 처음에 WHERE 쓰는 것 X -->
+		SELECT COUNT(ITEM.ITEM_CODE)
+		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA, HBT_ITEM_STATE HIS
+		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
+		AND ITEM.AREA_CODE = AREA.AREA_CODE
+		AND ITEM.STATUS_CODE = HIS.STATUS_CODE
 		<if test='searchValue != null and !searchValue.equals("")'>
 			AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
