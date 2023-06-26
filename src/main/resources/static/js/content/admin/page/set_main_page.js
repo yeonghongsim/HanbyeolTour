@@ -76,12 +76,12 @@ function drawImg(){
         const title = recomItemList[i].text;
 
         img += `
-                <div class="col col-2 recomImg">
-                     <div class="row mb-3">
-                        <img width="180px;" height="180px;" src="/img/item/itemImg/${imgName}" class="rounded recommend-img">
+                <div class="col col-2 mx-3">
+                     <div class="row mb-0 d-flex justify-content-center text-center">
+                        <img src="/img/item/itemImg/${imgName}" class="rounded-5 px-0 custom-border-3 recommend-img">
                         <h4 class="recom_img_comment"></h4>
                      </div>
-                     <div class="row">
+                     <div class="row my-0">
                         <input class="form-control comment_input" type="text" placeholder="입력후 엔터" onchange="changeComment();">
                      </div>
                 </div>
