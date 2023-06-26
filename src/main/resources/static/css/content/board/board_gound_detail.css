@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-
+.board-grd-det {
+	min-height: 59vh;
+}
 .detail_table > tbody > tr > td{
 	border: 1px solid #eee;
 }

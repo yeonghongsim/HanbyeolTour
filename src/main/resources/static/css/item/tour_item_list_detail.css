@@ -1,0 +1,26 @@
+.accordion-button:not(.collapsed){
+    background-color: #ffd000;
+}
+.accordion-button:focus {
+    z-index: 3;
+    border-color: #ffd000;
+    outline: 0;
+    box-shadow: #ffd000;
+}
+.accordion{
+    --bs-accordion-border-color: #ffd000;
+    --bs-accordion-btn-focus-border-color: #ffd000;
+    --bs-accordion-btn-focus-box-shadow: #ffd000;
+}
+
+.form-control:focus{
+    box-shadow: none;
+}
+.form-control{
+    font-size: 14px;
+}
+
+.dailyPlanDivs img{
+    width: 305px;
+    height: 200px;
+}

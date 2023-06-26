@@ -45,14 +45,14 @@ function idValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memId){
-		const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memId}</div>`;
+		const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memId}</div>`;
 		loginIdTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#memId').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memId').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#memId').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memId').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memId').css('border-color', 'green'); 
-        $('#memId').css('border-width', '2px');
+        $('#memId').css('border-color', '#c6df5f'); 
+        $('#memId').css('border-width', '1.5px');
     }
 	
 	return result_memId;
@@ -90,14 +90,14 @@ function pwValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memPw){
-		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memPw}</div>`;
+		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memPw}</div>`;
 		loginPwTag.insertAdjacentHTML('afterend', errorHTML);
-		$('#memPw').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memPw').css('border-width', '2px'); // 테두리 두께 변경
+		$('#memPw').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memPw').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memPw').css('border-color', 'green'); 
-        $('#memPw').css('border-width', '2px');
+        $('#memPw').css('border-color', '#c6df5f'); 
+        $('#memPw').css('border-width', '1.5px');
     }
 	
 	return result_memPw;

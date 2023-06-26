@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import com.project.team.admin.vo.index.SearchStatisticsVO;
 import com.project.team.board.service.BoardService;
 import com.project.team.member.service.MemberService;
 
+import groovyjarjarantlr4.v4.parse.GrammarTreeVisitor.mode_return;
 import jakarta.annotation.Resource;
 
 @Controller
@@ -32,8 +36,25 @@ public class AdminIndexController {
 	
 	// 로그인 성공 후 관리자 인증 시 오는 관리자 첫 페이지 및 우측 상단의 그래프 버튼 클릭 시
 	@GetMapping("/")
-	public String indexBar() {
+	public String indexBar(Model model) {
+		
+		System.out.println(adminService.getToDoList());
+		
+		Map<String, Integer> map = adminService.getToDoList();
+		
+		System.out.println(map.get("COMPLTE_PAYMENT"));
+		
+		model.addAttribute("toDo", adminService.getToDoList());
+
 		return "content/admin/index/index_bar";
+	}
+
+	@PostMapping("/getReviewData")
+	@ResponseBody
+	public String reviewData() throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		return mapper.writeValueAsString(adminIndexService.getReveiwResult());
 	}
 	
 	

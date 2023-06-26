@@ -1,201 +1,153 @@
-init()
+function getNationNames(e){
+    //const drawTarget = e.nextElementSibling.querySelector('ul');
+    //
+    const areaName = e.value;
 
-function chkWay(selectTag, areaList){
-	const oneWay_div = document.querySelector('.oneWay-div');
-	const round_div = oneWay_div.nextElementSibling;
-	const onewayGoCountry = document.querySelector('#onewayGoCountry');
-	const onewayComeCountry = document.querySelector('#onewayComeCountry');
-	
-	let draw_round_cols = '';
-	
-	if(selectTag.value == 'oneWay'){
-		round_div.replaceChildren();
-		
-	} else {
-		
-		draw_round_cols += `	<div class="col-3">`;
-		draw_round_cols += `		<input type="text" class="form-control" id="roundGoCountry" name="roundGoCountry" disabled>`;
-		draw_round_cols += `	</div>`;
-		draw_round_cols += `	<div class="col-3">`;
-		draw_round_cols += `		<input type="text" class="form-control" id="roundComeCountry" name="roundComeCountry" disabled>`;
-		draw_round_cols += `	</div>`;
-		draw_round_cols += `	<div class="col-3">`;
-		draw_round_cols += `		<input type="date" class="form-control" id="roundGoDate" name="roundGoDate">`;
-		draw_round_cols += `	</div>`;
-		
-		round_div.insertAdjacentHTML('afterbegin', draw_round_cols);
-		
-		arrival(onewayGoCountry, areaList);
-		departure(onewayComeCountry, areaList);
-		
-	}
-	
+    $.ajax({
+        url: '/airline/getNationalNamesAJAX', //요청경로
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {'areaName': areaName},
+        success: function(result) {
+            drawInnerAccordion(result, e);
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
+}
+
+function drawInnerAccordion(nationalNames, e){
+
+    const drawTarget = e.parentNode.parentNode.querySelector('.accordion-body');
+
+    let str = '';
+
+    nationalNames.forEach((name, index) => {
+
+    str += `
+            <div class="row" onclick="setAreaNAme('${name['KOR_AIRPORT_NAME']}', '${name['AIRPORT_CODE']}');">
+                <div class="col">
+                    <span>${name['KOR_AIRPORT_NAME']}</span>
+                    <span>${name['AIRPORT_CODE']}</span>
+                </div>
+            </div>
+    `;
+    });
+
+    drawTarget.replaceChildren();
+    drawTarget.insertAdjacentHTML('afterbegin', str);
+}
+
+function setAreaNAme(name, code){
+
+    const modalTitle = document.querySelector('.modal-title').textContent;
+    const textTarget = document.querySelectorAll('.korName');
+
+    if(modalTitle == '출발지선택'){
+        textTarget[0].textContent = name.split('(')[0];
+        textTarget[0].nextElementSibling.textContent = code;
+    }
+    else {
+        textTarget[1].textContent = name.split('(')[0];
+        textTarget[1].nextElementSibling.textContent = code;
+
+    }
+
+    $('#areaModal').modal('hide');
+}
+//항공정보조회
+function getFlightAJAX(){
+
+    const depAirport = document.querySelector('#depAirport').textContent;
+    const arrAirport = document.querySelector('#arrAirport').textContent;
+    const depDate = document.querySelector('#depDate').value;
+    const arrDate = document.querySelector('#arrDate').value;
+
+    $.ajax({
+        url: '/airline/getFlightAJAX', //요청경로
+        type: 'post',
+        //contentType : 'application/json; charset=UTF-8',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        async : true,
+        data: {'depAirport': depAirport, 'arrAirport': arrAirport, 'depDate': depDate, 'arrDate': arrDate},
+        success: function(result) {
+            const flightInfo = JSON.parse(result);
+            console.log(flightInfo);
+
+            drawFlightInfo(flightInfo);
+        },
+        error: function() {
+            alert('실패');
+        }
+    });
+}
+
+function drawFlightInfo(flightInfo){
+
+    //데이터삽입위치태그
+    const depInfoTable = document.querySelector('.depInfoTable > tbody');
+    const arrInfoTable = document.querySelector('.arrInfoTable > tbody');
+
+    let depInfoStr = '';
+    let arrInfoStr = '';
+
+    flightInfo['dep'].forEach(flight => {
+        let time = flight['internationalTime'].toString();
+
+        depInfoStr += `
+                <tr>
+                    <td>${flight['internationalNum']}</td>                
+                    <td>${flight['airlineKorean']}</td>                
+                    <td>${time.substring(0, 2)}시  ${time.substring(2)}분</td>                
+                </tr>
+        `;
+    });
+
+
+
+    if(Object.keys(flightInfo).length != 1){
+
+        flightInfo['arr'].forEach(flight => {
+            let time = flight['internationalTime'].toString();
+
+            arrInfoStr += `
+                    <tr>
+                        <td>${flight['internationalNum']}</td>                
+                        <td>${flight['airlineKorean']}</td>                
+                        <td>${time.substring(0, 2)}시  ${time.substring(2)}분</td>                
+                    </tr>
+            `;
+        });
+        arrInfoTable.replaceChildren();
+        arrInfoTable.insertAdjacentHTML('afterbegin', arrInfoStr);
+
+    }
+
+    depInfoTable.replaceChildren();
+    depInfoTable.insertAdjacentHTML('afterbegin', depInfoStr);
 }
 
 
 
 
-function arrival(tag, areaList){
-	const roundComeCountry = document.querySelector('#roundComeCountry');
-	
-	if(tag.value == '선택'){
-		if(roundComeCountry != null){
-			roundComeCountry.value = '선택';
-		}
-	} else {
-		if(roundComeCountry != null){
-			areaList.forEach(function(areaInfo){
-				if(tag.value == areaInfo.areaCode){
-					roundComeCountry.value = areaInfo.areaKorName;
-					return ;
-				} 
-			});
-		
-		}
-	}
-	
-	
-}
-function departure(tag, areaList){
-	const roundGoCountry = document.querySelector('#roundGoCountry');
-	
-	if(tag.value == '선택') {
-		if(roundGoCountry != null){
-			roundGoCountry.value = '선택';
-		}
-	} else {
-		if(roundGoCountry != null){
-			areaList.forEach(function(areaInfo){
-				if(tag.value == areaInfo.areaCode){
-					roundGoCountry.value = areaInfo.areaKorName;
-				} 
-			});
-		}
-	}
+function openOutterModal(e) {
+    const text = e.querySelector('h5').textContent;
+    const modalTitle = document.querySelector('.modal-title');
+
+    modalTitle.textContent = text + '선택';
+
+    const myModal = new bootstrap.Modal('#areaModal');
+    const areaModal = document.querySelector('#areaModal');
+    myModal.show(areaModal);
+
 }
 
 
-function getTicketList(){
-	const oneWay_div = document.querySelector('.oneWay-div');
-	const round_div_chk = oneWay_div.nextElementSibling.children[0];
-	// 모든 인풋/셀렉트의 벨류값
-	const onewayGoCountry = document.querySelector('#onewayGoCountry').value;
-	const onewayGoDateStr = document.querySelector('#onewayGoDate').value;
-	const onewayComeCountry = document.querySelector('#onewayComeCountry').value;
-	// 에러 체크용
-	let err_chk = 0;
-	// 데이터 띄울 div
-	const result_area = document.querySelector('.result_area');
-	
-	// 출발 날짜 형식 변경
-	let onewayGoDate = '';
-	onewayGoDateStr.split('-').forEach(function(word){
-		onewayGoDate += word;
-	})
-	
-	let roundGoCountry = '';
-	let roundGoDateStr = '';
-	let roundComeCountry = '';
-	let roundGoDate = '';
 
-	if(round_div_chk != null){
-	roundGoCountry = document.querySelector('#roundGoCountry').value;
-	roundGoDateStr = document.querySelector('#roundGoDate').value;
-	roundComeCountry = document.querySelector('#roundComeCountry').value;
-	
-	
-	// 도착 날짜 형식 변경
-	roundGoDateStr.split('-').forEach(function(word){
-		roundGoDate += word;
-	})
-	
-	}	
-	
-	// 잘못된 검색 결과의 내용을 보여줄 div
-	const err_div = oneWay_div.parentElement.nextElementSibling;
-	let err_text = '';
-	
-	
-	console.log(onewayGoCountry + " / " + onewayGoDate+ " / " + onewayComeCountry);
-	console.log(roundGoCountry + " / " + roundGoDate+ " / " + roundComeCountry);
-	
-	// 잘못된 검색 결과의 내용
-	if(onewayGoCountry == '선택' || onewayComeCountry == '선택'){
-		err_div.replaceChildren();
-		err_text += `<div>`;
-		err_text += `<span>출발/도착 국가를 확인해주세요.</span>`;
-		err_text += `</div>`;
-		
-		err_div.insertAdjacentHTML('afterbegin', err_text);
-		err_chk += 1;
-		
-	} else if(onewayGoCountry == onewayComeCountry){
-		err_div.replaceChildren();
-		err_text += `<div>`;
-		err_text += `<span>출발/도착 국가를 확인해주세요111.</span>`;
-		err_text += `</div>`;
-		
-		err_div.insertAdjacentHTML('afterbegin', err_text);
-		err_chk += 1;
-	}
-	
-	if(onewayGoDate == '') {
-		err_div.replaceChildren();
-		err_text += `<div>`;
-		err_text += `<span>출발일을 선택해주세요.</span>`;
-		err_text += `</div>`;
-		
-		err_div.insertAdjacentHTML('afterbegin', err_text);
-		err_chk += 1;
-	}
-	
-	if(round_div_chk != null){
-		if(roundGoDate == '' || onewayGoDate - roundGoDate >= 0){
-			err_div.replaceChildren();
-			err_text += `<div>`;
-			err_text += `<span>왕복편의 출발일을 확인해 주세요.</span>`;
-			err_text += `</div>`;
-			
-			err_div.insertAdjacentHTML('afterbegin', err_text);
-			err_chk += 1;
-		}
-	}
-	
-	if(err_chk > 0){
-		return ;
-	}
-	
-	//ajax start
-	$.ajax({
-		url: '/airLine/searchAirLineAJAX', //요청경로
-		type: 'post',
-		async: true, // 동기방식(Ajax사용), false == 비동기방식
-		//contentType: 'application/json; charset=UTF-8',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		//필요한 데이터
-		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
-		data: {
-			'onewayGoCountry' : onewayGoCountry
-			, 'onewayGoDate' : onewayGoDate
-			, 'onewayComeCountry' : onewayComeCountry
-			, 'roundGoCountry' : roundGoCountry
-			, 'roundGoDate' : roundGoDate
-			, 'roundComeCountry' : roundComeCountry
-		},
-		success: function(result) {
-			err_div.replaceChildren();
-			result_area.insertAdjacentHTML('afterbegin', result);
-			
-		},
-		error: function() {
-			alert('실패');
-		}
-	});
-   //ajax end
-	
-	
-}
 
-function init(){
-	
-}
+
+document.querySelector('.airlineCate').classList.add("ye-S-bc");
+

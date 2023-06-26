@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import com.project.team.item.controller.ItemController;
 import com.project.team.util.DateUtil;
+import com.project.team.util.MessageService;
+//import com.project.team.util.MessageService;
 import com.project.team.util.UploadPath;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +23,21 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.BuyListSearchVO;
+import com.project.team.admin.vo.HotelVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
-import com.project.team.admin.vo.StatisticsVO;
+import com.project.team.admin.vo.SaleListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.admin.vo.TourItemVO;
 
 import jakarta.annotation.Resource;
-import oracle.net.aso.l;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
+import net.nurigo.java_sdk.Coolsms;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import net.nurigo.sdk.message.service.DefaultMessageService;
+//import oracle.net.aso.l;
 
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardRequestVO;
@@ -37,6 +47,8 @@ import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberVO;
@@ -53,6 +65,9 @@ public class AdminController {
 	private AdminService adminService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	@Resource(name = "messageService")
+	private MessageService messageService;
+	
 	
 	// 초기화면 이동
 	@GetMapping("/")
@@ -171,13 +186,23 @@ public class AdminController {
 	}
 	
 	//등록 판매 상품 목록 조회
-	@GetMapping("/itemManageForSale")
-	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg) {
+	@RequestMapping("/itemManageForSale")
+	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg, SaleListSearchVO saleListSearchVO) {
 		
-		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
+		//검색 조건에 맞는 데이터 수 조회
+		int totalDataCnt = adminService.getsaleListCnt(saleListSearchVO);
+		saleListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		saleListSearchVO.setDisplayCnt(10);
+		
+		saleListSearchVO.setPageInfo();
+		
+		model.addAttribute("itemSaleList", adminService.saleListForAdmin(saleListSearchVO));
+		
 		//등록된 여행지 카테고리 조회
 		List<TourAreaVO> areaCateList = adminService.getAreaCateList();
 		model.addAttribute("areaCateList", areaCateList);
+		
 		
 		return "content/admin/item_manage_for_sale";
 	}
@@ -324,6 +349,7 @@ public class AdminController {
 		//구매 상태 리스트
 		model.addAttribute("buyStatusList", adminService.getBuyStatus());
 		
+		
 		return "content/admin/reservation_inquiry";
 	}
 	
@@ -331,10 +357,28 @@ public class AdminController {
 	//예약 상태 변경 버튼 클릭 시
 	@ResponseBody
 	@PostMapping("/changeBuyStatusAJAX")
-	public void changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) {
+	public List<String> changeBuyStatusAjax(@RequestBody HashMap<String, Object> map) throws CoolsmsException{
 		
-		System.out.println(map);
+		//System.out.println(map);
 		
+		List<Object> sendSmsInfo = new ArrayList();
+		sendSmsInfo.add(map.get("memDTells"));
+		sendSmsInfo.add(map.get("memNames"));
+		
+		List<String> memDTellList = new ArrayList<>();
+		List<String> memNameList = new ArrayList<>();
+		
+	    if (sendSmsInfo.get(0) instanceof List) {
+	        memDTellList = (List<String>) sendSmsInfo.get(0);
+	    }
+
+	    if (sendSmsInfo.get(1) instanceof List) {
+	        memNameList = (List<String>) sendSmsInfo.get(1);
+	    }
+		
+		//System.out.println(sendSmsInfo);
+		
+	
 		//쿼리 빈값 채우기
 		Map<String, Object> mapData = new HashMap<>();
 		mapData.put("buyStatusCode", map.get("buyStatusCode"));
@@ -342,22 +386,63 @@ public class AdminController {
 		
 		adminService.changeBuyStatus(mapData);
 		
+		return messageService.sendMessage(memNameList, memDTellList);
 	}
 	
 	
-	//예약 상태 변경
-	@GetMapping("/updateReservation")
-	public String updateReservation() {
+	//DIY 예약 
+	@RequestMapping("/diyReservation")
+	public String diyReservation(Model model, BuyListSearchVO buyListSearchVO) {
 		
-		return "content/admin/update_reservation";
+		//검색 조건에 맞는 예약 수 조회
+		int totalDataCnt = adminService.getDiyBuyListCnt(buyListSearchVO);
+		buyListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이지 정보 세팅
+		buyListSearchVO.setPageInfo();
+		
+		//div 구매 리스트
+		model.addAttribute("diyBuyList", adminService.getDiyBuyListForAdmin(buyListSearchVO));
+		
+		//구매 상태 리스트
+		model.addAttribute("buyStatusList", adminService.getBuyStatus());
+		
+		return "content/admin/diy_reservation_inquiry";
 	}
 	
-	//예약 확정으로 예약 상태 변경 시 문자 전송
+	//DIV 예약 상태 변경 버튼 클릭 시
 	@ResponseBody
-	@PostMapping("/")
-	public String UpdateReservSendSms() {
+	@PostMapping("/changeDivBuyStatusAJAX")
+	public List<String> changeDivBuyStatus(@RequestBody HashMap<String, Object> map) throws CoolsmsException{
 		
-		return "";
+		//System.out.println(map);
+		
+		List<Object> sendSmsInfo = new ArrayList();
+		sendSmsInfo.add(map.get("memDTells"));
+		sendSmsInfo.add(map.get("memNames"));
+		
+		List<String> memDTellList = new ArrayList<>();
+		List<String> memNameList = new ArrayList<>();
+		
+	    if (sendSmsInfo.get(0) instanceof List) {
+	        memDTellList = (List<String>) sendSmsInfo.get(0);
+	    }
+
+	    if (sendSmsInfo.get(1) instanceof List) {
+	        memNameList = (List<String>) sendSmsInfo.get(1);
+	    }
+		
+		//System.out.println(sendSmsInfo);
+		
+	
+		//쿼리 빈값 채우기
+		Map<String, Object> mapData = new HashMap<>();
+		mapData.put("buyStatusCode", map.get("buyStatusCode"));
+		mapData.put("buyCodeList", map.get("buyCodeList"));
+		
+		adminService.changeDiyBuyStatus(mapData);
+		
+		return messageService.sendMessage(memNameList, memDTellList);
 	}
 	
 	
@@ -369,6 +454,60 @@ public class AdminController {
 		model.addAttribute("reservDetail", adminService.getReservDetail(buyCode));
 		
 		return "content/admin/reservation_detail";
+	}
+	
+	//Diy 예약 상세 페이지
+	@GetMapping("/diyReservDetail")
+	public String divReservDetail(Model model, String hbtDiyCode) {
+		
+		//기본 상세 정보
+		model.addAttribute("reservDetail", adminService.getDiyReservDetail(hbtDiyCode));
+		
+		//호텔 정보
+		model.addAttribute("hotelList", adminService.getDiyReservHotelDetail(hbtDiyCode));
+		
+		//투어 정보
+		model.addAttribute("tourList", adminService.getDiyReservTourDetail(hbtDiyCode));
+		
+		
+		System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
+		//System.out.println("-------------------------------");
+		//System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
+		System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
+		
+		//호텔 총 결제 금액
+		List<DiyTourVO> diyDetail = adminService.getDiyReservHotelDetail(hbtDiyCode);
+		List<DiyDetailVO> diyDetailList = diyDetail.get(0).getDiyDetailList();
+		int hotelTotalPrice = 0;
+
+		for (DiyDetailVO diyDetailVO : diyDetailList) {
+		    List<HotelVO> hotelList = diyDetailVO.getHotelList();
+		    for (HotelVO hotelVO : hotelList) {
+		        int hbtHotelPrice = Integer.parseInt(hotelVO.getHbtHotelPrice());
+		        hotelTotalPrice += hbtHotelPrice;
+		    }
+		}
+		
+		//투어 총 결제 금액
+		List<DiyTourVO> diyDetailTour = adminService.getDiyReservTourDetail(hbtDiyCode);
+		List<DiyDetailVO> diyDetaiTourlList = diyDetailTour.get(0).getDiyDetailList();
+		int tourTotalPrice = 0;
+
+		for (DiyDetailVO diyDetailVO : diyDetaiTourlList) {
+		    List<TourItemVO> tourList = diyDetailVO.getTourItemList();
+		    for (TourItemVO tourItemVO : tourList) {
+		        int tourPrice = Integer.parseInt(tourItemVO.getHbtTourItemPrice());
+		        tourTotalPrice += tourPrice;
+		    }
+		}
+		
+		System.out.println(hotelTotalPrice);
+		System.out.println(tourTotalPrice);
+		
+		model.addAttribute("hotelTotalPrice", hotelTotalPrice);
+		model.addAttribute("tourTotalPrice", tourTotalPrice);
+		
+		return "content/admin/diy_reservation_detail";
 	}
 	
 	
@@ -399,7 +538,7 @@ public class AdminController {
 			Map<String, Integer> data1 = new TreeMap<>(map);
 			dataList.add(data1);
 			
-			//System.out.println(data1);
+			System.out.println(data1);
 			
 			Set<String> keySet = data1.keySet();
 			
@@ -433,10 +572,10 @@ public class AdminController {
 			resultList.add(map1);
 		}
 		//자료형 Integer로 하면 json에서 인식 오류남!
-		List<Object> thisYearCntList = 			resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		List<Object> thisYearSaleList = 			resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		List<Object> lastYearSaleList = 			resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		
+		List<Object> thisYearCntList = resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> thisYearSaleList = resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> lastYearSaleList = resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
+
 		
 		//분기별 매출
 		List<Map<String, Integer>> mapList2 = adminService.getQuarterlySales(year);
@@ -449,7 +588,7 @@ public class AdminController {
 			
 		}
 		
-		List<Object> quarterSaleList = 			resultList.get(3).values().stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Object> quarterSaleList = resultList.get(3).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		
 		Map<String, List<Object>> map = new HashMap<>();
 		map.put("thisYearCntList", thisYearCntList);
@@ -458,17 +597,53 @@ public class AdminController {
 		map.put("quarterSaleList", quarterSaleList);
 		
 		System.out.println(adminService.getQuarterlySales(year));
+		System.out.println("******************" + thisYearSaleList);
 		
+		//당해년도 매출 합
+
 		return map;
 	}
 	
 	
 	//카테고리별 매출 현황 페이지
 	@GetMapping("/salesStatisticsByCategory")
-	public String salesStatisticsByCategory() {
+	public String salesStatisticsByCategory(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+		
+		//year 데이터 안 넘어오는 경우
+		if(year == 0) {
+			year = DateUtil.getYear();
+		}
+		
+		model.addAttribute("year", year);
+		model.addAttribute("thisYear", DateUtil.getYear());
 		
 		return "content/admin/sales_statistics_by_category";
 	}
+	
+	//카테고리별 차트 데이터 받아오는 ajax
+	@ResponseBody
+	@PostMapping("/getCateChartDataAJAX")
+	public List<List<Map<String, Object>>> getCateChartDataAJAX(int year) {
+		
+	    List<List<Map<String, Object>>> result = new ArrayList<>();
+	    
+	    List<Map<String, Object>> mapList = adminService.getSalesStatisticsByCategory(year);
+	    List<Map<String, Object>> mapList2 = adminService.getsalesStatisticsByKindOfReserv(year);
+	    
+	    result.add(mapList);
+	    result.add(mapList2);
+	    
+	    System.out.println(mapList);
+	    System.out.println(mapList2);
+	    
+	    return result;
+	}
+	
+	
+	
+	
+	
+
 	
 	
 	
@@ -581,7 +756,10 @@ public class AdminController {
 	public String regReqReplyForm(Model model, String hbtBoardRequestNum, String itemCode) {
 
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
-		model.addAttribute("reqReplyList", boardService.getReqReplyList(hbtBoardRequestNum));
+		if(boardService.getReqReply(hbtBoardRequestNum) != null) {
+			model.addAttribute("reqReply", boardService.getReqReply(hbtBoardRequestNum));
+			model.addAttribute("answerId", memberService.getMemId(boardService.getReqReply(hbtBoardRequestNum).getMemberVO().getMemCode()));
+		}
 		model.addAttribute("itemCode", itemCode);
 		
 		return "content/admin/board/reg_req_reply_form";

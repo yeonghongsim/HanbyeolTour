@@ -26,16 +26,16 @@ function searchTypeRequest(typeRequestCode){
 			
 			let str = '';
 			for(const freqReq of result){
-				str += `<tr>`;
+				str += `<tr  class="pointer" onclick="toggleAnswer(this)">`;
 				str += `	<td>${freqReq.typeRequestVO.typeRequestName}</td>`;
 				str += `	<td>`;
-				str += `		<span class="pointer" onclick="toggleAnswer(this)">${freqReq.freqRequestTitle}</span>`;
+				str += `		<span>${freqReq.freqRequestTitle}</span>`;
 				str += `	</td>`;
 				str += `	<td class="bi bi-chevron-up"></td>`;
 				str += `</tr>`;
 				str += `<tr class="answerTr hide">`;
-				str += `	<td>A.</td>`;
-				str += `	<td colspan="2">${freqReq.freqRequestContent}</td>`;
+				str += `	<td style="padding-left: 3rem;">A.</td>`;
+				str += `	<td style="padding-left: 3rem;" colspan="2">${freqReq.freqRequestContent}</td>`;
 				str += `</tr>`;
 				
 			}

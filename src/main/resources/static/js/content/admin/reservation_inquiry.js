@@ -1,3 +1,39 @@
+init();
+
+function init() {
+
+	let url = location.search
+
+	console.log(location.search)
+	
+
+	if(url == '?buyStatusCode=1') {
+		const checkboxes = document.querySelectorAll('.searchChk');
+
+		
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].value == '1') {
+				checkboxes[i].checked = true;
+			}
+		}
+
+		const searchButton = document.querySelector("input[type='submit']");
+		searchButton.click();
+	}else if(url == '?buyStatusCode=3'){
+		const checkboxes = document.querySelectorAll('.searchChk');
+
+		
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].value == '3') {
+				checkboxes[i].checked = true;
+			}
+		}
+		const searchButton = document.querySelector("input[type='submit']");
+		searchButton.click();
+	}
+}
+	
+
 //예약 목록 전체 체크박스 클릭 컨트롤
 function AllCheckboxControl() {
 	const checkAll = document.querySelector('#allCheck');
@@ -47,6 +83,27 @@ function changeBuyStatus(){
 		return;
 	}
 	
+	const memNames = [];
+	const memDTells = [];
+	
+	//예약 상태 예약 완료 select한 경우
+	if (buyStatusCode == 2) {
+		
+		//예약 완료로 변경하는 구매건의 구매자 아이디, 휴대폰번호 가져오기
+		checkboxes.forEach(function(checkbox) {
+			const row = checkbox.parentNode.parentNode;
+			const memName = row.querySelector('td:nth-child(5) div:first-child').innerHTML;
+			const memDTell = row.querySelector('td:nth-child(5) div:last-child').innerHTML;
+
+			memNames.push(memName);
+			memDTells.push(memDTell);
+			
+		});
+		
+			console.log(memNames);
+			console.log(memDTells);
+	}
+	
 	//선택한 체크박스 없는 경우
 	if(checkboxes.length == 0) {
 		alert('선택된 예약이 없습니다.\n예약 상태 변경은 예약 건 선택 후 가능합니다.');
@@ -55,15 +112,20 @@ function changeBuyStatus(){
 	
 	console.log(buyStatusCode);
 	
+	
 	const buyCodeList = [];
 	
 	for(let i = 0; i < checkboxes.length; i++){
 		buyCodeList[i] = checkboxes[i].value;
 	}
 	
+	console.log(buyCodeList)
+	
 	let paramData = {
 		'buyStatusCode' : buyStatusCode
 		, 'buyCodeList' : buyCodeList
+		, 'memNames' : memNames
+		, 'memDTells' : memDTells
 	};
 	
 	
@@ -111,9 +173,6 @@ function getBuyListPaging(pageNum){
 	
 	search_form.submit();	
 }
-
-
-
 
 
 

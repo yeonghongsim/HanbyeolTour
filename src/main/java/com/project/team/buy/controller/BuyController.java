@@ -39,7 +39,7 @@ public class BuyController {
 
         buyService.setBuy(buyVO,buyDetailVO);
 
-        return "redirect:/item/tourItemListMain";
+        return "redirect:/main";
     }
 
     //장바구니등록

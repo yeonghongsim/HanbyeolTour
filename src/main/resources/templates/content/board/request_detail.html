@@ -10,13 +10,19 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="board_content">
+<div class="req_det">
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
+	<div class="row mb-3">
+		<div class="offset-10 col-2">
+			<input onclick="location.href='/board/regRequestPage'" type="button" class="btn btn-secondary w-100" value="뒤로 가기">
+		</div>
+	</div>
 	
-	<div class="row">
+	<div class="row mb-2">
 		<div class="col">
 			<table class="table text-center req-detail-table">
 				<colgroup>
@@ -37,12 +43,11 @@
 						<td>
 							<span>[[${reqDetail.hbtBoardRequestTitle}]]</span>
 						</td>
-						<td>1</td>
-						<td>1</td>
+						<td colspan="2"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="3">
+						<td colspan="3" style="text-align: left; padding-left: 5rem;">
 							<span>[[${reqDetail.hbtBoardRequestContent}]]</span>
 						</td>
 					</tr>
@@ -50,39 +55,47 @@
 			</table>
 		</div>
 	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			1차 답변
+	<th:block th:if="${reqReply != null}">
+		<div class="row mb-3">
+			<div class="col-2">
+				<h4>답변 내용</h4>
+			</div>
+			<div class="col">
+				<table class="table text-center req-detail-table">
+					<colgroup>
+						<col width="20%">
+						<col width="20%">
+						<col width="">
+						<col width="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>답변자</td>
+							<td>[[${answerId}]]</td>
+							<td>답변 일</td>
+							<td>[[${reqReply.reqReplyAnswerDate}]]</td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td colspan="3" style="text-align: left; padding-left: 5rem;">
+								<span>[[${reqReply.reqReplyContent}]]</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
-
-	<div class="row mb-3">
-		<div class="col">
-			1차 재문의
+	</th:block>
+	<th:block th:unless="${reqReply != null}">
+		<div class="row mb-3">
+			<div class="col">
+				<span>아직 답변글이 작성되지 않았습니다.</span>
+			</div>
 		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			2차 답변
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			2차 재문의
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col">
-			3차 답변
-		</div>
-	</div>
+	</th:block>
 	
 	
-	
+</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   

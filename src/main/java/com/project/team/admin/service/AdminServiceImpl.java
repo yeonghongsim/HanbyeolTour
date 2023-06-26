@@ -3,6 +3,7 @@ package com.project.team.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import com.project.team.review.vo.ReveiwVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
+import com.project.team.admin.vo.SaleListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.board.vo.BoardRequestVO;
@@ -85,9 +88,16 @@ public class AdminServiceImpl implements AdminService{
 	
 	//판매 상품 리스트 조회
 	@Override
-	public List<ItemVO> saleListForAdmin() {
+	public List<ItemVO> saleListForAdmin(SaleListSearchVO saleListSearchVO) {
 		
-		return sqlSession.selectList("adminMapper.saleListForAdmin");
+		return sqlSession.selectList("adminMapper.saleListForAdmin", saleListSearchVO);
+	}
+	
+	//검색 조건에 맞는 판매 상품 수 조회
+	@Override
+	public int getsaleListCnt(SaleListSearchVO saleListSearchVO) {
+		
+		return sqlSession.selectOne("adminMapper.getsaleListCnt", saleListSearchVO);
 	}
 	
 	//판매 상품 삭제
@@ -166,8 +176,15 @@ public class AdminServiceImpl implements AdminService{
 	
 	//구매(예약) 리스트 조회
 	@Override
-	public List<MemberVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
+	public List<BuyVO> getBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
 		return sqlSession.selectList("adminMapper.getBuyListForAdmin", buyListSearchVO);
+	}
+	
+	//DIY 예약 리스트 조회
+	@Override
+	public List<DiyTourVO> getDiyBuyListForAdmin() {
+		
+		return sqlSession.selectList("adminMapper.getDiyBuyListForAdmin");
 	}
 	
 	//검색 조건에 맞는 구매(예약) 수
@@ -184,6 +201,7 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getBuyStatus");
 	}
 	
+	
 	//구매(예약) 상태 변경
 	@Override
 	public void changeBuyStatus(Map<String, Object> map) {
@@ -198,6 +216,49 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectOne("adminMapper.getReservDetail", buyCode);
 	}
 	
+	//DIY 예약 리스트 조회
+	@Override
+	public List<DiyTourVO> getDiyBuyListForAdmin(BuyListSearchVO buyListSearchVO) {
+		
+		return sqlSession.selectList("adminMapper.getDiyBuyListForAdmin", buyListSearchVO);
+	}
+	
+	//검색 조건에 맞는 DIY 예약 수
+	@Override
+	public int getDiyBuyListCnt(BuyListSearchVO buyListSearchVO) {
+		
+		return sqlSession.selectOne("adminMapper.getDiyBuyListCnt", buyListSearchVO);
+	}
+	
+	//DIY 예약 상태 변경
+	@Override
+	public void changeDiyBuyStatus(Map<String, Object> map) {
+		sqlSession.selectOne("adminMapper.changeDiyBuyStatus", map);
+		
+	}
+	
+	//DIY 예약 상세 기본 정보
+	@Override
+	public DiyTourVO getDiyReservDetail(String hbtDiyCode) {
+		
+		return sqlSession.selectOne("adminMapper.getDiyReservDetail", hbtDiyCode);
+	}
+	
+	//DIY 호텔 정보
+	@Override
+	public List<DiyTourVO> getDiyReservHotelDetail(String hbtDiyCode) {
+		
+		return sqlSession.selectList("adminMapper.getDiyReservHotelDetail", hbtDiyCode);
+	}
+	
+	//DIY 투어 정보
+	@Override
+	public List<DiyTourVO> getDiyReservTourDetail(String hbtDiyCode) {
+		
+		return sqlSession.selectList("adminMapper.getDiyReservTourDetail", hbtDiyCode);
+	}
+
+	
 	//기간별 매출 조회 
 	@Override
 	public List<Map<String, Integer>> getSalesStatisticsByPeriod(int year) {
@@ -211,6 +272,28 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectList("adminMapper.getQuarterlySales", year);
 	}
+	
+	//할 일 목록 조회
+	@Override
+	public Map<String, Integer> getToDoList() {
+		
+		return sqlSession.selectOne("adminMapper.getToDoList");
+	}
+	
+	//여행 국가별 판매수 조회
+	@Override
+	public List<Map<String, Object>> getSalesStatisticsByCategory(int year) {
+		
+		return sqlSession.selectList("adminMapper.getSalesStatisticsByCategory", year);
+	}
+	
+	//예약 종류별 판매수 조회
+	@Override
+	public List<Map<String, Object>> getsalesStatisticsByKindOfReserv(int year) {
+		
+		return sqlSession.selectList("adminMapper.getsalesStatisticsByKindOfReserv", year);
+	}
+
 
 
 
@@ -314,15 +397,15 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getRecomImgListForPKG");
 	}
 
+	@Override
+	public List<String> getReviewList() {
+		return sqlSession.selectList("adminMapper.getReviewList");
+	}
 
-
-
-
-
-
-
-
-
+	@Override
+	public void setReviewData(ReveiwVO reveiwVO) {
+		sqlSession.insert("adminMapper.setReviewData", reveiwVO);
+	}
 
 
 

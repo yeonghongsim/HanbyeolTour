@@ -17,7 +17,7 @@
 			<div class="row">
 				<div class="col-12">
 					<h5 class="miniTitle">예약상품</h5>
-					<table class="table">
+					<table class="table reservItemTable">
 						<colgroup>
 							<col width="15%">
 							<col width="*">
@@ -35,72 +35,90 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td rowspan="3">상품 금액</td>
+							<td rowspan="2">상품 금액</td>
 							<td class="priceTd">[[${#numbers.formatCurrency(reservDetail.buyDetailVO.buyDPrice)}]]원</td>
 						</tr>
 						<tr>
 							<td class="priceTd">수량 &nbsp; [[${reservDetail.buyDetailVO.reservedPeopleNum}]]</td>
 						</tr>
 						<tr>
-							<td class="priceTd totalPrice" >합계 금액 &nbsp; [[${#numbers.formatCurrency(reservDetail.buyTotalPrice)}]]원</td>
+							<td class="priceTd totalPrice" colspan="3">합계 금액 &nbsp; [[${#numbers.formatCurrency(reservDetail.buyTotalPrice)}]]원</td>
 						</tr>
 					</table>
 					<div class="col-12">
 						<h5 class="miniTitle">예약자 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
 							<tr>
-								<td class="reservInfoTd">
-									<span class="reservInfoSpan">아이디 &nbsp;</span> [[${reservDetail.memberVO.memId}]]<br>
+								<td>
+									<span class="reservInfoSpan">아이디 &nbsp;</span> [[${reservDetail.memberVO.memId}]]
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="reservInfoSpan">이름 &nbsp;</span> [[${reservDetail.memberVO.memName}]]<br>
+									<span class="reservInfoSpan">이름 &nbsp;</span> [[${reservDetail.memberVO.memName}]]
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="reservInfoSpan">휴대폰번호 &nbsp;</span>[[${reservDetail.memberVO.memberDetailVO.memDTell}]]<br>
+									<span class="reservInfoSpan">휴대폰번호 &nbsp;</span>[[${reservDetail.memberVO.memberDetailVO.memDTell}]]
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="reservInfoSpan">이메일주소 &nbsp;</span>[[${reservDetail.memberVO.memberDetailVO.memEmail}]]<br>
+									<span class="reservInfoSpan">이메일주소 &nbsp;</span>[[${reservDetail.memberVO.memberDetailVO.memEmail}]]
 								</td>
 							</tr>
 						</table>
 					</div>
 					<div class="col-12">
-						<h5 class="miniTitle">여행자 정보</h5>
-						<table class="table">
+						<h5 class="miniTitle">항공권 정보</h5>
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
 							<tr>
 								<td>
-									실제 여행자 추가 정보<br>
-									한글 이름<br>
-									영문 이름<br>
-									여권 정보?<br>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-12">
+						<h5 class="miniTitle">호텔 정보</h5>
+						<table class="table reservInfoTable">
+							<colgroup>
+								<col width="">
+							</colgroup>
+							<tr>
+								<td>
 								</td>
 							</tr>
 						</table>
 					</div>
 					<div class="col-12">
 						<h5 class="miniTitle">결제 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
 							<tr>
 								<td>
-									결제 금액 : [[${#numbers.formatCurrency(reservDetail.buyTotalPrice)}]]원<br>
-									결제 수단<br>
+									<span class="reservInfoSpan">결제일 &nbsp;</span> [[${reservDetail.BuyDate}]]
 								</td>
 							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">결제 금액 &nbsp;</span> [[${#numbers.formatCurrency(reservDetail.buyTotalPrice)}]]원
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">결제 수단 &nbsp;</span>
+								</td>
+							</tr>
+								
 						</table>
 					</div>
 				</div>

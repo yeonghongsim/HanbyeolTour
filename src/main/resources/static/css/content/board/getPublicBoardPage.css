@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+.public_container {
+	min-height: 59vh;
+}
 
 .public-table > tbody > tr > td:nth-child(2) {
 	text-align: left;

@@ -87,13 +87,13 @@ function getSearchByDateTable(month){
 	for(let i = 0; i < lastDate; i++){
 		
 		if(parseInt(getDays[i]) == 0){
-			drawCalTable += `<td style='background-color: red;'>${dayName[getDays[i]]}</td>`
+			drawCalTable += `<td class="px-0 py-0 rounded-5" style='background-color: #FB9079; width: 25px;'>${dayName[getDays[i]]}</td>`
 		}
 		else if(parseInt(getDays[i]) == 6){
-			drawCalTable += `<td style='background-color: blue;'>${dayName[getDays[i]]}</td>`
+			drawCalTable += `<td class="px-0 py-0 rounded-5" style='background-color: #79B6FB; width: 25px;'>${dayName[getDays[i]]}</td>`
 		}
 		else{
-			drawCalTable += `<td>${dayName[getDays[i]]}</td>`
+			drawCalTable += `<td class="px-0 py-0" style="width: 25px;">${dayName[getDays[i]]}</td>`
 		}
 		
 	}
@@ -103,7 +103,7 @@ function getSearchByDateTable(month){
 	drawCalTable += `<tr>`
 	
 	for(let i = 0; i < lastDate; i++){
-		drawCalTable += `<td onclick="getSearchByDateAJAX(${i+1});">${i+1}</td>`
+		drawCalTable += `<td class="dateTd px-0 py-0 rounded-5" onclick="getSearchByDateAJAX(${i+1});">${i+1}</td>`
 	}
 	drawCalTable += `</tr>`
 	
@@ -114,6 +114,22 @@ function getSearchByDateTable(month){
 
 //달력의 날짜 클릭시 검색결과
 function getSearchByDateAJAX(getDate){
+
+	//날짜태그 전체 가져오기
+	const dateTds = document.querySelectorAll('.dateTd');
+	dateTds.forEach((td, index) => {
+
+		console.log(getDate, index+1);
+
+		td.style.backgroundColor = '#ffffff';
+
+		if(getDate == index+1){
+
+			td.style.backgroundColor = '#ffd000';
+		}
+
+	});
+
 	//현재지역 가져오기
 	const areaName = document.querySelector('#areaName').value;
 	
@@ -135,29 +151,49 @@ function getSearchByDateAJAX(getDate){
 			let resultArray = JSON.parse(result);
 			
 			//결과테이블 수정
-			const resultTbodyTag = document.querySelector('.resultTbodyTag');
-				resultTbodyTag.replaceChildren();
+			const rusultDiv = document.querySelector('.rusultDiv');
+			rusultDiv.replaceChildren();
 			
 			//테이블 그리기 시작			
 			let str = '';
 			for(const i of resultArray){
-				str += `<tr>`;
-				str += `<td>`;
-				str += `<a href="/item/tourItemListDetail?departDate=${i["DEP_DATE"]}&arriveDate=${i["ARR_DATE"]}&itemCode=${i["ITEM_CODE"]}">`;
-				str += `<img width="150px;" src="/img/item/itemImg/${i["ITEM_IMG_ATTACHED_NAME"]}"></td>`;
-				str += `</a>`;
-				str += `</td>`;
-				str += `<td>`;
-				str += `<div>${i["DEP_DATE"]}</div>`;
-				str += `<div>${i["ARR_DATE"]}</div>`;
-				str += `</td>`;
-				str += `<td>${i["TRAVER_PERIOD"]}</td>`;
-				str += `<td>${i["ITEM_TITLE"]}</td>`;
-				str += `<td>${i["ITEM_PRICE"]}</td>`;
-				str += `<td>${i["STATUS_NAME"]}</td>`;
-				str += `</tr>`;
+
+			str += `
+				<h3 class="text-center mt-5">${i["ITEM_TITLE"]}</h3>
+				<div class="row rounded-5 mx-5 mb-5 border custom-border-3 shadow" style="cursor: pointer;"
+					 onclick="location.href='/item/tourItemListDetail?departDate=${i['DEP_DATE']}&arriveDate=${i['ARR_DATE']}&itemCode=${i['ITEM_CODE']}'">
+					<div class="col-6 px-0 mx-0 rounded-5">
+						<img style="display: block; width: 100%;" class="rounded-start-5" src="/img/item/itemImg/${i['ITEM_IMG_ATTACHED_NAME']}">
+					</div>
+					<div class="col-6 d-flex align-items-center">
+						<table
+							class="table align-middle py-0 d-flex align-items-center justify-content-center text-center">
+							<tr>
+								<td>여행국가 :</td>
+								<td>${i["AREA_KOR_NAME"]}</td>
+							</tr>
+							<tr>
+								<td>여행기간 :</td>
+								<td>${i["TRAVER_PERIOD"]}</td>
+							</tr>
+							<tr>
+								<td>출발예정 :</td>
+								<td>${i["DEP_DATE"]}</td>
+							</tr>
+							<tr>
+								<td>도착예정 :</td>
+								<td>${i["ARR_DATE"]}</td>
+							</tr>
+							<tr>
+								<td>결제금액 :</td>
+								<td>${i["ITEM_PRICE"]}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				`;
 			}
-			document.querySelector('.resultTbodyTag').insertAdjacentHTML('afterbegin',str);
+			document.querySelector('.rusultDiv').insertAdjacentHTML('afterbegin',str);
 			
 		},
 		error: function() {
@@ -211,3 +247,7 @@ function getDate123(dateString){
 	const formattedDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\./g, '-');
 	return formattedDate;
 }
+
+
+
+document.querySelector('.dateCate').classList.add("ye-S-bc");

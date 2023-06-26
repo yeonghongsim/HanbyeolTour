@@ -64,7 +64,7 @@ function openModal(itemCode, areaCateList){
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">기본 가격</label>                                          `;
-			str += `					<input type="text" class="form-control" id="" name="itemPrice" value="${result.itemPrice}">                             `;
+			str += `					<input type="text" class="form-control" id="" name="itemPrice" value="${result.itemPrice}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">                             `;
 			str += `				</div>                                                                                          `;
 			str += `				<div class="col-3">                                                                             `;
 			str += `					<label for="" class="form-label">땡처리할인</label>                                         `;
@@ -187,13 +187,13 @@ function openModal(itemCode, areaCateList){
 			str += `					</div>                                                                                      `;
 										}
 			str += `				</div>                                                                                          `;
-			str += `				<div class="col-3">                                                                             `;
-			str += `					<input id="" type="button" class="btn" value="수정" onclick="updateItem();"                                                     `;
-			str += `						style="background-color: #ffd000;">                                     `;
+			str += `				<div class="col-12 d-grid">                                                                             `;
+			str += `					<input id="updateButton" type="button" class="btn btn-primary" value="상품 수정" onclick="updateItem();">                                                     `;
 			str += `				</div>                                                                                          `;
 			str += `			</form> `;
 			
 				modalBody.insertAdjacentHTML('afterbegin', str);
+				
 				
 		},
 		error: function() {
@@ -204,10 +204,10 @@ function openModal(itemCode, areaCateList){
 	
 	itemDetailModal.show();
 	
-	
 }
-	
-	
+
+
+
 
 
 
@@ -336,8 +336,37 @@ function updateItem(){
 }
 
 
+//상품 조회 페이징 처리
+function getSaleListPaging(pageNum){
+	document.querySelector('#nowPage').value = pageNum;
+	const searchForm = document.querySelector('#searchForm');
+	
+	searchForm.submit();
+
+}
 
 
+//상품 정보 모두 입력되었는지 확인
+  function validateForm(event) {
+    
+    const formElements = document.querySelectorAll('form input, form textarea');
+
+
+    for (let i = 0; i < formElements.length; i++) {
+      let element = formElements[i];
+      
+      if (element.value.trim() === '') {
+        // 입력 제출 막기
+        event.preventDefault();
+        alert('입력되지 않은 항목이 있습니다.');
+        return;
+      }
+    }
+  }
+
+  // 폼 제출(submit) 이벤트 리스너 등록
+  const form = document.getElementById('itemDetailForm');
+  form.addEventListener('submit', validateForm);
 
 
 

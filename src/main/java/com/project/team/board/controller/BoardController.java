@@ -31,14 +31,6 @@ public class BoardController {
 	@Resource(name = "adminService")
 	private AdminService adminService;
 	
-	@GetMapping("/boardMain")
-	public String boardMain(Model model) {
-		
-		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
-		
-		
-		return "content/board/board_main";
-	}
 	
 	@GetMapping("/getPublicBoardPage")
 	public String getPublicBoardPage(Model model, BoardVO boardVO) {
@@ -244,9 +236,14 @@ public class BoardController {
 	
 	@GetMapping("/RequestDetail")
 	public String RequestDetail(Model model, String hbtBoardRequestNum) {
+		System.out.println("!@#!@#" + boardService.getReqReply(hbtBoardRequestNum) + "!@#!@#");
 		
 		model.addAttribute("boardSideMenuList", boardService.getBoardSideMenuList());
 		model.addAttribute("reqDetail", boardService.getRequestDetail(hbtBoardRequestNum));
+		if(boardService.getReqReply(hbtBoardRequestNum) != null) {
+			model.addAttribute("reqReply", boardService.getReqReply(hbtBoardRequestNum));
+			model.addAttribute("answerId", memberService.getMemId(boardService.getReqReply(hbtBoardRequestNum).getMemberVO().getMemCode()));
+		}
 		
 		return "content/board/request_detail";
 	}
