@@ -232,6 +232,7 @@ function buyBtnClick(hbtDiyCode, cartCode){
 	
 	
 	if(cartCode != 'empty'){
+		const airlineCode = document.querySelector('#airlineCode').value;
 		const memCode = document.querySelector('#memCode').value;
 		const cartTotalPrice = document.querySelector('#cartTotalPrice').value;
 		const itemCode = document.querySelector('#itemCode').value;
@@ -242,6 +243,7 @@ function buyBtnClick(hbtDiyCode, cartCode){
 		
 		cart = {
 			'type' : 'cart'
+			, 'airlineCode' : airlineCode
 			, 'cartCode' : cartCode
 			, 'memberVO.memCode' : memCode
 			, 'buyTotalPrice' : cartTotalPrice
