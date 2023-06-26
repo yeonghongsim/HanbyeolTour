@@ -129,9 +129,6 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `</div>`;
 		
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-success w-100" value="변경" onclick="changeBtnClick();">`;
-		modal_btn += `</div>`;
-		modal_btn += `<div class="col-2 me-2">`;
 		modal_btn += `	<input type="button" class="btn btn-primary w-100" value="구매" onclick="buyBtnClick();">`;
 		modal_btn += `</div>`;
 		modal_btn += `<div class="col-2 me-2">`;
@@ -210,9 +207,6 @@ function checkDetail(myCart, diyTour){
 	}
 	
 	
-}
-function changeBtnClick(){
-	alert('변경 버튼 클릭');
 }
 
 function buyBtnClick(){

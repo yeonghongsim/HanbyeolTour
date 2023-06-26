@@ -4,7 +4,7 @@
 
 
 <th:block th:fragment="headerFragment">
-<div class="test">
+<div class="board_header_background">
 	<!-- 상단바 1 -->
 	<div class="row header-bar">
 		<div class="col text-end">
@@ -13,15 +13,15 @@
 				<ul class="header-title head-top">
 					<li class="h-btn"><a href="/member/login">로그인</a></li>
 					<li class="h-btn"><a href="/member/join">회원가입</a></li>
-					<li class="h-btn">장바구니</li>
-					<li class="h-btn">마이페이지</li>
+					<li class="h-btn"><span>장바구니</span></li>
+					<li class="h-btn"><span>마이페이지</span></li>
 					<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
 				</ul>
 			</div>
 			<!-- 로그인 시 -->
 			<div sec:authorize="isAuthenticated()">
 				<ul class="header-title head-top">
-					<li>[[${#authentication.name}]]님 즐거운 여행되세요!</li>
+					<li><span>[[${#authentication.name}]]님 즐거운 여행되세요!</span></li>
 					<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
 					<li class="h-btn"><a th:href="@{/myPage/checkMyCart(memId=${#authentication.name})}">장바구니</a></li>
 					<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>

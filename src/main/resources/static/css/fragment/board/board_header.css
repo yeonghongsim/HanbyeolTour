@@ -1,9 +1,15 @@
 @charset "UTF-8";
 
-.header-bar{
-	margin-top: 1.5rem;
+/*
+.head-top > li > a,span{
+	color: white;
 }
-
+*/
+.board_header_background {
+	background-image: url('/imageForUse/playground.jpeg');
+	background-size: cover;
+	background-position: center;
+}
 
 /* 헤더 글씨 옆으로 나오도록 설정*/
 .header-title li {
@@ -32,12 +38,6 @@
 	color: #ffd000;
 	font-weight: bolder;
 }
-
-.header-bar-2{
-	background: white; 
-	margin-top: 1rem;
-}	
-	
 
 a {
   text-decoration: none;
