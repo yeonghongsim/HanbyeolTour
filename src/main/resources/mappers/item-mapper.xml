@@ -236,6 +236,7 @@
 			, HBT_AIRLINE_NAME
 			, HBT_AIRLINE_ICON
 		FROM HBT_AIRLINE
+		WHERE IS_USE = 'Y'
 	</select>
 	<!--선택지역 호델 전체 조회-->
 	<select id="getHotelAJAX" resultType="map">
