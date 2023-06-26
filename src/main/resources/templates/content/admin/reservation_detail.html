@@ -24,9 +24,9 @@
 						</colgroup>
 						<tr>
 							<td rowspan="3">
-								<img th:src="${'/img/item/itemImg/' + reservDetail.buyDetailVO.itemVO.imgList[0].itemImgAttachedName}" width="130px" style="border-radius: 10px;">
+								<img th:src="${'/img/item/itemImg/' + reservDetail.buyDetailVO.itemVO.imgList[0].itemImgAttachedName}" width="130px" height="130px;">
 							</td>
-							<td class="detailItemTitle">[[${reservDetail.buyDetailVO.itemVO.itemTitle}]]</td>
+							<td class="detailItemTitle">[ [[${reservDetail.buyDetailVO.itemVO.tourAreaVO.areaKorName}]] ]&nbsp;[[${reservDetail.buyDetailVO.itemVO.itemTitle}]]</td>
 						</tr>
 						<tr>
 							<td class="detailDate">[[${reservDetail.buyDetailVO.departDate}]]부터 ~ [[${reservDetail.buyDetailVO.arriveDate}]]까지</td>

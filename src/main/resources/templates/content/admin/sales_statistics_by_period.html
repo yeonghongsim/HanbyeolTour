@@ -25,13 +25,15 @@
 				</select>
 			</div>
 		</div>
-		<div class="row mt-5">
-			<div class="col-10">
+		<div class="row mt-5 text-end">
+			<div class="col">
+				<h6 style="color: grey;"><span style="font-weight: bold;">[[${thisYear}]]년</span> 총매출액 &nbsp;<span style="font-weight: bold; font-size: 25px; border-bottom:2px; border-bottom-color: #ffd000; border-bottom-style:solid;">[[${#numbers.formatCurrency(totalSales)}]]원</span></h6>
+			</div>    
+		</div>
+		<div class="row mt-5">      
+			<div class="col">
 				<canvas id="myChart"></canvas>
 			</div>
-			<div class="col-2">
-				매출 합계, 총 판매량? 데이터 뿌리기
-			</div>            
 		</div>
 		<div class="row mt-5">
 			<div class="col-6">
