@@ -128,7 +128,9 @@
 							<th:block th:each="tour : ${tourList}">
 								<tr th:each="diy : ${tour.diyDetailList}">
 									<td th:each="tourItem : ${diy.tourItemList}">
-										<!-- <span th:src="${'/img/item/tourItem/' + tourItem.tourItemImgList[0].hbtTourItemAttechedFileName}"></span> -->
+										<th:block th:each="tourItemImg : ${tourItem.tourItemImgList}">
+											<img th:src="${'/img/item/tourItem/' + tourItemImg.hbtTourItemAttechedFileName}" width="50px;">
+										</th:block>
 										<span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span> [[${diy.tourItemList[0].hbtTourItemName}]]
 									</td>
 								</tr>
