@@ -178,7 +178,7 @@
 						        <div id="cancelBtn">
 						        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn"
 						        	th:if="${diy.buyStatusCode == '1'}"
-						        	th:onclick="cancel_reservation([[${diy.hbtDiyCode}]])"> 예약취소</button>
+						        	th:onclick="cancel_reservation([[${diy.hbtDiyCode}]], this)"> 예약취소</button>
 						        </div>
 					        </td>
 						</tr>
