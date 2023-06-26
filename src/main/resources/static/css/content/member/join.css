@@ -1,30 +1,24 @@
 @charset "UTF-8";
 
-.col{
+
+.join-container .col{
 	padding: 0;
 }
 
-
+/* 배경 */
 .join-container{
 	width: 100%;
 	background-color: #f5f6f8;
 	border-bottom: 1px solid #bbb;
 	border-top: 1px solid #bbb;
+	padding: 0;
 }
-
-
-.inner {
-	width: 40%;
-    margin: 0 auto;
-	margin-bottom: 4rem;
-	
-}
-
+/* 입력 container */
 .join-title{
 	font-size: 3rem;
 	text-align: center;
 	letter-spacing: -4px;
-    padding-bottom: 2rem;
+    padding-bottom: 4rem;
     padding-left: 8px;
 }
 
@@ -36,58 +30,82 @@
 	
 }
 
-.join-status{
-	font-size: 1.3rem;
-	text-align: center;
-    padding-bottom: 1rem;
-    color: #ffd000;
-    font-weight: bold;
+.join-inner {
+	width: 40%;
+    margin: 0 auto;
+    margin-top:5rem;
+	margin-bottom: 10rem;
+	
 }
 
 
-.s-row{
-	width: 50%;
-	text-align: center;
-	margin: 0 auto;
-	margin-bottom: 1.5rem;
+/* 입력 table */
+
+.join-table tr td{
+	vertical-align: middle;
+	padding: 0.7rem;
+	margin-bottom: 10rem;
 }
 
-.form-control-lg{
-	height: 3.6rem;
+
+
+/* 소제목 */
+.title{
+	font-size: 1.6rem;
+	font-weight: bold;
+	letter-spacing: -1px;
+	vertical-align: middle;
+	margin-bottom: 2rem;
+	margin-top: 2rem;
+}
+
+/* 인풋 태그 스타일 */
+.form-control:focus{ 
+	background-color: #fff;
+    border-color: #DEE2E5;
+    outline: 0;
+	box-shadow: 0 0 4px 4px #fff9d4;
+}
+.form-control{ 
+	padding: 1.2rem;
+	border-radius: 0.6rem;
 	font-size: 1rem;
 }
 
-.btn-outline-light{
-	color: black;
-	background-color:#ffd000;
-	border: 1px solid #dee2e6;
-	font-size: 1.25rem;
+/* 버튼 */
+.btn-yellow {
+    --bs-btn-color: #000;
+    --bs-btn-bg: #fff9d4;
+    --bs-btn-border-color: #DEE2E5;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #ffd000;
+    --bs-btn-hover-border-color: #ffd000;
+    --bs-btn-focus-shadow-rgb: #fff9d4;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #ffd000;
+    --bs-btn-active-border-color: #ffd000;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #ffc107;
+    --bs-btn-disabled-border-color: #ffc107;
+    border-radius: 0.6rem;
+	font-size: 1.2rem;
 }
 
-.btn-outline-light:hover {
-	background: #fff9d4; 
-	color: #bbb;
+.joinBtn{
+	height:54.8px; 
 }
 
 
-.btn-outline-light:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    color: #ffffff;
-	margin-bottom: 1rem;
-	font-weight: bold;
-	height: 3.6rem;
-	background-color:#ffd000;
-	border: 1px solid #dee2e6;
-}
+/* radio btn */
 
-	
 .btn-group{
-	height: 3.6rem;
+	height: 54.8px;
 	width: 90%;
-	border: 1px solid #bbb;
-	/* #dee2e6 */
-	background-color: #dee2e6;
+	border: 1px solid #DEE2E5;
+	background-color: #fff9d4;
+	border-radius: 0.6rem;
+	color: #212529;
 }
 
 .btn-label {
@@ -95,12 +113,13 @@
 	align-items: center;
 	justify-content: center;
 	height: 100%;
+	
 }
 
 .btn-group .btn-check:checked + label.btn {
 	background-color: #ffd000;
 	color: black;
-	border: 1px solid #bbb;
+	border: 1px solid #DEE2E5;
 }
 
 .gender-radio {
@@ -109,21 +128,11 @@
 	align-items: center;
 }
 .form-select-lg{
-	height: 3.6rem;
 	font-size: 1rem;
 }
-	
-.join-info-title{
-	font-size: 1.6rem;
-	font-weight:bold;
-	text-align: left;
-	letter-spacing: -1px;
-    padding-bottom: 1rem;
-    margin-top: 2rem;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-	
+
+
+/* 생일 */
 .birthDay{
 	font-size: 1.4rem;
 	text-align: center;
@@ -141,23 +150,5 @@
 
 .bd-row{
 	margin-bottom: 2rem;
-}
-
-.joinBtn{
-	color: #ffffff;
-	margin-bottom: 1rem;
-	font-weight: bold;
-	height: 3rem;
-}
-
-.joinBtn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    color: #ffffff;
-	margin-bottom: 1rem;
-	font-weight: bold;
-	height: 3rem;
-	background-color:#ffd000;
-	border: 1px solid #dee2e6;
 }
 

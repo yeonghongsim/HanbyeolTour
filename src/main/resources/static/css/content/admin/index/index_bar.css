@@ -10,13 +10,18 @@
 table {
   border-collapse: collapse;
   width: 300px;
-  height: 70px; 
+  height: 70px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 }
 
+<<<<<<< HEAD
 #toDo1 tr, #toDo1 td {
   border-left: 2px solid #a6d5f7;
+=======
+th, td {
+  border-left: 2px solid orange;
+>>>>>>> dev
   padding-left: 20px;
   padding-right: 20px;
   text-align: left;
@@ -53,6 +58,7 @@ table {
   border-left: none;
   text-align: right
 }
+
 
 .tdTitle{
 	font-size: 12px;

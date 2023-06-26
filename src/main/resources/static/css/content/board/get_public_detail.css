@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.board_pub_det_container {
+	min-height: 53vh;
+}
+
 .detail_table > tbody > tr > td{
 	border: 1px solid #eee;
 }

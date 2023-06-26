@@ -13,15 +13,20 @@
 	
 	<!-- 프로필 상단바 -->
 	<div class="header-area">
-		<div class="row mt-3 mb-5 profile-bar">
-			<div class="col-8 inner-bar"><span class="profile-name">[[${memInfo.memName}]]</span>님 반갑습니다!
+		<div class="row mt-3  profile-bar">
+			<div class="col-5 inner-bar"><span class="profile-name">[[${memInfo.memName}]]</span>님 반갑습니다!
 			&nbsp;<i class="bi bi-emoji-wink" style="color: #ffd000; font-weight: bolder;"></i>
 			</div>
-			<div class="col-4 inner-bar text-end">
-				<a th:href="@{/myPage/updateMyInfo}"  class="btn btn-outline-warning"><span class="">내정보 수정</span></a>
+			<div class="col-7 weather-bar">
+				<span class="weather-ment" style="margin-right: 1rem; letter-spacing: 0px;"></span>
+				<span class="weather-city" style="margin-right: 1rem; margin-left: 0.5rem;"></span>
+				<span class="weather-icon" style="margin-right: 1rem;"></span> 
+				<span class="weather-text" style="margin-right: 1rem;"></span>
+				<span class="weather-temp" ></span> 
 			</div>
 		</div>
 	</div>	
+	
 
 	<!-- 1개월 이내의 예약 조회 데이터 (취소관련 데이터는 제외) -->
 	<div class="one-month-mention mb-3 text-end">
@@ -450,7 +455,7 @@
 
 <!-- 연결해야 할 외부 js 파일-->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/member/info_manage.js"></script> -->
+	<script type="text/javascript" src="/js/content/member/info_manage.js"></script>
 </th:block>
 
 

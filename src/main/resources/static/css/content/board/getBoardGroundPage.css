@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+.board-grd-pg {
+	min-height: 53vh;
+}
 
 .regTable > tbody > tr > td {
 	border: 1px solid #eee;

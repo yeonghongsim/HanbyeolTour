@@ -61,7 +61,6 @@ public class MemberController {
 		return "content/member/join";
 	}
 	
-	
 	//아이디 중복 확인 
 	@PostMapping("/isDuplicateMemIdAJAX")
 	@ResponseBody
@@ -92,6 +91,7 @@ public class MemberController {
 		
 		return "content/member/join_notice";
 	}
+		
 	
 	//회원가입시 인증 기능 
 	@PostMapping("/emailCheckAJAX")

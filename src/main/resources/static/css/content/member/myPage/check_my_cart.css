@@ -1,5 +1,24 @@
 @charset "UTF-8";
 
-.test {
-	color: red;
+.modal_img {
+	width: 200px;
+	height: 150px;
+	margin: 0.8rem;
 }
+
+.modal_day_plan {
+	padding-top: 0.8rem;
+	border-bottom: 1px solid #ffd000;
+	border-top: 1px solid #ffd000;
+}
+
+.accordion {
+	--bs-accordion-active-color: none; 
+    --bs-accordion-active-bg: #fff9d4;
+    --bs-accordion-btn-focus-box-shadow: none;
+}
+/*
+.accordion-button:not(.collapsed) {
+	color: none;
+}
+*/

@@ -1,3 +1,19 @@
+// 예약 내역 조회 - 날짜 데이터 선택 제약사항 
+const fromDateInput = document.querySelector('#fromDateShow');
+const toDateInput = document.querySelector('#toDateShow');
+
+toDateInput.addEventListener('change', function() {
+    const fromDateValue = new Date(fromDateInput.value);
+    const toDateValue = new Date(toDateInput.value);
+
+    if (toDateValue < fromDateValue) {
+        alert('종료일자는 시작일자보다 크게 선택하여 주세요!');
+        toDateInput.value = ''; // Clear the invalid value
+    }
+});
+
+
+
 
 //value 값 바꾸기 -> 
 // 검색 버튼 -> from Date, to Date, StatusCode 변경 필요 

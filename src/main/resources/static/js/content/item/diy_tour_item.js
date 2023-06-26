@@ -651,7 +651,7 @@ function drawResultModal(){
             <tr>
                 <td>여행 국가</td>
                 <td colspan="2">${area.textContent}
-                    <input type="hidden" class="areaCode" name="areaCode" value="${area.nextElementSibling.value}">
+                    <input type="hidden" class="areaCode" id="areaCode" name="areaCode" value="${area.nextElementSibling.value}">
                 </td>
             </tr>
             <tr>
@@ -723,8 +723,20 @@ function drawResultModal(){
 
 //구매 및 장바구니 AJAX
 function buyNCart(isPaid){
+
+    if(isPaid == 'Y'){
+        if(!confirm('구매확인')){
+            return;
+        }
+    }
+    else {
+        if(!confirm('장바구니')){
+            return;
+        }
+    }
+
     //국가코드
-    const areaCode = document.querySelector('.areaCode').value;
+    const areaCode = document.querySelector('#areaCode').value;
     //여행기간
     const departDate = document.querySelector('.departDate').value;
     const arriveDate = document.querySelector('.arriveDate').value;
@@ -777,6 +789,7 @@ function buyNCart(isPaid){
         async : true,
         data: {'diyTour': JSON.stringify(diyTourVO),'diyTourDetail': JSON.stringify(diyDetail)},
         success: function(result) {
+            $('#resultModal').modal('hide');
         },
         error: function() {
             alert('실패');
@@ -835,7 +848,7 @@ function getDate(){
 
     console.log(diffDays + 1)
 
-    return diffDays;
+    return diffDays + 1;
 }
 
 

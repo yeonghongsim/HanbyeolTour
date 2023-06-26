@@ -17,6 +17,7 @@ import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.vo.MemberVO;
+import com.project.team.review.vo.ReveiwVO;
 
 public interface AdminService {
 	
@@ -184,5 +185,10 @@ public interface AdminService {
 	void addRecomImgForPKG(List<Map<String, String>> list);
 	//패키지 추천 아이템 목록 조회
 	List<Map<String,String>> getRecomImgListForPKG();
+
+	//리뷰전체조회
+	List<String> getReviewList();
+	//리뷰분석데이터 업데이트
+	void setReviewData(ReveiwVO reveiwVO);
 
 }

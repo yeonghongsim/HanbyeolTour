@@ -5,6 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +50,9 @@ import com.project.team.member.vo.MemberSideMenuVO;
 import com.project.team.member.vo.MemberVO;
 import com.project.team.util.DateUtil;
 
+import io.grpc.Context.Key;
 import jakarta.annotation.Resource;
+import kotlin.jvm.internal.Lambda;
 
 @Controller
 @RequestMapping("/myPage")
@@ -197,141 +201,60 @@ public class MyPageController {
 		return "redirect:/myPage/updateMyInfo";
 	}
 	
-
-	
-	// 일반 패키지 예약확인 페이지로 이동 
+	// 일반 패키지 - 예약 확인 페이지 
 	@RequestMapping("/checkMyReservation")
-	public String checkMyReservation(Model model, BuyVO buyVO, Authentication authentication) {
-		
-		// 로그인 정보 이용 -> memCode 가져오기 
+	public String checkMyReservation(Model model, BuySearchVO buySearchVO, Authentication authentication) {
+		//memCode 
 		String memCode = memberService.getMemCode(authentication.getName());
-		System.out.println("memCode : " + memCode);
+		buySearchVO.setMemCode(memCode);
 		
-		buyVO.setMemCode(memCode);
+		//페이징 세팅에 필요한 정보 세팅 
+		System.out.println("buySearchVO : " + buySearchVO);
 		
-		//month 설정 
-//		if(buyVO.getMonth() == 0) {
-//			buyVO.setMonth(-1);
-//		}
-		
-		// 구매상태 정보 조회 (상단바)
-		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
-		System.out.println(buyStatusCodeCountList);
-		model.addAttribute("buyStatusCodeCountList", buyStatusCodeCountList);
-		
-		// 조회될 데이터 수 조회
-		int totalDataCnt = memberService.getBuyListCount(buyVO);
-		buyVO.setTotalDataCnt(totalDataCnt);
-		buyVO.setPageInfo();
-		
-		// 검색 시 예약 상태 조건 
-		int searchStatusCode = buyVO.getSearchStatusCode();
-		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
-		buyVO.setSearchStatusCode(searchStatusCode);
-		
-		// 구매 내역 리스트 데이터 조회 
-		List<BuyVO> buyList = memberService.getBuyList(buyVO);
-		System.out.println("@@@@ 구매내역 조회 :" + buyList);
-		model.addAttribute("buyList",buyList);
-		// 넘어온 날짜 데이터 없을 경우 기본값으로 날짜 세팅
-		String nowDate = DateUtil.getNowDateToString(); // 오늘 날짜
-		String firstDate = DateUtil.getFirstDateOfMonth(); // 이번 달의 첫번째 날짜
-		
-		if(buyVO.getToDate() == null) {
-			buyVO.setToDate(nowDate);
+		// 개월 수 조건 세팅 (날짜 세팅)
+		// 전체 :  전체 누르면 공백이라서 날짜 조건 쿼리에서 안 탐 
+		if(buySearchVO.getMonth() == 1) {
+			buySearchVO.setFromDate("");
+			buySearchVO.setToDate("");
 		}
-		if (buyVO.getFromDate() == null) {
-			buyVO.setFromDate(firstDate);
+		if(buySearchVO.getMonth() < 0) {
+			buySearchVO.setFromDate(getMonthDate(buySearchVO.getMonth()));
+			buySearchVO.setToDate(getMonthDate(0));
 		}
-		// sideMenu colorActivate를 위한 msMenuCode  
+		
+		buySearchVO.setDisplayCnt(6);
+		buySearchVO.setDisplayPageCnt(5);
+		
+		// 검색 데이터 갯수 조회 
+		int totalDataCnt = memberService.getBuyListCount(buySearchVO);
+		buySearchVO.setTotalDataCnt(totalDataCnt);
+		// 페이징 세팅 
+		buySearchVO.setPageInfo();
+		
+		//상단바 조회
+		model.addAttribute("buyStatusCodeCountList" ,memberService.getBuyStatusCount(buySearchVO)); 
+		
+		//diy 패키지 구매 리스트 
+		model.addAttribute("buyList", memberService.getBuyList(buySearchVO)); 
+		
+		// sideMenu colorActivate를 위한 msMenuCode 
 		model.addAttribute("msMenuCode", "MS_MENU_001");
+		
 		
 		return "content/member/myPage/check_my_reservation";
 	}
 	
-	// 버튼으로 조회해도 화면에서 동일하게 유지 
-	@PostMapping("/getUpdatedTableDataAJAX")
-	@ResponseBody
-	public Map<String, Object> getUpdatedTableData(BuyVO buyVO, int month, int searchStatusCode, Authentication authentication) {
-		// 로그인 정보 이용 -> memCode 가져오기 
-		String memCode = memberService.getMemCode(authentication.getName());
-		System.out.println("memCode : " + memCode);
-		
-		buyVO.setMemCode(memCode);
-		
-		//month데이터 이용 
-		buyVO.setMonth(month);
-		
-		// 검색 시 예약 상태 조건 
-		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
-		buyVO.setSearchStatusCode(searchStatusCode);
-		
-		// 구매 내역 리스트 데이터 조회 
-		List<BuyVO> buyList = memberService.getBuyList(buyVO);
-		
-		// 상단바 데이터 조회 
-		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
-		
-		// 보낼 때에는 Map 데이터에 넣어서 보내기 
-		Map<String, Object> responseMap = new HashMap<>();
-		responseMap.put("buyList", buyList);
-		responseMap.put("buyStatusCodeCountList", buyStatusCodeCountList);
-		
-		return responseMap;
-	}
-	
-	
-	
-	// 예약 취소 처리 
+	//일반 패키지 - 예약 취소 처리 AJAX 
 	@PostMapping("/cancelReservationAJAX")
 	@ResponseBody
-	public Map<String, Object> cancelReservation(String buyCode, Authentication authentication, BuyVO buyVO, int searchStatusCode, String toDate, String fromDate) {
-		//예약 상태 코드 변경 
+	public String cancelReservationAJAX(String buyCode) {
 		memberService.cancelReservation(buyCode);
 		
-		// 로그인 정보 이용 -> memCode 가져오기 
-		String memCode = memberService.getMemCode(authentication.getName());
-		buyVO.setMemCode(memCode);
-		
-		//month데이터 이용 
-		//buyVO.setMonth(month);
-		
-		// 검색 시 예약 상태 조건 
-		System.out.println("@@@@@ 검색시 예약 상태 코드 입력한 값 : " + searchStatusCode);
-		buyVO.setSearchStatusCode(searchStatusCode);
-		
-		// 날짜 조건
-		// 넘어온 날짜 데이터 없을 경우 기본값으로 날짜 세팅
-		String nowDate = DateUtil.getNowDateToString(); // 오늘 날짜
-		String firstDate = DateUtil.getFirstDateOfMonth(); // 이번 달의 첫번째 날짜
-		
-		if(buyVO.getMonth() == 0) {
-			buyVO.setToDate(nowDate);
-			buyVO.setFromDate(firstDate);
-		}
-		else {
-			buyVO.setFromDate(fromDate);
-			buyVO.setToDate(toDate);
-		}
-		System.out.println("@@@@@ fromDate : " + fromDate);
-		System.out.println("@@@@@ toDate : " + toDate);
-				
-		
-		// 구매 내역 리스트 데이터 조회 
-		List<BuyVO> buyList = memberService.getBuyList(buyVO);
-		
-		// 상단바 데이터 조회 
-		List<BuyStateVO> buyStatusCodeCountList = memberService.getBuyStatusCount(buyVO);
-		
-		// 보낼 때에는 Map 데이터에 넣어서 보내기 
-		Map<String, Object> responseMap = new HashMap<>();
-		responseMap.put("buyList", buyList);
-		responseMap.put("buyStatusCodeCountList", buyStatusCodeCountList);
-	
-		return responseMap;
+		return "success";
 	}
 	
-	//예약 상세 페이지로 이동 
+
+	//일반 패키지 - 예약 상세 페이지로 이동 
 	@GetMapping("/reservationDetail")
 	public String reservationDetail(Model model, String buyCode, BuyVO buyVO, Authentication authentication) {
 		// sideMenu colorActivate를 위한 msMenuCode 
@@ -347,7 +270,7 @@ public class MyPageController {
 		return"content/member/myPage/reservation_detail";
 	}
 	
-	// 예약 상세 페이지 - 예약 취소 
+	// 일반패키지 - 예약 상세 페이지 - 예약 취소 
 	@GetMapping("/cancelReservation")
 	public String cancelReservation(Model model , String buyCode) {
 		System.out.println("@@@@@ 전달받은 buyCode :" + buyCode);
@@ -388,7 +311,7 @@ public class MyPageController {
 			buySearchVO.setToDate(getMonthDate(0));
 		}
 		
-		buySearchVO.setDisplayCnt(8);
+		buySearchVO.setDisplayCnt(6);
 		buySearchVO.setDisplayPageCnt(5);
 		
 		// 검색 데이터 갯수 조회 
@@ -504,15 +427,15 @@ public class MyPageController {
 	}
 	
 	
-		//diy 예약 취소 
-		@PostMapping("/cancelDiyReservationAJAX")
-		@ResponseBody
-		public String cancelDiyReservation(String hbtDiyCode){
-			
-	        memberService.cancelDiyReservation(hbtDiyCode);
-	        return "success";
-		}
-	
+	//diy 예약 취소 
+	@PostMapping("/cancelDiyReservationAJAX")
+	@ResponseBody
+	public String cancelDiyReservation(String hbtDiyCode){
+		
+        memberService.cancelDiyReservation(hbtDiyCode);
+        return "success";
+	}
+
 	
 	
 	
@@ -555,10 +478,9 @@ public class MyPageController {
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
 		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
-		List<DiyTourVO> diyTourList = itemService.testGetDiyTourList(memCode);
-		//List<DiyTourVO> tourList = itemService.testGetDiyTourList(memCode);
+		List<DiyTourVO> diyTourListBofore = itemService.testGetDiyTourList(memCode);
 		
-		for(DiyTourVO diyTourVO : diyTourList) {
+		for(DiyTourVO diyTourVO : diyTourListBofore) {
 			List<Integer> diyDayList = new ArrayList<>();
 			for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
 				int day = Integer.parseInt(diyDetailVO.getHbtDiyDay());
@@ -576,30 +498,26 @@ public class MyPageController {
 				diyTourVO.getDiyDetailList().add(diyDetailVO);
 			}
 		}
+		//model.addAttribute("diyTourList", diyTourListBofore);
 		
-		
-		model.addAttribute("diyTourList", diyTourList);
-		
-		List<DiyDetailVO> testDetailList = new ArrayList<>();
-		List<DiyTourVO> testTourList = new ArrayList<>();
-		for(DiyTourVO aaa : diyTourList) {
-			for(int i = 1; i <= diyTourList.size(); i++) {
-				for(DiyDetailVO asd : aaa.getDiyDetailList()) {
-					if(i == Integer.parseInt(asd.getHbtDiyDay())) {
-						testDetailList.add(asd);
-						break;
+		List<DiyTourVO> diyTourList = diyTourListBofore;
+		List<DiyDetailVO> sortedDetailList = new ArrayList<>();
+		for(DiyTourVO diyTourVO : diyTourList) {
+			
+			for(int i = 1 ; i <= Integer.valueOf(diyTourVO.getTraverPeriod()) ; i++) {
+			
+				for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
+					if(i == Integer.valueOf(diyDetailVO.getHbtDiyDay())) {
+						sortedDetailList.add(diyDetailVO);
+						
+						break ;
 					}
 				}
 			}
-			testTourList.add(aaa);
+			diyTourVO.setDiyDetailList(sortedDetailList);
+			
 		}
-		
-		System.out.println("!@#@!#!@#!@#!@#@" + testTourList);
-		model.addAttribute("testTourList", testTourList);
-		
-		
-		
-		
+		model.addAttribute("diyList", diyTourList);
 		
 		return "content/member/myPage/check_my_cart";
 	}
@@ -614,6 +532,7 @@ public class MyPageController {
 		
 		return emptyDayList;
 	}
+	
 	
 	// 1:1 문의 내역 페이지로 이동 
 	@GetMapping("/checkMyRequest")

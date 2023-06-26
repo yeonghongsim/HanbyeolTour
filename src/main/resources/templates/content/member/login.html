@@ -11,59 +11,52 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	
-	<div class="row">
-		<div class="col page-title">
-			로그인
+	<div class="container">
+    <form class="form" id="loginForm" method="post">
+       <p class="form-title">로그인</p>
+        <div class="input-container">
+         <div class="row mb-3">
+			<div class="col-12" id="loginIdDiv">
+				<input type="text" id="memId" name="memId" placeholder="아이디" 
+				onclick="idValidate();" oninput="idValidate()">
+			</div>
 		</div>
-	</div>
-
-	<div class="row justify-content-center">
-		<div class="col-4 mt-4">
-			<form id="loginForm" method="post">
-				<div class="row mb-3">
-					<div class="col-12" id="loginIdDiv">
-						<input type="text" id="memId" name="memId" class="form-control form-control-lg" placeholder="아이디" 
-						onclick="idValidate();" oninput="idValidate()">
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-12" id="loginPwDiv">
-						<input type="password" id="memPw" name="memPw" class="form-control form-control-lg" placeholder="비밀번호" 
-						onclick="pwValidate();" oninput="pwValidate()">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12 d-grid mb-5">
-						<input type="button" class="btn btn-primary" value="로그인" onclick="login();"
+      </div>
+      <div class="input-container">
+         <div class="row mb-3">
+			<div class="col-12" id="loginPwDiv">
+				<input type="password" id="memPw" name="memPw" placeholder="비밀번호" 
+				onclick="pwValidate();" oninput="pwValidate()">
+			</div>
+		</div>
+     </div>
+      	<input type="button" class="submit" value="LOGIN" onclick="login();"
 						data-bs-toggle="modal" data-bs-target="#loginModal">
-					</div>
-				</div>
-				<div class="row">	
-					<div class="col-12">
-						<ul class="login-func-bar text-center">
-							<li class="h-btn"><a href="/member/findId">아이디 찾기</a></li>
-							<li class="h-btn"><a href="/member/findPw">비밀번호 찾기</a></li>
-							<li class="h-btn"><a href="/member/join" data-bs-toggle="popover" 
-							 data-bs-trigger="hover focus"
-							 data-bs-custom-class="custom-popover"
-					         data-bs-title="만나서 반가워요!"
-					         data-bs-content="한별투어 회원에게는 특별한 혜택들이 준비되어 있어요!
-					         한별투어와 함께 여행해요~😉"
-					         data-bs-placement="right">회원가입</a>
-					         </li>
-						</ul>
-					</div>
-				</div>
-			</form>
+       	<div class="row">	
+			<div class="col-12 link">
+				<ul class="text-center" style="list-style: none; display: flex; justify-content: center; padding-left:0; margin-top: 2rem;">
+					<li class="h-btn" style="margin-right: 1rem;"><a href="/member/findId">아이디 찾기</a></li>
+					<li class="h-btn"><a href="/member/findPw">비밀번호 찾기</a></li>
+				</ul>
+			</div>
 		</div>
+		<p class="link">
+    		아직 회원이 아니신가요? &nbsp;
+		<a href="/member/join" data-bs-toggle="popover" 
+		 data-bs-trigger="hover focus"
+		 data-bs-custom-class="custom-popover"
+         data-bs-title="만나서 반가워요!"
+         data-bs-content="한별투어 회원에게는 특별한 혜택들이 준비되어 있어요!
+         한별투어와 함께 여행해요~😉"
+         data-bs-placement="right">회원가입</a>
+         </p>
+   </form>
 	</div>
-
 	
 	<!--로그인 결과 모달 -->
 	<div class="modal fade" id="loginModal" data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-md">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="row justify-content-end">
