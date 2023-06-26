@@ -48,4 +48,8 @@ public interface ItemService {
 	List<DiyTourVO> testGetDiyTourList(String memCode);
 	//리뷰조회
 	List<HashMap<String, Object>> getItemReview(String itemCode);
+	// diyDetailCodeList 조회
+	List<DiyDetailVO> getDiyDetailCodeList(String hbtDiyCode);
+	// diyTour 삭제
+	void delDiyTour(DiyTourVO diyTourVO);
 }

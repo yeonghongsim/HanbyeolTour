@@ -22,11 +22,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.vo.HotelImgVO;
 import com.project.team.admin.vo.HotelVO;
 import com.project.team.admin.vo.ImgVO;
@@ -36,6 +40,7 @@ import com.project.team.admin.vo.TourItemVO;
 import com.project.team.board.service.BoardService;
 import com.project.team.board.vo.BoardRequestVO;
 import com.project.team.buy.service.BuyService;
+import com.project.team.buy.vo.BuyDetailVO;
 import com.project.team.buy.vo.BuySearchVO;
 import com.project.team.buy.vo.BuyStateVO;
 import com.project.team.buy.vo.BuyVO;
@@ -44,6 +49,7 @@ import com.project.team.item.vo.DiyDetailVO;
 import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
+import com.project.team.member.vo.CartVO;
 import com.project.team.member.vo.MemberDetailVO;
 import com.project.team.member.vo.MemberReviewVO;
 import com.project.team.member.vo.MemberSideMenuVO;
@@ -478,9 +484,9 @@ public class MyPageController {
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
 		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
-		List<DiyTourVO> diyTourListBofore = itemService.testGetDiyTourList(memCode);
+		List<DiyTourVO> diyTourListBefore = itemService.testGetDiyTourList(memCode);
 		
-		for(DiyTourVO diyTourVO : diyTourListBofore) {
+		for(DiyTourVO diyTourVO : diyTourListBefore) {
 			List<Integer> diyDayList = new ArrayList<>();
 			for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
 				int day = Integer.parseInt(diyDetailVO.getHbtDiyDay());
@@ -500,9 +506,13 @@ public class MyPageController {
 		}
 		//model.addAttribute("diyTourList", diyTourListBofore);
 		
-		List<DiyTourVO> diyTourList = diyTourListBofore;
+		List<DiyTourVO> diyTourList = diyTourListBefore;
+		
+		DiyTourVO setDiyTourVO = new DiyTourVO();
+		
 		List<DiyDetailVO> sortedDetailList = new ArrayList<>();
-		for(DiyTourVO diyTourVO : diyTourList) {
+		
+		for(DiyTourVO diyTourVO : diyTourListBefore) {
 			
 			for(int i = 1 ; i <= Integer.valueOf(diyTourVO.getTraverPeriod()) ; i++) {
 			
@@ -510,12 +520,15 @@ public class MyPageController {
 					if(i == Integer.valueOf(diyDetailVO.getHbtDiyDay())) {
 						sortedDetailList.add(diyDetailVO);
 						
+						
 						break ;
 					}
-				}
+				}  
+				setDiyTourVO.setDiyDetailList(sortedDetailList);
 			}
-			diyTourVO.setDiyDetailList(sortedDetailList);
 			
+			
+			//diyTourVO.setDiyDetailList(sortedDetailList);
 		}
 		model.addAttribute("diyList", diyTourList);
 		
@@ -529,9 +542,82 @@ public class MyPageController {
 				emptyDayList.add(i);
 			}
 		}
-		
 		return emptyDayList;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/delMyCartAJAX")
+	public String delMyCartAJAX(String cartCode, DiyTourVO diyTourVO, String memCode) {
+		System.out.println("delMyCartAJAX~" + cartCode + "/" + diyTourVO);
+		
+		if(!cartCode.equals("empty")) {
+			buyService.delCart(cartCode);
+		}
+		
+		if(!diyTourVO.getHbtDiyCode().equals("empty")) {
+			System.out.println("diyCode--"+diyTourVO.getHbtDiyCode());
+			List<DiyDetailVO> diyDetailCodeList = itemService.getDiyDetailCodeList(diyTourVO.getHbtDiyCode());
+			
+			for(int i = 0 ; i < diyDetailCodeList.size() ; i++) {
+				diyTourVO.setDiyDetailList(diyDetailCodeList);
+			}
+			
+			itemService.delDiyTour(diyTourVO);
+			
+		}
+		
+		String memId = memberService.getMemId(memCode);
+		return memId;
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/addMyCartAjax")
+	public void addMyCartAjax(String data) throws JsonProcessingException {
+		
+		 ObjectMapper mapper = new ObjectMapper();
+		 
+	    TypeReference<Map<String, String>> typeReference = new TypeReference<Map<String,String>>() {};
+		 Map<String, String> map =  mapper.readValue(data, typeReference);
+		 
+		 
+		 if(map.get("type").equals("cart")) {
+			 System.out.println("!!!" + map);
+			 BuyVO buyVO = new BuyVO();
+			 String buyCode = buyService.getNextBuyCode();
+			 buyVO.setBuyCode(buyCode);
+			 String memId = memberService.getMemId(map.get("memberVO.memCode"));
+			 buyVO.setMemberVO(new MemberVO());
+			 buyVO.getMemberVO().setMemId(memId);
+			 buyVO.setBuyTotalPrice(Integer.valueOf(map.get("buyTotalPrice")));
+			 
+			 buyVO.setBuyDetailVO(new BuyDetailVO());
+			 buyVO.getBuyDetailVO().setItemCode(map.get("itemCode"));
+			 buyVO.getBuyDetailVO().setBuyCode(buyVO.getBuyCode());
+			 buyVO.getBuyDetailVO().setAreaCode(map.get("areaCode"));
+			 buyVO.getBuyDetailVO().setDepartDate(map.get("departDate"));
+			 buyVO.getBuyDetailVO().setArriveDate(map.get("arriveDate"));
+			 buyVO.getBuyDetailVO().setReservedPeopleNum(Integer.valueOf(map.get("numOfPeople")));
+			 buyVO.getBuyDetailVO().setBuyDPrice(Integer.valueOf(map.get("buyTotalPrice")));
+			 
+			 
+			 try {
+				 buyService.setBuy(buyVO, buyVO.getBuyDetailVO());
+				 buyService.delCart(map.get("cartCode"));
+				
+			} catch (Exception e) {
+				System.out.println("errorMessege" + e.getMessage());
+				e.printStackTrace();
+			}
+			 
+			 System.out.println("!@#!@#!@#"+ buyVO);
+			 
+		 } else {
+			 System.out.println("@@@" + map);
+		 }
+		 
+	}
+	
 	
 	
 	// 1:1 문의 내역 페이지로 이동 

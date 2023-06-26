@@ -120,6 +120,19 @@ public class ItemServiceImpl implements ItemService{
 		return sqlSession.selectList("itemMapper.getItemReview", itemCode);
 	}
 
+	@Override
+	public List<DiyDetailVO> getDiyDetailCodeList(String hbtDiyCode) {
+		return sqlSession.selectList("itemMapper.getDiyDetailCodeList", hbtDiyCode);
+	}
+
+	@Transactional
+	@Override
+	public void delDiyTour(DiyTourVO diyTourVO) {
+		sqlSession.delete("itemMapper.delDiyTourDetail", diyTourVO);
+		sqlSession.delete("itemMapper.delDiyTour", diyTourVO);
+	}
+
+
 	
 
 	

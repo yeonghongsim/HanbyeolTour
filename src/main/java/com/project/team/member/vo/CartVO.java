@@ -14,4 +14,6 @@ public class CartVO {
     private String itemCode;
     private int numOfPeople;
     private int cartTotalPrice;
+    private String arriveDate;
+	private String departDate;
 }

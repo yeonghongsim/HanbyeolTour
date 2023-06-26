@@ -20,4 +20,6 @@ public interface BuyService {
     BuyVO getBuyDetail(String buyCode);
     // 장바구니 목록
     List<CartVO> getCartList(String memCode);
+    // 장바구니 삭제
+    void delCart(String cartCode);
 }
