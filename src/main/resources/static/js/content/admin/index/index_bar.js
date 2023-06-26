@@ -31,6 +31,7 @@ function goCancle(){
 function goDiyCancle(){
 	
 	location.href='/admin/diyReservation?buyStatusCode=3'
+}	
 
 function getReviewData(){
 
