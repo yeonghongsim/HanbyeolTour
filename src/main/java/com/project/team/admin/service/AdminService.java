@@ -131,6 +131,9 @@ public interface AdminService {
 	//분기별 매출 조회
 	List<Map<String, Integer>> getQuarterlySales(int year);
 	
+	//해당년도 매출 총합 조회
+	int getSumOfSales(int year);
+	
 	//할 일 목록 조회
 	Map<String, Integer> getToDoList();
 	
@@ -138,8 +141,10 @@ public interface AdminService {
 	List<Map<String, Object>> getSalesStatisticsByCategory(int year);
 	
 	//예약 종류별 판매수 조회
-	List<Map<String, Object>> getsalesStatisticsByKindOfReserv(int year);
+	List<Map<String, Object>> getCntStatisticsByKindOfReserv(int year);
 	
+	//예약 종류별 매출 조회
+	List<Map<String, Object>> getSalesStatisticsByKindOfReserv(int year);
 	
 
 	

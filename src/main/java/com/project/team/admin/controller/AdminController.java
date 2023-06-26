@@ -306,7 +306,7 @@ public class AdminController {
 	@PostMapping("/getMemDetailAJAX")
 	public MemberVO getMemDetailAjax(String memId) {
 		
-		System.out.println(memId);
+		//System.out.println(memId);
 		
 		return adminService.getMemDetailInfo(memId);
 	}
@@ -314,7 +314,7 @@ public class AdminController {
 	//회원 권한 변경
 	@GetMapping("/updateMemRole")
 	public String updateMemRole(MemberVO memberVO) {
-		System.out.println(memberVO);
+		//System.out.println(memberVO);
 		
 		adminService.updateMemRole(memberVO);
 		
@@ -453,6 +453,8 @@ public class AdminController {
 		
 		model.addAttribute("reservDetail", adminService.getReservDetail(buyCode));
 		
+		//System.out.println(adminService.getReservDetail(buyCode));
+		
 		return "content/admin/reservation_detail";
 	}
 	
@@ -470,10 +472,10 @@ public class AdminController {
 		model.addAttribute("tourList", adminService.getDiyReservTourDetail(hbtDiyCode));
 		
 		
-		System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
+		//System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
 		//System.out.println("-------------------------------");
 		//System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
-		System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
+		//System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
 		
 		//호텔 총 결제 금액
 		List<DiyTourVO> diyDetail = adminService.getDiyReservHotelDetail(hbtDiyCode);
@@ -501,8 +503,8 @@ public class AdminController {
 		    }
 		}
 		
-		System.out.println(hotelTotalPrice);
-		System.out.println(tourTotalPrice);
+		//System.out.println(hotelTotalPrice);
+		//System.out.println(tourTotalPrice);
 		
 		model.addAttribute("hotelTotalPrice", hotelTotalPrice);
 		model.addAttribute("tourTotalPrice", tourTotalPrice);
@@ -548,11 +550,12 @@ public class AdminController {
 			//System.out.println();
 		}
 		
+		model.addAttribute("totalSales", adminService.getSumOfSales(year));
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("year", year);
 		model.addAttribute("thisYear", DateUtil.getYear());
 		
-		System.out.println("@@@@@" + dataList);
+		//System.out.println("@@@@@" + dataList);
 		
 		return "content/admin/sales_statistics_by_period";
 	}
@@ -566,7 +569,7 @@ public class AdminController {
 		List<Map<String, Integer>> mapList = adminService.getSalesStatisticsByPeriod(year);
 		List<Map<String, Integer>> resultList = new ArrayList<>();
 		
-		//해쉬맵으로 변환
+		//트리맵으로 변환
 		for(Map<String, Integer> map : mapList) {
 			Map<String, Integer> map1 = new TreeMap<>(map);
 			resultList.add(map1);
@@ -596,8 +599,8 @@ public class AdminController {
 		map.put("lastYearSaleList", lastYearSaleList);
 		map.put("quarterSaleList", quarterSaleList);
 		
-		System.out.println(adminService.getQuarterlySales(year));
-		System.out.println("******************" + thisYearSaleList);
+		//System.out.println(adminService.getQuarterlySales(year));
+		//System.out.println("******************" + thisYearSaleList);
 		
 		//당해년도 매출 합
 
@@ -627,14 +630,25 @@ public class AdminController {
 		
 	    List<List<Map<String, Object>>> result = new ArrayList<>();
 	    
+	    //여행국가 카테고리별 판매수
 	    List<Map<String, Object>> mapList = adminService.getSalesStatisticsByCategory(year);
-	    List<Map<String, Object>> mapList2 = adminService.getsalesStatisticsByKindOfReserv(year);
+	    //예약 종류별 판매수
+	    List<Map<String, Object>> mapList2 = adminService.getCntStatisticsByKindOfReserv(year);
+	    //예약 종류별 매출
+	    List<Map<String, Object>> mapList3 = adminService.getSalesStatisticsByKindOfReserv(year);
+	    
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		
+		//트리맵으로 변환
+		for(Map<String, Object> map : mapList3) {
+			Map<String, Object> map1 = new TreeMap<>(map);
+			resultList.add(map1);
+		}
+	    
 	    
 	    result.add(mapList);
 	    result.add(mapList2);
-	    
-	    System.out.println(mapList);
-	    System.out.println(mapList2);
+	    result.add(resultList);
 	    
 	    return result;
 	}
