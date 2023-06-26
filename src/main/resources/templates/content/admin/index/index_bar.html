@@ -15,12 +15,14 @@
 		<div class="col">
 			<div class="row mt-5">
 				<div class="col-4">
-					<table onclick="goReserv();">
+					<table id="toDo1">
 					  <tbody>
 					    <tr>
 					      <td>
-					      	<span class="tdTitle">신규 예약</span>
-					      	<div class="tdCnt" th:text="${toDo['COMPLTE_PAYMENT']}"></div>
+					      	<span class="tdTitle">신규 예약</span> <span class="tdTitle">DIV 예약</span>
+					      	<div>
+					      		<span class="tdCnt" th:text="${toDo['COMPLTE_PAYMENT']}" onclick="goReserv();"></span> <span class="tdCnt" th:text="${toDo['DIY_COMPLTE_PAYMENT']}" onclick="goDiyReserv();"></span>
+					      	</div>
 					      </td>
 					      <td>
 					     	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
@@ -32,12 +34,14 @@
 					</table>
 				</div>
 				<div class="col-4">
-					<table onclick="goCancle();">
+					<table id="toDo2">
 					  <tbody>
 					    <tr>
 					      <td>
-					      	<span class="tdTitle">취소 요청</span>
-					      	<div class="tdCnt" th:text="${toDo['CANCLE_REQUSET']}"></div>
+					      	<span class="tdTitle">취소 요청</span> <span class="tdTitle">DIV 취소</span>
+					      	<div>
+					      		<span class="tdCnt" th:text="${toDo['CANCLE_REQUSET']}" onclick="goCancle();"></span> <span class="tdCnt" th:text="${toDo['DIY_CANCLE_REQUSET']}" onclick="goDiyCancle();"></span>
+					      	</div>
 					      </td>
 					      <td>
 					      	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-calendar-x-fill" viewBox="0 0 16 16">
@@ -49,7 +53,7 @@
 					</table>
 				</div>
 				<div class="col-4">
-					<table onclick="location.href='/admin/requestManage'">
+					<table onclick="location.href='/admin/requestManage'" id="toDo3">
 					  <tbody>
 					    <tr>
 					      <td>
@@ -68,12 +72,12 @@
 			</div>
 			<div class="row mt-5">
 				<div class="col">
-					<div class="row custom-border-2">
+					<div class="row">
 						<div class="col">
 							<canvas id="reviewChart"></canvas>
 						</div>
 						<div class="col">
-							<H5>긍정 단어</H5>
+							<H5 class="reviewH5">긍정 TOP5</H5>
 							<table class="table posTable">
 								<thead>
 									<tr>
@@ -89,7 +93,7 @@
 
 						</div>
 						<div class="col">
-							<H5>부정 단어</H5>
+							<H5 class="reviewH5">부정 TOP5</H5>
 							<table class="table nagTable">
 								<thead>
 								<tr>
@@ -104,11 +108,17 @@
 							</table>
 						</div>
 						<div class="col">
+							<H5 class="reviewH5">리뷰 분석</H5>
 							<table class="table dataTable">
+								<thead>
+									<tr>
+										<td>dd</td>
+									</tr>
+								</thead>
 								<tbody>
 									<tr>
 										<td rowspan="2">
-											<input type="button" onclick="updateReviewData();" value="UPDATE">
+											<input type="button" class="btn updateBtn" onclick="updateReviewData();" value="UPDATE">
 										</td>
 									</tr>
 								</tbody>

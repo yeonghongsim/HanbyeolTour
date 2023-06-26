@@ -6,7 +6,7 @@
 
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/css/test.css(변경)">--> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
+	<link rel="stylesheet" href="/css/content/admin/mem_info.css"> <!-- 외부 css 연결하는 코드를 block 안에 작성 layout에서 같이 열어줌 -->
 </th:block>
 
 
@@ -20,52 +20,93 @@
 					<input type="hidden" name="nowPage" th:value="${memListSearchVO.nowPage}" id="nowPage">
 				<div class="row mb-3">
 					<!-- 검색 기능 -->
-					<div class="col-2">
+					<table style="width: 80%; margin: 0 auto;">
+						<colgroup>
+							<col width="15%">
+							<col width="*">
+							<col width="20%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>
+									<div class="row">
+										<div class="col">
+											<select class="form-select searchSelect" name="searchKeyword">
+												<option value="MEM_ID" th:selected="${memListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
+												<option value="MEM_NAME" th:selected="${memListSearchVO.searchKeyword == 'MEM_NAME'}">이름</option>
+											</select>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="row" style="margin-left: 20px; margin-right: 20px;">
+										<div class="col">
+											<input type="text" class="form-control searchInput" name="searchValue" th:value="${memListSearchVO.searchValue}">
+											
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="row">
+										<div class="col d-grid">
+											<input type="submit" value="회원 검색" class="btn btn-primary searchInput">
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+					</form>
+			
+					<!-- <div class="col-2">
 					
-						<select class="form-select" name="searchKeyword">
+						<select class="form-select searchSelect" name="searchKeyword">
 							<option value="MEM_ID" th:selected="${memListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
 							<option value="MEM_NAME" th:selected="${memListSearchVO.searchKeyword == 'MEM_NAME'}">이름</option>
 						</select>
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="searchValue" th:value="${memListSearchVO.searchValue}">
+						<input type="text" class="form-control searchInput" name="searchValue" th:value="${memListSearchVO.searchValue}">
 					</div>
 					<div class="col-1">
 						<input type="submit" value="검색" class="btn btn-outline" style="border-color: #ffd000;">
+					</div> -->
+				
+				<div class="row mt-3">
+					<div class="col">
+						<div class="smallRed">* 회원 아이디 클릭 시 해당 회원 상세 정보를 확인할 수 있습니다.</div>
+						<table class="table text-center table-hover">
+							<colgroup>
+								<col width="">
+							</colgroup>
+							<thead>
+								<tr>
+									<td>NO</td>
+									<td>아이디</td>
+									<td>이름</td>
+									<td>활동상태</td>
+								</tr>
+							</thead>
+							<tbody>
+							<th:block th:if="${#lists.size(memList) == 0}">
+								<tr>
+									<td colspan="4">
+										등록된 회원이 없습니다.
+									</td>
+								</tr>
+							</th:block>
+							<th:block th:unless="${#lists.size(memList) == 0}">
+								<tr th:each="mem, state : ${memList}">
+									<td>[[${state.count}]]</td>
+									<td><a href="javascript:void(0);" th:onclick="getMemDetail([[${mem.memId}]]);">[[${mem.memId}]]</a></td>
+									<td>[[${mem.memName}]]</td>
+									<td>[[${mem.memStatusVO.memStatusName}]]</td>
+								</tr>
+							</th:block>
+							</tbody>
+						</table>
 					</div>
-				</div>
-				</form>
-				<div class="col">
-					<table class="table text-center table-hover">
-						<colgroup>
-							<col width="">
-						</colgroup>
-						<thead>
-							<tr>
-								<td>NO</td>
-								<td>아이디</td>
-								<td>이름</td>
-								<td>활동상태</td>
-							</tr>
-						</thead>
-						<tbody>
-						<th:block th:if="${#lists.size(memList) == 0}">
-							<tr>
-								<td colspan="4">
-									등록된 회원이 없습니다.
-								</td>
-							</tr>
-						</th:block>
-						<th:block th:unless="${#lists.size(memList) == 0}">
-							<tr th:each="mem, state : ${memList}">
-								<td>[[${state.count}]]</td>
-								<td><a href="javascript:void(0);" th:onclick="getMemDetail([[${mem.memId}]]);">[[${mem.memId}]]</a></td>
-								<td>[[${mem.memName}]]</td>
-								<td>[[${mem.memStatusVO.memStatusName}]]</td>
-							</tr>
-						</th:block>
-						</tbody>
-					</table>
 				</div>
 				<!-- 페이징 처리 -->
 				<div class="row justify-content-center">

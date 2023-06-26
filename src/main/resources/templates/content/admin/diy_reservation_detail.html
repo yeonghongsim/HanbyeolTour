@@ -17,108 +17,143 @@
 			<div class="row">
 				<div class="col-12">
 					<h5 class="miniTitle">예약상품</h5>
-					<table class="table">
+					<table class="table reservItemTable">
 						<colgroup>
 							<col width="15%">
 							<col width="*">
 						</colgroup>
 						<tr>
 							<td rowspan="3">
-								이미지 자리
+								<img src="/img/diyDetailImg/vector_flying in_the_plane.png" width="130px" style="border-radius: 10px;">
 							</td>
-							<td class="detailItemTitle">[[${reservDetail.memberVO.memName}]]님의 DIV 여행</td>
+							<td class="detailItemTitle">[ [[${reservDetail.tourAreaVO.areaKorName}]] ]&nbsp;[[${reservDetail.memberVO.memName}]]님의 DIV 여행</td>
 						</tr>
 						<tr>
-							<td class="detailDate">여행기간</td>
+							<td class="detailDate">[[${reservDetail.departDate}]]부터 ~ [[${reservDetail.arriveDate}]]까지</td>
 						</tr>
 						<tr>
 							<td></td>
 						</tr>
 						<tr>
-							<td rowspan="3">상품 금액</td>
-							<td class="priceTd">원</td>
+							<td rowspan="2">상품 금액</td>
+							<td class="priceTd">
+								<div>호텔 &nbsp; [[${#numbers.formatCurrency(hotelTotalPrice)}]]원</div>
+								<div>투어 &nbsp; [[${#numbers.formatCurrency(tourTotalPrice)}]]원</div>
+							</td>
 						</tr>
 						<tr>
-							<td class="priceTd">수량 &nbsp; 1</td>
+							<td></td>
 						</tr>
 						<tr>
-							<td class="priceTd totalPrice" >합계 금액 &nbsp; </td>
+							<td class="priceTd totalPrice" colspan="3">합계 금액 &nbsp; [[${#numbers.formatCurrency(reservDetail.totalPrice)}]]원</td>
 						</tr>
 					</table>
 					<div class="col-12">
 						<h5 class="miniTitle">예약자 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
 							<tr>
-								<td class="reservInfoTd">
-									<span class="reservInfoSpan">아이디 &nbsp;</span> <br>
+								<td>
+									<span class="reservInfoSpan">아이디 &nbsp;</span> [[${reservDetail.memberVO.memId}]]
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="reservInfoSpan">이름 &nbsp;</span> <br>
+									<span class="reservInfoSpan">이름 &nbsp;</span> [[${reservDetail.memberVO.memName}]]
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="reservInfoSpan">휴대폰번호 &nbsp;</span><br>
+									<span class="reservInfoSpan">휴대폰번호 &nbsp;</span> [[${reservDetail.memberVO.memberDetailVO.memDTell}]]
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="reservInfoSpan">이메일주소 &nbsp;</span><br>
+									<span class="reservInfoSpan">이메일주소 &nbsp;</span> [[${reservDetail.memberVO.memberDetailVO.memEmail}]]
 								</td>
 							</tr>
 						</table>
 					</div>
 					<div class="col-12">
 						<h5 class="miniTitle">항공권 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
 							<tr>
+								<td>  
+									<span class="reservInfoSpan">항공사 &nbsp;</span>
+									<img th:src="${'/img/item/airlineIcon/' + reservDetail.airlineVO.hbtAirlineIcon}" width="28px;"> 
+									[[${reservDetail.airlineVO.hbtAirlineName}]]
+								</td>
+							</tr>
+							<tr>
 								<td>
-									항공사<br>
-									도착지<br>
-									출국일자<br>
-									입국일자<br>
-									<br>
+									<span class="reservInfoSpan">도착지 &nbsp;</span> [[${reservDetail.tourAreaVO.areaKorName}]]
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">출국일자 &nbsp;</span> [[${reservDetail.departDate}]]
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">입국일자 &nbsp;</span> [[${reservDetail.arriveDate}]]
 								</td>
 							</tr>
 						</table>
 					</div>
 					<div class="col-12">
 						<h5 class="miniTitle">호텔 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
-							
+							<th:block th:each="hotel : ${hotelList}">
+								<tr th:each="diy : ${hotel.diyDetailList}">
+									<td><span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span> [[${diy.hotelList[0].hbtHotelName}]]</td>
+								</tr>
+							</th:block>
 						</table>
 					</div>
 					<div class="col-12">
 						<h5 class="miniTitle">투어 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
-							
+							<th:block th:each="tour : ${tourList}">
+								<tr th:each="diy : ${tour.diyDetailList}">
+									<td th:each="tourItem : ${diy.tourItemList}">
+										<!-- <span th:src="${'/img/item/tourItem/' + tourItem.tourItemImgList[0].hbtTourItemAttechedFileName}"></span> -->
+										<span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span> [[${diy.tourItemList[0].hbtTourItemName}]]
+									</td>
+								</tr>
+							</th:block>
 						</table>
 					</div>
 					<div class="col-12">
 						<h5 class="miniTitle">결제 정보</h5>
-						<table class="table">
+						<table class="table reservInfoTable">
 							<colgroup>
 								<col width="">
 							</colgroup>
 							<tr>
 								<td>
-									결제일 <br>
-									결제 금액 : <br>
-									결제 수단<br>
+									<span class="reservInfoSpan">결제일 &nbsp;</span> [[${reservDetail.diyTourBuyDate}]]
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">결제 금액 &nbsp;</span> [[${#numbers.formatCurrency(reservDetail.totalPrice)}]]원
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="reservInfoSpan">결제 수단 &nbsp;</span>
 								</td>
 							</tr>
 						</table>

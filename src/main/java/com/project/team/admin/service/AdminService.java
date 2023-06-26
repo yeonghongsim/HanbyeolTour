@@ -12,6 +12,7 @@ import com.project.team.buy.vo.BuyVO;
 import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
+import com.project.team.admin.vo.SaleListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
@@ -39,7 +40,10 @@ public interface AdminService {
 	void deleteAreaCate(String areaCode);
 	
 	//판매 상품 조회
-	List<ItemVO> saleListForAdmin();
+	List<ItemVO> saleListForAdmin(SaleListSearchVO saleListSearchVO);
+	
+	//검색 조건에 맞는 판매 상품 수 조회
+	int getsaleListCnt(SaleListSearchVO saleListSearchVO);
 	
 	//판매 상품 삭제
 	void deleteItem(String itemCode);
@@ -132,6 +136,9 @@ public interface AdminService {
 	
 	//여행 국가별 판매수 조회
 	List<Map<String, Object>> getSalesStatisticsByCategory(int year);
+	
+	//예약 종류별 판매수 조회
+	List<Map<String, Object>> getsalesStatisticsByKindOfReserv(int year);
 	
 	
 

@@ -28,7 +28,7 @@
 				<div class="col">
 					<form class="row g-3">
 						<div class="col-9">
-							<input id="areaCode" type="text" class="form-control EnglargeDiv" placeholder="추가할 2자리 국가 코드 입력" style="margin-bottom: 10px;" required>
+							<input id="areaCode" type="text" class="form-control EnglargeDiv" placeholder="2자리 국가 코드 입력" style="margin-bottom: 10px;" required maxlength="2"/>
 							<input id="areaKorName" type="text" class="form-control onlyKor" placeholder="한글 국가명 입력" style="margin-bottom: 10px;" onkeyup="onlyKor(event)" required>
 							<input id="areaEngName" type="text" class="form-control EnglargeDiv" placeholder="영문 국가명 입력" style="margin-bottom: 10px;" required>
 						</div>       <!-- d-grid : col-영역만큼 버튼 사이즈 커짐 -->
@@ -52,7 +52,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<table id="areaCateTable" class="table table-striped table-hover text-center" style="width: 1000px;">
+							<table id="areaCateTable" class="table table-striped table-hover text-center" style="width: 1000px; vertical-align: middle;">
 								<colgroup>
 				                  <col width="5%">
 				                  <col width="10%">
@@ -121,8 +121,8 @@
 													</div>
 												</div>
 											</td>
-											<td><input type="button" value="삭제" class="btn btn-outline"
-												th:onclick="deleteAreaCate([[${area.areaCode}]]);" style="border-color: #ffd000;"></td>
+											<td><input type="button" value="삭제" class="btn deleteBtn"
+												th:onclick="deleteAreaCate([[${area.areaCode}]]);"></td>
 										</tr>
 									
 									</th:block>

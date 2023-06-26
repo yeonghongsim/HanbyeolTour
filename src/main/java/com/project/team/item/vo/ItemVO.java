@@ -30,4 +30,5 @@ public class ItemVO {
 	private List<ImgVO> imgList;
 	private TourAreaVO tourAreaVO;
 	private List<String> itemCodeList;
+	private ItemStateVO itemStateVO;
 }

@@ -16,10 +16,22 @@ function goReserv(){
 	
 }
 
+function goDiyReserv(){
+	
+	location.href='/admin/diyReservation?buyStatusCode=1'
+	
+}
+
 function goCancle(){
 	
 	location.href='/admin/reservationInquiry?buyStatusCode=3'
 }
+
+
+function goDiyCancle(){
+	
+	location.href='/admin/diyReservation?buyStatusCode=3'
+}	
 
 function getReviewData(){
 
@@ -51,15 +63,15 @@ function drawTable(reviewData){
 	let str = '';
 	str = `
 			<tr>
-				<td>등록된 리뷰 수 :</td>
+				<td>등록된 리뷰 수 </td>
 				<td>${reviewData['TOTAL_REVIEW_CNT']} 건</td>
 			</tr>
 			<tr>
-				<td>리뷰 평균 길이 :</td>
+				<td>리뷰 평균 길이 </td>
 				<td>${reviewData['AVG_LENGHT'].toString().slice(0, 3)} 글자</td>
 			</tr>
 			<tr>
-				<td>리뷰 최대 길이 :</td>
+				<td>리뷰 최대 길이 </td>
 				<td>${reviewData['MAX_LENGHT']} 글자</td>
 			</tr>
 			<tr>
@@ -76,12 +88,9 @@ function drawTable(reviewData){
 
 function drawReviewChart(posPercent, nagPercent){
 
-
-
 	let dataset = {
 		label: "",
-		backgroundColor: ['#ffd950', '#02bc77'],//라벨별 컬러설정
-		borderColor: '#22252B',
+		backgroundColor: ['rgba(154, 208, 245, 0.5)', 'rgba(255, 177, 193, 0.5)'],//라벨별 컬러설정
 		data: [posPercent, nagPercent]
 	}
 
@@ -172,4 +181,5 @@ function updateReviewData(){
 	});
 
 	location.reload();
+
 }

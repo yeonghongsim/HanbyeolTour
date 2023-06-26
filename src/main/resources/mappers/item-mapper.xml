@@ -17,6 +17,7 @@
 		<result column="STATUS_CODE" 		property="statusCode"/>
 		<result column="TRAVER_PERIOD" 		property="traverPeriod"/>
 		<association property="tourAreaVO" 	resultMap="tourArea"> </association>
+		<association property="itemStateVO" resultMap="itemState"> </association>
 		<collection property="imgList" 		resultMap="img"/>
 	</resultMap>
 	
@@ -62,6 +63,11 @@
 		<result column="HBT_HOTEL_CODE" 		property="hbtHotelCode"/>
 		<association property="tourItemList" 	resultMap="adminMapper.tourItem"/>
 		<association property="hotelList"		resultMap="adminMapper.hotel"/>
+	</resultMap>
+	
+	<resultMap type="com.project.team.item.vo.ItemStateVO" id="itemState">
+		<id 	column="STATUS_CODE" property="statusCode"></id>
+		<result column="STATUS_NAME" property="statusName" />
 	</resultMap>
 	
 	

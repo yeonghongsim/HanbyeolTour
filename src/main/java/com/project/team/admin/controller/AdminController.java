@@ -23,9 +23,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.team.admin.service.AdminService;
 import com.project.team.admin.vo.BuyListSearchVO;
+import com.project.team.admin.vo.HotelVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
+import com.project.team.admin.vo.SaleListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
+import com.project.team.admin.vo.TourItemVO;
 
 import jakarta.annotation.Resource;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -44,6 +47,8 @@ import com.project.team.board.vo.GroundSearchVO;
 import com.project.team.board.vo.ReqReplyVO;
 import com.project.team.board.vo.RequestSearchVO;
 import com.project.team.buy.vo.BuyVO;
+import com.project.team.item.vo.DiyDetailVO;
+import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
 import com.project.team.member.service.MemberService;
 import com.project.team.member.vo.MemberVO;
@@ -181,13 +186,23 @@ public class AdminController {
 	}
 	
 	//등록 판매 상품 목록 조회
-	@GetMapping("/itemManageForSale")
-	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg) {
+	@RequestMapping("/itemManageForSale")
+	public String itemManageForSale(Model model, MultipartFile mainImg, MultipartFile[] subImg, SaleListSearchVO saleListSearchVO) {
 		
-		model.addAttribute("itemSaleList", adminService.saleListForAdmin());
+		//검색 조건에 맞는 데이터 수 조회
+		int totalDataCnt = adminService.getsaleListCnt(saleListSearchVO);
+		saleListSearchVO.setTotalDataCnt(totalDataCnt);
+		
+		saleListSearchVO.setDisplayCnt(10);
+		
+		saleListSearchVO.setPageInfo();
+		
+		model.addAttribute("itemSaleList", adminService.saleListForAdmin(saleListSearchVO));
+		
 		//등록된 여행지 카테고리 조회
 		List<TourAreaVO> areaCateList = adminService.getAreaCateList();
 		model.addAttribute("areaCateList", areaCateList);
+		
 		
 		return "content/admin/item_manage_for_sale";
 	}
@@ -441,7 +456,7 @@ public class AdminController {
 		return "content/admin/reservation_detail";
 	}
 	
-	//DIV 예약 상세 페이지
+	//Diy 예약 상세 페이지
 	@GetMapping("/diyReservDetail")
 	public String divReservDetail(Model model, String hbtDiyCode) {
 		
@@ -455,11 +470,42 @@ public class AdminController {
 		model.addAttribute("tourList", adminService.getDiyReservTourDetail(hbtDiyCode));
 		
 		
-		//System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
-		System.out.println("-------------------------------");
-		System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
+		System.out.println(adminService.getDiyReservDetail(hbtDiyCode));
+		//System.out.println("-------------------------------");
+		//System.out.println("~~~~~~~~~HOTEL" + adminService.getDiyReservHotelDetail(hbtDiyCode));
 		System.out.println("*********TOUR" + adminService.getDiyReservTourDetail(hbtDiyCode));
 		
+		//호텔 총 결제 금액
+		List<DiyTourVO> diyDetail = adminService.getDiyReservHotelDetail(hbtDiyCode);
+		List<DiyDetailVO> diyDetailList = diyDetail.get(0).getDiyDetailList();
+		int hotelTotalPrice = 0;
+
+		for (DiyDetailVO diyDetailVO : diyDetailList) {
+		    List<HotelVO> hotelList = diyDetailVO.getHotelList();
+		    for (HotelVO hotelVO : hotelList) {
+		        int hbtHotelPrice = Integer.parseInt(hotelVO.getHbtHotelPrice());
+		        hotelTotalPrice += hbtHotelPrice;
+		    }
+		}
+		
+		//투어 총 결제 금액
+		List<DiyTourVO> diyDetailTour = adminService.getDiyReservTourDetail(hbtDiyCode);
+		List<DiyDetailVO> diyDetaiTourlList = diyDetailTour.get(0).getDiyDetailList();
+		int tourTotalPrice = 0;
+
+		for (DiyDetailVO diyDetailVO : diyDetaiTourlList) {
+		    List<TourItemVO> tourList = diyDetailVO.getTourItemList();
+		    for (TourItemVO tourItemVO : tourList) {
+		        int tourPrice = Integer.parseInt(tourItemVO.getHbtTourItemPrice());
+		        tourTotalPrice += tourPrice;
+		    }
+		}
+		
+		System.out.println(hotelTotalPrice);
+		System.out.println(tourTotalPrice);
+		
+		model.addAttribute("hotelTotalPrice", hotelTotalPrice);
+		model.addAttribute("tourTotalPrice", tourTotalPrice);
 		
 		return "content/admin/diy_reservation_detail";
 	}
@@ -492,7 +538,7 @@ public class AdminController {
 			Map<String, Integer> data1 = new TreeMap<>(map);
 			dataList.add(data1);
 			
-			//System.out.println(data1);
+			System.out.println(data1);
 			
 			Set<String> keySet = data1.keySet();
 			
@@ -529,7 +575,7 @@ public class AdminController {
 		List<Object> thisYearCntList = resultList.get(0).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		List<Object> thisYearSaleList = resultList.get(1).values().stream().collect(Collectors.toCollection(ArrayList::new));
 		List<Object> lastYearSaleList = resultList.get(2).values().stream().collect(Collectors.toCollection(ArrayList::new));
-		
+
 		
 		//분기별 매출
 		List<Map<String, Integer>> mapList2 = adminService.getQuarterlySales(year);
@@ -551,7 +597,10 @@ public class AdminController {
 		map.put("quarterSaleList", quarterSaleList);
 		
 		System.out.println(adminService.getQuarterlySales(year));
+		System.out.println("******************" + thisYearSaleList);
 		
+		//당해년도 매출 합
+
 		return map;
 	}
 	
@@ -574,12 +623,23 @@ public class AdminController {
 	//카테고리별 차트 데이터 받아오는 ajax
 	@ResponseBody
 	@PostMapping("/getCateChartDataAJAX")
-	public List<Map<String, Object>> getCateChartDataAJAX(int year) {
+	public List<List<Map<String, Object>>> getCateChartDataAJAX(int year) {
 		
-		List<Map<String, Object>> mapList = adminService.getSalesStatisticsByCategory(year);
-		
-		return mapList;
+	    List<List<Map<String, Object>>> result = new ArrayList<>();
+	    
+	    List<Map<String, Object>> mapList = adminService.getSalesStatisticsByCategory(year);
+	    List<Map<String, Object>> mapList2 = adminService.getsalesStatisticsByKindOfReserv(year);
+	    
+	    result.add(mapList);
+	    result.add(mapList2);
+	    
+	    System.out.println(mapList);
+	    System.out.println(mapList2);
+	    
+	    return result;
 	}
+	
+	
 	
 	
 	

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.team.admin.vo.BuyListSearchVO;
 import com.project.team.admin.vo.ImgVO;
 import com.project.team.admin.vo.MemListSearchVO;
+import com.project.team.admin.vo.SaleListSearchVO;
 import com.project.team.admin.vo.TourAreaVO;
 import com.project.team.item.vo.DiyTourVO;
 import com.project.team.item.vo.ItemVO;
@@ -87,9 +88,16 @@ public class AdminServiceImpl implements AdminService{
 	
 	//판매 상품 리스트 조회
 	@Override
-	public List<ItemVO> saleListForAdmin() {
+	public List<ItemVO> saleListForAdmin(SaleListSearchVO saleListSearchVO) {
 		
-		return sqlSession.selectList("adminMapper.saleListForAdmin");
+		return sqlSession.selectList("adminMapper.saleListForAdmin", saleListSearchVO);
+	}
+	
+	//검색 조건에 맞는 판매 상품 수 조회
+	@Override
+	public int getsaleListCnt(SaleListSearchVO saleListSearchVO) {
+		
+		return sqlSession.selectOne("adminMapper.getsaleListCnt", saleListSearchVO);
 	}
 	
 	//판매 상품 삭제
@@ -278,6 +286,13 @@ public class AdminServiceImpl implements AdminService{
 		
 		return sqlSession.selectList("adminMapper.getSalesStatisticsByCategory", year);
 	}
+	
+	//예약 종류별 판매수 조회
+	@Override
+	public List<Map<String, Object>> getsalesStatisticsByKindOfReserv(int year) {
+		
+		return sqlSession.selectList("adminMapper.getsalesStatisticsByKindOfReserv", year);
+	}
 
 
 
@@ -391,6 +406,10 @@ public class AdminServiceImpl implements AdminService{
 	public void setReviewData(ReveiwVO reveiwVO) {
 		sqlSession.insert("adminMapper.setReviewData", reveiwVO);
 	}
+
+
+
+
 
 
 }

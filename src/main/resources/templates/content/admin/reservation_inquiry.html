@@ -17,87 +17,153 @@
 		justify-content: center;
 		align-items: center;
 }
+
+	#showDetailSpan{
+		font-size: 13px;
+		margin-top: 8px;
+		border-bottom: 1px solid gray;
+		color: gray;
+		cursor: pointer;
+	}
+	
+	.listTable{
+		vertical-align: middle;
+		border-top: 2px solid #d6d6d6;
+		font-size: 14px;
+	}
+	
+	.listTable thead tr{
+		
+		background: #fafafa;
+	}
+	
+	.listTable thead td{
+		
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	
+	.listTable tbody td{
+		padding-top: 30px;
+		padding-bottom: 30px;
+		
+	}
+	
+	.buySatateSpan{
+		
+    min-width: 75px;
+    width: auto;
+    height: 32px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    background: #fff;
+    font-size: 14px;
+    font-weight: bold;
+
+	}
+	
+	.priceSpan{
+		color: red;
+		font-size: 14px;
+	}
+	
+	.searchTable{
+		vertical-align: middle;
+	}
+	
+	tbody, td, tfoot, th, thead, tr {
+    
+    border-style: none;
+   
+	}
+	
+	.searchTable input, .searchTable * {
+  	font-size: 15px;
+	}
+	
+	.searchTable {
+  	 background-color: #fafafa;
+}
+
+	
 </style>
 	<div class="row">
 		<div class="col">
 			<h3 class="menuTitle">일반 여행 예약 관리</h3>
-			<div class="row">
+			<div class="row mt-5">
 				<div class="col">
 					<div class="row">
-						<div class="col">
+						<div class="col" style="background-color: f2f2f2;">
 							<form th:action="@{/admin/reservationInquiry}" method="post" id="searchForm">
 							<!-- <input type="hidden" name="buyCode" th:value="${orderListSearchVO.buyCode}" id="orderBy"> -->
 							<input type="hidden" name="nowPage" th:value="${buyListSearchVO.nowPage}" id="nowPage">
-								<table class="table" id="searchTable">
+								<table class="table searchTable" style="vertical-align: middle;">
 									<colgroup>
-										<col width="">
+										<col width="8%">
+										<col width="80%">
+										<col width="*">
 									</colgroup>
 									<tr>
-										<td>
-										<div class="row">
-											<div class="col-1">
-												검색조건
-											</div>
-											<div class="col-2">
-												<select class="form-select" name="searchKeyword">
-													<option value="HB.BUY_CODE" th:selected="${buyListSearchVO.searchKeyword == 'HB.BUY_CODE'}">예약코드</option>
-													<option value="MEM_NAME" th:selected="${buyListSearchVO.searchKeyword == 'MEM_NAME'}">예약자명</option>
-													<option value="MEM_ID" th:selected="${buyListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
-													<option value="MEM_D_TELL" th:selected="${buyListSearchVO.searchKeyword == 'MEM_D_TELL'}">연락처</option>
-												</select>
-											</div>
-											<div class="col-9">
-												<input type="text" class="form-control" name="searchValue" th:value="${buyListSearchVO.searchValue}">
-											</div>
-										</div>
-										</td>
-									<tr>	
-									<tr>	
-										<td>
+										<td>검색조건</td>
+										<td colspan="6">
 											<div class="row">
-												<div class="col-1">
-													예약상태
+												<div class="col-3">
+													<select class="form-select" name="searchKeyword">
+														<option value="HB.BUY_CODE" th:selected="${buyListSearchVO.searchKeyword == 'HB.BUY_CODE'}">예약코드</option>
+														<option value="MEM_NAME" th:selected="${buyListSearchVO.searchKeyword == 'MEM_NAME'}">예약자명</option>
+														<option value="MEM_ID" th:selected="${buyListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
+														<option value="MEM_D_TELL" th:selected="${buyListSearchVO.searchKeyword == 'MEM_D_TELL'}">연락처</option>
+													</select>
 												</div>
-												
-												<div class="col-11">
-													<input type="checkbox" class="form-check-input" id="searchAllCheck">
-													<label class="form-check-label">전체</label>
-													<th:block th:each="buyStatus : ${buyStatusList}">
-														<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}" style="margin-left: 20px;"
-															name="statusCodeList" th:checked="${buyListSearchVO.statusCodeList == null ? 'false' : #lists.contains(buyListSearchVO.statusCodeList, buyStatus.buyStatusCode)}">
-														<label class="form-check-label">[[${buyStatus.buyStatusName}]]</label>
-													</th:block>
+												<div class="col-9">
+													<input type="text" class="form-control" name="searchValue" th:value="${buyListSearchVO.searchValue}">
+													
 												</div>
-												
 											</div>
 										</td>
-										
+										<td style="background-color: #eeeeee; padding: 0px;" rowspan="3">
+											<input type="submit" value="검색" class="" style="background-color: #ffd000; border: none; width: 115.81px; height: 183px;" onclick="searchBuyList();">
+										</td>
 									</tr>
-									<tr>	
+									<tr>
 										<td>
+											예약상태
+										</td>
+										<td colspan="6">
+											<input type="checkbox" class="form-check-input" id="searchAllCheck">
+											<label class="form-check-label">전체</label>
+											<th:block th:each="buyStatus : ${buyStatusList}">
+												<input type="checkbox" class="form-check-input searchChk" th:value="${buyStatus.buyStatusCode}" style="margin-left: 20px;"
+													name="statusCodeList" th:checked="${buyListSearchVO.statusCodeList == null ? 'false' : #lists.contains(buyListSearchVO.statusCodeList, buyStatus.buyStatusCode)}">
+												<label class="form-check-label">[[${buyStatus.buyStatusName}]]</label>
+											</th:block>
+										</td>
+									</tr>
+									<tr>
+										<td>예약일</td>
+										<td colspan="6" style="vertical-align: middle;">
 											<div class="row">
-												<div class="col-1">
-													예약일
+												<div class="col-5" style="width: 314px;">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; background:white; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="7일" onclick="setDate(this);">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; background:white; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="1개월" onclick="setDate(this);">
+													<input type="button" class="btn btn-outline" style="border-color: #ffd000; background:white; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="3개월" onclick="setDate(this);">
 												</div>
-												<div class="col-4">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="7일" onclick="setDate(this);">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="1개월" onclick="setDate(this);">
-													<input type="button" class="btn btn-outline" style="border-color: #ffd000; padding-right: 20px; padding-left: 20px; margin-right: 20px;" value="3개월" onclick="setDate(this);">
+												<div class="col-1" style="padding-left: 0px; padding-top: 7px;">
+													기간
 												</div>
-												<div class="col-1" style="padding-left: 0px;">기간 설정</div>
-												<div class="col-2">
-													<input type="date" class="form-control" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}">
+												<div class="col-2" style="padding-left: 0px; padding-right: 0px;">
+													<input type="date" class="form-control" id="strtDate" name="searchFromDate" th:value="${buyListSearchVO.searchFromDate}" style="width: 136px;">
+												
 												</div>
-												<div class="col-1" style="padding-left: 0px;">부터</div>
-												<div class="col-2">
-													<input type="date" class="form-control" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}">
+												<div class="col-1" style="padding-left: 15px; width: 32px; padding-top: 5px;">~</div>
+												<div class="col-2" style="padding-left: 0px; padding-right: 0px;">
+													<input type="date" class="form-control" id="endDate" name="searchToDate" th:value="${buyListSearchVO.searchToDate}" style="width: 136px;">
 												</div>
-												<div class="col-1" style="padding-left: 0px;">까지</div>
 											</div>
 										</td>
 									</tr>
 								</table>
-								<input type="submit" value="검색" class="btn btn-block" style="background-color: #ffd000;" onclick="searchBuyList();">
 							</form>
 						</div>
 					</div>
@@ -105,7 +171,7 @@
 			</div>
 			<div class="row mt-5">
 				<div class="col">
-					<div class="row">
+					<div class="row mb-3">
 						<div class="col-2">
 							<select class="form-select" id="buyStatusSelect">
 								<option>예약상태변경</option>
@@ -113,14 +179,14 @@
 								<option th:value="${buyStatus.buyStatusCode}">[[${buyStatus.buyStatusName}]]</option>
 							</th:block>
 							</select>
-							
 						</div>
 						<div class="col-1">
 							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeBuyStatus();">
 						</div>
 					</div>
-					<table class="table text-center">
+					<table class="table text-center listTable">
 						<colgroup>
+							<col width="">
 							<col width="">
 							<col width="">
 							<col width="">
@@ -135,19 +201,23 @@
 								<td>예약일</td>
 								<td>예약상품명</td>
 								<td>예약자정보</td>
+								<td>결제금액</td>
 								<td>예약상태</td>
 							</tr>
 						</thead>
 						<tbody>
 							<th:block th:if="${#lists.size(buyList) == 0}">
 								<tr>
-									<td colspan="6">조회할 예약 내역이 없습니다.</td>
+									<td colspan="7">조회할 예약 내역이 없습니다.</td>
 								</tr>
 							</th:block>
 							<th:block th:unless="${#lists.size(buyList) == 0}">
 								<tr th:each="buy, state : ${buyList}">
 									<td><input type="checkbox" class="form-check-input chk" onclick="listCheckboxControl();" th:value="${buy.buyCode}"></td>
-									<td><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">[[${buy.buyCode}]]</a></td>
+									<td>
+										<div>[[${buy.buyCode}]]</div>
+										<span id="showDetailSpan"><a th:href="@{/admin/reservDetail(buyCode=${buy.buyCode})}">상세보기</a></span>
+									</td>
 									<td>[[${buy.buyDate}]]</td>
 									<td>
 										[[${buy.buyDetailVO.itemVO.itemTitle}]]
@@ -157,10 +227,12 @@
 										<div>[[${buy.memberVO.memberDetailVO.memDTell}]]</div>
 									</td>
 									<td>
-										<span style="font-weight: bold;">[[${buy.buyStateVO.buyStatusName}]]</span>
+										<span class="priceSpan">[[${#numbers.formatCurrency(buy.buyTotalPrice)}]]원</span>
+									</td>
+									<td>
+										<span class="buySatateSpan">[[${buy.buyStateVO.buyStatusName}]]</span>
 									</td>
 								</tr>
-						
 							</th:block>
 						</tbody>
 					</table>

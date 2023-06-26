@@ -7,23 +7,50 @@
 }
 
 
-table {
+#toDo1, #toDo2, #toDo3 {
   border-collapse: collapse;
   width: 300px;
   height: 70px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  cursor: pointer;
 }
 
-th, td {
-  border-left: 2px solid orange;
+
+#toDo1 tr, #toDo1 td {
+  border-left: 2px solid #a6d5f7;
   padding-left: 20px;
   padding-right: 20px;
   text-align: left;
+  border-radius: 8px 0 0 8px;
 }
 
-td:nth-child(2) {
+#toDo1 td:nth-child(2) {
+  border-left: none;
+  text-align: right
+}
+
+#toDo2 tr, #toDo2 td {
+  border-left: 2px solid #ffd000;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
+  border-radius: 8px 0 0 8px;
+}
+
+#toDo2 td:nth-child(2) {
+  border-left: none;
+  text-align: right
+}
+
+#toDo3 tr, #toDo3 td {
+  border-left: 2px solid #9cdead;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
+  border-radius: 8px 0 0 8px;
+}
+
+#toDo3 td:nth-child(2) {
   border-left: none;
   text-align: right
 }
@@ -32,13 +59,54 @@ td:nth-child(2) {
 .tdTitle{
 	font-size: 12px;
 	color: gray;
+	padding-right: 30px;
 }
 
 .tdCnt{
 	font-size: 20px;
 	font-weight: bold;
+	padding-right: 65px;
+	cursor: pointer;
 }
 
-.bi {
-	color: orange;
+.bi-airplane-fill{
+	color: #a6d5f7;
+}
+
+.bi-calendar-x-fill{
+	color: #ffd000;
+}
+
+.bi-chat-left-text-fill{
+	color: #9cdead;
+}
+
+.nagTable, .posTable{
+	font-size: 15px;
+	text-align: center;
+}
+
+.dataTable{
+	padding-right: 0px;
+	font-size: 15px;
+}
+
+.dataTable tr td{
+	padding-right: 0px;
+}
+
+.reviewH5 {
+	font-style: italic;
+}
+
+.updateBtn {
+	color: grey;
+	text-decoration: underline;
+	font-size: 14px;
+	padding: 0px;
+}
+
+.updateBtn:hover {
+    color: red;
+ 
 }
