@@ -24,7 +24,7 @@
                 </select>
             </div>
             <div class="col">
-                <input type="text" class="form-control" name="hbtTourItemName" placeholder="투어이름">
+                <input type="text" class="form-control" name="hbtTourItemName" placeholder="투어이름" required>
             </div>
         </div>
 
@@ -39,14 +39,14 @@
                 <input class="form-check-input" type="radio" name="isUse" value="N">미사용
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" name="hbtTourItemPrice" placeholder="가격">
+                <input type="text" class="form-control" name="hbtTourItemPrice" placeholder="가격" required>
             </div>
         </div>
 
 
         <div class="row mb-3">
             <div class="col">
-                <input type="file" name="mainImg" class="form-control" accept="image/*">메인파일
+                <input type="file" name="mainImg" class="form-control" accept="image/*" required>메인파일
             </div>
             <div class="col">
                 <input type="file" name="subImg" class="form-control" multiple accept="image/*">서브파일
@@ -55,14 +55,14 @@
 
         <div class="row mb-3">
             <div class="col">
-                <textarea class="form-control" name="hbtTourItemIntro"></textarea>
+                <textarea class="form-control" name="hbtTourItemIntro" required></textarea>
             </div>
         </div>
 
 
         <div class="row mb-3">
             <div class="col-4 offset-4 d-gird">
-                <input type="submit" class="form-control ye-S-bc" value="등 록">
+                <input type="submit" class="form-control ye-S-bc custom-border-3 ye-S-bc rounded-5" value="등 록">
             </div>
         </div>
 
@@ -77,8 +77,16 @@
     <div class="row">
         <div class="row">
             <div class="col">
-                <table class="table table-striped">
+                <table class="table custom-border-3 text-center align-middle rounded-3">
                     <colgroup>
+                        <col width="">
+                        <col width="8%">
+                        <col width="">
+                        <col width="8%">
+                        <col width="">
+                        <col width="20%">
+                        <col width="30%">
+                        <col width="">
                     </colgroup>
                     <thead class="ye-S-bc">
                         <tr>
@@ -89,7 +97,7 @@
                             <td>가격</td>
                             <td>사용여부</td>
                             <td>상세정보</td>
-                            <td>삭제버튼</td>
+                            <td>삭제</td>
                         </tr>
                     </thead>
                     <tbody class="ye-bc">
@@ -109,7 +117,7 @@
                                     </td>
                                     <td>[[${item["HBT_TOUR_ITEM_INTRO"]}]]</td>
                                     <td>
-                                        <input type="submit" value="삭제">
+                                        <input type="submit" class="btn custom-border-3 ye-S-bc rounded-5" value="삭제">
                                     </td>
                                 </tr>
                             </form>

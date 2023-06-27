@@ -24,7 +24,7 @@
 						</colgroup>
 						<tr>
 							<td rowspan="3">
-								<img src="/img/diyDetailImg/vector_flying in_the_plane.png" width="130px" style="border-radius: 10px;">
+								<img src="/img/diyDetailImg/vector_flying in_the_plane.png" width="130px">
 							</td>
 							<td class="detailItemTitle">[ [[${reservDetail.tourAreaVO.areaKorName}]] ]&nbsp;[[${reservDetail.memberVO.memName}]]님의 DIV 여행</td>
 						</tr>
@@ -85,7 +85,7 @@
 							<tr>
 								<td>  
 									<span class="reservInfoSpan">항공사 &nbsp;</span>
-									<img th:src="${'/img/item/airlineIcon/' + reservDetail.airlineVO.hbtAirlineIcon}" width="28px;"> 
+									<img th:src="${'/img/item/airlineIcon/' + reservDetail.airlineVO.hbtAirlineIcon}" width="60px;"> 
 									[[${reservDetail.airlineVO.hbtAirlineName}]]
 								</td>
 							</tr>
@@ -114,7 +114,13 @@
 							</colgroup>
 							<th:block th:each="hotel : ${hotelList}">
 								<tr th:each="diy : ${hotel.diyDetailList}">
-									<td><span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span> [[${diy.hotelList[0].hbtHotelName}]]</td>
+									<td th:each="hotel : ${diy.hotelList}">
+									<span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span>
+									<th:block th:each="hotelItemImg : ${hotel.hotelImgList}">
+											<img th:src="${'/img/item/hotel/' + hotelItemImg.hbtHotelAttechedFileName}" width="50px;" height="50px;" style="border-radius: 50%;">
+									</th:block> 
+									<span style="padding-left: 10px;">[[${diy.hotelList[0].hbtHotelName}]]</span>
+									</td>
 								</tr>
 							</th:block>
 						</table>
@@ -128,10 +134,11 @@
 							<th:block th:each="tour : ${tourList}">
 								<tr th:each="diy : ${tour.diyDetailList}">
 									<td th:each="tourItem : ${diy.tourItemList}">
+										<span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span> 
 										<th:block th:each="tourItemImg : ${tourItem.tourItemImgList}">
-											<img th:src="${'/img/item/tourItem/' + tourItemImg.hbtTourItemAttechedFileName}" width="50px;">
+											<img th:src="${'/img/item/tourItem/' + tourItemImg.hbtTourItemAttechedFileName}" width="50px;" height="50px;" style="border-radius: 50%;">
 										</th:block>
-										<span class="reservInfoSpan">[[${diy.hbtDiyDay}]]일차 &nbsp;</span> [[${diy.tourItemList[0].hbtTourItemName}]]
+										<span style="padding-left: 10px;">[[${diy.tourItemList[0].hbtTourItemName}]]</span>
 									</td>
 								</tr>
 							</th:block>

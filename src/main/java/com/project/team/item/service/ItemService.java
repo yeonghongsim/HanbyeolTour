@@ -52,4 +52,6 @@ public interface ItemService {
 	List<DiyDetailVO> getDiyDetailCodeList(String hbtDiyCode);
 	// diyTour 삭제
 	void delDiyTour(DiyTourVO diyTourVO);
+	// diyTour 장바구니 -> 구매
+	void setDiyTourIsPaidToY(String hbtDiyCode);
 }

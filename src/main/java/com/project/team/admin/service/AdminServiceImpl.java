@@ -273,6 +273,13 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getQuarterlySales", year);
 	}
 	
+	//해당년도 매출 총합 조회
+	@Override
+	public int getSumOfSales(int year) {
+		
+		return sqlSession.selectOne("adminMapper.getSumOfSales", year);
+	}
+	
 	//할 일 목록 조회
 	@Override
 	public Map<String, Integer> getToDoList() {
@@ -289,12 +296,20 @@ public class AdminServiceImpl implements AdminService{
 	
 	//예약 종류별 판매수 조회
 	@Override
-	public List<Map<String, Object>> getsalesStatisticsByKindOfReserv(int year) {
+	public List<Map<String, Object>> getCntStatisticsByKindOfReserv(int year) {
 		
-		return sqlSession.selectList("adminMapper.getsalesStatisticsByKindOfReserv", year);
+		return sqlSession.selectList("adminMapper.getCntStatisticsByKindOfReserv", year);
+	}
+	
+	//예약 종류별 매출 조회
+	@Override
+	public List<Map<String, Object>> getSalesStatisticsByKindOfReserv(int year) {
+		
+		return sqlSession.selectList("adminMapper.getSalesStatisticsByKindOfReserv", year);
 	}
 
 
+	
 
 
 
@@ -406,6 +421,10 @@ public class AdminServiceImpl implements AdminService{
 	public void setReviewData(ReveiwVO reveiwVO) {
 		sqlSession.insert("adminMapper.setReviewData", reveiwVO);
 	}
+
+
+
+
 
 
 

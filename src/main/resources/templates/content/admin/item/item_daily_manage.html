@@ -15,42 +15,41 @@
             <h3>일자별 상세 일정</h3>
         </div>
         <!-- 추가할 아이템선택    -->
-        <div class="row">
-            <div class="row mb-3">
-                <div class="col">
-                    <select class="form-select" onchange="getItemInfo(this);">
-                        <option selected>상품선택</option>
-                        <th:block th:each="item : ${itemList}">
-                            <option th:value="${item.itemCode}"  th:selected="${#strings.equals(item.itemCode, itemCode)}">[[${item.itemTitle}]]</option>
-                        </th:block>
-                    </select>
+        <div class="row custom-border-3 py-3 px-3 my-3 rounded-5 shadow">
+            <div class="col my-2">
+                <select class="form-select custom-border-3 shadow rounded-5" onchange="getItemInfo(this);">
+                    <option selected>상품선택</option>
+                    <th:block th:each="item : ${itemList}">
+                        <option th:value="${item.itemCode}"  th:selected="${#strings.equals(item.itemCode, itemCode)}">[[${item.itemTitle}]]</option>
+                    </th:block>
+                </select>
+            </div>
+            <th:block th:if="${itemInfo} != null">
+            <div class="row my-3 d-flex justify-content-center">
+                <div class="col d-flex justify-content-center">지역 :
+                    <span th:text="${itemInfo['AREA_KOR_NAME']}"></span>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <span th:text="${itemInfo['SELLING_START']}"></span>
+                    <span >~</span>
+                    <span th:text="${itemInfo['SELLING_END']}"></span>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <span th:text="${itemInfo['TRAVER_PERIOD']}"></span>
                 </div>
             </div>
-            <div class="row itemInfo">
-                <th:block th:if="${itemInfo} != null">
-                <div class="row mb-3">
-                    <div class="col">지역이름
-                        <span th:text="${itemInfo['AREA_KOR_NAME']}"></span>
-                    </div>
-                    <div class="col">
-                        <span th:text="${itemInfo['SELLING_START']}"></span>
-                        <span >~</span>
-                        <span th:text="${itemInfo['SELLING_END']}"></span>
-                    </div>
-                    <div class="col">
-                        <span th:text="${itemInfo['TRAVER_PERIOD']}"></span>
-                    </div>
-                </div>
-                </th:block>
-            </div>
+            </th:block>
         </div>
+
+
+
         <!-- 일자별 일정 추가 (여행일자만큼 반복)-->
-        <div class="row mb-3 text-center">
-            <h4>항공사 선택</h4>
+        <div class="row mb-3 text-center custom-border-3 rounded-5 shadow">
+            <h4 class="my-2">항공사 선택</h4>
         </div>
-        <div class="row mb-3">
-            <div class="col">
-                <select class="form-select airlineSelect" name="hbtAirlineCode">
+        <div class="row mb-3 custom-border-3 px-3 py-3 rounded-5 shadow">
+            <div class="col my-3">
+                <select class="form-select airlineSelect shadow custom-border-3 rounded-5" name="hbtAirlineCode">
                     <option disabled selected>항공사 선택</option>
                     <th:block th:each="airline : ${airlineList}">
                         <option th:value="${airline.hbtAirlineCode}">[[${airline.hbtAirlineName}]]</option>
@@ -60,20 +59,20 @@
         </div>
 
         <!-- 일자별상세    -->
-        <div class="row text-center" th:if="${itemInfo} != null" >
+        <div class="row text-center d-flex justify-content-center custom-border-3 rounded-5 shadow" th:if="${itemInfo} != null" >
 
-            <h4>일자별 상세 일정 선택</h4>
+            <h4 class="my-3">일자별 상세 일정 선택</h4>
             <th:block th:each="i,state : ${#numbers.sequence(1, itemInfo['days'])}">
-                <div class="dailyPlanDiv">
+                <div class="dailyPlanDiv w-75 my-3 py-3 justify-content-center custom-border-2 rounded-5 shadow">
                     <div class="row mb-3">
                         <h5 th:data-day="${state.count}" th:text="${state.count} + '일차 일정'" ></h5>
                         <input type="hidden" name="itemPlanVOList.hbtPlanDay" th:value="${state.count}">
                     </div>
-                    <div class="row mb-3">
-                        <div class="col">오전 일정 선택</div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col ">오전 일정 선택</div>
                         <div class="col">
                             <input type="hidden" name="hbtPlanTime" th:value="AM">
-                            <select class="form-select tourSelect" name="hbtTourItemCode">
+                            <select class="form-select tourSelect custom-border-3 shadow rounded-5" name="hbtTourItemCode">
                                     <option>종일투어 선택시 오후 일정 선택 불가</option>
                                 <th:block th:if="${itemInfo} != null" th:each="tour : ${tourList}">
                                     <option th:value="${tour['HBT_TOUR_ITEM_CODE']}"
@@ -85,11 +84,11 @@
                         </div>
                     </div>
                     <!-- 오전일정이 전일 일정일시 비활성화    -->
-                    <div class="row mb-3 pmTour">
+                    <div class="row mb-3 pmTour align-items-center">
                         <div class="col">오후 일정 선택</div>
                         <div class="col">
                             <input type="hidden" name="hbtPlanTime" th:value="PM">
-                            <select class="form-select" disabled>
+                            <select class="form-select custom-border-3 shadow rounded-5" disabled>
                                 <th:block th:if="${itemInfo} != null" th:each="tour : ${tourList}">
                                     <option th:value="${tour['HBT_TOUR_ITEM_CODE']}"
                                             th:if="${#strings.equals(tour['HBT_TOUR_ITEM_RUNTIME'],'Half')}"
@@ -100,31 +99,31 @@
                         </div>
                     </div>
                     <!-- 호텔선택        -->
-                    <div class="row mb-3">
+                    <div class="row mb-3 align-items-center">
                         <div class="col">호텔선택</div>
                         <div class="col">
-                            <select class="form-select hotelSelect" name="hbtHotelCode">
+                            <select class="form-select hotelSelect custom-border-3 shadow rounded-5" name="hbtHotelCode">
                                 <th:block th:if="${itemInfo} != null" th:each="hotel : ${hotelList}">
                                     <option th:value="${hotel['HBT_HOTEL_CODE']}" th:text="${hotel['HBT_HOTEL_NAME']}"></option>
                                 </th:block>
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <textarea class="form-control" placeholder="상세일정설명" required></textarea>
+                    <div class="row mb-3 px-3">
+                        <textarea style="height: 8em;" class="form-control custom-border-3 shadow rounded-5" placeholder="상세일정설명" required></textarea>
                     </div>
                 </div>
             </th:block>
-        </div>
-
-
-
-
-        <div class="row">
-            <div class="col-4 offset-4">
-                <input type="button" class="btn ye-S-bc" value="등록" onclick="setDailyPlanData();">
+            <div class="row my-3">
+                <div class="col-4 offset-4 d-grid">
+                    <input type="button" class="rounded-5 btn ye-S-bc custom-border-3 shadow" value="등록" onclick="setDailyPlanData();">
+                </div>
             </div>
         </div>
+
+
+
+
     </form>
 
 

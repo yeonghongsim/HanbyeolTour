@@ -130,35 +130,56 @@
 			</div>
 		</div>
 	</div>
-
-	<div style="margin-top: 200px;"></div>
-	<div class="row mb-2">
-		<div class="col-4">
-			<h3>한눈에 확인하기</h3>
-		</div>
-		<div class="offset-6 col-2">
-			<input type="button" onclick="location.href='/adminIndex/indexStatictics'" class="btn btn-secondary w-100" value="통계">
-		</div>
-	</div>
-	<div class="row">
+	
+	<div class="row" style="margin-top:3rem; margin-bottom: 2rem;">
 		<div class="col">
-			<div class="row mb-3">
-				<div class="col-2">
-					원하는 기능별 버튼
-				</div>
-				<div class="col"></div>
-				<div class="col-2">
-					<input type="button" class="btn btn-primary w-100" value="보기">
+			
+			<div class="row mb-2">
+				<div class="col-4">
+					<h3>한눈에 확인하기</h3>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col bar-area">
-					bar chart area<br>
-					연도별, 월별, 카테고리별 판매 금액을 띄울듯?
+				<div class="col">
+				
+					<div class="row mb-3">
+						<div class="col-2">
+							<select onchange="chkMainSelect(this);" class="main_select form-control">
+								<option value="member" selected>회원</option>
+								<option value="board">게시글</option>
+								<option value="request">문의</option>
+							</select>
+						</div>
+						<div class="col-5">
+							<select class="sub_select form-control">
+								<option value="M/F" selected>전체 이용자 중 남/여 비율</option>
+								<option value="insited">전체 이용자 중 이용률 ( 이용, 휴면, 탈퇴 )</option>
+							</select>
+						</div>
+						<div class="col"></div>
+						<div class="col-2">
+							<input onclick="getChartStatisticsAJAX();" type="button" class="btn btn-yellow-reverse w-100" value="보기">
+						</div>
+					</div>
+					
+					<div class="row statistics_area">
+						<div class="col-5 data_area">
+						</div>
+						<div class="col-7 chart_area">
+							<div>
+								<canvas id="pieChart_statistics"></canvas>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
+			
+			
+			
 		</div>
 	</div>
+
 
 </th:block>
 <!-- 연결해야 할 외부 js 파일-->

@@ -12,6 +12,7 @@
 <th:block layout:fragment="board_content">
 	
 	<div class="board_pub_det_container">
+	
 		<div class="row mb-3 under-line-ylS">
 			<div class="col">
 				<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_001'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
@@ -51,9 +52,10 @@
 		
 		<div class="row mb-3">
 			<div class="col text-center">
-				<input onclick="location.href='/board/getPublicBoardPage'" class="btn btn-secondary" type="button" value="뒤로 가기">
+				<input onclick="location.href='/board/getPublicBoardPage'" class="btn btn-gray" type="button" value="뒤로 가기">
 			</div>
 		</div>
+		
 	</div>
 	
 </th:block>

@@ -1,12 +1,5 @@
 @charset "UTF-8";
 
-.bar-area {
-	width: 100%;
-	height: 420px;
-	border: 1px solid #eee;
-}
-
-
 #toDo1, #toDo2, #toDo3 {
   border-collapse: collapse;
   width: 300px;
@@ -110,3 +103,13 @@
     color: red;
  
 }
+
+.statistics_area {
+	height: 420px;
+}
+
+.statistics_table > tbody > tr > td {
+	border: 1px solid lightgrey;
+}
+
+

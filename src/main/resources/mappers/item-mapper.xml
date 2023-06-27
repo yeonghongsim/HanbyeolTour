@@ -319,6 +319,12 @@
 				)
 	</insert>
 	
+	<update id="setDiyTourIsPaidToY">
+		UPDATE HBT_DIY_TOUR 
+		SET IS_PAID = 'Y' 
+		WHERE HBT_DIY_CODE = #{hbtDiyCode}
+	</update>
+	
 	<select id="getDiyDetailCodeList" resultType="String">
 		SELECT HBT_DIY_DETAIL_CODE 
 		FROM HBT_DIY_DETAIL 

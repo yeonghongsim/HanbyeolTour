@@ -1,3 +1,4 @@
+init()
 
 function searchRequest(){
 	const searchFromDate = document.querySelector('#searchFromDate').value;
@@ -31,12 +32,26 @@ function searchRequest(){
 			let str = '';
 			
 			result.forEach(function(req, idx){
-				console.log(result[0]);
+				console.log(req);
 				str += `<tr>`;
 				str += `	<td>${result.length - idx}</td>`;
-				str += `	<td>${req.hbtBoardRequestTitle}</td>`;
+				
+				if(req.itemVO != null){
+				str += `	<td> 1212`;
+				str += `		<span class="pointer" onclick="location.href='/admin/regReqReplyForm?hbtBoardRequestNum=${req.hbtBoardRequestNum}&itemCode=${req.itemVO.itemCode}'";>${req.hbtBoardRequestTitle}</span>`;
+				str += `	</td>`;
+					
+				} else {
+				str += `	<td>`;
+				str += `		<span class="pointer" onclick="location.href='/admin/regReqReplyForm?hbtBoardRequestNum=${req.hbtBoardRequestNum}'";>${req.hbtBoardRequestTitle}</span>`;
+				str += `	</td>`;
+					
+				}
+				
+				
+				
 				str += `	<td>${req.memberVO.memId}</td>`;
-				if(result.itemVO != null){
+				if(req.itemVO != null){
 				str += `	<td>${req.itemVO.itemCode}</td>`;
 				} else{
 				str += `	<td></td>`;
@@ -59,6 +74,9 @@ function searchRequest(){
 	
 }
 
+function init(){
+	searchRequest()
+}
 
 
 

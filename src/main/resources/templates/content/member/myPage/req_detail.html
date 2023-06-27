@@ -16,13 +16,13 @@
 		<div class="col">
 		</div>
 		<div class="col-2">
-			<input onclick="location.href='/myPage/checkMyRequest'" type="button" class="btn btn-secondary w-100" value="뒤로 가기">
+			<input onclick="location.href='/myPage/checkMyRequest'" type="button" class="btn btn-gray w-100" value="뒤로 가기">
 		</div>
 		<div class="col-2">
-			<input th:onclick="updateMyRequest([[${reqDetail.hbtBoardRequestNum}]], [[${reqDetail.memberVO.memId}]], [[${reqDetail.memberVO.memCode}]], [[${itemCode}]]);" type="button" class="btn btn-primary w-100" value="문의 수정">
+			<input th:onclick="updateMyRequest([[${reqDetail.hbtBoardRequestNum}]], [[${reqDetail.memberVO.memId}]], [[${reqDetail.memberVO.memCode}]], [[${itemCode}]]);" type="button" class="btn btn-yellow-reverse w-100" value="문의 수정">
 		</div>
 		<div class="col-2">
-			<input th:onclick="delMyRequest([[${reqDetail.hbtBoardRequestNum}]]);" type="button" class="btn btn-danger w-100" value="문의 삭제">
+			<input th:onclick="delMyRequest([[${reqDetail.hbtBoardRequestNum}]]);" type="button" class="btn btn-red w-100" value="문의 삭제">
 		</div>
 	</div>
 	
@@ -74,7 +74,7 @@
 		<div class="row mb-3">
 			<div class="col">
 				<h4>답변된 내용</h4>
-				<table class="table text-center req-detail-table">
+				<table class="table text-center only-tbody">
 					<colgroup>
 						<col width="20%">
 						<col width="20%">

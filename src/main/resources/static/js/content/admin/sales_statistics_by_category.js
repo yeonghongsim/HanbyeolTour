@@ -18,6 +18,7 @@ function getCateChartDataAJAX(){
 			//차트 그리기
 			drawChart(result[0]);
 			drawKindChart(result[1]);
+			drawKindSalesChart(result[2]);
 			
 		},
 		error: function() {
@@ -118,6 +119,79 @@ function drawKindChart(data){
 	});
 }
 
+
+function drawKindSalesChart(data){
+	
+	const basic_arr = [];
+	const diy_arr = [];
+
+	//일반 매출
+	const basic_sales = data[0];
+	for (const key in basic_sales) {
+
+		const value = basic_sales[key];
+		basic_arr.push(value);
+
+	}   
+	//div 매출
+	const diy_sales = data[1];
+	for (const key in diy_sales) {
+
+		const value = diy_sales[key];
+		diy_arr.push(value);
+
+	}   
+
+
+	console.log(basic_arr)
+	console.log(diy_arr)
+	
+	
+	const ctx = document.getElementById('kindSalesChart');
+	
+	//차트 데이터
+	new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ['1월', '2월', '3월', '4월', '5월', '6월',
+				'7월', '8월', '9월', '10월', '11월', '12월'],  //차트의 x축
+			datasets: [
+				{
+					label: '일반 예약',
+					data: basic_arr,
+					backgroundColor: "rgba(154, 208, 245, 0.5)",
+				},
+				{
+					label: 'Diy 예약',
+					data: diy_arr,
+					backgroundColor: "rgba(153, 206, 206, 0.5)",
+				}
+			],
+			},
+			options: {
+				plugins: {
+				title: {
+					display: true,
+					text: (ctx) => '예약 종류별 월 매출액'
+				},
+				legend: {
+					position: 'right',
+				},
+			},
+	      scales: {
+	        y: { 
+	          beginAtZero: true,
+	          type: 'linear',
+	          display: true,
+	          position: 'left' //y축의 왼쪽
+	        }
+	      }
+	    }
+	  });
+	
+	
+	
+}
 
 
 //select 박스 년도 변경 시 차트 다시 그리기
