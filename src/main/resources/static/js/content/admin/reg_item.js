@@ -16,5 +16,5 @@
   }
 
   // 폼 제출(submit) 이벤트 리스너 등록
-  const form = document.getElementById('regForm');
+  const form = document.getElementById('searchForm');
   form.addEventListener('submit', validateForm);

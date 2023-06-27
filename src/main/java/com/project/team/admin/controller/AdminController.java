@@ -192,7 +192,7 @@ public class AdminController {
 		//검색 조건에 맞는 데이터 수 조회
 		int totalDataCnt = adminService.getsaleListCnt(saleListSearchVO);
 		saleListSearchVO.setTotalDataCnt(totalDataCnt);
-		
+				
 		saleListSearchVO.setDisplayCnt(10);
 		
 		saleListSearchVO.setPageInfo();
@@ -602,7 +602,6 @@ public class AdminController {
 		//System.out.println(adminService.getQuarterlySales(year));
 		//System.out.println("******************" + thisYearSaleList);
 		
-		//당해년도 매출 합
 
 		return map;
 	}
@@ -619,6 +618,8 @@ public class AdminController {
 		
 		model.addAttribute("year", year);
 		model.addAttribute("thisYear", DateUtil.getYear());
+		//당해년도 매출 합
+		model.addAttribute("totalSales", adminService.getSumOfSales(year));
 		
 		return "content/admin/sales_statistics_by_category";
 	}

@@ -347,27 +347,47 @@ function getSaleListPaging(pageNum){
 
 
 //상품 정보 모두 입력되었는지 확인
-  function validateForm(event) {
-    
-    const formElements = document.querySelectorAll('form input, form textarea');
+/*function validateForm(event) {
+
+	const formElements = document.querySelectorAll('form input, form textarea');
 
 
-    for (let i = 0; i < formElements.length; i++) {
-      let element = formElements[i];
-      
-      if (element.value.trim() === '') {
-        // 입력 제출 막기
-        event.preventDefault();
-        alert('입력되지 않은 항목이 있습니다.');
-        return;
-      }
-    }
-  }
+	for (let i = 0; i < formElements.length; i++) {
+		let element = formElements[i];
+
+		if (element.value.trim() === '') {
+			// 입력 제출 막기
+			event.preventDefault();
+			alert('입력되지 않은 항목이 있습니다.');
+			return;
+		}
+	}
+}
 
   // 폼 제출(submit) 이벤트 리스너 등록
   const form = document.getElementById('itemDetailForm');
-  form.addEventListener('submit', validateForm);
+  form.addEventListener('submit', validateForm); */
 
 
+function searchValidateForm(event) {
+  const inputElements = document.querySelectorAll('form#searchForm input[type="text"]');
+  let isEmpty = true;
 
+  for (let i = 0; i < inputElements.length; i++) {
+    let element = inputElements[i];
 
+    if (element.value.trim() !== '') {
+      isEmpty = false;
+      break;
+    }
+  }
+
+  if (isEmpty) {
+    event.preventDefault();
+    alert('검색 조건을 입력하세요.');
+  }
+}
+
+// 폼 제출(submit) 이벤트 리스너 등록
+const searchform = document.getElementById('searchForm');
+searchform.addEventListener('submit', searchValidateForm);

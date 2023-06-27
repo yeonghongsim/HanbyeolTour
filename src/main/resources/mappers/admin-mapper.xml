@@ -206,7 +206,7 @@
 	
 	<!-- 검색 조건에 맞는 판매 상품 수 조회 -->
 	<select id="getsaleListCnt" resultType="int">
-		SELECT COUNT(ITEM.ITEM_CODE)
+		SELECT COUNT(DISTINCT ITEM.ITEM_CODE)
 		FROM HBT_ITEM ITEM, HBT_ITEM_IMG IMG, HBT_TOUR_AREA AREA, HBT_ITEM_STATE HIS
 		WHERE ITEM.ITEM_CODE = IMG.ITEM_CODE
 		AND ITEM.AREA_CODE = AREA.AREA_CODE
@@ -691,6 +691,7 @@
 		            HBT_BUY
 		        WHERE
 		            TO_CHAR(BUY_DATE, 'YYYY') = #{year}
+		            AND BUY_STATUS_CODE != 4
 		    ) BUY
 		    CROSS JOIN
 		    (
@@ -711,6 +712,7 @@
 		            HBT_DIY_TOUR
 		        WHERE
 		            TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY') = #{year}
+		            AND BUY_STATUS_CODE != 4
 		    ) DIY
 		UNION ALL
 		<!-- 월별 구매 금액 합 -->
@@ -744,6 +746,7 @@
 		        NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '12', BUY_TOTAL_PRICE, 0)), 0) AS MONTH_12
 		    FROM HBT_BUY
 		    WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year}
+		    AND BUY_STATUS_CODE != 4
 		) BUY
 		CROSS JOIN
 		(
@@ -762,6 +765,7 @@
 		        NVL(SUM(DECODE(TO_CHAR(DIY_TOUR_BUY_DATE, 'MM'), '12', TOTAL_PRICE, 0)), 0) AS MONTH_12
 		    FROM HBT_DIY_TOUR
 		    WHERE TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY') = #{year}
+		    AND BUY_STATUS_CODE != 4
 		) DIY
 		UNION ALL
 		<!-- 작년 매출 현황 -->
@@ -795,6 +799,7 @@
 		        NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '12', BUY_TOTAL_PRICE, 0)), 0) AS MONTH_12
 		    FROM HBT_BUY
 		    WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year} - 1
+		    AND BUY_STATUS_CODE != 4
 		) BUY
 		CROSS JOIN
 		(
@@ -813,12 +818,13 @@
 		        NVL(SUM(DECODE(TO_CHAR(DIY_TOUR_BUY_DATE, 'MM'), '12', TOTAL_PRICE, 0)), 0) AS MONTH_12
 		    FROM HBT_DIY_TOUR
 		    WHERE TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY') = #{year} - 1
+		    AND BUY_STATUS_CODE != 4
 		) DIY		
 	</select>
 	
 	<!-- 분기별 매출 현황 -->
 	<select id="getQuarterlySales" resultType="HashMap">
-		SELECT
+	    SELECT
 		    MAX(CASE WHEN RN = 1 THEN TOTAL_QUARTERLY_SALES END) AS "1분기",
 		    MAX(CASE WHEN RN = 2 THEN TOTAL_QUARTERLY_SALES END) AS "2분기",
 		    MAX(CASE WHEN RN = 3 THEN TOTAL_QUARTERLY_SALES END) AS "3분기",
@@ -840,6 +846,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM DIY_TOUR_BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM DIY_TOUR_BUY_DATE) BETWEEN 1 AND 3
+                        AND BUY_STATUS_CODE != 4
 		        ) DIY,
 		        (
 		            SELECT
@@ -849,6 +856,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 1 AND 3
+                        AND BUY_STATUS_CODE != 4
 		        ) BUY
 		        UNION ALL
 		        SELECT
@@ -862,6 +870,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM DIY_TOUR_BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM DIY_TOUR_BUY_DATE) BETWEEN 4 AND 6
+                        AND BUY_STATUS_CODE != 4
 		        ) DIY,
 		        (
 		            SELECT
@@ -871,6 +880,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 4 AND 6
+                        AND BUY_STATUS_CODE != 4
 		        ) BUY
 		        UNION ALL
 		        SELECT
@@ -884,6 +894,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM DIY_TOUR_BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM DIY_TOUR_BUY_DATE) BETWEEN 7 AND 9
+                        AND BUY_STATUS_CODE != 4
 		        ) DIY,
 		        (
 		            SELECT
@@ -893,6 +904,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 7 AND 9
+                        AND BUY_STATUS_CODE != 4
 		        ) BUY
 		        UNION ALL
 		        SELECT
@@ -906,6 +918,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM DIY_TOUR_BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM DIY_TOUR_BUY_DATE) BETWEEN 10 AND 12
+                        AND BUY_STATUS_CODE != 4
 		        ) DIY,
 		        (
 		            SELECT
@@ -915,6 +928,7 @@
 		            WHERE
 		                EXTRACT(YEAR FROM BUY_DATE) = #{year}
 		                AND EXTRACT(MONTH FROM BUY_DATE) BETWEEN 10 AND 12
+                        AND BUY_STATUS_CODE != 4
 		        ) BUY
 		    ) RESULT
 		) ORDER BY RN
@@ -923,16 +937,20 @@
 	
 	<!-- 해당년도 매출 총합 조회-->
 	<select id="getSumOfSales" resultType="int">
-	SELECT
-	    COALESCE(BUY.BUY_TOTAL_PRICE, 0) + COALESCE(DIY.DIY_TOTAL_PRICE, 0) AS TOTAL_THIS_YEAR_PRICE
-	FROM
-	    (SELECT COALESCE(SUM(BUY_TOTAL_PRICE), 0) AS BUY_TOTAL_PRICE
-	    FROM HBT_BUY
-	    WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year}) BUY
-	CROSS JOIN
-	    (SELECT COALESCE(SUM(TOTAL_PRICE), 0) AS DIY_TOTAL_PRICE
-	    FROM HBT_DIY_TOUR
-	    WHERE TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY') = #{year}) DIY
+		SELECT
+		    COALESCE(BUY.BUY_TOTAL_PRICE, 0) + COALESCE(DIY.DIY_TOTAL_PRICE, 0) AS TOTAL_THIS_YEAR_PRICE
+		FROM
+		    (SELECT COALESCE(SUM(BUY_TOTAL_PRICE), 0) AS BUY_TOTAL_PRICE
+		    FROM HBT_BUY
+	        WHERE BUY_STATUS_CODE != 4
+		    AND TO_CHAR(BUY_DATE, 'YYYY') = #{year}) BUY
+	
+		    
+		CROSS JOIN
+		    (SELECT COALESCE(SUM(TOTAL_PRICE), 0) AS DIY_TOTAL_PRICE
+		    FROM HBT_DIY_TOUR
+	        WHERE BUY_STATUS_CODE != 4
+		    AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY') = #{year}) DIY
 	</select>
 	
 	
@@ -1025,6 +1043,7 @@
 			, NVL(SUM(DECODE(TO_CHAR(BUY_DATE, 'MM'), '12', BUY_TOTAL_PRICE, 0)), 0) AS "MONTH_12"
 		FROM HBT_BUY
 		WHERE TO_CHAR(BUY_DATE, 'YYYY') = #{year}
+		AND BUY_STATUS_CODE != 4
         UNION ALL
         SELECT NVL(SUM(DECODE(TO_CHAR(DIY_TOUR_BUY_DATE, 'MM'), '01', TOTAL_PRICE, 0)), 0) AS "MONTH_01"
 			, NVL(SUM(DECODE(TO_CHAR(DIY_TOUR_BUY_DATE, 'MM'), '02', TOTAL_PRICE, 0)) ,0) AS "MONTH_02"
@@ -1040,6 +1059,7 @@
 			, NVL(SUM(DECODE(TO_CHAR(DIY_TOUR_BUY_DATE, 'MM'), '12', TOTAL_PRICE, 0)), 0) AS "MONTH_12"
 		FROM HBT_DIY_TOUR
 		WHERE TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY') = #{year}
+		AND BUY_STATUS_CODE != 4
 	</select>
 	
 
