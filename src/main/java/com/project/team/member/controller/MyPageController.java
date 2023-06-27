@@ -774,12 +774,12 @@ public class MyPageController {
 	
 	
 	@ResponseBody
-	@PostMapping("/getAllReviewAJAX")
-	public List<MemberReviewVO> getAllReviewAJAX(MemberReviewVO memberReviewVO) {
+	@PostMapping("/getWritenReviewAJAX")
+	public List<MemberReviewVO> getWritenReviewAJAX(MemberReviewVO memberReviewVO) {
 		String memCode = memberService.getMemCode(memberReviewVO.getMemberVO().getMemId());
 		memberReviewVO.getMemberVO().setMemCode(memCode);
 		
-		System.out.println("getAllReviewAJAX run~");
+		System.out.println("getWritenReviewAJAX run~");
 		return memberService.getMyReviewList(memberReviewVO);
 	}
 	
