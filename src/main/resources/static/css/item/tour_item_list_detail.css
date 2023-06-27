@@ -1,14 +1,21 @@
 .accordion-button:not(.collapsed){
-    background-color: #ffd000;
+    background-color: #eeeeee;
 }
+/* 아코디언 아이콘 색 변경 
+    .accordion-button:not(.collapsed)::after {
+    background-image: var(--bs-accordion-btn-active-icon);
+    transform: var(--bs-accordion-btn-icon-transform);
+}*/
+
 .accordion-button:focus {
     z-index: 3;
+    color: black;
     border-color: #ffd000;
     outline: 0;
     box-shadow: #ffd000;
 }
 .accordion{
-    --bs-accordion-border-color: #ffd000;
+     --bs-accordion-border-color: 1px hidden #ffd000; 
     --bs-accordion-btn-focus-border-color: #ffd000;
     --bs-accordion-btn-focus-box-shadow: #ffd000;
 }

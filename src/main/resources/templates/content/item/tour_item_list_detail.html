@@ -10,7 +10,7 @@
 
 <th:block layout:fragment="content">
 	<div class="row mt-0 mb-3 d-flex justify-content-center">
-		<div class="col-md-6 shadow custom-border-4 rounded-5">
+		<div class="col-md-6">
 
 
 	<!-- 상품이미지 + 상품 제목 간단설명  -->
@@ -18,7 +18,7 @@
 			<h3 class="text-center mt-3">[[${itemDetail[0][0]['ITEM_TITLE']}]]</h3>
 
 			<form action="/buy/buyItem" th:class="buyForm" method="post">
-				<div class="row rounded-5 d-flex shadow custom-border-3 mx-2 my-2">
+				<div class="row d-flex shadow mx-2 my-2"> 
 
 
 
@@ -82,7 +82,7 @@
 									</td>
 								<tr>
 									<td colspan="2" class="px-0">
-										<textarea class="text-center form-control rounded-5 custom-border"
+										<textarea class="text-center form-control"
 												  disabled style="background-color: white;" th:text="${itemDetail[0][0]['ITEM_INTRO']}">
 										</textarea>
 									</td>
@@ -100,23 +100,23 @@
 
 				</div>
 
-				<div class="row rounded-5 shadow custom-border-3 mx-2 my-2 d-flex justify-content-center align-self-center">
+				<div class="row shadow mx-2 my-2 d-flex justify-content-center align-self-center">
 
 
 					<div class="col-2 my-2 py-2 px-0 mx-1 justify-content-center">
 						<div class="mx-1">
 							<div class="form-text text-center" id="basic-addon1">출발일</div>
 							<div class="input-group">
-								<input aria-describedby="basic-addon1" style="width: 120px; font-size: 12px;" class="form-control rounded-5 custom-border-3 center-align" type="date" th:value="${buyDetailVO.departDate}" name="departDate" id="departDate">
+								<input aria-describedby="basic-addon1" style="width: 120px; font-size: 12px;" class="form-control center-align" type="date" th:value="${buyDetailVO.departDate}" name="departDate" id="departDate">
 							</div>
 						</div>
 					</div>
 
-					<div class="col-2 my-2 py-2 px-0 mx-1 justify-content-center">
+				<div class="col-2 my-2 py-2 px-0 mx-1 justify-content-center">
 						<div class="mx-1">
 							<div class="form-text d-flex justify-content-center text-center" id="basic-addon2">도착일</div>
 							<div class="input-group">
-								<input aria-describedby="basic-addon2" style="width: 120px; font-size: 12px;" class="form-control rounded-5 custom-border-3 center-align" type="date" th:value="${buyDetailVO.arriveDate}" name="arriveDate" id="arriveDate">
+								<input aria-describedby="basic-addon2" style="width: 120px; font-size: 12px;" class="form-control center-align" type="date" th:value="${buyDetailVO.arriveDate}" name="arriveDate" id="arriveDate">
 							</div>
 						</div>
 					</div>
@@ -126,17 +126,17 @@
 						<div class="mx-1">
 							<div class="form-text text-center" id="basic-addon3">인 원</div>
 							<div class="input-group">
-								<input aria-describedby="basic-addon3" style="width: 120px; font-size: 12px; text-align: center;" class="form-control rounded-5 custom-border-3 center-align" type="number" id="numOfPeople" name="reservedPeopleNum" value="1">
+								<input aria-describedby="basic-addon3" style="width: 120px; font-size: 12px; text-align: center;" class="form-control center-align" type="number" id="numOfPeople" name="reservedPeopleNum" value="1">
 							</div>
 						</div>
 					</div>
 
-					<div class="col-2 px-0 py-2 ms-5 mx-0 my-2 justify-content-center align-self-center">
-						<input sec:authorize="isAuthenticated()" class="btn ye-S-bc rounded-5 custom-border-3" type="button" onclick="buyConfirm();" value="예약하기">
+					<div class="col-2 px-0 py-2 ms-5 mx-0 my-2 justify-content-center align-self-center"  sec:authorize="isAuthenticated()" >
+						<input class="btn ye-S-bc " type="button" onclick="buyConfirm();" value="예약하기">
 					</div>
 
-					<div class="col-2 px-0 py-2 mx-0 my-4 justify-content-center align-self-center">
-						<input sec:authorize="isAuthenticated()" class="btn ye-S-bc rounded-5 custom-border-3" type="button" value="장바구니" onclick="addCartAJAX();">
+					<div class="col-2 px-0 py-2 mx-0 my-4 justify-content-center align-self-center" sec:authorize="isAuthenticated()" >
+						<input class="btn ye-S-bc " type="button" value="장바구니" onclick="addCartAJAX();">
 					</div>
 
 				</div>
@@ -152,7 +152,7 @@
 					<div class="accordion" id="accordionPanelsStayOpenExample">
 						<th:block th:each="number, state : ${#numbers.sequence(0 , day - 1)}">
 
-							<div class="accordion-item my-3 rounded-5 custom-border-3">
+							<div class="accordion-item my-3  ">
 								<h2 class="accordion-header">
 									<button class="accordion-button rounded-5 shadow collapsed" type="button" data-bs-toggle="collapse"
 											th:data-bs-target="${'#panelsStayOpen-collapseOne'} + ${state.count}"
@@ -174,7 +174,7 @@
 														<div class="row rounded-5 mx-2 my-2 d-flex justify-content-center">
 															<div class="col-5 px-0 mx-3">
 																<div id="hotelImgSlide" class="carousel slide" data-bs-ride="carousel">
-																	<div class="carousel-inner custom-border-4 shadow rounded-5 hotelImg" style="height: 200px;">
+																	<div class="carousel-inner  shadow hotelImg" style="height: 200px;">
 
 
 																	</div>
@@ -191,7 +191,7 @@
 																</div>
 															</div>
 
-															<div class="col-5 mx-3 py-2 custom-border-4 shadow rounded-5 align-self-center" style="height: 200px;">
+															<div class="col-5 mx-3 py-2 shadow align-self-center" style="height: 200px;">
 																<table class="table text-center">
 																	<tr>
 																		<td>
@@ -205,7 +205,7 @@
 																	</tr>
 																	<tr>
 																		<td colspan="3">
-																			<textarea class="text-center form-control rounded-5 custom-border"
+																			<textarea class="text-center form-control"
 																					  disabled style="background-color: white;" th:text="${dailyPlan['HBT_HOTEL_INTRO']}"></textarea>
 																		</td>
 																	</tr>
@@ -224,7 +224,7 @@
 													<div class="row rounded-5 mx-2 my-2 d-flex justify-content-center">
 														<div class="col-5 px-0 mx-3">
 															<div id="tourImgSlide" class="carousel slide" data-bs-ride="carousel">
-																<div class="carousel-inner custom-border-4 shadow rounded-5 tourImg" style="height: 200px;">
+																<div class="carousel-inner  shadow tourImg" style="height: 200px;">
 
 
 																</div>
@@ -242,7 +242,7 @@
 														</div>
 
 
-														<div class="col-5 mx-3 py-2 custom-border-4 shadow rounded-5 d-flex align-self-center" style="height: 200px;">
+														<div class="col-5 mx-3 py-2 shadow  d-flex align-self-center" style="height: 200px;">
 															<table class="table mx-0">
 																<tr>
 																	<td class="align-middle">
@@ -252,7 +252,7 @@
 																</tr>
 																<tr>
 																	<td class="align-self-center d-flex">
-																		<textarea class="text-center form-control rounded-5 custom-border"
+																		<textarea class="text-center form-control"
 																				  disabled style="background-color: white; height: 5rem;" th:text="${dailyPlan['HBT_TOUR_ITEM_NAME']}">
 																		</textarea>
 																	</td>
@@ -273,12 +273,12 @@
 			</div>
 		</div>
 	</div>
-
+	<hr>
 	<div class="row mt-0 mb-3 d-flex justify-content-center">
-		<div class="col-md-6 shadow custom-border-4 rounded-5">
+		<div class="col-md-6">
 
 			<div class="row d-flex justify-content-center my-3 mb-3">
-				<div class="col-md-10 shadow align-content-middle custom-border-3 rounded-5">
+				<div class="col-md-10 shadow align-content-middle">
 					<h3 class="text-center my-2">리뷰</h3>
 				</div>
 			</div>
@@ -286,7 +286,7 @@
 
 
 			<div class="row d-flex justify-content-center mb-3">
-				<div class="col-md-10 shadow align-content-middle custom-border-3 rounded-5">
+				<div class="col-md-10 shadow align-content-middle">
 					<table class="table text-center">
 						<colgroup>
 							<col>

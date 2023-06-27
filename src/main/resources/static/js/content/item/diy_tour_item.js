@@ -279,7 +279,7 @@ function drawItem(resultList){
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" onclick="hotelModal(this);" class="">
                       <input type="hidden" value="${hotel['HBT_HOTEL_CODE']}" class="areaCode">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/hotel/${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">${hotel['HBT_HOTEL_NAME']}</p>
@@ -299,7 +299,7 @@ function drawItem(resultList){
 
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" class="">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">준비중</p>
@@ -321,7 +321,7 @@ function drawItem(resultList){
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" onclick="tourModal(this);" class="">
                       <input type="hidden" value="${tour['HBT_TOUR_ITEM_CODE']}">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/tourItem/${tour['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">${tour['HBT_TOUR_ITEM_NAME']}</p>
@@ -340,7 +340,7 @@ function drawItem(resultList){
             tourStr +=  `
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" class="">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">준비중</p>
