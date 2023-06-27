@@ -30,8 +30,9 @@
 			</div>
 		</div>
      </div>
-     <div class="d-grid">
-     	<input type="button" class="btn btn-yellow" value="LOGIN" onclick="login();" data-bs-toggle="modal" data-bs-target="#loginModal">
+     <div class="">
+     	<input type="button" class="btn btn-yellow" value="LOGIN" onclick="login();" data-bs-toggle="modal" data-bs-target="#loginModal"
+     	style="width:300px;">
      </div>
       	
        	<div class="row">	
@@ -72,22 +73,22 @@
 						</div>
 					</div>
 					<div class="row" id="btn-home">
-						<div class="col-12 d-grid">
-							<button onclick="location.href = '/';" class="btn btn-outline-warning" type="button">
+						<div class="col-12 d-flex justify-content-center">
+							<button onclick="location.href = '/';" class="btn btn-yellow-line" type="button">
 							  <span>홈으로 이동</span> 
 							</button>
 						</div>
 					</div>
 					<div class="row" id="btn-updatePw">
-						<div class="col-12 d-grid mt-3">
-							<button onclick="location.href = '/myPage/changeMyPwPage';" class="btn btn-danger" type="button">
+						<div class="col-12 mt-3 d-flex justify-content-center">
+							<button onclick="location.href = '/myPage/changeMyPwPage';" class="btn btn-red" type="button">
 							  <span>비밀번호 변경하러 가기</span> 
 							</button>
 						</div>
 					</div>
 					<div class="row" id="btn-home-2">
-						<div class="col-12 d-grid">
-							<button onclick="beforeGoMain();" class="btn btn-outline-warning" type="button">
+						<div class="col-12 d-flex justify-content-center">
+							<button onclick="beforeGoMain();" class="btn btn-gray" type="button">
 							  <span>홈으로 이동</span> 
 							</button>
 						</div>

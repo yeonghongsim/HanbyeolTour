@@ -171,6 +171,27 @@
 	margin-bottom: 3rem;
 }
 
-
-
+/* 버튼 */
+.btn-yellow-line {
+    --bs-btn-color: #ffd000;
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: #ffd000;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #fff9d4;
+    --bs-btn-hover-border-color: #DEE2E5;
+    --bs-btn-focus-shadow-rgb: #fff9d4;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #ffd000;
+    --bs-btn-active-border-color: #ffd000;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #ffc107;
+    --bs-btn-disabled-border-color: #ffc107;
+    border-radius: 0.7rem;
+    margin-bottom: 0.3rem;
+    margin-top: 0.4rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 180px;
+}
 

@@ -76,8 +76,8 @@ function pwValidate(){
 	
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
-	//const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&!@#$%^&*()]{8,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&!@#$%^&*()])[A-Za-z\d&!@#$%^&*()]{8,20}$/;
+
 
 	if(memPw == ''){
 		str_memPw = '비밀번호를 입력해주세요.';
@@ -133,14 +133,14 @@ function login(){
 						
 							// IS_TEMPORARY_PW = 'Y' 인 경우 (임시 비밀번호 발급받은 회원)
 						    let str =``;
-						   
+
 						    str += `<div class="col-12 text-center">`;
 							str += `<span>`;
 							str += `<br>`;
-							str += `<i class="bi bi-person-circle" style="font-size:3rem; color:#ffd000;"></i><br>`;
+							str += `<i class="bi bi-check-circle" style="font-size:5rem; color:#f27370;"></i><br>`;
 							str += `<strong style="font-size:1.2rem;">${memId}</strong> 회원님!<br>`;
 							str += `지금은 임시 비밀번호가 발급된 상태입니다.<br>`;
-							str += `<strong style="font-weight:bolder; color:red;">꼭! 비밀번호 변경 후</strong> 사이트를 이용해주세요!`;
+							str += `<strong style=" font-size:1.2rem; font-weight:bolder; color:#f27370;">꼭! 비밀번호 변경 후</strong> 사이트를 이용해주세요.`;
 							str += `<br>`;
 							str += `</span>`;
 							str += `</div>`;

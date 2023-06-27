@@ -153,6 +153,7 @@ public class MyPageController {
 		
 		// 비밀번호 암호화 전에 이전의 비밀번호와 같은지 비교 필요 
 		Boolean result = encoder.matches(memPw, encodedPw);
+		System.out.println("바꾸고자 하는 비밀번호 : " + memPw);
 		System.out.println("@@ 기존의 비밀번호와 일치한지 여부 : " + result);
 		
 		// 이전과 비밀번호가 일치한지에 대한 결과에 따라서 진행 

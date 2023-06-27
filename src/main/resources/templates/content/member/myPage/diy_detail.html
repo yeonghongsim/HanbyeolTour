@@ -198,7 +198,7 @@
  <th:block th:each="diy : ${hotelInfoList}">
     <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
       <!-- Text data part -->
-      <div class="col-md-6 mb-3 info">
+      <div class="col-md-7 mb-3 info">
         <table class="table info-table">
         	<tbody>
 	            <tr>
@@ -219,19 +219,13 @@
 	               	[[${#numbers.formatCurrency(diyDetail.hotelList[0].hbtHotelPrice).substring(1)}]] 원
 	                </td>
 	            </tr>
-	            <tr>
-	            	<th>추가 정보 : </th>
-	            	 <td>
-						<div class="scrollable-text">[[${diyDetail.hotelList[0].hbtHotelIntro}]]</div>
-	            	 </td>
-	            </tr>
 	        <tbody>
     	</table>
       </div>
       
       <!-- Image slider part -->
   
-      <div class="col-md-6 mb-3">
+      <div class="col-md-5 mb-3">
         <div th:id="'carouselControls' + ${detailStat.index}" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <th:block th:each="hotelImg, iterStat : ${diyDetail.hotelList[0].hotelImgList}">
@@ -256,6 +250,25 @@
 </div>
 
 
+<div class="row">
+	<th:block th:each="diy : ${tourInfoList}">
+	    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
+	      <div class="col-md-6 mb-3 under">
+	        <table class="table under-table">
+	        	<tbody>
+		             <tr>
+		            	<th>추가 정보 : </th>
+		            	 <td>
+							<div class="scrollable-text">[[${diyDetail.hotelList[0].hbtHotelIntro}]]</div>
+		            	 </td>
+		            </tr>
+		        <tbody>
+	    	</table>
+	      </div>
+		</th:block>
+	  </th:block>
+</div>
+
 
 <!-- 선 -->
 <div class="mt-5 mb-4">
@@ -276,7 +289,7 @@
  <th:block th:each="diy : ${tourInfoList}">
     <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
       <!-- Text data part -->
-      <div class="col-md-6 mb-3 info">
+      <div class="col-md-7 mb-3 info">
         <table class="table info-table">
         	<tbody>
 	            <tr>
@@ -288,7 +301,7 @@
 	            	 <td th:text="${diy.tourAreaVO.areaKorName}"></td>
 	            </tr>
 	            <tr>
-	            	<th>투어 소요 시간 : </th>
+	            	<th>투어 소요시간 : </th>
 	            	<td th:text="${diyDetail.tourItemList[0].hbtTourItemRunTime}"></td>
 	            </tr>
 	            <tr>
@@ -297,18 +310,18 @@
 	                [[${#numbers.formatCurrency(diyDetail.tourItemList[0].hbtTourItemPrice).substring(1)}]] 원
 	                </td>
 	            </tr>
-	            <tr>
+	           <!--  <tr>
 	            	<th>추가 정보 : </th>
 	            	<td>
 						<div class="scrollable-text">[[${diyDetail.tourItemList[0].hbtTourItemIntro}]]</div>
 	            	</td>
-	            </tr>
+	            </tr> -->
 	        <tbody>
     	</table>
       </div>
       
       <!-- Image slider part -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-5 mb-3">
         <div th:id="'carouselControl' + ${detailStat.index}" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <th:block th:each="tourImg, iterStat : ${diyDetail.tourItemList[0].tourItemImgList}">
@@ -333,7 +346,24 @@
   </th:block>
 </div>
 
-
+<div class="row">
+	<th:block th:each="diy : ${tourInfoList}">
+	    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
+	      <div class="col-md-6 mb-3 under">
+	        <table class="table under-table">
+	        	<tbody>
+		            <tr>
+		            	<th>추가 정보 : </th>
+		            	<td>
+							<div class="scrollable-text">[[${diyDetail.tourItemList[0].hbtTourItemIntro}]]</div>
+		            	</td>
+		            </tr>
+		        <tbody>
+	    	</table>
+	      </div>
+		</th:block>
+	  </th:block>
+</div>
 
 <!-- 선 -->
 <div class="mt-5 mb-4">

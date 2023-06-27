@@ -38,30 +38,23 @@ function searchAddr(){
         postcodeTextColor: "#FFD000",
         emphTextColor: "#FFD000"
     };
-
-    new daum.Postcode({
-	   theme: themeObj
-	}).open();
-	
-	new daum.Postcode({
-	   theme: themeObj
-	}).embed(target);
-
 	
     new daum.Postcode({
-    oncomplete: function(data) {
-		// 도로명 주소 변수
-		const roadAddr = data.roadAddress; 
-		//도로명 주소 세팅 
-		document.querySelector('#memDAddr').value = roadAddr;
-		//기존 오류 메시지 제거 
-		const memDAddrError = document.querySelector('#memDAddrError');
-		if (memDAddrError) {
-			memDAddrError.remove();
-		}
+		theme: themeObj,
+	    oncomplete: function(data) {
 			
-			$('#memDAddr').css('border-color', '#c6df5f'); 
-        	$('#memDAddr').css('border-width', '1.5px');
+			// 도로명 주소 변수
+			const roadAddr = data.roadAddress; 
+			//도로명 주소 세팅 
+			document.querySelector('#memDAddr').value = roadAddr;
+			//기존 오류 메시지 제거 
+			const memDAddrError = document.querySelector('#memDAddrError');
+			if (memDAddrError) {
+				memDAddrError.remove();
+			}
+				
+				$('#memDAddr').css('border-color', '#c6df5f'); 
+	        	$('#memDAddr').css('border-width', '1.5px');
         }
     }).open();
     
@@ -176,8 +169,8 @@ function pwValidate(){
 	
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
-	//const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&!@#$%^&*()]{8,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&!@#$%^&*()])[A-Za-z\d&!@#$%^&*()]{8,20}$/;
+
 		
 	if(memPw == ''){
 		str_memPw = '비밀번호는 필수 입력사항입니다.';
@@ -650,10 +643,10 @@ function verifyAuthCode(authCode) {
 			
 			strResultAuthCode = `인증번호 확인에 성공하였습니다.`;
 			
-			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: c6df5f; margin-top: 0.1rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
+			const resultHTML = `<div id='resultAuthCodeTag' style="font-size: 0.8rem; color: #25da49; margin-top: 0.1rem;margin-left:0.5rem;">${strResultAuthCode}</div>`;
 			authCodeInputTag.insertAdjacentHTML('afterend', resultHTML);
 			
-			authCodeInputTag.style.borderColor = "#c6df5f";
+			authCodeInputTag.style.borderColor = "#8adf4f";
         	authCodeInputTag.style.borderWidth = "1.5px";
         	
         	document.querySelector('.joinBtn').disabled = false;

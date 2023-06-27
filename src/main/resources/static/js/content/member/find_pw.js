@@ -156,8 +156,6 @@ function memDTellValidate(){
 
 
 
-
-
 function find_pw(findPwBtn){
 	
 	//버튼을 누르면 못 누르는 버튼으로 바꿔준다. 
@@ -209,7 +207,7 @@ function find_pw(findPwBtn){
 				str += `<i class="bi bi-envelope-check" style="font-size:3rem; color:#ffd000;"></i><br>`;
 				str += `가입시 입력한 이메일 주소로<br>`;
 				str += `<strong>임시 비밀번호</strong>를 발급해드렸습니다.<br>`;
-				str += `반드시 로그인 후 비밀번호를 변경하여 주세요!`;
+				str += `<span style="font-size:1.2rem; color:#ffd000;">반드시 로그인 후 비밀번호를 변경하여 주세요!<span>`;
 				str += `<br>`;
 				str += `<br>`;
 				str += `</span>`;
