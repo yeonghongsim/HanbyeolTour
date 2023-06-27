@@ -38,7 +38,7 @@ function getBoardDetail(isPrivate, hbtBoardNum, aTag){
 		str += `		<input class="chkVal form-control w-100" type="password">`;
 		str += `	</div>`;
 		str += `	<div class="col-4">`;
-		str += `		<input onclick="chkPw('${hbtBoardNum}', this);" class="chkBtn btn btn-secondary w-100" type="button" value="확인1">`;
+		str += `		<input onclick="chkPw('${hbtBoardNum}', this);" class="chkBtn btn btn-gray w-100" type="button" value="확인">`;
 		str += `	</div>`;
 		
 		
@@ -151,8 +151,8 @@ function regBoardForm(memId){
 	str += `</div>`;
 	str += `<div class="row text-center">`;
 	str += `	<div class="col">`;
-	str += `		<input onclick="location.href='/board/getBoardGroundPage'" type="button" class="btn btn-secondary" value="뒤로 가기">`;
-	str += `		<input type="button" onclick="regBoard();" class="btn btn-primary" value="등록">`;
+	str += `		<input onclick="location.href='/board/getBoardGroundPage'" type="button" class="btn btn-gray" value="뒤로 가기">`;
+	str += `		<input type="button" onclick="regBoard();" class="btn btn-yellow-reverse" value="등록">`;
 	str += `	</div>`;
 	str += `</div>`;
 	str += `</form>`;

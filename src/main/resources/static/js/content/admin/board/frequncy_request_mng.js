@@ -52,10 +52,10 @@ function regFreqReqJs(memId, typeRequestList){
 	str += `</div>`;
 	str += `<div class="row">`;
 	str += `	<div class="offset-8 col-2">`;
-	str += `		<input onclick="location.href='/admin/frequncyRequestMng';" class="btn btn-secondary w-100" type="button" value="이전으로">`;
+	str += `		<input onclick="location.href='/admin/frequncyRequestMng';" class="btn btn-gray w-100" type="button" value="이전으로">`;
 	str += `	</div>`;
 	str += `	<div class="col-2">`;
-	str += `		<input onclick="regFreRequest();" class="btn btn-success w-100" type="button" value="글 등록">`;
+	str += `		<input onclick="regFreRequest();" class="btn btn-yellow-reverse w-100" type="button" value="글 등록">`;
 	str += `	</div>`;
 	str += `</div>`;
 	

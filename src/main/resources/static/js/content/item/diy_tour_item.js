@@ -292,8 +292,8 @@ function drawItem(resultList){
                     `;
     });
     //호텔목록숫자체우기
-    if(resultList['HOTEL'].length < 5){
-        for(let i = 0; i < (5 - parseInt(resultList['HOTEL'].length)); i++){
+    if(resultList['HOTEL'].length % 4 != 0){
+        for(let i = 0; i < (4 - (parseInt(resultList['HOTEL'].length) % 4)); i++){
             hotelStr +=  `
 
 
@@ -335,8 +335,8 @@ function drawItem(resultList){
                     `;
     });
 
-    if(resultList['TOUR'].length < 5){
-        for(let i = 0; i < (5 - parseInt(resultList['TOUR'].length)); i++){
+    if(resultList['TOUR'].length % 4 != 0){
+        for(let i = 0; i < (4 - (parseInt(resultList['TOUR'].length) % 4)); i++){
             tourStr +=  `
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" class="">
@@ -387,6 +387,7 @@ function hotelModal(e){
 
 function drawHotelModal(result){
 
+    const formattedNumber = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' })
     const imgDiv = document.querySelector('.hotelModalImg');
     const hotelDetailInfoTable = document.querySelector('.hotelInfoTable');
     const selectHotel = document.querySelector('.selectHotel');
@@ -399,7 +400,7 @@ function drawHotelModal(result){
     result.forEach((img) => {
         imgStr +=  `
                     <div class="carousel-item">
-                      <img src="/img/item/hotel/${img['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="d-block w-100" alt="...">
+                      <img style="height: 250px; display: block;" src="/img/item/hotel/${img['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="d-block rounded-5 w-100" alt="...">
                     </div>
                    `;
 
@@ -420,10 +421,14 @@ function drawHotelModal(result){
     infoStr += `    </span></td>
                     </tr>
                     <tr>
-                       <td>${result[0]['HBT_HOTEL_PRICE']}</td>
+                       <td>${formattedNumber.format(result[0]['HBT_HOTEL_PRICE'])}</td>
                     </tr>
                     <tr>
-                      <td>${result[0]['HBT_HOTEL_INTRO']}</td>
+                      <td>
+                        <textarea class="text-center form-control rounded-5 custom-border"
+                           disabled style="height: 5rem; background-color: white; font-size: 10px;">${result[0]['HBT_HOTEL_INTRO']}
+                        </textarea>
+                      </td>
                     </tr>
              `;
 
@@ -431,13 +436,13 @@ function drawHotelModal(result){
     for(let i = 0; i < getDate(); i++){
 
         selectStr += `
-        <div class="col">
-            <input class="selectHotelInput form-check-input" type="checkbox" value="${i+1}" name="selectHotel">
+        <div class="col-auto d-flex justify-content-center">
+            <input class="selectHotelInput mx-1 form-check-input custom-border-2 ye-bc" type="checkbox" value="${i+1}" name="selectHotel">
             <input type="hidden" value="${result[0]['HBT_HOTEL_NAME']}">
             <input type="hidden" value="${result[0]['HBT_HOTEL_PRICE']}">
             <input type="hidden" class="hotelCode" value="${result[0]['HBT_HOTEL_CODE']}">
             <label class="form-check-label" for="">
-              ${i+1}일차 일정에 추가
+              ${i+1}일차
             </label>
         </div>
         
@@ -507,7 +512,7 @@ function tourModal(e){
 }
 //투어상품 모달창
 function drawTourModal(result){
-
+    const formattedNumber = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' })
     const tourModalImg = document.querySelector('.tourModalImg');
     const tourInfoTable = document.querySelector('.tourInfoTable');
 
@@ -519,7 +524,7 @@ function drawTourModal(result){
     result.forEach((img) => {
         imgStr +=  `
                     <div class="carousel-item">
-                      <img src="/img/item/tourItem/${img['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="d-block w-100" alt="...">
+                      <img style="height: 320px; display: block;" src="/img/item/tourItem/${img['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="d-block rounded-5 w-100" alt="...">
                     </div>
                    `;
     });
@@ -532,10 +537,14 @@ function drawTourModal(result){
                     <td>${result[0]['HBT_TOUR_ITEM_RUNTIME']}</td>
                 </tr>
                 <tr>
-                    <td>${result[0]['HBT_TOUR_ITEM_PRICE']}</td>
+                    <td>${formattedNumber.format(result[0]['HBT_TOUR_ITEM_PRICE'])}</td>
                 </tr>
                 <tr>
-                    <td>${result[0]['HBT_TOUR_ITEM_INTRO']}</td>
+                    <td>
+                        <textarea class="text-center form-control rounded-5 custom-border"
+                           disabled style="background-color: white; height: 5rem;">${result[0]['HBT_TOUR_ITEM_INTRO']}
+                        </textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -586,14 +595,11 @@ function tourModalControl(){
             //현재페이지 코드와 반복중인 키에해당하는 코드가 같을때 해당키의 정보를 밑에 출력
             let str = '';
             str += `
-                   <tr class="selectedSpan">
-                    <td>
                         <span>${tourInfoKey[i]}일차 일정으로 선택됨</span>
                         <button type="button" class="btn-close" aria-label="Close" onclick="deleteTour(${tourInfoKey[i]});"></button>
-                    </td>
-                   </tr>
             `;
-            document.querySelector('.tourInfoTable').insertAdjacentHTML('beforeend', str);
+            document.querySelector('.selectTour').insertAdjacentHTML('beforeend', str);
+            //document.querySelector('.tourInfoTable').insertAdjacentHTML('beforeend', str);
         }
         //키에 해당 셀렉트박스 옵션 삭제
         for (let i = 0; i < options.length; i++) {
@@ -609,8 +615,8 @@ function tourModalControl(){
 function deleteTour(day){
 
     const tourSelectTag = document.querySelector('.tourSelectTag');
-    const selectedSpan = document.querySelector('.selectedSpan');
-    selectedSpan.parentNode.removeChild(selectedSpan);
+    const selectTour = document.querySelector('.selectTour');
+    selectTour.replaceChildren();
     const option = document.createElement('option');
     option.value = day.toString();
     option.textContent = day.toString() + '일차 일정으로 선택';
@@ -624,6 +630,8 @@ function deleteTour(day){
 
 //최종 결과 화면
 function drawResultModal(){
+    //가격숫자포맷
+    const formattedNumber = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' })
     //합계가격 저장용 변수
     let totalPrice = 0;
     //그림그릴위치
@@ -676,7 +684,7 @@ function drawResultModal(){
             <tr>
                 <td>${hotelInfoKey[i]}일차 숙박일정</td>
                 <td>${hotelInfo[hotelInfoKey[i]][0]}</td>
-                <td>가격 : ${hotelInfo[hotelInfoKey[i]][1]}
+                <td>가격 : ${formattedNumber.format(hotelInfo[hotelInfoKey[i]][1])}
                     <input type="hidden" class="hotelDay" name="hbtHotelCode" value="${hotelInfoKey[i]}">
                     <input type="hidden" class="hbtHotelCode" name="hbtHotelCode" value="${hotelInfo[hotelInfoKey[i]][2]}">
                 </td>
@@ -694,7 +702,7 @@ function drawResultModal(){
             <tr>
                 <td>${tourInfoKey[i]}일차 투어일정</td>
                 <td>${tourInfo[tourInfoKey[i]][0]}</td>
-                <td>가격 : ${tourInfo[tourInfoKey[i]][1]}
+                <td>가격 : ${formattedNumber.format(tourInfo[tourInfoKey[i]][1])}
                     <input type="hidden" class="tourDay" name="hbtTourItemCode" value="${tourInfoKey[i]}">
                     <input type="hidden" class="tourCode" name="hbtTourItemCode" value="${tourInfo[tourInfoKey[i]][2]}">
                 </td>
@@ -708,7 +716,7 @@ function drawResultModal(){
               <tr>
                 <td>최종 결제 금액 : </td>
                 <td colspan="2">
-                    ${totalPrice}
+                    ${formattedNumber.format(totalPrice)}
                     <input type="hidden" class="totalPrice" name="totalPrice" value="${totalPrice}">
                     <input type="hidden" class="traverPeriod" name="traverPeriod" value="${getDate()}">
                 </td>

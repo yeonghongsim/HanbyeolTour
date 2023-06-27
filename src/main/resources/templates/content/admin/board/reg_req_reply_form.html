@@ -14,10 +14,10 @@
 		<div class="col">
 		</div>
 		<div class="col-2">
-			<input onclick="location.href='/admin/requestManage'" type="button" class="btn btn-secondary w-100" value="뒤로 가기">
+			<input onclick="location.href='/admin/requestManage'" type="button" class="btn btn-gray w-100" value="뒤로 가기">
 		</div>
 		<div class="col-2">
-			<input onclick="location.href='/admin/requestManage'" type="button" class="btn btn-danger w-100" value="문의 삭제">
+			<input onclick="location.href='/admin/requestManage'" type="button" class="btn btn-red w-100" value="문의 삭제">
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -71,18 +71,18 @@
 				<div class="row">
 					<th:block th:if="${itemCode == null}">
 						<div class="offset-8 col-2">
-							<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+							<input type="button" onclick="cancelUpdate();" class="btn btn-gray w-100" value="취소">
 						</div>
 						<div class="col-2">
-							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-primary w-100" value="답변 달기">
+							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-yellow-reverse w-100" value="답변 달기">
 						</div>
 					</th:block>
 					<th:block th:unless="${itemCode == null}">
 						<div class="offset-8 col-2">
-							<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+							<input type="button" onclick="cancelUpdate();" class="btn btn-gray w-100" value="취소">
 						</div>
 						<div class="col-2">
-							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-primary w-100" value="답변 달기">
+							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]]);" class="btn btn-yellow-reverse w-100" value="답변 달기">
 						</div>
 					</th:block>
 				</div>
@@ -91,24 +91,24 @@
 				<div class="row mb-3">
 					<th:block th:if="${itemCode == null}">
 						<div class="offset-6 col-2">
-							<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+							<input type="button" onclick="cancelUpdate();" class="btn btn-gray w-100" value="취소">
 						</div>
 						<div class="col-2">
-							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]], [[${reqReply.reqReplyNum}]]);" class="btn btn-primary w-100" value="답변 수정">
+							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]], [[${reqReply.reqReplyNum}]]);" class="btn btn-yellow-reverse w-100" value="답변 수정">
 						</div>
 						<div class="col-2">
-							<input type="button" th:onclick="delFirstResponse([[${reqReply.reqReplyNum}]], [[${reqReply.hbtBoardRequestNum}]]);" class="btn btn-danger w-100" value="답변 삭제">
+							<input type="button" th:onclick="delFirstResponse([[${reqReply.reqReplyNum}]], [[${reqReply.hbtBoardRequestNum}]]);" class="btn btn-red w-100" value="답변 삭제">
 						</div>
 					</th:block>
 					<th:block th:unless="${itemCode == null}">
 						<div class="offset-6 col-2">
-							<input type="button" onclick="cancelUpdate();" class="btn btn-secondary w-100" value="취소">
+							<input type="button" onclick="cancelUpdate();" class="btn btn-gray w-100" value="취소">
 						</div>
 						<div class="col-2">
-							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]], [[${reqReply.reqReplyNum}]]);" class="btn btn-primary w-100" value="답변 수정">
+							<input type="button" th:onclick="regReqReply([[${#authentication.name}]], [[${reqDetail.hbtBoardRequestNum}]], [[${reqReply.reqReplyNum}]]);" class="btn btn-yellow-reverse w-100" value="답변 수정">
 						</div>
 						<div class="col-2">
-							<input type="button" th:onclick="delFirstResponse([[${reqReply.reqReplyNum}]], [[${reqReply.hbtBoardRequestNum}]]);" class="btn btn-danger w-100" value="답변 삭제">
+							<input type="button" th:onclick="delFirstResponse([[${reqReply.reqReplyNum}]], [[${reqReply.hbtBoardRequestNum}]]);" class="btn btn-red w-100" value="답변 삭제">
 						</div>
 					</th:block>
 				</div>

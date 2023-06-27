@@ -44,7 +44,7 @@
     <div class="row">
         <div class="row">
             <div class="col">
-                <table class="table table-striped">
+                <table class="table custom-border-3 rounded-3 align-middle">
                     <colgroup></colgroup>
                     <thead class="ye-S-bc">
                         <tr>
@@ -66,10 +66,10 @@
                                         <img width="40px;" th:src="@{/img/item/airlineIcon/} + ${airline.hbtAirlineIcon}">
                                     </td>
                                     <td>
-                                        <input type="radio" class="form-check-input" name="isUse" value="Y" th:checked="${airline.isUse == 'Y'}" onchange="updateAirlineIsUseAJAX(this);">사용
-                                        <input type="radio" class="form-check-input" name="isUse" value="N" th:checked="${airline.isUse == 'N'}" onchange="updateAirlineIsUseAJAX(this);">미사용
+                                        <input type="radio" class="form-check-input mx-1" name="isUse" value="Y" th:checked="${airline.isUse == 'Y'}" onchange="updateAirlineIsUseAJAX(this);">사용
+                                        <input type="radio" class="form-check-input mx-1" name="isUse" value="N" th:checked="${airline.isUse == 'N'}" onchange="updateAirlineIsUseAJAX(this);">미사용
                                     </td>
-                                    <td><input type="submit" class="btn" value="삭제"></td>
+                                    <td><input type="submit" class="btn custom-border-3 ye-S-bc rounded-5" value="삭제"></td>
                                 </form>
                             </tr>
                         </th:block>

@@ -236,6 +236,7 @@
 			, HBT_AIRLINE_NAME
 			, HBT_AIRLINE_ICON
 		FROM HBT_AIRLINE
+		WHERE IS_USE = 'Y'
 	</select>
 	<!--선택지역 호델 전체 조회-->
 	<select id="getHotelAJAX" resultType="map">
@@ -318,6 +319,31 @@
 				)
 	</insert>
 	
+	<update id="setDiyTourIsPaidToY">
+		UPDATE HBT_DIY_TOUR 
+		SET IS_PAID = 'Y' 
+		WHERE HBT_DIY_CODE = #{hbtDiyCode}
+	</update>
+	
+	<select id="getDiyDetailCodeList" resultType="String">
+		SELECT HBT_DIY_DETAIL_CODE 
+		FROM HBT_DIY_DETAIL 
+		WHERE HBT_DIY_CODE = #{hbtDiyCode}
+	</select>
+	
+	<delete id="delDiyTour">
+		DELETE HBT_DIY_TOUR WHERE  HBT_DIY_CODE = #{hbtDiyCode}
+	</delete>
+	
+	<delete id="delDiyTourDetail">
+		DELETE HBT_DIY_DETAIL WHERE HBT_DIY_DETAIL_CODE IN 
+		(
+		<foreach collection="diyDetailList" item="hbtDiyDetailCode" separator=",">
+			#{hbtDiyDetailCode}
+		</foreach>
+		)
+	</delete>
+	
 	<select id="getDiyTourList" resultMap="diyTour">
 		SELECT HBT_DIY_CODE
 			, MEM_CODE
@@ -342,6 +368,7 @@
 		    , TOUR.TRAVER_PERIOD
 		    , TOUR.BUY_STATUS_CODE
 		    , TOUR.DIY_TOUR_BUY_DATE
+		    , TOUR.MEM_CODE
 		    , DETAIL.HBT_DIY_DETAIL_CODE
 		    , DETAIL.HBT_DIY_DAY
 		    , ITEM.HBT_TOUR_ITEM_CODE

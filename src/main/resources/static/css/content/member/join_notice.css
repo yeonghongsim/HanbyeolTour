@@ -10,7 +10,7 @@
 
 
 .join-n-title{
-	font-size: 2rem;
+	font-size: 1.6rem;
 	text-align: center;
 	letter-spacing: -2px;
     padding-bottom: 2rem;
@@ -24,10 +24,11 @@
 	letter-spacing: -1px;
     padding-bottom: 0.5rem;
     padding-left: 8px;
-    color: #ffd000;
+    color: black;
 }
 .join-n-content ul li{
-	margin-bottom: 0.8rem;
+	font-size:1.2rem;
+	margin-bottom: 0.1rem;
 }
 
 .last-btn{
@@ -35,7 +36,7 @@
 }
 
 .n-container{
-	border: 2px solid #ffd000;
+	border: 1px solid #DEE2E5;
 	border-radius:2rem;
 	width: 50%;
 	justify-content: center;

@@ -28,6 +28,8 @@ function setGrade(){
 function addCartAJAX(){
     const itemCode = document.querySelector("#itemCode").value;
     const numOfPeople = document.querySelector("#numOfPeople").value;
+    const departDate = document.querySelector('#departDate').value;
+    const arriveDate = document.querySelector('#arriveDate').value;
 
     $.ajax({
         url: '/buy/addCartAJAX', //요청경로
@@ -35,7 +37,7 @@ function addCartAJAX(){
         //contentType : 'application/json; charset=UTF-8',
         contentType : "application/x-www-form-urlencoded; charset=UTF-8",
         //async : true,
-        data: {'itemCode': itemCode ,'numOfPeople': numOfPeople},
+        data: {'itemCode': itemCode ,'numOfPeople': numOfPeople, 'departDate' : departDate, 'arriveDate' : arriveDate},
         success: function(result) {
             alert('장바구니 담기 성공');
         },

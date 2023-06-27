@@ -22,7 +22,7 @@
 					</div>
 				</div>
 				<div class="col-2">
-					<input th:onclick="regFreqReqJs([[${#authentication.name}]], [[${typeRequestList}]])" type="button" class="btn btn-primary w-100" value="글 등록하기">
+					<input th:onclick="regFreqReqJs([[${#authentication.name}]], [[${typeRequestList}]])" type="button" class="btn btn-yellow-reverse w-100" value="글 등록하기">
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 						<td>No.</td>
 						<td>title</td>
 						<td>
-							<input class="btn btn-danger w-100" type="button" value="선택 삭제" onclick="delFreqReq('', 0)">
+							<input class="btn btn-red w-100" type="button" value="선택 삭제" onclick="delFreqReq('', 0)">
 						</td>
 					</tr>
 				</thead>
@@ -69,7 +69,7 @@
 							</td>
 							<td>[[${freqRequest.freqRequestTitle}]]</td>
 							<td>
-								<input class="btn btn-danger w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], 0)">
+								<input class="btn btn-red w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], 0)">
 							</td>
 						</tr>
 						<tr class="align-middle hide">
@@ -77,7 +77,7 @@
 							<td>A.</td>
 							<td>[[${freqRequest.freqRequestContent}]]</td>
 							<td>
-								<input th:onclick="updateQnAjs([[${freqRequest.freqRequestCode}]], this, 0);" type="button" class="btn btn-secondary w-100" value="수정 하기">
+								<input th:onclick="updateQnAjs([[${freqRequest.freqRequestCode}]], this, 0);" type="button" class="btn btn-gray w-100" value="수정 하기">
 							</td>
 						</tr>
 					</th:block>

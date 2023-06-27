@@ -13,57 +13,51 @@
 <th:block layout:fragment="content">
 
 	
-	<div class="row">
-		<div class="col page-title">
-			비밀번호 찾기		
+	<div class="container">
+		<form class="form" id="findPwForm" th:action="@{/member/findPw}" method="post">
+			<p class="form-title">비밀번호 찾기</p>
+			<div class="input-container">
+	         <div class="row mb-3">
+				<div class="col-12" id="findPwMemIdDiv">
+					<input type="text" id="findPwMemId" name="memId" class="form-control" placeholder="아이디"
+					onclick="idValidate();" oninput="idValidate()">
+				</div>
+			</div>
+	      </div>
+	      
+			<div class="input-container">
+	         <div class="row mb-3">
+				<div class="col-12" id="findPwMemNameDiv">
+					<input type="text" id="findPwMemName" name="memName" class="form-control" placeholder="이름"
+					onclick="nameValidate();" oninput="nameValidate()">
+				</div>
+			</div>
+	      </div>
+	      
+			<div class="input-container">
+	         <div class="row mb-3">
+				<div class="col-12 text-center" id="findPwMemDTellDiv">
+					<input type="text" id="findPwMemDTell" name="memDTell" class="form-control" 
+					placeholder="'-'을 제외한 휴대전화 전체 자리" maxlength="11" onclick="memDTellValidate();" oninput="memDTellValidate()">
+				</div>
+			</div>
+	      </div>
+			
+		 <div class="row">
+			<div class="col-12 d-grid mb-2">
+				<button onclick="find_pw(this);" id="temp-btn" class="btn btn-yellow" type="button" data-bs-toggle="modal" data-bs-target="#findPwModal">
+					  <span>&nbsp;임시 비밀번호 발급하기</span> 
+				</button>
+			</div>
+		</div> 	
+		<div class="row">
+			<div class="col-12 d-grid mb-5">
+				<input type="button" class="btn btn-gray" value="로그인 하러가기" onclick="location.href='/member/login'">
+			</div>
 		</div>
+			
+		</form>
 	</div>
-	
-	
-	<div class="row justify-content-center">
-		<div class="col-4 mt-4">
-			<form id="findPwForm" th:action="@{/member/findPw}" method="post">
-				
-				<div class="row mb-3">
-					<div class="col-12" id="findPwMemIdDiv">
-						<input type="text" id="findPwMemId" name="memId" class="form-control form-control-lg" placeholder="아이디"
-						onclick="idValidate();" oninput="idValidate()">
-					</div>
-				</div>
-				
-				<div class="row mb-3">
-					<div class="col-12" id="findPwMemNameDiv">
-						<input type="text" id="findPwMemName" name="memName" class="form-control form-control-lg" placeholder="이름"
-						onclick="nameValidate();" oninput="nameValidate()">
-					</div>
-				</div>
-				
-				<div class="row mb-3">
-					<div class="col-12" id="findPwMemDTellDiv">
-						<input type="text" id="findPwMemDTell" name="memDTell" class="form-control form-control-lg" 
-						placeholder="'-'을 제외한 휴대전화 전체 자리" maxlength="11" onclick="memDTellValidate();" oninput="memDTellValidate()">
-					</div>
-				</div>
-							
-				<div class="row">
-					<div class="col-12 d-grid mb-2">
-						<button onclick="find_pw(this);" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#findPwModal">
-						  <span>&nbsp;임시 비밀번호 발급하기</span> 
-						</button>
-					</div>
-				</div> 
-				
-				
-				<div class="row">
-					<div class="col-12 d-grid mb-5">
-						<input type="button" class="btn btn-secondary" value="로그인 하러가기" onclick="location.href='/member/login'">
-					</div>
-				</div>
-				
-			</form>
-		</div>
-	</div>
-
 	
 		<!-- 비밀번호 찾기 결과 모달 -->
 	<div class="modal fade" id="findPwModal" data-bs-keyboard="false" tabindex="-1"

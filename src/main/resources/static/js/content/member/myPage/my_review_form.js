@@ -37,7 +37,7 @@ function isReviewed(buyCode, memCode){
 				str += `		  <label for="star1" title="text"></label>`;
 				str += `	</div>`;
 				str += `	<div class="col-2">`;
-				str += `		<input onclick="regMyReview('${buyCode}', '${memCode}');" type="button" name="" id="" class="btn btn-primary w-100" value="작성">`;
+				str += `		<input onclick="regMyReview('${buyCode}', '${memCode}');" type="button" name="" id="" class="btn btn-yellow-reverse w-100" value="작성">`;
 				str += `	</div>`;
 				str += `</div>`;
 			} else {
@@ -62,10 +62,10 @@ function isReviewed(buyCode, memCode){
 				str += `						<td>${result.hbtMemReviewContent}</td>`;
 				str += `						<td>${result.stars}</td>`;
 				str += `					<td>`;
-				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}', '${result.hbtMemReviewNum}');" type="button" class="btn btn-primary w-100" value="수정하기">`;
+				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}', '${result.hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="수정하기">`;
 				str += `					</td>`;
 				str += `					<td>`;
-				str += `						<input onclick="delMyReview('${result.hbtMemReviewNum}', '${result.buyVO.buyCode}');" type="button" class="btn btn-danger w-100" value="삭제">`;
+				str += `						<input onclick="delMyReview('${result.hbtMemReviewNum}', '${result.buyVO.buyCode}');" type="button" class="btn btn-red w-100" value="삭제">`;
 				str += `					</td>`;
 				str += `					</tr>`;
 				str += `				</tbody>`;
@@ -185,7 +185,7 @@ function changeReivew(hbtMemReviewContent, stars, buyCode, memCode, hbtMemReview
 	str += `		</div>`;
 	str += `	</td>`;
 	str += `	<td>`;
-	str += `		<input onclick="askToChange('${buyCode}', '${memCode}', '${hbtMemReviewNum}');" type="button" class="btn btn-primary w-100" value="변경하기">`;
+	str += `		<input onclick="askToChange('${buyCode}', '${memCode}', '${hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="변경하기">`;
 	str += `	</td>`;
 	str += `</tr>`;
 	

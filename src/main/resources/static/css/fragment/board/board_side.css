@@ -4,3 +4,8 @@
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 }
+
+.board-side-menu a {
+	color: black;
+	text-decoration: none;
+}

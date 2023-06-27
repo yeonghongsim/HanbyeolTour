@@ -46,6 +46,7 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `	<div class="col">`;
 		
 			diyTour.diyDetailList.forEach(function(diyDetail){
+		diy_tour_container += `	<input data-hbt-diy-day="${diyDetail.hbtDiyDay}" data-hbt-hotel-code="${diyDetail.hbtHotelCode}" data-hbt-tour-item-code="${diyDetail.hbtTourItemCode}" type="hidden" class="diyDetail">`;
 		diy_tour_container += `<div class="row modal_day_plan">`;
 		diy_tour_container += `	<div class="col">`;
 		diy_tour_container += `				<div class="row mb-3">`;
@@ -129,11 +130,21 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `</div>`;
 		
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-primary w-100" value="구매" onclick="buyBtnClick();">`;
+		modal_btn += `	<input type="button" class="btn btn-yellow-reverse w-100" value="구매" onclick="buyBtnClick('${diyTour.hbtDiyCode}', 'empty');">`;
 		modal_btn += `</div>`;
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-danger w-100" value="삭제" onclick="delBtnClick();">`;
+		modal_btn += `	<input type="button" class="btn btn-red w-100" value="삭제" onclick="delBtnClick('${diyTour.hbtDiyCode}', 'empty', '${diyTour.memCode}');">`;
 		modal_btn += `</div>`;
+		modal_btn += `<input type="hidden" value="${diyTour.hbtDiyCode}" id="hbtDiyCode">`;
+		modal_btn += `<input type="hidden" value="${diyTour.memCode}" id="memCode">`;
+		modal_btn += `<input type="hidden" value="${diyTour.totalPrice}" id="totalPrice">`;
+		modal_btn += `<input type="hidden" value="${diyTour.traverPeriod}" id="traverPeriod">`;
+		modal_btn += `<input type="hidden" value="${diyTour.areaCode}" id="areaCode">`;
+		modal_btn += `<input type="hidden" value="${diyTour.airlineCode}" id="airlineCode">`;
+		modal_btn += `<input type="hidden" value="${diyTour.areaCode}" id="areaCode">`;
+		modal_btn += `<input type="hidden" value="${diyTour.arriveDate}" id="arriveDate">`;
+		modal_btn += `<input type="hidden" value="${diyTour.departDate}" id="departDate">`;
+		modal_btn += `<input type="hidden" value="${diyTour.traverPeriod}" id="traverPeriod">`;
 		
 		diy_tour_div_col.insertAdjacentHTML('afterbegin', diy_tour_container);
 		modal_btn_div.insertAdjacentHTML('afterbegin', modal_btn);
@@ -141,6 +152,7 @@ function checkDetail(myCart, diyTour){
 	}
 	
 	if(myCart != null){
+		
 		let my_cart_container = '';
 		
 		modal_header.innerHTML = '내가 담은 상품';
@@ -149,10 +161,11 @@ function checkDetail(myCart, diyTour){
 		diy_tour_div_col.replaceChildren();
 		modal_btn_div.replaceChildren();
 		
+		
 		my_cart_container += `<div class="row mb-3">`;
 		my_cart_container += `	<div class="col-5" style="padding-left:3rem; padding-top: 5rem;">`;
 		
-		my_cart_container += `		<p>국가명 : ${myCart.itemVO.tourAreaVO.areaKorName}</p>`;
+		my_cart_container += `		<p">국가명 : ${myCart.itemVO.tourAreaVO.areaKorName}</p>`;
 		my_cart_container += `		<p>총기간 : ${myCart.itemVO.traverPeriod}</p>`;
 		my_cart_container += `		<p>내용</p>`;
 		my_cart_container += `		<p>: ${myCart.itemVO.itemIntro}</p>`;
@@ -194,12 +207,18 @@ function checkDetail(myCart, diyTour){
 		my_cart_container += `</div>`;
 		
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-primary w-100" value="구매" onclick="buyBtnClick();">`;
+		modal_btn += `	<input type="button" class="btn btn-yellow-reverse w-100" value="구매" onclick="buyBtnClick('empty', '${myCart.cartCode}');">`;
 		modal_btn += `</div>`;
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-danger w-100" value="삭제" onclick="delBtnClick();">`;
+		modal_btn += `	<input type="button" class="btn btn-red w-100" value="삭제" onclick="delBtnClick('empty', '${myCart.cartCode}', '${myCart.memberVO.memCode}');">`;
 		modal_btn += `</div>`;
-		
+		modal_btn += `	<input type="hidden" value="${myCart.memberVO.memCode}" id="memCode">`;
+		modal_btn += `	<input type="hidden" value="${myCart.cartTotalPrice}" id="cartTotalPrice">`;
+		modal_btn += `	<input type="hidden" value="${myCart.itemVO.itemCode}" id="itemCode">`;
+		modal_btn += `	<input type="hidden" value="${myCart.itemVO.areaCode}" id="areaCode">`;
+		modal_btn += `	<input type="hidden" value="${myCart.departDate}" id="departDate">`;
+		modal_btn += `	<input type="hidden" value="${myCart.arriveDate}" id="arriveDate">`;
+		modal_btn += `	<input type="hidden" value="${myCart.numOfPeople}" id="numOfPeople">`;
 		
 		my_cart_div_col.insertAdjacentHTML('afterbegin', my_cart_container);
 		modal_btn_div.insertAdjacentHTML('afterbegin', modal_btn);
@@ -209,12 +228,137 @@ function checkDetail(myCart, diyTour){
 	
 }
 
-function buyBtnClick(){
-	alert('구매 버튼 클릭');
+function buyBtnClick(hbtDiyCode, cartCode){
+	const ask = confirm('해당 상품을 구매하시겠습니까?');
+	
+	if(ask){
+		
+		if(cartCode != 'empty'){
+		const memCode = document.querySelector('#memCode').value;
+		const cartTotalPrice = document.querySelector('#cartTotalPrice').value;
+		const itemCode = document.querySelector('#itemCode').value;
+		const areaCode = document.querySelector('#areaCode').value;
+		const departDate = document.querySelector('#departDate').value;
+		const arriveDate = document.querySelector('#arriveDate').value;
+		const numOfPeople = document.querySelector('#numOfPeople').value;
+		
+		cart = {
+			'type' : 'cart'
+			, 'cartCode' : cartCode
+			, 'memberVO.memCode' : memCode
+			, 'buyTotalPrice' : cartTotalPrice
+			, 'itemCode' : itemCode
+			, 'areaCode' : areaCode
+			, 'departDate' : departDate
+			, 'arriveDate' : arriveDate
+			, 'numOfPeople' : numOfPeople 
+		}
+		
+	}
+	
+	if(hbtDiyCode != 'empty'){
+		const hbtDiyCode = document.querySelector('#hbtDiyCode').value;
+		const airlineCode = document.querySelector('#airlineCode').value;
+		const memCode = document.querySelector('#memCode').value;
+		const totalPrice = document.querySelector('#totalPrice').value;
+		const traverPeriod = document.querySelector('#traverPeriod').value;
+		const areaCode = document.querySelector('#areaCode').value;
+		const arriveDate = document.querySelector('#arriveDate').value;
+		const departDate = document.querySelector('#departDate').value;
+		
+		const diyDetails = document.querySelectorAll('.diyDetail');
+		
+		
+		diyDetailList = []
+		diyDetails.forEach(function(diyDetail, index){
+			//console.log(diyDetail.dataset);
+			
+			diyDetailVO = {
+				'hbtDiyDay' : diyDetail.dataset.hbtDiyDay
+				, 'hbtHotelCode' : diyDetail.dataset.hbtHotelCode
+				, 'hbtTourItemCode' : diyDetail.dataset.hbtTourItemCode 
+			}
+			
+			diyDetailList[index] = diyDetailVO
+		
+		});
+		console.log(diyDetailList);
+		
+		diyTour = {
+			'type' : 'diyTour'
+			, 'hbtDiyCode' : hbtDiyCode
+			, 'memCode' : memCode
+			, 'airlineCode' : airlineCode
+			, 'areaCode' : areaCode
+			, 'departDate' : departDate
+			, 'arriveDate' : arriveDate
+			, 'totalPrice' : totalPrice
+			, 'traverPeriod' : traverPeriod
+			, 'isPaid' : 'N'
+			, 'diyDetailList' : diyDetailList
+		}
+	}
+	
+	if(cartCode != 'empty'){
+		data = cart
+	} else if(hbtDiyCode != 'empty'){
+		data = diyTour
+	}
+	
+	
+	//ajax start
+	$.ajax({
+		url: '/myPage/buyMyCartAjax', //요청경로
+		type: 'post',
+		async: true, // 동기방식(Ajax사용), false == 비동기방식
+		//contentType: 'application/json; charset=UTF-8',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		//필요한 데이터
+		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+		data : {'data' : JSON.stringify(data)},
+		
+		success: function(result) {
+			location.href="/myPage/checkMyCart?memId="+result;
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+   //ajax end
+		
+	}
+	
+	
+	
 }
 
-function delBtnClick(){
-	alert('삭제 버튼 클릭');
+function delBtnClick(hbtDiyCode, cartCode, memCode){
+	const ask = confirm('해당 상품을 정말로 삭제하시겠습니까?');
+	
+	if(ask){
+		//ajax start
+		$.ajax({
+			url: '/myPage/delMyCartAJAX', //요청경로
+			type: 'post',
+			async: true, // 동기방식(Ajax사용), false == 비동기방식
+			//contentType: 'application/json; charset=UTF-8',
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			//필요한 데이터
+			// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+			data: {'cartCode' : cartCode
+				,'hbtDiyCode' : hbtDiyCode
+				, 'memCode' : memCode},
+			success: function(result) {
+				location.href="/myPage/checkMyCart?memId="+result;
+			},
+			error: function() {
+				alert('실패');
+			}
+		});
+	   //ajax end	
+	}
+	
+	
 }
 
 

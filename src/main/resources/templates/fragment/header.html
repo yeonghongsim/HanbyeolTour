@@ -22,8 +22,8 @@
 					<ul class="header-title head-top">
 						<li class="h-btn"><a th:href="@{/member/login}">로그인</a></li>
 						<li class="h-btn"><a href="/member/join">회원가입</a></li>
-						<li class="h-btn">장바구니</li>
-						<li class="h-btn">마이페이지</li>
+						<li class="h-btn"><a href="javascript:void(0);">장바구니</a></li>
+						<li class="h-btn"><a href="javascript:void(0);">마이페이지</a></li>
 						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
 						<li class="h-btn">
 							<a th:href="@{/admin/}">관리자메뉴</a>
@@ -33,7 +33,7 @@
 				<!-- 로그인 시 -->
 				<div sec:authorize="isAuthenticated()">
 					<ul class="header-title head-top">
-						<li>[[${#authentication.name}]]님 즐거운 여행되세요! 😉</li>
+						<li><a href="javascript:void(0);">[[${#authentication.name}]]님 즐거운 여행되세요! 😉</a></li>
 						<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
 						<li class="h-btn"><a th:href="@{/myPage/checkMyCart(memId=${#authentication.name})}">장바구니</a></li>
 						<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>

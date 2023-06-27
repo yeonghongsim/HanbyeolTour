@@ -89,10 +89,10 @@ function updateMyRequest(hbtBoardRequestNum, memId, memCode, itemCode){
 				str += `	</div>`
 				str += `	<div class="row justify-content-center">`
 				str += `		<div class="col-2">`
-				str += `			<input onclick="cancelUpdate('${hbtBoardRequestNum}', '${itemCode}');" type="button" class="btn btn-secondary w-100" value="뒤로 가기">`;
+				str += `			<input onclick="cancelUpdate('${hbtBoardRequestNum}', '${itemCode}');" type="button" class="btn btn-gray w-100" value="뒤로 가기">`;
 				str += `		</div>`
 				str += `		<div class="col-2">`
-				str += `			<input type="button" onclick="updateReq('${hbtBoardRequestNum}', '${itemCode}', '${typeRequestCode}', '${memCode}');" class="btn btn-primary w-100" value="수정 하기">`;
+				str += `			<input type="button" onclick="updateReq('${hbtBoardRequestNum}', '${itemCode}', '${typeRequestCode}', '${memCode}');" class="btn btn-yellow-reverse w-100" value="수정 하기">`;
 				str += `		</div>`
 				str += `	</div>`
 				str += `</div>`

@@ -48,4 +48,9 @@ public class BuyServiceImpl implements BuyService{
 	public List<CartVO> getCartList(String memCode) {
 		return sqlSession.selectList("buyMapper.getCartList", memCode);
 	}
+
+	@Override
+	public void delCart(String cartCode) {
+		sqlSession.delete("buyMapper.delCart", cartCode);
+	}
 }

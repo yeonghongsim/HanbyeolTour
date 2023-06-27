@@ -19,12 +19,14 @@ function update_my_info(){
 		
 		// 정보 수정 진행 
 		document.querySelector('#infoUpdateForm').submit();
-		
+		alert('정보가 수정되었습니다.');
 	}
 	else{
 		return;		
 	}
 }
+
+
 
 
 
@@ -43,14 +45,7 @@ function searchAddr() {
     };
 
     new daum.Postcode({
-	   theme: themeObj
-	}).open();
-	
-	new daum.Postcode({
-	   theme: themeObj
-	}).embed(target);
-
-    new daum.Postcode({
+		theme: themeObj,
         oncomplete: function(data) {
             const roadAddr = data.roadAddress;
             document.querySelector('#memDAddr').value = roadAddr;

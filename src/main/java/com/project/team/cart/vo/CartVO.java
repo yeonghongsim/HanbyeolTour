@@ -17,4 +17,6 @@ public class CartVO {
 	private int cartTotalPrice;
 	private MemberVO memberVO;
 	private ItemVO itemVO;
+	private String arriveDate;
+	private String departDate;
 }
