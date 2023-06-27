@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col">
 			<h3 class="menuTitle">판매 상품 관리</h3>
-			<div class="row">
+			<div class="row searchDiv">
 				<div class="col">
 					<form th:action="@{/admin/itemManageForSale}" method="post" id="searchForm">
 						<input type="hidden" name="nowPage" th:value="${saleListSearchVO.nowPage}" id="nowPage">
@@ -22,7 +22,7 @@
 							<colgroup>
 								<col width="15%">
 								<col width="*">
-								<col width="15%">
+								<col width="16.2%">
 								<col width="20%">
 							</colgroup>
 							<tbody>
@@ -48,23 +48,27 @@
 									</td>
 									<td colspan="2">
 									 <div class="row">
-									 	<div class="col priceDiv">
-										 	<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
-											<span>~</span>
-											<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
-									 	</div>
+									 	<div class="col-8 d-grid" style="padding-right: 0px;">
+											<input type="submit" value="상품 검색" class="btn btn-primary searchInput">
+										</div>
 				                     </div>
 									</td>
 								</tr>
 								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
+									<td colspan="4">
 										<div class="row">
-											<div class="col d-grid" style="padding-right: 0px;">
-												<input type="submit" value="상품 검색" class="btn btn-primary searchInput">
+											<div class="col-3">
+												<input type="date" class="form-control searchInput" name="searchFromDate" th:value="${saleListSearchVO.searchFromDate}">
 											</div>
+											<div class="col-1" style="width: 30px;">~</div>
+											<div class="col-3">
+												<input type="date" class="form-control searchInput" name="searchToDate" th:value="${saleListSearchVO.searchToDate}">
+											</div>
+											<div class="col-4 priceDiv">
+											 	<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
+												<span>~</span>
+												<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
+									 		</div>
 										</div>
 									</td>
 								</tr>
@@ -74,20 +78,20 @@
 					
 				</div>
 			</div>
+			<div class="row mt-3">
 			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보를 확인할 수 있습니다.</div>
-			<div class="row">
 				<div class="col">
 					<table class="table text-center listTable">
 						<colgroup>
 							<col width="5%">
-							<col width="">
-							<col width="">
-							<col width="">
-							<col width="">
-							<col width="">
+							<col width="*">
+							<col width="15%">
+							<col width="10%">
+							<col width="13%">
+							<col width="5%">
 						</colgroup>
 						<thead style="background-color: #f2f2f2;">
-							<tr>
+							<tr class="text-center">
 								<td><input type="checkbox" class="form-check-input" id="allCheck" onclick="AllCheckboxControl();"></td>
 								<td>상품</td>
 								<td>판매기간</td>
@@ -105,7 +109,7 @@
 							<th:block th:unless="${#lists.size(itemSaleList) == 0}">
 								<tr th:each="item : ${itemSaleList}">
 									<td><input type="checkbox" class="form-check-input chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
-									<td>
+									<td class="">
 										<table class="itemTd text-start">
 											<tr>
 												<td>

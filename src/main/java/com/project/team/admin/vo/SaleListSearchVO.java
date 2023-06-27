@@ -17,5 +17,7 @@ public class SaleListSearchVO extends PageVO{
 	private String searchValue; //검색 기능 select 박스 옆 입력하는 데이터
 	private String searchFromPrice;
 	private String searchToPrice;
+	private String searchFromDate;
+	private String searchToDate;
 	
 }
