@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 
-.join-container .col{
+.col{
 	padding: 0;
 }
 
@@ -100,7 +100,7 @@
 /* radio btn */
 
 .btn-group{
-	height: 54.8px;
+	height: 64px;
 	width: 90%;
 	border: 1px solid #DEE2E5;
 	background-color: #fff9d4;
@@ -118,8 +118,8 @@
 
 .btn-group .btn-check:checked + label.btn {
 	background-color: #ffd000;
-	color: black;
-	border: 1px solid #DEE2E5;
+	color: #fff;
+	border: 1px solid #ffd000;
 }
 
 .gender-radio {
