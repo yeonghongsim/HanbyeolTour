@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 .my-req-table > thead {
-	border-top: 1px solid grey;
-	border-bottom: 1px solid grey;
-	background-color: #eee;
+	border-top: 1px solid #ffd000;
+	border-bottom: 1px solid #ffd000;
+	background-color: #fff9d4;
 }
 
 .my-req-table > tbody > tr {

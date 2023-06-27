@@ -57,7 +57,7 @@
 	
 	<div class="row mb-3">
 		<div class="col text-end">
-			<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-secondary" type="button" value="뒤로 가기">
+			<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-gray" type="button" value="뒤로 가기">
 		</div>
 	</div>
 	
@@ -66,7 +66,7 @@
 			<input class="form-control" type="text" name="">
 		</div>
 		<div class="col-2">
-			<input th:onclick="regReply([[${boardDetail.memberVO.memId}]], [[${#authentication.name}]], [[${boardDetail.hbtBoardNum}]], this, [[${#authentication.authorities}]]);" class="btn btn-primary w-100" type="button" value="댓글 달기">
+			<input th:onclick="regReply([[${boardDetail.memberVO.memId}]], [[${#authentication.name}]], [[${boardDetail.hbtBoardNum}]], this, [[${#authentication.authorities}]]);" class="btn btn-yellow-reverse w-100" type="button" value="댓글 달기">
 		</div>
 	</div>
 	
@@ -90,22 +90,22 @@
 							</div>
 							<div class="row">
 								<div class="col-1 me-3" th:if="${reply.memberVO.memId} == ${#authentication.name}">
-									<input th:onclick="updateFormReply(this, [[${reply.hbtBoardReplyNum}]])" class="btn btn-secondary" type="button" value="수정">
+									<input th:onclick="updateFormReply(this, [[${reply.hbtBoardReplyNum}]])" class="btn btn-gray" type="button" value="수정">
 								</div>
 								<div class="col-1 me-3" th:if="${reply.memberVO.memId} != ${#authentication.name}">
-									<input th:onclick="regReReply(this, [[${reply.hbtBoardReplyNum}]], [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${reply.memberVO.memId}]], [[${#authentication.authorities}]]);" class="btn btn-primary" type="button" value="대댓글">
+									<input th:onclick="regReReply(this, [[${reply.hbtBoardReplyNum}]], [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${reply.memberVO.memId}]], [[${#authentication.authorities}]]);" class="btn btn-yellow-reverse" type="button" value="대댓글">
 								</div>
 								<th:block sec:authorize="hasRole('ROLE_USR')">
 									<div class="col-1 me-3" th:if="${reply.memberVO.memId} == ${#authentication.name}">
-										<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]],  [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${#authentication.authorities}]])" class="btn btn-danger" type="button" value="삭제1">
+										<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]],  [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${#authentication.authorities}]])" class="btn btn-red" type="button" value="삭제">
 									</div>
 								</th:block>
 								<th:block sec:authorize="hasRole('ROLE_AD')">
 									<div class="col-1 me-3" th:if="${reply.memberVO.memId} != ${#authentication.name}">
-										<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${#authentication.authorities}]])" class="btn btn-danger" type="button" value="삭제2">
+										<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${#authentication.authorities}]])" class="btn btn-red" type="button" value="삭제">
 									</div>
 									<div class="col-1 me-3" th:if="${reply.memberVO.memId} == ${#authentication.name}">
-										<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${#authentication.authorities}]])" class="btn btn-danger" type="button" value="삭제3">
+										<input th:onclick="delReply([[${reply.hbtBoardReplyNum}]], [[${#authentication.name}]], [[${reply.hbtBoardNum}]], [[${#authentication.authorities}]])" class="btn btn-red" type="button" value="삭제">
 									</div>
 								</th:block>
 							</div>
@@ -124,16 +124,16 @@
 							</div>
 							<th:block sec:authorize="hasRole('ROLE_USR')">
 								<div class="col-1 me-3" th:if="${reReply.memberVO.memId} == ${#authentication.name}">
-									<input th:onclick="delReReply([[${reReply.hbtBoardReplyNum}]], [[${reReply.hbtBoardNum}]], [[${#authentication.name}]], [[${reReply.hbtBoardReplyNumFk}]], [[${#authentication.authorities}]]);" type="button" class="btn btn-danger" value="삭제4">
+									<input th:onclick="delReReply([[${reReply.hbtBoardReplyNum}]], [[${reReply.hbtBoardNum}]], [[${#authentication.name}]], [[${reReply.hbtBoardReplyNumFk}]], [[${#authentication.authorities}]]);" type="button" class="btn btn-red" value="삭제">
 								</div>
 							</th:block>
 							<th:block sec:authorize="hasRole('ROLE_AD')">
 								<div class="col-1 me-3" th:if="${reReply.memberVO.memId} != ${#authentication.name}">
-									<input th:onclick="delReReply([[${reReply.hbtBoardReplyNum}]], [[${reReply.hbtBoardNum}]], [[${#authentication.name}]], [[${reReply.hbtBoardReplyNumFk}]], [[${#authentication.authorities}]]);" type="button" class="btn btn-danger" value="삭제5">
+									<input th:onclick="delReReply([[${reReply.hbtBoardReplyNum}]], [[${reReply.hbtBoardNum}]], [[${#authentication.name}]], [[${reReply.hbtBoardReplyNumFk}]], [[${#authentication.authorities}]]);" type="button" class="btn btn-red" value="삭제">
 								</div>
 								
 								<div class="col-1 me-3" th:if="${reReply.memberVO.memId} == ${#authentication.name}">
-									<input th:onclick="delReReply([[${reReply.hbtBoardReplyNum}]], [[${reReply.hbtBoardNum}]], [[${#authentication.name}]], [[${reReply.hbtBoardReplyNumFk}]], [[${#authentication.authorities}]]);" type="button" class="btn btn-danger" value="삭제6">
+									<input th:onclick="delReReply([[${reReply.hbtBoardReplyNum}]], [[${reReply.hbtBoardNum}]], [[${#authentication.name}]], [[${reReply.hbtBoardReplyNumFk}]], [[${#authentication.authorities}]]);" type="button" class="btn btn-red" value="삭제">
 								</div>
 							</th:block>
 						</div>

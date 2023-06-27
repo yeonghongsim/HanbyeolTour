@@ -37,7 +37,7 @@
 							<input class="form-control" type="text" name="groundSearchVO.searchVal" id="searchVal" th:value="${boardVO.groundSearchVO.searchVal}">
 						</div>
 						<div class="col-2">
-							<input th:onclick="searchBoard();" class="form-control btn btn-warning w-100" type="button" value="검색" style="color: white;">
+							<input th:onclick="searchBoard();" class="form-control btn btn-yellow-reverse w-100" type="button" value="검색">
 						</div>
 					</div>
 				</form>
@@ -47,10 +47,10 @@
 						
 						<div class="row mb-3">
 							<div class="col">
-								<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-secondary" type="button" value="전체 보기">
+								<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-gray" type="button" value="전체 보기">
 							</div>
 							<div class="col text-end" sec:authorize="isAuthenticated()">
-								<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-success" type="button" value="게시글 작성">
+								<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-green" type="button" value="게시글 작성">
 							</div>
 						</div>
 						
