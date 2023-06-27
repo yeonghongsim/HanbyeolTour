@@ -1,6 +1,6 @@
 init();
 
-getChartDataAJAX();
+getChartStatisticsAJAX();
 
 function chkMainSelect(mainSlcVal){
 	const sub_select = document.querySelector('.sub_select');
@@ -37,7 +37,7 @@ function chkMainSelect(mainSlcVal){
 	
 }
 
-function getChartDataAJAX(){
+function getChartStatisticsAJAX(){
 	const main_key = document.querySelector('.main_select').value;
 	const sub_select = document.querySelector('.sub_select');
 	const sub_key = sub_select.options[sub_select.selectedIndex].text;
@@ -72,8 +72,8 @@ function getChartDataAJAX(){
 				, 'valueList' : valueList 
 			}
 			
-			drawChart(data, sub_key);
-			drawTable(data, totalAmount);
+			drawChart_statistics(data, sub_key);
+			drawTable_statistics(data, totalAmount);
 			
 		},
 		error: function() {
@@ -84,7 +84,7 @@ function getChartDataAJAX(){
 	
 }
 
-function drawChart(data, sub_key){
+function drawChart_statistics(data, sub_key){
 	
 	const chart_area = document.querySelector('.chart_area');
 	let chart_div = '';
@@ -111,6 +111,7 @@ function drawChart(data, sub_key){
 			]
 		},
 		options: {
+			maintainAspectRatio: false,
 			responsive: true,
 			plugins: {
 				legend: {
@@ -126,7 +127,7 @@ function drawChart(data, sub_key){
 	
 }
 
-function drawTable(data, totalAmount){
+function drawTable_statistics(data, totalAmount){
 	const data_area = document.querySelector('.data_area');
 	
 	// 데이터 뿌리기

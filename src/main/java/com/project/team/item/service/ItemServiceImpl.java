@@ -132,6 +132,11 @@ public class ItemServiceImpl implements ItemService{
 		sqlSession.delete("itemMapper.delDiyTour", diyTourVO);
 	}
 
+	@Override
+	public void setDiyTourIsPaidToY(String hbtDiyCode) {
+		sqlSession.update("itemMapper.setDiyTourIsPaidToY", hbtDiyCode);
+	}
+
 
 	
 

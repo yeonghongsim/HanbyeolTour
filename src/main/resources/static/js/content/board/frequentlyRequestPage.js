@@ -57,8 +57,8 @@ function searchTypeRequest(typeRequestCode){
 
 // 해당 질문의 제목 클릭 시 질문의 답 토글 기능
 function toggleAnswer(selectedTitle){
-	const answerTr = selectedTitle.closest('tr').nextElementSibling;
-	const chevronClass = selectedTitle.parentElement.nextElementSibling;
+	const answerTr = selectedTitle.nextElementSibling;
+	const chevronClass = selectedTitle.children[2];
 	
 	if(answerTr.classList.contains('hide')){
 		answerTr.classList.remove('hide');

@@ -46,6 +46,7 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `	<div class="col">`;
 		
 			diyTour.diyDetailList.forEach(function(diyDetail){
+		diy_tour_container += `	<input data-hbt-diy-day="${diyDetail.hbtDiyDay}" data-hbt-hotel-code="${diyDetail.hbtHotelCode}" data-hbt-tour-item-code="${diyDetail.hbtTourItemCode}" type="hidden" class="diyDetail">`;
 		diy_tour_container += `<div class="row modal_day_plan">`;
 		diy_tour_container += `	<div class="col">`;
 		diy_tour_container += `				<div class="row mb-3">`;
@@ -129,10 +130,10 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `</div>`;
 		
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-primary w-100" value="구매" onclick="buyBtnClick('${diyTour.hbtDiyCode}', 'empty');">`;
+		modal_btn += `	<input type="button" class="btn btn-yellow-reverse w-100" value="구매" onclick="buyBtnClick('${diyTour.hbtDiyCode}', 'empty');">`;
 		modal_btn += `</div>`;
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-danger w-100" value="삭제" onclick="delBtnClick('${diyTour.hbtDiyCode}', 'empty', '${diyTour.memCode}');">`;
+		modal_btn += `	<input type="button" class="btn btn-red w-100" value="삭제" onclick="delBtnClick('${diyTour.hbtDiyCode}', 'empty', '${diyTour.memCode}');">`;
 		modal_btn += `</div>`;
 		modal_btn += `<input type="hidden" value="${diyTour.hbtDiyCode}" id="hbtDiyCode">`;
 		modal_btn += `<input type="hidden" value="${diyTour.memCode}" id="memCode">`;
@@ -206,10 +207,10 @@ function checkDetail(myCart, diyTour){
 		my_cart_container += `</div>`;
 		
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-primary w-100" value="구매" onclick="buyBtnClick('empty', '${myCart.cartCode}');">`;
+		modal_btn += `	<input type="button" class="btn btn-yellow-reverse w-100" value="구매" onclick="buyBtnClick('empty', '${myCart.cartCode}');">`;
 		modal_btn += `</div>`;
 		modal_btn += `<div class="col-2 me-2">`;
-		modal_btn += `	<input type="button" class="btn btn-danger w-100" value="삭제" onclick="delBtnClick('empty', '${myCart.cartCode}', '${myCart.memberVO.memCode}');">`;
+		modal_btn += `	<input type="button" class="btn btn-red w-100" value="삭제" onclick="delBtnClick('empty', '${myCart.cartCode}', '${myCart.memberVO.memCode}');">`;
 		modal_btn += `</div>`;
 		modal_btn += `	<input type="hidden" value="${myCart.memberVO.memCode}" id="memCode">`;
 		modal_btn += `	<input type="hidden" value="${myCart.cartTotalPrice}" id="cartTotalPrice">`;
@@ -228,11 +229,11 @@ function checkDetail(myCart, diyTour){
 }
 
 function buyBtnClick(hbtDiyCode, cartCode){
-	console.log(hbtDiyCode + '/' + cartCode);
+	const ask = confirm('해당 상품을 구매하시겠습니까?');
 	
-	
-	if(cartCode != 'empty'){
-		const airlineCode = document.querySelector('#airlineCode').value;
+	if(ask){
+		
+		if(cartCode != 'empty'){
 		const memCode = document.querySelector('#memCode').value;
 		const cartTotalPrice = document.querySelector('#cartTotalPrice').value;
 		const itemCode = document.querySelector('#itemCode').value;
@@ -243,7 +244,6 @@ function buyBtnClick(hbtDiyCode, cartCode){
 		
 		cart = {
 			'type' : 'cart'
-			, 'airlineCode' : airlineCode
 			, 'cartCode' : cartCode
 			, 'memberVO.memCode' : memCode
 			, 'buyTotalPrice' : cartTotalPrice
@@ -258,6 +258,7 @@ function buyBtnClick(hbtDiyCode, cartCode){
 	
 	if(hbtDiyCode != 'empty'){
 		const hbtDiyCode = document.querySelector('#hbtDiyCode').value;
+		const airlineCode = document.querySelector('#airlineCode').value;
 		const memCode = document.querySelector('#memCode').value;
 		const totalPrice = document.querySelector('#totalPrice').value;
 		const traverPeriod = document.querySelector('#traverPeriod').value;
@@ -265,15 +266,36 @@ function buyBtnClick(hbtDiyCode, cartCode){
 		const arriveDate = document.querySelector('#arriveDate').value;
 		const departDate = document.querySelector('#departDate').value;
 		
+		const diyDetails = document.querySelectorAll('.diyDetail');
+		
+		
+		diyDetailList = []
+		diyDetails.forEach(function(diyDetail, index){
+			//console.log(diyDetail.dataset);
+			
+			diyDetailVO = {
+				'hbtDiyDay' : diyDetail.dataset.hbtDiyDay
+				, 'hbtHotelCode' : diyDetail.dataset.hbtHotelCode
+				, 'hbtTourItemCode' : diyDetail.dataset.hbtTourItemCode 
+			}
+			
+			diyDetailList[index] = diyDetailVO
+		
+		});
+		console.log(diyDetailList);
+		
 		diyTour = {
 			'type' : 'diyTour'
 			, 'hbtDiyCode' : hbtDiyCode
 			, 'memCode' : memCode
+			, 'airlineCode' : airlineCode
+			, 'areaCode' : areaCode
+			, 'departDate' : departDate
+			, 'arriveDate' : arriveDate
 			, 'totalPrice' : totalPrice
 			, 'traverPeriod' : traverPeriod
-			, 'areaCode' : areaCode
-			, 'arriveDate' : arriveDate
-			, 'departDate' : departDate
+			, 'isPaid' : 'N'
+			, 'diyDetailList' : diyDetailList
 		}
 	}
 	
@@ -296,13 +318,17 @@ function buyBtnClick(hbtDiyCode, cartCode){
 		data : {'data' : JSON.stringify(data)},
 		
 		success: function(result) {
-			alert('ajax 통신 성공');
+			location.href="/myPage/checkMyCart?memId="+result;
 		},
 		error: function() {
 			alert('실패');
 		}
 	});
    //ajax end
+		
+	}
+	
+	
 	
 }
 
