@@ -308,7 +308,7 @@ function buyBtnClick(hbtDiyCode, cartCode){
 	
 	//ajax start
 	$.ajax({
-		url: '/myPage/addMyCartAjax', //요청경로
+		url: '/myPage/buyMyCartAjax', //요청경로
 		type: 'post',
 		async: true, // 동기방식(Ajax사용), false == 비동기방식
 		//contentType: 'application/json; charset=UTF-8',

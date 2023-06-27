@@ -68,12 +68,12 @@ function getNeedReview(memId){
 	
 }
 
-function getAllReview(memId){
+function getWritenReview(memId){
 	const get_result_area = document.querySelector('.get_result_area');
 	
 	//ajax start
 	$.ajax({
-		url: '/myPage/getAllReviewAJAX', //요청경로
+		url: '/myPage/getWritenReviewAJAX', //요청경로
 		type: 'post',
 		async: true, // 동기방식(Ajax사용), false == 비동기방식
 		//contentType: 'application/json; charset=UTF-8',
@@ -113,7 +113,7 @@ function getAllReview(memId){
 			result.forEach(function(review, idx){
 			str += `		<tr onclick="getMyReview('${review.buyVO.buyCode}');" class="pointer">`;
 			str += `			<td>${review.buyVO.buyCode}</td>`;
-			str += `			<td style="text-align: left; padding-left: 1rem;">${review.hbtMemReviewContent}</td>`;
+			str += `			<td style="text-align: left; padding-left: 1rem;" class="content_target">${review.hbtMemReviewContent.substr(0, 20)}</td>`;
 			str += `			<td>${review.stars}</td>`;
 			str += `		</tr>`;
 				

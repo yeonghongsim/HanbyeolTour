@@ -22,7 +22,7 @@ function onGeoOk(position) {
 	  const weather_icon_url = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" alt="${data.weather[0].description}">`;
      // console.log(`온도 : ${data.main.temp}, 날씨 : ${data.weather[0].main},도시 : ${data.sys.country} , ${data.name}, 아이콘 : ${data.weather[0].icon}`);
       icon.innerHTML = weather_icon_url;
-      text.innerText = `${data.weather[0].description}`;
+      text.innerText = `${data.weather[0].main}`;
       temp.innerText = `${data.main.temp} °C`;
       city.innerText = `${data.name} , ${data.sys.country}`;
       document.querySelector('.weather-ment').innerText = `현재 날씨 :   `;

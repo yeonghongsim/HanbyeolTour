@@ -4,11 +4,13 @@ a {
 	color: black;
 	text-decoration: none;
 }
+a:hover {
+	text-decoration: none;
+}
 
 .header-bar{
 	margin-top: 1.5rem;
 }
-
 
 /* 헤더 글씨 옆으로 나오도록 설정*/
 .header-title li {
@@ -29,26 +31,29 @@ a {
   height: 1px;
   background-color: #666;
 }
+/* 헤더 글씨 */
+.head-top a {
+	color: white;
+	font-size: 1.3rem;
+	text-decoration: none;
+}
+.head-top a:hover {
+	color: #ffd000;
+	text-decoration: none;
+}
 
 .logo {
 	font-size: 4rem;
-	padding: 0000;
-	margin-left: 10rem;
-	color: #ffd000;
+	margin-left: 3rem;
 	font-weight: bolder;
+	color: white;
 }
 
 .header-bar-2{
 	background: white; 
 	margin-top: 1rem;
-}	
-	
-
-a {
-  text-decoration: none;
-  color: #666;
-  
 }
+	
 
 
 

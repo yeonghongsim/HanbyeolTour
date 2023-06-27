@@ -73,7 +73,8 @@ function pwValidate(){
 	// validation 처리
 	const memPw = document.querySelector('#memPw').value;
 	//const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?!\s)[A-Za-z\d@$!%*?&]{8,20}$/;
-	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&!@#$%^&*()]{8,20}$/;
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&!@#$%^&*()])[A-Za-z\d&!@#$%^&*()]{8,20}$/;
+
 
 	if(memPw == ''){
 		str_memPw = '비밀번호를 입력해주세요.';
@@ -86,7 +87,7 @@ function pwValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memPw){
-		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:15rem;">${str_memPw}</div>`;
+		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:13rem;">${str_memPw}</div>`;
 		newPwTag.insertAdjacentHTML('afterend', errorHTML);
 		$('#memPw').css('border-color', '#f27370'); // 테두리 색상 변경
         $('#memPw').css('border-width', '1.5px'); // 테두리 두께 변경
@@ -137,7 +138,7 @@ function pwCheckValidate(){
 	 
 	
 	if(!result_pwCheck){
-	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:15rem;">${str_pwCheck}</div>`;
+	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:13rem;">${str_pwCheck}</div>`;
 	checkPwTag.insertAdjacentHTML('afterend', errorHTML);
 	$('#checkPw').css('border-color', '#f27370'); // 테두리 색상 변경
     $('#checkPw').css('border-width', '1.5px'); // 테두리 두께 변경

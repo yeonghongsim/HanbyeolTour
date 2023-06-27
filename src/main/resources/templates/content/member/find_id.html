@@ -15,20 +15,20 @@
 
 <div class="container">
 	
-	<form class="form" id="findIdForm" th:action="@{/member/findId}" method="post">
+	<form class="id-form" id="findIdForm" th:action="@{/member/findId}" method="post">
 		<p class="form-title">아이디 찾기</p>
 		
 	  <div class="input-container">
          <div class="row mb-3">
 			<div class="col-12">
-				<input type="text" id="memName" name="memName" class="form-control form-control-lg" placeholder="이름">
+				<input type="text" id="memName" name="memName" class="form-control id" placeholder="이름">
 			</div>
 		</div>
       </div>
 	  <div class="input-container">
          <div class="row mb-3">
 			<div class="col-12">
-				<input type="text" id="memDTell" name="memDTell" class="form-control form-control-lg" 
+				<input type="text" id="memDTell" name="memDTell" class="form-control id" 
 				placeholder="'-'을 제외한 휴대전화 전체 자리" maxlength="11">
 			</div>
 		</div>

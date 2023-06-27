@@ -516,7 +516,7 @@
         AND DT.HBT_AIRLINE_CODE = AIR.HBT_AIRLINE_CODE
         AND DT.AREA_CODE = AREA.AREA_CODE
         AND DT.BUY_STATUS_CODE = ST.BUY_STATUS_CODE
-		AND IS_PAID = 'Y'
+		AND DT.IS_PAID = 'Y'
 		<if test="fromDate != null and !fromDate.equals('')">
 		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
 		</if>	
@@ -571,8 +571,10 @@
 		LEFT OUTER JOIN HBT_TOUR_ITEM TOUR 
 		    ON DETAIL.HBT_TOUR_ITEM_CODE = TOUR.HBT_TOUR_ITEM_CODE
 		WHERE DETAIL.HBT_DIY_CODE = #{hbtDiyCode}
+		AND IS_PAID = 'Y'
 		ORDER BY DETAIL.HBT_DIY_CODE
 	</select>
+	
 	<!-- 일자별 예약된 투어와 호텔 정보 리스트 -->
 	<select id="getDiyDetailListNew" resultMap="buyMapper.diyDetail">
 		SELECT  DETAIL.HBT_DIY_CODE
@@ -590,7 +592,6 @@
 		WHERE DETAIL.HBT_DIY_CODE = #{hbtDiyCode}
 		ORDER BY DETAIL.HBT_DIY_CODE
 	</select>
-	
 		
 	<!-- DIY - 상세 / 예약된 호텔 정보 리스트 -->
 	<select id="getInDiyHotelInfoList" resultMap="buyMapper.diyTour">
@@ -644,7 +645,7 @@
 		WHERE HBT_TOUR_ITEM_CODE = #{hbtTourItemCode}
 	</select>
 	
-	<!-- 마이페이지 mainPage - DIY 1개월 이내 내역 조회 -->
+	<!-- 마이페이지 mainPage - DIY 1개월 이내 구매내역 상단바 조회 -->
 	<select id="getDiyStatusInOneMonth" resultMap="buyMapper.buyState">
 		SELECT
 		  HBS.BUY_STATUS_CODE,
@@ -655,6 +656,7 @@
 		LEFT JOIN
 		  HBT_DIY_TOUR HDT ON HBS.BUY_STATUS_CODE = HDT.BUY_STATUS_CODE 
 		  AND HDT.MEM_CODE = #{memCode} 
+		  AND HDT.IS_PAID = 'Y'
 		  AND TO_CHAR(HDT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD') 
 		  AND TO_CHAR(HDT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		WHERE 
@@ -665,7 +667,7 @@
 		ORDER BY
 		  HBS.BUY_STATUS_CODE ASC
 	</select>
-	
+	<!-- 마이페이지 mainPage - DIY 1개월 이내 내역 조회 -->
 	<select id="getDiyTourListInOneMonth" resultMap="buyMapper.diyTour">
 		 SELECT HBT_DIY_CODE
 		    , TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') DIY_TOUR_BUY_DATE
@@ -685,7 +687,7 @@
 		AND DT.HBT_AIRLINE_CODE = AIR.HBT_AIRLINE_CODE
 		AND DT.AREA_CODE = AREA.AREA_CODE
 		AND DT.BUY_STATUS_CODE = ST.BUY_STATUS_CODE
-		AND IS_PAID = 'Y'
+		AND DT.IS_PAID = 'Y'
 		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYY-MM-DD')
 		AND TO_CHAR(DT.DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &lt;= TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		AND ST.BUY_STATUS_CODE  &lt;= 2
@@ -697,6 +699,7 @@
 		SELECT COUNT(HBT_DIY_CODE)
 		FROM HBT_DIY_TOUR
 		WHERE MEM_CODE = #{memCode}
+		AND IS_PAID = 'Y'
 		<if test="fromDate != null and !fromDate.equals('')">
 		AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
 		</if>	
@@ -718,6 +721,7 @@
 		  HBT_BUY_STATE HBS
 		LEFT JOIN
 		  HBT_DIY_TOUR HDT ON HBS.BUY_STATUS_CODE = HDT.BUY_STATUS_CODE 
+		  AND HDT.IS_PAID = 'Y'
 		  AND HDT.MEM_CODE = #{memCode}
 		  <if test="fromDate != null and !fromDate.equals('')">
 			AND TO_CHAR(DIY_TOUR_BUY_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
@@ -784,9 +788,7 @@
 	
 	<select id="getMyReviewList" resultMap="myReview">
 		SELECT HBT_MEM_REVIEW_NUM
-			, RPAD(SUBSTR(HBT_MEM_REVIEW_CONTENT, 0, 20)
-		        , (SELECT LENGTH(HBT_MEM_REVIEW_CONTENT) FROM HBT_MEM_REVIEW WHERE HBT_MEM_REVIEW_NUM = REVIEW.HBT_MEM_REVIEW_NUM)
-		        , '*') HBT_MEM_REVIEW_CONTENT
+			, HBT_MEM_REVIEW_CONTENT
 			, STARS
 			, IS_REVIEWED
 			, MEM_CODE

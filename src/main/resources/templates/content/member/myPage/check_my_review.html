@@ -16,7 +16,7 @@
 			<input th:onclick="getNeedReview([[${#authentication.name}]]);" type="button" class="btn btn-gray w-100" value="미작성 후기">
 		</div>
 		<div class="col-2">
-			<input th:onclick="getAllReview([[${#authentication.name}]]);" type="button" class="btn btn-yellow-reverse w-100" value="작성 후기">
+			<input th:onclick="getWritenReview([[${#authentication.name}]]);" type="button" class="btn btn-yellow-reverse w-100" value="작성 후기">
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -47,7 +47,7 @@
 						<tr th:each="buy, state : ${myBuyList}" th:onclick="getMyReview([[${buy.buyCode}]]);">
 							<td>[[${myBuyList.size - state.index}]]</td>
 							<td>[[${buy.buyCode}]]</td>
-							<td>[[${buy.buyTotalPrice}]]</td>
+							<td>[[${#numbers.formatCurrency(buy.buyTotalPrice)}]]</td>
 							<td>[[${buy.buyDate}]]</td>
 						</tr>
 					</th:block>
