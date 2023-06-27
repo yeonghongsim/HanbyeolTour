@@ -207,7 +207,9 @@
 	            </tr>
 	            <tr>
 	            	<th>평점 : </th>
-	            	<td>[[${diyDetail.hotelList[0].hbtHotelGrade}]] / 5 </td>
+	            	<td>[[${diyDetail.hotelList[0].hbtHotelGrade}]] / 5 
+	            	  <span class="col-2" th:utext="${convertToStarIcons(rdiyDetail.hotelList[0].hbtHotelGrade)}" style="font-size: 0.8rem; color: #ffd000;"></span>
+	            	</td>
 	            </tr>
 	            <tr>
 	            	<th>해당 국가 : </th>
