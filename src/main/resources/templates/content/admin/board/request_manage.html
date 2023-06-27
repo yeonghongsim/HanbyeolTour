@@ -21,7 +21,7 @@
 					<col width="20%">
 					<col width="20%">
 				</colgroup>
-				<thead class="">
+				<thead>
 					<tr>
 						<td class="align-middle">문의일자</td>
 						<td colspan="3">
@@ -43,7 +43,7 @@
 						<td>
 							<div class="row">
 								<div class="col">
-									<input onclick="location.href='/admin/requestManage'" class="btn btn-secondary w-100" type="button" value="초기화">
+									<input onclick="location.href='/admin/requestManage'" class="btn btn-gray w-100" type="button" value="초기화">
 								</div>
 							</div>
 						</td>
@@ -64,7 +64,7 @@
 							<input class="form-control text-center" type="text" name="memberVO.memId" id="memId" value="" placeholder="회원 ID 입력">
 						</td>
 						<td rowspan="2">
-							<input onclick="searchRequest()" type="button" class="btn btn-primary w-100" value="검색">
+							<input onclick="searchRequest()" type="button" class="btn btn-yellow-reverse w-100" value="검색">
 						</td>
 					</tr>
 					<tr>
@@ -84,7 +84,7 @@
 	<div class="row mb-3">
 		<div class="col">
 			<h4>검색된 문의사항</h4>
-			<table class="table table-striped table-hover text-center req-table">
+			<table class="table table-hover text-center req-table">
 				<colgroup>
 					<col width="">
 					<col width="">
@@ -92,7 +92,7 @@
 					<col width="">
 					<col width="">
 				</colgroup>
-				<thead>
+				<thead class="ye-S-bc">
 					<tr>
 						<td>문의번호</td>
 						<td>문의제목</td>
@@ -103,26 +103,6 @@
 					</tr>
 				</thead>
 				<tbody id="searched-tbody">
-					<th:block th:if="${reqListN.size() != 0}" th:each="req, state : ${reqListN}">
-						<tr>
-							<td>[[${reqListN.size - state.index}]]</td>
-							<td>[[${req.hbtBoardRequestTitle}]]</td>
-							<td>[[${req.memberVO.memId}]]</td>
-							<td th:if="${req.itemVO == null}">
-								
-							</td>
-							<td th:unless="${req.itemVO == null}">
-								[[${req.itemVO.itemCode}]]
-							</td>
-							<td>[[${req.hbtBoardRequestRegDate}]]</td>
-							<td>[[${req.isAnswer}]]</td>
-						</tr>
-					</th:block>
-					<th:block th:unless="${reqListN.size() != 0}">
-						<tr>
-							<td colspan="6"><span>검색결과에 맞는 데이터가 존재하지 않습니다.</span></td>
-						</tr>
-					</th:block>
 				</tbody>
 			</table>
 		</div>
@@ -139,7 +119,7 @@
 					<col width="12%">
 					<col width="18%">
 				</colgroup>
-				<thead>
+				<thead class="ye-S-bc">
 					<tr>
 						<td>문의번호</td>
 						<td>문의유형</td>
@@ -189,7 +169,7 @@
 					<col width="12%">
 					<col width="18%">
 				</colgroup>
-				<thead>
+				<thead class="ye-S-bc">
 					<tr>
 						<td>문의번호</td>
 						<td>문의유형</td>

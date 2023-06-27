@@ -16,13 +16,13 @@
 		<h2>문의 현황</h2>
 	</div>
 	<div class="offset-7 col-2">
-		<input th:onclick="|location.href='@{/myPage/regRequestForm(memCode=${memInfo.memCode}, memId=${memInfo.memId})}'|" class="btn btn-primary w-100" type="button" value="문의 하기">
+		<input th:onclick="|location.href='@{/myPage/regRequestForm(memCode=${memInfo.memCode}, memId=${memInfo.memId})}'|" class="btn btn-yellow-reverse w-100" type="button" value="문의 하기">
 	</div>
 </div>
 <div class="row mb-3">
 	<div class="col">
 		<h4>문의 내역</h4>
-		<table class="table text-center my-req-table">
+		<table class="table text-center my-req-table table-hover">
 			<colgroup>
 				<col width="10%">
 				<col width="15%">
@@ -76,7 +76,7 @@
 <div class="row mb-3">
 	<div class="col">
 		<h4>답변 내역</h4>
-		<table class="table text-center my-req-table">
+		<table class="table text-center my-req-table table-hover">
 			<colgroup>
 				<col width="10%">
 				<col width="15%">

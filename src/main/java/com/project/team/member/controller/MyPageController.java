@@ -573,12 +573,12 @@ public class MyPageController {
 	
 	@ResponseBody
 	@PostMapping("/addMyCartAjax")
-	public void addMyCartAjax(String data) throws JsonProcessingException {
+	public String addMyCartAjax(String data) throws JsonProcessingException {
 		
 		 ObjectMapper mapper = new ObjectMapper();
 		 
-	    TypeReference<Map<String, String>> typeReference = new TypeReference<Map<String,String>>() {};
-		 Map<String, String> map =  mapper.readValue(data, typeReference);
+	    TypeReference<Map<String, Object>> typeReference = new TypeReference<Map<String,Object>>() {};
+		 Map<String, Object> map =  mapper.readValue(data, typeReference);
 		 
 		 
 		 if(map.get("type").equals("cart")) {
@@ -586,24 +586,24 @@ public class MyPageController {
 			 BuyVO buyVO = new BuyVO();
 			 String buyCode = buyService.getNextBuyCode();
 			 buyVO.setBuyCode(buyCode);
-			 String memId = memberService.getMemId(map.get("memberVO.memCode"));
+			 String memId = memberService.getMemId((String)map.get("memberVO.memCode"));
 			 buyVO.setMemberVO(new MemberVO());
 			 buyVO.getMemberVO().setMemId(memId);
-			 buyVO.setBuyTotalPrice(Integer.valueOf(map.get("buyTotalPrice")));
+			 buyVO.setBuyTotalPrice(Integer.valueOf((String)map.get("buyTotalPrice")));
 			 
 			 buyVO.setBuyDetailVO(new BuyDetailVO());
-			 buyVO.getBuyDetailVO().setItemCode(map.get("itemCode"));
+			 buyVO.getBuyDetailVO().setItemCode((String)map.get("itemCode"));
 			 buyVO.getBuyDetailVO().setBuyCode(buyVO.getBuyCode());
-			 buyVO.getBuyDetailVO().setAreaCode(map.get("areaCode"));
-			 buyVO.getBuyDetailVO().setDepartDate(map.get("departDate"));
-			 buyVO.getBuyDetailVO().setArriveDate(map.get("arriveDate"));
-			 buyVO.getBuyDetailVO().setReservedPeopleNum(Integer.valueOf(map.get("numOfPeople")));
-			 buyVO.getBuyDetailVO().setBuyDPrice(Integer.valueOf(map.get("buyTotalPrice")));
+			 buyVO.getBuyDetailVO().setAreaCode((String)map.get("areaCode"));
+			 buyVO.getBuyDetailVO().setDepartDate((String)map.get("departDate"));
+			 buyVO.getBuyDetailVO().setArriveDate((String)map.get("arriveDate"));
+			 buyVO.getBuyDetailVO().setReservedPeopleNum(Integer.valueOf((String)map.get("numOfPeople")));
+			 buyVO.getBuyDetailVO().setBuyDPrice(Integer.valueOf((String)map.get("buyTotalPrice")));
 			 
 			 
 			 try {
 				 buyService.setBuy(buyVO, buyVO.getBuyDetailVO());
-				 buyService.delCart(map.get("cartCode"));
+				 buyService.delCart((String)map.get("cartCode"));
 				
 			} catch (Exception e) {
 				System.out.println("errorMessege" + e.getMessage());
@@ -612,8 +612,20 @@ public class MyPageController {
 			 
 			 System.out.println("!@#!@#!@#"+ buyVO);
 			 
+			 System.out.println(buyVO.getMemberVO().getMemId());
+			 
+			 return buyVO.getMemberVO().getMemId();
+			 
 		 } else {
-			 System.out.println("@@@" + map);
+			 //System.out.println("@@@" + map);
+			 
+			 itemService.setDiyTourIsPaidToY((String)map.get("hbtDiyCode"));
+			 
+			 String memId = memberService.getMemId((String)map.get("memCode"));
+			 
+			 return memId;
+			 
+			 
 		 }
 		 
 	}

@@ -83,10 +83,13 @@
 
 	<insert id="setBuy">
 		INSERT INTO HBT_BUY (
-		                     BUY_CODE, MEM_CODE, BUY_STATUS_CODE, BUY_TOTAL_PRICE
+		                     BUY_CODE
+		                     , MEM_CODE
+		                     , BUY_STATUS_CODE
+		                     , BUY_TOTAL_PRICE
 		) VALUES (
 		          #{buyCode}
-		          , (SELECT MEM_CODE FROM HBT_MEM WHERE MEM_ID = #{memberVO.memId})
+		          , (SELECT MEM_CODE FROM HBT_MEM WHERE MEM_ID = #{memCode})
 		          , 1
 		          , ${buyTotalPrice}
 				)

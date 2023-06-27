@@ -755,6 +755,9 @@ public class AdminController {
 	public String requestManage(Model model, RequestSearchVO requestSearchVO, BoardRequestVO boardRequestVO) {
 		
 		model.addAttribute("typeRequestList", boardService.getTypeRequestList());
+		
+		//model.addAttribute("searchList", boardService.getBoardReqListBySearch(requestSearchVO));
+		
 		boardRequestVO.setIsAnswer("Y");
 		model.addAttribute("reqListY", boardService.getBoardReqList(boardRequestVO));
 		
