@@ -37,6 +37,7 @@ public class BuyController {
         //buyDetailVO 세팅
         buyDetailVO.setBuyCode(buyCode);
 
+
         buyService.setBuy(buyVO,buyDetailVO);
 
         return "redirect:/main";
