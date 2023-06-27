@@ -86,14 +86,14 @@ function pwValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memPw){
-		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memPw}</div>`;
+		const errorHTML = `<div id="memPwError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:15rem;">${str_memPw}</div>`;
 		newPwTag.insertAdjacentHTML('afterend', errorHTML);
-		$('#memPw').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#memPw').css('border-width', '2px'); // 테두리 두께 변경
+		$('#memPw').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#memPw').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memPw').css('border-color', 'green'); 
-        $('#memPw').css('border-width', '2px');
+        $('#memPw').css('border-color', '#c6df5f'); 
+        $('#memPw').css('border-width', '1.5px');
     }
 	
 	return result_memPw;
@@ -137,14 +137,14 @@ function pwCheckValidate(){
 	 
 	
 	if(!result_pwCheck){
-	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_pwCheck}</div>`;
+	const errorHTML = `<div id="pwCheckError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:15rem;">${str_pwCheck}</div>`;
 	checkPwTag.insertAdjacentHTML('afterend', errorHTML);
-	$('#checkPw').css('border-color', '#dc3545'); // 테두리 색상 변경
-    $('#checkPw').css('border-width', '2px'); // 테두리 두께 변경
+	$('#checkPw').css('border-color', '#f27370'); // 테두리 색상 변경
+    $('#checkPw').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#checkPw').css('border-color', 'green'); 
-        $('#checkPw').css('border-width', '2px');
+        $('#checkPw').css('border-color', '#c6df5f'); 
+        $('#checkPw').css('border-width', '1.5px');
     }
 	
 	return result_pwCheck;	

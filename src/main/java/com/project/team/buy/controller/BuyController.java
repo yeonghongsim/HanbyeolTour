@@ -38,6 +38,7 @@ public class BuyController {
         buyDetailVO.setBuyCode(buyCode);
 
         System.out.println("!@#!@#!@#!@#!@#!@#"+buyVO);
+
         buyService.setBuy(buyVO,buyDetailVO);
 
         return "redirect:/main";

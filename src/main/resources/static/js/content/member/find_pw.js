@@ -47,14 +47,14 @@ function idValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memId){
-		const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memId}</div>`;
+		const errorHTML = `<div id="memIdError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memId}</div>`;
 		memIdTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#findPwMemId').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#findPwMemId').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#findPwMemId').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#findPwMemId').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#findPwMemId').css('border-color', 'green'); 
-        $('#findPwMemId').css('border-width', '2px');
+        $('#findPwMemId').css('border-color', '#c6df5f'); 
+        $('#findPwMemId').css('border-width', '1.5px');
     }
 	
 	
@@ -92,14 +92,14 @@ function nameValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memName){
-		const errorHTML = `<div id="memNameError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem; margin-left:0.5rem;">${str_memName}</div>`;
+		const errorHTML = `<div id="memNameError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem; margin-left:0.5rem;">${str_memName}</div>`;
 		memNameTag.insertAdjacentHTML('afterend', errorHTML);
-		$('#findPwMemName').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#findPwMemName').css('border-width', '2px'); // 테두리 두께 변경
+		$('#findPwMemName').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#findPwMemName').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-        $('#findPwMemName').css('border-color', 'green'); 
-        $('#findPwMemName').css('border-width', '2px');
+        $('#findPwMemName').css('border-color', '#c6df5f'); 
+        $('#findPwMemName').css('border-width', '1.5px');
     }
 	
 	return result_memName;
@@ -140,14 +140,14 @@ function memDTellValidate(){
 	
 	//유효성 검사 실패 시 오류 메세지 출력
 	if(!result_memDTell){
-		const errorHTML = `<div class="my-invalid" id="memDTellError" style="font-size: 0.8rem; color: #dc3545; margin-top: 0.3rem;margin-left:0.5rem;">${str_memDTell}</div>`;
+		const errorHTML = `<div class="my-invalid" id="memDTellError" style="font-size: 0.8rem; color: #f27370; margin-top: 0.1rem;margin-left:0.5rem;">${str_memDTell}</div>`;
 		memDTellTag.insertAdjacentHTML('afterend', errorHTML);
-	    $('#findPwMemDTell').css('border-color', '#dc3545'); // 테두리 색상 변경
-        $('#findPwMemDTell').css('border-width', '2px'); // 테두리 두께 변경
+	    $('#findPwMemDTell').css('border-color', '#f27370'); // 테두리 색상 변경
+        $('#findPwMemDTell').css('border-width', '1.5px'); // 테두리 두께 변경
 	}
 	else {
-       $('#findPwMemDTell').css('border-color', 'green'); 
-        $('#findPwMemDTell').css('border-width', '2px');
+       $('#findPwMemDTell').css('border-color', '#c6df5f'); 
+        $('#findPwMemDTell').css('border-width', '1.5px');
     }
 	
 	

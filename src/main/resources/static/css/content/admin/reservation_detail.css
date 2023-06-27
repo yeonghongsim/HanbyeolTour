@@ -48,7 +48,7 @@ tbody, td, tfoot, th, thead, tr {
 	font-size:14px;
 }
 
-.reservItemTable tbody tr:nth-child(4), tr:nth-child(5){
+.reservItemTable tbody tr:nth-child(4), .reservItemTable tbody tr:nth-child(5){
 	
 	 background-color: #f2f2f2;
 }

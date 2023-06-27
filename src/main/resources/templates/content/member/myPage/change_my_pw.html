@@ -12,7 +12,7 @@
 <!-- 본문 내용 -->   
 <th:block layout:fragment="member_content">
 
-	<div class="content-container">
+	<div class="container">
 		<div class="row">
 			<div class="col page-title">
 				비밀번호 변경
@@ -44,7 +44,7 @@
 				
 				<div class="row">
 					<div class="col-12 d-grid mb-5">
-						<button id="changePwBtn" class="btn btn-warning" th:onclick="change_my_pw([[${#authentication.name}]]);">비밀번호 변경하기</button>
+						<button id="changePwBtn" class="btn btn-yellow" th:onclick="change_my_pw([[${#authentication.name}]]);">비밀번호 변경하기</button>
 					</div>
 				</div>
 			</div>
