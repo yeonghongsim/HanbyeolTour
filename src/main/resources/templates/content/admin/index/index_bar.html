@@ -13,7 +13,7 @@
 <th:block layout:fragment="adminContent">
 	<div class="row">
 		<div class="col">
-			<div class="row mt-5">
+			<div class="row mt-5 mb-5">
 				<div class="col-4">
 					<table id="toDo1">
 					  <tbody>
@@ -70,14 +70,14 @@
 					</table>
 				</div>
 			</div>
-			<div class="row mt-5">
+			<div class="row mt-5 mb-5">
 				<div class="col">
 					<div class="row">
 						<div class="col">
 							<canvas id="reviewChart"></canvas>
 						</div>
 						<div class="col">
-							<H5 class="reviewH5">긍정 TOP5</H5>
+							<H6 class="reviewH6">긍정 TOP5</H6>
 							<table class="table posTable">
 								<thead>
 									<tr>
@@ -93,7 +93,7 @@
 
 						</div>
 						<div class="col">
-							<H5 class="reviewH5">부정 TOP5</H5>
+							<H6 class="reviewH6">부정 TOP5</H6>
 							<table class="table nagTable">
 								<thead>
 								<tr>
@@ -108,7 +108,7 @@
 							</table>
 						</div>
 						<div class="col">
-							<H5 class="reviewH5">리뷰 분석</H5>
+							<H6 class="reviewH6">리뷰 분석</H6>
 							<table class="table dataTable">
 								<thead>
 									<tr>
@@ -136,12 +136,11 @@
 			
 			<div class="row mb-2">
 				<div class="col-4">
-					<h3>한눈에 확인하기</h3>
+					<h6 class="reviewH6">테마별 통계</h6>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-				
 					<div class="row mb-3">
 						<div class="col-2">
 							<select onchange="chkMainSelect(this);" class="main_select form-control">
@@ -150,7 +149,7 @@
 								<option value="request">문의</option>
 							</select>
 						</div>
-						<div class="col-5">
+						<div class="col-4">
 							<select class="sub_select form-control">
 								<option value="M/F" selected>전체 이용자 중 남/여 비율</option>
 								<option value="insited">전체 이용자 중 이용률 ( 이용, 휴면, 탈퇴 )</option>
@@ -163,6 +162,7 @@
 					</div>
 					
 					<div class="row statistics_area">
+					
 						<div class="col-5 data_area">
 						</div>
 						<div class="col-7 chart_area">

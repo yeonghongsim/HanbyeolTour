@@ -200,6 +200,12 @@
 		<if test='searchToPrice != null and !searchToPrice.equals("")'>
 			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) 
 		</if>
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+			AND TO_CHAR (SELLING_START, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+			AND TO_CHAR (SELLING_END, 'YYYY-MM-DD') &gt;= #{searchToDate}
+		</if>
 		ORDER BY ITEM_TITLE
 		OFFSET #{offsetCnt} ROWS FETCH FIRST #{displayCnt} ROWS ONLY
 	</select>
@@ -219,6 +225,12 @@
 		</if>
 		<if test='searchToPrice != null and !searchToPrice.equals("")'>
 			AND ITEM_PRICE &lt;= TO_NUMBER(#{searchToPrice}) 
+		</if>
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+			AND TO_CHAR (SELLING_START, 'YYYY-MM-DD') &gt;= #{searchFromDate} 
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+			AND TO_CHAR (SELLING_END, 'YYYY-MM-DD') &gt;= #{searchToDate}
 		</if>
 	</select>
 	

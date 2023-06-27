@@ -369,23 +369,26 @@ function getSaleListPaging(pageNum){
   form.addEventListener('submit', validateForm); */
 
 
+
+//검색 조건 빈 값 확인
 function searchValidateForm(event) {
-  const inputElements = document.querySelectorAll('form#searchForm input[type="text"]');
-  let isEmpty = true;
+	const inputElements = document.querySelectorAll('form#searchForm input[type="text"], form#searchForm input[type="date"]');
 
-  for (let i = 0; i < inputElements.length; i++) {
-    let element = inputElements[i];
+	let isEmpty = true;
 
-    if (element.value.trim() !== '') {
-      isEmpty = false;
-      break;
-    }
-  }
+	for (let i = 0; i < inputElements.length; i++) {
+		let element = inputElements[i];
 
-  if (isEmpty) {
-    event.preventDefault();
-    alert('검색 조건을 입력하세요.');
-  }
+		if (element.value.trim() !== '') {
+			isEmpty = false;
+			break;
+		}
+	}
+
+	if (isEmpty) {
+		event.preventDefault();
+		alert('검색 조건을 입력하세요.');
+	}
 }
 
 // 폼 제출(submit) 이벤트 리스너 등록
