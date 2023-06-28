@@ -257,18 +257,13 @@ a:hover {
 }
 
 
-
-.contain{
-	height: 300px;
+.contain {
+	position: relative;
+	height: 200px;
+	overflow: hidden;
 	background-repeat: no-repeat;
 	background-position: center bottom 40%;
 	background-size: cover;
-}
-
-.contain {
-	position: relative;
-	height: 300px;
-	overflow: hidden;
 }
 
 .contain img {
@@ -315,7 +310,7 @@ a:hover {
 }
 
 .table{
-	--bs-table-border-color: #ffd000;
+	--bs-table-border-color: #DEE2E5;
 }
 
 .hover {

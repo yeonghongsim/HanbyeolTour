@@ -63,18 +63,26 @@
 					</tr>
 				</thead>
 				<tbody id="freq-request-tbody">
-					<th:block th:each="freqReq : ${freqReqList}">
-						<tr class="pointer" onclick="toggleAnswer(this);">
-							<td>[[${freqReq.typeRequestVO.typeRequestName}]]</td>
-							<td>
-								<span>[[${freqReq.freqRequestTitle}]]</span>
-							</td>
-							<td class="bi bi-chevron-up"></td>
+					<th:block th:if="${freqReqList.size == 0}">
+						<tr>
+							<td></td>
+							<td colspan="2">등록된 문의글이 없습니다.</td>
 						</tr>
-						<tr class="answerTr hide">
-							<td style="padding-left: 3rem;">A.</td>
-							<td style="padding-left: 3rem;" colspan="2">[[${freqReq.freqRequestContent}]]</td>
-						</tr>
+					</th:block>
+					<th:block th:unless="${freqReqList.size == 0}">
+						<th:block th:each="freqReq : ${freqReqList}">
+							<tr class="pointer" onclick="toggleAnswer(this);">
+								<td>[[${freqReq.typeRequestVO.typeRequestName}]]</td>
+								<td>
+									<span>[[${freqReq.freqRequestTitle}]]</span>
+								</td>
+								<td class="bi bi-chevron-up"></td>
+							</tr>
+							<tr class="answerTr hide">
+								<td style="padding-left: 3rem;">A.</td>
+								<td style="padding-left: 3rem;" colspan="2">[[${freqReq.freqRequestContent}]]</td>
+							</tr>
+						</th:block>
 					</th:block>
 				</tbody>
 			</table>

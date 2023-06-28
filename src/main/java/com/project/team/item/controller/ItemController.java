@@ -36,11 +36,14 @@ public class ItemController {
 	private AdminService adminService;
 	@Resource(name = "memberService")
 	private MemberService memberService;
-	@Autowired
-	private DateFormat dateFormat;
-	@Autowired
-	private ObjectMapper mapper;
 
+	private final DateFormat dateFormat;
+	private final ObjectMapper mapper;
+
+	public ItemController(DateFormat dateFormat, ObjectMapper mapper) {
+		this.dateFormat = dateFormat;
+		this.mapper = mapper;
+	}
 
 
 	//그룹별 아이템 보기 페이지 이동
@@ -111,9 +114,6 @@ public class ItemController {
 		//일자별 상품상세정보 데이터가공
 		Map<String, List<HashMap<String, Object>>> result = new HashMap<>();
 
-		for(int i = 0; i < Integer.parseInt(list.get(1).get("HBT_PLAN_PERIOD").toString()); i++){
-		}
-
 		List<HashMap<String, Object>> originalList = list; // 원본 리스트
 		String targetColumn = "HBT_PLAN_DAY"; // 기준이 될 컬럼 이름
 
@@ -174,7 +174,6 @@ public class ItemController {
 			groupedList.add(data);
 			groupedMap.put(columnValue, groupedList);
 		}
-		System.out.println(groupedMap);
 		model.addAttribute("favoriteArea", groupedMap);
 
 		return "content/item/tour_item_list_main";
@@ -279,9 +278,6 @@ public class ItemController {
 			detailList.add(diyDetailVO);
 		}
 
-		System.out.println(diyTourVO.toString());
-		System.out.println(detailList.toString());
-
 		itemService.setDiyTour(diyTourVO, detailList);
 
 		return "redirect:/item/diyTourItem";
@@ -298,19 +294,27 @@ public class ItemController {
 		for(HashMap<String, Object> map : list) {
 			//출발일추가
 			map.put("DEP_DATE", dateFormat.format(searchDate));
-			//출발일자에 여행기간만큼더하기
-			int splitDate = Integer.parseInt(map.get("TRAVER_PERIOD").toString().split("박")[1].split("일")[0]);
-			//날짜초기화
-			Calendar setArrDate = Calendar.getInstance();
-			setArrDate.setTime(searchDate);
-			setArrDate.add(Calendar.DATE, splitDate);
 			//도착일추가
-			map.put("ARR_DATE", dateFormat.format(setArrDate.getTime()));
+			map.put("ARR_DATE", getArrDate(searchDate, getSpliteNum(map.get("TRAVER_PERIOD").toString())));
 		}
 		return list;
 	}
 
+	//X박N일의 데이터를 가져와 N의 숫자를 반환
+	public int getSpliteNum(String traverPeriod){
+
+		return Integer.parseInt(traverPeriod.split("박")[1].split("일")[0]);
+	}
 
 
+	//첫번째 파라미터의 날짜에 두번째 매개변수로 입력받은 숫자만큼의 날짜만큼을 더한 날짜를 리턴
+	public String getArrDate(Date searchDate, int spliteNum){
+
+		Calendar setArrDate = Calendar.getInstance();
+		setArrDate.setTime(searchDate);
+		setArrDate.add(Calendar.DATE, spliteNum);
+
+		return dateFormat.format(setArrDate.getTime());
+	}
 
 }

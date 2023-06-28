@@ -12,14 +12,14 @@
     <!--  국가선택 -->
     <div class="col-md-6 aa">
   <!-- 로딩바      -->
-      <div class="row d-flex text-center justify-content-center mb-3 custom-border-4 rounded-5 shadow py-3">
-        <h2 class="fw-bold my-3 pb-3">국가를 선택하세요</h2>
+      <div class="row d-flex text-center justify-content-center mb-3 custom-border rounded-5 shadow py-3">
+        <h3 class="fw-bold my-3 pb-3">국가를 선택하세요</h3>
         <th:block th:each="loc : ${location}">
 
 
           <div class="col mx-1 px-0 py-3 justify-content-center d-flex areaColDiv">
             <a href="javascript:void(0)" onclick="selectArea(this);" class="">
-              <div class="card1 areaDiv shadow">
+              <div class="card1 areaDiv">
                 <img width="190px;" height="140px;" th:src="'/img/item/itemImg/' + ${loc['ITEM_IMG_ATTACHED_NAME']}" class="rounded-3" alt="...">
                 <div class="card1-front">
                   <p class="title1" th:value="${loc['AREA_CODE']}">[[${loc['AREA_KOR_NAME']}]]</p>
@@ -39,7 +39,7 @@
               <div class="card1 areaDiv">
                 <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
                 <div class="card1-front">
-                  <p class="title1"}>준비중</p>
+                  <p class="title1">준비중</p>
                   <p class="subtitle"></p>
                 </div>
               </div>
@@ -51,20 +51,20 @@
         </th:block>
       </div>
   <!--  날짜선택 -->
-      <div class="row text-center justify-content-center mb-3 border rounded-5 shadow custom-border-4 py-3">
+      <div class="row text-center justify-content-center mb-3 border rounded-5 shadow custom-border py-3">
         <h3 class="fw-bold">여행 날짜를 선택하세요</h3>
         <div class="col-md-3">
           <span>출발일</span>
-          <input type="date" style="text-align: center;" value="2023-06-29" name="depDate" class="form-control depDate shadow custom-border-3 rounded-5">
+          <input type="date" style="text-align: center;" value="2023-06-29" name="depDate" class="form-control depDate shadow custom-border-6 rounded-3">
         </div>
         <div class="col-md-3">
           <span>도착일</span>
-          <input type="date" style="text-align: center;" value="2023-07-02" name="arrDate" class="form-control arrDate shadow custom-border-3 rounded-5">
+          <input type="date" style="text-align: center;" value="2023-07-02" name="arrDate" class="form-control arrDate shadow custom-border-6 rounded-3">
         </div>
       </div>
   <!--  항공편선택-->
-      <div class="row border text-center rounded-5 shadow custom-border-4 mb-3 py-3 ">
-        <h3>항공사 선택</h3>
+      <div class="row border text-center rounded-5 shadow custom-border mb-3 py-3 ">
+        <h3 class="fw-bold">항공사 선택</h3>
         <th:block th:each="air : ${airline}">
           <div class="col my-3">
 
@@ -87,7 +87,7 @@
       </div>
       <div class="row mb-3 justify-content-center">
         <div class="col-auto">
-          <input type="button" class="btn ye-S-bc" value="국가 날짜 선택 완료" onclick="getHotelnTourAJAX()">
+          <input type="button" class="btn btn-yellow-reverse" value="국가 날짜 선택 완료" onclick="getHotelnTourAJAX()">
         </div>
       </div>
 
@@ -96,14 +96,14 @@
     <div class="row">
 
 
-      <div class="collapse mx-0 px-5 custom-border-4 rounded-5 shadow" id="hotelNTourcollapse">
+      <div class="collapse mx-0 px-5 custom-border rounded-5 shadow" id="hotelNTourcollapse">
         <div class="card card-body border-0 mx-0 px-0 text-center">
 
-          <h4 class="py-3">호텔 목록</h4>
+          <h4 class="py-3 fw-bold">호텔 목록</h4>
           <div class="row hotelDiv">
 
           </div>
-          <h4 class="py-3">투어 목록</h4>
+          <h4 class="py-3 fw-bold">투어 목록</h4>
 
           <div class="row tourDiv">
 
@@ -124,13 +124,13 @@
 
     <div class="modal modal-lg fade" id="hotelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content rounded-5 custom-border-4 shadow">
+        <div class="modal-content rounded-3 custom-border-4 shadow">
           <div class="modal-header">
             <h4>호텔 상세 정보</h4>
           </div>
           <div class="modal-body">
 
-            <div class="row rounded-5 d-flex shadow custom-border-3 mx-2 my-2">
+            <div class="row rounded-3 d-flex shadow custom-border-3 mx-2 my-2">
 
 
               <div class="col-6 px-0 mx-0">

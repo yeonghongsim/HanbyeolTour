@@ -17,20 +17,28 @@
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span> > 게시글 상세</h3>
 		</div>
 	</div>
-	
 	<div class="row mb-3">
-		<div class="col">
-			<h4>게시글</h4>
+		<div class="col text-end">
+			<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-gray" type="button" value="뒤로 가기">
 		</div>
+		<th:block sec:authorize="hasRole('ROLE_USR')">
+			<div class="col-1" th:if="${#authentication.name == boardDetail.memberVO.memId}">
+				<input th:onclick="delBoard([[${boardDetail.hbtBoardNum}]]);" type="button" class="btn btn-red w-100" value="삭제">
+			</div>
+		</th:block>
+		<th:block sec:authorize="hasRole('ROLE_AD')">
+			<div class="col-1">
+				<input th:onclick="delBoard([[${boardDetail.hbtBoardNum}]]);" type="button" class="btn btn-red w-100" value="삭제">
+			</div>
+		</th:block>
 	</div>
-	
 	<div class="row mb-2">
 		<div class="col">
 			<table class="table text-center detail_table">
 				<colgroup>
-					<col width="25%">
-					<col width="25%">
-					<col width="25%">
+					<col width="15%">
+					<col width="45%">
+					<col width="15%">
 					<col width="25%">
 				</colgroup>
 				<tbody>
@@ -42,22 +50,16 @@
 					</tr>
 					<tr>
 						<td>제목</td>
-						<td>[[${boardDetail.hbtBoardTitle}]]</td>
+						<td style="text-align: left; padding-left: 2rem;">[[${boardDetail.hbtBoardTitle}]]</td>
 						<td>조회수</td>
 						<td>[[${boardDetail.hbtBoardCnt}]]</td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="3">[[${boardDetail.hbtBoardContent}]]</td>
+						<td colspan="3" style="text-align: left; padding-left: 2rem;">[[${boardDetail.hbtBoardContent}]]</td>
 					</tr>
 				</tbody>
 			</table>
-		</div>
-	</div>
-	
-	<div class="row mb-3">
-		<div class="col text-end">
-			<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-gray" type="button" value="뒤로 가기">
 		</div>
 	</div>
 	

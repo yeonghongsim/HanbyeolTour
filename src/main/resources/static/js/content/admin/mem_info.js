@@ -109,3 +109,22 @@ function updateMemRole(memId){
 	
 	location.href=`/admin/updateMemRole?memRole=${memRole}&memId=${memId}`;
 }
+
+
+//검색어 없을 시 검색 막기
+ function validateForm(event) {
+    
+    const input = document.querySelector('.searchInput');
+      
+      if (input.value.trim() === '') {
+        // 입력 제출 막기
+        event.preventDefault();
+        alert('검색 조건이 입력되지 않았습니다.');
+        return;
+      }
+    
+  }
+  
+ // 폼 제출(submit) 이벤트 리스너 등록
+ const form = document.getElementById('searchForm');
+ form.addEventListener('submit', validateForm);

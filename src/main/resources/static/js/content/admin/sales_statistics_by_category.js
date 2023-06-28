@@ -61,6 +61,7 @@ function drawChart(data){
 		},
 		options: {
 			responsive: true,
+			maintainAspectRatio: false,
 			plugins: {
 				legend: {
 					position: 'right',
@@ -99,6 +100,9 @@ function drawKindChart(data){
 						"rgba(255, 201, 14, 0.5)",
 						"rgba(255, 177, 193, 0.5)",
 						"rgba(154, 208, 245, 0.5)",
+						"rgba(252, 189, 134, 0.5)",
+						"rgba(206, 190, 251, 0.5)",
+						"rgba(238, 251, 190, 0.5)",
 		    		],
 				}
 			]
@@ -159,11 +163,15 @@ function drawKindSalesChart(data){
 				{
 					label: '일반 예약',
 					data: basic_arr,
+					borderWidth: 2,
+					borderColor: "rgba(54, 158, 235, 0.8)",
 					backgroundColor: "rgba(154, 208, 245, 0.5)",
 				},
 				{
 					label: 'Diy 예약',
 					data: diy_arr,
+					borderWidth: 2,
+					borderColor: "rgba(83, 172, 172, 0.8)",
 					backgroundColor: "rgba(153, 206, 206, 0.5)",
 				}
 			],

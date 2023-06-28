@@ -36,11 +36,11 @@
 
 .radio-input:focus + .radio-tile {
     border-color: #ffd000;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #ffd000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 1px #ffd000;
 }
 
 .radio-input:focus + .radio-tile:before {
-    transform: scale(1);
+    transform: scale(1); 
     opacity: 1;
 }
 
@@ -138,23 +138,23 @@
     width: 190px;
     height: 254px;
     position: relative;
-    outline: 3px solid #fff9d4;
+   /*  outline: 3px solid #fff9d4; */
     border-radius: 8px;
     line-height: 150%;
     background: #ff930f;
     background-blend-mode: multiply;
-    background: linear-gradient(to top, #ffd000, #fff9d4);
+    background: linear-gradient(to top,  #fff9d4, #fff);
     transition: background-color 1s ease-in-out;
     overflow: hidden;
 }
 
 .card1border {
-    outline: 6px solid #ffd000;
+    outline: 2px solid #ffd000
 !important;
 }
 
 .card1border-sm {
-    outline: 4px solid #ffd000;
+    outline: 4px solid #ffd000
 !important;
 }
 

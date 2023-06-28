@@ -1,6 +1,6 @@
 let hotelInfo = {};
 let tourInfo = {};
-//getNationalData();
+getNationalData();
 
 //환율정보크롤링데이터 가져오기
 function getExchangeData(){
@@ -12,6 +12,7 @@ function getExchangeData(){
         async : false,
         data: {},
         success: function(result) {
+
             drawExchang(JSON.parse(result));
         },
         error: function() {
@@ -71,7 +72,7 @@ function getNationalData(){
             }
         });
     });
-
+    console.log(resultMap);
     getLoc(getCaptalName(resultMap));
 
 }
@@ -81,13 +82,13 @@ function getCaptalName(resultMap){
     const keys = Object.keys(resultMap);
     let cityNames = [];
     keys.forEach((key) => {
-        cityNames.push( key == 'KR' ? '서울' : split(resultMap[key]['data'][0]['capital']));
+        cityNames.push( key == 'KR' ? '서울' : getSplit(resultMap[key]['data'][0]['capital']));
     });
     return cityNames;
 }
 
 //문자열 짜르기
-function split(str){
+function getSplit(str){
     return str.split('(')[0];
 }
 //도시명으로 위경도 받아오기
@@ -169,7 +170,7 @@ function drawWeather(weatherMap){
         areaCodes.forEach((areaCode) => {
 
             if(areaCode.value == weatherMap[key]['areaCode'].toString()){
-                areaCode.nextElementSibling.insertAdjacentHTML('beforeend', weatherStr);
+                areaCode.parentNode.insertAdjacentHTML('afterend', weatherStr);
             }
         });
     });
@@ -279,7 +280,7 @@ function drawItem(resultList){
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" onclick="hotelModal(this);" class="">
                       <input type="hidden" value="${hotel['HBT_HOTEL_CODE']}" class="areaCode">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/hotel/${hotel['HBT_HOTEL_ATTECHED_FILE_NAME']}" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">${hotel['HBT_HOTEL_NAME']}</p>
@@ -299,7 +300,7 @@ function drawItem(resultList){
 
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" class="">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">준비중</p>
@@ -321,7 +322,7 @@ function drawItem(resultList){
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" onclick="tourModal(this);" class="">
                       <input type="hidden" value="${tour['HBT_TOUR_ITEM_CODE']}">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/tourItem/${tour['HBT_TOUR_ITEM_ATTECHED_FILE_NAME']}" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">${tour['HBT_TOUR_ITEM_NAME']}</p>
@@ -340,7 +341,7 @@ function drawItem(resultList){
             tourStr +=  `
                 <div class="col mx-1 px-0 py-3 justify-content-center d-flex">
                     <a href="javascript:void(0)" class="">
-                      <div class="card1 card1border-sm">
+                      <div class="card1">
                         <img width="190px;" height="140px;" src="/img/item/xbox.jpg" class="rounded-3" alt="...">
                         <div class="card1-front">
                           <p class="title1">준비중</p>
@@ -891,7 +892,7 @@ function mergedObj(obj1, obj2){
 }
 
 
-document.querySelector('.diyCate').classList.add("ye-S-bc");
+document.querySelector('.diyCate').classList.add("ye-S-fc");
 
 
 

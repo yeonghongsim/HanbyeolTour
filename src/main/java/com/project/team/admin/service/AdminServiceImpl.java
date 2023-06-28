@@ -6,6 +6,8 @@ import java.util.Map;
 import com.project.team.review.vo.ReveiwVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,7 @@ public class AdminServiceImpl implements AdminService{
 	private SqlSessionTemplate sqlSession;
 	
 	//여행국가 카테고리 등록
+	@CacheEvict("areaCateList")
 	@Override
 	public void regArea(TourAreaVO tourAreaVO) {
 		sqlSession.insert("adminMapper.regArea", tourAreaVO);
@@ -42,6 +45,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	//여행국가 카테고리 조회
+	@Cacheable("areaCateList")
 	@Override
 	public List<TourAreaVO> getAreaCateList() {
 		

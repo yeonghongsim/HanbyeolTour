@@ -14,41 +14,15 @@
 	<div class="row">
 		<div class="col">
 			<h3 class="menuTitle">판매 상품 관리</h3>
-			<div class="row">
+			<div class="row searchDiv">
 				<div class="col">
 					<form th:action="@{/admin/itemManageForSale}" method="post" id="searchForm">
 						<input type="hidden" name="nowPage" th:value="${saleListSearchVO.nowPage}" id="nowPage">
-						
-						<!-- <div class="row mb-3 searchRow">
-							검색 기능
-							<div class="col-2">
-								<select class="form-select searchSelect" name="searchKeyword">
-									<option value="ITEM_TITLE" th:selected="${saleListSearchVO.searchKeyword == 'ITEM_TITLE'}">상품명</option>
-									<option value="AREA.AREA_KOR_NAME" th:selected="${saleListSearchVO.searchKeyword == 'AREA.AREA_KOR_NAME'}">여행지</option>
-									<option value="TRAVER_PERIOD" th:selected="${saleListSearchVO.searchKeyword == 'TRAVER_PERIOD'}">기간</option>
-								</select>
-							</div>
-							<div class="col-5">
-								<input type="text" class="form-control searchInput valueInput" name="searchValue" th:value="${saleListSearchVO.searchValue}">
-							</div>
-							
-							<div class="col-5 testdiv form-control">
-								<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
-								<span>~</span>
-								<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
-							</div>
-						</div>
-						<div class="row mt-2 searchRow">
-							<div class="col">
-								<input type="submit" value="상품 검색" class="btn searchButton">
-							</div>
-						</div> -->
-						
 						<table class="table table-borderless">
 							<colgroup>
 								<col width="15%">
 								<col width="*">
-								<col width="15%">
+								<col width="16.2%">
 								<col width="20%">
 							</colgroup>
 							<tbody>
@@ -74,23 +48,27 @@
 									</td>
 									<td colspan="2">
 									 <div class="row">
-									 	<div class="col priceDiv">
-										 	<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
-											<span>~</span>
-											<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
-									 	</div>
+									 	<div class="col-8 d-grid" style="padding-right: 0px;">
+											<input type="submit" value="상품 검색" class="btn btn-primary searchInput">
+										</div>
 				                     </div>
 									</td>
 								</tr>
 								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
+									<td colspan="4">
 										<div class="row">
-											<div class="col d-grid" style="padding-right: 0px;">
-												<input type="submit" value="상품 검색" class="btn btn-primary searchInput">
+											<div class="col-3">
+												<input type="date" class="form-control searchInput" name="searchFromDate" th:value="${saleListSearchVO.searchFromDate}">
 											</div>
+											<div class="col-1" style="width: 30px;">~</div>
+											<div class="col-3">
+												<input type="date" class="form-control searchInput" name="searchToDate" th:value="${saleListSearchVO.searchToDate}">
+											</div>
+											<div class="col-4 priceDiv">
+											 	<input type="text" class="searchInput2" name="searchFromPrice" th:value="${saleListSearchVO.searchFromPrice}" placeholder="상품 가격 입력">
+												<span>~</span>
+												<input type="text" class="searchInput2" name="searchToPrice" th:value="${saleListSearchVO.searchToPrice}" placeholder="상품 가격 입력">
+									 		</div>
 										</div>
 									</td>
 								</tr>
@@ -100,21 +78,21 @@
 					
 				</div>
 			</div>
+			<div class="row mt-3">
 			<div class="smallRed">* 패키지명 클릭 시 상품 상세 정보를 확인할 수 있습니다.</div>
-			<div class="row">
 				<div class="col">
 					<table class="table text-center listTable">
 						<colgroup>
-							<col width="5%">
-							<col width="">
-							<col width="">
-							<col width="">
-							<col width="">
-							<col width="">
+							<col width="10%">
+							<col width="*">
+							<col width="15%">
+							<col width="10%">
+							<col width="15%">
+							<col width="10%">
 						</colgroup>
 						<thead style="background-color: #f2f2f2;">
-							<tr>
-								<td><input type="checkbox" id="allCheck" onclick="AllCheckboxControl();"></td>
+							<tr class="text-center">
+								<td><input type="checkbox" class="form-check-input" id="allCheck" onclick="AllCheckboxControl();"></td>
 								<td>상품</td>
 								<td>판매기간</td>
 								<td>여행기간</td>
@@ -130,13 +108,12 @@
 							</th:block>
 							<th:block th:unless="${#lists.size(itemSaleList) == 0}">
 								<tr th:each="item : ${itemSaleList}">
-									<td><input type="checkbox" class="chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
-									<td>
-										<table class="itemTd text-start">
+									<td><input type="checkbox" class="form-check-input chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
+									<td class="itemTd">
+										<table class="itemTdTable">
 											<tr>
 												<td>
-													<img src="/img/diyDetailImg/de740e6f-f57b-49a2-be94-b9801958d1ad.jpg" width="100px">
-												<!-- <img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px"> --></td>
+													<img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px"></td>
 												<td style="padding-left: 10px;">
 													<div><span class="itemStatusSpan">[[${item.itemStateVO.statusName}]]</span></div>
 													<div>[[${item.tourAreaVO.areaKorName}]]</div>
@@ -172,6 +149,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 페이징 -->
 	<div class="row justify-content-center">
 		<div class="col-3">
 			<nav aria-label="Page navigation example">

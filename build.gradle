@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+
+	implementation 'org.springframework.boot:spiring-boot-starter-cache'
 	//구글api사용
 	implementation 'com.google.maps:google-maps-services:0.17.0'
 	// 문자 api

@@ -57,13 +57,13 @@ function drawHotel(results, cityName){
 
     for(const result of results){
         str +=`
-               <div class="row rounded-5 mx-5 my-3 shadow custom-border-3" style="cursor: pointer;">
-                    <div class="col-6 px-0 mx-0 rounded-5">
-                        <h5 class="card-title text-center mb-5 fw-bold">${result['name']}</h5>
+               <div class="row rounded-5 mx-5 my-3 shadow" style="cursor: pointer;">
+                    <div class="col-6 px-0 mx-0 rounded-5  mt-5">
+                        <h5 class="card-title text-center mt-4 fw-bold">${result['name']}</h5>
                         <div class="mt-auto">
-                            <p class="card-text">평점 : ${result['rating']}</p>
-                            <p class="card-text hotelGrade">
-                                <a href="javascript:void(0)" onclick="showLocationOnMap(${result['geometry']['location']['lat']},${result['geometry']['location']['lng']}, '${result['name']}');" class="btn">구글맵에서 보기</a>
+                            <p class="card-text text-center">평점 : ${result['rating']}</p>
+                            <p class="card-text hotelGrade text-center">
+                                <input class="btn btn-gray rounded-5" type="button" value="구글맵 보기" onclick="showLocationOnMap(${result['geometry']['location']['lat']},${result['geometry']['location']['lng']}, '${result['name']}');">
                             </p>
                         </div>
                     </div>
@@ -97,7 +97,7 @@ function showLocationOnMap(lat, lng, name) {
     //구글맵 호출
     const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: lat, lng: lng }, // Set initial center position
-        zoom: 17 // Set initial zoom level
+        zoom: 14 // Set initial zoom level
     });
     //모달창 오픈
     $('#modalToggle').modal('show');
@@ -132,4 +132,4 @@ function requestAndRenderPage() {
 }
 
 
-document.querySelector('.hotelCate').classList.add("ye-S-bc");
+document.querySelector('.hotelCate').classList.add("ye-S-fc");

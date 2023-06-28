@@ -1,7 +1,20 @@
 
 //예약하기 경고창
 function buyConfirm(){
+    const dateInputs = document.querySelectorAll('.dateInput');
     const buyForm = document.querySelector('.buyForm');
+
+    let dateValue = 0;
+    dateInputs.forEach(date => {
+        if(date.value == null || date.value == ''){
+           dateValue++;
+        }
+    });
+
+    if(dateValue != 0){
+        alert('날짜를 입력하세요');
+        return;
+    }
 
     if(!confirm('예약시겠습니까?')){
         return;

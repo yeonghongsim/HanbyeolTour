@@ -48,15 +48,16 @@ const ctx = document.getElementById('myChart');
 					label: '당해년도 매출',
 					data: data['thisYearSaleList'],
 					fill: true,
+					tension: 0.6,
 					borderColor: "rgba(255, 201, 14, 1)",
-					lineTension: 0,
-	           		backgroundColor: "rgba(255, 201, 14, 0.5)"
+	           		backgroundColor: "rgba(255, 201, 14, 0.5)",
 				},
 				{
 					label: '작년 매출',
 					data: data['lastYearSaleList'],
 					fill: true,
-					lineTension:0
+					tension: 0.6,
+					
 					
 				}
 			]	

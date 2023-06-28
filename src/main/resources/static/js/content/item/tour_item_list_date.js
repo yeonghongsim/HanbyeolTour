@@ -252,4 +252,4 @@ function getDate123(dateString){
 
 
 
-document.querySelector('.dateCate').classList.add("ye-S-bc");
+document.querySelector('.dateCate').classList.add("ye-S-fc");
