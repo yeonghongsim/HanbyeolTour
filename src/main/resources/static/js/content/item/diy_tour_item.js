@@ -1,6 +1,6 @@
 let hotelInfo = {};
 let tourInfo = {};
-//getNationalData();
+getNationalData();
 
 //환율정보크롤링데이터 가져오기
 function getExchangeData(){
@@ -12,6 +12,7 @@ function getExchangeData(){
         async : false,
         data: {},
         success: function(result) {
+
             drawExchang(JSON.parse(result));
         },
         error: function() {
@@ -71,7 +72,7 @@ function getNationalData(){
             }
         });
     });
-
+    console.log(resultMap);
     getLoc(getCaptalName(resultMap));
 
 }
@@ -81,13 +82,13 @@ function getCaptalName(resultMap){
     const keys = Object.keys(resultMap);
     let cityNames = [];
     keys.forEach((key) => {
-        cityNames.push( key == 'KR' ? '서울' : split(resultMap[key]['data'][0]['capital']));
+        cityNames.push( key == 'KR' ? '서울' : getSplit(resultMap[key]['data'][0]['capital']));
     });
     return cityNames;
 }
 
 //문자열 짜르기
-function split(str){
+function getSplit(str){
     return str.split('(')[0];
 }
 //도시명으로 위경도 받아오기
@@ -169,7 +170,7 @@ function drawWeather(weatherMap){
         areaCodes.forEach((areaCode) => {
 
             if(areaCode.value == weatherMap[key]['areaCode'].toString()){
-                areaCode.nextElementSibling.insertAdjacentHTML('beforeend', weatherStr);
+                areaCode.parentNode.insertAdjacentHTML('afterend', weatherStr);
             }
         });
     });
@@ -891,7 +892,7 @@ function mergedObj(obj1, obj2){
 }
 
 
-document.querySelector('.diyCate').classList.add("ye-S-bc");
+document.querySelector('.diyCate').classList.add("ye-S-fc");
 
 
 

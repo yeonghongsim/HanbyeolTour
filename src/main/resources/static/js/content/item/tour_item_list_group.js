@@ -173,7 +173,7 @@ function getDate123(dateString){
 //국가선택시 색상강조
 function init(){
 
-	document.querySelector('.areaCate').classList.add("ye-S-bc");
+	document.querySelector('.areaCate').classList.add("ye-S-fc");
 
 	const areaNameDivs  = document.querySelectorAll('.areaNameDiv');
 	const areaName = document.querySelector('#areaName').value;

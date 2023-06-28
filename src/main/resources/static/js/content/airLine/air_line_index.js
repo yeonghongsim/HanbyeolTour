@@ -149,5 +149,5 @@ function openOutterModal(e) {
 
 
 
-document.querySelector('.airlineCate').classList.add("ye-S-bc");
+document.querySelector('.airlineCate').classList.add("ye-S-fc");
 
