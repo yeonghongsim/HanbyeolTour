@@ -196,7 +196,7 @@ function chkMainSelect(mainSlcVal){
 	if(mainSlcVal.value == 'member'){
 		
 		options += `<option value="M/F">전체 이용자 중 남/여 비율</option>`;
-		options += `<option value="insited">전체 이용자 중 이용률 ( 이용, 휴면, 탈퇴 )</option>`;
+		options += `<option value="insited">전체 이용자 중 이용률 ( 활동중, 휴면, 탈퇴 )</option>`;
 		
 		sub_select.insertAdjacentHTML('afterbegin', options);
 		

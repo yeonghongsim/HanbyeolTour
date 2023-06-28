@@ -120,6 +120,15 @@ public class BoardController {
 		return boardService.getReplyList(boardReplyVO.getHbtBoardNum());
 	}
 	
+	@ResponseBody
+	@PostMapping("/delBoardAJAX")
+	public String delBoardAJAX(String hbtBoardNum) {
+		System.out.println("delBoardAJAX~" + hbtBoardNum);
+		
+		boardService.delBoard(hbtBoardNum);
+		
+		return hbtBoardNum;
+	}
 	
 	@PostMapping("/regBoard")
 	public String regBoard(BoardVO boardVO) {

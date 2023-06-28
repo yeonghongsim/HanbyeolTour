@@ -49,6 +49,7 @@ function regRequest(){
 			hbtBoardRequestContent.placeholder = '내용을 입력하세요.';
 		}
 		
+		alert('비밀번호 혹은 제목/내용의 확인해주세요.')
 		return ;
 	}
 	

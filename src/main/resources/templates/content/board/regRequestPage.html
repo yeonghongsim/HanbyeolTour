@@ -15,7 +15,6 @@
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 		</div>
 	</div>
-	
 	<div class="row">
 		<div class="col">
 			<table class="table table-hover text-center request-table">
@@ -38,32 +37,39 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="request, state : ${requestList}">
-						<td>[[${requestList.size() - state.index}]]</td>
-						<td>[[${request.typeRequestVO.typeRequestName}]]</td>
-						<td>
-							<div class="row mb-2">
-								<div class="col">
-									<img th:onclick="showBtn(this, [[${#authentication.name}]]);" src="/imageForUse/lock.jpeg" style="width: 30px;">
-									/ [[${request.requestPw}]]
+					<th:block th:if="${requestList.size() == 0}">
+						<tr>
+							<td colspan="6">문의된 글 목록이 없습니다.</td>
+						</tr>
+					</th:block>
+					<th:block th:unless="${requestList.size() == 0}">
+						<tr th:each="request, state : ${requestList}">
+							<td>[[${requestList.size() - state.index}]]</td>
+							<td>[[${request.typeRequestVO.typeRequestName}]]</td>
+							<td>
+								<div class="row mb-2">
+									<div class="col">
+										<img th:onclick="showBtn(this, [[${#authentication.name}]]);" src="/imageForUse/lock.jpeg" style="width: 30px;">
+										/ [[${request.requestPw}]]
+									</div>
 								</div>
-							</div>
-							<div class="row hide">
-								<div class="col-7">
-									<input type="password" class="form-control">
+								<div class="row hide">
+									<div class="col-7">
+										<input type="password" class="form-control">
+									</div>
+									<div class="col-3">
+										<input type="button" th:onclick="chkReqPw([[${request.hbtBoardRequestNum}]], this);" class="btn btn-yellow-reverse" value="문의 보기">
+									</div>
+									<div class="col-1">
+										<input type="button" onclick="cancelChkPw(this);" class="btn btn-red" value="취소">
+									</div>
 								</div>
-								<div class="col-3">
-									<input type="button" th:onclick="chkReqPw([[${request.hbtBoardRequestNum}]], this);" class="btn btn-yellow-reverse" value="문의 보기">
-								</div>
-								<div class="col-1">
-									<input type="button" onclick="cancelChkPw(this);" class="btn btn-red" value="취소">
-								</div>
-							</div>
-						</td>
-						<td>[[${request.memberVO.memId}]]</td>
-						<td>[[${request.hbtBoardRequestRegDate}]]</td>
-						<td>[[${request.isAnswer}]]</td>
-					</tr>
+							</td>
+							<td>[[${request.memberVO.memId}]]</td>
+							<td>[[${request.hbtBoardRequestRegDate}]]</td>
+							<td>[[${request.isAnswer}]]</td>
+						</tr>
+					</th:block>
 				</tbody>
 			</table>
 		</div>
