@@ -57,10 +57,10 @@ function drawHotel(results, cityName){
 
     for(const result of results){
         str +=`
-               <div class="row rounded-5 mx-5 my-3 shadow custom-border-3" style="cursor: pointer;">
+               <div class="row rounded-5 mx-5 my-3 shadow custom-border-3">
                     <div class="col-6 px-0 mx-0 rounded-5">
-                        <h5 class="card-title text-center mb-5 fw-bold">${result['name']}</h5>
-                        <div class="mt-auto">
+                        <h5 class="card-title text-center mt-2 mb-5 fw-bold">${result['name']}</h5>
+                        <div class="mt-auto text-center">
                             <p class="card-text">평점 : ${result['rating']}</p>
                             <p class="card-text hotelGrade">
                                 <a href="javascript:void(0)" onclick="showLocationOnMap(${result['geometry']['location']['lat']},${result['geometry']['location']['lng']}, '${result['name']}');" class="btn">구글맵에서 보기</a>
@@ -97,7 +97,7 @@ function showLocationOnMap(lat, lng, name) {
     //구글맵 호출
     const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: lat, lng: lng }, // Set initial center position
-        zoom: 17 // Set initial zoom level
+        zoom: 13 // Set initial zoom level
     });
     //모달창 오픈
     $('#modalToggle').modal('show');
