@@ -10,16 +10,17 @@
 
 
 .accordion-button:not(.collapsed){
-	background-color: #ffd000;
+	background-color: #eeeeee;
 }
 .accordion-button:focus {
 	z-index: 3;
-	border-color: #ffd000;
+	color:black;
+	/* border-color: #ffd000; */
 	outline: 0;
 	box-shadow: #ffd000;
 }
 .accordion{
-	--bs-accordion-border-color: #ffd000;
+	--bs-accordion-border-color: 1px hidden #ffd000;
 	--bs-accordion-btn-focus-border-color: #ffd000;
 	--bs-accordion-btn-focus-box-shadow: #ffd000;
 }
@@ -28,10 +29,33 @@
 	box-shadow: none;
 }
 .form-control{
-	font-size: 14px;
+	font-size: 17px;
+	text-align: center;
 }
 
 .dailyPlanDivs img{
 	width: 305px;
 	height: 200px;
+}
+
+.btn-gray-air {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #bbb;
+    --bs-btn-border-color: #bbb;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #fff9d4;
+    --bs-btn-hover-border-color: #DEE2E5;
+    --bs-btn-focus-shadow-rgb: #fff9d4;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #ffd000;
+    --bs-btn-active-border-color: #ffd000;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #ffc107;
+    --bs-btn-disabled-border-color: #ffc107;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    font-size: 1.1rem;
 }

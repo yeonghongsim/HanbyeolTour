@@ -53,6 +53,9 @@ function chkReqPw(hbtBoardRequestNum, chkBtn){
 			
 			if(!result){
 				alert('올바르지 않은 비밀번호 입니다.');
+				chkPwVal.value = '';
+				chkPwVal.placeholder = '비밀번호를 다시 입력하세요.';
+				
 			} else {
 				location.href='/board/RequestDetail?hbtBoardRequestNum=' + hbtBoardRequestNum;
 			}

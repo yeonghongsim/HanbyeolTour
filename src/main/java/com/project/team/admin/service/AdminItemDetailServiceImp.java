@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("adminItemDetailService")
-public class AdminItemDetailServiceImpl implements AdminItemDetailService {
+public class AdminItemDetailServiceImp implements AdminItemDetailService {
     @Autowired
     SqlSessionTemplate sqlSession;
 

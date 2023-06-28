@@ -14,34 +14,34 @@
 <!--        아이템 카드-->
 
     <div class="row d-flex justify-content-center">
-        <div class="col-md-6 mx-0 px-0 rounded-5 custom-border-4 shadow d-flex justify-content-center">
+        <div class="col-md-6 mx-0 px-0 rounded-5 custom-border-3 shadow d-flex justify-content-center">
             <h4 class="text-center my-3 fw-bold resultTitle">전 세계 호텔 검색</h4>
         </div>
     </div>
 
 
     <div class="row text-center mb-3 py-3 d-flex justify-content-center">
-        <div class="col-md-6 py-2 d-flex custom-border-4 shadow border rounded-5 justify-content-center">
+        <div class="col-md-6 py-2 d-flex shadow rounded-5 justify-content-center">
             <div class="row d-flex my-3 justify-content-center">
                 <div class="col-md-4">
-                    <select class="areaName rounded-5 custom-border-3 ye-S-bc form-control form-select">
+                    <select class="areaName rounded-5 custom-border-6 form-control form-select">
                         <th:block th:each="loc : ${locMenuList}">
                             <option>[[${loc.areaKorName}]]</option>
                         </th:block>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control rounded-5 custom-border-3 ye-S-bc" type="text" placeholder="도시명" id="cityName">
+                    <input class="form-control rounded-5 custom-border-6 " type="text" placeholder="도시명" id="cityName">
                 </div>
-                <div class="col-md-4">
-                    <input class="btn ye-S-bc custom-border-3 rounded-5" type="button" value="검색" onclick="searchHotelsAJAX();">
+                <div class="col-md-4 d-grid">
+                    <input class="btn btn-gray rounded-5" type="button" value="검색" onclick="searchHotelsAJAX();">
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center">
-        <div class="col-md-6 mx-0 px-0 rounded-5 my-3 custom-border-4 shadow d-flex justify-content-center">
+        <div class="col-md-6 mx-0 px-0 rounded-5 my-3 custom-border shadow d-flex justify-content-center">
             <h4 class="text-center my-3 fw-bold resultTitle">한별투어 추천 호텔</h4>
         </div>
     </div>
@@ -50,15 +50,15 @@
 
 
     <div class="row mt-3 mb-3 d-flex justify-content-center" >
-        <div class="col-md-6 shadow custom-border-4 rounded-5 resultDiv">
+        <div class="col-md-6 rounded-5 resultDiv">
             <th:block th:each="hotel : ${hotelList}">
 
-                <div class="row rounded-5 mx-5 my-3 shadow custom-border-3" style="cursor: pointer;">
+                <div class="row rounded-5 mx-5 my-3 shadow" style="cursor: pointer;">
                     <div class="col-6 px-0 mx-0 rounded-5">
-                        <h5 class="card-title text-center mt-2 mb-5 fw-bold">[[${hotel['HBT_HOTEL_NAME']}]]</h5>
+                        <h5 class="card-title text-center mb-4 mt-4 fw-bold">[[${hotel['HBT_HOTEL_NAME']}]]</h5>
                         <div class="mt-auto">
-                            <p class="card-text">[[${hotel['HBT_HOTEL_INTRO']}]]</p>
-                            <p class="card-text hotelGrade" th:data-grade="${hotel['HBT_HOTEL_GRADE']}"></p>
+                            <p class="card-text hotelGrade text-center" th:data-grade="${hotel['HBT_HOTEL_GRADE']}" style="color: #ffd000;"></p>
+                            <p class="card-text" style="padding-left: 10px; padding-right: 10px;">[[${hotel['HBT_HOTEL_INTRO']}]]</p>
                         </div>
                     </div>
                     <div class="col-6 px-0 mx-0 rounded-5">

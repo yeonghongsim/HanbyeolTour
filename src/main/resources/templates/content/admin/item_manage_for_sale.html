@@ -83,12 +83,12 @@
 				<div class="col">
 					<table class="table text-center listTable">
 						<colgroup>
-							<col width="5%">
+							<col width="10%">
 							<col width="*">
 							<col width="15%">
 							<col width="10%">
-							<col width="13%">
-							<col width="5%">
+							<col width="15%">
+							<col width="10%">
 						</colgroup>
 						<thead style="background-color: #f2f2f2;">
 							<tr class="text-center">
@@ -109,11 +109,10 @@
 							<th:block th:unless="${#lists.size(itemSaleList) == 0}">
 								<tr th:each="item : ${itemSaleList}">
 									<td><input type="checkbox" class="form-check-input chk" th:value="${item.itemCode}" onclick="listCheckboxControl();"></td>
-									<td class="">
-										<table class="itemTd text-start">
+									<td class="itemTd">
+										<table class="itemTdTable">
 											<tr>
 												<td>
-													
 													<img th:src="${'/img/item/itemImg/' + item.imgList[0].itemImgAttachedName}" width="100px"></td>
 												<td style="padding-left: 10px;">
 													<div><span class="itemStatusSpan">[[${item.itemStateVO.statusName}]]</span></div>

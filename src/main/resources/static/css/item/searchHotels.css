@@ -13,7 +13,7 @@
     box-shadow: none; /* 선택 사항: 클릭 시 생기는 그림자 제거 */
 }
 select:focus option {
-    background-color: #fff9d4;
+    background-color: #fff;
     color: #000000;
 }
 select option:hover {

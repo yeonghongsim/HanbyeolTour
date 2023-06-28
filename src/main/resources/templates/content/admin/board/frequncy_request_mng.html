@@ -32,8 +32,8 @@
 		<div class="col-lg-2 col-sm-3 typeRequest-div">
 			<span th:onclick="searchTypeRequest(0)" style="cursor: pointer;">전체</span>
 		</div>
-		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}">
-			<span th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])" style="cursor: pointer;">[[${typeRequest.typeRequestName}]]</span>
+		<div class="col-lg-2 col-sm-3 typeRequest-div" th:each="typeRequest : ${typeRequestList}" th:onclick="searchTypeRequest([[${typeRequest.typeRequestCode}]])" style="cursor: pointer;">
+			<span>[[${typeRequest.typeRequestName}]]</span>
 		</div>
 	</div>
 	
@@ -59,27 +59,35 @@
 					</tr>
 				</thead>
 				<tbody id="req-table-tbody">
-					<th:block th:each="freqRequest : ${getFreqRequestList}">
-						<tr class="align-middle">
-							<td>
-								<input type="checkbox" class="chk form-check-input" th:value="${freqRequest.freqRequestCode}" onclick="chks()">
-							</td>
-							<td>
-								<span class="showAnswer" style="cursor: pointer;" onclick="showAnswer(this);">[[${freqRequest.typeRequestVO.typeRequestName}]]</span>
-							</td>
-							<td>[[${freqRequest.freqRequestTitle}]]</td>
-							<td>
-								<input class="btn btn-red w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], 0)">
-							</td>
-						</tr>
-						<tr class="align-middle hide">
+					<th:block th:if="${getFreqRequestList.size == 0}">
+						<tr>
 							<td></td>
-							<td>A.</td>
-							<td>[[${freqRequest.freqRequestContent}]]</td>
-							<td>
-								<input th:onclick="updateQnAjs([[${freqRequest.freqRequestCode}]], this, 0);" type="button" class="btn btn-gray w-100" value="수정 하기">
-							</td>
+							<td colspan="3">등록하신 글 목록이 없습니다.</td>
 						</tr>
+					</th:block>
+					<th:block th:unless="${getFreqRequestList.size == 0}">
+						<th:block th:each="freqRequest : ${getFreqRequestList}">
+							<tr class="align-middle">
+								<td>
+									<input type="checkbox" class="chk form-check-input" th:value="${freqRequest.freqRequestCode}" onclick="chks()">
+								</td>
+								<td>
+									<span class="showAnswer" style="cursor: pointer;" onclick="showAnswer(this);">[[${freqRequest.typeRequestVO.typeRequestName}]]</span>
+								</td>
+								<td>[[${freqRequest.freqRequestTitle}]]</td>
+								<td>
+									<input class="btn btn-red w-100" type="button" value="삭제 하기" th:onclick="delFreqReq([[${freqRequest.freqRequestCode}]], 0)">
+								</td>
+							</tr>
+							<tr class="align-middle hide">
+								<td></td>
+								<td>A.</td>
+								<td>[[${freqRequest.freqRequestContent}]]</td>
+								<td>
+									<input th:onclick="updateQnAjs([[${freqRequest.freqRequestCode}]], this, 0);" type="button" class="btn btn-gray w-100" value="수정 하기">
+								</td>
+							</tr>
+						</th:block>
 					</th:block>
 				</tbody>
 			</table>
