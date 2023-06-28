@@ -22,10 +22,13 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
 <div class="row">
+	<div class="col">
+		<h3 class="menuTitle">메인 페이지 설정</h3>
+	</div>
 
     <!-- 메인페이지 슬라이드 이미지 관리   -->
-        <div class="row text-center custom-border-4 rounded-5 mb-3">
-            <h3>메인 페이지 슬라이드 사진 설정</h3>
+        <h5 style="font-style: italic;">메인 페이지 슬라이드 사진 설정</h5>
+        <div class="row text-center mb-3 mt-3">
              <form class="mx-0 px-0 " action="/admin/uploadMainSlideImg" method="post" enctype="multipart/form-data">
            <!--  사진 업로드 및 설정  -->
                  <div class="row d-flex justify-content-center">
@@ -47,7 +50,7 @@
                                             <td>[[${state.count}]]</td>
                                             <td>[[${img['HBT_MAINPAGE_ORIGIN_FILE_NAME']}]]</td>
                                             <td>
-                                                <input type="button" class="btn ye-S-bc" value="삭제" th:onclick="|location.href='@{/admin/deleteMainSlideImg(imgCode=(${img.HBT_MAINPAGE_IMG_CODE}))}'|">
+                                                <input type="button" class="btn ye-S-bc custom-border" value="삭제" th:onclick="|location.href='@{/admin/deleteMainSlideImg(imgCode=(${img.HBT_MAINPAGE_IMG_CODE}))}'|">
                                             </td>
                                             <td></td>
                                         </tr>
@@ -87,22 +90,19 @@
                  </div>
 
                 <div class="row mb-3 text-center d-flex justify-content-center">
-                    <div class="col-md-4">
-                        <input class="form-control rounded-5 custom-border-3" type="file" name="slideImg">
+                    <div class="col-md-5">
+                        <input class="form-control custom-border-6" type="file" name="slideImg">
                     </div>
-                    <div class="col-md-4">
-                        <input class="btn btn ye-S-bc rounded-5 custom-border-3" type="submit" value="추가">
+                    <div class="col-md-2 mb-5 d-grid">
+                        <input class="btn ye-S-bc custom-border" type="submit" value="추가">
                     </div>
                 </div>
              </form>
         </div>
-
-    <div class="row mb-3 rounded-5 custom-border-4 d-flex justify-content-center">
+	<h5 style="font-style: italic;">추천 아이템 관리</h5>
+    <div class="row mb-3 mt-3 rounded-3 d-flex justify-content-center">
         <div class="col justify-content-center mx-0">
-
-
             <div class="row text-center my-2">
-                <h3>추천 아이템 관리</h3>
             </div>
 
             <div class="row mb-2">
@@ -118,7 +118,7 @@
 
             <div class="row mb-3 text-center">
                 <div class="col-5">
-                    <select style="height: 200px;" class="form-select allItemList text-center custom-border-2" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                    <select style="height: 200px;" class="form-select allItemList text-center custom-border-6" multiple="" aria-label="multiple select example" control-id="ControlID-13">
                         <th:block th:each="item : ${itemList}">
                             <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}">[[${item['ITEM_TITLE']}]]</option>
                         </th:block>
@@ -126,15 +126,15 @@
                 </div>
                 <div class="col-2 align-self-center">
                     <div class="row mb-3">
-                        <input type="button" class="btn ye-S-bc rounded-5 custom-border-3" value="▷" onclick="addRecomItem();">
+                        <input type="button" class="btn ye-S-bc rounded-5 custom-border" value="▷" onclick="addRecomItem();">
                     </div>
                     <div class="row mt-3">
-                        <input type="button" class="btn ye-S-bc rounded-5 custom-border-3" value="◁" onclick="removeRecomItem();">
+                        <input type="button" class="btn ye-S-bc rounded-5 custom-border" value="◁" onclick="removeRecomItem();">
                     </div>
                 </div>
                 <div class="col-5">
 
-                    <select style="height: 200px;" class="form-select recomItemList text-center custom-border-2" multiple="" aria-label="multiple select example" control-id="ControlID-13">
+                    <select style="height: 200px;" class="form-select recomItemList text-center" multiple="" aria-label="multiple select example" control-id="ControlID-13">
                         <th:block th:each="item : ${recomItem}">
                             <option th:value="${item['ITEM_CODE']} + ',' + ${item['ITEM_IMG_ATTACHED_NAME']}">[[${item['ITEM_TITLE']}]]</option>
                         </th:block>
@@ -143,13 +143,13 @@
             </div>
 
             <!-- 추천 아이템 등록 이미지 미리보기     -->
-            <div class="row my-3">
+            <div class="row my-3 mt-5">
                 <div class="row justify-content-center recomImgDiv">
                     <th:block th:each="item : ${recomItem}">
                         <div class="col col-2 recomImg mx-3">
                             <div class="row mb-0 d-flex justify-content-center text-center">
-                                <img th:src="'/img/item/itemImg/' + ${item['ITEM_IMG_ATTACHED_NAME']}" class="rounded-5 px-0 custom-border-3 recommend-img" alt="추천상품이미지">
-                                <h4 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h4>
+                                <img th:src="'/img/item/itemImg/' + ${item['ITEM_IMG_ATTACHED_NAME']}" class="px-0 recommend-img" alt="추천상품이미지">
+                                <h5 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h5>
                             </div>
                             <div class="row my-0">
                                 <input class="form-control comment_input" type="text" placeholder="코멘트 입력" onchange="changeComment();">
@@ -163,7 +163,7 @@
 
             <div class="row my-1 d-flex justify-content-center">
                 <div class="col-6 d-flex justify-content-center">
-                    <input class="btn ye-S-bc rounded-5 custom-border-2" type="button" value="변경 사항 저장" onclick="setRecomItem();">
+                    <input class="btn ye-S-bc rounded-5 custom-border" type="button" value="변경 사항 저장" onclick="setRecomItem();">
                 </div>
             </div>
 
