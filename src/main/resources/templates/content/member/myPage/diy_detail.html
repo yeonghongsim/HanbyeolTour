@@ -176,7 +176,7 @@
 	     <tbody>
 				<th:block th:each="detail : ${resultList}">
 					<tr>
-				   		<td>[[${detail.hbtDiyDay}]] 일차 </td>
+				   		<td style="color: #ffd000;">[[${detail.hbtDiyDay}]] 일차 </td>
 				    	<td th:if="${detail.hotelList == null or #lists.size(detail.hotelList) == 0}"><i class="bi bi-dash-lg" style="color:#d6d6d6;"></i></td>
 				    	<td th:if="${detail.hotelList != null and #lists.size(detail.hotelList) != 0}" style="font-weight: bolder;">[[${detail.hotelList[0].hbtHotelName}]]</td>
 				    	<td th:if="${detail.tourItemList == null or #lists.size(detail.tourItemList) == 0}"><i class="bi bi-dash-lg" style="color:#d6d6d6;"></i></td>
@@ -207,9 +207,7 @@
 	            </tr>
 	            <tr>
 	            	<th>평점 : </th>
-	            	<td>[[${diyDetail.hotelList[0].hbtHotelGrade}]] / 5 
-	            	  <span class="col-2" th:utext="${convertToStarIcons(rdiyDetail.hotelList[0].hbtHotelGrade)}" style="font-size: 0.8rem; color: #ffd000;"></span>
-	            	</td>
+	            	<td><span style="font-weight: bolder; color: #ffd000;">[[${diyDetail.hotelList[0].hbtHotelGrade}]]</span> / 5 </td>
 	            </tr>
 	            <tr>
 	            	<th>해당 국가 : </th>
@@ -253,7 +251,7 @@
 
 
 <div class="row">
-	<th:block th:each="diy : ${tourInfoList}">
+	<th:block th:each="diy : ${hotelInfoList}">
 	    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
 	      <div class="col-md-6 mb-3 under">
 	        <table class="table under-table">
@@ -312,12 +310,6 @@
 	                [[${#numbers.formatCurrency(diyDetail.tourItemList[0].hbtTourItemPrice).substring(1)}]] 원
 	                </td>
 	            </tr>
-	           <!--  <tr>
-	            	<th>추가 정보 : </th>
-	            	<td>
-						<div class="scrollable-text">[[${diyDetail.tourItemList[0].hbtTourItemIntro}]]</div>
-	            	</td>
-	            </tr> -->
 	        <tbody>
     	</table>
       </div>
@@ -348,38 +340,44 @@
   </th:block>
 </div>
 
-<div class="row">
-	<th:block th:each="diy : ${tourInfoList}">
-	    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
-	      <div class="col-md-6 mb-3 under">
-	        <table class="table under-table">
-	        	<tbody>
-		            <tr>
-		            	<th>추가 정보 : </th>
-		            	<td>
-							<div class="scrollable-text">[[${diyDetail.tourItemList[0].hbtTourItemIntro}]]</div>
-		            	</td>
-		            </tr>
-		        <tbody>
-	    	</table>
-	      </div>
-		</th:block>
-	  </th:block>
-</div>
+	<div class="row">
+		<th:block th:each="diy : ${tourInfoList}">
+		    <th:block th:each="diyDetail, detailStat : ${diy.diyDetailList}">
+		      <div class="col-md-6 mb-3 under">
+		        <table class="table under-table">
+		        	<tbody>
+			            <tr>
+			            	<th>추가 정보 : </th>
+			            	<td>
+								<div class="scrollable-text">[[${diyDetail.tourItemList[0].hbtTourItemIntro}]]</div>
+			            	</td>
+			            </tr>
+			        <tbody>
+		    	</table>
+		      </div>
+			</th:block>
+		  </th:block>
+	</div>
 
-<!-- 선 -->
-<div class="mt-5 mb-4">
-	<hr class="line">
-</div>
+	<!-- 선 -->
+	<div class="mt-5 mb-4">
+		<hr class="line">
+	</div>
 
-<!-- 유의 사항 -->
-<div class="info-under">
-	<ul>
-		<li>
-			예약취소는 [결제완료] 상태까지 가능합니다. [예약완료]상태는 고객센터로 문의 부탁드립니다.
-		</li>
-	</ul>
-</div>
+	<!-- 유의 사항 -->
+	<div class="info-under">
+		<ul>
+			<li>
+				예약취소는 [결제완료] 상태까지 가능합니다. [예약완료]상태는 고객센터로 문의 부탁드립니다.
+			</li>
+		</ul>
+	</div>
+
+	<div class="offset-5 col-2 d-grid mb-5">
+		 <a class="btn btn-yellow-line text-center" th:href="@{/myPage/checkDiyReservation}">
+    	    목록
+   		</a>
+	</div>
 
 </div>
 
