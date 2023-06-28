@@ -14,11 +14,16 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		
 		
 			registry.addInterceptor(getMenuInterceptor())
-									.addPathPatterns("/item/**")
-									.addPathPatterns("/hotel/**")
+									//.addPathPatterns("/item/**")
+									//.addPathPatterns("/hotel/**")
 									.addPathPatterns("/**/**")
 									.excludePathPatterns("/**/*AJAX")
 									.excludePathPatterns("/admin/**");
+									//.excludePathPatterns("/member/join");
+		
+//		registry.addInterceptor(getMenuInterceptor())
+//		.addPathPatterns("/member/login")
+//		;
 			
 			// 마이페이지 - 사이드 메뉴 리스트 조회 
 			registry.addInterceptor(getMemberSideMenuInterceptor())
