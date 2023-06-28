@@ -72,7 +72,6 @@ public class AdminController {
 	// 초기화면 이동
 	@GetMapping("/")
 	public String index() {
-		
 		return "redirect:/adminIndex/";
 	}
 	

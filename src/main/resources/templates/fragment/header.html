@@ -7,7 +7,7 @@
 	<!-- 상단바 1 -->
 	<div class="row contain position-relative">
 
-		<img src="/img/backg6.jpg" class="px-0 active" style="bottom: 10%;">
+	 	<img src="/img/backg6.jpg" class="px-0 active" style="bottom: 10%;">
 		<img src="/img/backg5.jpg" class="px-0">
 		<img src="/img/backg4.jpg" class="px-0">
 		<div class="row header-bar mt-1 pb-1 my-0 position-absolute">
@@ -22,12 +22,9 @@
 					<ul class="header-title head-top">
 						<li class="h-btn"><a th:href="@{/member/login}">로그인</a></li>
 						<li class="h-btn"><a href="/member/join">회원가입</a></li>
-						<li class="h-btn"><a href="javascript:void(0);">장바구니</a></li>
-						<li class="h-btn"><a href="javascript:void(0);">마이페이지</a></li>
+						<li class="h-btn"><a th:href="@{/member/login}">장바구니</a></li>
+						<li class="h-btn"><a th:href="@{/member/login}">마이페이지</a></li>
 						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
-						<li class="h-btn">
-							<a th:href="@{/admin/}">관리자메뉴</a>
-						</li>
 					</ul>
 				</div>
 				<!-- 로그인 시 -->

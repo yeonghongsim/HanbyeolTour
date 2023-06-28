@@ -113,7 +113,7 @@ function login(){
 
 	//ajax start
 	$.ajax({
-	   url: '/member/login', //요청경로
+	   url: '/member/loginProcess', //요청경로
 	   type: 'post',
 	   data: {'memId':memId, 'memPw':memPw}, //필요한 데이터
 	   success: function(result) {

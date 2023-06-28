@@ -35,7 +35,9 @@ a{
   --bs-popover-body-padding-y: 0.5rem;
   --bs-popover-body-margin-x: 1rem;
   font-size: 0.8rem;
-  
+  font-family: 'IBMPlexSansKR-Regular';
+  font-size: 14px;
+  letter-spacing: -1px;
 }
 
 #btn-home{

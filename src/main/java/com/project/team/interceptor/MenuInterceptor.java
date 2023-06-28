@@ -18,9 +18,10 @@ public class MenuInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		if(modelAndView != null) {
-			modelAndView.addObject("locMenuList", adminService.getAreaCateList());
-		}
+		String prevPage = request.getHeader("Referer");
+		System.out.println("인터셉터 : " + prevPage);
+		
+		modelAndView.addObject("locMenuList", adminService.getAreaCateList());
 		
 	}
 	
