@@ -132,4 +132,4 @@ function requestAndRenderPage() {
 }
 
 
-document.querySelector('.hotelCate').classList.add("ye-S-bc");
+document.querySelector('.hotelCate').classList.add("ye-S-fc");
