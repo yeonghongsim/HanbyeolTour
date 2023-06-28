@@ -14,12 +14,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		
 		
 			registry.addInterceptor(getMenuInterceptor())
-									//.addPathPatterns("/item/**")
-									//.addPathPatterns("/hotel/**")
+									.addPathPatterns("/item/**")
+									.addPathPatterns("/hotel/**")
 									.addPathPatterns("/**/**")
 									.excludePathPatterns("/**/*AJAX")
 									.excludePathPatterns("/admin/**");
-									//.excludePathPatterns("/member/join");
 		
 //		registry.addInterceptor(getMenuInterceptor())
 //		.addPathPatterns("/member/login")
@@ -51,7 +50,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 	
 	@Bean
-	public MenuInterceptor getMenuInterceptor() {
+	MenuInterceptor getMenuInterceptor() {
 		return new MenuInterceptor();
 	}
 	
