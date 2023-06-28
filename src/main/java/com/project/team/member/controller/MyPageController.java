@@ -564,7 +564,7 @@ public class MyPageController {
 	@ResponseBody
 	@RequestMapping("/delMyCartAJAX")
 	public String delMyCartAJAX(String cartCode, DiyTourVO diyTourVO, String memCode) {
-		System.out.println("delMyCartAJAX~" + cartCode + "/" + diyTourVO);
+		System.out.println("delMyCartAJAX~" + cartCode + "/." + diyTourVO);
 		
 		if(!cartCode.equals("empty")) {
 			buyService.delCart(cartCode);
