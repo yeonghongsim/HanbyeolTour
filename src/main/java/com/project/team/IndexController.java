@@ -50,7 +50,6 @@ public class IndexController {
 			groupedList.add(data);
 			groupedMap.put(columnValue, groupedList);
 		}
-		System.out.println(groupedMap);
 		model.addAttribute("favoriteArea", groupedMap);
 
 

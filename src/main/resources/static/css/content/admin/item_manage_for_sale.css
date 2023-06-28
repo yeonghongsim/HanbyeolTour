@@ -87,9 +87,10 @@
 	padding: 2px;
 }
 
-.itemTd{
-	margin: 0 auto;
+.itemTdTable{
+	text-align: left;
 }
+
 
 .searchDiv{
 	

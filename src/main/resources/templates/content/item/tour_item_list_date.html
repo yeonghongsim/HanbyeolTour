@@ -21,16 +21,16 @@
 		</div>
 		<!-- 년/월 다음날 이번달 버튼 -->
 		<div class="row mt-0 mb-3 d-flex justify-content-center">
-			<div class="col-md-6 shadow custom-border-4 rounded-5">
+			<div class="col-md-6 shadow custom-border-3 rounded-5">
 				<nav aria-label="Page navigation example d-flex justify-content-center">
 					<ul class="pagination d-flex my-2 justify-content-center">
 						<li class="page-item">
 							<a class="page-link border-0" href="javascript:void(0);" onclick="getSearchByDateTable('prev');"
 							aria-label="Previous">
-								<span class="ye-S-fc" aria-hidden="true">&laquo;</span>
+								<span style="color: black; font-size: 20px;" aria-hidden="true">&laquo;</span>
 							</a>
 						</li>
-						<li class="page-item align-middle py-2">
+						<li class="page-item align-middle py-2 text-center" style="width: 100px; font-size: 20px;">
 							<span class="" id="yearSpan"></span>
 							<span>.</span>
 							<span id="monthSpan"></span>
@@ -38,7 +38,7 @@
 						<li class="page-item">
 							<a class="page-link border-0" href="javascript:void(0);" onclick="getSearchByDateTable('next');"
 							aria-label="Next">
-								<span class="ye-S-fc" aria-hidden="true">&raquo;</span>
+								<span style="color: black; font-size: 20px;" aria-hidden="true">&raquo;</span>
 							</a>
 						</li>
 					</ul>
@@ -48,7 +48,7 @@
 
 
 		<div class="row mt-0 mb-3 d-flex justify-content-center">
-			<div class="col px-2 py-2 col-md-6 shadow custom-border-4 rounded-5">
+			<div class="col px-2 py-2 col-md-6 shadow rounded-5">
 				<table class="table text-center searchByDateCal px-1 py-1 my-1">
 					<colgroup>
 					</colgroup>
@@ -72,7 +72,7 @@
 
 		<!-- 검색결과표  -->		
 		<div class="row mt-0 mb-3 d-flex justify-content-center">
-			<div class="col-md-6 shadow custom-border-4 rounded-5 rusultDiv">
+			<div class="col-md-6 rounded-5 rusultDiv">
 
 				<th:block th:each="tourItem, state : ${tourItemList}">
 
@@ -81,7 +81,7 @@
 					<h3 class="text-center mt-5">[[${tourItem["ITEM_TITLE"]}]]</h3>
 
 
-					<div class="row rounded-5 mx-5 mb-5 border shadow custom-border-3" style="cursor: pointer;" th:onclick="|location.href='@{/item/tourItemListDetail(departDate = ${tourItem.DEP_DATE},arriveDate = ${tourItem.ARR_DATE},itemCode = ${tourItem.ITEM_CODE})}'|">
+					<div class="row rounded-5 mx-5 mb-5 shadow" style="cursor: pointer;" th:onclick="|location.href='@{/item/tourItemListDetail(departDate = ${tourItem.DEP_DATE},arriveDate = ${tourItem.ARR_DATE},itemCode = ${tourItem.ITEM_CODE})}'|">
 						<div class="col-6 px-0 mx-0 rounded-5">
 							<img style="display: block; width: 100%;" class="rounded-start-5 object-fit-fill" th:src="'/img/item/itemImg/' + ${tourItem['ITEM_IMG_ATTACHED_NAME']}">
 						</div>

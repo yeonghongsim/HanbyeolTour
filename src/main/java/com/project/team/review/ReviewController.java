@@ -31,28 +31,17 @@ import java.util.Map;
 public class ReviewController {
     @Resource(name = "adminService")
     private AdminService adminService;
-    @Autowired
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
+
+    public ReviewController(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @PostMapping("/reviewAJAX")
     @ResponseBody
     public void review(ReveiwVO reveiwVO) throws JsonProcessingException {
-        //List<String> list = adminService.getReviewList();
-
-        //테스트데이터생성
-        List<String> list = new ArrayList<>();
-        for(int i = 0; i < 3; i++){
-
-            list.add("최악이였다");
-            list.add("기분좋은 여행이였다");
-            list.add("가성비가 안 좋다");
-            list.add("가성비가 최고");
-            list.add("재미없다");
-            list.add("환상적인 여행");
-            list.add("가이드가 친절하고 좋은 여행이였따");
-        }
+        List<String> list = adminService.getReviewList();
         //json변환
-        ObjectMapper mapper = new ObjectMapper();
         mapper.writeValueAsString(list);
         //get요청할 url 세팅
         String url = "http://localhost:5001/predictTest?sentences=" + mapper.writeValueAsString(list);
@@ -98,8 +87,6 @@ public class ReviewController {
 
         adminService.setReviewData(reveiwVO);
     }
-
-
 }
 
 @Getter
@@ -110,8 +97,6 @@ class DataObject {
     private GoodOrBad goodorbad;
     @JsonProperty
     private WordObject word;
-
-    // Getter, Setter, 생성자
 }
 @Getter
 @Setter
@@ -123,8 +108,6 @@ class GoodOrBad {
     private List<Integer> label;
     @JsonProperty("percent")
     private List<String> percent;
-
-    // Getter, Setter, 생성자
 }
 @Getter
 @Setter
@@ -146,6 +129,4 @@ class WordObject {
     private int review_length_max;
     @JsonProperty("review_length_avg")
     private double review_length_avg;
-
-    // Getter, Setter, 생성자
 }

@@ -100,9 +100,9 @@ function getSearchByGroupTable(idx, e){
 	if(e != undefined){
 		//선택한 div 색칠하기
 		dateDivTags.forEach(date => {
-			date.classList.remove('ye-S-bc');
+			date.classList.remove('gr-bc');
 		});
-		e.classList.add('ye-S-bc');
+		e.classList.add('gr-bc');
 	}
 }
 
@@ -173,7 +173,7 @@ function getDate123(dateString){
 //국가선택시 색상강조
 function init(){
 
-	document.querySelector('.areaCate').classList.add("ye-S-bc");
+	document.querySelector('.areaCate').classList.add("ye-S-fc");
 
 	const areaNameDivs  = document.querySelectorAll('.areaNameDiv');
 	const areaName = document.querySelector('#areaName').value;

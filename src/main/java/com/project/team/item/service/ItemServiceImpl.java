@@ -9,6 +9,7 @@ import com.project.team.item.vo.DiyTourVO;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.project.team.item.vo.ItemVO;
@@ -16,10 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("itemService")
 public class ItemServiceImpl implements ItemService{
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	
-	
+	private final SqlSessionTemplate sqlSession;
+
+	public ItemServiceImpl(SqlSessionTemplate sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
+
 	//국가명으로 여행상품 검색
 	public List<HashMap<String, Object>> getItemListByAreaName(Map<String, String> searchKeyword) {
 		return sqlSession.selectList("itemMapper.getItemListByAreaName", searchKeyword);
@@ -102,6 +106,7 @@ public class ItemServiceImpl implements ItemService{
 		sqlSession.insert("itemMapper.setDiyTourDetail", detailList);
 	}
 
+	@Cacheable("hotelList")
 	@Override
 	public List<HashMap<String, Object>> getHotelList() {
 		return sqlSession.selectList("itemMapper.getHotelList");
