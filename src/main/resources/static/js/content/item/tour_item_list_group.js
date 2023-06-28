@@ -100,9 +100,9 @@ function getSearchByGroupTable(idx, e){
 	if(e != undefined){
 		//선택한 div 색칠하기
 		dateDivTags.forEach(date => {
-			date.classList.remove('ye-S-bc');
+			date.classList.remove('gr-bc');
 		});
-		e.classList.add('ye-S-bc');
+		e.classList.add('gr-bc');
 	}
 }
 

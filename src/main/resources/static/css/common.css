@@ -26,6 +26,14 @@ body {
 	background-color: #ffd000;
 }
 
+.gr-fc {
+	color: #eee;
+}
+
+.gr-bc{
+	background-color: #eee;
+}
+
 /* 연노랑색*/
 .yel-fc {
 	color: #fff9d4;
