@@ -65,6 +65,13 @@ public class BoardServiceImp implements BoardService{
 		
 		return sqlSession.selectOne("boardMapper.getBoardDetail", hbtBoardNum);
 	}
+	
+	@Transactional
+	@Override
+	public void delBoard(String hbtBoardNum) {
+		sqlSession.delete("boardMapper.delReplyAllFromDelBoard", hbtBoardNum);
+		sqlSession.delete("boardMapper.delBoard", hbtBoardNum);
+	}
 
 	@Override
 	public void delNotice(String hbtBoardNoticeNum) {
@@ -180,6 +187,8 @@ public class BoardServiceImp implements BoardService{
 	public List<BoardRequestVO> getBoardReqListBySearch(RequestSearchVO requestSearchVO) {
 		return sqlSession.selectList("boardMapper.getBoardReqListBySearch", requestSearchVO);
 	}
+
+	
 
 	
 

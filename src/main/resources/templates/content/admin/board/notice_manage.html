@@ -21,7 +21,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center notice_table">
 				<colgroup>
 					<col width="15%">
 					<col width="">
@@ -29,7 +29,7 @@
 					<col width="15%">
 					<col width="15%">
 				</colgroup>
-				<thead>
+				<thead class="ye-bc">
 					<tr>
 						<td>공지글번호</td>
 						<td>제목</td>
@@ -47,10 +47,10 @@
 						</tr>
 					</th:block>
 					<th:block th:unless="${noticeList.size() == 0}">
-						<tr th:each="notice, state : ${noticeList}">
+						<tr th:each="notice, state : ${noticeList}" th:onclick="getNoticeDetail([[${notice.hbtBoardNum}]]);" style="cursor: pointer;">
 							<td>[[${noticeList.size() - state.index}]]</td>
 							<td>
-								<span th:onclick="getNoticeDetail([[${notice.hbtBoardNum}]]);" style="cursor: pointer;">[[${notice.hbtBoardTitle}]]</span>
+								<span>[[${notice.hbtBoardTitle}]]</span>
 							</td>
 							<td>[[${notice.hbtBoardRegDate}]]</td>
 							<td>[[${notice.hbtBoardCnt}]]</td>

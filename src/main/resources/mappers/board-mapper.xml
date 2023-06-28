@@ -197,10 +197,19 @@
 		WHERE HBT_BOARD_NUM = #{#hbtBoardNum}
 	</select>
 	
+	<delete id="delBoard">
+		DELETE HBT_BOARD WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</delete>
+	
+	<delete id="delReplyAllFromDelBoard">
+		DELETE HBT_BOARD_REPLY WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</delete>
+	
 	<delete id="delNotice">
 		DELETE FROM HBT_BOARD 
 		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
 	</delete>
+	
 	
 	<update id="updateBoardNotice">
 		UPDATE HBT_BOARD

@@ -40,9 +40,9 @@
 						</thead>
 						<tbody>
 							<th:block th:each="notice, state : ${noticeList}">
-								<tr>
+								<tr th:onclick="|location.href='@{/board/getPublicDetail(hbtBoardNum=${notice.hbtBoardNum})}'|" class="pointer">
 									<td>[[${noticeList.size() - state.index}]]</td>
-									<td th:onclick="|location.href='@{/board/getPublicDetail(hbtBoardNum=${notice.hbtBoardNum})}'|" class="pointer">[[${notice.hbtBoardTitle}]]</td>
+									<td>[[${notice.hbtBoardTitle}]]</td>
 									<td>[[${notice.hbtBoardCnt}]]</td>
 									<td>[[${notice.hbtBoardRegDate}]]</td>
 								</tr>

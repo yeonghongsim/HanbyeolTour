@@ -6,8 +6,6 @@ init();
 // 검색 버튼 밑의 버튼을 이용한 검색 기능
 function searchTypeRequest(typeRequestCode){
 	
-	console.log(typeRequestCode);
-	
 	//ajax start
 	$.ajax({
 		url: '/board/searchFreqRequestByCodeAJAX', //요청경로
@@ -19,25 +17,31 @@ function searchTypeRequest(typeRequestCode){
 		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
 		data: {'typeRequestCode' : typeRequestCode},
 		success: function(result) {
-			
+			console.log(result.length);
 			const freq_request_tbody = document.querySelector('#freq-request-tbody');
 			
 			freq_request_tbody.replaceChildren();
 			
 			let str = '';
-			for(const freqReq of result){
-				str += `<tr  class="pointer" onclick="toggleAnswer(this)">`;
-				str += `	<td>${freqReq.typeRequestVO.typeRequestName}</td>`;
-				str += `	<td>`;
-				str += `		<span>${freqReq.freqRequestTitle}</span>`;
-				str += `	</td>`;
-				str += `	<td class="bi bi-chevron-up"></td>`;
+			if(result.length == 0){
+				str += `<tr>`;
+				str += `	<td></td>`;
+				str += `	<td colspan="2">등록된 문의글이 없습니다.</td>`;
 				str += `</tr>`;
-				str += `<tr class="answerTr hide">`;
-				str += `	<td style="padding-left: 3rem;">A.</td>`;
-				str += `	<td style="padding-left: 3rem;" colspan="2">${freqReq.freqRequestContent}</td>`;
-				str += `</tr>`;
-				
+			} else {
+				for(const freqReq of result){
+					str += `<tr  class="pointer" onclick="toggleAnswer(this)">`;
+					str += `	<td>${freqReq.typeRequestVO.typeRequestName}</td>`;
+					str += `	<td>`;
+					str += `		<span>${freqReq.freqRequestTitle}</span>`;
+					str += `	</td>`;
+					str += `	<td class="bi bi-chevron-up"></td>`;
+					str += `</tr>`;
+					str += `<tr class="answerTr hide">`;
+					str += `	<td style="padding-left: 3rem;">A.</td>`;
+					str += `	<td style="padding-left: 3rem;" colspan="2">${freqReq.freqRequestContent}</td>`;
+					str += `</tr>`;
+				}
 			}
 			
 			freq_request_tbody.insertAdjacentHTML('afterbegin', str);

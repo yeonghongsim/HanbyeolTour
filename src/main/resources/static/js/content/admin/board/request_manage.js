@@ -24,42 +24,46 @@ function searchRequest(){
 				, 'hbtBoardRequestTitle' : hbtBoardRequestTitle
 				, 'itemV.itemCode' :itemCode},
 		success: function(result) {
-			
 			const searched_tbody = document.querySelector('#searched-tbody');
 	
 			searched_tbody.replaceChildren();
 			
 			let str = '';
 			
-			result.forEach(function(req, idx){
-				console.log(req);
+			if(result.length == 0){
 				str += `<tr>`;
-				str += `	<td>${result.length - idx}</td>`;
-				
-				if(req.itemVO != null){
-				str += `	<td> 1212`;
-				str += `		<span class="pointer" onclick="location.href='/admin/regReqReplyForm?hbtBoardRequestNum=${req.hbtBoardRequestNum}&itemCode=${req.itemVO.itemCode}'";>${req.hbtBoardRequestTitle}</span>`;
-				str += `	</td>`;
-					
-				} else {
-				str += `	<td>`;
-				str += `		<span class="pointer" onclick="location.href='/admin/regReqReplyForm?hbtBoardRequestNum=${req.hbtBoardRequestNum}'";>${req.hbtBoardRequestTitle}</span>`;
-				str += `	</td>`;
-					
-				}
-				
-				
-				
-				str += `	<td>${req.memberVO.memId}</td>`;
-				if(req.itemVO != null){
-				str += `	<td>${req.itemVO.itemCode}</td>`;
-				} else{
-				str += `	<td></td>`;
-				}
-				str += `	<td>${req.hbtBoardRequestRegDate}</td>`;
-				str += `	<td>${req.isAnswer}</td>`;
+				str += `	<td colspan="6">검색된 문의글이 없습니다.</td>`;
 				str += `</tr>`;
-			});
+			} else {
+				result.forEach(function(req, idx){
+					str += `<tr>`;
+					str += `	<td>${result.length - idx}</td>`;
+					
+					if(req.itemVO != null){
+					str += `	<td>`;
+					str += `		<span class="pointer" onclick="location.href='/admin/regReqReplyForm?hbtBoardRequestNum=${req.hbtBoardRequestNum}&itemCode=${req.itemVO.itemCode}'";>${req.hbtBoardRequestTitle}</span>`;
+					str += `	</td>`;
+						
+					} else {
+					str += `	<td>`;
+					str += `		<span class="pointer" onclick="location.href='/admin/regReqReplyForm?hbtBoardRequestNum=${req.hbtBoardRequestNum}'";>${req.hbtBoardRequestTitle}</span>`;
+					str += `	</td>`;
+						
+					}
+					str += `	<td>${req.memberVO.memId}</td>`;
+					
+					if(req.itemVO != null){
+					str += `	<td>${req.itemVO.itemCode}</td>`;
+					} else{
+					str += `	<td></td>`;
+					}
+					
+					str += `	<td>${req.hbtBoardRequestRegDate}</td>`;
+					str += `	<td>${req.isAnswer}</td>`;
+					str += `</tr>`;
+				});
+			}
+			
 			
 			searched_tbody.insertAdjacentHTML('afterbegin', str);
 			
@@ -75,7 +79,7 @@ function searchRequest(){
 }
 
 function init(){
-	searchRequest()
+	searchRequest();
 }
 
 

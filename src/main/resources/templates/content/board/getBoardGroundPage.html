@@ -18,6 +18,7 @@
 					<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_002'}" th:value="boardSideMenu.boardSideMenuCode">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col" id="wholeViewDiv">
 				
@@ -53,7 +54,6 @@
 								<input th:onclick="regBoardForm([[${#authentication.name}]]);" class="btn btn-green" type="button" value="게시글 작성">
 							</div>
 						</div>
-						
 						<div class="row">
 							<div class="col">
 								<table class="table text-center table-hover list-table">
@@ -76,29 +76,36 @@
 										</tr>
 									</thead>
 									<tbody id="board-tbody">
-										<th:block th:each="board, state : ${boardList}">
-											<tr class="align-middle">
-												<td>[[${boardList.size() - state.index}]]</td>
-												<td>
-												<th:block th:if="${board.isPrivate } == null or ${board.isPrivate} == 'N'">
-													<div>
-														<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]])" class="pointer">[[${board.hbtBoardTitle}]]</span>
-													</div>
-												</th:block>
-												<th:block th:if="${board.isPrivate } != null or ${board.isPrivate} == 'Y'">
-													<div>
-														<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]], this)" class="pointer">[[${board.hbtBoardTitle}]]</span>
-														<img src="/imageForUse/lock.jpeg" style="width: 30px;">
-													</div>
-													<div class="row chkDiv">
-													</div>
-												</th:block>
-												</td>
-												<td>[[${board.hbtBoardCnt}]]</td>
-												<td>[[${board.replyCnt}]]</td>
-												<td>[[${board.hbtBoardRegDate}]]</td>
-												<td>[[${board.memberVO.memId}]]</td>
+										<th:block th:if="${boardList.size == 0}">
+											<tr>
+												<td colspan="6">등록된 게시글이 없습니다.</td>
 											</tr>
+										</th:block>
+										<th:block th:unless="${boardList.size == 0}">
+											<th:block th:each="board, state : ${boardList}">
+												<tr class="align-middle">
+													<td>[[${boardList.size() - state.index}]]</td>
+													<td>
+													<th:block th:if="${board.isPrivate } == null or ${board.isPrivate} == 'N'">
+														<div>
+															<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]])" class="pointer">[[${board.hbtBoardTitle}]]</span>
+														</div>
+													</th:block>
+													<th:block th:if="${board.isPrivate } != null or ${board.isPrivate} == 'Y'">
+														<div>
+															<span th:onclick="getBoardDetail([[${board.isPrivate}]], [[${board.hbtBoardNum}]], this)" class="pointer">[[${board.hbtBoardTitle}]]</span>
+															<img src="/imageForUse/lock.jpeg" style="width: 30px;">
+														</div>
+														<div class="row chkDiv">
+														</div>
+													</th:block>
+													</td>
+													<td>[[${board.hbtBoardCnt}]]</td>
+													<td>[[${board.replyCnt}]]</td>
+													<td>[[${board.hbtBoardRegDate}]]</td>
+													<td>[[${board.memberVO.memId}]]</td>
+												</tr>
+											</th:block>
 										</th:block>
 									</tbody>
 								</table>
@@ -110,29 +117,33 @@
 					</div>
 				</div>
 				
-				<div class="row mb-3">
-					<div class="col">
-						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center">
-								<li class="page-item" th:classappend="${boardVO.groundSearchVO.prev ? '' : 'disabled'}">
-									<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${boardVO.groundSearchVO.beginPage - 1}]]);" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span>
-									</a>
-								</li>
-								<li class="page-item"
-								th:each="pageNum : ${#numbers.sequence(boardVO.groundSearchVO.beginPage, boardVO.groundSearchVO.endPage)}">
-									<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${pageNum}]]);"
-									th:classappend="${pageNum == boardVO.groundSearchVO.nowPage ? 'active' : ''}">[[${pageNum}]]</a>
-								</li>
-								<li class="page-item" th:classappend="${boardVO.groundSearchVO.next ? '' : 'disabled'}">
-									<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${boardVO.groundSearchVO.endPage + 1}]]);" aria-label="next"> 
-										<span aria-hidden="true">&raquo;</span>
-									</a>
-								</li>
-							</ul>
-						</nav>
+				<th:block th:if="${boardList.size != 0}">
+					<div class="row mb-3 page_div">
+						<div class="col">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination justify-content-center">
+									<li class="page-item" th:classappend="${boardVO.groundSearchVO.prev ? '' : 'disabled'}">
+										<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${boardVO.groundSearchVO.beginPage - 1}]]);" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li class="page-item"
+									th:each="pageNum : ${#numbers.sequence(boardVO.groundSearchVO.beginPage, boardVO.groundSearchVO.endPage)}">
+										<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${pageNum}]]);"
+										th:classappend="${pageNum == boardVO.groundSearchVO.nowPage ? 'active' : ''}">[[${pageNum}]]</a>
+									</li>
+									<li class="page-item" th:classappend="${boardVO.groundSearchVO.next ? '' : 'disabled'}">
+										<a class="page-link" href="javascript:void(0);" th:onclick="getOrderListPaging([[${boardVO.groundSearchVO.endPage + 1}]]);" aria-label="next"> 
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
 					</div>
-				</div>
+				</th:block>
+				
+				
 			
 				</div>
 			</div>
