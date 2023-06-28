@@ -507,6 +507,7 @@ public class MyPageController {
 		}
 		//model.addAttribute("diyTourList", diyTourListBofore);
 		
+		
 		List<DiyTourVO> diyTourList = diyTourListBefore;
 		
 		DiyTourVO setDiyTourVO = new DiyTourVO();
@@ -531,6 +532,20 @@ public class MyPageController {
 			
 			//diyTourVO.setDiyDetailList(sortedDetailList);
 		}
+		
+		
+		for(DiyTourVO diyTourVO : diyTourListBefore) {
+			
+			for(int i = 0 ; i < diyTourVO.getDiyDetailList().size(); i++) {
+				
+				if(Integer.valueOf(diyTourVO.getDiyDetailList().get(i).getHbtDiyDay()) == i+1) {
+					System.out.println("@@@@@@@@@@@@@@@@" + i);
+				}
+				
+			}
+		}
+		
+		
 		model.addAttribute("diyList", diyTourList);
 		
 		return "content/member/myPage/check_my_cart";

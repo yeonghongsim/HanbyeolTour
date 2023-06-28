@@ -40,11 +40,11 @@ function regFreqReqJs(memId, typeRequestList){
 	str += `			</tr>`;
 	str += `			<tr>`;
 	str += `				<td class="align-middle"><span>Q.</span></td>`;
-	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestTitle" required placeholder="제목을 입력하세요."></td>`;
+	str += `				<td colspan="3"><input class="form-control freqRequestTitle" type="text" name="freqRequestTitle" required placeholder="제목을 입력하세요."></td>`;
 	str += `			</tr>`;
 	str += `			<tr>`;
 	str += `				<td class="align-middle"><span>A.</span></td>`;
-	str += `				<td colspan="3"><input class="form-control" type="text" name="freqRequestContent" required placeholder="내용을 입력하세요."></td>`;
+	str += `				<td colspan="3"><input class="form-control freqRequestContent" type="text" name="freqRequestContent" required placeholder="내용을 입력하세요."></td>`;
 	str += `			</tr>`;
 	str += `		</table>`;
 	str += `		</form>`;
@@ -65,6 +65,18 @@ function regFreqReqJs(memId, typeRequestList){
 
 // 글 등록하기
 function regFreRequest(){
+	const freqRequestTitle = document.querySelector('.freqRequestTitle');
+	const freqRequestContent = document.querySelector('.freqRequestContent');
+	
+	if(freqRequestTitle.value == '' || freqRequestContent.value == ''){
+		if(freqRequestTitle.value == ''){
+			freqRequestTitle.placeholder = '제목은 필수 입력 사항입니다.';
+		}
+		if(freqRequestContent.value == ''){
+			freqRequestContent.placeholder = '내용은 필수 입력 사항입니다.';
+		}
+		return ;
+	}
 	
 	document.querySelector('#regFreReqForm').submit();
 
@@ -187,7 +199,6 @@ function searchTypeRequest(typeRequestCode){
 		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
 		data: {'typeRequestCode' : typeRequestCode},
 		success: function(result) {
-			
 			const fre_table_div = document.querySelector('#fre_table_div');
 	
 			fre_table_div.replaceChildren();
@@ -210,13 +221,17 @@ function searchTypeRequest(typeRequestCode){
 			str += `			<td><span>No.</span></td>`;
 			str += `			<td><span>title</span></td>`;
 			str += `			<td>`;
-			str += `				<input class="btn btn-danger w-100" type="button" value="선택 삭제" onclick="delFreqReq('', ${typeRequestCode})">`;
+			str += `				<input class="btn btn-red w-100" type="button" value="선택 삭제" onclick="delFreqReq('', ${typeRequestCode})">`;
 			str += `			</td>`;
 			str += `		</tr>`;
 			str += `	</thead>`;
 			str += `	<tbody id="req-table-tbody">`;
-			str += `		<tbody>`;
-			str += `	</tbody>`;
+			if(result.length == 0){
+			str += `	<tr>`;
+			str += `		<td></td>`;
+			str += `		<td colspan="3">등록하신 글 목록이 없습니다.</td>`;
+			str += `	</tr>`;
+			} else {
 		for(const freqRequest of result){
 			str += `	<tr class="align-middle">`;
 			str += `		<td>`;
@@ -225,7 +240,7 @@ function searchTypeRequest(typeRequestCode){
 			str += `		<td><span class="showAnswer" style="cursor: pointer;" onclick="showAnswer(this);">${freqRequest.typeRequestVO.typeRequestName}</span></td>`;
 			str += `		<td>${freqRequest.freqRequestTitle}</td>`;
 			str += `		<td>`;
-			str += `			<input class="btn btn-danger w-100" type="button" value="삭제 하기" onclick="delFreqReq('${freqRequest.freqRequestCode}', ${typeRequestCode})">`;
+			str += `			<input class="btn btn-red w-100" type="button" value="삭제 하기" onclick="delFreqReq('${freqRequest.freqRequestCode}', ${typeRequestCode})">`;
 			str += `		</td>`;
 			str += `	</tr>`;
 			str += `	<tr class="align-middle hide">`;
@@ -237,6 +252,9 @@ function searchTypeRequest(typeRequestCode){
 			str += `		</td>`;
 			str += `	</tr>`;
 		}
+				
+			}
+			str += `	</tbody>`;
 			str += `</table>`;
 			
 			fre_table_div.insertAdjacentHTML('afterbegin', str);

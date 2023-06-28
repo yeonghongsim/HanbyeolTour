@@ -107,7 +107,7 @@ function checkDetail(myCart, diyTour){
 		diy_tour_container += `								<div class="row">`;
 		diy_tour_container += `									<div class="col">`;
 				diyDetail.hotelList[0].hotelImgList.forEach(function(img){
-		diy_tour_container += `										<img src="/img/item/hotel/${img.hbtHotelAttchedFileName}" class="modal_img">`;
+		diy_tour_container += `										<img src="/img/item/hotel/${img.hbtHotelAttechedFileName}" class="modal_img">`;
 					
 				});
 		diy_tour_container += `									</div>`;
@@ -163,7 +163,7 @@ function checkDetail(myCart, diyTour){
 		
 		
 		my_cart_container += `<div class="row mb-3">`;
-		my_cart_container += `	<div class="col-5" style="padding-left:3rem; padding-top: 5rem;">`;
+		my_cart_container += `	<div class="col-5">`;
 		
 		my_cart_container += `		<p">국가명 : ${myCart.itemVO.tourAreaVO.areaKorName}</p>`;
 		my_cart_container += `		<p>총기간 : ${myCart.itemVO.traverPeriod}</p>`;

@@ -19,11 +19,11 @@
 		<div class="col">
 			<div class="row mb-3">
 				<div class="col">
-					<table class="table not-det-table text-center">
+					<table class="table not-det-table text-center align-middle">
 						<colgroup>
-							<col width="25%">
-							<col width="25%">
-							<col width="25%">
+							<col width="15%">
+							<col width="45%">
+							<col width="15%">
 							<col width="25%">
 						</colgroup>
 						<tbody>
@@ -32,8 +32,8 @@
 								<td>
 									[[${noticeDetail.memberVO.memId}]]
 								</td>
-								<td>조회수 / 댓글수</td>
-								<td>[[${noticeDetail.hbtBoardCnt}]] / [[${noticeDetail.replyCnt}]]</td>
+								<td>조회수</td>
+								<td>[[${noticeDetail.hbtBoardCnt}]]</td>
 							</tr>
 							<tr>
 								<td>제목</td>
@@ -43,7 +43,7 @@
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td colspan="3" class="text-start" style="padding-left: 3rem;">
+								<td colspan="3" class="text-start">
 									[[${noticeDetail.hbtBoardContent}]]
 								</td>
 							</tr>

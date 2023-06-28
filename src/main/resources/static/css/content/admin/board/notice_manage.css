@@ -1,5 +1,5 @@
 @charset "UTF-8";
 
-.test {
-	color: red;
+.notice_table > tbody > tr > td:nth-child(2) {
+	text-align: left;
 }

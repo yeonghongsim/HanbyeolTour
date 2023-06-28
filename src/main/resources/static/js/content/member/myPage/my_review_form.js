@@ -20,7 +20,7 @@ function isReviewed(buyCode, memCode){
 			let str = '';
 			
 			if(result == ''){
-				str += `<div class="row mb-2">`;
+				str += `<div class="row mt-3 mb-2">`;
 				str += `	<div class="col-8">`;
 				str += `		<input type="text" name="" id="hbtMemReviewContent" class="form-control" placeholder="후기를 작성해주세요.">`;
 				str += `	</div>`;
@@ -41,7 +41,7 @@ function isReviewed(buyCode, memCode){
 				str += `	</div>`;
 				str += `</div>`;
 			} else {
-				str += `<div class="row">`;
+				str += `<div class="row mt-3">`;
 				str += `	<div class="col">`;
 				str += `		<div class="row mb-2">`;
 				str += `			<div class="col">`;
@@ -60,7 +60,7 @@ function isReviewed(buyCode, memCode){
 				str += `				<tbody class="review_tbody">`;
 				str += `					<tr>`;
 				str += `						<td>${result.hbtMemReviewContent}</td>`;
-				str += `						<td>${result.stars}</td>`;
+				str += `						<td>내 평점 : ${result.stars}.0</td>`;
 				str += `					<td>`;
 				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}', '${result.hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="수정하기">`;
 				str += `					</td>`;
