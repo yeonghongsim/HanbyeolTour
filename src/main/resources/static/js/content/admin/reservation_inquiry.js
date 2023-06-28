@@ -107,7 +107,7 @@ function changeBuyStatus(){
 	//선택한 체크박스 없는 경우
 	if(checkboxes.length == 0) {
 		alert('선택된 예약이 없습니다.\n예약 상태 변경은 예약 건 선택 후 가능합니다.');
-		return;
+		return false;
 	}
 	
 	console.log(buyStatusCode);
@@ -138,7 +138,8 @@ function changeBuyStatus(){
 		contentType: 'application/json; charset=UTF-8', //json 방식
 		//contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default 방식
 		success: function(result) {
-			alert('ajax 통신 성공');
+			//alert('ajax 통신 성공');
+			alert('예약 상태가 변경되었습니다.')
 			location.reload();
 		},
 		error: function() {
@@ -157,13 +158,14 @@ function searchBuyList(){
 	
 	if(checked_cnt == 0) {
 		alert('검색할 예약 상태를 선택하십시오.');
-		
 		return;
+	}else{
+		//아닐 경우 form 태그 submit
+		search_form.submit();	
 	}
-	//아닐 경우 form 태그 submit
-	search_form.submit();	
 	
 }
+
 
 
 //페이지 번호 누를 때 검색 영역 submit

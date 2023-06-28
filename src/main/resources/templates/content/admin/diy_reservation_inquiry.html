@@ -84,12 +84,26 @@
 	.searchTable {
   	 background-color: #fafafa;
 }
+
+	#buyStatusSelect{
+		height: 48px;
+	}	
 	
+	.btn-primary {
+	--bs-btn-color: black;
+	--bs-btn-bg: #ffd000;
+	--bs-btn-border-color: none;
+	--bs-btn-hover-border-color: none;
+	--bs-btn-hover-bg: #ffae26;
+	height: 48px;
+	border-radius: 16px;
+}
 
 </style>
 	<div class="row">
+		<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;예약 관리&nbsp; > &nbsp;DIY 여행 관리</div>
 		<div class="col">
-			<h3 class="menuTitle">DIY 여행 예약 관리</h3>
+			<h3 class="menuTitle">DIY 여행 관리</h3>
 			<div class="row mt-5">
 				<div class="col">
 					<div class="row">
@@ -126,7 +140,7 @@
 											</div>
 										</td>
 										<td style="background-color: #eeeeee; padding: 0px;" rowspan="3">
-											<input type="submit" value="검색" class="" style="background-color: #ffd000; border: none; width: 115.81px; height: 183px;" onclick="searchBuyList();">
+											<input type="button" value="검색" class="" style="background-color: #ffd000; border: none; width: 115.81px; height: 183px;" onclick="searchBuyList();">
 										</td>
 									</tr>
 									<tr>
@@ -185,8 +199,8 @@
 							</select>
 					
 						</div>
-						<div class="col-1">
-							<input type="button" value="변경" class="btn" style="background-color: #ffd000;" onclick="changeDivBuyStatus();">
+						<div class="col-1 d-grid">
+							<input type="button" value="변경" class="btn btn-primary" onclick="changeDivBuyStatus();">
 						</div>
 					</div>
 					

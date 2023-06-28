@@ -76,7 +76,7 @@ function getMemDetail(memId){
 			str += `				</select>`;
 			str += `			</td>             `;
 			str += `			<td>             `;
-			str += `				<input type=button value="권한 변경" class="btn" style="background-color: #ffd000;" onclick="updateMemRole('${result.memId}');">`;
+			str += `				<input type=button value="권한 변경" class="btn btn-primary" onclick="updateMemRole('${result.memId}');">`;
 			str += `			</td>             `;
 			str += `		</tr>                     `;
 			str += `	</thead>                      `;
@@ -105,6 +105,7 @@ function getMemListPaging(pageNum){
 
 //회원 권한 변경
 function updateMemRole(memId){
+	alert('권한이 변경되었습니다.');
 	const memRole = document.querySelector('#memRoleSelectbox').value
 	
 	location.href=`/admin/updateMemRole?memRole=${memRole}&memId=${memId}`;

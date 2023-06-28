@@ -236,8 +236,8 @@ function changeIsExposeMain(areaCode, selectedRadio){
 //여행 국가 카테고리 입력 영어만 가능
 $('.EnglargeDiv').on("input", (e) => {
   let v = e.currentTarget.value;
-  if ((/[ㄱ-힣]+/).test(v)) {
-    e.currentTarget.value = v.replaceAll(/[ㄱ-힣]+/g, '')
+  if ((/[ㄱ-힣0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=\s]/g).test(v)) {
+    e.currentTarget.value = v.replaceAll(/[ㄱ-ㅎㅏ-ㅣ가-힣0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=\s]+/gi, '')
     alert('영문 대문자만 입력 가능합니다');
     $('.EnglargeDiv').focus()
   }
@@ -246,7 +246,7 @@ $('.EnglargeDiv').on("input", (e) => {
 
 //여행 국가 한글만 입력 가능 
 function onlyKor(event) {
-  const regExp = /[^ㄱ-ㅎ|가-힣]/g; // 한글만 허용
+  const regExp = /[^ㄱ-ㅎ|가-힣]/gi; // 한글만 허용
   const del = event.target;
   if (regExp.test(del.value)) {
 	alert('한글만 입력 가능합니다.');
