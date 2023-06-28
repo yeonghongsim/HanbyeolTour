@@ -1627,19 +1627,19 @@
 		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
 		        FROM HBT_BOARD
 		        WHERE IS_NOTICE = 'N'
-		        AND IS_PRIVATE = 'Y') 일반글,
+		        AND IS_PRIVATE = 'Y') 비밀글,
 		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
 		        FROM HBT_BOARD
 		        WHERE IS_NOTICE = 'N'
-		        AND IS_PRIVATE IS NULL) 비밀글
+		        AND IS_PRIVATE IS NULL) 일반글
 				</if>
 				<if test="searchValue.equals('boardCnt')">
 				(SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
 		        FROM HBT_BOARD
-		        WHERE HBT_BOARD_CNT &lt; 5) AS "5회미만",
+		        WHERE HBT_BOARD_CNT &lt; 5) AS "0-4회",
 		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
 		        FROM HBT_BOARD
-		        WHERE HBT_BOARD_CNT &gt;= 5 AND HBT_BOARD_CNT &lt; 10) AS "10회미만",
+		        WHERE HBT_BOARD_CNT &gt;= 5 AND HBT_BOARD_CNT &lt; 10) AS "5-9회",
 		        (SELECT NVL(COUNT(HBT_BOARD_NUM), 0)
 		        FROM HBT_BOARD
 		        WHERE HBT_BOARD_CNT &gt;= 10) AS "10회이상"

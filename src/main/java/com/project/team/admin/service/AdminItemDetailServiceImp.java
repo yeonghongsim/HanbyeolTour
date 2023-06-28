@@ -6,6 +6,7 @@ import com.project.team.admin.vo.TourItemVO;
 import com.project.team.item.vo.ItemVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("adminItemDetailService")
-public class AdminItemDetailServiceImpl implements AdminItemDetailService {
+public class AdminItemDetailServiceImp implements AdminItemDetailService {
     @Autowired
     SqlSessionTemplate sqlSession;
 
@@ -71,6 +72,7 @@ public class AdminItemDetailServiceImpl implements AdminItemDetailService {
         return sqlSession.selectOne("adminMapper.getNextHotelCode");
     }
 
+    @CacheEvict("hotelList")
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addHotel(HotelVO hotelVO) {

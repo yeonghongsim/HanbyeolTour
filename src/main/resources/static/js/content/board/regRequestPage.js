@@ -52,7 +52,9 @@ function chkReqPw(hbtBoardRequestNum, chkBtn){
 			console.log(result);
 			
 			if(!result){
-				alert('올바르지 않은 비밀번호 입니다.');
+				chkPwVal.value = '';
+				chkPwVal.placeholder = '올바르지 않은 비밀번호 입니다.';
+				
 			} else {
 				location.href='/board/RequestDetail?hbtBoardRequestNum=' + hbtBoardRequestNum;
 			}

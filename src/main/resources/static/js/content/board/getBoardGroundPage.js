@@ -75,7 +75,7 @@ function chkPw(hbtBoardNum, chkInp){
         	if(result == chkPw.value){
 				location.href=`/board/boardGroundDetail?hbtBoardNum=${hbtBoardNum}`;
 			} else {
-				alert('잘못된 비밀번호입니다.');
+				alert('올바르지 않은 비밀번호 입니다.');
 			}
 			
         	

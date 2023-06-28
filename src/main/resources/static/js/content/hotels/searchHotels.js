@@ -97,7 +97,7 @@ function showLocationOnMap(lat, lng, name) {
     //구글맵 호출
     const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: lat, lng: lng }, // Set initial center position
-        zoom: 17 // Set initial zoom level
+        zoom: 14 // Set initial zoom level
     });
     //모달창 오픈
     $('#modalToggle').modal('show');

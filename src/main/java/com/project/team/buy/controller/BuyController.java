@@ -29,6 +29,8 @@ public class BuyController {
         //로그인정보
         User user = (User) authentication.getPrincipal();
 
+
+        buyVO.setBuyCode(buyCode);
         //시큐리티로그인아이디로 쿼리에서 memcode조회
         buyVO.setMemCode(user.getUsername());
         buyVO.setBuyTotalPrice(getBuyTotalPrice(buyDetailVO.getReservedPeopleNum()

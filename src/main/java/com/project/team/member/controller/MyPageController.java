@@ -485,10 +485,11 @@ public class MyPageController {
 		model.addAttribute("myCartList", buyService.getCartList(memCode));
 		model.addAttribute("myDiyList", itemService.getDiyTourList(memCode));
 		
-		List<DiyTourVO> diyTourListBefore = itemService.testGetDiyTourList(memCode);
+		List<DiyTourVO> diyTourList = itemService.testGetDiyTourList(memCode);
 		
-		for(DiyTourVO diyTourVO : diyTourListBefore) {
+		for(DiyTourVO diyTourVO : diyTourList) {
 			List<Integer> diyDayList = new ArrayList<>();
+			int traverPeriod = Integer.parseInt(diyTourVO.getTraverPeriod());
 			for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
 				int day = Integer.parseInt(diyDetailVO.getHbtDiyDay());
 				diyDayList.add(day);
@@ -496,7 +497,7 @@ public class MyPageController {
 			
 			//ex> 2,3 -> 1
 			//ex> 1 -> 2,3
-			List<Integer> emptyDayList =checkEmptyDay(diyDayList);
+			List<Integer> emptyDayList =checkEmptyDay(diyDayList, traverPeriod);
 			
 			for(int day : emptyDayList) {
 				DiyDetailVO diyDetailVO = new DiyDetailVO();
@@ -505,51 +506,44 @@ public class MyPageController {
 				diyTourVO.getDiyDetailList().add(diyDetailVO);
 			}
 		}
-		//model.addAttribute("diyTourList", diyTourListBofore);
 		
-		List<DiyTourVO> diyTourList = diyTourListBefore;
-		
-		DiyTourVO setDiyTourVO = new DiyTourVO();
-		
-		List<DiyDetailVO> sortedDetailList = new ArrayList<>();
-		
-		for(DiyTourVO diyTourVO : diyTourListBefore) {
+		for(DiyTourVO diyTourVO : diyTourList) {
+			List<DiyDetailVO> sortedDetailList = new ArrayList<>();
 			
-			for(int i = 1 ; i <= Integer.valueOf(diyTourVO.getTraverPeriod()) ; i++) {
-			
+			for(int i = 0 ; i < diyTourVO.getDiyDetailList().size(); i++) {
+				
 				for(DiyDetailVO diyDetailVO : diyTourVO.getDiyDetailList()) {
-					if(i == Integer.valueOf(diyDetailVO.getHbtDiyDay())) {
+					if(Integer.parseInt(diyDetailVO.getHbtDiyDay()) == i+1) {
 						sortedDetailList.add(diyDetailVO);
-						
-						
-						break ;
+						break;
 					}
-				}  
-				setDiyTourVO.setDiyDetailList(sortedDetailList);
+				}
+				
 			}
-			
-			
-			//diyTourVO.setDiyDetailList(sortedDetailList);
+			diyTourVO.setDiyDetailList(sortedDetailList);
 		}
+		
 		model.addAttribute("diyList", diyTourList);
 		
 		return "content/member/myPage/check_my_cart";
 	}
 	
-	public List<Integer> checkEmptyDay(List<Integer> diyDayList) {
+	public List<Integer> checkEmptyDay(List<Integer> diyDayList, int traverPeriod) {
 		List<Integer> emptyDayList = new ArrayList<>();
-		for(int i = 1 ; i <= 3 ; i++ ) {
+		for(int i = 1 ; i <= traverPeriod ; i++ ) {
 			if(!diyDayList.contains(i)) {
 				emptyDayList.add(i);
 			}
 		}
+		
+		
 		return emptyDayList;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/delMyCartAJAX")
 	public String delMyCartAJAX(String cartCode, DiyTourVO diyTourVO, String memCode) {
-		System.out.println("delMyCartAJAX~" + cartCode + "/" + diyTourVO);
+		System.out.println("delMyCartAJAX~" + cartCode + "/." + diyTourVO);
 		
 		if(!cartCode.equals("empty")) {
 			buyService.delCart(cartCode);

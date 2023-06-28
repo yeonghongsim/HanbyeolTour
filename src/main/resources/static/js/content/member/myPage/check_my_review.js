@@ -50,7 +50,7 @@ function getNeedReview(memId){
 				result.forEach(function(buy){
 			str += `		<tr onclick="getMyReview('${buy.buyCode}');" class="pointer">`;
 			str += `			<td>${buy.buyCode}</td>`;
-			str += `			<td>${buy.buyTotalPrice}</td>`;
+			str += `			<td>${parseInt(buy.buyTotalPrice).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</td>`;
 			str += `			<td>${buy.buyDate}</td>`;
 			str += `		</tr>`;
 				});

@@ -40,6 +40,9 @@ public interface BoardService {
 	// select board-notice-detail
 	BoardVO getBoardDetail(String hbtBoardNum);
 	
+	// delete board w reply
+	void delBoard(String hbtBoardNum);
+	
 	// delete board-notice
 	void delNotice(String hbtBoardNoticeNum);
 	
