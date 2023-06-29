@@ -169,7 +169,7 @@ function updateReviewData(){
 		type: 'post',
 		//contentType : 'application/json; charset=UTF-8',
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		async : true,
+		async : false,
 		data: {},
 		success: function(result) {
 			alert("업데이트 성공");
