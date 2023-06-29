@@ -7,7 +7,7 @@ function getMemDetail(memId){
 		type: 'post',
 		data: {'memId' : memId}, //필요한 데이터
 		success: function(result) {
-			alert('ajax 통신 성공');
+			//alert('ajax 통신 성공');
 			
 			const memDetailDiv = document.querySelector('.memDetailDiv');
 			memDetailDiv.replaceChildren();

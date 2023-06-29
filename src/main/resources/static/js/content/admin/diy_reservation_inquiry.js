@@ -138,7 +138,7 @@ function changeDivBuyStatus(){
 		contentType: 'application/json; charset=UTF-8', //json 방식
 		//contentType: "application/x-www-form-urlencoded; charset=UTF-8", //default 방식
 		success: function(result) {
-			alert('ajax 통신 성공');
+			//alert('ajax 통신 성공');
 			location.reload();
 		},
 		error: function() {

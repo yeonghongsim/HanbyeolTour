@@ -16,7 +16,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 			registry.addInterceptor(getMenuInterceptor())
 									.addPathPatterns("/**/**")
 									.excludePathPatterns("/**/*AJAX")
-									.excludePathPatterns("/admin/**");
+									.excludePathPatterns("/admin/**")
+									.excludePathPatterns("/img/**", "/imageForUse/**", "/js/**", "/css/**");
 		
 //		registry.addInterceptor(getMenuInterceptor())
 //		.addPathPatterns("/member/login")
@@ -41,7 +42,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 							.addPathPatterns("/myPage/reqDetail")
 							.addPathPatterns("/myPage/checkMyReview")
 							.addPathPatterns("/myPage/getMyReview")
-							.excludePathPatterns("/**/*AJAX"); 
+							.excludePathPatterns("/**/*AJAX")
+							.excludePathPatterns("/img/**", "/imageForUse/**", "/js/**", "/css/**");
 			
 	}
 	
