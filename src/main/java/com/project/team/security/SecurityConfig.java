@@ -20,17 +20,28 @@ public class SecurityConfig {
 		
 		security.csrf().disable()
 				.authorizeHttpRequests()
-					.requestMatchers("/**").permitAll()
+					.requestMatchers(
+							"/**"
+							//"/main"
+						
+//							"/airline/**",
+//							"/board/**",
+//							"/hotel/**",
+//							"/item/**",
+//							"/member/**",
+//							"/review/**"
+						
+							).permitAll()
 					.anyRequest().authenticated()
 				.and()
 					.formLogin() //로그인할때 폼태그 쓸꺼다.
 					.loginPage("/member/login") //로그인할 페이지 경로 설정 
-					.loginProcessingUrl("/member/login")// 실제로 로그인을 하는 url 
+					.loginProcessingUrl("/member/loginProcess")// 실제로 로그인을 하는 url 
 					.usernameParameter("memId")//넘어올 아이디 이름 
 					.passwordParameter("memPw")//넘어올 비밀번호 이름 
 					.successHandler(getSuccessHandler())
 					.failureHandler(getFailureHandler())
-					.permitAll() // 모든 로그인 관련 페이지는 다 허용 
+					//.permitAll() // 모든 로그인 관련 페이지는 다 허용 
 				.and()
 					.logout()
 					.logoutUrl("/member/logout") //실제로 로그아웃 하는 url 
@@ -48,7 +59,8 @@ public class SecurityConfig {
 	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "image/**");
+        return (web) -> web.ignoring().requestMatchers("/img/**", "/imageForUse/**", "/js/**", "/css/**");
+        //return (web) -> web.ignoring().requestMatchers("/js/**","/js/**/**" , "/css/**/**", "/css/**", "/img/**", "/img/**/**", "/imageForUse/**");
     }
 	
 	

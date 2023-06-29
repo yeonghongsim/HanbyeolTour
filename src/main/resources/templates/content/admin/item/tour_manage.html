@@ -7,11 +7,12 @@
 </th:block>
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
-<div class="row">
-    <div class="row text-center">
-        <h3>투어 상품 관리</h3>
+	<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;상품 상세 설정&nbsp; > &nbsp;투어 목록 관리</div>
+    <div>
+    	<h3 class="menuTitle">투어 목록 관리</h3>
     </div>
 
+<div class="row">
     <!-- 투어상품등록    -->
     <form action="/admin/itemDetail/addTourItem" method="post" enctype="multipart/form-data">
     <div class="row">
@@ -62,7 +63,7 @@
 
         <div class="row mb-3">
             <div class="col-4 offset-4 d-gird">
-                <input type="submit" class="form-control ye-S-bc custom-border-3 ye-S-bc rounded-5" value="등 록">
+                <input type="submit" class="form-control ye-S-bc custom-border" value="등 록">
             </div>
         </div>
 
@@ -77,7 +78,7 @@
     <div class="row">
         <div class="row">
             <div class="col">
-                <table class="table custom-border-3 text-center align-middle rounded-3">
+                <table class="table text-center align-middle rounded-3">
                     <colgroup>
                         <col width="">
                         <col width="8%">
@@ -88,7 +89,7 @@
                         <col width="30%">
                         <col width="">
                     </colgroup>
-                    <thead class="ye-S-bc">
+                    <thead class="gr-bc">
                         <tr>
                             <td>No</td>
                             <td>지역</td>
@@ -100,7 +101,7 @@
                             <td>삭제</td>
                         </tr>
                     </thead>
-                    <tbody class="ye-bc">
+                    <tbody>
                         <th:block th:each="item,state : ${tourItemList}">
                             <form action="/admin/itemDetail/deleteTourItem" method="post">
                                 <input type="hidden" class="hbtTourItemCode" name="hbtTourItemCode" th:value="${item['HBT_TOUR_ITEM_CODE']}">
@@ -117,7 +118,7 @@
                                     </td>
                                     <td>[[${item["HBT_TOUR_ITEM_INTRO"]}]]</td>
                                     <td>
-                                        <input type="submit" class="btn custom-border-3 ye-S-bc rounded-5" value="삭제">
+                                        <input type="submit" class="btn custom-border" value="삭제">
                                     </td>
                                 </tr>
                             </form>

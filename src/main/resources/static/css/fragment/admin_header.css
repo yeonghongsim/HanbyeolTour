@@ -196,20 +196,30 @@ a{
   }
   
   
- .deleteBtn{
+.deleteBtn{
 	color: red;
 	text-decoration: underline;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .deleteBtn:hover {
     color: red;
- 
 }
 
-.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+.deleteBtn:first-child:active{
+	border-color: white;
+	background-color: none;
+	color: red;
+}
+
+.btn-primary-check:checked+.btn-primary, .btn-primary.active, .btn-primary.show, .btn-primary:first-child:active, :not(.btn-primary-check)+.btn-primary:active {
     color: var(--bs-btn-active-color);
     background-color: #ffae26;
     border-color: var(--bs-btn-active-border-color);
 }
-  
+
+
+.pageInfo{
+	font-size: 12px;
+	text-align: right;
+}

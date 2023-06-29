@@ -14,6 +14,7 @@ public class MemberReviewVO {
 	private String hbtMemReviewContent;
 	private int stars;
 	private String isReviewed;
+	private String itemCode;
 	private MemberVO memberVO;
 	private BuyVO buyVO;
 }

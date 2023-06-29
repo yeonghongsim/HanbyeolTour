@@ -12,6 +12,7 @@
 
 <th:block layout:fragment="adminContent">
 <div class="row">
+<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;상품 관리&nbsp; > &nbsp;상품 등록</div>
    <div class="col-12">
 		<h3 class="menuTitle">상품 등록</h3>
      	<div class="row">
@@ -70,16 +71,16 @@
 		            <label for="" class="form-label">패키지 소개</label> 
 		            <textarea rows="5" class="form-control" name="itemIntro"></textarea>
 		         </div>
-		         <div class="col-6">
+		         <div class="col-6" id="mainImgDiv">
 		            <label for="" class="form-label">메인 이미지</label> 
 		            <input type="file" class="form-control" id="" name="mainImg" accept="image/*">
 		         </div>
-		         <div class="col-6">
+		         <div class="col-6" id="subImgDiv">
 		            <label for="" class="form-label">상세 이미지</label> 
 		            <input type="file" class="form-control" id="" name="subImg" multiple accept="image/*">
 		         </div>
-		         <div class="col-12 d-grid pt-4_">
-		            <button id="regButton" type="submit" class="btn btn-primary">상품 등록</button>
+		         <div class="col-12 d-grid pt-4">
+		            <button id="regButton" type="button" class="btn btn-primary" onclick="validateForm();">상품 등록</button>
 		         </div>
 		      </form>
 		   </div>

@@ -26,7 +26,7 @@ public class IndexController {
 	private ItemService itemService;
 
 	@GetMapping("/main")
-	public String main(Model model) {
+	public String main(Model model) {System.out.println("@@@@@@@@@");
 
 		//메인메뉴 이미지 조회
 		model.addAttribute("mainSlideImg", adminService.getMainSlideImg());
@@ -66,7 +66,7 @@ public class IndexController {
 		System.out.println("!!!!!" + prevPage);
 		
 		String path = "";
-		
+		System.out.println("@@@@@@@@@");
 		
 		//not_login = null
 		if(authentication == null) {

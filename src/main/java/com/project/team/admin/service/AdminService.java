@@ -45,7 +45,7 @@ public interface AdminService {
 	//검색 조건에 맞는 판매 상품 수 조회
 	int getsaleListCnt(SaleListSearchVO saleListSearchVO);
 	
-	//판매 상품 삭제
+	//판매 상품 삭제(이미지 포함)
 	void deleteItem(String itemCode);
 	
 	//판매 상품 선택 삭제

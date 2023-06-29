@@ -7,8 +7,11 @@
 </th:block>
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
+<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;상품 상세 설정&nbsp; > &nbsp;호텔 목록 관리</div>
   <div class="row">
-
+	 <div>
+     	<h3 class="menuTitle">호텔 목록 관리</h3>
+     </div>
     <div class="row">
       <form action="/admin/itemDetail/addHotel" method="post" enctype="multipart/form-data">
         <div class="row mb-3">
@@ -59,7 +62,7 @@
 
         <div class="row mb-3">
           <div class="col-4 offset-4 d-gird">
-            <input type="submit" class="form-control custom-border-3 ye-S-bc rounded-5" value="등 록">
+            <input type="submit" class="form-control custom-border ye-S-bc" value="등 록">
           </div>
         </div>
       </form>
@@ -81,7 +84,7 @@
     <div class="row">
       <div class="row">
         <div class="col">
-          <table class="table custom-border-2 rounded-5 text-center align-middle">
+          <table class="table rounded-5 text-center align-middle">
             <colgroup>
               <col>
               <col>
@@ -92,7 +95,7 @@
               <col width="30%">
               <col>
             </colgroup>
-            <thead class="ye-S-bc">
+            <thead class="gr-bc">
             <tr>
               <td>No</td>
               <td>지역</td>
@@ -104,7 +107,7 @@
               <td>삭제</td>
             </tr>
             </thead>
-            <tbody class="ye-bc">
+            <tbody>
               <th:block th:each="item,state : ${hotelList}">
                 <form action="/admin/itemDetail/deleteHotel" method="post">
                   <input type="hidden" class="hbtHotelCode" name="hbtHotelCode" th:value="${item['HBT_HOTEL_CODE']}">
@@ -121,7 +124,7 @@
                     </td>
                     <td>[[${item["HBT_HOTEL_INTRO"]}]]</td>
                     <td>
-                      <input type="submit" class="btn custom-border-3 ye-S-bc rounded-5" value="삭제">
+                      <input type="submit" class="btn custom-border" value="삭제">
                     </td>
                   </tr>
                 </form>

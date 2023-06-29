@@ -8,10 +8,11 @@
 </th:block>
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
-<div class="row text-center">
-    <div class="row mb-3">
-        <h3>항공사 목록 관리</h3>
+	<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;상품 상세 설정&nbsp; > &nbsp;항공사 목록 관리</div>
+    <div>
+        <h3 class="menuTitle">항공사 목록 관리</h3>
     </div>
+	<div class="row text-center">
     <!-- 항공사등록    -->
     <form action="/admin/itemDetail/addAirline" method="post" enctype="multipart/form-data">
     <div class="row mb-3">
@@ -28,8 +29,8 @@
                     <span>사용여부 : </span>
                 </div>
                 <div class="col">
-                    <input type="radio" checked name="isUse" value="Y">사용
-                    <input type="radio" name="isUse" value="N">미사용
+                    <input type="radio" class="form-check-input" checked name="isUse" value="Y">사용
+                    <input type="radio" class="form-check-input" name="isUse" value="N">미사용
                 </div>
             </div>
         </div>
@@ -44,9 +45,9 @@
     <div class="row">
         <div class="row">
             <div class="col">
-                <table class="table custom-border-3 rounded-3 align-middle">
+                <table class="table align-middle">
                     <colgroup></colgroup>
-                    <thead class="ye-S-bc">
+                    <thead class="gr-bc">
                         <tr>
                             <td>No</td>
                             <td>항공사명</td>
@@ -55,7 +56,7 @@
                             <td>삭제</td>
                         </tr>
                     </thead>
-                    <tbody class="ye-bc">
+                    <tbody>
                         <th:block th:each="airline, state : ${airlineList}">
                             <tr>
                                 <form action="/admin/itemDetail/delAirline" method="post">
@@ -69,7 +70,7 @@
                                         <input type="radio" class="form-check-input mx-1" name="isUse" value="Y" th:checked="${airline.isUse == 'Y'}" onchange="updateAirlineIsUseAJAX(this);">사용
                                         <input type="radio" class="form-check-input mx-1" name="isUse" value="N" th:checked="${airline.isUse == 'N'}" onchange="updateAirlineIsUseAJAX(this);">미사용
                                     </td>
-                                    <td><input type="submit" class="btn custom-border-3 ye-S-bc rounded-5" value="삭제"></td>
+                                    <td><input type="submit" class="btn custom-border" value="삭제"></td>
                                 </form>
                             </tr>
                         </th:block>

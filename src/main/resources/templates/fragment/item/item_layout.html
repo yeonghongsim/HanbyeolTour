@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragment/user_layout}">
+	>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -15,7 +15,7 @@
 <div class="container">
 	<div class="row itemHeaderRow" style="margin-bottom: 1em;">
 		<div class="col">
-			<th:block th:replace="~{fragment/item/item_header::headerFragment}"></th:block>
+			<th:block th:replace="~{fragment/item/item_header::itemHeaderFragment}"></th:block>
 		</div>
 	</div>
 	<div class="row">

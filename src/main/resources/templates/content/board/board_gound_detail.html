@@ -21,6 +21,9 @@
 		<div class="col text-end">
 			<input onclick="location.href='/board/getBoardGroundPage'" class="btn btn-gray" type="button" value="뒤로 가기">
 		</div>
+		<div class="col-1" th:if="${#authentication.name == boardDetail.memberVO.memId and replyList.size == 0}">
+			<input th:onclick="updateInput([[${boardDetail.hbtBoardNum}]], this);" type="button" class="btn btn-green w-100" value="수정">
+		</div>
 		<th:block sec:authorize="hasRole('ROLE_USR')">
 			<div class="col-1" th:if="${#authentication.name == boardDetail.memberVO.memId}">
 				<input th:onclick="delBoard([[${boardDetail.hbtBoardNum}]]);" type="button" class="btn btn-red w-100" value="삭제">
@@ -34,7 +37,7 @@
 	</div>
 	<div class="row mb-2">
 		<div class="col">
-			<table class="table text-center detail_table">
+			<table class="table text-center detail_table align-middle">
 				<colgroup>
 					<col width="15%">
 					<col width="45%">
@@ -50,13 +53,13 @@
 					</tr>
 					<tr>
 						<td>제목</td>
-						<td style="text-align: left; padding-left: 2rem;">[[${boardDetail.hbtBoardTitle}]]</td>
+						<td style="text-align: left; padding-left: 2rem;" class="board_title">[[${boardDetail.hbtBoardTitle}]]</td>
 						<td>조회수</td>
 						<td>[[${boardDetail.hbtBoardCnt}]]</td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="3" style="text-align: left; padding-left: 2rem;">[[${boardDetail.hbtBoardContent}]]</td>
+						<td colspan="3" style="text-align: left; padding-left: 2rem;" class="board_content">[[${boardDetail.hbtBoardContent}]]</td>
 					</tr>
 				</tbody>
 			</table>

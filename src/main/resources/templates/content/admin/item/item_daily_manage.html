@@ -7,13 +7,16 @@
 </th:block>
 <!-- 본문 내용 -->
 <th:block layout:fragment="adminContent">
+<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;상품 상세 설정&nbsp; > &nbsp;상품 상세 일정 관리</div>
+<div>
+   	<h3 class="menuTitle">상품 상세 일정 관리</h3>
+</div>
+
 <div class="row">
     <form action="/admin/itemDetail/setItemDailyPlan" method="post">
         <input type="hidden" id="itemCode" name="itemCode" th:value="${itemCode}">
         <input th:if="${itemInfo} != null" type="hidden" id="hbtPlanPeriod" name="hbtPlanPeriod" th:value="${itemInfo['days']}">
-        <div class="row text-center">
-            <h3>일자별 상세 일정</h3>
-        </div>
+       
         <!-- 추가할 아이템선택    -->
         <div class="row custom-border-3 py-3 px-3 my-3 rounded-5 shadow">
             <div class="col my-2">
