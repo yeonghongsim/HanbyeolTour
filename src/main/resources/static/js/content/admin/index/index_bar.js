@@ -285,9 +285,9 @@ function drawChart_statistics(data, sub_key){
 				{
 					label: 'Dataset 1',
 					data: data.valueList,
-					backgroundColor: ['rgba(215, 176, 229, 0.5)', 'rgba(251, 231, 135, 0.5)'
-										, 'rgba(218, 224, 207, 0.5)', 'rgba(191, 223, 216, 0.5)'
-										, 'rgba(218, 229, 235, 0.5)', 'rgba(243, 174, 144, 0.5)'],//라벨별 컬러설정
+					backgroundColor: ['rgba(191, 223, 216, 0.5)', 'rgba(243, 174, 144, 0.5)'
+										, 'rgba(251, 231, 135, 0.5)', 'rgba(215, 176, 229, 0.5)'
+										, 'rgba(218, 229, 235, 0.5)', 'rgba(218, 224, 207, 0.5)'],//라벨별 컬러설정
 				}
 			]
 		},
@@ -295,7 +295,9 @@ function drawChart_statistics(data, sub_key){
 			responsive: true,
 			plugins: {
 				legend: {
-					position: 'top',
+					position: 'bottom',
+					align: 'center',
+					fullWidth: true,
 				},
 				title: {
 					display: true,

@@ -130,53 +130,51 @@
 			</div>
 		</div>
 	</div>
-	
-	<div class="row" style="margin-top:3rem; margin-bottom: 2rem;">
+
+	<div class="row" style="margin-top: 3rem; margin-bottom: 2rem;">
 		<div class="col">
-			
+
 			<div class="row mb-2">
 				<div class="col-4">
 					<h6 class="reviewH6">테마별 통계</h6>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<div class="row mb-3">
-						<div class="col-2">
-							<select onchange="chkMainSelect(this);" class="main_select form-control">
-								<option value="member" selected>회원</option>
-								<option value="board">게시글</option>
-								<option value="request">문의</option>
-							</select>
-						</div>
-						<div class="col-4">
-							<select class="sub_select form-control">
-								<option value="M/F" selected>전체 이용자 중 남/여 비율</option>
-								<option value="insited">전체 이용자 중 이용률 ( 활동중, 휴면, 탈퇴 )</option>
-							</select>
-						</div>
-						<div class="col"></div>
-						<div class="col-2">
-							<input onclick="getChartStatisticsAJAX();" type="button" class="btn btn-yellow-reverse w-100" value="보기">
-						</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col">
+				<div class="row mb-3 justify-content-center">
+					<div class="col-2">
+						<select onchange="chkMainSelect(this);"
+							class="main_select form-control">
+							<option value="member" selected>회원</option>
+							<option value="board">게시글</option>
+							<option value="request">문의</option>
+						</select>
 					</div>
-					
-					<div class="row statistics_area">
-					
-						<div class="col-5 data_area">
-						</div>
-						<div class="col-7 chart_area">
-							<div>
+					<div class="col-4">
+						<select class="sub_select form-control">
+							<option value="M/F" selected>전체 이용자 중 남/여 비율</option>
+							<option value="insited">전체 이용자 중 이용률 ( 활동중, 휴면, 탈퇴 )</option>
+						</select>
+					</div>
+					<div class="col-1">
+						<input onclick="getChartStatisticsAJAX();" type="button"
+							class="btn updateBtn" value="보기">
+					</div>
+					<div class="col-5"></div>
+				</div>
+
+				<div class="row statistics_area align-items-top">
+					<div class="col">
+						<div class="row">
+							<div class="col-4 data_area justify-content-end"></div>
+							<div class="col-8 chart_area">
 								<canvas id="pieChart_statistics"></canvas>
 							</div>
 						</div>
 					</div>
-					
 				</div>
 			</div>
-			
-			
-			
 		</div>
 	</div>
 

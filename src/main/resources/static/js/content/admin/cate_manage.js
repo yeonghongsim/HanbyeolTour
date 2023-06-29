@@ -126,8 +126,9 @@ function checkAreaDuplicate(areaCode, areaKorName, areaEngName){
 		async : false, //default 
 		success: function(result) {
 			//alert('ajax 통신 성공');
-			if(result == 1) {
+			if (result == 1) {
 				isDuplicate = true;
+				
 			}
 			
 		},
@@ -237,14 +238,18 @@ function changeIsExposeMain(areaCode, selectedRadio){
 
 
 //여행 국가 영어 대문자만 입력 가능
-function onlyEng(event) {  
-  const regExp = /[^A-Z]+$/; // 영어만 허용
-  const del = event.target;
-  if (regExp.test(del.value)) {
-	alert('영문 대문자만 입력 가능합니다.');
-    del.value = del.value.replace(regExp, '');
+function onlyEng(event) {
+  const input = event.target;
+  const inputValue = input.value;
+  const lastInputChar = inputValue.charAt(inputValue.length - 1);
+  
+  if (inputValue.length === 1 && lastInputChar === ' ') {
+    input.value = '';
+  } else if (!/^[A-Z ]+$/.test(lastInputChar)) {
+    input.value = inputValue.slice(0, -1);
+	alert('영어 대문자만 입력 가능합니다.')
   }
-};
+}
 
 
 //여행 국가 한글만 입력 가능 

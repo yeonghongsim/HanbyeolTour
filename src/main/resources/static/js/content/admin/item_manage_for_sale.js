@@ -323,9 +323,21 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 function updateItem(){
 	
 	
+	//입력 값 없으면 막기
+	const itemTitle = document.querySelector('input[name="itemTitle"]').value;
+	const itemPrice = document.querySelector('input[name="itemPrice"]').value;
+	const traverPeriod = document.querySelector('input[name="traverPeriod"]').value;
+	const itemIntro = document.querySelector('textarea[name="itemIntro"]').value;
+
+	if (itemTitle.trim() === '' || itemPrice.trim() === '' || traverPeriod.trim() === '' || itemIntro.trim() === '') {
+		alert('입력되지 않은 항목이 있습니다.');
+		return;
+	}
+
+
 	let childrenCnt = document.querySelector('#mainImgDiv').children.length;
 	const mainImg = document.querySelector('#mainImg').value;
-	if(!(childrenCnt == 3 || mainImg != '')){
+	if (!(childrenCnt == 3 || mainImg != '')) {
 		alert('메인 이미지를 선택하십시오.');
 		return;
 	}
@@ -338,23 +350,11 @@ function updateItem(){
 		return;
 	}
 	
-	
-	const formElements = document.querySelectorAll('form input, form textarea');
-
-
-	for (let i = 0; i < formElements.length; i++) {
-		let element = formElements[i];
-
-		if (element.value.trim() === '') {
-			// 입력 제출 막기
-			alert('입력되지 않은 항목이 있습니다.');
-			return;
-		}
-	}
-	
-	document.querySelector('#itemDetailForm').submit();
+	document.getElementById('itemDetailForm').submit();
+	alert('상품 정보가 수정되었습니다.');
 	
 }
+
 
 
 //상품 조회 페이징 처리
