@@ -13,6 +13,7 @@
 <th:block layout:fragment="member_content">
 	<input type="hidden" th:value="${buyDetail.buyCode}" id="hideMemCode">
 	<input type="hidden" th:value="${buyDetail.memberVO.memCode}" id="hideBuyCode">
+	<input type="hidden" th:value="${buyDetail.buyDetailVO.itemVO.itemCode}" id="itemCode">
 	<div class="row mb-3">
 		<div class="offset-10 col-2">
 			<input th:onclick="|location.href='@{/myPage/checkMyReview(memId=${#authentication.name})}'|" type="button" class="btn btn-gray w-100" value="뒤로 가기">

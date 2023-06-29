@@ -195,6 +195,8 @@ function openModal(itemCode, areaCateList){
 				modalBody.insertAdjacentHTML('afterbegin', str);
 				
 				
+				
+				
 		},
 		error: function() {
 			alert('실패');
@@ -202,8 +204,8 @@ function openModal(itemCode, areaCateList){
 	});
 	//ajax end
 	
-	itemDetailModal.show();
 	
+	itemDetailModal.show();
 }
 
 
@@ -315,6 +317,7 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 //상품 수정 시 이미지 등록 여부 확인
 function updateItem(){
 	
+	
 	let childrenCnt = document.querySelector('#mainImgDiv').children.length;
 	const mainImg = document.querySelector('#mainImg').value;
 	if(!(childrenCnt == 3 || mainImg != '')){
@@ -331,6 +334,19 @@ function updateItem(){
 	}
 	
 	
+	const formElements = document.querySelectorAll('form input, form textarea');
+
+
+	for (let i = 0; i < formElements.length; i++) {
+		let element = formElements[i];
+
+		if (element.value.trim() === '') {
+			// 입력 제출 막기
+			alert('입력되지 않은 항목이 있습니다.');
+			return;
+		}
+	}
+	
 	document.querySelector('#itemDetailForm').submit();
 	
 }
@@ -344,29 +360,6 @@ function getSaleListPaging(pageNum){
 	searchForm.submit();
 
 }
-
-
-//상품 정보 모두 입력되었는지 확인
-/*function validateForm(event) {
-
-	const formElements = document.querySelectorAll('form input, form textarea');
-
-
-	for (let i = 0; i < formElements.length; i++) {
-		let element = formElements[i];
-
-		if (element.value.trim() === '') {
-			// 입력 제출 막기
-			event.preventDefault();
-			alert('입력되지 않은 항목이 있습니다.');
-			return;
-		}
-	}
-}
-
-  // 폼 제출(submit) 이벤트 리스너 등록
-  const form = document.getElementById('itemDetailForm');
-  form.addEventListener('submit', validateForm); */
 
 
 

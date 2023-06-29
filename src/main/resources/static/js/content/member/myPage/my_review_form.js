@@ -1,7 +1,7 @@
 init()
 
 
-function isReviewed(buyCode, memCode){
+function isReviewed(buyCode, memCode, itemCode){
 	//ajax start
 	$.ajax({
 		url: '/myPage/chkMyReviewAJAX', //요청경로
@@ -13,6 +13,7 @@ function isReviewed(buyCode, memCode){
 		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
 		data: {'buyCode' : buyCode},
 		success: function(result) {
+			console.log(result);
 			const review_area = document.querySelector('.review_area');
 
 			review_area.replaceChildren();
@@ -37,7 +38,7 @@ function isReviewed(buyCode, memCode){
 				str += `		  <label for="star1" title="text"></label>`;
 				str += `	</div>`;
 				str += `	<div class="col-2">`;
-				str += `		<input onclick="regMyReview('${buyCode}', '${memCode}');" type="button" name="" id="" class="btn btn-yellow-reverse w-100" value="작성">`;
+				str += `		<input onclick="regMyReview('${buyCode}', '${memCode}', '${itemCode}');" type="button" name="" id="" class="btn btn-yellow-reverse w-100" value="작성">`;
 				str += `	</div>`;
 				str += `</div>`;
 			} else {
@@ -62,7 +63,7 @@ function isReviewed(buyCode, memCode){
 				str += `						<td>${result.hbtMemReviewContent}</td>`;
 				str += `						<td>내 평점 : ${result.stars}.0</td>`;
 				str += `					<td>`;
-				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}', '${result.hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="수정하기">`;
+				str += `						<input onclick="changeReivew('${result.hbtMemReviewContent}', ${result.stars}, '${buyCode}', '${memCode}', '${itemCode}', '${result.hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="수정하기">`;
 				str += `					</td>`;
 				str += `					<td>`;
 				str += `						<input onclick="delMyReview('${result.hbtMemReviewNum}', '${result.buyVO.buyCode}');" type="button" class="btn btn-red w-100" value="삭제">`;
@@ -116,7 +117,7 @@ function delMyReview(hbtMemReviewNum, buyCode){
 	
 }
 
-function regMyReview(buyCode, memCode, hbtMemReviewNum){
+function regMyReview(buyCode, memCode, itemCode, hbtMemReviewNum){
 	const hbtMemReviewContent = document.querySelector('#hbtMemReviewContent');
 	
 	// 후기 별점 세팅
@@ -146,7 +147,8 @@ function regMyReview(buyCode, memCode, hbtMemReviewNum){
 				, 'buyVO.buyCode' : buyCode
 				, 'memberVO.memCode' : memCode
 				, 'stars' : stars
-				, 'hbtMemReviewNum' : hbtMemReviewNum},
+				, 'hbtMemReviewNum' : hbtMemReviewNum
+				, 'itemCode' : itemCode},
 		success: function(result) {
 			
 			location.href='/myPage/getMyReview?buyCode='+buyCode;
@@ -159,7 +161,7 @@ function regMyReview(buyCode, memCode, hbtMemReviewNum){
    
 }
 
-function changeReivew(hbtMemReviewContent, stars, buyCode, memCode, hbtMemReviewNum){
+function changeReivew(hbtMemReviewContent, stars, buyCode, memCode, itemCode, hbtMemReviewNum){
 	
 	const review_tbody = document.querySelector('.review_tbody');
 	review_tbody.replaceChildren();
@@ -185,7 +187,7 @@ function changeReivew(hbtMemReviewContent, stars, buyCode, memCode, hbtMemReview
 	str += `		</div>`;
 	str += `	</td>`;
 	str += `	<td>`;
-	str += `		<input onclick="askToChange('${buyCode}', '${memCode}', '${hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="변경하기">`;
+	str += `		<input onclick="askToChange('${buyCode}', '${memCode}', '${itemCode}', '${hbtMemReviewNum}');" type="button" class="btn btn-yellow-reverse w-100" value="변경하기">`;
 	str += `	</td>`;
 	str += `</tr>`;
 	
@@ -193,19 +195,20 @@ function changeReivew(hbtMemReviewContent, stars, buyCode, memCode, hbtMemReview
 	
 }
 
-function askToChange(buyCode, memCode, hbtMemReviewNum){
+function askToChange(buyCode, memCode, itemCode, hbtMemReviewNum){
 	
 	const ask = confirm('후기를 수정하시겠습니까?');
 	
 	if(ask){
-		regMyReview(buyCode, memCode, hbtMemReviewNum);
+		regMyReview(buyCode, memCode, itemCode, hbtMemReviewNum);
 	}
 }
 
 function init(){
 	const memCode = document.querySelector('#hideMemCode').value;
 	const buyCode = document.querySelector('#hideBuyCode').value;
+	const itemCode = document.querySelector('#itemCode').value;
 	
-	isReviewed(memCode, buyCode);
+	isReviewed(memCode, buyCode, itemCode);
 	
 }

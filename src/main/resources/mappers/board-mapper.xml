@@ -222,6 +222,11 @@
 		WHERE HBT_BOARD_NUM = #{hbtBoardCnt}
 	</update>
 	
+	<update id="updateBoard">
+		UPDATE HBT_BOARD SET HBT_BOARD_TITLE = #{hbtBoardTitle}, HBT_BOARD_CONTENT = #{hbtBoardContent}
+		WHERE HBT_BOARD_NUM = #{hbtBoardNum}
+	</update>
+	
 	<insert id="regBoardReply">
 		INSERT INTO HBT_BOARD_REPLY (
 		    HBT_BOARD_REPLY_NUM

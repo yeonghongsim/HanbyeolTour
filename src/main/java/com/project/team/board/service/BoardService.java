@@ -102,4 +102,7 @@ public interface BoardService {
 	
 	// list req search
 	List<BoardRequestVO> getBoardReqListBySearch(RequestSearchVO requestSearchVO);
+	
+	// update board
+	void updateBoard(BoardVO  boardVO);
 }

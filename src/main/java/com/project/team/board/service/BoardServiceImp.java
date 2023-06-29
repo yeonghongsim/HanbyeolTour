@@ -188,6 +188,11 @@ public class BoardServiceImp implements BoardService{
 		return sqlSession.selectList("boardMapper.getBoardReqListBySearch", requestSearchVO);
 	}
 
+	@Override
+	public void updateBoard(BoardVO boardVO) {
+		sqlSession.update("boardMapper.updateBoard", boardVO);
+	}
+
 	
 
 	
