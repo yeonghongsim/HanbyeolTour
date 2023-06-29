@@ -233,15 +233,17 @@ function changeIsExposeMain(areaCode, selectedRadio){
 }
 
 
-//여행 국가 카테고리 입력 영어만 가능
-$('.EnglargeDiv').on("input", (e) => {
-  let v = e.currentTarget.value;
-  if ((/[ㄱ-힣0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=\s]/g).test(v)) {
-    e.currentTarget.value = v.replaceAll(/[ㄱ-ㅎㅏ-ㅣ가-힣0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=\s]+/gi, '')
-    alert('영문 대문자만 입력 가능합니다');
-    $('.EnglargeDiv').focus()
+
+
+//여행 국가 영어 대문자만 입력 가능
+function onlyEng(event) {  
+  const regExp = /[^A-Z]+$/; // 영어만 허용
+  const del = event.target;
+  if (regExp.test(del.value)) {
+	alert('영문 대문자만 입력 가능합니다.');
+    del.value = del.value.replace(regExp, '');
   }
-})
+};
 
 
 //여행 국가 한글만 입력 가능 
