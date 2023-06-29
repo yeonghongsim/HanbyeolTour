@@ -157,12 +157,20 @@ function searchBuyList(){
 	
 	if(checked_cnt == 0) {
 		alert('검색할 예약 상태를 선택하십시오.');
-		
 		return;
 	}
 	//아닐 경우 form 태그 submit
 	search_form.submit();	
 	
+}
+
+function validateForm(event) {
+  var checkbox = document.getElementById("myCheckbox");
+
+  if (!checkbox.checked) {
+    event.preventDefault(); // submit 막기
+    alert("Checkbox is not checked!");
+  }
 }
 
 
