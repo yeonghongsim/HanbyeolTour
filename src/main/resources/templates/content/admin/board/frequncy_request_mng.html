@@ -10,18 +10,17 @@
 </th:block>
 
 <th:block layout:fragment="adminContent">
-	<div class="row mb-3">
+	<div class="row">
+		<div class="col">
+			<h3 class="menuTitle">
+				자주 묻는 문의 관리
+			</h3>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col">
 			<div class="row" style="justify-content: center; align-items: center;">
-				<div class="col-10">
-					<div>
-						<span>자주 묻는 문의 관리</span>
-					</div>
-					<div>
-						<span>각 게시글의 유형이름을 클릭 시 해당 글의 내용을 볼 수 있습니다.</span>
-					</div>
-				</div>
-				<div class="col-2">
+				<div class="offset-10 col-2">
 					<input th:onclick="regFreqReqJs([[${#authentication.name}]], [[${typeRequestList}]])" type="button" class="btn btn-yellow-reverse w-100" value="글 등록하기">
 				</div>
 			</div>
@@ -29,6 +28,7 @@
 	</div>
 	
 	<div class="row mb-3 typeRequest-con">
+		<span class="smallRed">* 각 게시글의 유형이름을 클릭 시 해당 글의 내용을 볼 수 있습니다.</span>
 		<div class="col-lg-2 col-sm-3 typeRequest-div">
 			<span th:onclick="searchTypeRequest(0)" style="cursor: pointer;">전체</span>
 		</div>
