@@ -110,9 +110,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	//판매 상품 삭제
 	@Override
-	/* @Transactional(rollbackFor = Exception.class) */
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteItem(String itemCode) {
-		/* sqlSession.delete("adminMapper.deleteItemImg", itemCode); */
+		sqlSession.delete("adminMapper.deleteItemImgforSaleList", itemCode);
 		sqlSession.delete("adminMapper.deleteItem", itemCode);
 	}
 	

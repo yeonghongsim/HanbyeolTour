@@ -125,7 +125,7 @@ function checkAreaDuplicate(areaCode, areaKorName, areaEngName){
 		data: {'areaCode' : areaCode, 'areaKorName' : areaKorName, 'areaEngName' : areaEngName}, //필요한 데이터
 		async : false, //default 
 		success: function(result) {
-			alert('ajax 통신 성공');
+			//alert('ajax 통신 성공');
 			if(result == 1) {
 				isDuplicate = true;
 			}
