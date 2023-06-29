@@ -173,8 +173,9 @@
 	<select id="getBoardListCnt" resultType="int">
 		SELECT COUNT(HBT_BOARD_NUM)
 		FROM HBT_BOARD
+		WHERE IS_NOTICE = 'N'
 		<if test='searchVal != null and !searchVal.equals("")'>
-		WHERE UPPER(${searchKey}) LIKE '%'||UPPER(#{searchVal})||'%'
+		AND UPPER(${searchKey}) LIKE '%'||UPPER(#{searchVal})||'%'
 		</if>
 	</select>
 	
