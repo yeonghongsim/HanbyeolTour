@@ -104,9 +104,8 @@ public class ItemController {
 	//상품상세정보조회
 	@GetMapping("/tourItemListDetail")
 	public String tourItemListDetail(Model model, BuyDetailVO buyDetailVO) {
-		//임시 아이템코드세팅
+		//아이템코드세팅
 		String itemCode = buyDetailVO.getItemCode();
-
 
 		//상품상세정보
 		List<HashMap<String, Object>> list = itemService.getItemDetail(itemCode);
@@ -134,6 +133,8 @@ public class ItemController {
 		model.addAttribute("day", list.get(0).get("HBT_PLAN_PERIOD"));
 		//투어 이미지
 		//리뷰데이터
+		List<HashMap<String, Object>> reviewMap = itemService.getItemReview(itemCode);
+
 		model.addAttribute("reviews", itemService.getItemReview(itemCode));
 
 
@@ -232,7 +233,7 @@ public class ItemController {
 
 		return mapper.writeValueAsString(itemService.getTourDetailAJAX(hbttourCode));
 	}
-
+	//diy투어상품 장바구니or바로구매
 	@PostMapping("/buyNcartAJAX")
 	@ResponseBody
 	private String buyNcart(String diyTour,String diyTourDetail,
