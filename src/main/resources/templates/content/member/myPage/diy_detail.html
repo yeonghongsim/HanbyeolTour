@@ -80,7 +80,8 @@
 				        <div id="cancelBtn">
 				        	<button class="btn btn-outline-secondary btn-sm mt-2 cancelBtn"
 				        	th:if="${tourDetail.buyStatusCode == '1'}"
-				        	th:onclick="cancel_reservation([[${tourDetail.buyStatusCode}]])">예약취소</button>
+				        	th:onclick="detail_cancel([[${tourDetail.hbtDiyCode}]])">
+				        	예약취소</button>
 				        </div>
 				        <div id="reviewBtn">
 				        	<a th:href="@{/myPage/checkMyReview(memCode=${tourDetail.memCode})}">

@@ -442,7 +442,17 @@ public class MyPageController {
         memberService.cancelDiyReservation(hbtDiyCode);
         return "success";
 	}
+	
+	// DIY패키지 - 예약 상세 페이지 - 예약 취소 
+	@GetMapping("/cancelDiyReservation")
+	public String cancelDiyReservation(Model model ,String hbtDiyCode) {
+		System.out.println("@@@@@ 전달받은 hbtDiyCode :" + hbtDiyCode);
+		//예약 취소
+		memberService.cancelDiyReservation(hbtDiyCode);
+		
+		return "redirect:/myPage/diyDetail?hbtDiyCode=" + hbtDiyCode;
 
+	}
 	
 	
 	
