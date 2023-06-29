@@ -11,6 +11,7 @@
 
 
 <th:block layout:fragment="adminContent">
+	<div class="pageInfo">관리자 메뉴&nbsp; > &nbsp;회원 관리&nbsp; > &nbsp;회원 정보 조회</div>
 	<div class="row">
 		<div class="col">
 			<h3 class="menuTitle">회원 관리</h3>
@@ -57,21 +58,6 @@
 					</table>
 					</div>
 					</form>
-			
-					<!-- <div class="col-2">
-					
-						<select class="form-select searchSelect" name="searchKeyword">
-							<option value="MEM_ID" th:selected="${memListSearchVO.searchKeyword == 'MEM_ID'}">아이디</option>
-							<option value="MEM_NAME" th:selected="${memListSearchVO.searchKeyword == 'MEM_NAME'}">이름</option>
-						</select>
-					</div>
-					<div class="col-4">
-						<input type="text" class="form-control searchInput" name="searchValue" th:value="${memListSearchVO.searchValue}">
-					</div>
-					<div class="col-1">
-						<input type="submit" value="검색" class="btn btn-outline" style="border-color: #ffd000;">
-					</div> -->
-				
 				<div class="row mt-3">
 					<div class="col">
 						<div class="smallRed">* 회원 아이디 클릭 시 해당 회원 상세 정보를 확인할 수 있습니다.</div>
