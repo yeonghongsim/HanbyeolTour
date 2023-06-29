@@ -14,9 +14,4 @@ public class AppConfig {
     public DateFormat dateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
-    //ObjectMapper
-    @Bean
-    public ObjectMapper mapper() {
-        return new ObjectMapper();
-    }
 }

@@ -153,7 +153,6 @@ public class AdminItemDetailController {
         subImgInfo.add(mainImgInfo);
         hotelVO.setImgVOList(subImgInfo);
 
-        System.out.println(hotelVO);
         adminItemDetailService.addHotel(hotelVO);
 
         return "redirect:/admin/itemDetail/hotelManage";
@@ -205,7 +204,6 @@ public class AdminItemDetailController {
         Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
         List<Map<String, Object>> list = gson.fromJson(itemDailyPlan, resultType);
 
-        System.out.println(list.toString());
         adminItemDetailService.setItemDailyPlan(list);
         adminItemDetailService.updateItemState(list.get(0).get("itemCode").toString());
     }

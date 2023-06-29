@@ -153,7 +153,7 @@
                                 <h5 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h5>
                             </div>
                             <div class="row my-0">
-                                <input class="form-control comment_input" type="text" placeholder="코멘트 입력" th:onchange="changeComment([[${state.index}]]);">
+                                <input class="form-control comment_input" type="text" placeholder="코멘트 입력" onchange="changeComment(this);">
                             </div>
                         </div>
                     </th:block>

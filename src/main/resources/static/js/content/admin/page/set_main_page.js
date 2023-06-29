@@ -82,7 +82,7 @@ function drawImg(){
                         <h4 class="recom_img_comment"></h4>
                      </div>
                      <div class="row my-0">
-                        <input class="form-control comment_input" type="text" placeholder="입력후 엔터" onchange="changeComment();">
+                        <input class="form-control comment_input" type="text" placeholder="입력후 엔터" onchange="changeComment(this);">
                      </div>
                 </div>
                 `;
@@ -133,10 +133,14 @@ function setRecomItem(){
 }
 
 //텍스트 박스 글자 입력시 span 태그 글자 바꾸기
-function changeComment(index){
+function changeComment(input){
+
+    const targetTag = input.parentNode.parentNode.querySelector('.recom_img_comment');
+
+
     const commentSpan = document.querySelectorAll('.recom_img_comment');
     const comment_input = document.querySelectorAll('.comment_input');
 
-    commentSpan[index].textContent = comment_input[index].value;
+    targetTag.textContent = input.value;
 
 }
