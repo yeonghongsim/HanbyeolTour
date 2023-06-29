@@ -7,12 +7,12 @@
 	<!-- 상단바 1 -->
 	<div class="row contain position-relative">
 
-	 	<img src="/img/backg6.jpg" class="px-0 active" style="bottom: 10%;">
-		<img src="/img/backg5.jpg" class="px-0">
-		<img src="/img/backg4.jpg" class="px-0">
+ 	 	<img src="/img/main14.jpg" class="px-0 active" style="bottom: 10%;">
+		<img src="/img/main13.jpg" class="px-0">
+		<img src="/img/main15.jpg" class="px-0">
 		<div class="row header-bar mt-1 pb-1 my-0 position-absolute">
 			<div class="col logo">
-				<span onclick="location.href='/'" style="cursor: pointer;" class="header-title">✈️한별투어</span>
+				<!-- <span onclick="location.href='/'" style="cursor: pointer;" class="header-title">✈️한별투어</span>-->
 			</div>
 
 
@@ -21,10 +21,10 @@
 				<div sec:authorize="isAnonymous()">
 					<ul class="header-title head-top">
 						<li class="h-btn"><a th:href="@{/member/login}">로그인</a></li>
-						<li class="h-btn"><a href="/member/join">회원가입</a></li>
+						<li class="h-btn"><a th:href="@{/member/join}">회원가입</a></li>
 						<li class="h-btn"><a th:href="@{/member/login}">장바구니</a></li>
 						<li class="h-btn"><a th:href="@{/member/login}">마이페이지</a></li>
-						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
+						<li class="h-btn"><a th:href="@{/board/getPublicBoardPage}">고객센터</a></li>
 					</ul>
 				</div>
 				<!-- 로그인 시 -->
@@ -33,8 +33,8 @@
 						<li><a href="javascript:void(0);">[[${#authentication.name}]]님 즐거운 여행되세요! 😉</a></li>
 						<li class="h-btn"><a th:href="@{/member/logout}">로그아웃</a></li>
 						<li class="h-btn"><a th:href="@{/myPage/checkMyCart(memId=${#authentication.name})}">장바구니</a></li>
-						<li class="h-btn"><a href="/member/infoManage">마이페이지</a></li>
-						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
+						<li class="h-btn"><a th:href="@{/member/infoManage}">마이페이지</a></li>
+						<li class="h-btn"><a th:href="@{/board/getPublicBoardPage}">고객센터</a></li>
 						<th:block sec:authorize="hasAnyRole('ROLE_AD', 'ROLE_MNG')">
 							<li class="h-btn">
 								<a th:href="@{/adminIndex/}">관리자메뉴</a>
@@ -55,21 +55,24 @@
 		<div class="col shadow pb-2" style="background-color: white;">
 			<div class="row d-flex justify-content-center cateListDiv">
 				<div class="row d-flex justify-content-center">
-					<div class="hover col-md-2 dateCate  py-2 mx-3 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/item/tourItemListDate'">
+					<div class="hover col-md-2 dateCate" style="font-size: 1.4rem; font-weight: bold;"onclick="location.href='/'">
+						<img src="/img/logo.png" style="width: 70px; height: 65px;">
+					</div>
+					<div class="hover col-md-2 dateCate  py-2 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/item/tourItemListDate'">
 						일자별 상품
 					</div>
-					<div class="hover col-md-2 areaCate py-2 mx-3 my-1" style="font-size: 1.4rem; font-weight: bold;"onclick="location.href='/item/tourItemListGroup'">
+					<div class="hover col-md-2 areaCate py-2 my-1" style="font-size: 1.4rem; font-weight: bold;"onclick="location.href='/item/tourItemListGroup'">
 						국가별 상품
 					</div>
-					<div class="hover col-md-2 diyCate py-2 mx-3 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/item/diyTourItem'">
+					<div class="hover col-md-2 diyCate py-2 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/item/diyTourItem'">
 						패키지DIY
 					</div>
-					<div class="hover col-md-2 airlineCate py-2 mx-3 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/airline/airline'">
+					<div class="hover col-md-2 airlineCate py-2 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/airline/airline'">
 						항공권
 					</div>
 
 
-					<div class="hover col-md-2 hotelCate py-2 mx-3 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/item/hotelPage'">
+					<div class="hover col-md-2 hotelCate py-2 my-1" style="font-size: 1.4rem; font-weight: bold;" onclick="location.href='/item/hotelPage'">
 						호텔
 					</div>
 					
@@ -88,7 +91,7 @@
 
 
 	<script>
-		const images = document.querySelectorAll('.contain img');
+ 		const images = document.querySelectorAll('.contain img');
 		let currentImageIndex = 0;
 
 		function rotateImages() {

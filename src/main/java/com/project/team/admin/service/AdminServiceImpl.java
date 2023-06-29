@@ -31,7 +31,7 @@ public class AdminServiceImpl implements AdminService{
 	private SqlSessionTemplate sqlSession;
 	
 	//여행국가 카테고리 등록
-	@CacheEvict("areaCateList")
+	@CacheEvict(value =  "areaCateList", allEntries = true)
 	@Override
 	public void regArea(TourAreaVO tourAreaVO) {
 		sqlSession.insert("adminMapper.regArea", tourAreaVO);
@@ -39,6 +39,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	//여행국가 카테고리 중복 확인
+	@CacheEvict(value =  "areaCateList", allEntries = true)
 	@Override
 	public int checkAreaName(TourAreaVO tourAreaVO) {
 		return sqlSession.selectOne("adminMapper.checkAreaName", tourAreaVO);
@@ -52,13 +53,15 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.getAreaCateList");
 	}
 	
-	//여행국가 카테고리 사용여부 변경 (정현 추가) 
+	//여행국가 카테고리 사용여부 변경 (정현 추가)
+	@CacheEvict(value =  "areaCateList", allEntries = true)
 	@Override
 	public int changeAreaIsUse(String areaCode) {
 		return sqlSession.update("adminMapper.changeAreaIsUse", areaCode);
 	}
 	
 	//여행국가 카테고리 메인 노출 여부
+	@CacheEvict(value =  "areaCateList", allEntries = true)
 	@Override
 	public int changeIsExposeMain(String areaCode) {
 		
@@ -66,6 +69,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	//여행국가 카테고리 삭제
+	@CacheEvict(value =  "areaCateList", allEntries = true)
 	@Override
 	public void deleteAreaCate(String areaCode) {
 		sqlSession.delete("adminMapper.deleteAreaCate", areaCode);
@@ -106,9 +110,10 @@ public class AdminServiceImpl implements AdminService{
 	
 	//판매 상품 삭제
 	@Override
+	/* @Transactional(rollbackFor = Exception.class) */
 	public void deleteItem(String itemCode) {
+		/* sqlSession.delete("adminMapper.deleteItemImg", itemCode); */
 		sqlSession.delete("adminMapper.deleteItem", itemCode);
-		
 	}
 	
 	//판매 상품 선택 삭제

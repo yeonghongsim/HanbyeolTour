@@ -16,19 +16,21 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 	
 	@Bean
-	SecurityFilterChain filterChain(HttpSecurity security) throws Exception{
+	public SecurityFilterChain filterChain(HttpSecurity security) throws Exception{
 		
 		security.csrf().disable()
 				.authorizeHttpRequests()
 					.requestMatchers(
 							"/**"
-//							"/main",
+							//"/main"
+						
 //							"/airline/**",
 //							"/board/**",
 //							"/hotel/**",
 //							"/item/**",
 //							"/member/**",
 //							"/review/**"
+						
 							).permitAll()
 					.anyRequest().authenticated()
 				.and()
@@ -57,7 +59,7 @@ public class SecurityConfig {
 	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/img/**", "/imageForUse/**");
+        return (web) -> web.ignoring().requestMatchers("/img/**", "/imageForUse/**", "/js/**", "/css/**");
         //return (web) -> web.ignoring().requestMatchers("/js/**","/js/**/**" , "/css/**/**", "/css/**", "/img/**", "/img/**/**", "/imageForUse/**");
     }
 	
