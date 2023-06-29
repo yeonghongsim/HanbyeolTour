@@ -240,6 +240,11 @@
 		WHERE ITEM_CODE = #{itemCode}
 	</delete>
 	
+	<!-- <delete id="deleteItemImg">
+		DELETE HBT_ITEM_IMG
+		WHERE ITEM_CODE = #{itemCode}
+	</delete> -->
+	
 	<!-- 판매 상품 선택 삭제 -->
 	<delete id="deleteCheckItems">
 		DELETE HBT_ITEM

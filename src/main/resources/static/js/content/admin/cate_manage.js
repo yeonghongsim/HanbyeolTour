@@ -81,25 +81,25 @@ function regArea(){
 								>노출`;
 					}else{
 						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="Y"
-								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}');"
+								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>노출`;
 					}
 				str += `</div>`;
 				str += `<div class="form-check col-6">`;
 					if(result[i].isExposeMain == 'N') {
 						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="N"
-								class="form-check-input isExposeRadio" checked onchange="changeIsExposeMain('${result[i].areaCode}');"
+								class="form-check-input isExposeRadio" checked onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>비노출`;
 					}else{
 						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="N"
-								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}');"
+								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>비노출`;
 					}
 				str += `</div>`;
 				str += `</div>`;
 				str += `</td>`;
-				str += `<td><input type="button" value="삭제" class="btn btn-outline"
-												onclick="deleteAreaCate('${result[i].areaCode}');" style="border-color: #ffd000;"></td> `;
+				str += `<td><input type="button" value="삭제" class="btn deleteBtn"
+												onclick="deleteAreaCate('${result[i].areaCode}');"></td>`;
 				str += `</tr>`;
 			}
 			areaCateTableTbody.insertAdjacentHTML('afterbegin', str);
@@ -197,8 +197,9 @@ function checkIsExposeMain() {
 
 //카테고리 메인 노출 여부
 function changeIsExposeMain(areaCode, selectedRadio){
+	
 	//클릭한 라디오 버튼의 페어 라디오 버튼
-	const selectedRadioPair = selectedRadio.parentElement.nextElementSibling.firstElementChild
+	const selectedRadioPair = selectedRadio.closest('.row').querySelector('.isExposeRadio:not(:checked)');
 		
 	if(!checkIsExposeMain()){
 		//노출된 국가 수 3개이상이면 누른 라디오 노출 버튼 false
