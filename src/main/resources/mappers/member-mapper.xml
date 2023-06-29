@@ -46,6 +46,7 @@
 		<id		column="HBT_MEM_REVIEW_NUM" 	property="hbtMemReviewNum"/>
 		<result column="HBT_MEM_REVIEW_CONTENT" property="hbtMemReviewContent"/>
 		<result column="STARS" 					property="stars"/>
+		<result column="ITEM_CODE" 				property="itemCode"/>
 		<result column="IS_REVIEWED" 			property="isReviewed"/>
 		<association property="memberVO"		resultMap="member"></association>
 		<association property="buyVO" 			resultMap="buyMapper.buy"></association>
@@ -804,6 +805,7 @@
 		    , IS_REVIEWED
 		    , MEM_CODE
 		    , BUY_CODE
+		    , ITEM_CODE
 		FROM HBT_MEM_REVIEW
 		WHERE BUY_CODE = #{buyCode}
 	</select>
@@ -825,6 +827,7 @@
 		    HBT_MEM_REVIEW_NUM
 		    , HBT_MEM_REVIEW_CONTENT
 		    , STARS
+		    , ITEM_CODE
 		    , IS_REVIEWED
 		    , MEM_CODE
 		    , BUY_CODE
@@ -832,6 +835,7 @@
 		    #{hbtMemReviewNum}
 		    , #{hbtMemReviewContent}
 		    , ${stars}
+		    , #{itemCode}
 		    , #{isReviewed}
 		    , #{memberVO.memCode}
 		    , #{buyVO.buyCode}

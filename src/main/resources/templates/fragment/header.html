@@ -37,7 +37,7 @@
 						<li class="h-btn"><a href="/board/getPublicBoardPage">고객센터</a></li>
 						<th:block sec:authorize="hasAnyRole('ROLE_AD', 'ROLE_MNG')">
 							<li class="h-btn">
-								<a th:href="@{/admin/itemManage}">관리자메뉴</a>
+								<a th:href="@{/adminIndex/}">관리자메뉴</a>
 							</li>
 						</th:block>
 					</ul>

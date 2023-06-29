@@ -161,6 +161,17 @@ public class BoardController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/updateBoardAJAX")
+	public void updateBoardAJAX(BoardVO boardVO) {
+		
+		System.out.println("@@@@@@@@@@@@@@ updateBoardAJAX" + boardVO);
+		boardService.updateBoard(boardVO);
+		
+	}
+	
+	
+	
+	@ResponseBody
 	@PostMapping("/getReplyListAJAX")
 	public List<BoardReplyVO> getReplyListAJAX(String hbtBoardNum) {
 		

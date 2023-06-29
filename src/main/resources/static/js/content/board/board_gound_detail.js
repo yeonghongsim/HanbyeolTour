@@ -54,31 +54,110 @@ function regReply(writer, memId, hbtBoardNum, inpTag, userRole){
     //ajax end
 }
 
-function delBoard(hbtBoardNum){
-	alert(hbtBoardNum);
+function updateInput(hbtBoardNum, inputTag){
+	const board_title = document.querySelector('.board_title');
+	const board_content = document.querySelector('.board_content');
+	let titleValue = board_title.innerHTML;
+	let contentValue = board_content.innerHTML; 
+	let hbtBoardTitle = document.querySelector('.hbtBoardTitle');
+	let hbtBoardContent = document.querySelector('.hbtBoardContent');
 	
-	//ajax start
-	$.ajax({
-		url: '/board/delBoardAJAX', //요청경로
-		type: 'post',
-		async: true, // 동기방식(Ajax사용), false == 비동기방식
-		//contentType: 'application/json; charset=UTF-8',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		//필요한 데이터
-		// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
-		data: {'hbtBoardNum' : hbtBoardNum},
-		success: function(result) {
-			location.href="/board/getBoardGroundPage";
-		},
-		error: function() {
-			alert('실패');
+	let title_area = '';
+	let content_area = '';
+
+	if(inputTag.value == '수정'){
+		inputTag.value = '확인';
+		board_title.replaceChildren();
+		board_content.replaceChildren();
+		
+		title_area += `<input type="text" class="form-control hbtBoardTitle" value="${titleValue}">`;
+		
+		content_area += `<input type="text" class="form-control hbtBoardContent" value="${contentValue}">`;
+		
+		board_title.insertAdjacentHTML('afterbegin', title_area);
+		board_content.insertAdjacentHTML('afterbegin', content_area);
+		
+		
+	} else {
+		if(hbtBoardTitle.value == '' || hbtBoardContent.value == ''){
+			
+			if(hbtBoardTitle.value == ''){
+				hbtBoardTitle.placeholder = '제목은 필수사항 입니다.';
+				
+			}
+			if(hbtBoardContent.value == ''){
+				hbtBoardContent.placeholder = '내용은 필수사항 입니다.';
+				
+			}
+			
+			return ;
 		}
-	});
-   //ajax end
+		const ask = confirm('게시글 정보를 수정하시겠습니까?');
+		if(ask){
+			//ajax start
+			$.ajax({
+				url: '/board/updateBoardAJAX', //요청경로
+				type: 'post',
+				async: true, // 동기방식(Ajax사용), false == 비동기방식
+				//contentType: 'application/json; charset=UTF-8',
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				//필요한 데이터
+				// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+				data: {'hbtBoardNum' : hbtBoardNum
+						, 'hbtBoardTitle' : hbtBoardTitle.value
+						, 'hbtBoardContent' : hbtBoardContent.value},
+				success: function(result) {
+					inputTag.value = '수정';
+			
+					board_title.replaceChildren();
+					board_content.replaceChildren();
+					
+					title_area += `${hbtBoardTitle.value}`;
+					content_area += `${hbtBoardContent.value}`;
+					
+					board_title.insertAdjacentHTML('afterbegin', title_area);
+					board_content.insertAdjacentHTML('afterbegin', content_area);
+					
+					
+					
+					
+					
+				},
+				error: function() {
+					alert('실패');
+				}
+			});
+		   //ajax end
+			
+		}
+		
+	}
 	
+}
+
+function delBoard(hbtBoardNum){
+	const ask = confirm('정말로 삭제하시겠습니까?');
 	
-	
-	
+	if(ask){
+		//ajax start
+		$.ajax({
+			url: '/board/delBoardAJAX', //요청경로
+			type: 'post',
+			async: true, // 동기방식(Ajax사용), false == 비동기방식
+			//contentType: 'application/json; charset=UTF-8',
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			//필요한 데이터
+			// 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
+			data: {'hbtBoardNum' : hbtBoardNum},
+			success: function(result) {
+				location.href="/board/getBoardGroundPage";
+			},
+			error: function() {
+				alert('실패');
+			}
+		});
+	   //ajax end	
+	}
 	
 }
 
