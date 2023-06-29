@@ -31,7 +31,7 @@ public class AdminServiceImpl implements AdminService{
 	private SqlSessionTemplate sqlSession;
 	
 	//여행국가 카테고리 등록
-	@CacheEvict("areaCateList")
+	@CacheEvict(value = "areaCateList", allEntries = true)
 	@Override
 	public void regArea(TourAreaVO tourAreaVO) {
 		sqlSession.insert("adminMapper.regArea", tourAreaVO);
@@ -54,12 +54,14 @@ public class AdminServiceImpl implements AdminService{
 	
 	//여행국가 카테고리 사용여부 변경 (정현 추가) 
 	@Override
+	@CacheEvict(value = "areaCateList", allEntries = true)
 	public int changeAreaIsUse(String areaCode) {
 		return sqlSession.update("adminMapper.changeAreaIsUse", areaCode);
 	}
 	
 	//여행국가 카테고리 메인 노출 여부
 	@Override
+	@CacheEvict(value = "areaCateList", allEntries = true)
 	public int changeIsExposeMain(String areaCode) {
 		
 		return sqlSession.update("adminMapper.changeIsExposeMain", areaCode);
@@ -67,6 +69,7 @@ public class AdminServiceImpl implements AdminService{
 	
 	//여행국가 카테고리 삭제
 	@Override
+	@CacheEvict(value = "areaCateList", allEntries = true)
 	public void deleteAreaCate(String areaCode) {
 		sqlSession.delete("adminMapper.deleteAreaCate", areaCode);
 		

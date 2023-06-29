@@ -133,12 +133,10 @@ function setRecomItem(){
 }
 
 //텍스트 박스 글자 입력시 span 태그 글자 바꾸기
-function changeComment(){
+function changeComment(index){
     const commentSpan = document.querySelectorAll('.recom_img_comment');
     const comment_input = document.querySelectorAll('.comment_input');
 
-    for(let i = 0; i < comment_input.length; i++){
-        commentSpan[i].textContent = comment_input[i].value;
-    }
+    commentSpan[index].textContent = comment_input[index].value;
 
 }

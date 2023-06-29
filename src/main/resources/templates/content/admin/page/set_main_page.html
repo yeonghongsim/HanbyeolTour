@@ -146,14 +146,14 @@
             <!-- 추천 아이템 등록 이미지 미리보기     -->
             <div class="row my-3 mt-5">
                 <div class="row justify-content-center recomImgDiv">
-                    <th:block th:each="item : ${recomItem}">
+                    <th:block th:each="item, state : ${recomItem}">
                         <div class="col col-2 recomImg mx-3">
                             <div class="row mb-0 d-flex justify-content-center text-center">
                                 <img th:src="'/img/item/itemImg/' + ${item['ITEM_IMG_ATTACHED_NAME']}" class="px-0 recommend-img" alt="추천상품이미지">
                                 <h5 class="recom_img_comment">[[${item['RECOM_COMMENT']}]]</h5>
                             </div>
                             <div class="row my-0">
-                                <input class="form-control comment_input" type="text" placeholder="코멘트 입력" onchange="changeComment();">
+                                <input class="form-control comment_input" type="text" placeholder="코멘트 입력" th:onchange="changeComment([[${state.index}]]);">
                             </div>
                         </div>
                     </th:block>

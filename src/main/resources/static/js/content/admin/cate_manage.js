@@ -207,7 +207,7 @@ function changeIsExposeMain(areaCode, selectedRadio){
 		selectedRadioPair.checked = true;
 		return ;
 	}
-	
+	console.log(123)
 	//ajax start
 	$.ajax({
 	   url: '/admin/changeIsExposeMainAJAX', 
