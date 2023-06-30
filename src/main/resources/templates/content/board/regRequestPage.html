@@ -10,6 +10,7 @@
 
 <!-- 본문 내용 -->   
 <th:block layout:fragment="board_content">
+<div class="reg_req_page_div">
 	<div class="row mb-3 under-line-ylS">
 		<div class="col">
 			<h3>고객센터 > <span th:each="boardSideMenu : ${boardSideMenuList}" th:if="${boardSideMenu.boardSideMenuCode == 'BS_MENU_004'}">[[${boardSideMenu.boardSideMenuName}]]</span></h3>
@@ -50,7 +51,6 @@
 								<div class="row mb-2">
 									<div class="col">
 										<img th:onclick="showBtn(this, [[${#authentication.name}]]);" src="/imageForUse/lock.jpeg" style="width: 30px;">
-										/ [[${request.requestPw}]]
 									</div>
 								</div>
 								<div class="row hide">
@@ -74,7 +74,7 @@
 			</table>
 		</div>
 	</div>
-	
+</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->   
