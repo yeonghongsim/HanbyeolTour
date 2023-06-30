@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+.reg_req_page_div{
+	min-height: 42vh;
+}
 
 .request-table > tbody > tr > td:nth-child(3) {
 	text-align: left;
