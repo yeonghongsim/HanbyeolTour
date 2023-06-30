@@ -53,19 +53,19 @@ function regArea(){
 				str += `<div class="row">`;
 				str += `<div class="form-check col-6">`;
 				if(result[i].isUse == 'Y') {
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" checked onchange="changeAreaIsUse('${result[i].areaCode}');">사용중`;
 				}else{
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" onchange="changeAreaIsUse('${result[i].areaCode}');">사용중`;
 				}
 				str += `</div>`;
 				str += `<div class="form-check col-6">`;
 				if(result[i].isUse == 'N') {
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" checked onchange="changeAreaIsUse('${result[i].areaCode}');">미사용`;
 				}else{
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" onchange="changeAreaIsUse('${result[i].areaCode}');">미사용`;
 				}
 				str += `</div>`;
@@ -76,22 +76,22 @@ function regArea(){
 				str += `<div class="row">`;
 				str += `<div class="form-check col-6">`;
 					if(result[i].isExposeMain == 'Y') {
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="Y"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="Y"
 								class="form-check-input isExposeRadio" checked onchange="changeIsExposeMain('${result[i].areaCode}');"
 								>노출`;
 					}else{
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="Y"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="Y"
 								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>노출`;
 					}
 				str += `</div>`;
 				str += `<div class="form-check col-6">`;
 					if(result[i].isExposeMain == 'N') {
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="N"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="N"
 								class="form-check-input isExposeRadio" checked onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>비노출`;
 					}else{
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="N"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="N"
 								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>비노출`;
 					}
@@ -125,9 +125,10 @@ function checkAreaDuplicate(areaCode, areaKorName, areaEngName){
 		data: {'areaCode' : areaCode, 'areaKorName' : areaKorName, 'areaEngName' : areaEngName}, //필요한 데이터
 		async : false, //default 
 		success: function(result) {
-			alert('ajax 통신 성공');
-			if(result == 1) {
+			//alert('ajax 통신 성공');
+			if (result == 1) {
 				isDuplicate = true;
+				
 			}
 			
 		},
@@ -208,7 +209,7 @@ function changeIsExposeMain(areaCode, selectedRadio){
 		selectedRadioPair.checked = true;
 		return ;
 	}
-	
+	console.log(123)
 	//ajax start
 	$.ajax({
 	   url: '/admin/changeIsExposeMainAJAX', 
@@ -237,14 +238,18 @@ function changeIsExposeMain(areaCode, selectedRadio){
 
 
 //여행 국가 영어 대문자만 입력 가능
-function onlyEng(event) {  
-  const regExp = /[^A-Z]+$/; // 영어만 허용
-  const del = event.target;
-  if (regExp.test(del.value)) {
-	alert('영문 대문자만 입력 가능합니다.');
-    del.value = del.value.replace(regExp, '');
+function onlyEng(event) {
+  const input = event.target;
+  const inputValue = input.value;
+  const lastInputChar = inputValue.charAt(inputValue.length - 1);
+  
+  if (inputValue.length === 1 && lastInputChar === ' ') {
+    input.value = '';
+  } else if (!/^[A-Z ]+$/.test(lastInputChar)) {
+    input.value = inputValue.slice(0, -1);
+	alert('영어 대문자만 입력 가능합니다.')
   }
-};
+}
 
 
 //여행 국가 한글만 입력 가능 

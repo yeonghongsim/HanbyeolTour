@@ -218,8 +218,8 @@ function memDAddr2Validate(){
         $('#memDAddr2').css('border-width', '1px'); // 테두리 두께 변경
 	}
 	else {
-        $('#memDTell').css('border-color', '#DEE2E5'); // 테두리 색상 변경
-		$('#memDTell').css('border-width', '1px'); 
+        $('#memDAddr2').css('border-color', '#DEE2E5'); // 테두리 색상 변경
+		$('#memDAddr2').css('border-width', '1px'); 
     }
 	
 	return result_memDAddr2;

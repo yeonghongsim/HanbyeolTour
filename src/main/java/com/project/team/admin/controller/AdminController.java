@@ -209,6 +209,7 @@ public class AdminController {
 	//판매 상품 삭제
 	@GetMapping("/deleteItem")
 	public String deleteItem(String itemCode) {
+		//adminService.deleteItemImg(itemCode);
 		adminService.deleteItem(itemCode);
 		
 		return "redirect:/admin/itemManageForSale";

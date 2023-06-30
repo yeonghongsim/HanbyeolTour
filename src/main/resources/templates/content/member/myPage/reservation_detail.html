@@ -85,11 +85,9 @@
 					        	<span id="statusCode" style="font-weight: bolder;">[[${buyDetail.buyStateVO.buyStatusName}]]</span>
 					        </div>
 					        <div id="reviewBtn">
-					        	<!-- <a th:href="@{/myPage/checkMyReview(buyCode=${buyDetail.buyCode})}">
--->					        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
+					        	<button class="btn btn-outline-secondary btn-sm mt-2 reviewBtn"
 					        	th:if="${buyDetail.buyStateVO.buyStatusCode == 1}"
 					        	th:onclick="detail_cancel([[${buyDetail.buyCode}]])">예약취소</button>
-					        	<!-- </a> -->
 					        </div>
 					        <div id="cancelBtn"> 
 					        	<a th:href="@{/myPage/getMyReview(buyCode=${buyDetail.buyCode})}">

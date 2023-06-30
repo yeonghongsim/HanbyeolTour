@@ -4,10 +4,14 @@ const imgModal = new bootstrap.Modal('#imgModal');
 
 //이미지명 클릭 시 이미지 모달창 띄우기
 function openImgModal(itemImgAttachedName, itemImgOriginName){
+	
+	console.log(itemImgAttachedName);
 	//모달 안에서 보여질 이미지 정보 세팅 (모달 태그 안의 이미지 태그 선택)	
 	const modalTag = document.querySelector('#imgModal');
 	//모달 태그에서 img 태그 선택(선택한 태그에서도 querySelector 쓰기 가능)
-	modalTag.querySelector('img').src = `/upload/${itemImgAttachedName}`;
+	modalTag.querySelector('img').src = `/img/item/itemImg/${itemImgAttachedName}`;
+	
+	
 	
 	//모달창의 이미지 제목 세팅 (원본파일명으로) 태그.textContent : 태그의 글자 바꾸기
 	modalTag.querySelector('h1').textContent = itemImgOriginName;
@@ -295,7 +299,8 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 		type: 'post',
 		data: {'itemImgCode' : itemImgCode}, //필요한 데이터
 		success: function(result) {
-			alert('ajax 통신 성공');
+			//alert('ajax 통신 성공');
+			confirm('선택하신 이미지를 삭제하시겠습니까?');
 			
 			//버튼의 부모 태그 선택
 			const previousId = xBtn.parentElement.previousElementSibling.id;
@@ -318,9 +323,21 @@ function deleteItemImgAjax(itemImgCode, xBtn){
 function updateItem(){
 	
 	
+	//입력 값 없으면 막기
+	const itemTitle = document.querySelector('input[name="itemTitle"]').value;
+	const itemPrice = document.querySelector('input[name="itemPrice"]').value;
+	const traverPeriod = document.querySelector('input[name="traverPeriod"]').value;
+	const itemIntro = document.querySelector('textarea[name="itemIntro"]').value;
+
+	if (itemTitle.trim() === '' || itemPrice.trim() === '' || traverPeriod.trim() === '' || itemIntro.trim() === '') {
+		alert('입력되지 않은 항목이 있습니다.');
+		return;
+	}
+
+
 	let childrenCnt = document.querySelector('#mainImgDiv').children.length;
 	const mainImg = document.querySelector('#mainImg').value;
-	if(!(childrenCnt == 3 || mainImg != '')){
+	if (!(childrenCnt == 3 || mainImg != '')) {
 		alert('메인 이미지를 선택하십시오.');
 		return;
 	}
@@ -333,23 +350,11 @@ function updateItem(){
 		return;
 	}
 	
-	
-	const formElements = document.querySelectorAll('form input, form textarea');
-
-
-	for (let i = 0; i < formElements.length; i++) {
-		let element = formElements[i];
-
-		if (element.value.trim() === '') {
-			// 입력 제출 막기
-			alert('입력되지 않은 항목이 있습니다.');
-			return;
-		}
-	}
-	
-	document.querySelector('#itemDetailForm').submit();
+	document.getElementById('itemDetailForm').submit();
+	alert('상품 정보가 수정되었습니다.');
 	
 }
+
 
 
 //상품 조회 페이징 처리

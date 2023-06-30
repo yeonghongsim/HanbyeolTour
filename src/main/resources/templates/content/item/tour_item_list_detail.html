@@ -24,7 +24,7 @@
 
 					<div class="col-6 px-0 mx-0">
 
-						<div id="itemLIstMainImg" class="carousel slide" data-bs-ride="carousel">
+						<div id="itemListMainImg" class="carousel slide" data-bs-ride="carousel">
 
 							<div class="carousel-inner rounded-start-5">
 								<th:block th:each="img,state : ${itemImg}">
@@ -36,12 +36,12 @@
 							</div>
 
 							<button class="carousel-control-prev" type="button"
-								data-bs-target="itemLIstMainImg" data-bs-slide="prev">
+								data-bs-target="#itemListMainImg" data-bs-slide="prev">
 								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">Previous</span>
 							</button>
 							<button class="carousel-control-next" type="button"
-								data-bs-target="itemLIstMainImg" data-bs-slide="next">
+								data-bs-target="#itemListMainImg" data-bs-slide="next">
 								<span class="carousel-control-next-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">Next</span>
 							</button>
@@ -291,7 +291,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="review : ${reviews}">
-								<td>[[${review['MEM_CODE']}]]</td>
+								<td>[[${review['MEM_ID']}]]</td>
 								<td>[[${review['HBT_MEM_REVIEW_CONTENT']}]]</td>
 								<td>[[${review['STARS']}]]</td>
 								<td>[[${review['REVIEW_REG_DATE']}]]</td>
