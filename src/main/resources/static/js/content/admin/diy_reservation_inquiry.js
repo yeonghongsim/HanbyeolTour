@@ -17,7 +17,7 @@ function init() {
 			}
 		}
 
-		const searchButton = document.querySelector("input[type='submit']");
+		const searchButton = document.querySelector("input[type='button']");
 		searchButton.click();
 	}else if(url == '?buyStatusCode=3'){
 		const checkboxes = document.querySelectorAll('.searchChk');
@@ -28,7 +28,7 @@ function init() {
 				checkboxes[i].checked = true;
 			}
 		}
-		const searchButton = document.querySelector("input[type='submit']");
+		const searchButton = document.querySelector("input[type='button']");
 		searchButton.click();
 	}
 }

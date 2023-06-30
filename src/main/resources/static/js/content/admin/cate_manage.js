@@ -53,19 +53,19 @@ function regArea(){
 				str += `<div class="row">`;
 				str += `<div class="form-check col-6">`;
 				if(result[i].isUse == 'Y') {
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" checked onchange="changeAreaIsUse('${result[i].areaCode}');">사용중`;
 				}else{
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" onchange="changeAreaIsUse('${result[i].areaCode}');">사용중`;
 				}
 				str += `</div>`;
 				str += `<div class="form-check col-6">`;
 				if(result[i].isUse == 'N') {
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" checked onchange="changeAreaIsUse('${result[i].areaCode}');">미사용`;
 				}else{
-					str += `<input th:name="isUse_' + ${i+1}" type="radio"
+					str += `<input name="isUse_' + ${i+1}" type="radio"
 							class="form-check-input" onchange="changeAreaIsUse('${result[i].areaCode}');">미사용`;
 				}
 				str += `</div>`;
@@ -76,22 +76,22 @@ function regArea(){
 				str += `<div class="row">`;
 				str += `<div class="form-check col-6">`;
 					if(result[i].isExposeMain == 'Y') {
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="Y"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="Y"
 								class="form-check-input isExposeRadio" checked onchange="changeIsExposeMain('${result[i].areaCode}');"
 								>노출`;
 					}else{
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="Y"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="Y"
 								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>노출`;
 					}
 				str += `</div>`;
 				str += `<div class="form-check col-6">`;
 					if(result[i].isExposeMain == 'N') {
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="N"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="N"
 								class="form-check-input isExposeRadio" checked onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>비노출`;
 					}else{
-						str += `<input th:name="isExposeMain_' + ${i+1}" type="radio" value="N"
+						str += `<input name="isExposeMain_' + ${i+1}" type="radio" value="N"
 								class="form-check-input isExposeRadio" onchange="changeIsExposeMain('${result[i].areaCode}', this);"
 								>비노출`;
 					}
