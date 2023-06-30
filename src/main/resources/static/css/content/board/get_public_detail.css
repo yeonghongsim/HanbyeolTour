@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .board_pub_det_container {
-	min-height: 59vh;
+	min-height: 41.6vh;
 }
 
 .detail_table > tbody > tr > td{

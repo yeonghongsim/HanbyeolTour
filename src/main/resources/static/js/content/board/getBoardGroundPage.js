@@ -181,6 +181,7 @@ function regBoard(){
 	const hbtBoardTitle = document.querySelector('#hbtBoardTitle');
 	const hbtBoardContent = document.querySelector('#hbtBoardContent');
 	const regBoardForm = document.querySelector('#regBoardForm');
+	const private_pw = document.querySelector('.private_pw');
 	
 	if(hbtBoardTitle.value == '' || hbtBoardContent.value == ''){
 
@@ -193,7 +194,15 @@ function regBoard(){
 
 		}
 		
+		
 		return ;
+	}
+	
+	if(!private_pw.classList.contains('hide')){
+		if(private_pw.value == ''){
+			private_pw.placeholder = '비밀번호를 입력하세요.';
+			return ;
+		}
 	}
 	
 	regBoardForm.submit();

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .public_container {
-	min-height: 59vh;
+	min-height: 41.6vh;
 }
 
 .public-table > tbody > tr > td:nth-child(2) {

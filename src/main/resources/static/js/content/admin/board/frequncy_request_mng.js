@@ -310,8 +310,6 @@ function delFreqReq(freqRequestCode, typeRequestCode){
 	        // 위의 데이터를 자바가 인식 가능한 json 문자열로 변환
 	        data: JSON.stringify(freqRequestList),
 	        success: function(result) {
-				alert('게시글이 삭제되었습니다.')
-				
 				searchTypeRequest(typeRequestCode);
 					           
 	        },
